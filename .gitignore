@@ -11,4 +11,3 @@ test-results/
 .DS_Store
 **.md
 .agents/
-static/
