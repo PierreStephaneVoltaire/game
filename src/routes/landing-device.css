@@ -1,0 +1,275 @@
+.device-wrap {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 430px);
+}
+
+.pet-device {
+  position: relative;
+  padding: 24px 25px 30px;
+  overflow: hidden;
+  background: #ff7ab5;
+  border: 4px solid #512b9a;
+  border-radius: 25% 25% 22% 22% / 18% 18% 20% 20%;
+  box-shadow:
+    10px 10px 0 #512b9a,
+    17px 17px 0 #f3a15f;
+  transform: rotate(2deg);
+}
+
+.device-topline {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 0 8px 15px;
+  white-space: nowrap;
+  color: #512b9a;
+  font-size: 0.54rem;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+}
+
+.screen {
+  position: relative;
+  display: grid;
+  min-height: 224px;
+  place-items: center;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgb(116 84 197 / 11%) 50%, transparent 50%),
+    linear-gradient(rgb(116 84 197 / 11%) 50%, transparent 50%), #c9f4ee;
+  background-size: 12px 12px;
+  border: 4px solid #512b9a;
+  box-shadow: inset 4px 4px 0 rgb(255 255 255 / 70%);
+}
+
+.screen-stars {
+  position: absolute;
+  inset: 16px 20px auto;
+  display: flex;
+  justify-content: space-between;
+  color: #8061c5;
+  font-size: 1.2rem;
+}
+
+.pet {
+  position: relative;
+  width: 110px;
+  height: 135px;
+  margin-top: 14px;
+}
+
+.pet-ear,
+.bunny-ear,
+.pet-hair,
+.pet-face,
+.pet-body {
+  position: absolute;
+  display: block;
+}
+
+.bunny-ear {
+  z-index: 1;
+  top: 0;
+  width: 25px;
+  height: 49px;
+  background: #7a5a3a;
+  border: 4px solid #512b9a;
+}
+
+.bunny-ear-left {
+  left: 25px;
+  transform: rotate(-9deg);
+}
+
+.bunny-ear-right {
+  right: 25px;
+  transform: rotate(9deg);
+}
+
+.pet-ear {
+  top: 13px;
+  width: 36px;
+  height: 112px;
+  background: #f6cf67;
+  border: 4px solid #512b9a;
+}
+
+.pet-ear::after {
+  position: absolute;
+  top: 13px;
+  left: 3px;
+  width: 18px;
+  height: 3px;
+  background: #ff7ab5;
+  content: '';
+}
+
+.pet-ear-left {
+  left: 0;
+  transform: skewY(-20deg);
+}
+
+.pet-ear-right {
+  right: 0;
+  transform: skewY(20deg);
+}
+
+.pet-hair {
+  z-index: 2;
+  top: 14px;
+  left: 22px;
+  width: 66px;
+  height: 36px;
+  background: #f6cf67;
+  border: 4px solid #512b9a;
+  border-bottom: 0;
+}
+
+.pet-face {
+  z-index: 1;
+  top: 38px;
+  left: 21px;
+  width: 68px;
+  height: 58px;
+  background: #ffe2c6;
+  border: 4px solid #512b9a;
+}
+
+.pet-face i {
+  position: absolute;
+  top: 19px;
+  width: 7px;
+  height: 10px;
+  background: #2aa9a2;
+}
+
+.pet-face i:first-child {
+  left: 15px;
+}
+
+.pet-face i:nth-child(2) {
+  right: 15px;
+}
+
+.pet-face b {
+  position: absolute;
+  bottom: 11px;
+  left: 26px;
+  width: 10px;
+  height: 5px;
+  border-bottom: 3px solid #e45c8d;
+}
+
+.pet-body {
+  bottom: 3px;
+  left: 14px;
+  width: 82px;
+  height: 49px;
+  background: #ff7ab5;
+  border: 4px solid #512b9a;
+}
+
+.screen-message {
+  position: absolute;
+  right: 14px;
+  bottom: 13px;
+  margin: 0;
+  color: #512b9a;
+  font-size: 0.58rem;
+  font-weight: 900;
+}
+
+.care-readout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 9px 13px;
+  padding: 16px 4px 18px;
+}
+
+.care-readout span {
+  display: grid;
+  grid-template-columns: 37px 1fr;
+  align-items: center;
+  gap: 7px;
+}
+
+.care-readout b {
+  color: #512b9a;
+  font-size: 0.49rem;
+  letter-spacing: 0.04em;
+}
+
+.meter {
+  display: block;
+  height: 8px;
+  border: 2px solid #512b9a;
+  background: #fff7e7;
+}
+
+.meter::after {
+  display: block;
+  height: 100%;
+  content: '';
+}
+
+.food-meter::after {
+  width: 75%;
+  background: #f3a15f;
+}
+
+.rest-meter::after {
+  width: 90%;
+  background: #86c6ed;
+}
+
+.heart-meter::after {
+  width: 66%;
+  background: #e45c8d;
+}
+
+.cheer-meter::after {
+  width: 81%;
+  background: #f5d558;
+}
+
+.device-controls {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.device-controls span {
+  width: 30px;
+  height: 30px;
+  background: #fff7e7;
+  border: 3px solid #512b9a;
+  border-radius: 50%;
+  box-shadow: 2px 3px 0 #512b9a;
+}
+
+.sticker {
+  position: absolute;
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 900;
+  transform: rotate(-12deg);
+}
+
+.sticker-one {
+  top: -18px;
+  right: -17px;
+  background: #f3a15f;
+  box-shadow: 4px 4px 0 #512b9a;
+}
+
+.sticker-two {
+  right: -24px;
+  bottom: 40px;
+  background: #7655bb;
+  box-shadow: 4px 4px 0 #512b9a;
+}

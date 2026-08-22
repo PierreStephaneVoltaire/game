@@ -1,0 +1,161 @@
+:root {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #24183d;
+  background: #f8f0ff;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(
+      circle at 15% 8%,
+      rgb(255 255 255 / 80%) 0 1px,
+      transparent 1.5px
+    ),
+    radial-gradient(
+      circle at 87% 23%,
+      rgb(255 255 255 / 70%) 0 2px,
+      transparent 2.5px
+    ),
+    linear-gradient(135deg, #f9f1ff 0%, #e8efff 48%, #fff0e5 100%);
+  background-size:
+    20px 20px,
+    31px 31px,
+    auto;
+}
+
+a {
+  color: inherit;
+}
+
+.page-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 0 14px;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #512b9a;
+  font-size: 0.8rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  text-decoration: none;
+}
+
+.wordmark-spark {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  color: #fff;
+  background: #512b9a;
+  box-shadow: 3px 3px 0 #f3a15f;
+}
+
+.build-label,
+.eyebrow {
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.build-label {
+  padding: 7px 9px;
+  color: #8d386e;
+  background: #ffdaea;
+  box-shadow: 3px 3px 0 #8d386e;
+  text-decoration: none;
+}
+
+.build-label:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #8d386e;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.9fr);
+  gap: clamp(34px, 8vw, 96px);
+  align-items: center;
+  padding: clamp(42px, 9vw, 98px) 0 clamp(60px, 10vw, 116px);
+}
+
+.hero-copy {
+  max-width: 560px;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: #8d386e;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: ui-rounded, 'Arial Rounded MT Bold', system-ui, sans-serif;
+}
+
+h1 {
+  max-width: 550px;
+  margin-bottom: 21px;
+  color: #512b9a;
+  font-size: clamp(2.9rem, 7vw, 5.5rem);
+  letter-spacing: -0.075em;
+  line-height: 0.91;
+}
+
+.intro {
+  max-width: 470px;
+  margin-bottom: 25px;
+  color: #56466b;
+  font-size: clamp(1rem, 2vw, 1.13rem);
+  line-height: 1.7;
+}
+
+.status-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  color: #26496a;
+  background: #dff5ff;
+  border: 2px solid #26496a;
+  box-shadow: 5px 5px 0 #26496a;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.status-card p {
+  margin: 0;
+}
+
+.status-light {
+  width: 9px;
+  height: 9px;
+  background: #4dbd81;
+  box-shadow: 0 0 0 3px #b5efd0;
+}

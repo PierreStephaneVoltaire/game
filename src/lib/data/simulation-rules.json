@@ -1,0 +1,186 @@
+{
+  "statRange": { "min": 0, "max": 10 },
+  "startingCurrency": 20,
+  "startingInventory": {
+    "water": 1,
+    "uncrustables": 1,
+    "pretzel": 1
+  },
+  "maxCartQuantity": 20,
+  "startingMetrics": {
+    "food": 6,
+    "health": 8,
+    "mood": 6,
+    "rest": 7,
+    "bond": 4,
+    "creativity": 3
+  },
+  "timeDecay": {
+    "intervalHours": 2,
+    "foodPerInterval": 1,
+    "restPerInterval": 1,
+    "bondLossHours": 48,
+    "criticalNeed": { "lowMaximum": 2, "zeroLoss": 2, "lowLoss": 1 }
+  },
+  "nutrition": { "rollingWindowHours": 48, "sugarWindowHours": 6 },
+  "wait": { "minHours": 1, "maxHours": 12 },
+  "events": {
+    "weights": {
+      "none": 100,
+      "lowMoneyBalanceThreshold": 10,
+      "lowMoneyStress": 20,
+      "foodCraving": 20,
+      "creativeInspiration": 15,
+      "socks": 15,
+      "benignRoom": 10
+    },
+    "cooldowns": {
+      "creativeInspirationHours": 12,
+      "socksHours": 6,
+      "benignRoomHours": 4
+    },
+    "effects": {
+      "lowMoneyMood": -1,
+      "creativeInspirationCreativity": 1,
+      "socksMood": [-1, 0, 1]
+    }
+  },
+  "stream": {
+    "blockers": [
+      "hungry",
+      "starving",
+      "sleep_deprived",
+      "sick",
+      "kidney_stone",
+      "depressed",
+      "low_energy",
+      "overstimulated"
+    ],
+    "weight": {
+      "base": 50,
+      "moodCoefficient": 25,
+      "creativityCoefficient": 25,
+      "metricCenter": 5,
+      "metricScale": 5
+    },
+    "dayparts": [
+      { "fromHour": 4, "toHour": 8, "multiplier": 0.5 },
+      { "fromHour": 13, "toHour": 19, "multiplier": 1.5 }
+    ],
+    "duration": {
+      "shortCutoff": 0.45,
+      "shortStep": 0.15,
+      "shortBase": 1,
+      "longBase": 4,
+      "longSlots": 9,
+      "maximumHours": 12
+    },
+    "restCost": { "maximumRest": 10 },
+    "income": {
+      "minimumRate": 5,
+      "rateSlots": 11,
+      "baseMultiplier": 0.5,
+      "creativityDivisor": 10
+    },
+    "completion": { "creativity": -1, "rest": -1, "mood": [-1, 0, 1] },
+    "snackFloor": 2
+  },
+  "shop": {
+    "maximumItems": 24,
+    "stock": { "minimum": 1, "range": 5 },
+    "mix": {
+      "food": 12,
+      "medicineOrCare": 2,
+      "reusable": 4,
+      "upgrade": 3,
+      "decoration": 3
+    },
+    "guarantees": {
+      "affordableFood": true,
+      "hydratingFood": true,
+      "hydratingWaterMinimum": 2,
+      "minimumAffordableCount": 1
+    }
+  },
+  "activities": {
+    "socializeMinutes": [15, 30, 45, 60],
+    "playHours": [1, 2, 3],
+    "restBands": {
+      "low": { "maxRest": 2, "hours": [7, 8, 9], "cutoffs": [0.2, 0.7] },
+      "medium": { "maxRest": 5, "hours": [6, 7, 8], "cutoffs": [0.3, 0.8] },
+      "high": { "hours": [4, 5, 6], "cutoffs": [0.5, 0.85] }
+    },
+    "restRefusal": {
+      "restAtOrAbove": 10,
+      "restBandAt": 8,
+      "cutoffAt8": 0.8,
+      "cutoffAt9": 0.9
+    },
+    "refusal": {
+      "moodAtOrBelow": 2,
+      "moodProbability": 0.2,
+      "restAtOrBelow": 2,
+      "restProbability": 0.2,
+      "annoyedProbability": 0.5,
+      "repeatIncrement": 0.1,
+      "repeatCap": 0.3,
+      "maximum": 0.9
+    },
+    "completion": {
+      "socialize": { "mood": 1, "bond": 1 },
+      "play": { "mood": 1, "creativity": 1 },
+      "rest": { "healthDivisor": 4, "moodDivisor": 6 }
+    }
+  },
+  "statusRules": {
+    "lowMetricOnsetMaximum": 2,
+    "lowMetricClearMinimum": 5,
+    "lowEnergyOnsetSum": 6,
+    "lowEnergyClearSum": 8,
+    "fullOnsetMinimum": 9,
+    "fullClearMaximum": 7,
+    "recurrenceHours": 12,
+    "overstimulatedMoodMinimum": 9,
+    "overstimulatedClearHours": 2,
+    "annoyedClearHours": 3,
+    "sickClearFoodMaximum": 5,
+    "sickClearHealthMinimum": 5,
+    "criticalHealthMinimum": 1,
+    "criticalHealthMaximum": 2
+  },
+  "statusMetricDeltas": {
+    "lonelyMood": -1,
+    "creativeBlockMood": -1,
+    "lowEnergyCreativity": -1,
+    "lowStatusRecurrenceMood": -1,
+    "annoyedMood": -2,
+    "sickHealth": -1,
+    "sickMood": -1,
+    "fullHealth": -1,
+    "fullMood": -2,
+    "overstimulatedMood": -4,
+    "kidneyStoneMood": -1,
+    "kidneyStoneHealth": -1,
+    "kidneyStoneRest": -2,
+    "kidneyStoneRecurrenceHealth": -1,
+    "kidneyStoneRecurrenceRest": -1,
+    "sugarCrashMood": -2,
+    "sugarCrashRest": -1,
+    "criticalHealthMood": -1
+  },
+  "fullFeedSicknessProbability": 0.35,
+  "itemRefusalWasteProbability": 0.5,
+  "sugarCrash": {
+    "servingsRequired": 3,
+    "delayHours": 2,
+    "proteinClearMinimum": 2
+  },
+  "kidneyStoneRecurrenceHours": 12,
+  "annoyance": { "min": 2, "max": 5 },
+  "kidneyStone": {
+    "saltThreshold": 8,
+    "waterThreshold": 2,
+    "probability": 0.35
+  },
+  "medicalCare": { "durationHours": 12, "cost": 10000 }
+}

@@ -15,6 +15,12 @@ export default [
     },
   },
   {
+    files: ['**/*.svelte'],
+    languageOptions: {
+      parserOptions: { parser: tseslint.parser },
+    },
+  },
+  {
     ignores: ['build/', '.svelte-kit/', 'node_modules/'],
   },
 ];

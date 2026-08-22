@@ -1,17 +1,20 @@
 # Virtual Pet
 
-A small, static starter site for a colorful virtual pet project.
+A static, session-only companion-care game built with SvelteKit and strict
+TypeScript. A run supports Realtime and Streaming clocks, deterministic care and
+autonomous events, a 216-item shop and inventory, room placement, persistent
+statuses, complete in-memory history, and terminal graveyard presentation.
+
+The app deliberately has no account recovery, persistence, backend, telemetry,
+or runtime network API. Refreshing starts a fresh Realtime run. The clock mode
+is chosen during sign-in and there is no in-app reset, restart, or mode switch.
 
 ## Requirements
 
 - Node.js 24.14.0
 - Corepack-enabled pnpm 11.22.0
-- TypeScript 5.9 with strict checking
 
-All Svelte components use `<script lang="ts">`. Route modules use `.ts` files, and
-`svelte-check` runs as part of the standard verification commands.
-
-## Local development
+## Run locally
 
 ```sh
 corepack enable
@@ -19,30 +22,32 @@ pnpm install
 pnpm dev
 ```
 
-Open the local address printed by Vite, normally `http://localhost:5173`.
-
-## Verification
+For the static production build:
 
 ```sh
-pnpm check
-pnpm lint
-pnpm format
 pnpm build
 pnpm preview
 ```
 
-The current site is fully static. It has no Azure credentials, API calls, persistence, generated art, or external image and font dependencies.
-
-Set the surprise pet name locally without committing it:
+## Verification
 
 ```sh
-cp .env.example .env
+pnpm validate:data
+pnpm validate:assets
+pnpm validate:product
+pnpm check
+pnpm lint
+pnpm format
+pnpm test
+pnpm build
+pnpm test:e2e
 ```
 
-Then set `PUBLIC_PET_NAME` in `.env` before running or building.
+Catalogue nutrition and behavior are authored under
+`src/lib/data/catalogue/` and compiled into the bundled game definition. All
+gameplay uncertainty is derived from the displayed run seed; the simulation
+does not use `Math.random()`.
 
-Visible copy lives in `src/lib/i18n/en.ts`; add another locale module there when translations are needed.
-
-## Project direction
-
-The next persistence milestone will add an Azure Functions API and Azure Table Storage. Browser code will never receive the storage connection string or directly write save data.
+See `docs/GAME_RULES.md` for the player-facing rules,
+`docs/RULES_AND_FILES.md` for source ownership, and `CONTEXT.md` for the domain
+vocabulary.

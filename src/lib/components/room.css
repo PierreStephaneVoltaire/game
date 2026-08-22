@@ -1,0 +1,192 @@
+.room-page {
+  max-width: 1120px;
+  margin: clamp(32px, 8vh, 96px) auto 0;
+}
+.overview-row {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.42fr) minmax(0, 1fr);
+  gap: clamp(18px, 2vw, 24px);
+  align-items: stretch;
+}
+.room-card,
+.feed-dialog {
+  border: 4px solid #512b9a;
+  background: #fffdf9;
+  box-shadow: 8px 8px 0 #f3a15f;
+}
+.overview-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding: 8px 0;
+}
+.metrics h1 {
+  margin: 0 0 18px;
+  color: #512b9a;
+  font-size: clamp(1.55rem, 3vw, 2.35rem);
+}
+.metric {
+  margin: 11px 0;
+}
+.metric > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.8rem;
+}
+.metric strong {
+  color: #512b9a;
+}
+.metric meter {
+  width: 100%;
+  height: 12px;
+}
+.time-balance {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 0.8rem;
+}
+.time-balance h2 {
+  margin: 0 0 2px;
+  font-size: 0.9rem;
+}
+.activity {
+  margin: 6px 0 0;
+  padding: 9px;
+  color: #512b9a;
+  background: #f1e8ff;
+}
+.secondary-action {
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 2px solid #512b9a;
+  color: #512b9a;
+  background: #fff;
+  box-shadow: 3px 3px 0 #f3a15f;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+.room-card {
+  display: grid;
+  min-width: 0;
+  overflow: hidden;
+  grid-template-rows: 1fr auto;
+}
+.companion-caption {
+  min-height: 60px;
+  padding: 16px 20px;
+  color: #766d7f;
+  background: #fff;
+}
+.care-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  margin: 38px 0 0;
+}
+.care-actions button,
+.food-choices button {
+  border: 3px solid #512b9a;
+  color: #512b9a;
+  background: #fff;
+  box-shadow: 5px 5px 0 #f3a15f;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+.care-actions button {
+  display: grid;
+  flex: 1 1 0;
+  min-height: 48px;
+  padding: 0;
+  place-items: center;
+  font-size: 0.78rem;
+}
+.food-choices button {
+  min-height: 54px;
+  padding: 11px;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+.death-card {
+  padding: 14px;
+  background: #ffe0e8;
+}
+.death-card h2 {
+  margin: 0 0 6px;
+}
+.death-card a {
+  color: inherit;
+  font-weight: 800;
+}
+.feed-dialog {
+  width: min(720px, calc(100% - 32px));
+  max-height: calc(100vh - 48px);
+  padding: clamp(18px, 4vw, 30px);
+  color: #32254b;
+}
+.feed-dialog::backdrop {
+  background: #27163db3;
+}
+.dialog-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+.dialog-heading h2 {
+  margin: 0 0 22px;
+  color: #512b9a;
+}
+.dialog-close {
+  border: 0;
+  color: #512b9a;
+  background: transparent;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+.food-choices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 16px;
+}
+.food-choices button {
+  display: grid;
+  gap: 5px;
+  place-items: center;
+}
+.food-choices img {
+  image-rendering: pixelated;
+}
+.food-choices span,
+.food-choices small {
+  color: #766d7f;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #f3a15f;
+  outline-offset: 3px;
+}
+@media (max-width: 780px) {
+  .overview-row {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 560px) {
+  .care-actions {
+    gap: 9px;
+  }
+  .care-actions button {
+    min-width: 0;
+    min-height: 44px;
+    font-size: 0.7rem;
+  }
+}

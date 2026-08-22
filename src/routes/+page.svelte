@@ -1,14 +1,14 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import { copy, createTranslator } from '$lib/i18n';
+  import { companion } from '$lib/ui/companion';
 
-  const petName = import.meta.env.PUBLIC_PET_NAME || 'your pet';
-  const text = createTranslator({ pet: petName });
+  const text = createTranslator({ pet: companion.name });
 </script>
 
 <svelte:head>
   <title>{text(copy.metaTitle)}</title>
-  <meta name="description" content={copy.metaDescription} />
+  <meta name="description" content={text(copy.metaDescription)} />
 </svelte:head>
 
 <main class="page-shell">
@@ -59,9 +59,14 @@
         <div class="care-readout" aria-label={copy.statsLabel}>
           <span><b>{copy.stats.food}</b><i class="meter food-meter"></i></span>
           <span><b>{copy.stats.rest}</b><i class="meter rest-meter"></i></span>
-          <span><b>{copy.stats.heart}</b><i class="meter heart-meter"></i></span
+          <span
+            ><b>{copy.stats.health}</b><i class="meter heart-meter"></i></span
           >
-          <span><b>{copy.stats.cheer}</b><i class="meter cheer-meter"></i></span
+          <span><b>{copy.stats.mood}</b><i class="meter cheer-meter"></i></span>
+          <span><b>{copy.stats.bond}</b><i class="meter cheer-meter"></i></span>
+          <span
+            ><b>{copy.stats.creativity}</b><i class="meter cheer-meter"
+            ></i></span
           >
         </div>
         <div class="device-controls" aria-hidden="true">
@@ -94,12 +99,12 @@
       <article class="care-card heart-card">
         <span class="card-icon" aria-hidden="true">♥</span>
         <h3>{copy.cards.heart.title}</h3>
-        <p>{copy.cards.heart.body}</p>
+        <p>{text(copy.cards.heart.body)}</p>
       </article>
       <article class="care-card cheer-card">
         <span class="card-icon" aria-hidden="true">✦</span>
         <h3>{copy.cards.cheer.title}</h3>
-        <p>{copy.cards.cheer.body}</p>
+        <p>{text(copy.cards.cheer.body)}</p>
       </article>
     </div>
   </section>

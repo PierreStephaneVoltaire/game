@@ -1,0 +1,137 @@
+.room-scene {
+  position: relative;
+  min-height: 570px;
+  overflow: hidden;
+  background: linear-gradient(var(--sky) 0 68%, #c99468 68%);
+}
+.daypart-morning {
+  --sky: #ccefe8;
+}
+.daypart-day {
+  --sky: #bfe7f4;
+}
+.daypart-evening {
+  --sky: #f1cad0;
+}
+.daypart-night {
+  --sky: #8d8cb8;
+}
+.room-scene::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 18%;
+  background: #d19e72;
+  content: '';
+}
+.companion {
+  position: absolute;
+  z-index: 2;
+  bottom: 17%;
+  left: 50%;
+  width: min(176px, 27%);
+  height: auto;
+  image-rendering: pixelated;
+  transform: translateX(-50%);
+}
+.anchor {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  min-width: 75px;
+  min-height: 62px;
+  place-items: center;
+  border: 3px solid #fff1df;
+  color: #fff;
+  background: #7d4a36cc;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.anchor img {
+  width: 52px;
+  height: 52px;
+  image-rendering: pixelated;
+}
+.anchor-label {
+  position: absolute;
+  top: 3px;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+}
+.anchor-unplace {
+  z-index: 3;
+  padding: 3px 6px;
+  border: 1px solid #fff;
+  color: #512b9a;
+  background: #fff;
+  font: inherit;
+  font-size: 0.58rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.anchor-empty {
+  opacity: 0.7;
+  font-size: 1.4rem;
+}
+.anchor-bed {
+  bottom: 20%;
+  left: 7%;
+  width: 30%;
+  height: 95px;
+  background: #eaa7b8;
+}
+.anchor-desk {
+  right: 7%;
+  bottom: 26%;
+  width: 25%;
+  height: 76px;
+}
+.anchor-chair {
+  right: 14%;
+  bottom: 13%;
+}
+.anchor-wall {
+  top: 12%;
+  left: 40%;
+}
+.anchor-floor {
+  bottom: 4%;
+  left: 43%;
+}
+.anchor-shelf {
+  top: 26%;
+  left: 8%;
+}
+.anchor-window {
+  top: 12%;
+  right: 9%;
+  width: 112px;
+  height: 84px;
+  background: #aee2ef;
+}
+.anchor-cat-corner {
+  bottom: 7%;
+  left: 8%;
+}
+@media (max-width: 780px) {
+  .room-scene {
+    min-height: 500px;
+  }
+}
+@media (max-width: 460px) {
+  .room-scene {
+    min-height: 420px;
+  }
+  .anchor {
+    min-width: 54px;
+    min-height: 48px;
+  }
+  .anchor-label {
+    font-size: 0.46rem;
+  }
+  .anchor-window {
+    width: 76px;
+    height: 62px;
+  }
+}
