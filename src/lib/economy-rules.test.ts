@@ -1,0 +1,114 @@
+import { describe, expect, test } from 'vitest';
+import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { completeStreamEconomy } from './economy-rules';
+import { hospitalCost, purchaseQuantity } from './billing-rules';
+import { projectCompletionAtLocalMidnight } from './project-economy-rules';
+import { startRun } from './game-engine';
+import type { GameState } from './game-types';
+
+const HOUR = 3_600_000;
+
+function state(): GameState {
+  return startRun(
+    { mode: 'realtime', now: 0, seed: 'economy-test', timezone: 'UTC' },
+    BUNDLED_GAME_DEFINITION,
+  );
+}
+
+describe('economy and progression rules', () => {
+  test('purchase quantity respects stock and authored ownership cap', () => {
+    const item = { ...BUNDLED_GAME_DEFINITION.items[0], maximumOwned: 2 };
+    const current = {
+      ...state(),
+      inventory: { [item.id]: 1 },
+      shop: { ...state().shop, stock: { [item.id]: 5 } },
+    };
+    expect(purchaseQuantity(current, item, 9)).toBe(1);
+  });
+
+  test('insurance metadata selects the authored hospital bill', () => {
+    const insured = BUNDLED_GAME_DEFINITION.items.find(
+      (item) => item.id === 'water',
+    )!;
+    const definition = {
+      ...BUNDLED_GAME_DEFINITION,
+      items: [
+        { ...insured, id: 'insurance-card', tags: ['care', 'insurance'] },
+      ],
+    };
+    const current = { ...state(), inventory: { 'insurance-card': 1 } };
+    expect(hospitalCost(current, definition)).toBe(500);
+  });
+
+  test('stream completion records follower progression and deterministic replay', () => {
+    const initial = {
+      ...state(),
+      metrics: { ...state().metrics, creativity: 8 },
+    };
+    const first = completeStreamEconomy(initial, 'stream', 4, 4 * HOUR, 10);
+    const second = completeStreamEconomy(initial, 'stream', 4, 4 * HOUR, 10);
+    expect(first.state).toEqual(second.state);
+    expect(first.state.progression.followers).toBeGreaterThan(
+      initial.progression.followers,
+    );
+    expect(
+      first.events.some((event) => event.type === 'followers_gained'),
+    ).toBe(true);
+  });
+
+  test('prime-hour follower growth is segmented and rounded once', () => {
+    const started = Date.UTC(2026, 0, 1, 12);
+    const initial = startRun(
+      { mode: 'realtime', now: started, seed: 'prime', timezone: 'UTC' },
+      BUNDLED_GAME_DEFINITION,
+    );
+    const current = {
+      ...initial,
+      metrics: { ...initial.metrics, creativity: 10 },
+    };
+    const result = completeStreamEconomy(
+      current,
+      'prime-stream',
+      4,
+      started + 4 * HOUR,
+      10,
+    );
+    expect(
+      result.state.progression.followers - current.progression.followers,
+    ).toBe(14);
+  });
+
+  test('donations roll independently for each whole stream hour', () => {
+    const initial = {
+      ...state(),
+      metrics: { ...state().metrics, creativity: 10 },
+    };
+    let found: ReturnType<typeof completeStreamEconomy> | undefined;
+    for (let index = 0; index < 10_000 && !found; index += 1) {
+      const result = completeStreamEconomy(
+        { ...initial, seed: `donation-${index}` },
+        `donation-${index}`,
+        6,
+        6 * HOUR,
+        10,
+        3,
+      );
+      if (
+        result.events.filter((event) => event.type === 'donation_received')
+          .length >= 2
+      )
+        found = result;
+    }
+    expect(found).toBeDefined();
+  });
+
+  test('project completion uses the third local midnight, including DST boundaries', () => {
+    const started = Date.UTC(2026, 2, 8, 1);
+    const completion = projectCompletionAtLocalMidnight(
+      started,
+      'America/Toronto',
+    );
+    const expected = Date.UTC(2026, 2, 10, 4);
+    expect(completion).toBe(expected);
+  });
+});

@@ -18,6 +18,12 @@ import { resolveAttemptEvent } from '../event-rules';
 import { HOUR_MS } from '../game-constants';
 import { STAT_MAX, STAT_MIN } from '../game-constants';
 import { activityCompletionMessage } from '../event-messages';
+import {
+  completeStreamEconomy,
+  resolveCommissionWorkPayout,
+} from '../economy-rules';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { localDate } from '../shop-rules';
 
 export type ActivityCompletionInput = {
   state: GameState;
@@ -41,7 +47,7 @@ export function completeActivity({
 }: ActivityCompletionInput): ActivityCompletionResult {
   const completedAt = interrupted ? reconciliationNow : activity.endsAt;
   const elapsed = Math.max(0, completedAt - activity.startedAt);
-  const delta: Partial<Metrics> =
+  const delta: Partial<Metrics> = (
     activity.type === 'medical_care'
       ? rules.medicalCare.completion
       : interrupted && activity.type !== 'rest'
@@ -50,23 +56,49 @@ export function completeActivity({
           ? {
               creativity: rules.stream.completion.creativity,
               rest: rules.stream.completion.rest,
-              mood: rules.stream.completion.mood[
-                Math.floor(
-                  actionRandom(
-                    state.seed,
-                    state.stateVersion,
-                    activity.sourceActionId,
-                    'stream_completion',
-                    'mood',
-                  ) * rules.stream.completion.mood.length,
-                )
-              ],
+              mood: Number(
+                rules.stream.completion.mood[
+                  Math.floor(
+                    actionRandom(
+                      state.seed,
+                      state.stateVersion,
+                      activity.sourceActionId,
+                      'stream_completion',
+                      'mood',
+                    ) * rules.stream.completion.mood.length,
+                  )
+                ],
+              ),
             }
-          : completionDelta(
-              activity.type as 'rest' | 'socialize' | 'play',
-              elapsed,
-              state.metrics.rest,
-            );
+          : activity.type === 'commission_work'
+            ? {
+                rest: rules.activities.commissionWork.completion.rest,
+                creativity:
+                  rules.activities.commissionWork.completion.creativity,
+                mood: rules.activities.commissionWork.completion.mood[
+                  Math.floor(
+                    actionRandom(
+                      state.seed,
+                      state.stateVersion,
+                      activity.sourceActionId,
+                      'commission_completion',
+                      'mood',
+                    ) * rules.activities.commissionWork.completion.mood.length,
+                  )
+                ],
+              }
+            : completionDelta(
+                activity.type as 'rest' | 'socialize' | 'play',
+                elapsed,
+                state.metrics.rest,
+              )
+  ) as Partial<Metrics>;
+  if (
+    (activity.type === 'socialize' || activity.type === 'play') &&
+    state.history.repeatAction === activity.type &&
+    state.history.repeatCount > 1
+  )
+    delta.mood = 0;
   if (activity.payload?.suppressMoodGain) delete delta.mood;
   const beforeActivityMetrics = { ...state.metrics };
   const completedMetrics = { ...state.metrics };
@@ -99,6 +131,13 @@ export function completeActivity({
       Math.min(STAT_MAX, beforeActivityMetrics.mood + delta.mood),
     );
   }
+  if (
+    state.timedEffects.hyperfocusUntil !== null &&
+    completedAt < state.timedEffects.hyperfocusUntil
+  ) {
+    delta.creativity = 10 - beforeActivityMetrics.creativity;
+    completedMetrics.creativity = 10;
+  }
   const beforeActivityStatuses = state.statuses;
   let statuses = {
     ...alignGameStatuses(completedMetrics, state.statuses, reconciliationNow),
@@ -119,27 +158,79 @@ export function completeActivity({
   }
   if (activity.type === 'rest')
     statuses = clearRestStatuses(statuses, completedMetrics);
-  const income =
-    activity.type === 'stream'
-      ? Math.round(
-          Number(
-            activity.payload?.hourlyRate ?? rules.stream.income.minimumRate,
-          ) *
-            (elapsed / HOUR_MS) *
-            (rules.stream.income.baseMultiplier +
-              state.metrics.creativity / rules.stream.income.creativityDivisor),
-        )
+  const commissionPayout =
+    activity.type === 'commission_work' && !interrupted
+      ? resolveCommissionWorkPayout({
+          ...state,
+          metrics: {
+            ...state.metrics,
+            creativity: Number(
+              activity.payload?.startingCreativity ?? state.metrics.creativity,
+            ),
+          },
+        })
       : 0;
   let next: GameState = {
     ...state,
     metrics: completedMetrics,
     statuses,
     activity: null,
-    balance: state.balance + income,
-    history: state.history,
+    balance: state.balance + commissionPayout,
+    history:
+      activity.type === 'commission_work' && !interrupted
+        ? {
+            ...state.history,
+            lastCommissionWorkDate: localDate(completedAt, state.timezone),
+          }
+        : state.history,
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
   };
+  if (activity.type === 'stream') {
+    const economy = completeStreamEconomy(
+      { ...next, metrics: state.metrics },
+      activity.sourceActionId,
+      elapsed / HOUR_MS,
+      completedAt,
+      Number(activity.payload?.hourlyRate ?? rules.stream.income.minimumRate),
+      Number(activity.payload?.donationMultiplier ?? 1),
+      !interrupted,
+    );
+    next = {
+      ...next,
+      balance: economy.state.balance,
+      metrics: {
+        ...next.metrics,
+        mood: Math.max(
+          STAT_MIN,
+          Math.min(
+            STAT_MAX,
+            next.metrics.mood +
+              (economy.state.metrics.mood - state.metrics.mood),
+          ),
+        ),
+      },
+      progression: economy.state.progression,
+      events: [...next.events, ...economy.events],
+    };
+  }
+  if (activity.type === 'commission_work' && !interrupted) {
+    next = {
+      ...next,
+      events: [
+        ...next.events,
+        {
+          id: `event-${next.events.length + 1}`,
+          type: 'full_body_project_completed',
+          at: completedAt,
+          message: `Commission Work paid out $${commissionPayout}.`,
+          sourceActionId: activity.sourceActionId,
+          amount: commissionPayout,
+        },
+      ],
+    };
+  }
+  next = reconcileMetricSource(state, next, activity.sourceActionId);
   next = recordBondGain(next, state, completedAt);
   next = appendStatusTransitionEvents(
     next,
@@ -147,7 +238,7 @@ export function completeActivity({
     activity.sourceActionId,
   );
   const eventIds = [event.id];
-  if (activity.type !== 'medical_care') {
+  if (activity.type !== 'medical_care' && activity.type !== 'commission_work') {
     const beforePenaltyCount = next.events.length;
     next = applyCriticalHealthMoodPenalty(
       next,
@@ -162,7 +253,8 @@ export function completeActivity({
     !interrupted &&
     (activity.type === 'rest' ||
       activity.type === 'socialize' ||
-      activity.type === 'play')
+      activity.type === 'play' ||
+      activity.type === 'commission_work')
   ) {
     const beforeEventCount = next.events.length;
     const beforeEventState = next;

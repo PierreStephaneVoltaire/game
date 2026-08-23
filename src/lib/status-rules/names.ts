@@ -14,6 +14,7 @@ export const STATUS_NAMES = [
   'full',
   'low_energy',
   'sugar_crash',
+  'dizzy_spell',
 ] as const satisfies readonly GameStatusName[];
 
 export function isStatusName(value: string): value is GameStatusName {

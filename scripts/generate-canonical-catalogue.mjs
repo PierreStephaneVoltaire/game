@@ -64,17 +64,17 @@ assertUniqueIds(unorderedItemSources, 'Catalogue source');
 assertUniqueIds(nutritionSources, 'Nutrition source');
 
 if (
-  canonicalIds.length !== 216 ||
+  canonicalIds.length !== 225 ||
   new Set(canonicalIds).size !== canonicalIds.length
 )
-  throw new Error('Canonical item ID allowlist must contain 216 unique IDs');
-if (unorderedItemSources.length !== 216)
+  throw new Error('Canonical item ID allowlist must contain 225 unique IDs');
+if (unorderedItemSources.length !== 225)
   throw new Error(
-    `Expected 216 catalogue source records, found ${unorderedItemSources.length}`,
+    `Expected 225 catalogue source records, found ${unorderedItemSources.length}`,
   );
-if (nutritionSources.length !== 108)
+if (nutritionSources.length !== 110)
   throw new Error(
-    `Expected 108 nutrition source records, found ${nutritionSources.length}`,
+    `Expected 110 nutrition source records, found ${nutritionSources.length}`,
   );
 
 const nutritionById = new Map(
@@ -125,11 +125,11 @@ if (process.argv.includes('--check')) {
       'shop-items.json has drifted; run node scripts/generate-canonical-catalogue.mjs',
     );
   console.log(
-    'Catalogue compiler drift check passed (216 items, 108 sourced nutrition records).',
+    'Catalogue compiler drift check passed (225 items, 110 sourced nutrition records).',
   );
 } else {
   writeFileSync(outputUrl, output);
   console.log(
-    'Generated 216 canonical catalogue items from maintained JSONL sources.',
+    'Generated 225 canonical catalogue items from maintained JSONL sources.',
   );
 }

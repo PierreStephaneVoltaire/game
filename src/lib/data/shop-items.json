@@ -2489,12 +2489,12 @@
     }
   },
   {
-    "id": "taco",
-    "name": "Taco",
+    "id": "mini-tacos",
+    "name": "Mini Tacos",
     "category": "food",
     "price": 5,
-    "description": "Protein, carbs, toppings, structural risk.",
-    "qualitativeNutritionHint": "A mixed meal with protein, starch, and potentially plenty of salt.",
+    "description": "Small tacos, big feelings, structurally sound enough.",
+    "qualitativeNutritionHint": "A favorite little meal with protein, starch, and a salty edge.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -2555,7 +2555,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/taco.png",
+    "image": "/items/generated/mini-tacos.png",
     "nutrition": {
       "serving": "1 small/regular (105 g)",
       "calories": 258.3,
@@ -2566,7 +2566,7 @@
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708514/nutrients",
-      "sourceReference": "FDC ID 2708514 / food code 58102000 — Taco, NFS",
+      "sourceReference": "FDC ID 2708514 / food code 58102000 — Taco, NFS; gameplay name Mini Tacos",
       "retrievalDate": "2026-08-22",
       "snapshotDate": "2024-10-31"
     }
@@ -8599,12 +8599,12 @@
     }
   },
   {
-    "id": "pizza",
-    "name": "Pizza",
+    "id": "cheeseless-toppingless-pizza",
+    "name": "Cheeseless Toppingless Pizza",
     "category": "food",
     "price": 5,
-    "description": "Carbs, fat, salt, infinite configuration problems.",
-    "qualitativeNutritionHint": "Rich, salty comfort food with countless preparation variables.",
+    "description": "The safe order: crust, sauce, and no surprises.",
+    "qualitativeNutritionHint": "A favorite comfort meal with a specific plain preparation and a salty edge.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -8619,7 +8619,7 @@
     ],
     "context": {
       "refusalProbability": 0.4,
-      "preparationAcceptance": 0.75,
+      "preparationAcceptance": 0.85,
       "dislikedEffects": {
         "mood": {
           "min": -1,
@@ -8666,7 +8666,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pizza.png",
+    "image": "/items/generated/cheeseless-toppingless-pizza.png",
     "nutrition": {
       "serving": "1 piece, NFS (119 g)",
       "calories": 316.5,
@@ -8677,9 +8677,16 @@
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708614/nutrients",
-      "sourceReference": "FDC ID 2708614 / food code 58106210 — Pizza, cheese, from restaurant or fast food, NS as to type of crust",
+      "sourceReference": "FDC ID 2708614 / food code 58106210 — Pizza, cheese, from restaurant or fast food, NS as to type of crust; proxy for the cheeseless/toppingless preparation",
       "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately"
+      }
     }
   },
   {
@@ -8849,12 +8856,12 @@
     }
   },
   {
-    "id": "mystery-snack",
-    "name": "Mystery Snack",
+    "id": "the-concoction",
+    "name": "The Concoction",
     "category": "food",
     "price": 4,
-    "description": "Could be delicious. Could be a surprise.",
-    "qualitativeNutritionHint": "Its nutrition comes from one of three seeded fictional profiles.",
+    "description": "Jello, soda, peanut butter cookies, taco seasoning, and three cups of pickle juice.",
+    "qualitativeNutritionHint": "A seeded fictional mystery meal whose nutrition is intentionally unpredictable.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -8900,7 +8907,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mystery-snack.png",
+    "image": "/items/generated/the-concoction.png",
     "nutrition": {
       "serving": "1 mystery portion",
       "calories": null,
@@ -8911,7 +8918,7 @@
       "caffeineMg": null,
       "sourceType": "fictional_seeded_profile",
       "sourceUrl": null,
-      "sourceReference": "Explicit fictional profiles A/B/C; no real-world nutrition claim.",
+      "sourceReference": "Explicit fictional profiles A/B/C for The Concoction; no real-world nutrition claim.",
       "retrievalDate": "2026-08-22",
       "fictionalProfiles": [
         {
@@ -11846,6 +11853,13 @@
           }
         },
         "cooldownHours": 12
+      }
+    ],
+    "eventPoolModifiers": [
+      {
+        "eventId": "socks",
+        "weightDelta": 3,
+        "eligibility": "placed"
       }
     ],
     "itemActions": [],
@@ -17543,6 +17557,732 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Five Plain Tortillas is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "jar-of-pickle-juice",
+    "name": "Jar of Pickle Juice",
+    "category": "food",
+    "price": 3,
+    "description": "A briny beverage and a questionable coping strategy.",
+    "qualitativeNutritionHint": "A salty, hydrating favorite with an unmistakably pickled personality.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "drink",
+      "favorite",
+      "hydrating",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 3,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 3,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/jar-of-pickle-juice.png",
+    "nutrition": {
+      "serving": "1 fl oz (30 mL)",
+      "calories": 2,
+      "sodiumMg": 250,
+      "sugarG": 0,
+      "proteinG": 0,
+      "waterG": 29.5,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708914/nutrients",
+      "sourceReference": "FDC ID 2708914 / food code 56603010 — Pickle juice, dill; gameplay portion is one jar serving",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "sodiumMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "limited-edition-dr-pepper",
+    "name": "Limited-Edition Dr Pepper",
+    "category": "food",
+    "price": 12,
+    "description": "The forbidden flavor for a very productive afternoon.",
+    "qualitativeNutritionHint": "A rare, extra-sugary caffeinated drink with a dramatic energy spike.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "stock": {
+      "min": 1,
+      "max": 2
+    },
+    "sugarServings": 2,
+    "tags": [
+      "food",
+      "drink",
+      "caffeinated",
+      "favorite",
+      "sugar",
+      "rare-stock",
+      "hyperfocus"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      },
+      "rest": {
+        "min": -1,
+        "max": -1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 1,
+      "protein": 0,
+      "sugar": 3,
+      "caffeine": 3
+    },
+    "properties": {
+      "salt": 0,
+      "water": 1,
+      "protein": 0,
+      "sugar": 3,
+      "caffeine": 3,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/limited-edition-dr-pepper.png",
+    "nutrition": {
+      "serving": "12 fl oz",
+      "calories": 150,
+      "sodiumMg": 55,
+      "sugarG": 39,
+      "proteinG": 0,
+      "waterG": null,
+      "caffeineMg": 41,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.kdpproductfacts.com/product/a0e3h000003LJzZAAW/detail",
+      "sourceReference": "KDP product a0e3h000003LJzZAAW; limited-edition gameplay variant uses the same 12 fl oz label baseline",
+      "retrievalDate": "2026-08-22",
+      "qualifiers": {
+        "caffeineMg": "approximately"
+      },
+      "nullReasons": {
+        "waterG": "The first-party product label does not report waterG."
+      }
+    }
+  },
+  {
+    "id": "painkillers",
+    "name": "Painkillers",
+    "category": "medicine",
+    "price": 7,
+    "description": "Twelve hours of less stone-related misery; the stone remains.",
+    "qualitativeNutritionHint": "A short comfort window for a painful episode, without pretending to cure it.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "medicine",
+      "care",
+      "pain-relief"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "take_painkillers",
+        "label": "Take painkillers",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "care",
+          "pain-relief"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/painkillers.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Painkillers is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "electrolyte-sachet",
+    "name": "Electrolyte Sachet",
+    "category": "care",
+    "price": 9,
+    "description": "Salt and water in a packet for the medically sensible plot twist.",
+    "qualitativeNutritionHint": "A care supply designed to pair hydration with a deliberate electrolyte boost.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "care",
+      "hydrating",
+      "salty"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 2,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "take_electrolyte",
+        "label": "Take electrolyte sachet",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "care"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/electrolyte-sachet.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Electrolyte Sachet is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "insurance-card",
+    "name": "Insurance Card",
+    "category": "care",
+    "price": 150,
+    "description": "A tiny rectangle that makes the hospital bill less theatrical.",
+    "qualitativeNutritionHint": "A one-claim care safeguard for an expensive medical emergency.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "maximumOwned": 1,
+    "tags": [
+      "care",
+      "medical",
+      "insurance"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "inspect_insurance_card",
+        "label": "Review insurance coverage",
+        "kind": "interaction",
+        "consumes": false,
+        "tags": [
+          "care",
+          "insurance"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/insurance-card.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Insurance Card is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "rigging-tablet",
+    "name": "Rigging Tablet",
+    "category": "upgrade",
+    "price": 200,
+    "description": "The portable workstation for turning commissions into rent money.",
+    "qualitativeNutritionHint": "A professional creative tool that opens a focused commission-work activity.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "upgrade",
+      "streaming-gear",
+      "rigging"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "commission_work",
+        "label": "Commission Work",
+        "kind": "activity",
+        "consumes": false,
+        "tags": [
+          "commission"
+        ],
+        "effects": {
+          "rest": {
+            "min": -2,
+            "max": -2
+          },
+          "creativity": {
+            "min": -1,
+            "max": -1
+          },
+          "mood": {
+            "min": -1,
+            "max": 0
+          }
+        },
+        "requirements": {
+          "minimumMetrics": {
+            "creativity": 4
+          },
+          "blockedStatuses": [
+            "sleep_deprived",
+            "depressed"
+          ]
+        },
+        "activity": {
+          "type": "commission_work",
+          "durationHours": 6
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/rigging-tablet.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Rigging Tablet is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "new-model-commission",
+    "name": "New Model Commission",
+    "category": "upgrade",
+    "price": 300,
+    "description": "Three local dates of rigging for one more model debut.",
+    "qualitativeNutritionHint": "A long-term creative upgrade reserved for an unlocked career tier.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "upgrade",
+      "commission",
+      "model"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "partner"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "start_model_commission",
+        "label": "Start model commission",
+        "kind": "service",
+        "consumes": false,
+        "tags": [
+          "model"
+        ],
+        "service": {
+          "type": "model_commission"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/new-model-commission.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: New Model Commission is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "sheet-of-cute-stickers",
+    "name": "Sheet of Cute Stickers",
+    "category": "decoration",
+    "price": 25,
+    "description": "Cute, colorful, and absolutely not welcome here.",
+    "qualitativeNutritionHint": "A cursed decorative sheet whose tiny adhesive shapes are a known hazard.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "cursed"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "confront_stickers",
+        "label": "Confront the stickers",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -2,
+            "max": -2
+          }
+        },
+        "consumes": false,
+        "tags": [
+          "cursed"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/sheet-of-cute-stickers.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Sheet of Cute Stickers is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "convention-guest-set",
+    "name": "Convention Guest Set",
+    "category": "decoration",
+    "price": 120,
+    "description": "A convention backdrop, badge display, and guest-signing setup.",
+    "qualitativeNutritionHint": "A milestone display that turns convention memories into room energy.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "career"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "convention_guest"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "wall",
+    "roomEffects": {
+      "mood": 1
+    },
+    "clearsStatuses": [],
+    "image": "/items/generated/convention-guest-set.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Convention Guest Set is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",

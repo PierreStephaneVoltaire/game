@@ -8,10 +8,12 @@ import rules from './data/simulation-rules.json';
 import { resolveStatusFixedPoint } from './status-rules/fixed-point';
 import { HOUR_MS, STAT_MAX, STAT_MIN } from './game-constants';
 import { STATUS_NAMES } from './status-rules/names';
+import { LOW_STATUS_RULES } from './status-rules/low-metric-rules';
 export { STATUS_NAMES, isStatusName } from './status-rules/names';
 export { nextStatusBoundary } from './status-rules/boundaries';
 import { applyStatusOnsetEffects } from './status-rules/context-statuses';
 import { statusTransitionMessage } from './event-messages';
+import { resolveNaturalStatusPassage } from './status-rules/natural-resolution';
 export { applyStatusOnsetEffects };
 export {
   applyOverstimulation,
@@ -38,44 +40,6 @@ export function triggersOverstimulation(
 ): boolean {
   return isHighMood(mood) && moodDelta > 0;
 }
-
-const LOW_STATUS_RULES: ReadonlyArray<{
-  status: GameStatusName;
-  metric: keyof Metrics;
-  onsetMaximum: number;
-  clearMinimum: number;
-}> = [
-  {
-    status: 'starving',
-    metric: 'food',
-    onsetMaximum: rules.statusRules.lowMetricOnsetMaximum,
-    clearMinimum: rules.statusRules.lowMetricClearMinimum,
-  },
-  {
-    status: 'sleep_deprived',
-    metric: 'rest',
-    onsetMaximum: rules.statusRules.lowMetricOnsetMaximum,
-    clearMinimum: rules.statusRules.lowMetricClearMinimum,
-  },
-  {
-    status: 'depressed',
-    metric: 'mood',
-    onsetMaximum: rules.statusRules.lowMetricOnsetMaximum,
-    clearMinimum: rules.statusRules.lowMetricClearMinimum,
-  },
-  {
-    status: 'lonely',
-    metric: 'bond',
-    onsetMaximum: rules.statusRules.lowMetricOnsetMaximum,
-    clearMinimum: rules.statusRules.lowMetricClearMinimum,
-  },
-  {
-    status: 'creative_block',
-    metric: 'creativity',
-    onsetMaximum: rules.statusRules.lowMetricOnsetMaximum,
-    clearMinimum: rules.statusRules.lowMetricClearMinimum,
-  },
-];
 
 export type StatusEffectEvent = {
   status: GameStatusName;
@@ -209,8 +173,12 @@ export function reconcileStatusRules(input: {
   metrics: Metrics;
   now: number;
 }): StatusReconciliation {
-  const { state, metrics, now } = input;
+  const { state, now } = input;
+  let metrics = input.metrics;
   let statuses = alignGameStatuses(metrics, state.statuses, now);
+  const natural = resolveNaturalStatusPassage(statuses, metrics, now);
+  statuses = natural.statuses;
+  metrics = natural.metrics;
   if (
     now - state.history.lastCareAttemptAt >=
     rules.statusRules.overstimulatedClearHours * HOUR_MS
@@ -222,6 +190,7 @@ export function reconcileStatusRules(input: {
   )
     statuses = clearStatus(statuses, 'annoyed');
   const onsetPrevious = { ...state.statuses };
+  for (const effect of natural.effects) delete onsetPrevious[effect.status];
   if (!statuses.overstimulated) delete onsetPrevious.overstimulated;
   if (!statuses.annoyed) delete onsetPrevious.annoyed;
 
@@ -237,7 +206,7 @@ export function reconcileStatusRules(input: {
     { ...state, metrics: onset.metrics, statuses },
     now,
   );
-  const nextMetrics = { ...onset.metrics };
+  let nextMetrics = { ...onset.metrics };
   for (const effect of recurrence.effects) {
     for (const [metric, delta] of Object.entries(effect.metricDeltas)) {
       const name = metric as keyof Metrics;
@@ -249,14 +218,6 @@ export function reconcileStatusRules(input: {
   }
 
   statuses = recurrence.statuses;
-  const clearEffects = STATUS_NAMES.filter(
-    (status) => state.statuses[status] && !statuses[status],
-  ).map((status) => ({
-    status,
-    metricDeltas: {},
-    message: statusTransitionMessage(status, false),
-    at: now,
-  }));
   let sugarCrashDueAt = state.history.sugarCrashDueAt;
   let sugarCrash = false;
   if (sugarCrashDueAt !== null && sugarCrashDueAt <= now) {
@@ -277,11 +238,35 @@ export function reconcileStatusRules(input: {
     sugarCrashDueAt = null;
     sugarCrash = true;
   }
+  const finalOnset = resolveStatusFixedPoint({
+    metrics: nextMetrics,
+    previous: statuses,
+    now,
+    align: alignGameStatuses,
+    applyOnset: applyStatusOnsetEffects,
+  });
+  nextMetrics = finalOnset.metrics;
+  statuses = finalOnset.statuses;
+  const naturalStatusSet = new Set(
+    natural.effects.map((effect) => effect.status),
+  );
+  const clearEffects: StatusEffectEvent[] = STATUS_NAMES.filter(
+    (status) =>
+      state.statuses[status] &&
+      !statuses[status] &&
+      !naturalStatusSet.has(status),
+  ).map((status) => ({
+    status,
+    metricDeltas: {},
+    message: statusTransitionMessage(status, false),
+    at: now,
+  }));
+  clearEffects.push(...natural.effects);
   return {
     metrics: nextMetrics,
     statuses,
     sugarCrashDueAt,
-    onsetEffects: onset.events,
+    onsetEffects: [...onset.events, ...finalOnset.events],
     recurrenceEffects: recurrence.effects,
     clearEffects,
     sugarCrash,

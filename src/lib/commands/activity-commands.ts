@@ -10,6 +10,7 @@ import {
   criticalMetrics,
   isCriticalState,
 } from '../simulation/health-resolution';
+import { hospitalCost, hospitalInsuranceItemId } from '../billing-rules';
 
 export type ActivityCommandResult = {
   handled: boolean;
@@ -26,13 +27,15 @@ type ActivityFields = {
 type ActivityCommand =
   | (ActivityFields & { type: 'wait' })
   | (ActivityFields & { type: 'medical_care' })
-  | (ActivityFields & { type: 'rest' | 'socialize' | 'play' });
+  | (ActivityFields & { type: 'rest' | 'socialize' | 'play' })
+  | (ActivityFields & { type: 'commission_work' });
 type WaitCommand = Extract<ActivityCommand, { type: 'wait' }>;
 type MedicalCareCommand = Extract<ActivityCommand, { type: 'medical_care' }>;
 type CompanionCommand = Extract<
   ActivityCommand,
   { type: 'rest' | 'socialize' | 'play' }
 >;
+type CommissionCommand = Extract<ActivityCommand, { type: 'commission_work' }>;
 
 type ReconcileResult = {
   state: GameState;
@@ -54,8 +57,23 @@ export function handleActivityCommand(
 ): ActivityCommandResult {
   if (command.type === 'wait')
     return wait(state, command, definition, reconcile);
-  if (command.type === 'medical_care') return medicalCare(state, command);
+  if (command.type === 'medical_care')
+    return medicalCare(state, command, definition);
+  if (command.type === 'commission_work') return commissionWork(state, command);
   return companionActivity(state, command);
+}
+
+function commissionWork(
+  state: GameState,
+  command: CommissionCommand,
+): ActivityCommandResult {
+  return result(
+    state,
+    rejected(
+      'unavailable',
+      `Commission Work is launched from the Rigging Tablet. (${command.commandId})`,
+    ),
+  );
 }
 
 function wait(
@@ -105,6 +123,7 @@ function wait(
 function medicalCare(
   state: GameState,
   command: MedicalCareCommand,
+  definition: GameDefinition,
 ): ActivityCommandResult {
   if (!state.statuses.kidney_stone && !state.statuses.sick)
     return result(
@@ -112,6 +131,7 @@ function medicalCare(
       rejected('unavailable', 'Hospital care is not needed.'),
     );
   const duration = rules.medicalCare.durationHours * HOUR_MS;
+  const insuranceItemId = hospitalInsuranceItemId(state, definition);
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'activity_started',
@@ -129,7 +149,16 @@ function medicalCare(
       endsAt: state.now + duration,
       sourceActionId: command.commandId,
     },
-    balance: state.balance - rules.medicalCare.cost,
+    balance: state.balance - hospitalCost(state, definition),
+    inventory: insuranceItemId
+      ? {
+          ...state.inventory,
+          [insuranceItemId]: Math.max(
+            0,
+            (state.inventory[insuranceItemId] ?? 0) - 1,
+          ),
+        }
+      : state.inventory,
     actionOrdinal: state.actionOrdinal + 1,
     stateVersion: state.stateVersion + 1,
     events: [...state.events, event],
@@ -179,7 +208,7 @@ function companionActivity(
       command.commandId,
       'refusal',
       'attempt',
-    ) < refusalProbability(next, command.type)
+    ) < refusalProbability(next)
   )
     return result(
       next,
@@ -204,6 +233,7 @@ function companionActivity(
       sourceActionId: command.commandId,
       payload: {
         ...(overstimulated ? { suppressMoodGain: true } : {}),
+        startingRest: next.metrics.rest,
         startingCriticalMetrics: criticalMetrics(next.metrics).join(','),
       },
     },

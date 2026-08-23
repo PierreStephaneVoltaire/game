@@ -128,16 +128,8 @@ describe('daily shop and economy public seam', () => {
     ).toBe(true);
   });
 
-  test('blocks ordinary purchases in debt and duplicate durable ownership', () => {
+  test('blocks duplicate durable ownership', () => {
     const initial = run();
-    const shopItem = initial.shop.itemIds[0];
-    const inDebt = dispatchCommand(
-      { ...initial, balance: -1 },
-      { type: 'buy_item', commandId: 'debt-buy', itemId: shopItem, now: 0 },
-      BUNDLED_GAME_DEFINITION,
-    );
-    expect(inDebt.outcomes[0]).toMatchObject({ accepted: false, kind: 'debt' });
-
     const durable = initial.shop.itemIds
       .map((id) => BUNDLED_GAME_DEFINITION.items.find((item) => item.id === id))
       .find((item) => item?.consumable === false && !item.supportsQuantity);

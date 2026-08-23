@@ -127,7 +127,7 @@ test('blocks care during Realtime activity while navigation remains available', 
   await expect(page.getByRole('button', { name: 'Feed' })).toBeDisabled();
   await expect(page.locator('.activity')).toContainText(/resting until/i);
   await expect(page.locator('.companion-caption span')).toContainText(
-    /went to rest/i,
+    /settled down to rest|went to rest/i,
   );
 });
 

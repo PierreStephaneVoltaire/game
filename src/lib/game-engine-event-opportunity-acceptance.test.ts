@@ -214,7 +214,7 @@ describe('commands without companion attempts', () => {
       },
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(autoEvents(cared)).toHaveLength(0);
+    expect(autoEvents(cared)).toHaveLength(1);
   });
 });
 

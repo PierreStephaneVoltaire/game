@@ -3,6 +3,8 @@ import type { GameEvent, GameState, StartRunInput } from '../game-types';
 import { actionRandom } from '../seeded-rng';
 import { localDate, rotateShop } from '../shop-rules';
 import rules from '../data/simulation-rules.json';
+import { startingAppearanceId } from '../companion-profile';
+import { HOUR_MS } from '../game-constants';
 
 export function createRunState(
   input: StartRunInput,
@@ -36,7 +38,15 @@ export function createRunState(
     eventCooldowns: {},
     oncePerLocalDate: {},
     cravingItemId: null,
+    cravingStartedAt: null,
+    cravingRefreshCount: 0,
     annoyanceThreshold,
+    annoyanceWarningIssued: false,
+    bondPlacementResetAt: {},
+    lastCommissionWorkDate: null,
+    nextAutonomousAt:
+      input.now + rules.events.autonomous.intervalHours * HOUR_MS,
+    runStartedAt: input.now,
   } as GameState['history'];
   const base: GameState = {
     definitionVersion: definition.version,
@@ -55,6 +65,22 @@ export function createRunState(
     roomModifiers: {},
     shop: { localDate: '', itemIds: [], stock: {}, cart: {} },
     activity: null,
+    timedEffects: {
+      deferredRestLossAt: null,
+      hyperfocusUntil: null,
+      painReliefUntil: null,
+    },
+    progression: {
+      followers: rules.progression.startingFollowers,
+      careerTier: 'starting_out',
+      unlockedModelTiers: [],
+      completedModelTiers: [],
+      activeAppearanceId: startingAppearanceId(),
+      awardedMilestones: [],
+      queuedEventStreams: [],
+      permanentDonationBonus: false,
+    },
+    projects: [],
     events: [],
     history,
     death: null,

@@ -38,6 +38,7 @@ export const gameCopy = {
     play: 'playing',
     stream: 'streaming',
     medical_care: 'at the hospital',
+    commission_work: 'working on a commission',
   },
   empty: {
     run: 'Starting…',

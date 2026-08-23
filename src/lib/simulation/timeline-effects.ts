@@ -1,18 +1,19 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState } from '../game-types';
 import { actionRandom } from '../seeded-rng';
-import { localDate, rotateShop } from '../shop-rules';
 import { resolveItemConsumption } from '../commands/item-consumption';
 import {
   kidneyStoneRecurrenceHours,
   kidneyStoneRecurrenceMetricDeltas,
-  sugarCrashMetricDeltas,
 } from '../status-rules';
 import type { StatusReconciliation } from '../status-rules';
 import { HOUR_MS } from '../game-constants';
 import { healthDamageSource } from './health-resolution';
-import { statusDisplayName } from '../event-messages';
 import { appendStatusTransitionEvents } from './engine-state';
+import { completeDueProjects } from '../project-rules';
+import { resolveTimelineOpportunities } from './timeline-opportunities';
+import { appendTimelineStatusEvents } from './timeline-status-events';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 
 export type TimelineEffectsInput = {
   state: GameState;
@@ -22,6 +23,8 @@ export type TimelineEffectsInput = {
   deathAt: number | null;
   streamSnackRequests: number;
   lastResolvedAt: number;
+  autonomousOpportunity?: boolean;
+  preventLethal?: boolean;
 };
 
 export type TimelineEffectsResult = {
@@ -41,6 +44,8 @@ export function resolveTimelineEffects({
   deathAt: initialDeathAt,
   streamSnackRequests,
   lastResolvedAt,
+  autonomousOpportunity = false,
+  preventLethal = false,
 }: TimelineEffectsInput): TimelineEffectsResult {
   let next = state;
   let deathAt = initialDeathAt;
@@ -48,6 +53,11 @@ export function resolveTimelineEffects({
   let reconciliationNow = initialReconciliationNow;
   let resolvedElapsedHours = (reconciliationNow - lastResolvedAt) / HOUR_MS;
   const eventIds: string[] = [];
+  const beforeProjectEvents = next.events.length;
+  next = completeDueProjects(next, reconciliationNow);
+  eventIds.push(
+    ...next.events.slice(beforeProjectEvents).map((event) => event.id),
+  );
 
   if (!deathAt && streamSnackRequests > 0 && next.activity?.type === 'stream') {
     const streamActivityId = next.activity.sourceActionId;
@@ -59,6 +69,8 @@ export function resolveTimelineEffects({
       const snacks = definition.items.filter(
         (item) =>
           item.edible &&
+          (item.preferences?.includes('liked') ||
+            item.preferences?.includes('variable')) &&
           item.usable !== false &&
           item.itemActions?.some((action) => action.kind === 'consume') &&
           (item.effects?.food?.max ?? 0) > 0 &&
@@ -97,90 +109,35 @@ export function resolveTimelineEffects({
           .slice(beforeSnackEventCount)
           .map((snackEvent) => snackEvent.id),
       );
+      if (next.metrics.health <= 0) {
+        if (preventLethal) {
+          next = { ...next, metrics: { ...next.metrics, health: 1 } };
+        } else {
+          deathAt = reconciliationNow;
+          break;
+        }
+      }
     }
   }
 
-  const currentLocalDate = localDate(reconciliationNow, next.timezone);
-  if (!deathAt && currentLocalDate !== next.shop.localDate) {
-    next = {
-      ...next,
-      shop: rotateShop(next, definition, currentLocalDate),
-      stateVersion: next.stateVersion + 1,
-    };
-    const event: GameEvent = {
-      id: `event-${next.events.length + 1}`,
-      type: 'shop_rotated',
+  if (!deathAt) {
+    const opportunities = resolveTimelineOpportunities({
+      state: next,
+      definition,
       at: reconciliationNow,
-      message: 'The shop refreshed for a new local day.',
-    };
-    next = { ...next, events: [...next.events, event] };
-    eventIds.push(event.id);
+      autonomous: autonomousOpportunity,
+    });
+    next = opportunities.state;
+    eventIds.push(...opportunities.eventIds);
   }
-  if (!deathAt)
-    for (const effect of statusReconciliation.onsetEffects) {
-      if (!next.statuses[effect.status]) continue;
-      const event: GameEvent = {
-        id: `event-${next.events.length + 1}`,
-        type: 'status_onset',
-        at: reconciliationNow,
-        message: effect.message,
-        status: effect.status,
-        metricDeltas: effect.metricDeltas,
-        healthDamageSources: damageSourcesForStatusEffect(
-          effect.status,
-          effect.metricDeltas.health,
-        ),
-      };
-      next = { ...next, events: [...next.events, event] };
-      eventIds.push(event.id);
-    }
-  if (!deathAt)
-    for (const effect of statusReconciliation.recurrenceEffects) {
-      if (!next.statuses[effect.status]) continue;
-      const event: GameEvent = {
-        id: `event-${next.events.length + 1}`,
-        type: 'status_recurrence',
-        at: effect.at ?? reconciliationNow,
-        message: effect.message,
-        status: effect.status,
-        metricDeltas: effect.metricDeltas,
-        healthDamageSources: damageSourcesForStatusEffect(
-          effect.status,
-          effect.metricDeltas.health,
-        ),
-      };
-      next = { ...next, events: [...next.events, event] };
-      eventIds.push(event.id);
-    }
-  if (!deathAt)
-    for (const effect of statusReconciliation.clearEffects) {
-      if (next.statuses[effect.status]) continue;
-      const event: GameEvent = {
-        id: `event-${next.events.length + 1}`,
-        type: 'status_cleared',
-        at: effect.at ?? reconciliationNow,
-        message: effect.message,
-        status: effect.status,
-        metricDeltas: effect.metricDeltas,
-      };
-      next = { ...next, events: [...next.events, event] };
-      eventIds.push(event.id);
-    }
-  if (!deathAt && statusReconciliation.sugarCrash) {
-    const sugarCrash = sugarCrashMetricDeltas();
-    const event: GameEvent = {
-      id: `event-${next.events.length + 1}`,
-      type: 'sugar_crash',
+  if (!deathAt) {
+    const statusEvents = appendTimelineStatusEvents({
+      state: next,
+      reconciliation: statusReconciliation,
       at: reconciliationNow,
-      message: 'Companion hit a sugar crash.',
-      status: 'sugar_crash',
-      metricDeltas: {
-        mood: sugarCrash.mood,
-        rest: sugarCrash.rest,
-      },
-    };
-    next = { ...next, events: [...next.events, event] };
-    eventIds.push(event.id);
+    });
+    next = statusEvents.state;
+    eventIds.push(...statusEvents.eventIds);
   }
 
   if (
@@ -197,8 +154,27 @@ export function resolveTimelineEffects({
     );
     for (let occurrence = 0; occurrence < occurrences; occurrence += 1) {
       const recurrenceAt = lastPenaltyAt + (occurrence + 1) * recurrenceMs;
+      if (
+        next.timedEffects.painReliefUntil !== null &&
+        recurrenceAt < next.timedEffects.painReliefUntil
+      ) {
+        next = {
+          ...next,
+          statuses: {
+            ...next.statuses,
+            kidney_stone: {
+              ...next.statuses.kidney_stone!,
+              lastPenaltyAt: recurrenceAt,
+            },
+          },
+        };
+        continue;
+      }
       const recurrence = kidneyStoneRecurrenceMetricDeltas(next.metrics);
-      const healthDelta = recurrence.health;
+      const healthDelta =
+        preventLethal && next.metrics.health + recurrence.health <= 0
+          ? 1 - next.metrics.health
+          : recurrence.health;
       const restDelta = recurrence.rest;
       const event: GameEvent = {
         id: `event-${next.events.length + 1}`,
@@ -219,6 +195,7 @@ export function resolveTimelineEffects({
         ],
       };
       causalEventIds = [...causalEventIds, event.id];
+      const beforeRecurrence = next;
       next = {
         ...next,
         metrics: {
@@ -236,7 +213,17 @@ export function resolveTimelineEffects({
         },
         events: [...next.events, event],
       };
-      eventIds.push(event.id);
+      next = reconcileMetricSource(
+        beforeRecurrence,
+        next,
+        `kidney-stone:${recurrenceAt}`,
+      );
+      eventIds.push(
+        event.id,
+        ...next.events
+          .slice(beforeRecurrence.events.length + 1)
+          .map((statusEvent) => statusEvent.id),
+      );
       if (next.metrics.health <= 0) {
         deathAt = recurrenceAt;
         lethalEventId = event.id;
@@ -259,27 +246,4 @@ export function resolveTimelineEffects({
     reconciliationNow,
     resolvedElapsedHours,
   };
-}
-
-function damageSourcesForStatusEffect(
-  status: keyof GameState['statuses'],
-  healthDelta: number | undefined,
-) {
-  if ((healthDelta ?? 0) >= 0) return undefined;
-  const names: Partial<Record<keyof GameState['statuses'], string>> = {
-    starving: 'Starvation',
-    sleep_deprived: 'Sleep deprivation',
-    depressed: 'Depression',
-    sick: 'Sickness',
-    kidney_stone: 'Kidney stone complications',
-    full: 'Overfeeding',
-  };
-  return [
-    healthDamageSource(
-      'status',
-      status,
-      names[status] ?? statusDisplayName(status),
-      healthDelta ?? 0,
-    ),
-  ];
 }

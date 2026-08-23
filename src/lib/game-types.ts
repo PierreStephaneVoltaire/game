@@ -1,3 +1,19 @@
+import type {
+  DonationTier,
+  ProgressionState,
+  Project,
+  TimedEffects,
+} from './progression-types';
+export type {
+  AppearanceId,
+  CareerTier,
+  DonationTier,
+  ProgressionState,
+  Project,
+  QueuedEventStream,
+  TimedEffects,
+} from './progression-types';
+
 export type GameMode = 'realtime' | 'streaming';
 
 export type MetricName =
@@ -18,12 +34,15 @@ export type StatusName =
   | 'kidney_stone'
   | 'full'
   | 'low_energy'
-  | 'sugar_crash';
+  | 'sugar_crash'
+  | 'dizzy_spell';
 
 export type StatusRecord = {
   since: number;
   source: string;
   lastPenaltyAt?: number;
+  /** Seeded natural resolution boundary for statuses that can pass on their own. */
+  naturalPassAt?: number;
   causalEventIds?: string[];
 };
 
@@ -49,6 +68,10 @@ export type GameEvent = {
   actionLabel?: string;
   outcomeKind?: string;
   outcomeAccepted?: boolean;
+  donationTier?: DonationTier;
+  amount?: number;
+  followerDelta?: number;
+  projectId?: string;
 };
 
 export type HealthDamageSource = {
@@ -71,7 +94,13 @@ export type PurchaseRecord = {
 
 export type Activity = {
   id: string;
-  type: 'rest' | 'socialize' | 'play' | 'stream' | 'medical_care';
+  type:
+    | 'rest'
+    | 'socialize'
+    | 'play'
+    | 'stream'
+    | 'medical_care'
+    | 'commission_work';
   startedAt: number;
   endsAt: number;
   sourceActionId: string;
@@ -85,6 +114,8 @@ export type ConsumptionRecord = {
   water: number;
   protein: number;
   sugar: number;
+  caffeine?: number;
+  sugarServings?: number;
   sugarTagged: boolean;
   nutritionProfileId?: string;
 };
@@ -105,7 +136,15 @@ export type GameHistory = {
   eventCooldowns: Record<string, number>;
   oncePerLocalDate: Record<string, string>;
   cravingItemId: string | null;
+  cravingStartedAt: number | null;
+  cravingRefreshCount: number;
   annoyanceThreshold: number;
+  annoyanceWarningIssued: boolean;
+  /** Placement may reset Bond decay once per catalogue item type per 48 hours. */
+  bondPlacementResetAt: Record<string, number>;
+  lastCommissionWorkDate: string | null;
+  nextAutonomousAt: number;
+  runStartedAt: number;
 };
 
 export type DeathRecord = {
@@ -141,6 +180,9 @@ export type GameState = {
   roomModifiers: Record<string, Partial<Metrics>>;
   shop: ShopState;
   activity: Activity | null;
+  timedEffects: TimedEffects;
+  progression: ProgressionState;
+  projects: Project[];
   events: GameEvent[];
   history: GameHistory;
   death: DeathRecord | null;
@@ -186,7 +228,7 @@ export type GameCommand =
       expectedStateVersion?: number;
     }
   | {
-      type: 'rest' | 'socialize' | 'play' | 'medical_care';
+      type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'commission_work';
       commandId: string;
       now: number;
       expectedStateVersion?: number;

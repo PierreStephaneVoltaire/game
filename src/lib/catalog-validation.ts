@@ -12,21 +12,21 @@ import {
 import { isStatusName } from './status-rules';
 
 const CATEGORY_BANDS: Record<string, [number, number]> = {
-  food: [1, 8],
+  food: [1, 15],
   medicine: [5, 15],
-  care: [5, 15],
+  care: [5, 250],
   accessory: [25, 250],
   reusable: [25, 250],
-  upgrade: [25, 250],
+  upgrade: [25, 350],
   decoration: [25, 250],
 };
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
-  food: 107,
-  medicine: 1,
-  care: 1,
+  food: 109,
+  medicine: 2,
+  care: 3,
   reusable: 73,
-  upgrade: 20,
-  decoration: 14,
+  upgrade: 22,
+  decoration: 16,
 };
 const METRICS = new Set([
   'food',
@@ -234,9 +234,9 @@ export function validateCatalog(
     }
   }
   if (requireComplete) {
-    if (definition.items.length !== 216)
+    if (definition.items.length !== 225)
       issues.push({
-        message: `expected 216 canonical items, found ${definition.items.length}`,
+        message: `expected 225 canonical items, found ${definition.items.length}`,
       });
     for (const [category, expected] of Object.entries(
       COMPLETE_CATEGORY_COUNTS,

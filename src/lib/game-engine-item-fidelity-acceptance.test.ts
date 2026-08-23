@@ -122,11 +122,11 @@ describe('item and history fidelity', () => {
 
   test('Mystery Snack records only the selected profile identity', () => {
     const result = dispatchCommand(
-      { ...run('mystery-profile'), inventory: { 'mystery-snack': 1 } },
+      { ...run('mystery-profile'), inventory: { 'the-concoction': 1 } },
       {
         type: 'use_item',
         commandId: 'mystery-consume',
-        itemId: 'mystery-snack',
+        itemId: 'the-concoction',
         now: 0,
       },
       BUNDLED_GAME_DEFINITION,

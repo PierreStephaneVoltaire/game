@@ -8,6 +8,12 @@ import {
   isHealthProtectedActivity,
   resolveHealthWindow,
 } from './health-resolution';
+import { recoveryPenaltyForDebt } from '../debt-rules';
+import { resolveDizzyHealthCheck } from './dizzy-resolution';
+import {
+  pinHyperfocusStatusEffects,
+  resolveHyperfocusBoundary,
+} from './hyperfocus-resolution';
 
 export type DecayResolution = {
   intervals: number;
@@ -26,6 +32,7 @@ export type DecayResolution = {
   lastBondGainAt: number;
   healthDamageSources: HealthDamageSource[];
   healthRecovery: number;
+  timedEffects: GameState['timedEffects'];
 };
 
 export function resolveDecay(
@@ -45,13 +52,21 @@ export function resolveDecay(
   const healthRemainderHours =
     accumulatedHealthHours - healthIntervals * intervalHours;
   const recoveryMetrics = { ...state.metrics };
-  const metrics = { ...state.metrics };
-  const metricDeltas: Partial<GameState['metrics']> = {};
+  const hyperfocus = resolveHyperfocusBoundary(
+    state,
+    { ...state.metrics },
+    now,
+  );
+  const metrics = hyperfocus.metrics;
+  const metricDeltas: Partial<GameState['metrics']> = hyperfocus.metricDeltas;
   let pendingFoodDecayHit = state.history.pendingFoodDecayHit;
   let streamSnackRequests = 0;
   let deathAt: number | null = null;
   let healthDamageSources: HealthDamageSource[] = [];
   let healthRecovery = 0;
+  const timedEffects = hyperfocus.timedEffects;
+  let statusState = state;
+  let dizzyOnsetAt: number | null = null;
 
   for (let interval = 0; interval < intervals; interval += 1) {
     const boundaryAt =
@@ -85,24 +100,41 @@ export function resolveDecay(
       if (!protectedActivity) pendingFoodDecayHit = true;
     }
 
-    if (state.activity?.type !== 'rest') {
-      const restBefore = metrics.rest;
+    const restBefore = metrics.rest;
+    const deferred = timedEffects.deferredRestLossAt;
+    const deferredDue = deferred !== null && boundaryAt >= deferred;
+    if (deferredDue) {
       metrics.rest = Math.max(
         STAT_MIN,
         metrics.rest - rules.timeDecay.restPerInterval,
       );
-      metricDeltas.rest =
-        (metricDeltas.rest ?? 0) + (metrics.rest - restBefore);
+      timedEffects.deferredRestLossAt = null;
     }
+    if (
+      state.activity?.type !== 'rest' &&
+      (deferred === null || boundaryAt >= deferred)
+    )
+      metrics.rest = Math.max(
+        STAT_MIN,
+        metrics.rest - rules.timeDecay.restPerInterval,
+      );
+    metricDeltas.rest = (metricDeltas.rest ?? 0) + (metrics.rest - restBefore);
   }
 
   for (let interval = 0; interval < healthIntervals; interval += 1) {
+    const boundaryAt =
+      state.lastResolvedAt +
+      (intervalHours -
+        state.history.healthRemainderHours +
+        interval * intervalHours) *
+        HOUR_MS;
     const health = resolveHealthWindow({
       health: metrics.health,
       metricsAfterDecay: metrics,
       recoveryMetrics,
       foodDecayHit: pendingFoodDecayHit,
       preventLethal: options.preventLethal,
+      recoveryPenalty: recoveryPenaltyForDebt(state.balance),
     });
     metrics.health = health.health;
     metricDeltas.health = (metricDeltas.health ?? 0) + health.delta;
@@ -110,13 +142,19 @@ export function resolveDecay(
     healthRecovery += health.recovery;
     pendingFoodDecayHit = false;
     if (health.lethal) {
-      deathAt =
-        state.lastResolvedAt +
-        (intervalHours -
-          state.history.healthRemainderHours +
-          interval * intervalHours) *
-          HOUR_MS;
+      deathAt = boundaryAt;
       break;
+    }
+    const dizzy = resolveDizzyHealthCheck(statusState, metrics, boundaryAt);
+    if (dizzy.onset) {
+      metrics.rest = dizzy.metrics.rest;
+      metrics.mood = dizzy.metrics.mood;
+      metricDeltas.rest =
+        (metricDeltas.rest ?? 0) + rules.dizzySpell.onset.rest;
+      metricDeltas.mood =
+        (metricDeltas.mood ?? 0) + rules.dizzySpell.onset.mood;
+      statusState = { ...statusState, statuses: dizzy.statuses };
+      dizzyOnsetAt = boundaryAt;
     }
   }
 
@@ -134,8 +172,25 @@ export function resolveDecay(
   }
 
   let statusReconciliation: StatusReconciliation = deathAt
-    ? emptyStatusReconciliation(state, metrics)
-    : reconcileStatusRules({ state, metrics, now: reconciliationNow });
+    ? emptyStatusReconciliation(statusState, metrics)
+    : reconcileStatusRules({
+        state: statusState,
+        metrics,
+        now: reconciliationNow,
+      });
+  if (dizzyOnsetAt !== null)
+    statusReconciliation = {
+      ...statusReconciliation,
+      onsetEffects: [
+        ...statusReconciliation.onsetEffects,
+        {
+          status: 'dizzy_spell',
+          metricDeltas: rules.dizzySpell.onset,
+          message: 'Companion had a dizzy spell.',
+          at: dizzyOnsetAt,
+        },
+      ],
+    };
   if (state.activity?.type === 'medical_care') {
     statusReconciliation = {
       ...statusReconciliation,
@@ -148,9 +203,15 @@ export function resolveDecay(
         statusReconciliation.recurrenceEffects.map(stripHealth),
     };
   }
+  statusReconciliation = pinHyperfocusStatusEffects(
+    statusReconciliation,
+    timedEffects,
+    reconciliationNow,
+  );
   for (const effect of [
     ...statusReconciliation.onsetEffects,
     ...statusReconciliation.recurrenceEffects,
+    ...statusReconciliation.clearEffects,
   ])
     for (const [metric, delta] of Object.entries(effect.metricDeltas)) {
       const name = metric as keyof GameState['metrics'];
@@ -185,6 +246,7 @@ export function resolveDecay(
         : state.history.lastBondGainAt,
     healthDamageSources,
     healthRecovery,
+    timedEffects,
   };
 }
 

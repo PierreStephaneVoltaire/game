@@ -3,22 +3,19 @@ import type { GameEvent, GameState } from './game-types';
 import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
 import { startAutonomousStream, streamWeight } from './stream-rules';
-import { alignGameStatuses, applyStatusOnsetEffects } from './status-rules';
 import rules from './data/simulation-rules.json';
 import { messageFor, type BuiltInEventType } from './event-messages';
 
-type Candidate =
-  | 'none'
-  | 'low_money_stress'
-  | 'food_craving'
-  | 'creative_inspiration'
-  | 'socks'
-  | 'benign_room_event'
-  | 'stream'
-  | `item_hook:${string}`;
-
-import { HOUR_MS, STAT_MAX, STAT_MIN } from './game-constants';
-import { resolveAutomaticEventHook } from './simulation/event-hook-resolution';
+import { DAY_MS, HOUR_MS, STAT_MAX, STAT_MIN } from './game-constants';
+import { startFullBodyProject } from './project-rules';
+import {
+  chooseCarePackageFoods,
+  chooseCravingFood,
+  resolveAutonomousNap,
+} from './event-autonomous-actions';
+import { applyAutomaticHook } from './event-hook-application';
+import { eventCandidates, localDateOrdinal } from './event-candidate-pool';
+import { reconcileMetricSource } from './status-rules/metric-source-reconciliation';
 
 /** Resolves exactly one weighted autonomous opportunity for one companion attempt. */
 export function resolveAttemptEvent(
@@ -27,71 +24,13 @@ export function resolveAttemptEvent(
   definition: GameDefinition,
 ): GameState {
   const date = localDate(state.now, state.timezone);
-  const cravingEligible = definition.items.some(
-    (item) =>
-      item.edible &&
-      item.preferences?.includes('liked') &&
-      ((state.inventory[item.id] ?? 0) > 0 ||
-        (state.shop.itemIds.includes(item.id) &&
-          (state.shop.stock[item.id] ?? 0) > 0)),
+  const resolvedStreamWeight = streamWeight(state, commandId);
+  const candidates = eventCandidates(
+    state,
+    definition,
+    date,
+    resolvedStreamWeight,
   );
-  const itemHooks = definition.items.flatMap((item) => {
-    const placed = Object.values(state.room).includes(item.id);
-    const owned = (state.inventory[item.id] ?? 0) > 0 || placed;
-    return (item.automaticEventHooks ?? [])
-      .filter(
-        (hook) =>
-          (hook.eligibility === 'owned' ? owned : placed) &&
-          (state.history.eventCooldowns[`item_hook:${item.id}:${hook.id}`] ??
-            0) <= state.now,
-      )
-      .map((hook) => ({ itemId: item.id, hook }));
-  });
-  const candidates: Array<{ type: Candidate; weight: number }> = [
-    { type: 'none', weight: rules.events.weights.none },
-    {
-      type: 'low_money_stress',
-      weight:
-        state.balance < rules.events.weights.lowMoneyBalanceThreshold &&
-        state.history.oncePerLocalDate.low_money_stress !== date
-          ? rules.events.weights.lowMoneyStress
-          : 0,
-    },
-    {
-      type: 'food_craving',
-      weight: state.history.cravingItemId
-        ? 0
-        : cravingEligible
-          ? rules.events.weights.foodCraving
-          : 0,
-    },
-    {
-      type: 'creative_inspiration',
-      weight:
-        (state.history.eventCooldowns.inspiration ?? 0) <= state.now
-          ? rules.events.weights.creativeInspiration
-          : 0,
-    },
-    {
-      type: 'socks',
-      weight:
-        (state.history.eventCooldowns.socks ?? 0) <= state.now
-          ? rules.events.weights.socks
-          : 0,
-    },
-    {
-      type: 'benign_room_event',
-      weight:
-        (state.history.eventCooldowns.room ?? 0) <= state.now
-          ? rules.events.weights.benignRoom
-          : 0,
-    },
-    { type: 'stream', weight: streamWeight(state, commandId) },
-    ...itemHooks.map(({ itemId, hook }) => ({
-      type: `item_hook:${itemId}:${hook.id}` as const,
-      weight: hook.weight,
-    })),
-  ];
   const total = candidates.reduce(
     (sum, candidate) => sum + candidate.weight,
     0,
@@ -105,10 +44,12 @@ export function resolveAttemptEvent(
       'pool',
     ) * total;
   const selected =
-    candidates.find((candidate) => {
-      remaining -= candidate.weight;
-      return remaining < 0;
-    })?.type ?? 'none';
+    state.progression.queuedEventStreams.length > 0 && resolvedStreamWeight > 0
+      ? 'stream'
+      : (candidates.find((candidate) => {
+          remaining -= candidate.weight;
+          return remaining < 0;
+        })?.type ?? 'none');
   const opportunityEvent: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'random_event_opportunity',
@@ -137,11 +78,38 @@ export function resolveAttemptEvent(
       stateVersion: state.stateVersion + 2,
     };
   }
+  if (selected === 'autonomous_nap') {
+    return resolveAutonomousNap(state, commandId, opportunityEvent);
+  }
+  if (selected === 'full_body_commission') {
+    const withOpportunity: GameState = {
+      ...state,
+      events: [...state.events, opportunityEvent],
+      stateVersion: state.stateVersion + 1,
+      history: {
+        ...state.history,
+        eventCooldowns: {
+          ...state.history.eventCooldowns,
+          full_body_commission:
+            localDateOrdinal(date) +
+            rules.events.cooldowns.fullBodyCommissionLocalDays * DAY_MS,
+        },
+      },
+    };
+    return startFullBodyProject(withOpportunity, commandId);
+  }
 
   const selectedHook = selected.startsWith('item_hook:')
-    ? itemHooks.find(
-        ({ itemId, hook }) => `item_hook:${itemId}:${hook.id}` === selected,
-      )
+    ? definition.items
+        .flatMap((item) =>
+          (item.automaticEventHooks ?? []).map((hook) => ({
+            itemId: item.id,
+            hook,
+          })),
+        )
+        .find(
+          ({ itemId, hook }) => `item_hook:${itemId}:${hook.id}` === selected,
+        )
     : undefined;
   if (selected.startsWith('item_hook:') && !selectedHook)
     return {
@@ -159,24 +127,22 @@ export function resolveAttemptEvent(
     sourceActionId: commandId,
   };
   const metrics = { ...state.metrics };
+  let inventory = state.inventory;
   const cooldowns = { ...state.history.eventCooldowns };
   const oncePerLocalDate = { ...state.history.oncePerLocalDate };
   let cravingItemId = state.history.cravingItemId;
+  let cravingStartedAt = state.history.cravingStartedAt;
+  let cravingRefreshCount = state.history.cravingRefreshCount;
   if (selectedHook) {
-    const hook = selectedHook.hook;
-    const resolution = resolveAutomaticEventHook({
+    applyAutomaticHook({
       state,
       commandId,
       itemId: selectedHook.itemId,
-      hook,
+      hook: selectedHook.hook,
+      metrics,
+      event,
+      cooldowns,
     });
-    Object.assign(metrics, resolution.metrics);
-    if (Object.keys(resolution.metricDeltas).length)
-      event.metricDeltas = resolution.metricDeltas;
-    event.healthDamageSources = resolution.healthDamageSources;
-    if (resolution.cooldownAt)
-      cooldowns[`item_hook:${selectedHook.itemId}:${hook.id}`] =
-        resolution.cooldownAt;
   }
   if (selected === 'low_money_stress') {
     metrics.mood = Math.max(
@@ -218,72 +184,73 @@ export function resolveAttemptEvent(
   if (selected === 'benign_room_event')
     cooldowns.room =
       state.now + rules.events.cooldowns.benignRoomHours * HOUR_MS;
-  if (selected === 'food_craving') {
-    const foods = definition.items.filter(
-      (item) =>
-        item.edible &&
-        item.preferences?.includes('liked') &&
-        ((state.inventory[item.id] ?? 0) > 0 ||
-          (state.shop.itemIds.includes(item.id) &&
-            (state.shop.stock[item.id] ?? 0) > 0)),
+  if (selected === 'rest_snoring') {
+    event.message = 'The companion snored through the rest of the room.';
+    cooldowns[`rest_snoring:${state.activity?.id ?? commandId}`] = state.now;
+  }
+  if (selected === 'moms_care_package') {
+    const foods = chooseCarePackageFoods(state, definition, commandId);
+    inventory = { ...state.inventory };
+    for (const food of foods)
+      inventory[food.id] = (inventory[food.id] ?? 0) + 1;
+    event.message = foods.length
+      ? `Mom's Care Package arrived with ${foods.map((food) => food.name).join(' and ')}.`
+      : "Mom's Care Package arrived.";
+    event.metricDeltas = { mood: rules.events.effects.carePackageMood };
+    metrics.mood = Math.min(
+      STAT_MAX,
+      metrics.mood + rules.events.effects.carePackageMood,
     );
-    if (!foods.length)
+    cooldowns.moms_care_package =
+      state.now + rules.events.cooldowns.momsCarePackageHours * HOUR_MS;
+  }
+  if (selected === 'food_craving') {
+    const food = chooseCravingFood(state, definition, commandId);
+    if (!food)
       return {
         ...state,
         events: [...state.events, opportunityEvent],
         stateVersion: state.stateVersion + 1,
       };
-    const ordered = [...foods].sort(
-      (a, b) =>
-        actionRandom(
-          state.seed,
-          state.stateVersion,
-          commandId,
-          'craving',
-          a.id,
-        ) -
-        actionRandom(
-          state.seed,
-          state.stateVersion,
-          commandId,
-          'craving',
-          b.id,
-        ),
-    );
-    cravingItemId = ordered[0].id;
-    event.message = `Companion is craving ${ordered[0].name}.`;
+    cravingItemId = food.id;
+    cravingStartedAt = state.now;
+    cravingRefreshCount = 0;
+    event.message = `Companion is craving ${food.name}.`;
     event.cause = cravingItemId;
   }
-  const aligned = alignGameStatuses(metrics, state.statuses, state.now);
-  const statusEffects = applyStatusOnsetEffects(
-    metrics,
-    state.statuses,
-    aligned,
-  );
-  const statusEvents = statusEffects.events.map((effect, index) => ({
-    id: `event-${state.events.length + index + 3}`,
-    type: 'status_onset',
-    at: state.now,
-    message: effect.message,
-    sourceActionId: commandId,
-    status: effect.status,
-    metricDeltas: effect.metricDeltas,
-  }));
-  return {
-    ...state,
-    metrics: statusEffects.metrics,
-    statuses: aligned,
-    history: {
-      ...state.history,
-      eventCooldowns: cooldowns,
-      oncePerLocalDate,
-      cravingItemId,
-      lastBondGainAt:
-        statusEffects.metrics.bond > state.metrics.bond
-          ? state.now
-          : state.history.lastBondGainAt,
+  if (
+    state.timedEffects.hyperfocusUntil !== null &&
+    state.now < state.timedEffects.hyperfocusUntil &&
+    event.metricDeltas?.creativity !== undefined
+  )
+    event.metricDeltas = { ...event.metricDeltas, creativity: 0 };
+  const normalized = reconcileMetricSource(
+    state,
+    {
+      ...state,
+      metrics,
+      inventory,
+      history: {
+        ...state.history,
+        eventCooldowns: cooldowns,
+        oncePerLocalDate,
+        cravingItemId,
+        cravingStartedAt,
+        cravingRefreshCount,
+      },
+      events: [...state.events, opportunityEvent, event],
+      stateVersion: state.stateVersion + 2,
     },
-    events: [...state.events, opportunityEvent, event, ...statusEvents],
-    stateVersion: state.stateVersion + 2,
+    commandId,
+  );
+  return {
+    ...normalized,
+    history: {
+      ...normalized.history,
+      lastBondGainAt:
+        normalized.metrics.bond > state.metrics.bond
+          ? state.now
+          : normalized.history.lastBondGainAt,
+    },
   };
 }

@@ -23,11 +23,11 @@ const GENERIC_SOURCE_URLS = new Set([
 ]);
 const QUALIFIERS = new Set(['less_than', 'approximately']);
 const COMPLETE_SOURCE_TYPE_COUNTS = {
-  manufacturer_label: 6,
+  manufacturer_label: 7,
   usda_foundation: 35,
-  usda_fndds: 65,
+  usda_fndds: 66,
   fictional_seeded_profile: 1,
-  not_applicable: 109,
+  not_applicable: 116,
 } as const;
 
 function validateScores(
@@ -180,8 +180,8 @@ export function validateItemNutrition(item: ItemDefinition): string[] {
   }
 
   if (nutrition.sourceType === 'fictional_seeded_profile') {
-    if (item.id !== 'mystery-snack')
-      issues.push('fictional seeded nutrition is restricted to Mystery Snack');
+    if (item.id !== 'the-concoction')
+      issues.push('fictional seeded nutrition is restricted to The Concoction');
     if (item.nutritionScores)
       issues.push(
         'fictional seeded item must not carry fixed nutrition scores',
@@ -205,10 +205,10 @@ export function validateItemNutrition(item: ItemDefinition): string[] {
   if (item.id === 'acai-bowl' && nutrition.sourceType !== 'not_applicable')
     issues.push('Açaí Bowl must retain its explicit unavailable-source record');
   if (
-    item.id === 'mystery-snack' &&
+    item.id === 'the-concoction' &&
     nutrition.sourceType !== 'fictional_seeded_profile'
   )
-    issues.push('Mystery Snack must use seeded fictional nutrition profiles');
+    issues.push('The Concoction must use seeded fictional nutrition profiles');
 
   return issues;
 }

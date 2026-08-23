@@ -25,7 +25,7 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 }
 
 describe('catalogue validation', () => {
-  test('accepts all 216 maintained catalogue records', () => {
+  test('accepts all 225 maintained catalogue records', () => {
     expect(validateCatalog(BUNDLED_GAME_DEFINITION, true)).toEqual([]);
   });
 
@@ -115,7 +115,7 @@ describe('catalogue validation', () => {
   });
 
   test('requires exactly three fictional profiles and forbids fixed scores', () => {
-    const definition = definitionWithItem('mystery-snack', (item) => {
+    const definition = definitionWithItem('the-concoction', (item) => {
       if (!item.nutrition?.fictionalProfiles)
         throw new Error('Mystery Snack needs profiles.');
       item.nutrition.fictionalProfiles.pop();
@@ -128,7 +128,7 @@ describe('catalogue validation', () => {
       };
     });
 
-    expect(messages(definition, 'mystery-snack')).toEqual(
+    expect(messages(definition, 'the-concoction')).toEqual(
       expect.arrayContaining([
         'fictional seeded item must not carry fixed nutrition scores',
         'fictional nutrition must define exactly profiles A, B, and C',
@@ -137,13 +137,13 @@ describe('catalogue validation', () => {
   });
 
   test('requires fictional profiles to be materially distinct', () => {
-    const definition = definitionWithItem('mystery-snack', (item) => {
+    const definition = definitionWithItem('the-concoction', (item) => {
       const profiles = item.nutrition?.fictionalProfiles;
       if (!profiles) throw new Error('Mystery Snack needs profiles.');
       profiles[1] = { ...structuredClone(profiles[0]), id: 'B' };
     });
 
-    expect(messages(definition, 'mystery-snack')).toContain(
+    expect(messages(definition, 'the-concoction')).toContain(
       'fictional nutrition profiles must be materially distinct',
     );
   });
@@ -162,7 +162,7 @@ describe('catalogue validation', () => {
       item.nutrition.sourceType = 'fictional_seeded_profile';
     });
     expect(messages(fictional, 'water')).toContain(
-      'fictional seeded nutrition is restricted to Mystery Snack',
+      'fictional seeded nutrition is restricted to The Concoction',
     );
   });
 
@@ -264,7 +264,7 @@ describe('catalogue validation', () => {
     ).toEqual(
       expect.arrayContaining([
         'expected 35 usda_foundation nutrition records, found 36',
-        'expected 65 usda_fndds nutrition records, found 64',
+        'expected 66 usda_fndds nutrition records, found 65',
       ]),
     );
 

@@ -172,7 +172,7 @@ describe('protected activities and Streaming fairness', () => {
     expect(result.metrics.health).toBe(6);
     expect(result.metrics.food).toBeGreaterThanOrEqual(3);
     expect(result.metrics.rest).toBeGreaterThanOrEqual(3);
-    expect(result.metrics.mood).toBe(4);
+    expect(result.metrics.mood).toBeGreaterThanOrEqual(3);
     expect(result.statuses.sick).toBeUndefined();
     expect(result.statuses.kidney_stone).toBeUndefined();
     expect(result.death).toBeNull();

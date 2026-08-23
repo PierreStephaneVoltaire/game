@@ -81,10 +81,11 @@ describe('canonical status public seam', () => {
         12 * HOUR,
         BUNDLED_GAME_DEFINITION,
       ).state;
-      expect(lowResult.metrics.mood).toBe(9);
-      expect(
-        lowResult.events.filter((event) => event.type === 'status_recurrence'),
-      ).toHaveLength(1);
+      const recurrences = lowResult.events.filter(
+        (event) => event.type === 'status_recurrence',
+      );
+      expect(recurrences).toHaveLength(1);
+      expect(recurrences[0].metricDeltas?.mood).toBe(-1);
 
       const aboveThreshold = {
         ...low,
@@ -96,7 +97,6 @@ describe('canonical status public seam', () => {
         BUNDLED_GAME_DEFINITION,
       ).state;
       expect(aboveResult.statuses[status]).toBeDefined();
-      expect(aboveResult.metrics.mood).toBe(10);
       expect(
         aboveResult.events.filter(
           (event) => event.type === 'status_recurrence',
@@ -162,7 +162,7 @@ describe('context status behavior through commands', () => {
     expect(result.statuses.overstimulated).toBeUndefined();
   });
 
-  test('invalid attempts reach Annoyed at the seeded threshold and clear after three hours', () => {
+  test('invalid attempts do not count toward Annoyance', () => {
     const state = {
       ...run(),
       history: {
@@ -182,14 +182,8 @@ describe('context status behavior through commands', () => {
       },
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(attempted.statuses.annoyed).toBeDefined();
-
-    const cleared = reconcileTime(
-      attempted,
-      3 * HOUR + 1,
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-    expect(cleared.statuses.annoyed).toBeUndefined();
+    expect(attempted.statuses.annoyed).toBeUndefined();
+    expect(attempted.history.careAttemptStreak).toBe(1);
   });
 
   test('three sugar servings schedule Sugar Crash, and Rest clears it', () => {

@@ -58,6 +58,13 @@ export function reconcileTime(
   const boundaries = [
     state.activity?.endsAt,
     state.history.sugarCrashDueAt ?? undefined,
+    state.timedEffects.deferredRestLossAt ?? undefined,
+    state.timedEffects.hyperfocusUntil ?? undefined,
+    state.history.cravingStartedAt !== null
+      ? state.history.cravingStartedAt + rules.craving.expiryHours * HOUR_MS
+      : undefined,
+    state.history.nextAutonomousAt,
+    ...state.projects.map((project) => project.completesAt),
     nextDecayAt,
     nextHealthAt,
     nextStatusAt,
@@ -125,6 +132,7 @@ export function reconcileTime(
       lastBondGainAt: decay.lastBondGainAt,
       sugarCrashDueAt: decay.statusReconciliation.sugarCrashDueAt,
     },
+    timedEffects: decay.timedEffects,
   };
   const timeline = resolveTimelineEffects({
     state: next,
@@ -134,6 +142,8 @@ export function reconcileTime(
     deathAt,
     streamSnackRequests: decay.streamSnackRequests,
     lastResolvedAt: state.lastResolvedAt,
+    autonomousOpportunity: state.history.nextAutonomousAt <= reconciliationNow,
+    preventLethal: options.preventLethalDecay,
   });
   next = timeline.state;
   const eventIds = timeline.eventIds;

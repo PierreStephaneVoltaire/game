@@ -3,23 +3,47 @@ import type { GameDefinition } from './game-definition';
 import type { GameState, ShopState } from './game-types';
 import rules from './data/simulation-rules.json';
 import { DAY_MS, HOUR_MS, LOCAL_MIDNIGHT_SEARCH_HOURS } from './game-constants';
+import { progressionPurchaseAllowed } from './billing-rules';
 
 export function rotateShop(
   state: GameState,
   definition: GameDefinition,
   date: string,
 ): ShopState {
-  const candidates = [...definition.items].sort(
-    (a, b) =>
-      actionRandom(
-        state.seed,
-        state.stateVersion,
-        date,
-        'shop_rotation',
-        a.id,
-      ) -
-      actionRandom(state.seed, state.stateVersion, date, 'shop_rotation', b.id),
-  );
+  const careerOrder = [
+    'starting_out',
+    'affiliate',
+    'partner',
+    'convention_guest',
+    'tournament_host',
+    'three_d_ready',
+  ];
+  const currentCareer = careerOrder.indexOf(state.progression.careerTier);
+  const candidates = definition.items
+    .filter((item) => {
+      const required = item.progression?.requiredCareerTier;
+      return (
+        (!required || currentCareer >= careerOrder.indexOf(required)) &&
+        progressionPurchaseAllowed(state, item)
+      );
+    })
+    .sort(
+      (a, b) =>
+        actionRandom(
+          state.seed,
+          state.stateVersion,
+          date,
+          'shop_rotation',
+          a.id,
+        ) -
+        actionRandom(
+          state.seed,
+          state.stateVersion,
+          date,
+          'shop_rotation',
+          b.id,
+        ),
+    );
   const chosen: typeof candidates = [];
   const take = (
     count: number,
@@ -53,7 +77,8 @@ export function rotateShop(
       (item) => eligible(item) && !chosen.includes(item),
     );
     const affordableCount = chosen.filter(
-      (item) => item.edible && item.price <= state.balance,
+      (item) =>
+        item.edible && (state.balance < 0 || item.price <= state.balance),
     ).length;
     const replaceAt = chosen.findIndex(
       (item) =>
@@ -65,7 +90,10 @@ export function rotateShop(
     if (replacement && replaceAt >= 0) chosen[replaceAt] = replacement;
   };
   if (rules.shop.guarantees.affordableFood)
-    replaceFood((item) => item.edible && item.price <= state.balance);
+    replaceFood(
+      (item) =>
+        item.edible && (state.balance < 0 || item.price <= state.balance),
+    );
   if (rules.shop.guarantees.hydratingFood)
     replaceFood(
       (item) =>
@@ -76,19 +104,24 @@ export function rotateShop(
       true,
     );
   const stock = Object.fromEntries(
-    chosen.map((item) => [
-      item.id,
-      rules.shop.stock.minimum +
-        Math.floor(
-          actionRandom(
-            state.seed,
-            state.stateVersion,
-            date,
-            'shop_stock',
-            item.id,
-          ) * rules.shop.stock.range,
-        ),
-    ]),
+    chosen.map((item) => {
+      const minimum = item.stock?.min ?? rules.shop.stock.minimum;
+      const maximum = item.stock?.max ?? minimum + rules.shop.stock.range - 1;
+      return [
+        item.id,
+        minimum +
+          Math.floor(
+            actionRandom(
+              state.seed,
+              state.stateVersion,
+              date,
+              'shop_stock',
+              item.id,
+            ) *
+              (maximum - minimum + 1),
+          ),
+      ];
+    }),
   );
   return {
     localDate: date,

@@ -56,10 +56,7 @@ function chooseRestBand(state: GameState, commandId: string): number {
   return values[roll < cutoffs[0] ? 0 : roll < cutoffs[1] ? 1 : 2] * HOUR_MS;
 }
 
-export function refusalProbability(
-  state: GameState,
-  type: 'socialize' | 'play',
-): number {
+export function refusalProbability(state: GameState): number {
   let probability = 0;
   if (state.metrics.mood <= rules.activities.refusal.moodAtOrBelow)
     probability += rules.activities.refusal.moodProbability;
@@ -67,11 +64,6 @@ export function refusalProbability(
     probability += rules.activities.refusal.restProbability;
   if (state.statuses.annoyed)
     probability += rules.activities.refusal.annoyedProbability;
-  if (state.history.repeatAction === type)
-    probability += Math.min(
-      rules.activities.refusal.repeatCap,
-      state.history.repeatCount * rules.activities.refusal.repeatIncrement,
-    );
   return Math.min(rules.activities.refusal.maximum, probability);
 }
 

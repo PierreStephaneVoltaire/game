@@ -32,14 +32,26 @@ export function isCriticalState(state: GameState): boolean {
 }
 
 export function isHealthProtectedActivity(state: GameState): boolean {
-  return Boolean(state.activity);
+  return (
+    state.activity?.type === 'rest' ||
+    state.activity?.type === 'socialize' ||
+    state.activity?.type === 'play' ||
+    state.activity?.type === 'stream' ||
+    state.activity?.type === 'medical_care'
+  );
 }
 
-export function recoveryForMetrics(metrics: GameState['metrics']): number {
+export function recoveryForMetrics(
+  metrics: GameState['metrics'],
+  scorePenalty = 0,
+): number {
   const baseline = rules.timeDecay.healthRecovery.metricBaseline;
-  const score = CRITICAL_METRICS.reduce(
-    (total, metric) => total + Math.max(metrics[metric] - baseline, 0),
+  const score = Math.max(
     0,
+    CRITICAL_METRICS.reduce(
+      (total, metric) => total + Math.max(metrics[metric] - baseline, 0),
+      0,
+    ) - scorePenalty,
   );
   return (
     [...rules.timeDecay.healthRecovery.buckets]
@@ -54,6 +66,7 @@ export function resolveHealthWindow(input: {
   recoveryMetrics: GameState['metrics'];
   foodDecayHit: boolean;
   preventLethal?: boolean;
+  recoveryPenalty?: number;
 }): HealthResolution {
   const sources: HealthDamageSource[] = [];
   for (const metric of CRITICAL_METRICS) {
@@ -67,7 +80,10 @@ export function resolveHealthWindow(input: {
           : 0;
     if (amount > 0) sources.push(sourceForCriticalMetric(metric, amount));
   }
-  const recovery = recoveryForMetrics(input.recoveryMetrics);
+  const recovery = Math.max(
+    0,
+    recoveryForMetrics(input.recoveryMetrics, input.recoveryPenalty ?? 0),
+  );
   const damage = sources.reduce((total, source) => total + source.amount, 0);
   const intendedHealth = Math.min(
     STAT_MAX,

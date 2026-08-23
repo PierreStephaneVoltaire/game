@@ -6,6 +6,8 @@
   import { gameViewModel, sendGameIntent } from '$lib/game-session';
   import type { GameIntent } from '$lib/ui/game-view-model';
   import ItemDetail from './ItemDetail.svelte';
+  import ShopItemGrid from './ShopItemGrid.svelte';
+  import ShoppingCart from './ShoppingCart.svelte';
   import './shop.css';
 
   type Tab = 'shop' | 'cart' | 'inventory' | 'detail';
@@ -17,6 +19,7 @@
   let message = '';
   let detailReturn: 'shop' | 'inventory' = 'shop';
   let lastNormalizedUrl = '';
+  const numbers = new Intl.NumberFormat('en-US');
   $: selected = model?.catalogue.find((item) => item.id === selectedId) ?? null;
   $: visible =
     model?.shop.filter(
@@ -131,9 +134,19 @@
         <a class="back-link" href={resolve('/game')} aria-label="Back to room"
           >←</a
         >
-        <strong class="balance">${model.balance}</strong>
+        <strong class:debt={model.debt.active} class="balance"
+          >{model.debt.active
+            ? `Debt: $${numbers.format(model.debt.amount)}`
+            : `$${numbers.format(model.balance)}`}</strong
+        >
       </div>
     </header>
+    {#if model.debt.active}
+      <p class="debt-notice" role="status">
+        While in debt, food and medicine remain available. Care, reusable,
+        upgrade, and decoration purchases are paused.
+      </p>
+    {/if}
     <div class="tabs" role="tablist" aria-label="Shop sections">
       {#each tabs as option (option)}{#if option !== 'detail' || selected}<button
             role="tab"
@@ -174,74 +187,22 @@
                 )}>{option}</button
             >{/each}
         </nav>
-        <div class="item-grid">
-          {#each visible as item (item.id)}<article class="item-card">
-              <button class="item-open" on:click={() => openItem(item.id)}
-                ><img
-                  src={item.image}
-                  alt={item.name}
-                  width="88"
-                  height="88"
-                /><span
-                  ><strong>{item.name}</strong><small
-                    >{item.qualitativeHint}</small
-                  ></span
-                ></button
-              >
-              <div class="item-footer">
-                <span>${item.price} · {item.stock} available</span><button
-                  on:click={() => add(item.id)}
-                  disabled={terminal ||
-                    !item.stock ||
-                    model.balance < item.price}>Add</button
-                >
-              </div>
-            </article>{/each}
-        </div>
+        <ShopItemGrid
+          items={visible}
+          disabled={terminal}
+          onOpen={openItem}
+          onAdd={add}
+        />
       </section>
     {:else if tab === 'cart'}
-      <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
-      <section
-        id="cart-panel"
-        class="cart-panel"
-        role="tabpanel"
-        tabindex="-1"
-        aria-labelledby="cart-heading"
-      >
-        <h2 id="cart-heading">Cart</h2>
-        {#if !cartLines.length}<p class="empty">
-            Your cart is empty.
-          </p>{:else}{#each cartLines as line (line.item.id)}<div
-              class="cart-line"
-            >
-              <img src={line.item.image} alt="" width="52" height="52" /><span
-                ><strong>{line.item.name}</strong><small
-                  >${line.item.price} each</small
-                ></span
-              >
-              <div>
-                <button
-                  aria-label={`Remove one ${line.item.name}`}
-                  on:click={() => cartQuantity(line.item.id, line.quantity - 1)}
-                  disabled={terminal}>−</button
-                ><output>{line.quantity}</output><button
-                  aria-label={`Add one ${line.item.name}`}
-                  on:click={() => cartQuantity(line.item.id, line.quantity + 1)}
-                  disabled={terminal}>+</button
-                >
-              </div>
-              <strong>${line.item.price * line.quantity}</strong>
-            </div>{/each}
-          <p class="total">
-            <span>Total</span><strong>${model.cartTotal}</strong>
-          </p>
-          <button
-            class="checkout"
-            on:click={checkout}
-            disabled={terminal || model.cartTotal > model.balance}
-            >Checkout</button
-          >{/if}
-      </section>
+      <ShoppingCart
+        lines={cartLines}
+        total={model.cartTotal}
+        checkoutAllowed={model.cartCheckoutAllowed}
+        disabled={terminal}
+        onQuantity={cartQuantity}
+        onCheckout={checkout}
+      />
     {:else if tab === 'inventory'}
       <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
       <section

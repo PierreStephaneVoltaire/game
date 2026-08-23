@@ -113,14 +113,26 @@ export function dispatchCommand(
       'perform_item_action',
     ].includes(command.type)
   )
-    return rememberAndCompleteStreaming(
-      recordAttempt(
-        resolveAttemptEvent(next, command.commandId, definition),
-        rejected('activity_blocked', 'Companion is busy right now.'),
-        next,
+    if (command.type === 'medical_care')
+      return rememberAndCompleteStreaming(
+        timed,
         command.commandId,
-        command.type,
-      ),
+        rejected('activity_blocked', 'Companion is busy right now.'),
+        definition,
+      );
+  if (
+    next.activity &&
+    [
+      'rest',
+      'socialize',
+      'play',
+      'medical_care',
+      'use_item',
+      'perform_item_action',
+    ].includes(command.type)
+  )
+    return rememberAndCompleteStreaming(
+      resolveAttemptEvent(next, command.commandId, definition),
       command.commandId,
       rejected('activity_blocked', 'Companion is busy right now.'),
       definition,

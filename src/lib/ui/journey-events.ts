@@ -1,4 +1,14 @@
-import type { Activity, GameEvent } from '$lib/game-types';
+import type { GameEvent } from '$lib/game-types';
+import { activityJourneyMessage } from './journey-activity-messages';
+import {
+  ITEM_NARRATIVE_TYPES,
+  itemJourneyMessage,
+  timedEffectJourneyMessage,
+} from './journey-item-messages';
+import {
+  PROGRESSION_EVENT_TYPES,
+  progressionJourneyMessage,
+} from './journey-progress-messages';
 import { statusJourneyMessage } from './journey-status-messages';
 
 export type JourneyEntryViewModel = {
@@ -21,7 +31,14 @@ export function projectJourney(
 ): JourneyEntryViewModel[] {
   const entries: JourneyEntryViewModel[] = [];
   const transitionKeys = new Set<string>();
-  for (const event of events) {
+  const chronologicalEvents = events
+    .map((event, index) => ({ event, index }))
+    .sort(
+      (left, right) =>
+        left.event.at - right.event.at || left.index - right.index,
+    )
+    .map(({ event }) => event);
+  for (const event of chronologicalEvents) {
     if (HIDDEN_TYPES.has(event.type) || event.type === 'status_recurrence')
       continue;
     if (event.type === 'command_outcome') {
@@ -40,6 +57,13 @@ export function projectJourney(
       continue;
     }
     if (event.type === 'time_reconciled') {
+      const effectMessage = timedEffectJourneyMessage(
+        chronologicalEvents,
+        event,
+        petName,
+      );
+      if (effectMessage)
+        push(entries, event, effectMessage, [event.id], `${event.id}:effect`);
       if (
         !event.healthDamageSources?.length ||
         (event.metricDeltas?.health ?? 0) >= 0
@@ -52,6 +76,8 @@ export function projectJourney(
         entries,
         event,
         `${petName}'s health suffered from ${joinWords(causes)}.`,
+        [event.id],
+        `${event.id}:health`,
       );
       continue;
     }
@@ -70,7 +96,7 @@ export function projectJourney(
       if (transitionKeys.has(transitionKey)) continue;
       transitionKeys.add(transitionKey);
       const message = statusJourneyMessage({
-        events,
+        events: chronologicalEvents,
         event,
         status: event.status,
         petName,
@@ -80,22 +106,24 @@ export function projectJourney(
       continue;
     }
     if (event.type === 'activity_started') {
-      push(entries, event, activityStarted(event.activityType, petName));
+      const message = activityJourneyMessage(
+        chronologicalEvents,
+        event,
+        petName,
+      );
+      if (message) push(entries, event, message);
       continue;
     }
     if (
       event.type === 'activity_completed' ||
       event.type === 'activity_interrupted'
     ) {
-      push(
-        entries,
+      const message = activityJourneyMessage(
+        chronologicalEvents,
         event,
-        activityEnded(
-          event.activityType,
-          petName,
-          event.type === 'activity_interrupted',
-        ),
+        petName,
       );
+      if (message) push(entries, event, message);
       continue;
     }
     if (event.type === 'stream_candidate') {
@@ -108,6 +136,11 @@ export function projectJourney(
       );
       continue;
     }
+    if (PROGRESSION_EVENT_TYPES.has(event.type)) {
+      const message = progressionJourneyMessage(event, petName);
+      if (message) push(entries, event, message);
+      continue;
+    }
     if (event.purchases?.length) {
       event.purchases.forEach((purchase, index) =>
         entries.push({
@@ -117,29 +150,32 @@ export function projectJourney(
           sourceEventIds: [event.id],
         }),
       );
+      if ((event.metricDeltas?.mood ?? 0) < 0)
+        entries.push({
+          id: `${event.id}:debt`,
+          at: event.at,
+          message: `Buying essentials while already in debt weighed on ${petName}.`,
+          sourceEventIds: [event.id],
+        });
       continue;
     }
-    if (event.type === 'item_used') {
-      const item =
-        event.itemName ?? event.message.match(/^(.*?) was used\.$/)?.[1];
-      push(
-        entries,
-        event,
-        item ? `${petName} used ${item}.` : personalize(event.message, petName),
-      );
-      continue;
-    }
-    if (event.type === 'item_reaction' && event.itemName) {
-      const reaction = event.discovery === 'liked' ? 'enjoyed' : 'tolerated';
-      push(entries, event, `${petName} ${reaction} ${event.itemName}.`);
+    if (ITEM_NARRATIVE_TYPES.has(event.type)) {
+      const message = itemJourneyMessage(event, petName);
+      if (message)
+        push(
+          entries,
+          event,
+          message,
+          authoredStatusSourceIds(chronologicalEvents, event),
+        );
       continue;
     }
     if (event.type === 'death') {
       push(entries, event, `${petName} died.`);
       continue;
     }
-    if (isNarrativeEvent(event.type))
-      push(entries, event, personalize(event.message, petName));
+    const narrativeMessage = naturalNarrativeMessage(event, petName);
+    if (narrativeMessage) push(entries, event, narrativeMessage);
   }
   return entries;
 }
@@ -155,53 +191,52 @@ export function projectCausalJourney(
   );
 }
 
-function activityStarted(type: Activity['type'] | undefined, name: string) {
-  if (type === 'medical_care') return `${name} went to the hospital.`;
-  if (type === 'rest') return `${name} went to rest.`;
-  if (type === 'socialize') return `${name} started socializing.`;
-  if (type === 'play') return `${name} started playing.`;
-  if (type === 'stream') return `${name} started streaming.`;
-  return `${name} started an activity.`;
+function naturalNarrativeMessage(
+  event: GameEvent,
+  petName: string,
+): string | undefined {
+  if (event.type === 'annoyance_warning')
+    return `${petName} is getting frustrated. One more genuine refusal could leave them Annoyed.`;
+  if (event.type === 'autonomous_nap_refused')
+    return `${petName} tried to nap on their own, but could not settle.`;
+  if (event.type === 'rest_snoring')
+    return `${petName} snored contentedly through the room.`;
+  if (event.type === 'craving_expired')
+    return `${petName}'s craving faded before it could be fulfilled.`;
+  if (
+    [
+      'item_refused',
+      'item_placed',
+      'item_unplaced',
+      'kidney_stone_recurrence',
+      'sugar_crash',
+      'low_money_stress',
+      'food_craving',
+      'creative_inspiration',
+      'socks',
+      'benign_room_event',
+      'item_automatic_hook',
+    ].includes(event.type)
+  )
+    return personalize(event.message, petName);
+  return undefined;
 }
 
-function activityEnded(
-  type: Activity['type'] | undefined,
-  name: string,
-  interrupted: boolean,
-) {
-  if (type === 'medical_care') return `${name} returned from the hospital.`;
-  const verbs: Partial<Record<Activity['type'], string>> = {
-    rest: 'resting',
-    socialize: 'socializing',
-    play: 'playing',
-    stream: 'streaming',
-  };
-  return interrupted
-    ? `${name} stopped ${verbs[type ?? 'play'] ?? 'the activity'} early.`
-    : `${name} finished ${verbs[type ?? 'play'] ?? 'the activity'}.`;
-}
-
-function isNarrativeEvent(type: string): boolean {
-  return [
-    'item_refused',
-    'item_reaction',
-    'item_discovery',
-    'item_preparation',
-    'item_placed',
-    'item_unplaced',
-    'craving_fulfilled',
-    'sickness_onset',
-    'sick_feeding_harm',
-    'kidney_stone_onset',
-    'kidney_stone_recurrence',
-    'sugar_crash',
-    'low_money_stress',
-    'food_craving',
-    'creative_inspiration',
-    'socks',
-    'benign_room_event',
-    'item_automatic_hook',
-  ].includes(type);
+function authoredStatusSourceIds(
+  events: GameEvent[],
+  event: GameEvent,
+): string[] {
+  if (!event.status) return [event.id];
+  const transitionIds = events
+    .filter(
+      (candidate) =>
+        candidate.at === event.at &&
+        candidate.status === event.status &&
+        (candidate.type === 'status_onset' ||
+          candidate.type === 'status_added'),
+    )
+    .map((candidate) => candidate.id);
+  return [...new Set([event.id, ...transitionIds])];
 }
 
 function personalize(message: string, petName: string): string {
@@ -221,11 +256,13 @@ function push(
   entries: JourneyEntryViewModel[],
   event: GameEvent,
   message: string,
+  sourceEventIds = [event.id],
+  id = event.id,
 ) {
   entries.push({
-    id: event.id,
+    id,
     at: event.at,
     message,
-    sourceEventIds: [event.id],
+    sourceEventIds,
   });
 }

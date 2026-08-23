@@ -10,4 +10,3 @@ playwright-report/
 test-results/
 .DS_Store
 .agents/
-**.md

@@ -19,7 +19,7 @@ export type NutritionResolution = {
   metricDeltas: Partial<GameState['metrics']>;
   itemMetricDeltas: Partial<GameState['metrics']>;
   consumptions: GameState['history']['consumptions'];
-  sugarServings: GameState['history']['consumptions'];
+  sugarServings: number;
   fulfilledCraving: boolean;
   nutritionProfileId?: string;
   preparationRejected: boolean;
@@ -29,6 +29,8 @@ export type NutritionResolution = {
   sickFromFull: boolean;
   kidneyStone: boolean;
   kidneyStoneDeltas: Partial<GameState['metrics']>;
+  dizzySpell: boolean;
+  dizzySpellDeltas: Partial<GameState['metrics']>;
 };
 
 export function resolveNutritionConsumption(
@@ -155,17 +157,27 @@ export function resolveNutritionConsumption(
             water: nutritionScores.water ?? 0,
             protein: nutritionScores.protein ?? 0,
             sugar: nutritionScores.sugar ?? 0,
+            caffeine: nutritionScores.caffeine ?? 0,
+            sugarServings:
+              item.sugarServings ?? ((nutritionScores.sugar ?? 0) > 0 ? 1 : 0),
             sugarTagged: (nutritionScores.sugar ?? 0) > 0,
             nutritionProfileId: profile?.id,
           },
         ]
       : state.history.consumptions;
-  const sugarServings = consumptions.filter(
-    (consumption) =>
-      consumption.at >=
-        state.now - rules.nutrition.sugarWindowHours * HOUR_MS &&
-      consumption.sugarTagged,
-  );
+  const sugarServings = consumptions
+    .filter(
+      (consumption) =>
+        consumption.at >=
+        state.now - rules.nutrition.sugarWindowHours * HOUR_MS,
+    )
+    .reduce(
+      (total, consumption) =>
+        total +
+        (consumption.sugarServings ?? (consumption.sugarTagged ? 1 : 0)),
+      0,
+    );
+
   const priorNutrition = state.history.consumptions.filter(
     (consumption) =>
       consumption.at >=
@@ -199,6 +211,15 @@ export function resolveNutritionConsumption(
       'kidney_stone',
       'onset',
     ),
+    naturalPassRoll: actionRandom(
+      state.seed,
+      state.stateVersion,
+      command.commandId,
+      'kidney_stone',
+      'natural_pass',
+    ),
+    currentSalt: nutritionScores.salt ?? 0,
+    currentWater: nutritionScores.water ?? 0,
   });
   const itemMetricDeltas = { ...metricDeltas };
   for (const [metric, delta] of Object.entries(
@@ -247,5 +268,7 @@ export function resolveNutritionConsumption(
     sickFromFull: nutritionResolution.sickFromFull,
     kidneyStone: nutritionResolution.kidneyStone,
     kidneyStoneDeltas: nutritionResolution.kidneyStoneDeltas,
+    dizzySpell: nutritionResolution.dizzySpell,
+    dizzySpellDeltas: nutritionResolution.dizzySpellDeltas,
   };
 }

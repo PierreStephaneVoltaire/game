@@ -54,6 +54,19 @@ h2 {
   background: #d8f5e3;
   border: 2px solid #16834a;
 }
+.balance.debt {
+  color: #9b2445;
+  background: #ffe0e8;
+  border-color: #9b2445;
+}
+.debt-notice {
+  padding: 10px 12px;
+  color: #7a1835;
+  background: #ffe0e8;
+  border-left: 4px solid #9b2445;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
 .tabs,
 .categories {
   display: flex;
@@ -135,6 +148,12 @@ h2 {
   margin-top: 12px;
   color: #16834a;
   font-size: 0.7rem;
+}
+.purchase-note {
+  display: block;
+  margin-top: 8px;
+  color: #8b1739;
+  font-size: 0.68rem;
 }
 .item-footer button,
 .checkout {

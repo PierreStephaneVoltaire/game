@@ -1,4 +1,4 @@
-import type { GameDefinition, ItemDefinition } from '$lib/game-definition';
+import type { GameDefinition } from '$lib/game-definition';
 import type {
   GameCommand,
   GameState,
@@ -6,45 +6,33 @@ import type {
   StatusName,
 } from '$lib/game-types';
 import { companion } from './companion';
-import {
-  actionOwnership,
-  itemActionAvailable,
-} from '$lib/item-action-prerequisites';
 import { gameCopy, statusLabel } from './game-copy';
 import {
   projectCausalJourney,
   projectJourney,
   type JourneyEntryViewModel,
 } from './journey-events';
+import {
+  createActionOwnership,
+  itemFor,
+  type ItemViewModel,
+} from './item-view-model';
+import {
+  progressionPresentation,
+  type CareerViewModel,
+  type HospitalViewModel,
+  type ProjectViewModel,
+  type TimedEffectViewModel,
+} from './progression-view-model';
+import type { CompanionAppearance } from './companion';
 
-type CatalogueItem = ItemDefinition;
-export type ItemActionViewModel = {
-  id: string;
-  label: string;
-  available: boolean;
-};
+export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
 
 export type MetricViewModel = {
   key: MetricName;
   label: string;
   value: number;
   percentage: number;
-};
-export type ItemViewModel = {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  image: string;
-  description: string;
-  edible: boolean;
-  itemActions: ItemActionViewModel[];
-  roomSlot: string | null;
-  owned: number;
-  stock: number;
-  inCart: number;
-  qualitativeHint: string;
-  placedSlot: string | null;
 };
 export type EventViewModel = JourneyEntryViewModel;
 export type ActivityViewModel = {
@@ -68,6 +56,13 @@ export type GameViewModel = {
   timezone: string;
   seed: string;
   balance: number;
+  followers: number;
+  career: CareerViewModel;
+  debt: { active: boolean; amount: number };
+  effects: TimedEffectViewModel[];
+  projects: ProjectViewModel[];
+  activeAvatar: CompanionAppearance;
+  hospital: HospitalViewModel;
   metrics: MetricViewModel[];
   statuses: Array<{ key: StatusName; label: string }>;
   activity: ActivityViewModel | null;
@@ -80,6 +75,7 @@ export type GameViewModel = {
   catalogue: ItemViewModel[];
   cart: ItemViewModel[];
   cartTotal: number;
+  cartCheckoutAllowed: boolean;
   categories: string[];
 };
 
@@ -92,44 +88,6 @@ const metricKeys: MetricName[] = [
   'creativity',
 ];
 const anchorKeys = Object.keys(gameCopy.anchors);
-
-function itemFor(
-  state: GameState,
-  definition: GameDefinition,
-  id: string | undefined,
-  ownership: ReturnType<typeof actionOwnership>,
-): ItemViewModel | null {
-  if (!id) return null;
-  const item = definition.items.find((candidate) => candidate.id === id) as
-    CatalogueItem | undefined;
-  if (!item) return null;
-  const owned = state.inventory[id] ?? 0;
-  const placedSlot =
-    Object.entries(state.room).find(([, placedId]) => placedId === id)?.[0] ??
-    null;
-  const itemActions = (item.itemActions ?? []).map((action) => ({
-    id: action.id,
-    label: action.label,
-    available: itemActionAvailable(item.id, action, ownership),
-  }));
-  const presentationOwned = owned + (placedSlot ? 1 : 0);
-  return {
-    id: item.id,
-    name: item.name,
-    category: item.category,
-    price: item.price,
-    image: item.image,
-    description: item.description,
-    edible: item.edible,
-    itemActions,
-    roomSlot: item.roomSlot ?? null,
-    owned: presentationOwned,
-    stock: state.shop.stock[id] ?? 0,
-    inCart: state.shop.cart[id] ?? 0,
-    qualitativeHint: item.qualitativeNutritionHint,
-    placedSlot,
-  };
-}
 
 function formatTime(value: number, timezone: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
@@ -163,11 +121,7 @@ export function createGameViewModel(
   definition: GameDefinition,
   locale = 'en-US',
 ): GameViewModel {
-  const ownership = actionOwnership(
-    state.inventory,
-    state.room,
-    definition.items,
-  );
+  const ownership = createActionOwnership(state, definition);
   const catalogue = definition.items
     .map((item) => itemFor(state, definition, item.id, ownership))
     .filter((item): item is ItemViewModel => Boolean(item));
@@ -182,6 +136,16 @@ export function createGameViewModel(
   const causalEventViews = state.death
     ? projectCausalJourney(state.events, state.death.eventIds, companion.name)
     : [];
+  const cartTotal = cart.reduce(
+    (sum, item) => sum + item.price * item.inCart,
+    0,
+  );
+  const cartCheckoutAllowed =
+    cart.length > 0 &&
+    cart.every(
+      (item) => item.purchaseAllowed && item.inCart <= item.maximumCartQuantity,
+    ) &&
+    (state.balance < 0 || cartTotal <= state.balance);
   return {
     companion,
     mode: state.mode,
@@ -191,6 +155,7 @@ export function createGameViewModel(
     timezone: state.timezone,
     seed: state.seed,
     balance: state.balance,
+    ...progressionPresentation(state, definition),
     metrics: metricKeys.map((key) => ({
       key,
       label: gameCopy.metrics[key],
@@ -226,7 +191,8 @@ export function createGameViewModel(
     shop,
     catalogue,
     cart,
-    cartTotal: cart.reduce((sum, item) => sum + item.price * item.inCart, 0),
+    cartTotal,
+    cartCheckoutAllowed,
     categories: [...new Set(shop.map((item) => item.category))].sort(),
   };
 }

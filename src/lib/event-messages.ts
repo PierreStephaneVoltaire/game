@@ -30,6 +30,7 @@ const STATUS_NAMES: Record<StatusName, string> = {
   full: 'Full',
   low_energy: 'Low Energy',
   sugar_crash: 'Sugar Crash',
+  dizzy_spell: 'Dizzy Spell',
 };
 
 export function statusDisplayName(status: StatusName): string {
@@ -48,5 +49,6 @@ export function activityCompletionMessage(type: Activity['type']): string {
   if (type === 'socialize') return 'Socializing finished.';
   if (type === 'play') return 'Play finished.';
   if (type === 'stream') return 'The stream finished.';
+  if (type === 'commission_work') return 'Commission work finished.';
   return 'The hospital visit finished.';
 }

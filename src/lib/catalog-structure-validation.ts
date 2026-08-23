@@ -34,6 +34,54 @@ export function validateItemStructure(
   allTags: Set<string>,
 ): string[] {
   const issues: string[] = [];
+  if (typeof item.supportsQuantity !== 'boolean')
+    issues.push('supportsQuantity must be explicitly authored');
+  if (
+    item.maximumOwned !== undefined &&
+    (!Number.isInteger(item.maximumOwned) || item.maximumOwned < 1)
+  )
+    issues.push('maximumOwned must be a positive integer');
+  if (
+    item.stock &&
+    (!Number.isInteger(item.stock.min) ||
+      !Number.isInteger(item.stock.max) ||
+      item.stock.min < 1 ||
+      item.stock.max < item.stock.min)
+  )
+    issues.push('stock must contain a valid positive min/max range');
+  if (
+    item.sugarServings !== undefined &&
+    (!Number.isInteger(item.sugarServings) || item.sugarServings < 1)
+  )
+    issues.push('sugarServings must be a positive integer');
+  if (
+    item.progression?.requiredCareerTier !== undefined &&
+    ![
+      'starting_out',
+      'affiliate',
+      'partner',
+      'convention_guest',
+      'tournament_host',
+      'three_d_ready',
+    ].includes(item.progression.requiredCareerTier)
+  )
+    issues.push('progression references an unknown career tier');
+  for (const modifier of item.eventPoolModifiers ?? []) {
+    if (!modifier.eventId?.trim())
+      issues.push('event-pool modifier needs an event id');
+    if (!Number.isFinite(modifier.weightDelta) || modifier.weightDelta === 0)
+      issues.push(
+        `event-pool modifier ${modifier.eventId} needs a nonzero weight`,
+      );
+    if (!['owned', 'placed'].includes(modifier.eligibility))
+      issues.push(
+        `event-pool modifier ${modifier.eventId} has invalid eligibility`,
+      );
+    if (modifier.eligibility === 'placed' && !item.roomSlot)
+      issues.push(
+        `event-pool modifier ${modifier.eventId} cannot require placement`,
+      );
+  }
   const actions = item.itemActions;
   if (!Array.isArray(actions)) issues.push('item actions missing');
   else {
@@ -48,8 +96,28 @@ export function validateItemStructure(
       if (actionIds.has(action.id))
         issues.push(`duplicate item action id: ${action.id}`);
       actionIds.add(action.id);
-      if (!['consume', 'interaction'].includes(action.kind))
+      if (
+        !['consume', 'interaction', 'activity', 'service'].includes(action.kind)
+      )
         issues.push(`unknown item action kind: ${action.kind}`);
+      if (
+        action.kind === 'activity' &&
+        (action.activity?.type !== 'commission_work' ||
+          !Number.isFinite(action.activity.durationHours) ||
+          action.activity.durationHours <= 0)
+      )
+        issues.push(`action ${action.id} needs a valid activity definition`);
+      if (action.kind !== 'activity' && action.activity)
+        issues.push(`action ${action.id} cannot define an activity`);
+      if (
+        action.kind === 'service' &&
+        !['model_commission', 'full_body_commission'].includes(
+          action.service?.type ?? '',
+        )
+      )
+        issues.push(`action ${action.id} needs a valid service definition`);
+      if (action.kind !== 'service' && action.service)
+        issues.push(`action ${action.id} cannot define a service`);
       if (action.effects)
         issues.push(
           ...validateEffects(action.effects, `action ${action.id} effect`),

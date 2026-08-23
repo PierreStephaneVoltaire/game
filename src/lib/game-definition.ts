@@ -7,12 +7,22 @@ export type EffectRange = { min: number; max: number };
 export type ItemActionDefinition = {
   id: string;
   label: string;
-  kind: 'consume' | 'interaction';
+  kind: 'consume' | 'interaction' | 'activity' | 'service';
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
   consumes?: boolean;
   requirements?: {
     ownedItemIdsAll?: string[];
     ownedItemTagsAny?: string[];
+    minimumMetrics?: Partial<Metrics>;
+    blockedStatuses?: StatusName[];
+    requiredCareerTier?: string;
+  };
+  activity?: {
+    type: 'commission_work';
+    durationHours: number;
+  };
+  service?: {
+    type: 'model_commission' | 'full_body_commission';
   };
   clearsStatuses?: StatusName[];
   tags?: string[];
@@ -39,6 +49,18 @@ export type ItemDefinition = {
   usable?: boolean;
   consumable?: boolean;
   supportsQuantity?: boolean;
+  maximumOwned?: number;
+  stock?: { min: number; max: number };
+  sugarServings?: number;
+  progression?: {
+    requiredCareerTier?: string;
+    modelTier?: 1 | 2 | 3 | 4;
+  };
+  eventPoolModifiers?: Array<{
+    eventId: string;
+    weightDelta: number;
+    eligibility: 'owned' | 'placed';
+  }>;
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
   tags: string[];
   preferences?: string[];

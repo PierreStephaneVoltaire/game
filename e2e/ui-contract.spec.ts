@@ -42,8 +42,17 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
     overviewColumn.getByRole('region', { name: 'Status' }),
   ).toBeVisible();
   await expect(overviewColumn.getByText(/Balance:/)).toBeVisible();
+  await expect(overviewColumn.getByText('Followers: 100')).toBeVisible();
+  await expect(overviewColumn.getByText('Career: Starting Out')).toBeVisible();
+  await expect(
+    overviewColumn.getByText('Next milestone: Affiliate · 150 to go'),
+  ).toBeVisible();
   const room = firstRow.getByRole('region', { name: /room/i });
   await expect(room).toBeVisible();
+  await expect(room.locator('img.companion')).toHaveAttribute(
+    'data-appearance-id',
+    'classic',
+  );
   expect(
     await overviewColumn.evaluate((element) => ({
       display: getComputedStyle(element).display,

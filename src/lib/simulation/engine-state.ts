@@ -15,6 +15,7 @@ import {
 import { STAT_MIN } from '../game-constants';
 import { statusTransitionMessage } from '../event-messages';
 import { recordDeath } from './death-resolution';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 
 export function appendStatusTransitionEvents(
   state: GameState,
@@ -128,7 +129,7 @@ export function applyCriticalHealthMoodPenalty(
     sourceActionId,
     metricDeltas: { mood: criticalHealthMoodDelta() },
   };
-  return {
+  const penalized: GameState = {
     ...state,
     metrics: {
       ...state.metrics,
@@ -137,6 +138,7 @@ export function applyCriticalHealthMoodPenalty(
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
   };
+  return reconcileMetricSource(state, penalized, sourceActionId);
 }
 
 export function recordAttempt(
@@ -146,7 +148,14 @@ export function recordAttempt(
   sourceActionId?: string,
   attemptType?: GameCommand['type'],
 ): GameState {
-  const attemptStatus = resolveAttemptStatus(state, outcome.accepted);
+  const countsAsRefusal =
+    outcome.kind === 'refused' &&
+    !(attemptType === 'rest' && before.metrics.rest >= 10);
+  const attemptStatus = resolveAttemptStatus(
+    state,
+    outcome.accepted,
+    countsAsRefusal,
+  );
   const becameAnnoyed = attemptStatus.moodDelta !== 0;
   const careMetricChanged = (
     ['food', 'rest', 'bond', 'creativity'] as const
@@ -160,7 +169,8 @@ export function recordAttempt(
         event.sourceActionId === sourceActionId,
     );
   const interaction = attemptType === 'socialize' || attemptType === 'play';
-  const next = {
+  const genuineAttempt = outcome.accepted || countsAsRefusal;
+  let next: GameState = {
     ...state,
     metrics:
       becameAnnoyed || criticalPenalty
@@ -176,13 +186,20 @@ export function recordAttempt(
     statuses: attemptStatus.statuses,
     history: {
       ...state.history,
-      lastCareAttemptAt: before.now,
-      lastInteractionAt: before.now,
-      careAttemptStreak: becameAnnoyed
-        ? 0
+      lastCareAttemptAt: genuineAttempt
+        ? before.now
+        : state.history.lastCareAttemptAt,
+      lastInteractionAt: genuineAttempt
+        ? before.now
+        : state.history.lastInteractionAt,
+      careAttemptStreak: attemptStatus.careAttemptStreak,
+      annoyanceWarningIssued: becameAnnoyed
+        ? false
         : outcome.accepted
-          ? 0
-          : state.history.careAttemptStreak + 1,
+          ? false
+          : countsAsRefusal
+            ? state.history.annoyanceWarningIssued || attemptStatus.warning
+            : state.history.annoyanceWarningIssued,
       repeatAction: interaction ? attemptType : null,
       repeatCount: interaction
         ? state.history.repeatAction === attemptType
@@ -192,6 +209,18 @@ export function recordAttempt(
     },
     stateVersion: state.stateVersion + 1,
   };
+  if (attemptStatus.warning) {
+    const warning: GameEvent = {
+      id: `event-${next.events.length + 1}`,
+      type: 'annoyance_warning',
+      at: next.now,
+      message: 'The companion is getting frustrated by repeated attempts.',
+      sourceActionId,
+      status: 'annoyed',
+    };
+    next = { ...next, events: [...next.events, warning] };
+  }
+  next = reconcileMetricSource(state, next, sourceActionId ?? 'attempt-status');
   return criticalPenalty
     ? applyCriticalHealthMoodPenalty(next, before, sourceActionId ?? 'attempt')
     : next;
