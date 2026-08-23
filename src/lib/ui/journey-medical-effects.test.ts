@@ -114,6 +114,8 @@ describe('Journey status and timed-effect narration', () => {
         at: 0,
         message: 'Limited-Edition Dr Pepper was used.',
         itemName: 'Limited-Edition Dr Pepper',
+        itemNarration:
+          'cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.',
         tags: ['feeding'],
       },
       {
@@ -122,6 +124,8 @@ describe('Journey status and timed-effect narration', () => {
         at: 1,
         message: 'Painkillers was used.',
         itemName: 'Painkillers',
+        itemNarration:
+          'took Painkillers, easing the kidney stone symptoms for a while.',
         tags: ['care', 'pain-relief'],
       },
       {
@@ -154,7 +158,7 @@ describe('Journey status and timed-effect narration', () => {
       projectJourney(events, 'Nova').map((entry) => entry.message),
     ).toEqual([
       'Nova cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.',
-      'Nova took Painkillers. Pain Relief will ease the recurring symptoms for a while.',
+      'Nova took Painkillers, easing the kidney stone symptoms for a while.',
       "Nova's craving faded before it could be fulfilled.",
       'Bought 2 Soup.',
       'Bought 1 Medicine.',

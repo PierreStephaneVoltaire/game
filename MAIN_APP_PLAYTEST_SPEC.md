@@ -167,6 +167,12 @@ following boundaries are especially important for implementation acceptance:
   once. Interrupted streams receive no base Followers.
 - Ordered milestones support several thresholds in one result and apply stream
   rates, Mood, fee, unlocks, and Tournament queue once.
+- The career ladder is Debut (100), First Model (150), 1K Subscribers (1,000),
+  Model Redesign (5,000), Twitch Partner (10,000), 30K Subscribers (30,000),
+  Tournament Appearance (40,000), 50K Subscribers (50,000), Convention Guest
+  (75,000), 100K Subscribers (100,000), 3D Ready (150,000), 200K Subscribers
+  (200,000), 250K Subscribers (250,000), 500K Subscribers (500,000), and 1M
+  Subscribers (1,000,000).
 - Rare and model projects complete on their third local midnight. Model rewards
   change profile-driven appearance and queue four-hour debut streams. The
   fourth completion grants the permanent donation bonus.
@@ -189,9 +195,16 @@ Cute Stickers, Rigging Tablet, Limited-Edition Dr Pepper, Convention Guest Set,
 and New Model Commission. Every eligible item participates in the 24-item
 rotation; milestone-gated items enter only after unlock.
 
-Each ID has one unique valid 256×256 transparent PNG. The classic appearance
-continues to use `/bri.svg`; the four model tiers use finished transparent PNGs
-selected through profile data, never frontend name/path branches.
+Every catalogue record has a nonempty array of seeded item-use narration.
+Journey prefixes the configured companion name; it does not create discovery
+events for familiar foods or possessions.
+
+Each catalogue ID has one unique valid 256×256 transparent PNG. While the
+commissioned companion artwork is pending, the classic appearance and four
+model tiers share a temporary, transparently pixelated 256×256 PNG selected
+through profile data, never frontend name/path branches. The distinct
+appearance IDs and progression behavior remain intact so commissioned artwork
+can replace the profile paths without frontend changes.
 
 Food nutrition records include exact serving facts, nullable missing values,
 source type, exact source record, retrieval date, and pinned snapshot date.
@@ -207,7 +220,7 @@ The internal ledger retains commands, reconciliation, opportunity, status,
 activity, economy, project, and causal damage records. Journey projects only
 natural narration. It includes catch-up events, donations, milestones,
 commissions, medical recovery, craving expiry, timed effects, Dizzy, care
-packages, model debuts, item reactions, and structured death.
+packages, model debuts, item-authored reactions, and structured death.
 
 Reconciliation, decay, random-opportunity bookkeeping, shop refreshes,
 nutrition counters, command receipts, and internal causal bookkeeping remain

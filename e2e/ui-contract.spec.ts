@@ -43,9 +43,9 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
   ).toBeVisible();
   await expect(overviewColumn.getByText(/Balance:/)).toBeVisible();
   await expect(overviewColumn.getByText('Followers: 100')).toBeVisible();
-  await expect(overviewColumn.getByText('Career: Starting Out')).toBeVisible();
+  await expect(overviewColumn.getByText('Career: Debut')).toBeVisible();
   await expect(
-    overviewColumn.getByText('Next milestone: Affiliate · 150 to go'),
+    overviewColumn.getByText('Next milestone: First Model · 50 to go'),
   ).toBeVisible();
   const room = firstRow.getByRole('region', { name: /room/i });
   await expect(room).toBeVisible();

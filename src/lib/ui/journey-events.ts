@@ -22,7 +22,6 @@ const HIDDEN_TYPES = new Set([
   'random_event_opportunity',
   'shop_rotated',
   'critical_health_mood_penalty',
-  'nutrition_profile_discovered',
 ]);
 
 export function projectJourney(

@@ -10,7 +10,7 @@ describe('Journey progression narration', () => {
         id: 'milestone',
         type: 'career_milestone',
         at: 5,
-        message: 'affiliate milestone reached.',
+        message: 'sub 1k milestone reached.',
       },
       { id: 'start', type: 'run_started', at: 0, message: 'internal' },
       {
@@ -36,7 +36,7 @@ describe('Journey progression narration', () => {
       "Nova's journey began.",
       "A whale donated $2,450 during Nova's stream.",
       "Nova's stream brought 31 new followers to the channel.",
-      "Nova's channel reached Affiliate! Better stream rates are now available.",
+      "Nova's channel reached 1,000 subscribers! Better stream rates are now available.",
     ]);
   });
 

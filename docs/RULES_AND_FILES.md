@@ -47,8 +47,8 @@ gameplay rules.
 - `src/lib/commands/consumption-timed-effects.ts` and
   `src/lib/commands/consumption-rule-events.ts` — timed caffeine, Hyperfocus,
   Pain Relief, and authored status/reaction events for item consumption.
-- `src/lib/commands/item-consumption-events.ts` — structured item discovery and
-  reaction event construction for the consumption pipeline.
+- `src/lib/commands/item-consumption-events.ts` — seeded catalogue narration
+  selection and preparation-event construction for item consumption.
 - `src/lib/commands/nutrition-resolution.ts` — catalogue nutrition effects
   and deterministic nutrition-event outcomes.
 - `src/lib/commands/room-commands.ts` and

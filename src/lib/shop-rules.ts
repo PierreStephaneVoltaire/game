@@ -4,26 +4,21 @@ import type { GameState, ShopState } from './game-types';
 import rules from './data/simulation-rules.json';
 import { DAY_MS, HOUR_MS, LOCAL_MIDNIGHT_SEARCH_HOURS } from './game-constants';
 import { progressionPurchaseAllowed } from './billing-rules';
+import { CAREER_TIERS } from './progression-types';
 
 export function rotateShop(
   state: GameState,
   definition: GameDefinition,
   date: string,
 ): ShopState {
-  const careerOrder = [
-    'starting_out',
-    'affiliate',
-    'partner',
-    'convention_guest',
-    'tournament_host',
-    'three_d_ready',
-  ];
-  const currentCareer = careerOrder.indexOf(state.progression.careerTier);
+  const currentCareer = CAREER_TIERS.indexOf(state.progression.careerTier);
   const candidates = definition.items
     .filter((item) => {
       const required = item.progression?.requiredCareerTier;
       return (
-        (!required || currentCareer >= careerOrder.indexOf(required)) &&
+        (!required ||
+          currentCareer >=
+            CAREER_TIERS.indexOf(required as (typeof CAREER_TIERS)[number])) &&
         progressionPurchaseAllowed(state, item)
       );
     })

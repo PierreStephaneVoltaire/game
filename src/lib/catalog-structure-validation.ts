@@ -1,5 +1,6 @@
 import type { EffectRange, ItemDefinition } from './game-definition';
 import { isStatusName } from './status-rules';
+import { CAREER_TIERS } from './progression-types';
 
 const METRICS = new Set([
   'food',
@@ -56,14 +57,9 @@ export function validateItemStructure(
     issues.push('sugarServings must be a positive integer');
   if (
     item.progression?.requiredCareerTier !== undefined &&
-    ![
-      'starting_out',
-      'affiliate',
-      'partner',
-      'convention_guest',
-      'tournament_host',
-      'three_d_ready',
-    ].includes(item.progression.requiredCareerTier)
+    !CAREER_TIERS.includes(
+      item.progression.requiredCareerTier as (typeof CAREER_TIERS)[number],
+    )
   )
     issues.push('progression references an unknown career tier');
   for (const modifier of item.eventPoolModifiers ?? []) {

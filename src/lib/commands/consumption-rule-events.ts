@@ -9,14 +9,14 @@ export function consumptionRuleEvents(input: {
   item: ItemDefinition;
   nutrition: NutritionResolution;
   sourceActionId: string;
-  discoveryCount: number;
+  precedingEventCount: number;
   event: GameEvent;
 }): GameEvent[] {
-  const { state, item, nutrition, sourceActionId, discoveryCount, event } =
+  const { state, item, nutrition, sourceActionId, precedingEventCount, event } =
     input;
   const events: GameEvent[] = [];
   const id = () =>
-    `event-${state.events.length + discoveryCount + events.length + 2}`;
+    `event-${state.events.length + precedingEventCount + events.length + 2}`;
   if (nutrition.fullFeedSuppressed)
     events.push({
       id: id(),

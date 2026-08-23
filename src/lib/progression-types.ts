@@ -1,13 +1,25 @@
 export type DonationTier =
   'kind_bridiot' | 'raid_windfall' | 'whale' | 'legendary_whale';
 
-export type CareerTier =
-  | 'starting_out'
-  | 'affiliate'
-  | 'partner'
-  | 'convention_guest'
-  | 'tournament_host'
-  | 'three_d_ready';
+export const CAREER_TIERS = [
+  'debut',
+  'first_model',
+  'sub_1k',
+  'model_redesign',
+  'twitch_partner',
+  'sub_30k',
+  'tournament_appearance',
+  'sub_50k',
+  'convention_guest',
+  'sub_100k',
+  'three_d_ready',
+  'sub_200k',
+  'sub_250k',
+  'sub_500k',
+  'sub_1m',
+] as const;
+
+export type CareerTier = (typeof CAREER_TIERS)[number];
 
 export type AppearanceId = string;
 

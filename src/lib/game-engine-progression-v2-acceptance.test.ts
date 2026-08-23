@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import type { GameState } from './game-types';
+import rules from './data/simulation-rules.json';
 
 const HOUR = 3_600_000;
 
@@ -14,6 +15,33 @@ function run(now: number, seed: string): GameState {
 }
 
 describe('career progression through the engine seam', () => {
+  test('uses the authored career ladder and exact follower thresholds', () => {
+    expect(
+      rules.progression.milestones.map(({ id, followers }) => [id, followers]),
+    ).toEqual([
+      ['debut', 100],
+      ['first_model', 150],
+      ['sub_1k', 1_000],
+      ['model_redesign', 5_000],
+      ['twitch_partner', 10_000],
+      ['sub_30k', 30_000],
+      ['tournament_appearance', 40_000],
+      ['sub_50k', 50_000],
+      ['convention_guest', 75_000],
+      ['sub_100k', 100_000],
+      ['three_d_ready', 150_000],
+      ['sub_200k', 200_000],
+      ['sub_250k', 250_000],
+      ['sub_500k', 500_000],
+      ['sub_1m', 1_000_000],
+    ]);
+    expect(run(0, 'career-start').progression).toMatchObject({
+      followers: 100,
+      careerTier: 'debut',
+      awardedMilestones: ['debut'],
+    });
+  });
+
   test('one completed stream awards every newly crossed milestone in order', () => {
     const startedAt = Date.UTC(2026, 0, 1, 12);
     const initial = run(startedAt, 'all-milestones');
@@ -28,7 +56,7 @@ describe('career progression through the engine seam', () => {
         creativity: 10,
       },
       statuses: {},
-      progression: { ...initial.progression, followers: 3_499 },
+      progression: { ...initial.progression, followers: 999_999 },
       activity: {
         id: 'milestone-stream',
         type: 'stream',
@@ -50,14 +78,24 @@ describe('career progression through the engine seam', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(completed.progression.followers).toBeGreaterThanOrEqual(3_501);
-    expect(completed.progression.careerTier).toBe('three_d_ready');
+    expect(completed.progression.followers).toBeGreaterThanOrEqual(1_000_001);
+    expect(completed.progression.careerTier).toBe('sub_1m');
     expect(completed.progression.awardedMilestones).toEqual([
-      'affiliate',
-      'partner',
+      'debut',
+      'first_model',
+      'sub_1k',
+      'model_redesign',
+      'twitch_partner',
+      'sub_30k',
+      'tournament_appearance',
+      'sub_50k',
       'convention_guest',
-      'tournament_host',
+      'sub_100k',
       'three_d_ready',
+      'sub_200k',
+      'sub_250k',
+      'sub_500k',
+      'sub_1m',
     ]);
     expect(completed.progression.unlockedModelTiers).toEqual([1, 2, 3, 4]);
     expect(completed.progression.queuedEventStreams).toEqual([
@@ -74,11 +112,20 @@ describe('career progression through the engine seam', () => {
         .filter((event) => event.type === 'career_milestone')
         .map((event) => event.message),
     ).toEqual([
-      'affiliate milestone reached.',
-      'partner milestone reached.',
+      'first model milestone reached.',
+      'sub 1k milestone reached.',
+      'model redesign milestone reached.',
+      'twitch partner milestone reached.',
+      'sub 30k milestone reached.',
+      'tournament appearance milestone reached.',
+      'sub 50k milestone reached.',
       'convention guest milestone reached.',
-      'tournament host milestone reached.',
+      'sub 100k milestone reached.',
       'three d ready milestone reached.',
+      'sub 200k milestone reached.',
+      'sub 250k milestone reached.',
+      'sub 500k milestone reached.',
+      'sub 1m milestone reached.',
     ]);
   });
 
@@ -99,9 +146,9 @@ describe('career progression through the engine seam', () => {
       inventory: { ...initial.inventory, 'new-model-commission': 1 },
       progression: {
         ...initial.progression,
-        followers: 600,
-        careerTier: 'partner',
-        awardedMilestones: ['affiliate', 'partner'],
+        followers: 150,
+        careerTier: 'first_model',
+        awardedMilestones: ['debut', 'first_model'],
         unlockedModelTiers: [1],
       },
     };
@@ -159,13 +206,19 @@ describe('career progression through the engine seam', () => {
       ],
       progression: {
         ...initial.progression,
-        followers: 3_500,
+        followers: 150_000,
         careerTier: 'three_d_ready',
         awardedMilestones: [
-          'affiliate',
-          'partner',
+          'debut',
+          'first_model',
+          'sub_1k',
+          'model_redesign',
+          'twitch_partner',
+          'sub_30k',
+          'tournament_appearance',
+          'sub_50k',
           'convention_guest',
-          'tournament_host',
+          'sub_100k',
           'three_d_ready',
         ],
         unlockedModelTiers: [1, 2, 3, 4],
@@ -188,7 +241,7 @@ describe('career progression through the engine seam', () => {
     expect(completed.projects).toEqual([]);
     expect(completed.metrics).toMatchObject({ mood: 10, creativity: 9 });
     expect(completed.progression).toMatchObject({
-      followers: 3_550,
+      followers: 150_050,
       activeAppearanceId: 'three_d_debut',
       completedModelTiers: [1, 2, 3, 4],
       permanentDonationBonus: true,

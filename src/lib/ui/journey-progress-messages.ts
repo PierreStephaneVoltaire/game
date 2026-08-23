@@ -70,13 +70,25 @@ function followerMessage(
 }
 
 function milestoneMessage(event: GameEvent, petName: string): string {
-  const milestone = event.message.split(' milestone')[0]?.trim();
+  const milestone =
+    event.cause ??
+    event.message.split(' milestone')[0]?.trim().replaceAll(' ', '_');
   const messages: Record<string, string> = {
-    affiliate: `${petName}'s channel reached Affiliate! Better stream rates are now available.`,
-    partner: `${petName}'s channel reached Partner! The first new-model commission is now available.`,
+    debut: `${petName}'s channel made its debut.`,
+    first_model: `${petName}'s first new-model commission is now available.`,
+    sub_1k: `${petName}'s channel reached 1,000 subscribers! Better stream rates are now available.`,
+    model_redesign: `${petName}'s model-redesign commission is now available.`,
+    twitch_partner: `${petName} reached Twitch Partner! The best stream-rate band is now available.`,
+    sub_30k: `${petName}'s channel reached 30,000 subscribers.`,
+    tournament_appearance: `${petName} earned a tournament appearance! A special tournament stream is waiting for an open afternoon.`,
+    sub_50k: `${petName}'s channel reached 50,000 subscribers.`,
     convention_guest: `${petName} became a Convention Guest! An appearance fee arrived, along with new set and model opportunities.`,
-    tournament_host: `${petName} became a Tournament Host! A special tournament stream is waiting for an open afternoon.`,
+    sub_100k: `${petName}'s channel reached 100,000 subscribers.`,
     three_d_ready: `${petName}'s channel reached 3D Ready! The final model commission is now available.`,
+    sub_200k: `${petName}'s channel reached 200,000 subscribers.`,
+    sub_250k: `${petName}'s channel reached 250,000 subscribers.`,
+    sub_500k: `${petName}'s channel reached 500,000 subscribers.`,
+    sub_1m: `${petName}'s channel reached one million subscribers.`,
   };
   return (
     messages[milestone] ??

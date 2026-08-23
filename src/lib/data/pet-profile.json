@@ -1,27 +1,31 @@
 {
   "displayName": "Bri",
-  "avatarPath": "/bri.svg",
+  "avatarPath": "/companions/bri-default-pixel.png",
   "appearances": [
-    { "id": "classic", "label": "Classic", "assetPath": "/bri.svg" },
+    {
+      "id": "classic",
+      "label": "Classic",
+      "assetPath": "/companions/bri-default-pixel.png"
+    },
     {
       "id": "model_3_0",
       "label": "3.0-inspired",
-      "assetPath": "/companions/bri-bunny-2020.png"
+      "assetPath": "/companions/bri-default-pixel.png"
     },
     {
       "id": "pixie",
       "label": "Pixie-inspired",
-      "assetPath": "/companions/bri-pixie-2024.png"
+      "assetPath": "/companions/bri-default-pixel.png"
     },
     {
       "id": "goth_oni",
       "label": "Goth/oni-inspired",
-      "assetPath": "/companions/bri-goth-oni.png"
+      "assetPath": "/companions/bri-default-pixel.png"
     },
     {
       "id": "three_d_debut",
       "label": "3D-debut-inspired",
-      "assetPath": "/companions/bri-bunny-2022.png"
+      "assetPath": "/companions/bri-default-pixel.png"
     }
   ]
 }

@@ -5,8 +5,6 @@ import type { GameEvent } from '$lib/game-types';
 export const ITEM_NARRATIVE_TYPES = new Set([
   'item_used',
   'item_refused',
-  'item_reaction',
-  'item_discovery',
   'item_preparation',
   'craving_fulfilled',
   'sickness_onset',
@@ -25,12 +23,8 @@ export function itemJourneyMessage(
     return usedItemMessage(event, itemName, petName);
   if (event.type === 'item_refused')
     return `${petName} refused ${itemName ?? 'the item'}${event.message.includes('wasted') ? ', and it went to waste' : ''}.`;
-  if (event.type === 'item_reaction')
-    return `${petName} ${event.discovery === 'liked' ? 'really enjoyed' : 'managed to tolerate'} ${itemName ?? 'the food'}.`;
-  if (event.type === 'item_discovery')
-    return `${petName} tried ${itemName ?? 'the food'} and discovered something new about this serving.`;
   if (event.type === 'item_preparation')
-    return event.discovery === 'acceptable_preparation'
+    return event.preparation === 'acceptable'
       ? `${petName}'s ${itemName ?? 'food'} arrived just the way they wanted it.`
       : `${petName} was unhappy with how ${itemName ?? 'the food'} was prepared.`;
   if (event.type === 'craving_fulfilled')
@@ -70,14 +64,7 @@ function usedItemMessage(
   itemName: string | undefined,
   petName: string,
 ): string {
-  if (event.tags?.includes('pain-relief'))
-    return `${petName} took Painkillers. Pain Relief will ease the recurring symptoms for a while.`;
-  if (itemName === 'Limited-Edition Dr Pepper')
-    return `${petName} cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.`;
-  if (itemName === 'Electrolyte Sachet')
-    return `${petName} mixed an Electrolyte Sachet for a measured salt-and-water boost.`;
-  if (event.tags?.includes('feeding'))
-    return `${petName} tried ${itemName ?? 'the food'}.`;
+  if (event.itemNarration) return `${petName} ${event.itemNarration}`;
   if (event.actionLabel && itemName)
     return `${petName} used ${itemName} to ${event.actionLabel.toLowerCase()}.`;
   return itemName ? `${petName} used ${itemName}.` : `${petName} used an item.`;

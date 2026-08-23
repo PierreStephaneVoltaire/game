@@ -16,6 +16,7 @@ import {
 import type { Project } from '../game-types';
 import { HOUR_MS } from '../game-constants';
 import { criticalMetrics } from '../simulation/health-resolution';
+import { CAREER_TIERS } from '../progression-types';
 
 export type ProgressionActionResult = {
   state: GameState;
@@ -50,15 +51,10 @@ export function actionRequirementFailure(
 }
 
 function careerAtLeast(current: string, required: string): boolean {
-  const order = [
-    'starting_out',
-    'affiliate',
-    'partner',
-    'convention_guest',
-    'tournament_host',
-    'three_d_ready',
-  ];
-  return order.indexOf(current) >= order.indexOf(required);
+  return (
+    CAREER_TIERS.indexOf(current as (typeof CAREER_TIERS)[number]) >=
+    CAREER_TIERS.indexOf(required as (typeof CAREER_TIERS)[number])
+  );
 }
 
 export function startCommissionWork(

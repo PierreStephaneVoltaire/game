@@ -281,11 +281,17 @@ and an equal Mood −1 or 0 roll, followed by one deferred companion opportunity
 
 ## Feeding, nutrition, and cravings
 
-Liked foods apply at least Mood +1. Variable foods are neutral and reveal one
-seeded reaction. Disliked foods use their authored refusal chance and disliked
-Mood effect. Specific-preparation foods first make their authored preparation
-roll; an unacceptable preparation follows disliked behavior. A refused
-consumable has a separate 50% chance to be wasted.
+Every catalogue item owns an array of possible Journey lines. An accepted use
+selects one line with seeded randomness and prefixes the configured companion
+name. Items are familiar possessions and foods, so item use never produces a
+discovery event. Water, for example, uses authored reluctant-drinking lines
+instead of generic "tried" copy.
+
+Liked foods apply at least Mood +1. Variable foods are mechanically neutral
+but still use their item-authored narration. Disliked foods use their authored
+refusal chance and disliked Mood effect. Specific-preparation foods first make
+their authored preparation roll; an unacceptable preparation follows disliked
+behavior. A refused consumable has a separate 50% chance to be wasted.
 
 Automatic stream snacks select only Liked or Variable owned foods. They still
 use ordinary salt, water, sugar, protein, preparation, refusal, Full, Sick, and
@@ -386,8 +392,8 @@ The fourth model adds one permanent percentage point before multipliers.
 
 Legendary is eligible only at Creativity 10. Below 10, the other tier weights
 are normalized rather than doubled. June 29 and November 14 triple donation
-hit chance. Tournament Host's ×3 stacks with that multiplier, capped at 100%.
-Every donation is narrated.
+hit chance. The Tournament Appearance stream's ×3 stacks with that multiplier,
+capped at 100%. Every donation is narrated.
 
 ## Followers, milestones, and model projects
 
@@ -398,13 +404,23 @@ once. Donations and model rewards are then added.
 
 Milestones resolve in order, including several crossed by one result:
 
-| Followers | Career tier and reward                                                                      |
-| --------: | ------------------------------------------------------------------------------------------- |
-|       250 | Affiliate: hourly stream rate $8–$18 and Mood +2                                            |
-|       600 | Partner: hourly rate $10–$22 and first model tier unlocked                                  |
-|     1,200 | Convention Guest: $500 appearance fee, Convention Guest Set, and second model tier unlocked |
-|     2,000 | Tournament Host: third model tier and one fixed eight-hour stream with donation chance ×3   |
-|     3,500 | 3D Ready: fourth model tier unlocked                                                        |
+| Followers | Career tier and reward                                                                    |
+| --------: | ----------------------------------------------------------------------------------------- |
+|       100 | Debut; every run begins here                                                              |
+|       150 | First Model: first model tier unlocked                                                    |
+|     1,000 | 1K Subscribers: hourly stream rate $8–$18 and Mood +2                                     |
+|     5,000 | Model Redesign: second model tier unlocked                                                |
+|    10,000 | Twitch Partner: hourly stream rate $10–$22                                                |
+|    30,000 | 30K Subscribers                                                                           |
+|    40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
+|    50,000 | 50K Subscribers                                                                           |
+|    75,000 | Convention Guest: $500 appearance fee and Convention Guest Set                            |
+|   100,000 | 100K Subscribers                                                                          |
+|   150,000 | 3D Ready: fourth model tier unlocked                                                      |
+|   200,000 | 200K Subscribers                                                                          |
+|   250,000 | 250K Subscribers                                                                          |
+|   500,000 | 500K Subscribers                                                                          |
+| 1,000,000 | 1M Subscribers                                                                            |
 
 New Model Commission costs $300 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
@@ -412,12 +428,13 @@ project ends at the third local midnight and grants Mood +3, Creativity +2,
 Followers +50, a new active appearance, and a queued fixed four-hour debut
 stream.
 
-The appearances progress through 3.0-inspired, pixie-inspired,
-goth/oni-inspired, and 3D-debut-inspired models. Completing the fourth project
-is the actual 3D Debut and permanently increases base donation chance by one
-percentage point.
+The appearance identity progresses through 3.0-inspired, pixie-inspired,
+goth/oni-inspired, and 3D-debut-inspired models. Appearance artwork is selected
+entirely by the companion profile, and multiple identities may share one asset.
+Completing the fourth project is the actual 3D Debut and permanently increases
+base donation chance by one percentage point.
 
-Tournament and debut streams wait until ordinary stream blockers are gone and
+Tournament Appearance and model-debut streams wait until ordinary stream blockers are gone and
 a 13:00–19:59 opportunity occurs. Their fixed duration ignores ordinary
 Rest-duration subtraction, remains capped at midnight, and can end at a newly
 critical condition.

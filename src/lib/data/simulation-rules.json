@@ -278,21 +278,25 @@
   "progression": {
     "startingFollowers": 100,
     "milestones": [
-      { "id": "affiliate", "followers": 250, "streamRate": [8, 18], "mood": 2 },
+      { "id": "debut", "followers": 100 },
+      { "id": "first_model", "followers": 150, "unlockModelTier": 1 },
+      { "id": "sub_1k", "followers": 1000, "streamRate": [8, 18], "mood": 2 },
+      { "id": "model_redesign", "followers": 5000, "unlockModelTier": 2 },
+      { "id": "twitch_partner", "followers": 10000, "streamRate": [10, 22] },
+      { "id": "sub_30k", "followers": 30000 },
       {
-        "id": "partner",
-        "followers": 600,
-        "streamRate": [10, 22],
-        "unlockModelTier": 1
+        "id": "tournament_appearance",
+        "followers": 40000,
+        "unlockModelTier": 3
       },
-      {
-        "id": "convention_guest",
-        "followers": 1200,
-        "appearanceFee": 500,
-        "unlockModelTier": 2
-      },
-      { "id": "tournament_host", "followers": 2000, "unlockModelTier": 3 },
-      { "id": "three_d_ready", "followers": 3500, "unlockModelTier": 4 }
+      { "id": "sub_50k", "followers": 50000 },
+      { "id": "convention_guest", "followers": 75000, "appearanceFee": 500 },
+      { "id": "sub_100k", "followers": 100000 },
+      { "id": "three_d_ready", "followers": 150000, "unlockModelTier": 4 },
+      { "id": "sub_200k", "followers": 200000 },
+      { "id": "sub_250k", "followers": 250000 },
+      { "id": "sub_500k", "followers": 500000 },
+      { "id": "sub_1m", "followers": 1000000 }
     ]
   },
   "specialDates": [

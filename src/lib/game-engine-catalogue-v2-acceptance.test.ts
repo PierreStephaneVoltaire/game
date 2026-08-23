@@ -117,7 +117,7 @@ describe('V2 catalogue definition seam', () => {
     expect(item('new-model-commission')).toMatchObject({
       category: 'upgrade',
       price: 300,
-      progression: { requiredCareerTier: 'partner' },
+      progression: { requiredCareerTier: 'first_model' },
       itemActions: [
         expect.objectContaining({
           id: 'start_model_commission',
@@ -183,7 +183,7 @@ describe('single-run product boundary', () => {
       },
       progression: {
         followers: 100,
-        careerTier: 'starting_out',
+        careerTier: 'debut',
         activeAppearanceId: 'classic',
         completedModelTiers: [],
         queuedEventStreams: [],

@@ -1,6 +1,6 @@
 import rules from './data/simulation-rules.json';
 import items from './data/shop-items.json';
-import type { Metrics, StatusName } from './game-types';
+import type { CareerTier, Metrics, StatusName } from './game-types';
 
 export type EffectRange = { min: number; max: number };
 
@@ -15,7 +15,7 @@ export type ItemActionDefinition = {
     ownedItemTagsAny?: string[];
     minimumMetrics?: Partial<Metrics>;
     blockedStatuses?: StatusName[];
-    requiredCareerTier?: string;
+    requiredCareerTier?: CareerTier;
   };
   activity?: {
     type: 'commission_work';
@@ -40,6 +40,8 @@ export type AutomaticEventHookDefinition = {
 export type ItemDefinition = {
   id: string;
   name: string;
+  /** Seeded player-facing sentence fragments, prefixed with the configured companion name. */
+  narration: string[];
   category: string;
   price: number;
   image: string;
@@ -53,7 +55,7 @@ export type ItemDefinition = {
   stock?: { min: number; max: number };
   sugarServings?: number;
   progression?: {
-    requiredCareerTier?: string;
+    requiredCareerTier?: CareerTier;
     modelTier?: 1 | 2 | 3 | 4;
   };
   eventPoolModifiers?: Array<{

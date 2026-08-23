@@ -59,12 +59,14 @@ export type GameEvent = {
   causedBy?: string[];
   nutritionProfileId?: string;
   tags?: string[];
-  discovery?: string;
+  preparation?: 'acceptable' | 'unpreferred';
   activityType?: Activity['type'];
   healthDamageSources?: HealthDamageSource[];
   healthRecovery?: number;
   purchases?: PurchaseRecord[];
   itemName?: string;
+  /** Catalogue-authored sentence fragment selected for this item use. */
+  itemNarration?: string;
   actionLabel?: string;
   outcomeKind?: string;
   outcomeAccepted?: boolean;

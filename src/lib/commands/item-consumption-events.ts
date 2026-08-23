@@ -1,8 +1,28 @@
-import type { ItemDefinition } from '../game-definition';
+import type { ItemActionDefinition, ItemDefinition } from '../game-definition';
 import type { GameEvent, GameState } from '../game-types';
+import { actionRandom } from '../seeded-rng';
 import type { NutritionResolution } from './nutrition-resolution';
 
-export function itemDiscoveryEvents(input: {
+export function selectItemNarration(input: {
+  state: GameState;
+  item: ItemDefinition;
+  action: ItemActionDefinition;
+  sourceActionId: string;
+}): string {
+  const { state, item, action, sourceActionId } = input;
+  const index = Math.floor(
+    actionRandom(
+      state.seed,
+      state.stateVersion,
+      sourceActionId,
+      'item_narration',
+      `${item.id}:${action.id}`,
+    ) * item.narration.length,
+  );
+  return item.narration[index];
+}
+
+export function itemConsumptionEvents(input: {
   state: GameState;
   event: GameEvent;
   item: ItemDefinition;
@@ -19,30 +39,6 @@ export function itemDiscoveryEvents(input: {
       sourceActionId,
     });
 
-  if (item.preferences?.includes('liked'))
-    add({
-      type: 'item_reaction',
-      message: `${item.name} was enjoyed.`,
-      cause: event.id,
-      discovery: 'liked',
-      itemName: item.name,
-    });
-  if (item.preferences?.includes('disliked'))
-    add({
-      type: 'item_reaction',
-      message: `${item.name} was tolerated.`,
-      cause: event.id,
-      discovery: 'disliked',
-      itemName: item.name,
-    });
-  if (item.preferences?.includes('variable'))
-    add({
-      type: 'item_discovery',
-      message: `The companion discovered something new about ${item.name}.`,
-      cause: event.id,
-      discovery: 'variable',
-      itemName: item.name,
-    });
   if (item.preferences?.includes('specific_preparation'))
     add({
       type: 'item_preparation',
@@ -50,18 +46,8 @@ export function itemDiscoveryEvents(input: {
         ? `${item.name} was served in an unpreferred preparation.`
         : `${item.name} was served in an acceptable preparation.`,
       cause: event.id,
-      discovery: nutrition.preparationRejected
-        ? 'unpreferred_preparation'
-        : 'acceptable_preparation',
+      preparation: nutrition.preparationRejected ? 'unpreferred' : 'acceptable',
       itemName: item.name,
-    });
-  if (nutrition.nutritionProfileId)
-    add({
-      type: 'nutrition_profile_discovered',
-      message: `The companion discovered profile ${nutrition.nutritionProfileId} for ${item.name}.`,
-      cause: event.id,
-      nutritionProfileId: nutrition.nutritionProfileId,
-      discovery: 'variable_profile',
     });
   return events;
 }

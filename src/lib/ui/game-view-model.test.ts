@@ -36,8 +36,8 @@ describe('game view model', () => {
       },
       progression: {
         ...initial.progression,
-        followers: 650,
-        careerTier: 'partner',
+        followers: 10_500,
+        careerTier: 'twitch_partner',
         activeAppearanceId: 'model_3_0',
       },
       projects: [
@@ -54,15 +54,15 @@ describe('game view model', () => {
 
     const model = createGameViewModel(state, BUNDLED_GAME_DEFINITION);
 
-    expect(model.followers).toBe(650);
+    expect(model.followers).toBe(10_500);
     expect(model.career).toEqual({
-      key: 'partner',
-      label: 'Partner',
+      key: 'twitch_partner',
+      label: 'Twitch Partner',
       nextMilestone: {
-        key: 'convention_guest',
-        label: 'Convention Guest',
-        followers: 1_200,
-        remaining: 550,
+        key: 'sub_30k',
+        label: '30K Subscribers',
+        followers: 30_000,
+        remaining: 19_500,
       },
     });
     expect(model.debt).toEqual({ active: true, amount: 9_500 });

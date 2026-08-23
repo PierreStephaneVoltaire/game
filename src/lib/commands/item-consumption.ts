@@ -6,7 +6,10 @@ import { accepted, recordBondGain, rejected } from '../simulation/engine-state';
 import { resolveNutritionConsumption } from './nutrition-resolution';
 import { HOUR_MS } from '../game-constants';
 import { sugarCrashDelayHours } from '../status-rules';
-import { itemDiscoveryEvents } from './item-consumption-events';
+import {
+  itemConsumptionEvents,
+  selectItemNarration,
+} from './item-consumption-events';
 import { consumptionRuleEvents } from './consumption-rule-events';
 import {
   actionOwnership,
@@ -158,6 +161,12 @@ export function resolveItemConsumption(
     tags: action.tags,
     cause: action.id,
     itemName: item.name,
+    itemNarration: selectItemNarration({
+      state,
+      item,
+      action,
+      sourceActionId: command.commandId,
+    }),
     actionLabel: action.label,
     healthDamageSources:
       (nutrition.itemMetricDeltas.health ?? 0) < 0
@@ -171,7 +180,7 @@ export function resolveItemConsumption(
           ]
         : undefined,
   };
-  const discoveries = itemDiscoveryEvents({
+  const consumptionEvents = itemConsumptionEvents({
     state,
     event,
     item,
@@ -183,12 +192,12 @@ export function resolveItemConsumption(
     item,
     nutrition,
     sourceActionId: command.commandId,
-    discoveryCount: discoveries.length,
+    precedingEventCount: consumptionEvents.length,
     event,
   });
   const cravingEvent = nutrition.fulfilledCraving
     ? {
-        id: `event-${state.events.length + discoveries.length + ruleEvents.length + 2}`,
+        id: `event-${state.events.length + consumptionEvents.length + ruleEvents.length + 2}`,
         type: 'craving_fulfilled' as const,
         at: state.now,
         message: `${item.name} fulfilled the craving.`,
@@ -258,7 +267,7 @@ export function resolveItemConsumption(
     events: [
       ...state.events,
       event,
-      ...discoveries,
+      ...consumptionEvents,
       ...ruleEvents,
       ...(cravingEvent ? [cravingEvent] : []),
     ],
@@ -272,7 +281,7 @@ export function resolveItemConsumption(
     ),
     outcome: accepted('item_used', event.message, [
       event.id,
-      ...discoveries.map((item) => item.id),
+      ...consumptionEvents.map((item) => item.id),
       ...ruleEvents.map((item) => item.id),
       ...(cravingEvent ? [cravingEvent.id] : []),
     ]),

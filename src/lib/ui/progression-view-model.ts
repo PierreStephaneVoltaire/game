@@ -36,12 +36,21 @@ export type HospitalViewModel = {
 };
 
 const careerLabels: Record<CareerTier, string> = {
-  starting_out: 'Starting Out',
-  affiliate: 'Affiliate',
-  partner: 'Partner',
+  debut: 'Debut',
+  first_model: 'First Model',
+  sub_1k: '1K Subscribers',
+  model_redesign: 'Model Redesign',
+  twitch_partner: 'Twitch Partner',
+  sub_30k: '30K Subscribers',
+  tournament_appearance: 'Tournament Appearance',
+  sub_50k: '50K Subscribers',
   convention_guest: 'Convention Guest',
-  tournament_host: 'Tournament Host',
+  sub_100k: '100K Subscribers',
   three_d_ready: '3D Ready',
+  sub_200k: '200K Subscribers',
+  sub_250k: '250K Subscribers',
+  sub_500k: '500K Subscribers',
+  sub_1m: '1M Subscribers',
 };
 
 function careerFor(state: GameState): CareerViewModel {

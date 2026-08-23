@@ -41,7 +41,6 @@ const PREFERENCES = new Set([
   'disliked',
   'specific_preparation',
   'variable',
-  'never_had',
 ]);
 const ROOM_SLOTS = new Set([
   'bed',
@@ -89,6 +88,18 @@ function validateItem(
   const issues: string[] = [];
   if (!item.id || !item.name || !item.description)
     issues.push('missing identity/display field');
+  if (!Array.isArray(item.narration) || item.narration.length === 0)
+    issues.push('item narration needs at least one authored line');
+  else {
+    if (new Set(item.narration).size !== item.narration.length)
+      issues.push('duplicate item narration');
+    if (item.narration.some((line) => !line.trim()))
+      issues.push('empty item narration');
+    if (item.narration.some((line) => /\bdiscover(?:ed|ing|s)?\b/i.test(line)))
+      issues.push(
+        'item narration must not treat familiar items as discoveries',
+      );
+  }
   if (FORBIDDEN_ALIASES.has(item.id))
     issues.push('catalogue contains a non-canonical alias');
   if (!(item.category in CATEGORY_BANDS)) issues.push('unknown item category');
@@ -105,7 +116,7 @@ function validateItem(
     issues.push('qualitative nutrition hint is missing or generic');
   if (
     companionNamePattern.test(
-      `${item.description} ${item.qualitativeNutritionHint}`,
+      `${item.description} ${item.qualitativeNutritionHint} ${(item.narration ?? []).join(' ')}`,
     )
   )
     issues.push('catalogue copy hardcodes the companion name');

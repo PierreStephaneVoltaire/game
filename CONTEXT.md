@@ -81,7 +81,7 @@ _Avoid_: Level
 Nonblocking commission work that completes at its third run-local midnight.
 
 **Queued event stream**:
-A Tournament Host or model-debut stream waiting for its eligible prime-time
+A Tournament Appearance or model-debut stream waiting for its eligible prime-time
 opportunity.
 
 **Appearance**:

@@ -31,6 +31,7 @@ import {
   startFullBodyCommission,
 } from './progression-actions';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { selectItemNarration } from './item-consumption-events';
 
 export type ItemActionCommandResult = {
   handled: boolean;
@@ -180,6 +181,12 @@ export function handleItemActionCommand(
     tags: itemAction.tags,
     cause: itemAction.id,
     itemName: item.name,
+    itemNarration: selectItemNarration({
+      state,
+      item,
+      action: itemAction,
+      sourceActionId: command.commandId,
+    }),
     actionLabel: itemAction.label,
     healthDamageSources:
       (actionDeltas.health ?? 0) < 0

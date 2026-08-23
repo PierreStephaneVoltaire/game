@@ -48,7 +48,7 @@ export function applyFollowerMilestones(
     if (milestone.appearanceFee)
       state = { ...state, balance: state.balance + milestone.appearanceFee };
     if (
-      milestone.id === 'tournament_host' &&
+      milestone.id === 'tournament_appearance' &&
       !progression.queuedEventStreams.some(
         (stream) => stream.type === 'tournament',
       )
@@ -69,6 +69,7 @@ export function applyFollowerMilestones(
       at,
       message: `${milestone.id.replaceAll('_', ' ')} milestone reached.`,
       sourceActionId,
+      cause: milestone.id,
       followerDelta: milestone.followers,
     });
   }

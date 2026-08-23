@@ -153,7 +153,7 @@ const companionAppearances = petProfile.appearances.filter(
 );
 if (companionAppearances.length !== 4)
   issues.push(
-    `expected 4 generated companion appearances, found ${companionAppearances.length}`,
+    `expected 4 configured companion appearances, found ${companionAppearances.length}`,
   );
 for (const appearance of companionAppearances) {
   const filename = appearance.assetPath.replace('/companions/', '');
@@ -179,5 +179,5 @@ if (issues.length) {
   process.exit(1);
 }
 console.log(
-  `validated ${catalogue.length} catalogue PNGs and ${companionAppearances.length} companion PNGs`,
+  `validated ${catalogue.length} catalogue PNGs and ${companionAppearances.length} companion appearances across ${companionFiles.size} ${companionFiles.size === 1 ? 'PNG' : 'PNGs'}`,
 );

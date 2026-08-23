@@ -72,11 +72,11 @@ export function createRunState(
     },
     progression: {
       followers: rules.progression.startingFollowers,
-      careerTier: 'starting_out',
+      careerTier: 'debut',
       unlockedModelTiers: [],
       completedModelTiers: [],
       activeAppearanceId: startingAppearanceId(),
-      awardedMilestones: [],
+      awardedMilestones: ['debut'],
       queuedEventStreams: [],
       permanentDonationBonus: false,
     },
