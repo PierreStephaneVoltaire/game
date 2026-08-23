@@ -22,6 +22,7 @@ import {
 } from '../status-rules';
 import { resolveAttemptEvent } from '../event-rules';
 import { STAT_MAX, STAT_MIN } from '../game-constants';
+import { healthDamageSource } from '../simulation/health-resolution';
 
 export type ItemActionCommandResult = {
   handled: boolean;
@@ -136,6 +137,19 @@ export function handleItemActionCommand(
     status: itemAction.clearsStatuses?.[0],
     tags: itemAction.tags,
     cause: itemAction.id,
+    itemName: item.name,
+    actionLabel: itemAction.label,
+    healthDamageSources:
+      (actionDeltas.health ?? 0) < 0
+        ? [
+            healthDamageSource(
+              'item',
+              item.id,
+              item.name,
+              actionDeltas.health ?? 0,
+            ),
+          ]
+        : undefined,
   };
   let actionState: GameState = {
     ...state,

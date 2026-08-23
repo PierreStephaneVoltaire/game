@@ -7,6 +7,7 @@ import {
   recordBondGain,
   rejected,
 } from '../simulation/engine-state';
+import { healthDamageSource } from '../simulation/health-resolution';
 
 export type RoomCommandResult = {
   handled: boolean;
@@ -45,12 +46,30 @@ function placeItem(
       state,
       rejected('room_occupied', 'That room anchor is occupied.'),
     );
+  const roomDelta = appliedRoomMetricDelta(
+    state.metrics,
+    item.roomEffects,
+    definition.metricMin,
+    definition.metricMax,
+  );
   const event = {
     id: `event-${state.events.length + 1}`,
     type: 'item_placed',
     at: state.now,
     message: `Placed ${item.name} in the room.`,
     sourceActionId: command.commandId,
+    metricDeltas: roomDelta,
+    healthDamageSources:
+      (roomDelta.health ?? 0) < 0
+        ? [
+            healthDamageSource(
+              'item',
+              item.id,
+              item.name,
+              roomDelta.health ?? 0,
+            ),
+          ]
+        : undefined,
   };
   const next: GameState = {
     ...state,
@@ -64,12 +83,7 @@ function placeItem(
     ),
     roomModifiers: {
       ...state.roomModifiers,
-      [command.slot]: appliedRoomMetricDelta(
-        state.metrics,
-        item.roomEffects,
-        definition.metricMin,
-        definition.metricMax,
-      ),
+      [command.slot]: roomDelta,
     },
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
@@ -92,12 +106,25 @@ function unplaceItem(
     : undefined;
   if (!item)
     return result(state, rejected('unavailable', 'That room anchor is empty.'));
+  const unplacedMetrics = applyRoomMetricDelta(
+    state.metrics,
+    state.roomModifiers[command.slot] ?? item.roomEffects,
+    definition.metricMin,
+    definition.metricMax,
+    -1,
+  );
+  const healthDelta = unplacedMetrics.health - state.metrics.health;
   const event = {
     id: `event-${state.events.length + 1}`,
     type: 'item_unplaced',
     at: state.now,
     message: `Removed ${item.name} from the room.`,
     sourceActionId: command.commandId,
+    metricDeltas: { health: healthDelta },
+    healthDamageSources:
+      healthDelta < 0
+        ? [healthDamageSource('item', item.id, item.name, healthDelta)]
+        : undefined,
   };
   const next: GameState = {
     ...state,
@@ -108,13 +135,7 @@ function unplaceItem(
       ...state.inventory,
       [item.id]: (state.inventory[item.id] ?? 0) + 1,
     },
-    metrics: applyRoomMetricDelta(
-      state.metrics,
-      state.roomModifiers[command.slot] ?? item.roomEffects,
-      definition.metricMin,
-      definition.metricMax,
-      -1,
-    ),
+    metrics: unplacedMetrics,
     roomModifiers: Object.fromEntries(
       Object.entries(state.roomModifiers).filter(
         ([slot]) => slot !== command.slot,

@@ -17,11 +17,15 @@
       <section class="death-card" role="alert">
         <p class="eyebrow">TERMINAL RUN</p>
         <h2>Cause of death</h2>
-        <p>{model.death.cause}</p>
+        <ul class="death-causes">
+          {#each model.death.causes as cause (cause.name)}<li>
+              {cause.name}
+            </li>{/each}
+        </ul>
         <h3>Causal chain</h3>
         <ol>
           {#each model.causalEvents as event (event.id)}<li>
-              <strong>{event.label}</strong><span> — {event.message}</span>
+              <span>{event.message}</span>
             </li>{/each}
         </ol>
         <div class="graveyard">
@@ -31,7 +35,7 @@
       </section>
     {/if}
     <details class="event-log" open={!model.death}>
-      <summary>Full event log</summary>
+      <summary>{model.companion.name}'s journey</summary>
       <ol>
         {#each model.events as event (event.id)}<li>
             <time datetime={new Date(event.at).toISOString()}
@@ -40,11 +44,7 @@
                 dateStyle: 'medium',
                 timeStyle: 'short',
               }).format(event.at)}</time
-            ><span
-              ><strong>{event.label}</strong><span>
-                — {event.message}</span
-              ></span
-            >
+            ><span>{event.message}</span>
           </li>{/each}
       </ol>
     </details>
@@ -97,6 +97,10 @@
   .death-card li {
     padding: 4px 0;
   }
+  .death-causes {
+    margin: 8px 0 0;
+    padding-left: 22px;
+  }
   .graveyard {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -141,13 +145,6 @@
   .event-log time {
     color: #766d7f;
     font-size: 0.75rem;
-  }
-  .event-log strong {
-    display: block;
-    margin-bottom: 3px;
-    color: #512b9a;
-    font-size: 0.72rem;
-    text-transform: capitalize;
   }
   .event-log span {
     font-size: 0.82rem;

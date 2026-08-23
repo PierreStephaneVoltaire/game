@@ -3,6 +3,7 @@ import type { GameEvent, GameState } from './game-types';
 import { nextLocalMidnight } from './shop-rules';
 import rules from './data/simulation-rules.json';
 import { HOUR_MS } from './game-constants';
+import { criticalMetrics } from './simulation/health-resolution';
 
 export function streamWeight(state: GameState, commandId: string): number {
   if (
@@ -79,6 +80,7 @@ export function startAutonomousStream(
       hours <= 0
         ? 'Companion is too tired to stream.'
         : 'Companion started streaming.',
+    activityType: 'stream',
   };
   if (hours <= 0)
     return {
@@ -105,7 +107,10 @@ export function startAutonomousStream(
       startedAt: state.now,
       endsAt: state.now + hours * HOUR_MS,
       sourceActionId: commandId,
-      payload: { hourlyRate: rate },
+      payload: {
+        hourlyRate: rate,
+        startingCriticalMetrics: criticalMetrics(state.metrics).join(','),
+      },
     },
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,

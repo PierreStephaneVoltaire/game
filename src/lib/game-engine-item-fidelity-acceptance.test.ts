@@ -113,9 +113,10 @@ describe('item and history fidelity', () => {
     );
 
     expect(sickness?.metricDeltas?.health).toBe(-1);
-    expect(result.death?.cause).toBe(
-      'Uncrustables caused sickness from overfeeding.',
-    );
+    expect(result.death?.cause).toBe('Sickness');
+    expect(result.death?.causes).toEqual([
+      expect.objectContaining({ id: 'sick', name: 'Sickness' }),
+    ]);
     expect(result.death?.eventIds).toContain(sickness?.id);
   });
 

@@ -1,7 +1,6 @@
 import type { GameDefinition, ItemDefinition } from '$lib/game-definition';
 import type {
   GameCommand,
-  GameEvent,
   GameState,
   MetricName,
   StatusName,
@@ -11,7 +10,12 @@ import {
   actionOwnership,
   itemActionAvailable,
 } from '$lib/item-action-prerequisites';
-import { eventLabel, gameCopy, statusLabel } from './game-copy';
+import { gameCopy, statusLabel } from './game-copy';
+import {
+  projectCausalJourney,
+  projectJourney,
+  type JourneyEntryViewModel,
+} from './journey-events';
 
 type CatalogueItem = ItemDefinition;
 export type ItemActionViewModel = {
@@ -42,9 +46,7 @@ export type ItemViewModel = {
   qualitativeHint: string;
   placedSlot: string | null;
 };
-export type EventViewModel = Pick<GameEvent, 'id' | 'at' | 'message'> & {
-  label: string;
-};
+export type EventViewModel = JourneyEntryViewModel;
 export type ActivityViewModel = {
   label: string;
   endsAt: number;
@@ -69,8 +71,7 @@ export type GameViewModel = {
   metrics: MetricViewModel[];
   statuses: Array<{ key: StatusName; label: string }>;
   activity: ActivityViewModel | null;
-  death: { at: number; cause: string } | null;
-  eventCount: number;
+  death: { at: number; causes: Array<{ name: string }> } | null;
   events: EventViewModel[];
   causalEvents: EventViewModel[];
   anchors: Array<{ key: string; label: string; item: ItemViewModel | null }>;
@@ -138,10 +139,6 @@ function formatTime(value: number, timezone: string, locale: string): string {
   }).format(value);
 }
 
-function personalizeEventMessage(message: string): string {
-  return message.replace(/^Companion\b/, companion.name);
-}
-
 export function daypartFor(now: number, timezone: string): string {
   const hour = Number(
     new Intl.DateTimeFormat('en-CA', {
@@ -181,21 +178,10 @@ export function createGameViewModel(
   const cart = Object.keys(state.shop.cart)
     .map((id) => itemFor(state, definition, id, ownership))
     .filter((item): item is ItemViewModel => Boolean(item));
-  const causalEvents = state.death
-    ? state.events.filter((event) => state.death?.eventIds.includes(event.id))
+  const events = projectJourney(state.events, companion.name);
+  const causalEventViews = state.death
+    ? projectCausalJourney(state.events, state.death.eventIds, companion.name)
     : [];
-  const events = state.events.map((event) => ({
-    id: event.id,
-    at: event.at,
-    message: personalizeEventMessage(event.message),
-    label: eventLabel(event.type),
-  }));
-  const causalEventViews = causalEvents.map((event) => ({
-    id: event.id,
-    at: event.at,
-    message: personalizeEventMessage(event.message),
-    label: eventLabel(event.type),
-  }));
   return {
     companion,
     mode: state.mode,
@@ -222,9 +208,13 @@ export function createGameViewModel(
         }
       : null,
     death: state.death
-      ? { at: state.death.at, cause: state.death.cause }
+      ? {
+          at: state.death.at,
+          causes: state.death.causes?.map((cause) => ({
+            name: cause.name,
+          })) ?? [{ name: state.death.cause }],
+        }
       : null,
-    eventCount: state.events.length,
     events,
     causalEvents: causalEventViews,
     anchors: anchorKeys.map((key) => ({

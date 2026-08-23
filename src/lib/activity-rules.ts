@@ -86,9 +86,6 @@ export function completionDelta(
   const recovered = Math.min(STAT_MAX - startingRest, plannedRecovery);
   return {
     rest: recovered,
-    health: Math.floor(
-      recovered / rules.activities.completion.rest.healthDivisor,
-    ),
     mood: Math.floor(recovered / rules.activities.completion.rest.moodDivisor),
   };
 }

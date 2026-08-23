@@ -124,6 +124,11 @@ function checkoutCart(
     at: state.now,
     message: `Checked out ${lines.length} item${lines.length === 1 ? '' : 's'}.`,
     sourceActionId: command.commandId,
+    purchases: lines.map((line) => ({
+      itemId: line.item.id,
+      itemName: line.item.name,
+      quantity: line.quantity,
+    })),
   };
   const next: GameState = {
     ...state,
@@ -177,6 +182,7 @@ function buyItem(
     at: state.now,
     message: `Bought ${quantity} ${item.name}.`,
     sourceActionId: command.commandId,
+    purchases: [{ itemId: item.id, itemName: item.name, quantity }],
   };
   const next: GameState = {
     ...state,

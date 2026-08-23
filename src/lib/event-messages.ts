@@ -48,5 +48,5 @@ export function activityCompletionMessage(type: Activity['type']): string {
   if (type === 'socialize') return 'Socializing finished.';
   if (type === 'play') return 'Play finished.';
   if (type === 'stream') return 'The stream finished.';
-  return 'Medical Care finished.';
+  return 'The hospital visit finished.';
 }

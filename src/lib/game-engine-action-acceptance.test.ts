@@ -109,9 +109,9 @@ describe('activity distributions and refusals', () => {
     const recovered = completed.metricDeltas?.rest ?? 0;
     expect(completed.metricDeltas).toMatchObject({
       rest: recovered,
-      health: Math.floor(recovered / 4),
       mood: Math.floor(recovered / 6),
     });
+    expect(completed.metricDeltas?.health).toBeUndefined();
     expect(result.state.statuses.sleep_deprived).toBeUndefined();
   });
 

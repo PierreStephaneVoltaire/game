@@ -6,6 +6,8 @@ import { accepted, recordBondGain, rejected } from '../simulation/engine-state';
 import { resolveNutritionConsumption } from './nutrition-resolution';
 import { HOUR_MS } from '../game-constants';
 import { sugarCrashDelayHours } from '../status-rules';
+import { healthDamageSource } from '../simulation/health-resolution';
+import { itemDiscoveryEvents } from './item-consumption-events';
 import {
   actionOwnership,
   itemActionAvailable,
@@ -98,6 +100,7 @@ export function resolveItemConsumption(
         ? `${item.name} was refused and wasted.`
         : `${item.name} was refused.`,
       sourceActionId: command.commandId,
+      itemName: item.name,
     };
     const next: GameState = {
       ...state,
@@ -126,63 +129,27 @@ export function resolveItemConsumption(
     nutritionProfileId: nutrition.nutritionProfileId,
     tags: action.tags,
     cause: action.id,
+    itemName: item.name,
+    actionLabel: action.label,
+    healthDamageSources:
+      (nutrition.itemMetricDeltas.health ?? 0) < 0
+        ? [
+            healthDamageSource(
+              'item',
+              item.id,
+              item.name,
+              nutrition.itemMetricDeltas.health ?? 0,
+            ),
+          ]
+        : undefined,
   };
-  const discoveries: GameEvent[] = [];
-  if (item.preferences?.includes('liked'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_reaction',
-      at: state.now,
-      message: `${item.name} was enjoyed.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: 'liked',
-    });
-  if (item.preferences?.includes('disliked'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_reaction',
-      at: state.now,
-      message: `${item.name} was tolerated.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: 'disliked',
-    });
-  if (item.preferences?.includes('variable'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_discovery',
-      at: state.now,
-      message: `The companion discovered something new about ${item.name}.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: 'variable',
-    });
-  if (item.preferences?.includes('specific_preparation'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_preparation',
-      at: state.now,
-      message: nutrition.preparationRejected
-        ? `${item.name} was served in an unpreferred preparation.`
-        : `${item.name} was served in an acceptable preparation.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: nutrition.preparationRejected
-        ? 'unpreferred_preparation'
-        : 'acceptable_preparation',
-    });
-  if (nutrition.nutritionProfileId)
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'nutrition_profile_discovered',
-      at: state.now,
-      message: `The companion discovered profile ${nutrition.nutritionProfileId} for ${item.name}.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      nutritionProfileId: nutrition.nutritionProfileId,
-      discovery: 'variable_profile',
-    });
+  const discoveries = itemDiscoveryEvents({
+    state,
+    event,
+    item,
+    nutrition,
+    sourceActionId: command.commandId,
+  });
   const ruleEvents: GameEvent[] = [];
   if (nutrition.fullFeedSuppressed)
     ruleEvents.push({
@@ -207,6 +174,15 @@ export function resolveItemConsumption(
       causedBy: [event.id],
       status: 'sick',
       metricDeltas: nutrition.sickFeedingDeltas,
+      healthDamageSources: [
+        healthDamageSource(
+          'status',
+          'sick',
+          'Sickness',
+          nutrition.sickFeedingDeltas.health ?? 0,
+          [event.id],
+        ),
+      ],
     });
   if (nutrition.sickFeedingHarm)
     ruleEvents.push({
@@ -218,6 +194,15 @@ export function resolveItemConsumption(
       causedBy: [event.id],
       status: 'sick',
       metricDeltas: nutrition.sickFeedingDeltas,
+      healthDamageSources: [
+        healthDamageSource(
+          'status',
+          'sick',
+          'Sickness',
+          nutrition.sickFeedingDeltas.health ?? 0,
+          [event.id],
+        ),
+      ],
     });
   if (nutrition.kidneyStone)
     ruleEvents.push({
@@ -229,6 +214,15 @@ export function resolveItemConsumption(
       causedBy: [event.id],
       status: 'kidney_stone',
       metricDeltas: nutrition.kidneyStoneDeltas,
+      healthDamageSources: [
+        healthDamageSource(
+          'status',
+          'kidney_stone',
+          'Kidney stone complications',
+          nutrition.kidneyStoneDeltas.health ?? 0,
+          [event.id],
+        ),
+      ],
     });
   const cravingEvent = nutrition.fulfilledCraving
     ? {

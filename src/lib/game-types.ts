@@ -41,6 +41,32 @@ export type GameEvent = {
   nutritionProfileId?: string;
   tags?: string[];
   discovery?: string;
+  activityType?: Activity['type'];
+  healthDamageSources?: HealthDamageSource[];
+  healthRecovery?: number;
+  purchases?: PurchaseRecord[];
+  itemName?: string;
+  actionLabel?: string;
+  outcomeKind?: string;
+  outcomeAccepted?: boolean;
+};
+
+export type HealthDamageSource = {
+  kind: 'status' | 'item' | 'event';
+  id: string;
+  name: string;
+  amount: number;
+  eventIds: string[];
+};
+
+export type DeathCause = Pick<HealthDamageSource, 'kind' | 'id' | 'name'> & {
+  eventIds: string[];
+};
+
+export type PurchaseRecord = {
+  itemId: string;
+  itemName: string;
+  quantity: number;
 };
 
 export type Activity = {
@@ -74,6 +100,8 @@ export type GameHistory = {
   sugarCrashDueAt: number | null;
   lastStatusReconcileAt: number;
   decayRemainderHours: number;
+  healthRemainderHours: number;
+  pendingFoodDecayHit: boolean;
   eventCooldowns: Record<string, number>;
   oncePerLocalDate: Record<string, string>;
   cravingItemId: string | null;
@@ -82,7 +110,9 @@ export type GameHistory = {
 
 export type DeathRecord = {
   at: number;
+  /** Compatibility summary; player UI renders the structured causes. */
   cause: string;
+  causes?: DeathCause[];
   eventIds: string[];
 };
 

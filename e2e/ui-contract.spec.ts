@@ -109,9 +109,7 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
   await expect(page.getByRole('link', { name: /back to room/i })).toBeVisible();
   await page.getByRole('link', { name: /back to room/i }).click();
 
-  await expect(page.locator('.companion-caption')).toHaveText(
-    'Just rainbows and sunshine.',
-  );
+  await expect(page.locator('.companion-caption')).toHaveText(/journey began/i);
   const settings = page.locator('details.settings');
   await settings.locator('summary', { hasText: 'Settings' }).click();
   await expect(settings).toContainText('Realtime mode');

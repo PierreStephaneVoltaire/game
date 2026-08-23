@@ -8,16 +8,23 @@ import { resolveTimelineEffects } from './timeline-effects';
 import { nextStatusBoundary } from '../status-rules';
 import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
+import { criticalMetrics, isCriticalState } from './health-resolution';
 
 export type ReconcileResult = Transition & {
   elapsedHours: number;
   eventIds: string[];
 };
 
+export type ReconcileOptions = {
+  stopAtCritical?: boolean;
+  preventLethalDecay?: boolean;
+};
+
 export function reconcileTime(
   state: GameState,
   now: number,
   definition: GameDefinition,
+  options: ReconcileOptions = {},
 ): ReconcileResult {
   if (state.death)
     return { state, outcomes: [], elapsedHours: 0, eventIds: [] };
@@ -39,6 +46,10 @@ export function reconcileTime(
   const nextDecayAt =
     state.lastResolvedAt +
     (intervalHours - state.history.decayRemainderHours) * HOUR_MS;
+  const nextHealthAt = state.activity
+    ? undefined
+    : state.lastResolvedAt +
+      (intervalHours - state.history.healthRemainderHours) * HOUR_MS;
   const nextStatusAt = nextStatusBoundary(state, state.lastResolvedAt);
   const nextMidnightAt = nextLocalMidnight(
     state.lastResolvedAt,
@@ -48,6 +59,7 @@ export function reconcileTime(
     state.activity?.endsAt,
     state.history.sugarCrashDueAt ?? undefined,
     nextDecayAt,
+    nextHealthAt,
     nextStatusAt,
     nextMidnightAt,
   ].filter(
@@ -58,8 +70,33 @@ export function reconcileTime(
   );
   const nextBoundary = boundaries.length ? Math.min(...boundaries) : null;
   if (nextBoundary !== null) {
-    const throughBoundary = reconcileTime(state, nextBoundary, definition);
-    const throughTarget = reconcileTime(throughBoundary.state, now, definition);
+    const throughBoundary = reconcileTime(
+      state,
+      nextBoundary,
+      definition,
+      options,
+    );
+    if (
+      options.stopAtCritical &&
+      !isCriticalState(state) &&
+      isCriticalState(throughBoundary.state)
+    )
+      return throughBoundary;
+    if (
+      state.mode === 'streaming' &&
+      state.activity &&
+      !throughBoundary.state.activity &&
+      throughBoundary.state.events
+        .slice(state.events.length)
+        .some((event) => event.type === 'activity_interrupted')
+    )
+      return throughBoundary;
+    const throughTarget = reconcileTime(
+      throughBoundary.state,
+      now,
+      definition,
+      options,
+    );
     return {
       state: throughTarget.state,
       outcomes: [...throughBoundary.outcomes, ...throughTarget.outcomes],
@@ -68,53 +105,68 @@ export function reconcileTime(
     };
   }
 
-  const decay = resolveDecay(state, now);
-  const {
-    intervals,
-    metricDeltas,
-    statusReconciliation,
-    streamSnackRequests,
-    bondIntervals,
-    resolvedDecayRemainderHours,
-  } = decay;
+  const decay = resolveDecay(state, now, {
+    preventLethal: options.preventLethalDecay,
+  });
   let deathAt = decay.deathAt;
   let reconciliationNow = decay.reconciliationNow;
   let next: GameState = {
     ...state,
     now: reconciliationNow,
     lastResolvedAt: reconciliationNow,
-    stateVersion: state.stateVersion,
-    metrics: statusReconciliation.metrics,
-    statuses: statusReconciliation.statuses,
+    metrics: decay.statusReconciliation.metrics,
+    statuses: decay.statusReconciliation.statuses,
     history: {
       ...state.history,
       lastStatusReconcileAt: reconciliationNow,
-      decayRemainderHours: resolvedDecayRemainderHours,
+      decayRemainderHours: decay.resolvedDecayRemainderHours,
+      healthRemainderHours: decay.resolvedHealthRemainderHours,
+      pendingFoodDecayHit: decay.pendingFoodDecayHit,
       lastBondGainAt: decay.lastBondGainAt,
-      sugarCrashDueAt: statusReconciliation.sugarCrashDueAt,
+      sugarCrashDueAt: decay.statusReconciliation.sugarCrashDueAt,
     },
   };
   const timeline = resolveTimelineEffects({
     state: next,
     definition,
-    statusReconciliation,
+    statusReconciliation: decay.statusReconciliation,
     reconciliationNow,
     deathAt,
-    streamSnackRequests,
+    streamSnackRequests: decay.streamSnackRequests,
     lastResolvedAt: state.lastResolvedAt,
   });
   next = timeline.state;
   const eventIds = timeline.eventIds;
   deathAt = timeline.deathAt;
-  const lethalEventId = timeline.lethalEventId;
   reconciliationNow = timeline.reconciliationNow;
-  const resolvedElapsedHours = timeline.resolvedElapsedHours;
+  const elapsedHours = timeline.resolvedElapsedHours;
+
+  if (deathAt) {
+    if (!timeline.lethalEventId) {
+      const event = timeEvent(next, reconciliationNow, decay);
+      next = appendEvent(next, event);
+      eventIds.push(event.id);
+    }
+    return terminalResult(next, eventIds, elapsedHours);
+  }
+  if (next.metrics.health <= 0)
+    return terminalResult(next, eventIds, elapsedHours);
+
   if (
-    !deathAt &&
-    next.metrics.health > 0 &&
     next.activity &&
-    reconciliationNow >= next.activity.endsAt
+    next.activity.type !== 'medical_care' &&
+    hasNewCriticalCondition(next)
   ) {
+    const completion = completeActivity({
+      state: next,
+      activity: next.activity,
+      reconciliationNow,
+      definition,
+      interrupted: true,
+    });
+    next = completion.state;
+    eventIds.push(...completion.eventIds);
+  } else if (next.activity && reconciliationNow >= next.activity.endsAt) {
     const completion = completeActivity({
       state: next,
       activity: next.activity,
@@ -124,70 +176,71 @@ export function reconcileTime(
     next = completion.state;
     eventIds.push(...completion.eventIds);
   }
-  if (deathAt) {
-    let terminalEventId: string | undefined;
-    if (!lethalEventId) {
-      const event: GameEvent = {
-        id: `event-${next.events.length + 1}`,
-        type: 'critical_health_loss',
-        at: reconciliationNow,
-        message: 'Critical needs caused the final Health loss.',
-        metricDeltas,
-      };
-      terminalEventId = event.id;
-      next = {
-        ...next,
-        events: [...next.events, event],
-        stateVersion: next.stateVersion + 1,
-      };
-    }
-    const beforeDeathEventCount = next.events.length;
-    next = recordDeathIfNeeded(next);
-    if (terminalEventId) eventIds.push(terminalEventId);
-    eventIds.push(
-      ...next.events.slice(beforeDeathEventCount).map((item) => item.id),
-    );
-    return result(next, eventIds, resolvedElapsedHours);
-  }
-  if (intervals === 0 && bondIntervals === 0 && eventIds.length === 0) {
-    next = recordDeathIfNeeded(next);
-    return {
-      state: next,
-      outcomes: [],
-      elapsedHours: resolvedElapsedHours,
-      eventIds: [],
-    };
-  }
-  if (intervals === 0 && bondIntervals === 0) {
-    const beforeDeathEventCount = next.events.length;
-    next = recordDeathIfNeeded(next);
-    eventIds.push(
-      ...next.events.slice(beforeDeathEventCount).map((event) => event.id),
-    );
+
+  const resolvedAnything =
+    decay.intervals > 0 || decay.healthIntervals > 0 || decay.bondIntervals > 0;
+  if (resolvedAnything) {
+    const event = timeEvent(next, reconciliationNow, decay);
+    next = appendEvent(next, event);
+    eventIds.push(event.id);
+  } else if (eventIds.length > 0) {
     next = { ...next, stateVersion: next.stateVersion + 1 };
-    return result(next, eventIds, resolvedElapsedHours);
   }
-  const event: GameEvent = {
-    id: `event-${next.events.length + 1}`,
-    type: 'time_reconciled',
-    at: reconciliationNow,
-    message: `${intervals} decay interval${intervals === 1 ? '' : 's'} resolved.`,
-    metricDeltas,
-  };
-  next = {
-    ...next,
-    events: [...next.events, event],
-    stateVersion: next.stateVersion + 1,
-  };
-  eventIds.push(event.id);
-  const beforeDeathEventCount = next.events.length;
+
+  const beforeDeath = next.events.length;
   next = recordDeathIfNeeded(next);
-  eventIds.push(
-    ...next.events
-      .slice(beforeDeathEventCount)
-      .map((deathEvent) => deathEvent.id),
+  eventIds.push(...next.events.slice(beforeDeath).map((event) => event.id));
+  if (!resolvedAnything && eventIds.length === 0)
+    return { state: next, outcomes: [], elapsedHours, eventIds: [] };
+  return result(next, eventIds, elapsedHours);
+}
+
+function timeEvent(
+  state: GameState,
+  at: number,
+  decay: ReturnType<typeof resolveDecay>,
+): GameEvent {
+  return {
+    id: `event-${state.events.length + 1}`,
+    type: 'time_reconciled',
+    at,
+    message: 'Time-based simulation rules were resolved.',
+    metricDeltas: decay.metricDeltas,
+    healthDamageSources:
+      decay.healthDamageSources.length > 0
+        ? decay.healthDamageSources
+        : undefined,
+    healthRecovery: decay.healthRecovery || undefined,
+  };
+}
+
+function appendEvent(state: GameState, event: GameEvent): GameState {
+  return {
+    ...state,
+    events: [...state.events, event],
+    stateVersion: state.stateVersion + 1,
+  };
+}
+
+function terminalResult(
+  state: GameState,
+  eventIds: string[],
+  elapsedHours: number,
+): ReconcileResult {
+  const beforeDeath = state.events.length;
+  const terminal = recordDeathIfNeeded(state);
+  eventIds.push(...terminal.events.slice(beforeDeath).map((event) => event.id));
+  return result(terminal, eventIds, elapsedHours);
+}
+
+function hasNewCriticalCondition(state: GameState): boolean {
+  if (!state.activity) return false;
+  const starting = String(state.activity.payload?.startingCriticalMetrics ?? '')
+    .split(',')
+    .filter(Boolean);
+  return criticalMetrics(state.metrics).some(
+    (metric) => !starting.includes(metric),
   );
-  return result(next, eventIds, resolvedElapsedHours);
 }
 
 function result(

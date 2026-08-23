@@ -1,5 +1,4 @@
 import { expect, signInAndChooseMode, test } from './fixtures';
-
 test('signs in and reaches the companion room', async ({ page }) => {
   await signInAndChooseMode(page, 'Realtime mode');
   await expect(page.getByRole('region', { name: /room/i })).toBeVisible();
@@ -97,8 +96,8 @@ test('renders the selected feed outcome and advances streaming time', async ({
 
   await signInAndChooseMode(page, 'Streaming mode');
   await page.getByRole('button', { name: 'Advance time' }).click();
-  await expect(page.locator('.companion-caption span')).toContainText(
-    'Time advanced',
+  await expect(page.locator('.companion-caption span')).not.toContainText(
+    /Time advanced|decay interval/,
   );
 });
 
@@ -128,7 +127,7 @@ test('blocks care during Realtime activity while navigation remains available', 
   await expect(page.getByRole('button', { name: 'Feed' })).toBeDisabled();
   await expect(page.locator('.activity')).toContainText(/resting until/i);
   await expect(page.locator('.companion-caption span')).toContainText(
-    'Rest started.',
+    /went to rest/i,
   );
 });
 
@@ -239,7 +238,7 @@ test('reaches terminal history through Streaming time without a restart affordan
   ).toBeVisible();
   await expect(page.getByText('Graveyard', { exact: true })).toBeVisible();
   await expect(page.locator('.death-card ol li').first()).toBeVisible();
-  await expect(page.getByText('Full event log', { exact: true })).toBeVisible();
+  await expect(page.locator('details.event-log summary')).toBeVisible();
 });
 
 test('uses autonomous stream income to purchase, place, and unplace a durable', async ({

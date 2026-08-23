@@ -93,7 +93,7 @@ describe('calendar and terminal timeline boundaries', () => {
       },
       activity: {
         id: 'calendar-rest',
-        type: 'rest' as const,
+        type: 'medical_care' as const,
         startedAt,
         endsAt: Date.UTC(2026, 7, 23, 2),
         sourceActionId: 'calendar-rest',
@@ -139,6 +139,14 @@ describe('calendar and terminal timeline boundaries', () => {
           lastPenaltyAt: 0,
         },
       },
+      activity: {
+        id: 'protected-rest',
+        type: 'rest' as const,
+        startedAt: 0,
+        endsAt: 24 * HOUR,
+        sourceActionId: 'protected-rest',
+        payload: { startingCriticalMetrics: 'health' },
+      },
     };
 
     const result = reconcileTime(
@@ -147,7 +155,7 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.cause).toBe('Kidney stone symptoms worsened.');
+    expect(result.death?.cause).toBe('Kidney stone complications');
     expect(
       result.events.filter(
         (event) =>
@@ -187,6 +195,14 @@ describe('calendar and terminal timeline boundaries', () => {
           metricDeltas: { health: -1 },
         },
       ],
+      activity: {
+        id: 'protected-rest',
+        type: 'rest' as const,
+        startedAt: 0,
+        endsAt: 24 * HOUR,
+        sourceActionId: 'protected-rest',
+        payload: { startingCriticalMetrics: 'health' },
+      },
     };
 
     const result = reconcileTime(

@@ -78,7 +78,7 @@ describe('reconcileTime', () => {
     expect(afterThreeHours.activity).toBeNull();
   });
 
-  test('derives two-hour Food and awake-Rest decay from timestamps', () => {
+  test('derives seeded Food opportunities and awake-Rest decay from timestamps', () => {
     const startedAt = Date.UTC(2026, 7, 21, 14);
     const initial = startRun(
       {
@@ -102,10 +102,8 @@ describe('reconcileTime', () => {
     ).state;
 
     expect(afterThreeHours.metrics).toMatchObject({ food: 5, rest: 6 });
-    expect(afterFourHours.metrics).toMatchObject({ food: 4, rest: 5 });
-    expect(afterFourHours.statuses.hungry).toMatchObject({
-      source: 'food',
-    });
+    expect(afterFourHours.metrics).toMatchObject({ food: 5, rest: 5 });
+    expect(afterFourHours.statuses.hungry).toBeUndefined();
     expect(afterFourHours.lastResolvedAt).toBe(startedAt + 4 * 60 * 60 * 1_000);
   });
 
@@ -116,7 +114,7 @@ describe('reconcileTime', () => {
     );
     const criticalFood = {
       ...started,
-      metrics: { ...started.metrics, food: 2, rest: 10, mood: 10 },
+      metrics: { ...started.metrics, food: 2, rest: 5, mood: 5 },
     };
 
     const afterFourHours = reconcileTime(
@@ -125,9 +123,9 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    // Food reaches 1 at two hours (Health −1), then 0 at four hours
-    // (Health −2): it must not multiply the terminal zero by both intervals.
-    expect(afterFourHours.metrics).toMatchObject({ food: 0, health: 5 });
+    // One seeded Food opportunity hits. Its critical damage applies once;
+    // the missed opportunity causes neither Food loss nor starvation damage.
+    expect(afterFourHours.metrics).toMatchObject({ food: 1, health: 7 });
   });
 
   test('repeats lonely penalties every twelve game-hours while the status holds', () => {
@@ -169,7 +167,8 @@ describe('reconcileTime', () => {
     );
     const nearDeath = {
       ...started,
-      metrics: { ...started.metrics, health: 1, food: 0, rest: 10, mood: 10 },
+      metrics: { ...started.metrics, health: 1, food: 0, rest: 5, mood: 5 },
+      history: { ...started.history, pendingFoodDecayHit: true },
     };
 
     const result = reconcileTime(
@@ -179,6 +178,9 @@ describe('reconcileTime', () => {
     );
 
     expect(result.state.death).toBeTruthy();
+    expect(result.state.death?.causes).toEqual([
+      expect.objectContaining({ name: 'Starvation' }),
+    ]);
     expect(result.state.events.at(-1)).toMatchObject({ type: 'death' });
     expect(result.state.death?.eventIds).toContain(
       result.state.events.at(-1)?.id,

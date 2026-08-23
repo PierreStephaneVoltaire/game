@@ -79,12 +79,12 @@
         </section>
 
         <StatusPanel statuses={model.statuses} />
-        {#if model.statuses.some((status) => status.key === 'kidney_stone')}
+        {#if model.statuses.some((status) => status.key === 'kidney_stone' || status.key === 'sick')}
           <button
             class="secondary-action"
             type="button"
             on:click={() => act({ type: 'medical_care' })}
-            disabled={careBlocked}>Medical Care</button
+            disabled={careBlocked}>Hospital</button
           >
         {/if}
 
@@ -111,7 +111,11 @@
         {#if model.death}
           <section class="death-card" role="alert">
             <h2>Run ended</h2>
-            <p>{model.death.cause}</p>
+            <ul>
+              {#each model.death.causes as cause (cause.name)}<li>
+                  {cause.name}
+                </li>{/each}
+            </ul>
             <a href={resolve('/game/history')}>View the causal history</a>
           </section>
         {/if}

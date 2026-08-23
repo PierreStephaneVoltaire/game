@@ -14,6 +14,7 @@ import {
 } from '../status-rules';
 import { STAT_MIN } from '../game-constants';
 import { statusTransitionMessage } from '../event-messages';
+import { recordDeath } from './death-resolution';
 
 export function appendStatusTransitionEvents(
   state: GameState,
@@ -53,28 +54,7 @@ export function isCompanionAttempt(type: GameCommand['type']): boolean {
 }
 
 export function recordDeathIfNeeded(state: GameState): GameState {
-  if (state.death || state.metrics.health > 0) return state;
-  const finalCause = [...state.events]
-    .reverse()
-    .find((event) => (event.metricDeltas?.health ?? 0) < 0);
-  const cause =
-    finalCause?.message ?? 'Final Health loss from a critical need.';
-  const causalIds = finalCause
-    ? [...(finalCause.causedBy ?? []), finalCause.id]
-    : [];
-  const deathEvent: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type: 'death',
-    at: state.now,
-    message: 'Companion died.',
-    cause,
-    causedBy: causalIds,
-  };
-  return {
-    ...state,
-    death: { at: state.now, cause, eventIds: [...causalIds, deathEvent.id] },
-    events: [...state.events, deathEvent],
-  };
+  return recordDeath(state);
 }
 
 export function supportsQuantity(item: ItemDefinition): boolean {
@@ -241,6 +221,8 @@ export function remember(
     message: outcome.message,
     sourceActionId: commandId,
     causedBy: outcome.eventIds,
+    outcomeKind: outcome.kind,
+    outcomeAccepted: outcome.accepted,
   };
   const receiptState = {
     ...state,

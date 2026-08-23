@@ -31,6 +31,8 @@ export function createRunState(
     sugarCrashDueAt: null,
     lastStatusReconcileAt: input.now,
     decayRemainderHours: 0,
+    healthRemainderHours: 0,
+    pendingFoodDecayHit: false,
     eventCooldowns: {},
     oncePerLocalDate: {},
     cravingItemId: null,

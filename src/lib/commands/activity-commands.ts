@@ -6,6 +6,10 @@ import { actionRandom } from '../seeded-rng';
 import { applyOverstimulation, isHighMood } from '../status-rules';
 import { accepted, rejected } from '../simulation/engine-state';
 import { HOUR_MS } from '../game-constants';
+import {
+  criticalMetrics,
+  isCriticalState,
+} from '../simulation/health-resolution';
 
 export type ActivityCommandResult = {
   handled: boolean;
@@ -30,11 +34,16 @@ type CompanionCommand = Extract<
   { type: 'rest' | 'socialize' | 'play' }
 >;
 
-type ReconcileResult = { state: GameState; eventIds: string[] };
+type ReconcileResult = {
+  state: GameState;
+  eventIds: string[];
+  elapsedHours: number;
+};
 type Reconcile = (
   state: GameState,
   now: number,
   definition: GameDefinition,
+  options?: { stopAtCritical?: boolean; preventLethalDecay?: boolean },
 ) => ReconcileResult;
 
 export function handleActivityCommand(
@@ -63,8 +72,11 @@ function wait(
         'Advance time is available in Streaming mode only.',
       ),
     );
+  const critical = isCriticalState(state);
+  const minimum = critical ? rules.wait.criticalMinHours : rules.wait.minHours;
+  const maximum = critical ? rules.wait.criticalMaxHours : rules.wait.maxHours;
   const hours =
-    rules.wait.minHours +
+    minimum +
     Math.floor(
       actionRandom(
         state.seed,
@@ -73,14 +85,18 @@ function wait(
         'wait',
         'hours',
       ) *
-        (rules.wait.maxHours - rules.wait.minHours + 1),
+        (maximum - minimum + 1),
     );
-  const waited = reconcile(state, state.now + hours * HOUR_MS, definition);
+  const waited = reconcile(state, state.now + hours * HOUR_MS, definition, {
+    stopAtCritical: !critical,
+    preventLethalDecay: !critical,
+  });
+  const actualHoursValue = waited.elapsedHours;
   return result(
     waited.state,
     accepted(
       'waited',
-      `Time advanced ${hours} hour${hours === 1 ? '' : 's'}.`,
+      `Time advanced ${formatHours(actualHoursValue)}.`,
       waited.eventIds,
     ),
   );
@@ -90,18 +106,19 @@ function medicalCare(
   state: GameState,
   command: MedicalCareCommand,
 ): ActivityCommandResult {
-  if (!state.statuses.kidney_stone)
+  if (!state.statuses.kidney_stone && !state.statuses.sick)
     return result(
       state,
-      rejected('unavailable', 'Medical Care is not needed.'),
+      rejected('unavailable', 'Hospital care is not needed.'),
     );
   const duration = rules.medicalCare.durationHours * HOUR_MS;
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'activity_started',
     at: state.now,
-    message: 'Medical Care started.',
+    message: 'Hospital visit started.',
     sourceActionId: command.commandId,
+    activityType: 'medical_care',
   };
   const next: GameState = {
     ...state,
@@ -120,7 +137,7 @@ function medicalCare(
   return {
     handled: true,
     state: next,
-    outcome: accepted('medical_started', 'Medical Care started.', [event.id]),
+    outcome: accepted('medical_started', 'Hospital visit started.', [event.id]),
     completionOwnsAttemptOpportunity: true,
   };
 }
@@ -175,6 +192,7 @@ function companionActivity(
     at: next.now,
     message: `${activityLabel(command.type)} started.`,
     sourceActionId: command.commandId,
+    activityType: command.type,
   };
   next = {
     ...next,
@@ -184,7 +202,10 @@ function companionActivity(
       startedAt: next.now,
       endsAt: next.now + duration,
       sourceActionId: command.commandId,
-      payload: overstimulated ? { suppressMoodGain: true } : undefined,
+      payload: {
+        ...(overstimulated ? { suppressMoodGain: true } : {}),
+        startingCriticalMetrics: criticalMetrics(next.metrics).join(','),
+      },
     },
     actionOrdinal: next.actionOrdinal + 1,
     stateVersion: next.stateVersion + 1,
@@ -215,4 +236,9 @@ function result(state: GameState, outcome: Outcome): ActivityCommandResult {
 function activityLabel(type: CompanionCommand['type']): string {
   if (type === 'socialize') return 'Socializing';
   return type[0].toUpperCase() + type.slice(1);
+}
+
+function formatHours(hours: number): string {
+  const rounded = Math.round(hours * 100) / 100;
+  return `${rounded} hour${rounded === 1 ? '' : 's'}`;
 }

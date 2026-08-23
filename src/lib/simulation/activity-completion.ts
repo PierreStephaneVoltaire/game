@@ -1,4 +1,4 @@
-import type { Activity, GameEvent, GameState } from '../game-types';
+import type { Activity, GameEvent, GameState, Metrics } from '../game-types';
 import type { GameDefinition } from '../game-definition';
 import rules from '../data/simulation-rules.json';
 import { actionRandom } from '../seeded-rng';
@@ -24,6 +24,7 @@ export type ActivityCompletionInput = {
   activity: Activity;
   reconciliationNow: number;
   definition: GameDefinition;
+  interrupted?: boolean;
 };
 
 export type ActivityCompletionResult = {
@@ -36,31 +37,36 @@ export function completeActivity({
   activity,
   reconciliationNow,
   definition,
+  interrupted = false,
 }: ActivityCompletionInput): ActivityCompletionResult {
-  const delta =
-    activity.type === 'stream'
-      ? {
-          creativity: rules.stream.completion.creativity,
-          rest: rules.stream.completion.rest,
-          mood: rules.stream.completion.mood[
-            Math.floor(
-              actionRandom(
-                state.seed,
-                state.stateVersion,
-                activity.sourceActionId,
-                'stream_completion',
-                'mood',
-              ) * rules.stream.completion.mood.length,
-            )
-          ],
-        }
-      : activity.type === 'medical_care'
+  const completedAt = interrupted ? reconciliationNow : activity.endsAt;
+  const elapsed = Math.max(0, completedAt - activity.startedAt);
+  const delta: Partial<Metrics> =
+    activity.type === 'medical_care'
+      ? rules.medicalCare.completion
+      : interrupted && activity.type !== 'rest'
         ? {}
-        : completionDelta(
-            activity.type as 'rest' | 'socialize' | 'play',
-            activity.endsAt - activity.startedAt,
-            state.metrics.rest,
-          );
+        : activity.type === 'stream'
+          ? {
+              creativity: rules.stream.completion.creativity,
+              rest: rules.stream.completion.rest,
+              mood: rules.stream.completion.mood[
+                Math.floor(
+                  actionRandom(
+                    state.seed,
+                    state.stateVersion,
+                    activity.sourceActionId,
+                    'stream_completion',
+                    'mood',
+                  ) * rules.stream.completion.mood.length,
+                )
+              ],
+            }
+          : completionDelta(
+              activity.type as 'rest' | 'socialize' | 'play',
+              elapsed,
+              state.metrics.rest,
+            );
   if (activity.payload?.suppressMoodGain) delete delta.mood;
   const beforeActivityMetrics = { ...state.metrics };
   const completedMetrics = { ...state.metrics };
@@ -73,11 +79,14 @@ export function completeActivity({
   }
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
-    type: 'activity_completed',
-    at: activity.endsAt,
-    message: activityCompletionMessage(activity.type),
+    type: interrupted ? 'activity_interrupted' : 'activity_completed',
+    at: completedAt,
+    message: interrupted
+      ? `${activityCompletionMessage(activity.type).replace(/ finished\.$/, '')} ended early.`
+      : activityCompletionMessage(activity.type),
     sourceActionId: activity.sourceActionId,
     metricDeltas: delta,
+    activityType: activity.type,
   };
   const activityOverstimulated = triggersOverstimulation(
     beforeActivityMetrics.mood,
@@ -104,7 +113,10 @@ export function completeActivity({
       false,
     ).statuses;
   }
-  if (activity.type === 'medical_care') delete statuses.kidney_stone;
+  if (activity.type === 'medical_care') {
+    delete statuses.kidney_stone;
+    delete statuses.sick;
+  }
   if (activity.type === 'rest')
     statuses = clearRestStatuses(statuses, completedMetrics);
   const income =
@@ -113,7 +125,7 @@ export function completeActivity({
           Number(
             activity.payload?.hourlyRate ?? rules.stream.income.minimumRate,
           ) *
-            ((activity.endsAt - activity.startedAt) / HOUR_MS) *
+            (elapsed / HOUR_MS) *
             (rules.stream.income.baseMultiplier +
               state.metrics.creativity / rules.stream.income.creativityDivisor),
         )
@@ -128,26 +140,29 @@ export function completeActivity({
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
   };
-  next = recordBondGain(next, state, activity.endsAt);
+  next = recordBondGain(next, state, completedAt);
   next = appendStatusTransitionEvents(
     next,
     beforeActivityStatuses,
     activity.sourceActionId,
   );
   const eventIds = [event.id];
-  const beforePenaltyCount = next.events.length;
-  next = applyCriticalHealthMoodPenalty(
-    next,
-    { ...next, metrics: beforeActivityMetrics },
-    activity.sourceActionId,
-  );
-  eventIds.push(
-    ...next.events.slice(beforePenaltyCount).map((item) => item.id),
-  );
+  if (activity.type !== 'medical_care') {
+    const beforePenaltyCount = next.events.length;
+    next = applyCriticalHealthMoodPenalty(
+      next,
+      { ...next, metrics: beforeActivityMetrics },
+      activity.sourceActionId,
+    );
+    eventIds.push(
+      ...next.events.slice(beforePenaltyCount).map((item) => item.id),
+    );
+  }
   if (
-    activity.type === 'rest' ||
-    activity.type === 'socialize' ||
-    activity.type === 'play'
+    !interrupted &&
+    (activity.type === 'rest' ||
+      activity.type === 'socialize' ||
+      activity.type === 'play')
   ) {
     const beforeEventCount = next.events.length;
     const beforeEventState = next;

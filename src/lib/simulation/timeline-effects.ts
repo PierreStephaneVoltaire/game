@@ -10,6 +10,9 @@ import {
 } from '../status-rules';
 import type { StatusReconciliation } from '../status-rules';
 import { HOUR_MS } from '../game-constants';
+import { healthDamageSource } from './health-resolution';
+import { statusDisplayName } from '../event-messages';
+import { appendStatusTransitionEvents } from './engine-state';
 
 export type TimelineEffectsInput = {
   state: GameState;
@@ -70,17 +73,30 @@ export function resolveTimelineEffects({
         String(snackIndex),
       );
       const item = snacks[Math.floor(roll * snacks.length)];
+      const beforeSnackEventCount = next.events.length;
+      const beforeSnackStatuses = next.statuses;
+      const snackCommandId = `${streamActivityId}:snack:${snackIndex}`;
       next = resolveItemConsumption(
         next,
         {
           type: 'use_item',
-          commandId: `${streamActivityId}:snack:${snackIndex}`,
+          commandId: snackCommandId,
           itemId: item.id,
           now: reconciliationNow,
         },
         definition,
         { automatic: true },
       ).state;
+      next = appendStatusTransitionEvents(
+        next,
+        beforeSnackStatuses,
+        snackCommandId,
+      );
+      eventIds.push(
+        ...next.events
+          .slice(beforeSnackEventCount)
+          .map((snackEvent) => snackEvent.id),
+      );
     }
   }
 
@@ -102,6 +118,7 @@ export function resolveTimelineEffects({
   }
   if (!deathAt)
     for (const effect of statusReconciliation.onsetEffects) {
+      if (!next.statuses[effect.status]) continue;
       const event: GameEvent = {
         id: `event-${next.events.length + 1}`,
         type: 'status_onset',
@@ -109,12 +126,17 @@ export function resolveTimelineEffects({
         message: effect.message,
         status: effect.status,
         metricDeltas: effect.metricDeltas,
+        healthDamageSources: damageSourcesForStatusEffect(
+          effect.status,
+          effect.metricDeltas.health,
+        ),
       };
       next = { ...next, events: [...next.events, event] };
       eventIds.push(event.id);
     }
   if (!deathAt)
     for (const effect of statusReconciliation.recurrenceEffects) {
+      if (!next.statuses[effect.status]) continue;
       const event: GameEvent = {
         id: `event-${next.events.length + 1}`,
         type: 'status_recurrence',
@@ -122,12 +144,17 @@ export function resolveTimelineEffects({
         message: effect.message,
         status: effect.status,
         metricDeltas: effect.metricDeltas,
+        healthDamageSources: damageSourcesForStatusEffect(
+          effect.status,
+          effect.metricDeltas.health,
+        ),
       };
       next = { ...next, events: [...next.events, event] };
       eventIds.push(event.id);
     }
   if (!deathAt)
     for (const effect of statusReconciliation.clearEffects) {
+      if (next.statuses[effect.status]) continue;
       const event: GameEvent = {
         id: `event-${next.events.length + 1}`,
         type: 'status_cleared',
@@ -156,7 +183,11 @@ export function resolveTimelineEffects({
     eventIds.push(event.id);
   }
 
-  if (!deathAt && next.statuses.kidney_stone) {
+  if (
+    !deathAt &&
+    next.statuses.kidney_stone &&
+    next.activity?.type !== 'medical_care'
+  ) {
     const record = next.statuses.kidney_stone;
     let causalEventIds = record.causalEventIds ?? [];
     const lastPenaltyAt = record.lastPenaltyAt ?? record.since;
@@ -177,6 +208,15 @@ export function resolveTimelineEffects({
         status: 'kidney_stone',
         metricDeltas: { health: healthDelta, rest: restDelta },
         causedBy: causalEventIds,
+        healthDamageSources: [
+          healthDamageSource(
+            'status',
+            'kidney_stone',
+            'Kidney stone complications',
+            healthDelta,
+            causalEventIds,
+          ),
+        ],
       };
       causalEventIds = [...causalEventIds, event.id];
       next = {
@@ -219,4 +259,27 @@ export function resolveTimelineEffects({
     reconciliationNow,
     resolvedElapsedHours,
   };
+}
+
+function damageSourcesForStatusEffect(
+  status: keyof GameState['statuses'],
+  healthDelta: number | undefined,
+) {
+  if ((healthDelta ?? 0) >= 0) return undefined;
+  const names: Partial<Record<keyof GameState['statuses'], string>> = {
+    starving: 'Starvation',
+    sleep_deprived: 'Sleep deprivation',
+    depressed: 'Depression',
+    sick: 'Sickness',
+    kidney_stone: 'Kidney stone complications',
+    full: 'Overfeeding',
+  };
+  return [
+    healthDamageSource(
+      'status',
+      status,
+      names[status] ?? statusDisplayName(status),
+      healthDelta ?? 0,
+    ),
+  ];
 }

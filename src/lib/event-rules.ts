@@ -1,6 +1,6 @@
 import type { GameDefinition } from './game-definition';
 import type { GameEvent, GameState } from './game-types';
-import { actionRandom, resolveRange } from './seeded-rng';
+import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
 import { startAutonomousStream, streamWeight } from './stream-rules';
 import { alignGameStatuses, applyStatusOnsetEffects } from './status-rules';
@@ -18,6 +18,7 @@ type Candidate =
   | `item_hook:${string}`;
 
 import { HOUR_MS, STAT_MAX, STAT_MIN } from './game-constants';
+import { resolveAutomaticEventHook } from './simulation/event-hook-resolution';
 
 /** Resolves exactly one weighted autonomous opportunity for one companion attempt. */
 export function resolveAttemptEvent(
@@ -163,29 +164,19 @@ export function resolveAttemptEvent(
   let cravingItemId = state.history.cravingItemId;
   if (selectedHook) {
     const hook = selectedHook.hook;
-    const metricDeltas: Partial<GameState['metrics']> = {};
-    for (const [metric, range] of Object.entries(hook.effects ?? {})) {
-      const name = metric as keyof GameState['metrics'];
-      const delta = resolveRange(
-        range,
-        actionRandom(
-          state.seed,
-          state.stateVersion,
-          commandId,
-          'automatic_hook_effect',
-          `${selectedHook.itemId}:${hook.id}:${name}`,
-        ),
-      );
-      metrics[name] = Math.max(
-        STAT_MIN,
-        Math.min(STAT_MAX, metrics[name] + delta),
-      );
-      metricDeltas[name] = delta;
-    }
-    if (Object.keys(metricDeltas).length) event.metricDeltas = metricDeltas;
-    if (hook.cooldownHours)
+    const resolution = resolveAutomaticEventHook({
+      state,
+      commandId,
+      itemId: selectedHook.itemId,
+      hook,
+    });
+    Object.assign(metrics, resolution.metrics);
+    if (Object.keys(resolution.metricDeltas).length)
+      event.metricDeltas = resolution.metricDeltas;
+    event.healthDamageSources = resolution.healthDamageSources;
+    if (resolution.cooldownAt)
       cooldowns[`item_hook:${selectedHook.itemId}:${hook.id}`] =
-        state.now + hook.cooldownHours * HOUR_MS;
+        resolution.cooldownAt;
   }
   if (selected === 'low_money_stress') {
     metrics.mood = Math.max(

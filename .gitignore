@@ -9,5 +9,5 @@ coverage/
 playwright-report/
 test-results/
 .DS_Store
-**.md
 .agents/
+**.md
