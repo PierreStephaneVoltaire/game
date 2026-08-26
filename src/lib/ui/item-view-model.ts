@@ -21,6 +21,7 @@ export type ItemViewModel = {
   id: string;
   name: string;
   category: string;
+  tags: string[];
   price: number;
   image: string;
   description: string;
@@ -74,7 +75,7 @@ function purchasePresentation(
       !insufficientFunds &&
       !ownershipBlocked,
     purchaseBlockReason: debtBlocked
-      ? 'Only food and medicine can be purchased while in debt.'
+      ? 'Only essential items can be purchased while in debt.'
       : progressionBlocked
         ? 'No unlocked model commission is currently available.'
         : insufficientFunds
@@ -108,6 +109,7 @@ export function itemFor(
     id: item.id,
     name: item.name,
     category: item.category,
+    tags: item.tags,
     price: item.price,
     image: item.image,
     description: item.description,

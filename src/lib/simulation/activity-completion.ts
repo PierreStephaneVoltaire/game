@@ -1,8 +1,9 @@
 import type { Activity, GameEvent, GameState, Metrics } from '../game-types';
 import type { GameDefinition } from '../game-definition';
 import rules from '../data/simulation-rules.json';
+import activityRules from '../data/activity-rules.json';
 import { actionRandom } from '../seeded-rng';
-import { completionDelta } from '../activity-rules';
+import { activityPrimaryMetric, completionDelta } from '../activity-rules';
 import { alignGameStatuses, triggersOverstimulation } from '../status-rules';
 import {
   applyCriticalHealthMoodPenalty,
@@ -15,8 +16,7 @@ import {
   overstimulationMoodDelta,
 } from '../status-rules';
 import { resolveAttemptEvent } from '../event-rules';
-import { HOUR_MS } from '../game-constants';
-import { STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
 import { activityCompletionMessage } from '../event-messages';
 import {
   completeStreamEconomy,
@@ -24,6 +24,8 @@ import {
 } from '../economy-rules';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { localDate } from '../shop-rules';
+import { creditIncome } from '../income-rules';
+import { recordStreamEnd } from '../audience-growth-rules';
 
 export type ActivityCompletionInput = {
   state: GameState;
@@ -72,10 +74,9 @@ export function completeActivity({
             }
           : activity.type === 'commission_work'
             ? {
-                rest: rules.activities.commissionWork.completion.rest,
-                creativity:
-                  rules.activities.commissionWork.completion.creativity,
-                mood: rules.activities.commissionWork.completion.mood[
+                rest: activityRules.commissionWork.completion.rest,
+                creativity: activityRules.commissionWork.completion.creativity,
+                mood: activityRules.commissionWork.completion.mood[
                   Math.floor(
                     actionRandom(
                       state.seed,
@@ -83,7 +84,7 @@ export function completeActivity({
                       activity.sourceActionId,
                       'commission_completion',
                       'mood',
-                    ) * rules.activities.commissionWork.completion.mood.length,
+                    ) * activityRules.commissionWork.completion.mood.length,
                   )
                 ],
               }
@@ -91,6 +92,9 @@ export function completeActivity({
                 activity.type as 'rest' | 'socialize' | 'play',
                 elapsed,
                 state.metrics.rest,
+                activity.payload?.activityOutcome === 'strong'
+                  ? 'strong'
+                  : 'normal',
               )
   ) as Partial<Metrics>;
   if (
@@ -98,15 +102,15 @@ export function completeActivity({
     state.history.repeatAction === activity.type &&
     state.history.repeatCount > 1
   )
-    delta.mood = 0;
+    delta[activityPrimaryMetric(activity.type)] = 0;
   if (activity.payload?.suppressMoodGain) delete delta.mood;
   const beforeActivityMetrics = { ...state.metrics };
   const completedMetrics = { ...state.metrics };
   for (const [name, value] of Object.entries(delta)) {
     const metric = name as keyof typeof completedMetrics;
-    completedMetrics[metric] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, completedMetrics[metric] + (value ?? 0)),
+    completedMetrics[metric] = clampMetric(
+      metric,
+      completedMetrics[metric] + (value ?? 0),
     );
   }
   const event: GameEvent = {
@@ -119,9 +123,19 @@ export function completeActivity({
     sourceActionId: activity.sourceActionId,
     metricDeltas: delta,
     activityType: activity.type,
+    activityNarration:
+      typeof activity.payload?.activityNarration === 'string'
+        ? activity.payload.activityNarration
+        : undefined,
+    activityOutcome:
+      activity.type === 'socialize' || activity.type === 'play'
+        ? activity.payload?.activityOutcome === 'strong'
+          ? 'strong'
+          : 'normal'
+        : undefined,
   };
   const activityOverstimulated = triggersOverstimulation(
-    beforeActivityMetrics.mood,
+    Number(activity.payload?.startingMood ?? beforeActivityMetrics.mood),
     delta.mood ?? 0,
   );
   if (activityOverstimulated) {
@@ -144,7 +158,12 @@ export function completeActivity({
   };
   if (activityOverstimulated) {
     statuses = applyOverstimulation(
-      completedMetrics,
+      {
+        ...completedMetrics,
+        mood: Number(
+          activity.payload?.startingMood ?? beforeActivityMetrics.mood,
+        ),
+      },
       statuses,
       'high_mood_activity',
       activity.endsAt,
@@ -171,11 +190,10 @@ export function completeActivity({
         })
       : 0;
   let next: GameState = {
-    ...state,
+    ...creditIncome(state, commissionPayout),
     metrics: completedMetrics,
     statuses,
     activity: null,
-    balance: state.balance + commissionPayout,
     history:
       activity.type === 'commission_work' && !interrupted
         ? {
@@ -187,6 +205,7 @@ export function completeActivity({
     stateVersion: state.stateVersion + 1,
   };
   if (activity.type === 'stream') {
+    next = recordStreamEnd(next, elapsed, interrupted);
     const economy = completeStreamEconomy(
       { ...next, metrics: state.metrics },
       activity.sourceActionId,
@@ -194,7 +213,6 @@ export function completeActivity({
       completedAt,
       Number(activity.payload?.hourlyRate ?? rules.stream.income.minimumRate),
       Number(activity.payload?.donationMultiplier ?? 1),
-      !interrupted,
     );
     next = {
       ...next,

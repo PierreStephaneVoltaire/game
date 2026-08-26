@@ -24,6 +24,7 @@ export type ItemActionDefinition = {
   service?: {
     type: 'model_commission' | 'full_body_commission';
   };
+  progressionEffect?: { type: 'activate_clippers' };
   clearsStatuses?: StatusName[];
   tags?: string[];
 };

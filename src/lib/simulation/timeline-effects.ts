@@ -14,6 +14,10 @@ import { completeDueProjects } from '../project-rules';
 import { resolveTimelineOpportunities } from './timeline-opportunities';
 import { appendTimelineStatusEvents } from './timeline-status-events';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { subscriberRevenueMultiplier } from '../follower-rules';
+import { creditIncome } from '../income-rules';
+import rules from '../data/simulation-rules.json';
+import { resolveAudienceGrowth } from '../audience-growth-rules';
 
 export type TimelineEffectsInput = {
   state: GameState;
@@ -129,6 +133,35 @@ export function resolveTimelineEffects({
     });
     next = opportunities.state;
     eventIds.push(...opportunities.eventIds);
+  }
+  if (
+    !deathAt &&
+    (reconciliationNow - next.history.runStartedAt) %
+      (rules.progression.subscriberRevenue.intervalHours * HOUR_MS) ===
+      0
+  ) {
+    const revenueMultiplier = subscriberRevenueMultiplier(next);
+    const amount = Math.round(
+      rules.progression.subscriberRevenue.baseAmount * revenueMultiplier,
+    );
+    const event: GameEvent = {
+      id: `event-${next.events.length + 1}`,
+      type: 'subscriber_revenue',
+      at: reconciliationNow,
+      message: `Subscriber Revenue paid $${amount}.`,
+      amount,
+      revenueMultiplier,
+    };
+    next = {
+      ...creditIncome(next, amount),
+      events: [...next.events, event],
+    };
+    eventIds.push(event.id);
+  }
+  if (!deathAt) {
+    const audience = resolveAudienceGrowth(next, reconciliationNow);
+    next = audience.state;
+    eventIds.push(...audience.eventIds);
   }
   if (!deathAt) {
     const statusEvents = appendTimelineStatusEvents({

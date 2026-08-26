@@ -3,7 +3,11 @@ import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from '../game-definition';
 import { dispatchCommand, reconcileTime, startRun } from '../game-engine';
 import type { GameState, Metrics } from '../game-types';
-import { recoveryForMetrics, resolveHealthWindow } from './health-resolution';
+import {
+  criticalMetrics,
+  recoveryForMetrics,
+  resolveHealthWindow,
+} from './health-resolution';
 
 const HOUR = 3_600_000;
 
@@ -30,6 +34,22 @@ function run(
 }
 
 describe('periodic Health resolution', () => {
+  test('treats the proportional Health band from 1 through 8 as critical', () => {
+    expect(criticalMetrics(metrics({ health: 8 }))).toContain('health');
+    expect(criticalMetrics(metrics({ health: 9 }))).not.toContain('health');
+  });
+
+  test('caps Health at 40 while leaving recovery amounts unchanged', () => {
+    const result = resolveHealthWindow({
+      health: 39,
+      metricsAfterDecay: metrics({ food: 10, rest: 10, mood: 10, health: 39 }),
+      recoveryMetrics: metrics({ food: 10, rest: 10, mood: 10, health: 39 }),
+      foodDecayHit: false,
+    });
+
+    expect(result).toMatchObject({ recovery: 2, health: 40 });
+  });
+
   test('uses the configured recovery buckets', () => {
     expect(recoveryForMetrics(metrics())).toBe(0);
     expect(recoveryForMetrics(metrics({ food: 6, rest: 7, mood: 6 }))).toBe(1);
@@ -168,7 +188,7 @@ describe('protected activities and Streaming fairness', () => {
     ).state;
 
     expect(result.now).toBe(12 * HOUR);
-    expect(result.balance).toBe(-9_980);
+    expect(result.balance).toBe(-9_974);
     expect(result.metrics.health).toBe(6);
     expect(result.metrics.food).toBeGreaterThanOrEqual(3);
     expect(result.metrics.rest).toBeGreaterThanOrEqual(3);

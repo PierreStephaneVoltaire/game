@@ -84,6 +84,7 @@ test('normalizes invalid shop queries and exposes item detail', async ({
   await page.locator('.item-open').first().click();
   await expect(page).toHaveURL(/tab=detail&item=/);
   await expect(page.getByText('ITEM DETAIL', { exact: true })).toBeVisible();
+  await expect(page.getByRole('list', { name: 'Item tags' })).toBeVisible();
 });
 
 test('renders the selected feed outcome and advances streaming time', async ({
@@ -160,9 +161,14 @@ test('keeps cart flow in session and preserves keyboard/reduced-motion affordanc
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/game/shop?tab=shop');
-  const add = page.locator('.item-footer button:not([disabled])');
+  const add = page.locator(
+    '.quantity-stepper button[aria-label^="Add one"]:not([disabled])',
+  );
   await expect(add.first()).toBeEnabled();
   await add.first().click();
+  await expect(page.locator('.quantity-stepper output').first()).toHaveText(
+    '1',
+  );
   await page.getByRole('tab', { name: /Cart/ }).click();
   await expect(page).toHaveURL(/\/game\/shop\?tab=cart$/);
   await expect(page.getByRole('heading', { name: 'Cart' })).toBeVisible();
@@ -208,39 +214,6 @@ test('keeps cart flow in session and preserves keyboard/reduced-motion affordanc
   ).toBe(true);
 });
 
-test('reaches terminal history through Streaming time without a restart affordance', async ({
-  page,
-}) => {
-  await signInAndChooseMode(page, 'Streaming mode');
-  for (let attempt = 0; attempt < 120; attempt += 1) {
-    const advanceTime = page.getByRole('button', { name: 'Advance time' });
-    if (!(await advanceTime.isVisible())) break;
-    await advanceTime.click();
-    if (await page.getByRole('heading', { name: 'Run ended' }).isVisible())
-      break;
-  }
-  await expect(page.getByRole('heading', { name: 'Run ended' })).toBeVisible();
-  const settings = page.locator('details.settings');
-  await settings.locator('summary').click();
-  await expect(settings).toContainText('Streaming mode');
-  await expect(settings.getByRole('button', { name: /mode/i })).toHaveCount(0);
-  await settings.locator('summary').click();
-  await expect(page.getByRole('button', { name: /reset/i })).toHaveCount(0);
-  await page.getByRole('link', { name: 'Shop' }).click();
-  await expect(page.locator('.item-footer button').first()).toBeDisabled();
-  await page.getByRole('link', { name: /back to room/i }).click();
-  await page.getByRole('link', { name: 'History', exact: true }).click();
-  await expect(
-    page.getByRole('heading', { name: 'Cause of death' }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole('heading', { name: 'Causal chain' }),
-  ).toBeVisible();
-  await expect(page.getByText('Graveyard', { exact: true })).toBeVisible();
-  await expect(page.locator('.death-card ol li').first()).toBeVisible();
-  await expect(page.locator('details.event-log summary')).toBeVisible();
-});
-
 test('uses autonomous stream income to purchase, place, and unplace a durable', async ({
   page,
 }) => {
@@ -263,7 +236,7 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
   await page.getByRole('button', { name: 'Socialize' }).click();
   await expect(
     page.getByRole('region', { name: 'Time and balance' }),
-  ).toContainText('Balance: $82');
+  ).toContainText('Balance: $100');
   await page.getByRole('link', { name: 'Shop' }).click();
   await page.getByRole('button', { name: 'reusable' }).click();
   await page

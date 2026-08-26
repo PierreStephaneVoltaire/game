@@ -214,6 +214,7 @@ function naturalNarrativeMessage(
       'creative_inspiration',
       'socks',
       'benign_room_event',
+      'off_stream_support',
       'item_automatic_hook',
     ].includes(event.type)
   )

@@ -47,7 +47,7 @@ export function purchaseQuantity(
 
 /** Categories that remain purchasable after the balance was already negative. */
 export function debtPurchaseAllowed(item: ItemDefinition): boolean {
-  return item.category === 'food' || item.category === 'medicine';
+  return item.tags.includes('essential');
 }
 
 /** Dynamic service eligibility that must hold when an item is purchased. */

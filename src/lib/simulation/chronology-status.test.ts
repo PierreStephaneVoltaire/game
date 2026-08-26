@@ -20,6 +20,40 @@ const metrics = (overrides: Partial<Metrics> = {}): Metrics => ({
 });
 
 describe('chronology and status contracts', () => {
+  test('repeats Lonely penalties every twelve game-hours while the status holds', () => {
+    const started = startRun(
+      { mode: 'realtime', now: 0, seed: 'lonely-cadence', timezone: 'UTC' },
+      BUNDLED_GAME_DEFINITION,
+    );
+    const lonely = {
+      ...started,
+      metrics: { ...started.metrics, food: 10, health: 20, bond: 2, mood: 10 },
+      statuses: { lonely: { since: 0, source: 'bond' } },
+      history: {
+        ...started.history,
+        nextAutonomousAt: 25 * HOUR_MS,
+      },
+      activity: {
+        id: 'rest-for-cadence',
+        type: 'rest' as const,
+        startedAt: 0,
+        endsAt: 48 * HOUR_MS,
+        sourceActionId: 'cadence-rest',
+      },
+    };
+
+    const result = reconcileTime(
+      lonely,
+      24 * HOUR_MS,
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+
+    expect(result.metrics.mood).toBe(8);
+    expect(
+      result.events.filter((event) => event.type === 'status_recurrence'),
+    ).toHaveLength(2);
+  });
+
   test('metric statuses use hysteresis rather than flickering at the boundary', () => {
     const starving = alignGameStatuses(metrics({ food: 2 }), {}, 0);
     expect(starving.starving).toBeDefined();
@@ -42,11 +76,10 @@ describe('chronology and status contracts', () => {
       priorSalt: rules.kidneyStone.saltThreshold,
       priorWater: rules.kidneyStone.waterThreshold,
       kidneyStoneRoll: 0,
-      naturalPassRoll: 0,
     });
     expect(result.kidneyStone).toBe(true);
     expect(result.statuses.kidney_stone?.naturalPassAt).toBe(
-      rules.kidneyStone.naturalPassHours[0] * 60 * 60 * 1000,
+      rules.kidneyStone.naturalPassHours * 60 * 60 * 1000,
     );
   });
 

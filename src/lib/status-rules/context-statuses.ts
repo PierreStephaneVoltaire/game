@@ -7,7 +7,7 @@ import type {
 import type { StatusEffectEvent } from '../status-rules';
 import { addStatus, clearStatus, isHighMood } from '../status-rules';
 import rules from '../data/simulation-rules.json';
-import { STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, STAT_MIN } from '../game-constants';
 export { resolveNutritionStatuses } from './nutrition-statuses';
 export type { NutritionStatusResolution } from './nutrition-statuses';
 
@@ -88,10 +88,7 @@ export function applyStatusOnsetEffects(
     if (previous[status] || !next[status]) return;
     for (const [metric, delta] of Object.entries(deltas)) {
       const name = metric as keyof Metrics;
-      result[name] = Math.max(
-        STAT_MIN,
-        Math.min(STAT_MAX, result[name] + (delta ?? 0)),
-      );
+      result[name] = clampMetric(name, result[name] + (delta ?? 0));
     }
     events.push({ status, metricDeltas: deltas, message });
   };

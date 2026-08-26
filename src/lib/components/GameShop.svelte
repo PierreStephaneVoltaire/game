@@ -143,8 +143,8 @@
     </header>
     {#if model.debt.active}
       <p class="debt-notice" role="status">
-        While in debt, food and medicine remain available. Care, reusable,
-        upgrade, and decoration purchases are paused.
+        While in debt, essential food, water, and medicine remain available.
+        Other purchases are paused.
       </p>
     {/if}
     <div class="tabs" role="tablist" aria-label="Shop sections">
@@ -192,6 +192,7 @@
           disabled={terminal}
           onOpen={openItem}
           onAdd={add}
+          onQuantity={cartQuantity}
         />
       </section>
     {:else if tab === 'cart'}

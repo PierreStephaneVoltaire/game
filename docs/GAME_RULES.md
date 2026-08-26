@@ -7,14 +7,15 @@ separate offline-recap screen.
 
 ## Core rules
 
-- Food, Health, Mood, Rest, Bond, and Creativity are whole numbers from 0
-  through 10. Values clamp at those limits.
-- Health, Food, Rest, or Mood at 0–2 is a critical condition. Bond and
-  Creativity are not critical conditions.
+- Health is a whole number from 0 through 40. Food, Mood, Rest, Bond, and
+  Creativity are whole numbers from 0 through 10. Values clamp at those limits.
+- Health at 1–8 or Food, Rest, or Mood at 0–2 is a critical condition. Health
+  0 is terminal. Bond and Creativity are not critical conditions.
 - All chance is seeded. The same seed, state, action, and opportunity produce
   the same outcome.
-- A run starts with Food 6, Health 8, Mood 6, Rest 7, Bond 4, Creativity 3,
-  $20, 100 Followers, one Water, one Uncrustables, and one Pretzel.
+- A run starts with Food 6, Health 32, Mood 6, Rest 7, Bond 4, Creativity 3,
+  $20, 100 Followers, one Water, one Uncrustables, one Pretzel, and one Five
+  Plain Tortillas.
 - It also starts with no statuses, timed effects, activity, project, room
   items, career rewards, or completed model tiers, using the classic
   appearance.
@@ -64,7 +65,10 @@ Food and awake Rest share a two-hour needs clock. Health has its own two-hour
 clock, Bond has a 48-hour clock, and autonomous opportunities occur every two
 hours anchored to run start. At a shared deadline, a pending caffeine-deferred
 Rest loss lands before the ordinary Rest loss. Natural Kidney Stone passage is
-resolved before a recurrence due at that same instant. Death stops all later
+resolved before a recurrence due at that same instant. At a shared two-hour
+boundary, due projects and milestones resolve first, the autonomous candidate
+is selected from the pre-Subscriber-Revenue state, Subscriber Revenue is
+credited, and an activity completion resolves afterward. Death stops all later
 work at its lethal boundary.
 
 ## Needs and Health
@@ -108,7 +112,7 @@ Food damage requires a successful Food-decay opportunity since the last
 unprotected Health check. Recovery and eligible damage combine before Health
 is clamped and death is checked.
 
-If Health is already 1–2 before an action phase, an actual Food, Rest, Bond, or
+If Health is already 1–8 before an action phase, an actual Food, Rest, Bond, or
 Creativity change in that phase also causes Mood −1. A companion action and its
 following autonomous event are separate phases.
 
@@ -147,14 +151,17 @@ proper Rest can help.
 
 ### Kidney Stone and Pain Relief
 
-Consumptions contribute salt and water scores to a rolling 48-hour window. If
-the totals before the current consumption are salt at least 8 and water at most
-2, that later consumption makes a separate 35% Kidney Stone roll.
+The ten most recent successful food or drink feeds contribute salt and water
+scores. A new feed is appended and the oldest is evicted before evaluation. If
+those ten-or-fewer feeds total at least salt 8 while water remains at most 2,
+that feed makes a separate seeded 5% Kidney Stone roll. Refusals, rejections,
+and non-food Medicine actions do not enter this window.
 
-Onset applies Mood −1, Health −1, and Rest −2, then chooses a natural passing
-deadline of 36, 48, 60, or 72 hours with equal chances. Until it clears, it
-causes Health −1 and Rest −1 every 12 hours. Natural passage clears the status,
-adds Mood +1, and is narrated. Hospital also clears it.
+Onset applies Mood −1, Health −1, and Rest −2. After each 72 active hours, one
+seeded 50% passage roll occurs. Success clears the status and grants Mood +1
+before a recurrence due at the same instant; failure schedules the next check
+72 hours later. Symptoms recur every 12 hours for Health −1 and Rest −1.
+Hospital also clears it and creates no immunity or cooldown.
 
 Painkillers cost $7 and can be consumed only while Kidney Stone is active.
 They suppress recurring Health and Rest harm for 12 game-hours without clearing
@@ -238,14 +245,19 @@ Rest 0–2 also enables a weight-10, once-per-Rest snoring narration.
 
 ### Socialize and Play
 
-Socialize lasts 15, 30, 45, or 60 minutes with equal chances and normally gives
-Mood +1 and Bond +1. Play lasts 1, 2, or 3 hours with equal chances and normally
-gives Mood +1 and Creativity +1.
+Socialize lasts 15, 30, 45, or 60 minutes with equal chances and gives Bond +1
+plus Creativity +1. Play lasts 1, 2, or 3 hours with equal chances and gives
+Bond +1 plus Mood +1. A seeded strong outcome, selected 25% of the time, raises
+the activity's primary reward from +1 to +2 while Bond remains +1. Each
+accepted activity selects a seeded authored vignette from its normal or strong
+pool when it starts.
 
 Their refusal chance adds 20 percentage points at Mood 0–2, 20 at Rest 0–2,
 and 50 while Annoyed, capped at 90%. Consecutive repetition no longer raises
-refusal chance. The first consecutive completion grants its normal Mood gain;
-repeats keep Bond or Creativity rewards but suppress Mood gain.
+refusal chance. The first consecutive completion grants its primary reward;
+repeats keep Bond but suppress Mood for Play or Creativity for Socialize.
+Switching to another companion action ends the repetition streak. Refusals and
+interruptions do not grant completion rewards.
 
 Rest, Socialize, Play, streams, and Commission Work end if a condition that was
 not critical at their start becomes critical. Interrupted Socialize, Play, and
@@ -316,19 +328,20 @@ time-owned weighted opportunity. Companion attempts have their own separate
 opportunities. During an activity, narration and stat events remain eligible,
 but another stream and autonomous Rest are not.
 
-| Candidate                 | Weight and eligibility                                                     |
-| ------------------------- | -------------------------------------------------------------------------- |
-| No visible event          | 100                                                                        |
-| Low-money stress          | 20 below $10, once per local date                                          |
-| Food craving              | 20 when a Liked target exists and no craving is active                     |
-| Creative inspiration      | 15, 12-hour cooldown, Creativity +1                                        |
-| Socks                     | 15, six-hour cooldown, Mood −1/+1/+1 equally                               |
-| Benign room event         | 10, four-hour cooldown                                                     |
-| Autonomous Rest           | 40 at Rest 0–2 with no activity                                            |
-| Rare full-body commission | 5 with an owned Rigging Tablet, no active one, and a 14-local-day cooldown |
-| Mom's Care Package        | 5 in debt or at Food 0–2, 72-hour cooldown                                 |
-| Rest snoring              | 10 once during an eligible low-Rest Rest                                   |
-| Autonomous stream         | Dynamic                                                                    |
+| Candidate                 | Weight and eligibility                                                                                   |
+| ------------------------- | -------------------------------------------------------------------------------------------------------- |
+| No visible event          | 100                                                                                                      |
+| Low-money stress          | 20 below $10, once per local date                                                                        |
+| Food craving              | 20 when a Liked target exists and no craving is active                                                   |
+| Creative inspiration      | 15, 12-hour cooldown, Creativity +1                                                                      |
+| Socks                     | Requires a placed Cat Tree; weight 15 plus placement modifiers, six-hour cooldown, Mood −1/+1/+1 equally |
+| Benign room event         | 10, four-hour cooldown                                                                                   |
+| Autonomous Rest           | 40 at Rest 0–2 with no activity                                                                          |
+| Rare full-body commission | 5 with an owned Rigging Tablet, no active one, and a 14-local-day cooldown                               |
+| Mom's Care Package        | 5 in debt or at Food 0–2, 72-hour cooldown                                                               |
+| Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
+| Autonomous stream         | Dynamic                                                                                                  |
+| Off-stream support        | 10, 12-hour cooldown, $5–$15 uniformly                                                                   |
 
 Mom's Care Package adds two seeded Liked foods, distinct where possible, and
 Mood +1. The full-body commission is a nonblocking project that completes at
@@ -336,6 +349,12 @@ the third local midnight and pays a seeded $400–$800. Placing Cat Tree adds 3
 to Socks weight.
 
 All catalogue-authored automatic hooks also join the weighted pool.
+
+Off-stream support ignores all nonterminal stream blockers and remains
+eligible during any activity. It can be selected by either a time-owned or an
+attempt-owned opportunity, pays income immediately, grants no Followers, and
+does not use or modify ordinary stream donation rules. Its selection neither
+starts a stream nor resets stream-drought protection.
 
 ## Autonomous streaming and donations
 
@@ -352,13 +371,21 @@ max(0,
   + 25 × ((Mood - 5) / 5)
   + 25 × ((Creativity - 5) / 5)
   + managed-nutrition bonus
+  + clamp(0, (drought hours - 24) × 4, 300)
 )
 ```
 
-The managed-nutrition bonus is 5, added before the daypart multiplier. The
-ordinary daypart multipliers are 0.5 from 04:00–08:59, 1.5 from
-13:00–19:59, and 1 otherwise. June 29 and November 14 double the final stream
-weight.
+The drought clock starts with the run and tracks time since an ordinary
+autonomous stream candidate last won the weighted draw. Its bonus is zero for
+24 hours, then rises by 4 weight per hour to a cap of 300. The managed-nutrition
+and drought bonuses are added before the daypart multiplier. The ordinary
+daypart multipliers are 0.5 from 04:00–08:59, 1.5 from 13:00–19:59, and 1
+otherwise. June 29 and November 14 double the final pity-inclusive weight.
+
+Drought time continues while streaming is blocked. Selecting an ordinary
+stream resets it even when the companion is too tired, the activity is later
+interrupted, or midnight caps its duration. Forced Tournament and model-debut
+streams do not reset it.
 
 Base duration is 1, 2, or 3 hours at 15% each; the remaining 55% is divided
 equally across 4–12 hours. Ordinary effective duration is base duration minus
@@ -387,20 +414,65 @@ The fourth model adds one permanent percentage point before multipliers.
 | --------------- | -----: | ----------------------: | --------: |
 | Kind Bridiot    |     55 |       $20–$60 uniformly |        +5 |
 | Raid windfall   |     27 |     $100–$400 uniformly |        +5 |
-| Whale           |     14 | $1,000–$3,000 uniformly |       +30 |
-| Legendary whale |      4 |         exactly $10,000 |       +30 |
+| Major donor     |     14 | $1,000–$3,000 uniformly |       +30 |
+| Legendary donor |      4 |         exactly $10,000 |       +30 |
 
 Legendary is eligible only at Creativity 10. Below 10, the other tier weights
 are normalized rather than doubled. June 29 and November 14 triple donation
 hit chance. The Tournament Appearance stream's ×3 stacks with that multiplier,
 capped at 100%. Every donation is narrated.
 
+## Subscriber Revenue
+
+Every run earns a deterministic Subscriber Revenue payment on each two-hour
+boundary anchored to run start. It begins at `$1 × 1`, has no random roll, does
+not enter or consume the autonomous pool, and remains active through Sick,
+Hospital, Kidney Stone, streams, and every other activity or status. A terminal
+run earns no later payments. Like every positive income source, it immediately
+reduces debt before producing a positive balance.
+
+The highest unlocked multiplier replaces the previous one; multipliers do not
+stack. Each tick uses `round($1 × multiplier)`. The yields below show twelve
+ticks over 24 game-hours and are not local-date caps:
+
+| Followers | Multiplier | Per tick | 12-tick yield |
+| --------: | ---------: | -------: | ------------: |
+|     0–29K |         1× |       $1 |           $12 |
+|    30,000 |       1.5× |       $2 |           $24 |
+|    50,000 |         2× |       $2 |           $24 |
+|   100,000 |         3× |       $3 |           $36 |
+|   200,000 |         4× |       $4 |           $48 |
+|   250,000 |         5× |       $5 |           $60 |
+|   500,000 |         7× |       $7 |           $84 |
+| 1,000,000 |        10× |      $10 |          $120 |
+
+Routine payments stay out of Journey. The milestone entry announces each
+multiplier upgrade.
+
 ## Followers, milestones, and model projects
 
-Followers never decrease. Only normally completed streams earn base stream
-Followers. The base rate per hour is `1 + Creativity / 10`; only exact elapsed
-time within 13:00–19:00 is doubled. All time segments are summed and rounded
-once. Donations and model rewards are then added.
+Followers never decrease. Natural audience growth resolves every two
+game-hours. Each tick adds the current career tier's baseline plus every active
+stream contribution, rounded once. Every real stream start contributes for
+seven days using the career tier and Creativity at its start:
+
+```text
+stream contribution = snapshotted tier rate × (1 + snapshotted Creativity × 0.02)
+```
+
+The per-tick tier rates are: Debut 1, First Model 2, 1K 10, Model Redesign 20,
+Twitch Partner 60, 30K 80, Tournament 100, 50K 150, Convention 200, 100K 300,
+3D Ready 400, 200K 500, 250K 1,000, 500K 2,000, and 1M 2,000. Overlapping
+streams stack and each expires independently at its exact seven-day boundary.
+Interrupted streams retain their contribution. Ordinary stream completion has
+no separate direct base-Follower award; donations and model rewards remain.
+
+Clippers are a $25 consumable Upgrade available from Debut. The first active
+Clipper pays immediately, then the stack publishes daily before a shared
+72-hour expiry. Each award is `50 Followers × current tier ordinal × stacks`.
+Using another Clipper adds a stack and renews the shared expiry without moving
+the already scheduled next daily tick or granting another immediate award.
+All stacks expire together.
 
 Milestones resolve in order, including several crossed by one result:
 
@@ -411,16 +483,16 @@ Milestones resolve in order, including several crossed by one result:
 |     1,000 | 1K Subscribers: hourly stream rate $8–$18 and Mood +2                                     |
 |     5,000 | Model Redesign: second model tier unlocked                                                |
 |    10,000 | Twitch Partner: hourly stream rate $10–$22                                                |
-|    30,000 | 30K Subscribers                                                                           |
+|    30,000 | 30K Subscribers: Subscriber Revenue 1.5×                                                  |
 |    40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
-|    50,000 | 50K Subscribers                                                                           |
+|    50,000 | 50K Subscribers: Subscriber Revenue 2×                                                    |
 |    75,000 | Convention Guest: $500 appearance fee and Convention Guest Set                            |
-|   100,000 | 100K Subscribers                                                                          |
+|   100,000 | 100K Subscribers: Subscriber Revenue 3×                                                   |
 |   150,000 | 3D Ready: fourth model tier unlocked                                                      |
-|   200,000 | 200K Subscribers                                                                          |
-|   250,000 | 250K Subscribers                                                                          |
-|   500,000 | 500K Subscribers                                                                          |
-| 1,000,000 | 1M Subscribers                                                                            |
+|   200,000 | 200K Subscribers: Subscriber Revenue 4×                                                   |
+|   250,000 | 250K Subscribers: Subscriber Revenue 5×                                                   |
+|   500,000 | 500K Subscribers: Subscriber Revenue 7×                                                   |
+| 1,000,000 | 1M Subscribers: Subscriber Revenue 10×                                                    |
 
 New Model Commission costs $300 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
@@ -441,27 +513,28 @@ critical condition.
 
 ## Shop, Inventory, and room
 
-The catalogue has exactly 225 items:
+The catalogue has exactly 226 items:
 
 | Category   | Count |
 | ---------- | ----: |
-| Food       |   109 |
+| Food       |   110 |
 | Medicine   |     2 |
 | Care       |     3 |
 | Reusable   |    73 |
-| Upgrade    |    22 |
-| Decoration |    16 |
+| Upgrade    |    23 |
+| Decoration |    15 |
 
 The renamed items are Mini Tacos, Cheeseless Toppingless Pizza, and The
 Concoction. Cheeseless Toppingless Pizza has an 85% acceptable-preparation
 chance.
 
-The nine added definitions are Insurance Card ($150, at most one owned),
+The catalogue additions include Insurance Card ($150, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($9; salt 2/water 2), Jar of Pickle Juice
 ($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($25;
 reusable Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Pepper
-($12; stock 1–2; two sugar servings), Convention Guest Set ($120), and New
-Model Commission ($300).
+($12; stock 1–2; two sugar servings), Convention Guest Set ($120), New Model
+Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
+Food and starter comfort item with Food +2 and Mood +2.
 
 Each local date receives a seeded 24-item rotation:
 
@@ -471,17 +544,18 @@ Each local date receives a seeded 24-item rotation:
 - 3 Upgrade; and
 - 3 Decoration.
 
-Every rotation guarantees one affordable edible and one hydration-support
-item. Ordinary stock is seeded from 1 through 5; an item's authored fixed range
+Every rotation always includes Water, plus guarantees one affordable edible
+and one hydration-support item. Ordinary stock is seeded from 1 through 5; an item's authored fixed range
 overrides that. Milestone-gated items join the candidate pool only after their
 unlock.
 
 Positive but insufficient balances cannot cross into debt by shopping. When a
-command begins with a negative balance, Food and Medicine can be purchased
-without an affordability check; Care, Reusable, Upgrade, and Decoration remain
-blocked. Electrolytes and Insurance are Care. One successful Food/Medicine
-transaction made while already in debt applies Mood −1, regardless of quantity
-or cart lines. The once-per-local-date low-money event remains separate.
+command begins with a negative balance, only catalogue items tagged Essential
+can be purchased without an affordability check. Water, Five Plain Tortillas,
+Salt Tablet, and Painkillers are Essential; premium food and untagged items
+remain blocked. One successful Essential transaction made while already in
+debt applies Mood −1, regardless of quantity or cart lines. The once-per-local-
+date low-money event remains separate.
 
 Non-quantity durables reject quantity above one in both direct purchases and
 carts. Ownership caps and stock limits still apply.
@@ -492,16 +566,20 @@ its fixed anchors and three-row layout.
 
 ## Journey and death
 
-Journey shows natural narration for meaningful care, reactions, activities,
-catch-up events, donations, milestones, commissions, projects, medical
+Journey shows natural narration for meaningful care, authored activity
+vignettes, reactions, catch-up events, off-stream support, donations,
+milestones, commissions, projects, medical
 recovery, craving expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
 room changes, and death. The room displays only the latest projected Journey
 entry.
 
-It hides reconciliation, decay, opportunity bookkeeping, shop refreshes,
-nutrition counters, command receipts, and other internal mechanics. There is no
-attention-call system or separate offline recap.
+It hides reconciliation, decay, Subscriber Revenue ticks, opportunity
+bookkeeping, shop refreshes, nutrition counters, command receipts, and other
+internal mechanics. There is no attention-call system or separate offline
+recap.
 
 Death is terminal. The graveyard lists every structured cause, preserves the
 causal Journey that led to the final Health loss, and keeps the full narrated
-Journey available. It never infers causes by parsing narration text.
+Journey available. Its export downloads a Markdown record containing the run
+details, every cause, the causal chain, and the complete Journey. It never
+infers causes by parsing narration text.

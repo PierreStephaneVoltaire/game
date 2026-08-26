@@ -21,6 +21,14 @@ describe('Journey progression narration', () => {
         followerDelta: 31,
       },
       {
+        id: 'subscriber-revenue',
+        type: 'subscriber_revenue',
+        at: 4,
+        message: 'Subscriber Revenue paid $3.',
+        amount: 3,
+        revenueMultiplier: 3,
+      },
+      {
         id: 'donation',
         type: 'donation_received',
         at: 3,
@@ -34,9 +42,28 @@ describe('Journey progression narration', () => {
       projectJourney(events, 'Nova').map((entry) => entry.message),
     ).toEqual([
       "Nova's journey began.",
-      "A whale donated $2,450 during Nova's stream.",
+      "A major donor donated $2,450 during Nova's stream.",
       "Nova's stream brought 31 new followers to the channel.",
       "Nova's channel reached 1,000 subscribers! Better stream rates are now available.",
+    ]);
+  });
+
+  test('narrates Subscriber Revenue multiplier upgrades through milestones', () => {
+    const events: GameEvent[] = [
+      {
+        id: 'sub-30k',
+        type: 'career_milestone',
+        at: 1,
+        message: 'sub 30k milestone reached.',
+        cause: 'sub_30k',
+        revenueMultiplier: 1.5,
+      },
+    ];
+
+    expect(
+      projectJourney(events, 'Nova').map((entry) => entry.message),
+    ).toEqual([
+      "Nova's channel reached 30,000 subscribers! Subscriber Revenue now pays at 1.5x.",
     ]);
   });
 

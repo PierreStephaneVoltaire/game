@@ -12,7 +12,7 @@ import {
   STATUS_NAMES,
   resolveAttemptStatus,
 } from '../status-rules';
-import { STAT_MIN } from '../game-constants';
+import { HEALTH_MAX, STAT_MIN } from '../game-constants';
 import { statusTransitionMessage } from '../event-messages';
 import { recordDeath } from './death-resolution';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
@@ -77,7 +77,10 @@ export function applyRoomMetricDelta(
     const metric = key as keyof GameState['metrics'];
     next[metric] = Math.max(
       min,
-      Math.min(max, next[metric] + (value ?? 0) * multiplier),
+      Math.min(
+        metric === 'health' ? HEALTH_MAX : max,
+        next[metric] + (value ?? 0) * multiplier,
+      ),
     );
   }
   return next;
@@ -93,7 +96,13 @@ export function appliedRoomMetricDelta(
   const applied: Partial<GameState['metrics']> = {};
   for (const [key, value] of Object.entries(effects)) {
     const metric = key as keyof GameState['metrics'];
-    const target = Math.max(min, Math.min(max, metrics[metric] + (value ?? 0)));
+    const target = Math.max(
+      min,
+      Math.min(
+        metric === 'health' ? HEALTH_MAX : max,
+        metrics[metric] + (value ?? 0),
+      ),
+    );
     applied[metric] = target - metrics[metric];
   }
   return applied;

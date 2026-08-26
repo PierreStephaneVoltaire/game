@@ -1,6 +1,6 @@
 import type { AutomaticEventHookDefinition } from '../game-definition';
 import type { GameState, HealthDamageSource } from '../game-types';
-import { HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, HOUR_MS } from '../game-constants';
 import { actionRandom, resolveRange } from '../seeded-rng';
 import { healthDamageSource } from './health-resolution';
 
@@ -30,10 +30,7 @@ export function resolveAutomaticEventHook(input: {
         `${itemId}:${hook.id}:${name}`,
       ),
     );
-    metrics[name] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, metrics[name] + delta),
-    );
+    metrics[name] = clampMetric(name, metrics[name] + delta);
     metricDeltas[name] = delta;
   }
   return {

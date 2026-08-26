@@ -10,6 +10,7 @@ export type Candidate =
   | 'socks'
   | 'benign_room_event'
   | 'stream'
+  | 'off_stream_support'
   | 'autonomous_nap'
   | 'full_body_commission'
   | 'moms_care_package'
@@ -98,6 +99,7 @@ export function eventCandidates(
     {
       type: 'socks',
       weight:
+        Object.values(state.room).includes('cat-tree') &&
         (state.history.eventCooldowns.socks ?? 0) <= state.now
           ? rules.events.weights.socks + eventModifier('socks')
           : 0,
@@ -110,6 +112,14 @@ export function eventCandidates(
           : 0,
     },
     { type: 'stream', weight: streamWeight },
+    {
+      type: 'off_stream_support',
+      weight:
+        !state.death &&
+        (state.history.eventCooldowns.off_stream_support ?? 0) <= state.now
+          ? rules.events.offStreamSupport.weight
+          : 0,
+    },
     {
       type: 'autonomous_nap',
       weight:

@@ -1,9 +1,11 @@
 import rules from './data/simulation-rules.json';
 import { weightedDonation } from './donation-rules';
-import { applyFollowerMilestones, followerGain } from './follower-rules';
+import { applyFollowerMilestones } from './follower-rules';
 import { HOUR_MS } from './game-constants';
 import type { GameEvent, GameState } from './game-types';
 import { localDate } from './shop-rules';
+import activityRules from './data/activity-rules.json';
+import { creditIncome } from './income-rules';
 
 export { applyFollowerMilestones, streamRateFor } from './follower-rules';
 
@@ -17,13 +19,10 @@ export function completeStreamEconomy(
   completedAt: number,
   hourlyRate: number,
   donationMultiplier = 1,
-  normallyCompleted = true,
 ): StreamResult {
   const wholeHours = Math.max(0, Math.floor(elapsedHours));
   const startedAt = completedAt - elapsedHours * HOUR_MS;
-  const followers = normallyCompleted
-    ? followerGain(state, completedAt - elapsedHours * HOUR_MS, elapsedHours)
-    : 0;
+  const followers = 0;
   const income = Math.round(
     hourlyRate *
       elapsedHours *
@@ -61,8 +60,7 @@ export function completeStreamEconomy(
     0,
   );
   let next: GameState = {
-    ...state,
-    balance: state.balance + income,
+    ...creditIncome(state, income),
     progression: {
       ...state.progression,
       followers: state.progression.followers + followers + donationFollowers,
@@ -74,13 +72,13 @@ export function completeStreamEconomy(
       id: `event-${state.events.length + events.length + 1}`,
       type: 'donation_received',
       at,
-      message: `A ${donation.tier.replaceAll('_', ' ')} donated $${donation.amount}.`,
+      message: `${donationLabel(donation.tier)} donated $${donation.amount}.`,
       sourceActionId,
       donationTier: donation.tier,
       amount: donation.amount,
       followerDelta: donation.followers,
     };
-    next = { ...next, balance: next.balance + donation.amount };
+    next = creditIncome(next, donation.amount);
     events.push(event);
   }
   if (followers + donationFollowers > 0)
@@ -96,7 +94,14 @@ export function completeStreamEconomy(
   return { state: next, events };
 }
 
+function donationLabel(tier: GameEvent['donationTier']): string {
+  if (tier === 'whale') return 'A major donor';
+  if (tier === 'legendary_whale') return 'A legendary donor';
+  if (tier === 'kind_bridiot') return 'A kind Bridiot';
+  return 'A raid windfall';
+}
+
 export function resolveCommissionWorkPayout(state: GameState): number {
-  const work = rules.activities.commissionWork;
+  const work = activityRules.commissionWork;
   return work.basePayout + state.metrics.creativity * work.creativityPayout;
 }

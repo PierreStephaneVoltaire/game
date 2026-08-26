@@ -9,7 +9,7 @@ import {
   resolveNutritionStatuses,
   triggersOverstimulation,
 } from '../status-rules';
-import { HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, HOUR_MS } from '../game-constants';
 
 type UseItemCommand = Extract<GameCommand, { type: 'use_item' }>;
 
@@ -19,6 +19,7 @@ export type NutritionResolution = {
   metricDeltas: Partial<GameState['metrics']>;
   itemMetricDeltas: Partial<GameState['metrics']>;
   consumptions: GameState['history']['consumptions'];
+  kidneyStoneFeeds: GameState['history']['kidneyStoneFeeds'];
   sugarServings: number;
   fulfilledCraving: boolean;
   nutritionProfileId?: string;
@@ -136,10 +137,7 @@ export function resolveNutritionConsumption(
   if (fulfilledCraving) metricDeltas.bond = (metricDeltas.bond ?? 0) + 1;
   for (const [metric, delta] of Object.entries(metricDeltas)) {
     const name = metric as keyof GameState['metrics'];
-    metrics[name] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, metrics[name] + (delta ?? 0)),
-    );
+    metrics[name] = clampMetric(name, metrics[name] + (delta ?? 0));
   }
 
   const consumptions =
@@ -165,6 +163,17 @@ export function resolveNutritionConsumption(
           },
         ]
       : state.history.consumptions;
+  const currentFeed = item.edible ? consumptions.at(-1) : undefined;
+  const kidneyStoneFeeds = currentFeed
+    ? [...state.history.kidneyStoneFeeds, currentFeed].slice(
+        -rules.kidneyStone.feedWindowSize,
+      )
+    : state.history.kidneyStoneFeeds;
+  const priorNutrition = state.history.consumptions.filter(
+    (consumption) =>
+      consumption.at >=
+      state.now - rules.nutrition.rollingWindowHours * HOUR_MS,
+  );
   const sugarServings = consumptions
     .filter(
       (consumption) =>
@@ -178,11 +187,6 @@ export function resolveNutritionConsumption(
       0,
     );
 
-  const priorNutrition = state.history.consumptions.filter(
-    (consumption) =>
-      consumption.at >=
-      state.now - rules.nutrition.rollingWindowHours * HOUR_MS,
-  );
   const nutritionResolution = resolveNutritionStatuses({
     metrics,
     statuses: state.statuses,
@@ -204,19 +208,20 @@ export function resolveNutritionConsumption(
       (total, consumption) => total + consumption.water,
       0,
     ),
+    kidneySalt: kidneyStoneFeeds.reduce(
+      (total, consumption) => total + consumption.salt,
+      0,
+    ),
+    kidneyWater: kidneyStoneFeeds.reduce(
+      (total, consumption) => total + consumption.water,
+      0,
+    ),
     kidneyStoneRoll: actionRandom(
       state.seed,
       state.stateVersion,
       command.commandId,
       'kidney_stone',
       'onset',
-    ),
-    naturalPassRoll: actionRandom(
-      state.seed,
-      state.stateVersion,
-      command.commandId,
-      'kidney_stone',
-      'natural_pass',
     ),
     currentSalt: nutritionScores.salt ?? 0,
     currentWater: nutritionScores.water ?? 0,
@@ -258,6 +263,7 @@ export function resolveNutritionConsumption(
     metricDeltas,
     itemMetricDeltas,
     consumptions,
+    kidneyStoneFeeds,
     sugarServings,
     fulfilledCraving,
     nutritionProfileId: profile?.id,

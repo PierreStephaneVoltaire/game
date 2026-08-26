@@ -180,7 +180,7 @@ describe('Medical Care and terminal state', () => {
     );
 
     expect(result.outcomes[0]).toMatchObject({ accepted: true });
-    expect(result.state.balance).toBe(-9_980);
+    expect(result.state.balance).toBe(-9_974);
     expect(result.state.now).toBe(12 * HOUR);
     expect(result.state.activity).toBeNull();
     expect(result.state.statuses.kidney_stone).toBeUndefined();

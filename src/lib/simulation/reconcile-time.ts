@@ -60,6 +60,8 @@ export function reconcileTime(
     state.history.sugarCrashDueAt ?? undefined,
     state.timedEffects.deferredRestLossAt ?? undefined,
     state.timedEffects.hyperfocusUntil ?? undefined,
+    state.timedEffects.clippers?.nextClipAt,
+    state.timedEffects.clippers?.expiresAt,
     state.history.cravingStartedAt !== null
       ? state.history.cravingStartedAt + rules.craving.expiryHours * HOUR_MS
       : undefined,

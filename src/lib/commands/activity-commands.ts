@@ -1,9 +1,12 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Outcome } from '../game-types';
 import rules from '../data/simulation-rules.json';
-import { chooseDuration, refusalProbability } from '../activity-rules';
+import {
+  chooseActivityVignette,
+  chooseDuration,
+  refusalProbability,
+} from '../activity-rules';
 import { actionRandom } from '../seeded-rng';
-import { applyOverstimulation, isHighMood } from '../status-rules';
 import { accepted, rejected } from '../simulation/engine-state';
 import { HOUR_MS } from '../game-constants';
 import {
@@ -175,25 +178,7 @@ function companionActivity(
   state: GameState,
   command: CompanionCommand,
 ): ActivityCommandResult {
-  const overstimulated =
-    (command.type === 'socialize' || command.type === 'play') &&
-    isHighMood(state.metrics.mood);
   let next = state;
-  if (overstimulated) {
-    const stimulation = applyOverstimulation(
-      next.metrics,
-      next.statuses,
-      'high_mood_attempt',
-      next.now,
-      true,
-    );
-    next = {
-      ...next,
-      metrics: stimulation.metrics,
-      statuses: stimulation.statuses,
-      stateVersion: next.stateVersion + 1,
-    };
-  }
   const duration = chooseDuration(command.type, next, command.commandId);
   if (command.type === 'rest' && duration === 0)
     return result(
@@ -215,6 +200,10 @@ function companionActivity(
       rejected('refused', 'Companion refused that interaction.'),
     );
 
+  const vignette =
+    command.type === 'socialize' || command.type === 'play'
+      ? chooseActivityVignette(command.type, next, command.commandId)
+      : undefined;
   const event: GameEvent = {
     id: `event-${next.events.length + 1}`,
     type: 'activity_started',
@@ -232,8 +221,14 @@ function companionActivity(
       endsAt: next.now + duration,
       sourceActionId: command.commandId,
       payload: {
-        ...(overstimulated ? { suppressMoodGain: true } : {}),
+        ...(vignette
+          ? {
+              activityOutcome: vignette.outcome,
+              activityNarration: vignette.narration,
+            }
+          : {}),
         startingRest: next.metrics.rest,
+        startingMood: next.metrics.mood,
         startingCriticalMetrics: criticalMetrics(next.metrics).join(','),
       },
     },

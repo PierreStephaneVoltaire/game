@@ -1,7 +1,7 @@
 import type { GameState, Metrics } from '../game-types';
 import { addStatus, alignGameStatuses } from '../status-rules';
 import rules from '../data/simulation-rules.json';
-import { HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, HOUR_MS } from '../game-constants';
 
 export type NutritionStatusResolution = {
   metrics: Metrics;
@@ -25,18 +25,16 @@ export function resolveNutritionStatuses(input: {
   fullFeedRoll: number;
   priorSalt: number;
   priorWater: number;
+  kidneySalt?: number;
+  kidneyWater?: number;
   kidneyStoneRoll: number;
-  naturalPassRoll?: number;
   currentSalt?: number;
   currentWater?: number;
 }): NutritionStatusResolution {
   const result = { ...input.metrics };
   const metricDeltas: Partial<Metrics> = {};
   const addMetric = (metric: keyof Metrics, delta: number) => {
-    result[metric] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, result[metric] + delta),
-    );
+    result[metric] = clampMetric(metric, result[metric] + delta);
     metricDeltas[metric] = (metricDeltas[metric] ?? 0) + delta;
   };
   if (input.wasSick) {
@@ -53,8 +51,9 @@ export function resolveNutritionStatuses(input: {
   }
   const kidneyStone =
     !input.statuses.kidney_stone &&
-    input.priorSalt >= rules.kidneyStone.saltThreshold &&
-    input.priorWater <= rules.kidneyStone.waterThreshold &&
+    (input.kidneySalt ?? input.priorSalt) >= rules.kidneyStone.saltThreshold &&
+    (input.kidneyWater ?? input.priorWater) <=
+      rules.kidneyStone.waterThreshold &&
     input.kidneyStoneRoll < rules.kidneyStone.probability;
   if (kidneyStone) {
     addMetric('mood', rules.statusMetricDeltas.kidneyStoneMood);
@@ -87,18 +86,7 @@ export function resolveNutritionStatuses(input: {
       kidney_stone: {
         since: input.now,
         source: 'rolling_nutrition',
-        naturalPassAt:
-          input.now +
-          rules.kidneyStone.naturalPassHours[
-            Math.min(
-              rules.kidneyStone.naturalPassHours.length - 1,
-              Math.floor(
-                (input.naturalPassRoll ?? input.kidneyStoneRoll) *
-                  rules.kidneyStone.naturalPassHours.length,
-              ),
-            )
-          ] *
-            HOUR_MS,
+        naturalPassAt: input.now + rules.kidneyStone.naturalPassHours * HOUR_MS,
       },
     };
   if (

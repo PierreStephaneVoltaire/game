@@ -40,6 +40,8 @@ export function rotateShop(
         ),
     );
   const chosen: typeof candidates = [];
+  const water = candidates.find((item) => item.id === 'water');
+  if (water) chosen.push(water);
   const take = (
     count: number,
     eligible: (item: (typeof candidates)[number]) => boolean,

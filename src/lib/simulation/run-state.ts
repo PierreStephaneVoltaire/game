@@ -24,6 +24,7 @@ export function createRunState(
     );
   const history = {
     consumptions: [],
+    kidneyStoneFeeds: [],
     lastBondGainAt: input.now,
     lastCareAttemptAt: input.now,
     lastInteractionAt: input.now,
@@ -69,6 +70,7 @@ export function createRunState(
       deferredRestLossAt: null,
       hyperfocusUntil: null,
       painReliefUntil: null,
+      clippers: null,
     },
     progression: {
       followers: rules.progression.startingFollowers,
@@ -79,6 +81,14 @@ export function createRunState(
       awardedMilestones: ['debut'],
       queuedEventStreams: [],
       permanentDonationBonus: false,
+      lastAutonomousStreamSelectedAt: input.now,
+      activeAudienceBoosts: [],
+      streamStats: {
+        started: 0,
+        completed: 0,
+        interrupted: 0,
+        elapsedMs: 0,
+      },
     },
     projects: [],
     events: [],

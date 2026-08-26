@@ -6,7 +6,7 @@ import type {
 } from './game-types';
 import rules from './data/simulation-rules.json';
 import { resolveStatusFixedPoint } from './status-rules/fixed-point';
-import { HOUR_MS, STAT_MAX, STAT_MIN } from './game-constants';
+import { clampMetric, HOUR_MS, STAT_MIN } from './game-constants';
 import { STATUS_NAMES } from './status-rules/names';
 import { LOW_STATUS_RULES } from './status-rules/low-metric-rules';
 export { STATUS_NAMES, isStatusName } from './status-rules/names';
@@ -176,7 +176,11 @@ export function reconcileStatusRules(input: {
   const { state, now } = input;
   let metrics = input.metrics;
   let statuses = alignGameStatuses(metrics, state.statuses, now);
-  const natural = resolveNaturalStatusPassage(statuses, metrics, now);
+  const natural = resolveNaturalStatusPassage(
+    { ...state, statuses },
+    metrics,
+    now,
+  );
   statuses = natural.statuses;
   metrics = natural.metrics;
   if (
@@ -190,6 +194,8 @@ export function reconcileStatusRules(input: {
   )
     statuses = clearStatus(statuses, 'annoyed');
   const onsetPrevious = { ...state.statuses };
+  if (statuses.kidney_stone && state.statuses.kidney_stone)
+    onsetPrevious.kidney_stone = statuses.kidney_stone;
   for (const effect of natural.effects) delete onsetPrevious[effect.status];
   if (!statuses.overstimulated) delete onsetPrevious.overstimulated;
   if (!statuses.annoyed) delete onsetPrevious.annoyed;
@@ -210,10 +216,7 @@ export function reconcileStatusRules(input: {
   for (const effect of recurrence.effects) {
     for (const [metric, delta] of Object.entries(effect.metricDeltas)) {
       const name = metric as keyof Metrics;
-      nextMetrics[name] = Math.max(
-        STAT_MIN,
-        Math.min(STAT_MAX, nextMetrics[name] + (delta ?? 0)),
-      );
+      nextMetrics[name] = clampMetric(name, nextMetrics[name] + (delta ?? 0));
     }
   }
 

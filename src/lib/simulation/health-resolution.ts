@@ -1,5 +1,5 @@
 import rules from '../data/simulation-rules.json';
-import { STAT_MAX, STAT_MIN } from '../game-constants';
+import { HEALTH_MAX, STAT_MIN } from '../game-constants';
 import type { GameState, HealthDamageSource, MetricName } from '../game-types';
 
 const CRITICAL_METRICS = ['food', 'rest', 'mood'] as const;
@@ -86,7 +86,7 @@ export function resolveHealthWindow(input: {
   );
   const damage = sources.reduce((total, source) => total + source.amount, 0);
   const intendedHealth = Math.min(
-    STAT_MAX,
+    HEALTH_MAX,
     Math.max(STAT_MIN, input.health + recovery - damage),
   );
   const lethal =

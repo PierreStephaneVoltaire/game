@@ -137,7 +137,9 @@ describe('activity distributions and refusals', () => {
         event.type === 'activity_completed' &&
         event.sourceActionId === 'socialize-acceptance',
     );
-    expect(socialCompletion?.metricDeltas).toMatchObject({ mood: 1, bond: 1 });
+    expect(socialCompletion?.metricDeltas?.bond).toBe(1);
+    expect([1, 2]).toContain(socialCompletion?.metricDeltas?.creativity);
+    expect(socialCompletion?.metricDeltas?.mood).toBeUndefined();
 
     const play = dispatchCommand(
       {
@@ -160,10 +162,9 @@ describe('activity distributions and refusals', () => {
         event.type === 'activity_completed' &&
         event.sourceActionId === 'play-acceptance',
     );
-    expect(playCompletion?.metricDeltas).toMatchObject({
-      mood: 1,
-      creativity: 1,
-    });
+    expect(playCompletion?.metricDeltas?.bond).toBe(1);
+    expect([1, 2]).toContain(playCompletion?.metricDeltas?.mood);
+    expect(playCompletion?.metricDeltas?.creativity).toBeUndefined();
   });
 
   test('Mood, Rest, and Annoyed make Socialize/Play refusals possible', () => {
@@ -236,7 +237,7 @@ describe('Wait, Medical Care, and active activity boundaries', () => {
       { type: 'medical_care', commandId: 'medical-streaming', now: 0 },
       BUNDLED_GAME_DEFINITION,
     );
-    expect(streaming.state.balance).toBe(-9_980);
+    expect(streaming.state.balance).toBe(-9_974);
     expect(streaming.state.activity).toBeNull();
     expect(streaming.state.statuses.kidney_stone).toBeUndefined();
 

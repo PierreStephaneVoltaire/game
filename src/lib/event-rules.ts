@@ -16,6 +16,7 @@ import {
 import { applyAutomaticHook } from './event-hook-application';
 import { eventCandidates, localDateOrdinal } from './event-candidate-pool';
 import { reconcileMetricSource } from './status-rules/metric-source-reconciliation';
+import { resolveOffStreamSupport } from './off-stream-support-rules';
 
 /** Resolves exactly one weighted autonomous opportunity for one companion attempt. */
 export function resolveAttemptEvent(
@@ -65,6 +66,7 @@ export function resolveAttemptEvent(
       stateVersion: state.stateVersion + 1,
     };
   if (selected === 'stream') {
+    const ordinarySelection = state.progression.queuedEventStreams.length === 0;
     const started = startAutonomousStream(state, commandId);
     const generated = started.events
       .slice(state.events.length)
@@ -74,12 +76,21 @@ export function resolveAttemptEvent(
       }));
     return {
       ...started,
+      progression: ordinarySelection
+        ? {
+            ...started.progression,
+            lastAutonomousStreamSelectedAt: state.now,
+          }
+        : started.progression,
       events: [...state.events, opportunityEvent, ...generated],
       stateVersion: state.stateVersion + 2,
     };
   }
   if (selected === 'autonomous_nap') {
     return resolveAutonomousNap(state, commandId, opportunityEvent);
+  }
+  if (selected === 'off_stream_support') {
+    return resolveOffStreamSupport(state, commandId, opportunityEvent);
   }
   if (selected === 'full_body_commission') {
     const withOpportunity: GameState = {

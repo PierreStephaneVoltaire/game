@@ -24,7 +24,7 @@ const GENERIC_SOURCE_URLS = new Set([
 const QUALIFIERS = new Set(['less_than', 'approximately']);
 const COMPLETE_SOURCE_TYPE_COUNTS = {
   manufacturer_label: 7,
-  usda_foundation: 35,
+  usda_foundation: 36,
   usda_fndds: 66,
   fictional_seeded_profile: 1,
   not_applicable: 116,

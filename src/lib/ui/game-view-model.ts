@@ -25,6 +25,7 @@ import {
   type TimedEffectViewModel,
 } from './progression-view-model';
 import type { CompanionAppearance } from './companion';
+import { metricMaximum } from '$lib/game-constants';
 
 export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
 
@@ -32,6 +33,7 @@ export type MetricViewModel = {
   key: MetricName;
   label: string;
   value: number;
+  maximum: number;
   percentage: number;
 };
 export type EventViewModel = JourneyEntryViewModel;
@@ -52,11 +54,13 @@ export type GameViewModel = {
   mode: GameState['mode'];
   modeLabel: string;
   now: number;
+  runStartedAt: number;
   formattedTime: string;
   timezone: string;
   seed: string;
   balance: number;
   followers: number;
+  streamStats: GameState['progression']['streamStats'];
   career: CareerViewModel;
   debt: { active: boolean; amount: number };
   effects: TimedEffectViewModel[];
@@ -151,17 +155,22 @@ export function createGameViewModel(
     mode: state.mode,
     modeLabel: gameCopy.mode[state.mode],
     now: state.now,
+    runStartedAt: state.history.runStartedAt,
     formattedTime: formatTime(state.now, state.timezone, locale),
     timezone: state.timezone,
     seed: state.seed,
     balance: state.balance,
     ...progressionPresentation(state, definition),
-    metrics: metricKeys.map((key) => ({
-      key,
-      label: gameCopy.metrics[key],
-      value: state.metrics[key],
-      percentage: state.metrics[key] * 10,
-    })),
+    metrics: metricKeys.map((key) => {
+      const maximum = metricMaximum(key);
+      return {
+        key,
+        label: gameCopy.metrics[key],
+        value: state.metrics[key],
+        maximum,
+        percentage: (state.metrics[key] / maximum) * 100,
+      };
+    }),
     statuses: (Object.keys(state.statuses) as StatusName[]).map((key) => ({
       key,
       label: statusLabel(key),

@@ -3,6 +3,21 @@ import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, startRun } from './game-engine';
 
 describe('shop command seam', () => {
+  test('includes Water in every seeded daily rotation', () => {
+    for (let day = 0; day < 100; day += 1) {
+      const state = startRun(
+        {
+          mode: 'streaming',
+          now: day * 24 * 3_600_000,
+          seed: `water-${day}`,
+          timezone: 'UTC',
+        },
+        BUNDLED_GAME_DEFINITION,
+      );
+      expect(state.shop.itemIds).toContain('water');
+    }
+  });
+
   test('keeps cart state in the engine and checks it out atomically', () => {
     const started = startRun(
       { mode: 'streaming', now: 0, seed: 'cart-seed', timezone: 'UTC' },
@@ -30,6 +45,8 @@ describe('shop command seam', () => {
       kind: 'cart_checked_out',
     });
     expect(checkedOut.state.shop.cart).toEqual({});
-    expect(checkedOut.state.inventory[itemId]).toBe(1);
+    expect(checkedOut.state.inventory[itemId]).toBe(
+      (started.inventory[itemId] ?? 0) + 1,
+    );
   });
 });

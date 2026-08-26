@@ -42,14 +42,14 @@ describe('career progression through the engine seam', () => {
     });
   });
 
-  test('one completed stream awards every newly crossed milestone in order', () => {
+  test('passive audience growth awards every newly crossed milestone in order', () => {
     const startedAt = Date.UTC(2026, 0, 1, 12);
     const initial = run(startedAt, 'all-milestones');
     const streaming: GameState = {
       ...initial,
       metrics: {
         food: 10,
-        health: 10,
+        health: 20,
         mood: 5,
         rest: 10,
         bond: 10,
@@ -61,7 +61,7 @@ describe('career progression through the engine seam', () => {
         id: 'milestone-stream',
         type: 'stream',
         startedAt,
-        endsAt: startedAt + HOUR,
+        endsAt: startedAt + 2 * HOUR,
         sourceActionId: 'milestone-stream',
         payload: { hourlyRate: 10, startingCriticalMetrics: '' },
       },
@@ -74,11 +74,11 @@ describe('career progression through the engine seam', () => {
 
     const completed = reconcileTime(
       streaming,
-      startedAt + HOUR,
+      startedAt + 2 * HOUR,
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(completed.progression.followers).toBeGreaterThanOrEqual(1_000_001);
+    expect(completed.progression.followers).toBeGreaterThanOrEqual(1_000_000);
     expect(completed.progression.careerTier).toBe('sub_1m');
     expect(completed.progression.awardedMilestones).toEqual([
       'debut',

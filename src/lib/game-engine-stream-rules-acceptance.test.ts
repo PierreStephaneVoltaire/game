@@ -260,7 +260,7 @@ describe('automatic stream snacks and income', () => {
       2 * HOUR,
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(result.balance).toBe(-974);
+    expect(result.balance).toBe(-973);
     expect(result.activity).toBeNull();
   });
 });

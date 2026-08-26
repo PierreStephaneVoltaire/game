@@ -40,7 +40,7 @@ describe('economy and progression rules', () => {
     expect(hospitalCost(current, definition)).toBe(500);
   });
 
-  test('stream completion records follower progression and deterministic replay', () => {
+  test('ordinary stream completion is deterministic without direct followers', () => {
     const initial = {
       ...state(),
       metrics: { ...state().metrics, creativity: 8 },
@@ -48,15 +48,15 @@ describe('economy and progression rules', () => {
     const first = completeStreamEconomy(initial, 'stream', 4, 4 * HOUR, 10);
     const second = completeStreamEconomy(initial, 'stream', 4, 4 * HOUR, 10);
     expect(first.state).toEqual(second.state);
-    expect(first.state.progression.followers).toBeGreaterThan(
+    expect(first.state.progression.followers).toBe(
       initial.progression.followers,
     );
     expect(
       first.events.some((event) => event.type === 'followers_gained'),
-    ).toBe(true);
+    ).toBe(false);
   });
 
-  test('prime-hour follower growth is segmented and rounded once', () => {
+  test('prime hours do not add direct completion followers', () => {
     const started = Date.UTC(2026, 0, 1, 12);
     const initial = startRun(
       { mode: 'realtime', now: started, seed: 'prime', timezone: 'UTC' },
@@ -75,7 +75,7 @@ describe('economy and progression rules', () => {
     );
     expect(
       result.state.progression.followers - current.progression.followers,
-    ).toBe(14);
+    ).toBe(0);
   });
 
   test('donations roll independently for each whole stream hour', () => {

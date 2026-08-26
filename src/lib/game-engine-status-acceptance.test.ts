@@ -75,6 +75,7 @@ describe('canonical status public seam', () => {
           [metric]: 2,
         },
         statuses: { [status]: { since: 0, source: 'acceptance' } },
+        history: { ...run().history, nextAutonomousAt: 13 * HOUR },
       } as GameState;
       const lowResult = reconcileTime(
         low,
@@ -128,17 +129,18 @@ describe('context status behavior through commands', () => {
     expect(result.inventory.uncrustables).toBe(0);
     expect(result.metrics.food).toBe(9);
     expect(result.statuses.sick).toBeDefined();
-    expect(result.metrics).toMatchObject({ health: 7, mood: 5 });
+    expect(result.metrics).toMatchObject({ health: 31, mood: 5 });
   });
 
-  test('a Mood-raising interaction at Mood 9 adds Overstimulated', () => {
+  test('a Mood-raising Play at Mood 9 can add Overstimulated', () => {
+    const initial = run('streaming', 'overstimulated-0');
     const state = {
-      ...run(),
-      metrics: { ...run().metrics, food: 10, rest: 10, mood: 9 },
+      ...initial,
+      metrics: { ...initial.metrics, food: 10, rest: 10, mood: 9 },
     };
     const result = dispatchCommand(
       state,
-      { type: 'socialize', commandId: 'overstimulated', now: 0 },
+      { type: 'play', commandId: 'overstimulated-0', now: 0 },
       BUNDLED_GAME_DEFINITION,
     ).state;
     expect(result.statuses.overstimulated).toBeDefined();
@@ -241,7 +243,7 @@ describe('context status behavior through commands', () => {
       ...initial,
       history: {
         ...initial.history,
-        consumptions: [
+        kidneyStoneFeeds: [
           {
             at: -HOUR,
             itemId: 'cake',
@@ -255,12 +257,22 @@ describe('context status behavior through commands', () => {
       },
       inventory: { ...initial.inventory, cake: 1 },
     };
-    const result = dispatchCommand(
-      state,
-      { type: 'use_item', commandId: 'kidney-feed', itemId: 'cake', now: 0 },
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-    expect(result.statuses.kidney_stone).toBeDefined();
-    expect(result.metrics).toMatchObject({ health: 7, rest: 5, mood: 5 });
+    let result: GameState | undefined;
+    for (let index = 0; index < 500 && !result; index += 1) {
+      const candidate = dispatchCommand(
+        { ...state, seed: `kidney-${index}` },
+        {
+          type: 'use_item',
+          commandId: 'kidney-feed',
+          itemId: 'cake',
+          now: 0,
+        },
+        BUNDLED_GAME_DEFINITION,
+      ).state;
+      if (candidate.statuses.kidney_stone) result = candidate;
+    }
+    expect(result).toBeDefined();
+    expect(result!.statuses.kidney_stone).toBeDefined();
+    expect(result!.metrics).toMatchObject({ health: 31, rest: 5, mood: 5 });
   });
 });

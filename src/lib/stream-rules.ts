@@ -5,6 +5,7 @@ import rules from './data/simulation-rules.json';
 import { HOUR_MS } from './game-constants';
 import { criticalMetrics } from './simulation/health-resolution';
 import { streamRateFor } from './economy-rules';
+import { registerStreamStart } from './audience-growth-rules';
 
 export function streamWeight(state: GameState, commandId: string): number {
   if (
@@ -59,6 +60,15 @@ export function streamWeight(state: GameState, commandId: string): number {
     0,
   );
   const managedNutrition = salt >= 5 && water >= 4;
+  const droughtHours = Math.max(
+    0,
+    (state.now - state.progression.lastAutonomousStreamSelectedAt) / HOUR_MS,
+  );
+  const droughtBonus = Math.min(
+    rules.stream.weight.drought.maximumBonus,
+    Math.max(0, droughtHours - rules.stream.weight.drought.graceHours) *
+      rules.stream.weight.drought.weightPerHour,
+  );
   const roll = actionRandom(
     state.seed,
     state.stateVersion,
@@ -75,7 +85,8 @@ export function streamWeight(state: GameState, commandId: string): number {
       rules.stream.weight.creativityCoefficient *
         ((state.metrics.creativity - rules.stream.weight.metricCenter) /
           rules.stream.weight.metricScale) +
-      (managedNutrition ? rules.stream.weight.managedNutritionBonus : 0)) *
+      (managedNutrition ? rules.stream.weight.managedNutritionBonus : 0) +
+      droughtBonus) *
       multiplier *
       (specialDate?.streamWeightMultiplier ?? 1),
   );
@@ -139,22 +150,25 @@ export function startAutonomousStream(
       ) *
         (rateRange[1] - rateRange[0] + 1),
     );
-  return {
-    ...state,
-    activity: {
-      id: `activity-${state.actionOrdinal + 1}`,
-      type: 'stream',
-      startedAt: state.now,
-      endsAt: state.now + hours * HOUR_MS,
-      sourceActionId: commandId,
-      payload: {
-        hourlyRate: rate,
-        startingCriticalMetrics: criticalMetrics(state.metrics).join(','),
+  return registerStreamStart(
+    {
+      ...state,
+      activity: {
+        id: `activity-${state.actionOrdinal + 1}`,
+        type: 'stream',
+        startedAt: state.now,
+        endsAt: state.now + hours * HOUR_MS,
+        sourceActionId: commandId,
+        payload: {
+          hourlyRate: rate,
+          startingCriticalMetrics: criticalMetrics(state.metrics).join(','),
+        },
       },
+      events: [...state.events, event],
+      stateVersion: state.stateVersion + 1,
     },
-    events: [...state.events, event],
-    stateVersion: state.stateVersion + 1,
-  };
+    `activity-${state.actionOrdinal + 1}`,
+  );
 }
 
 function startQueuedStream(
@@ -196,25 +210,28 @@ function startQueuedStream(
       ) *
         (rateRange[1] - rateRange[0] + 1),
     );
-  return {
-    ...state,
-    progression: { ...state.progression, queuedEventStreams: remaining },
-    activity: {
-      id: `activity-${state.actionOrdinal + 1}`,
-      type: 'stream',
-      startedAt: state.now,
-      endsAt: state.now + hours * HOUR_MS,
-      sourceActionId: commandId,
-      payload: {
-        hourlyRate: rate,
-        donationMultiplier: queued.donationMultiplier,
-        queuedStreamType: queued.type,
-        startingCriticalMetrics: criticalMetrics(state.metrics).join(','),
+  return registerStreamStart(
+    {
+      ...state,
+      progression: { ...state.progression, queuedEventStreams: remaining },
+      activity: {
+        id: `activity-${state.actionOrdinal + 1}`,
+        type: 'stream',
+        startedAt: state.now,
+        endsAt: state.now + hours * HOUR_MS,
+        sourceActionId: commandId,
+        payload: {
+          hourlyRate: rate,
+          donationMultiplier: queued.donationMultiplier,
+          queuedStreamType: queued.type,
+          startingCriticalMetrics: criticalMetrics(state.metrics).join(','),
+        },
       },
+      events: [...state.events, event],
+      stateVersion: state.stateVersion + 1,
     },
-    events: [...state.events, event],
-    stateVersion: state.stateVersion + 1,
-  };
+    `activity-${state.actionOrdinal + 1}`,
+  );
 }
 
 function hoursUntilLocalMidnight(state: GameState): number {

@@ -4,7 +4,7 @@ import type {
   ItemDefinition,
 } from '../game-definition';
 import type { GameCommand, GameEvent, GameState, Outcome } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import activityRules from '../data/activity-rules.json';
 import { accepted, recordAttempt, rejected } from '../simulation/engine-state';
 import { resolveAttemptEvent } from '../event-rules';
 import { localDate } from '../shop-rules';
@@ -71,9 +71,7 @@ export function startCommissionWork(
       definition,
       'The companion is busy right now.',
     );
-  if (
-    state.metrics.creativity < rules.activities.commissionWork.minimumCreativity
-  )
+  if (state.metrics.creativity < activityRules.commissionWork.minimumCreativity)
     return unavailable(
       state,
       command,
@@ -90,7 +88,7 @@ export function startCommissionWork(
     );
   const duration =
     (action.activity?.durationHours ??
-      rules.activities.commissionWork.durationHours) * HOUR_MS;
+      activityRules.commissionWork.durationHours) * HOUR_MS;
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'activity_started',

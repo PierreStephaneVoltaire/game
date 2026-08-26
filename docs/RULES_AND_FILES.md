@@ -8,7 +8,10 @@ gameplay rules.
 
 - `src/lib/data/simulation-rules.json` — bounds, initial state, decay cadence,
   and configurable simulation values.
-- `src/lib/data/shop-items.json` — the 225 canonical item definitions:
+- `src/lib/data/activity-rules.json` — activity durations, refusals,
+  completion rewards, strong-outcome chance, and authored Play/Socialize
+  vignette pools.
+- `src/lib/data/shop-items.json` — the 226 canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and generated PNG paths.
 - `src/lib/data/catalogue/food-items.jsonl`,
@@ -16,7 +19,7 @@ gameplay rules.
   individually authored catalogue inputs. Nutrition facts stay separate from
   gameplay values so the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  225-item allowlist. The compiler and validator reject missing, unexpected,
+  226-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   avatar path. Runtime code does not hardcode a companion name.
@@ -30,7 +33,8 @@ gameplay rules.
 - `src/lib/game-types.ts` — run state, commands, events, outcomes, activities,
   history, and terminal death records.
 - `src/lib/progression-types.ts` — Followers, career tiers, projects, queued
-  event streams, appearances, donations, and scheduled-effect state.
+  event streams, appearances, donations, autonomous-stream selection history,
+  and scheduled-effect state.
 - `src/lib/game-definition.ts` — versioned bundled definition and repository
   seam used by the pure engine and tests.
 - `src/lib/game-constants.ts` — structural time units, stat bounds, and
@@ -44,6 +48,8 @@ gameplay rules.
 - `src/lib/commands/item-action-commands.ts` and
   `src/lib/commands/item-consumption.ts` — non-consume item actions and the
   consume-item transaction pipeline.
+- `src/lib/commands/clipper-action.ts` — the catalogue-action adapter that
+  consumes Clippers and delegates their career effect to audience growth.
 - `src/lib/commands/consumption-timed-effects.ts` and
   `src/lib/commands/consumption-rule-events.ts` — timed caffeine, Hyperfocus,
   Pain Relief, and authored status/reaction events for item consumption.
@@ -60,7 +66,8 @@ gameplay rules.
   the terminal-state guard.
 - `src/lib/simulation/decay-resolution.ts` and
   `src/lib/simulation/timeline-effects.ts` — interval decay plus ordered
-  boundary, status, and recurrence effects.
+  project, autonomous-opportunity, Subscriber Revenue, status, and recurrence
+  effects.
 - `src/lib/simulation/timeline-opportunities.ts` and
   `src/lib/simulation/timeline-status-events.ts` — chronological autonomous
   opportunities, craving/shop deadlines, and narrated status transitions.
@@ -77,6 +84,9 @@ gameplay rules.
 - `src/lib/simulation/engine-state.ts` and
   `src/lib/simulation/run-state.ts` — immutable state/event helpers and
   canonical death construction.
+- `src/lib/audience-growth-rules.ts` — the deep module for stream-start
+  audience snapshots, two-hour natural growth, Clippers activation/ticks,
+  milestone settlement, and exact stream statistics.
 - `src/lib/status-rules.ts` — metric status alignment, onset effects,
   recurrence, and status helpers.
 - `src/lib/status-rules/context-statuses.ts` — context-driven status
@@ -95,22 +105,27 @@ gameplay rules.
 - `src/lib/event-candidate-pool.ts`, `src/lib/event-autonomous-actions.ts`,
   and `src/lib/event-hook-application.ts` — weighted event eligibility and
   cohesive autonomous/event-hook resolutions behind `event-rules.ts`.
-- `src/lib/activity-rules.ts` — seeded activity distributions, refusals, and
-  completion effects.
+- `src/lib/activity-rules.ts` — seeded activity distributions, refusals,
+  normal/strong authored-vignette selection, and completion effects.
 - `src/lib/event-rules.ts` — deterministic automatic event opportunity rules.
+- `src/lib/off-stream-support-rules.ts` — seeded off-stream payout, cooldown,
+  Journey event, and shared income settlement.
 - `src/lib/event-stream-rules.ts` — queued Tournament and model-debut stream
   state.
 - `src/lib/simulation/event-hook-resolution.ts` — seeded, data-authored
   automatic item-hook effects and their damage attribution.
 - `src/lib/event-messages.ts` — user-facing copy for built-in event types.
-- `src/lib/stream-rules.ts` — stream eligibility, dynamic event weight,
-  daypart adjustment, duration, and autonomous-stream activity creation.
+- `src/lib/stream-rules.ts` — stream eligibility, drought-adjusted event
+  weight, daypart adjustment, duration, and autonomous-stream activity
+  creation.
 - `src/lib/billing-rules.ts` and `src/lib/debt-rules.ts` — Hospital coverage,
   ownership caps, debt shopping eligibility, and debt recovery suppression.
-- `src/lib/economy-rules.ts` — stream income and coordinated career rewards.
+- `src/lib/income-rules.ts` — the shared positive-income/debt settlement path.
+- `src/lib/economy-rules.ts` — stream income, hourly donations, and coordinated
+  donation/model career rewards.
 - `src/lib/donation-rules.ts` and `src/lib/follower-rules.ts` — independent
-  hourly donation tiers and exact elapsed-time Follower growth, milestone
-  ordering, and career stream-rate bands.
+  hourly stream-donation tiers, milestone ordering, Subscriber Revenue
+  multipliers, and career stream-rate bands.
 - `src/lib/project-rules.ts` and `src/lib/project-economy-rules.ts` — rare and
   model project creation, third-local-midnight completion, rewards, and debut
   queues.
@@ -120,6 +135,10 @@ gameplay rules.
   in-memory browser/controller boundary.
 - `src/lib/ui/journey-events.ts` — player-facing narrative projection over the
   immutable internal event ledger.
+- `src/lib/ui/journey-activity-messages.ts` — authored Play/Socialize vignette
+  projection and generic narration for other activities.
+- `src/lib/ui/graveyard-export.ts` — portable Markdown serialization for a
+  terminal run's grave details, causal chain, and complete Journey.
 - `src/lib/ui/journey-status-messages.ts` — natural status onset, improvement,
   and recovery narration used by the Journey projection.
 - `src/lib/ui/` — companion profile, centralized game copy, and typed view
@@ -164,7 +183,8 @@ gameplay rules.
   `src/lib/ui/journey-progress-messages.ts` — career/project presentation and
   natural progression narration.
 - `src/routes/game/history/+page.svelte` — narrated Journey, structured death
-  cause list and causal Journey, and graveyard presentation.
+  cause list and causal Journey, graveyard presentation, and local Markdown
+  export.
 
 Keep status behavior behind `status-rules.ts`, all configurable values in
 data, and all simulation uncertainty in `seeded-rng.ts`. Realtime has no

@@ -7,7 +7,7 @@ const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('publishes exactly 225 canonical items in the locked category counts', () => {
+  test('publishes exactly 226 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
         (category) => [
@@ -19,14 +19,14 @@ describe('V2 catalogue definition seam', () => {
       ),
     );
 
-    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(225);
+    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(226);
     expect(counts).toEqual({
-      food: 109,
+      food: 110,
       medicine: 2,
       care: 3,
       reusable: 73,
-      upgrade: 22,
-      decoration: 16,
+      upgrade: 23,
+      decoration: 15,
     });
   });
 
@@ -123,6 +123,30 @@ describe('V2 catalogue definition seam', () => {
           id: 'start_model_commission',
           kind: 'service',
           service: { type: 'model_commission' },
+        }),
+      ],
+    });
+  });
+
+  test('authors essential starter tortillas and stackable Clippers', () => {
+    expect(item('five-plain-tortillas')).toMatchObject({
+      category: 'food',
+      price: 2,
+      preferences: ['liked'],
+      effects: { food: { min: 2, max: 2 }, mood: { min: 2, max: 2 } },
+      nutritionScores: { salt: 0, water: 0, protein: 0, sugar: 0, caffeine: 0 },
+    });
+    expect(item('five-plain-tortillas')?.tags).toContain('essential');
+    expect(item('water')).toMatchObject({ price: 1 });
+    expect(item('water')?.tags).toContain('essential');
+    expect(item('clippers')).toMatchObject({
+      category: 'upgrade',
+      price: 25,
+      consumable: true,
+      supportsQuantity: true,
+      itemActions: [
+        expect.objectContaining({
+          progressionEffect: { type: 'activate_clippers' },
         }),
       ],
     });

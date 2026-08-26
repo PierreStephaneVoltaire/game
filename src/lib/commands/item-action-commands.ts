@@ -21,7 +21,7 @@ import {
   triggersOverstimulation,
 } from '../status-rules';
 import { resolveAttemptEvent } from '../event-rules';
-import { HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
 import { healthDamageSource } from '../simulation/health-resolution';
 import rules from '../data/simulation-rules.json';
 import {
@@ -32,6 +32,7 @@ import {
 } from './progression-actions';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { selectItemNarration } from './item-consumption-events';
+import { performClipperAction } from './clipper-action';
 
 export type ItemActionCommandResult = {
   handled: boolean;
@@ -110,6 +111,13 @@ export function handleItemActionCommand(
       handled: true,
       ...startFullBodyCommission(state, command, item, itemAction, definition),
     };
+  if (itemAction.progressionEffect?.type === 'activate_clippers') {
+    const result = performClipperAction(state, command, item, itemAction);
+    return {
+      handled: true,
+      ...result,
+    };
+  }
 
   const actionDeltas: Partial<GameState['metrics']> = {};
   const actionMetrics = { ...state.metrics };
@@ -126,10 +134,7 @@ export function handleItemActionCommand(
       ),
     );
     actionDeltas[name] = delta;
-    actionMetrics[name] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, actionMetrics[name] + delta),
-    );
+    actionMetrics[name] = clampMetric(name, actionMetrics[name] + delta);
   }
   const actionOverstimulated = triggersOverstimulation(
     state.metrics.mood,

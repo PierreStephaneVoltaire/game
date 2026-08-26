@@ -248,6 +248,7 @@ export function resolveItemConsumption(
     history: {
       ...state.history,
       consumptions: nutrition.consumptions,
+      kidneyStoneFeeds: nutrition.kidneyStoneFeeds,
       cravingItemId: nutrition.fulfilledCraving
         ? null
         : state.history.cravingItemId,

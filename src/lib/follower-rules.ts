@@ -1,5 +1,6 @@
 import rules from './data/simulation-rules.json';
-import { HOUR_MS, STAT_MAX } from './game-constants';
+import { creditIncome } from './income-rules';
+import { STAT_MAX } from './game-constants';
 import type { CareerTier, GameEvent, GameState } from './game-types';
 
 const progressionRules = rules.progression as {
@@ -10,8 +11,21 @@ const progressionRules = rules.progression as {
     mood?: number;
     unlockModelTier?: 1 | 2 | 3 | 4;
     appearanceFee?: number;
+    subscriberRevenueMultiplier?: number;
   }>;
 };
+
+export function subscriberRevenueMultiplier(state: GameState): number {
+  return (
+    progressionRules.milestones
+      .filter(
+        (milestone) =>
+          milestone.subscriberRevenueMultiplier &&
+          state.progression.followers >= milestone.followers,
+      )
+      .at(-1)?.subscriberRevenueMultiplier ?? 1
+  );
+}
 
 export function applyFollowerMilestones(
   state: GameState,
@@ -46,7 +60,7 @@ export function applyFollowerMilestones(
         mood: Math.min(STAT_MAX, metrics.mood + milestone.mood),
       };
     if (milestone.appearanceFee)
-      state = { ...state, balance: state.balance + milestone.appearanceFee };
+      state = creditIncome(state, milestone.appearanceFee);
     if (
       milestone.id === 'tournament_appearance' &&
       !progression.queuedEventStreams.some(
@@ -71,50 +85,10 @@ export function applyFollowerMilestones(
       sourceActionId,
       cause: milestone.id,
       followerDelta: milestone.followers,
+      revenueMultiplier: milestone.subscriberRevenueMultiplier,
     });
   }
   return { ...state, metrics, progression };
-}
-
-export function followerGain(
-  state: GameState,
-  startedAt: number,
-  elapsedHours: number,
-): number {
-  if (elapsedHours <= 0) return 0;
-  const endsAt = startedAt + elapsedHours * HOUR_MS;
-  const base =
-    rules.stream.followers.baseRate +
-    state.metrics.creativity / rules.stream.followers.creativityDivisor;
-  let primeMs = 0;
-  const startParts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: state.timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).formatToParts(new Date(startedAt));
-  const year = Number(startParts.find((part) => part.type === 'year')?.value);
-  const month = Number(startParts.find((part) => part.type === 'month')?.value);
-  const day = Number(startParts.find((part) => part.type === 'day')?.value);
-  for (
-    let offset = -1;
-    offset <= Math.ceil(elapsedHours / 24) + 1;
-    offset += 1
-  ) {
-    const wall = new Date(Date.UTC(year, month - 1, day + offset));
-    const primeStart = localWallTime(wall, 13, state.timezone);
-    const primeEnd = localWallTime(wall, 19, state.timezone);
-    primeMs += Math.max(
-      0,
-      Math.min(endsAt, primeEnd) - Math.max(startedAt, primeStart),
-    );
-  }
-  const normalMs = Math.max(0, endsAt - startedAt - primeMs);
-  return Math.round(
-    (base * normalMs +
-      base * rules.stream.followers.primeMultiplier * primeMs) /
-      HOUR_MS,
-  );
 }
 
 export function streamRateFor(state: GameState): [number, number] {
@@ -131,37 +105,4 @@ export function streamRateFor(state: GameState): [number, number] {
       rules.stream.income.minimumRate + rules.stream.income.rateSlots - 1,
     ]
   );
-}
-
-function localWallTime(date: Date, hour: number, timezone: string): number {
-  const guess = Date.UTC(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    hour,
-  );
-  const parts = new Intl.DateTimeFormat('en-CA', {
-    timeZone: timezone,
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    hour12: false,
-  }).formatToParts(new Date(guess));
-  const values = Object.fromEntries(
-    parts.map((part) => [part.type, Number(part.value)]),
-  );
-  const localAsUtc = Date.UTC(
-    values.year,
-    values.month - 1,
-    values.day,
-    values.hour,
-  );
-  const desiredAsUtc = Date.UTC(
-    date.getUTCFullYear(),
-    date.getUTCMonth(),
-    date.getUTCDate(),
-    hour,
-  );
-  return guess + desiredAsUtc - localAsUtc;
 }

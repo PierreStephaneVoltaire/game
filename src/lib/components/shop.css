@@ -166,6 +166,19 @@ h2 {
   font-weight: 800;
   cursor: pointer;
 }
+.quantity-stepper {
+  display: inline-grid;
+  grid-template-columns: 30px 28px 30px;
+  align-items: center;
+}
+.quantity-stepper button {
+  min-height: 30px;
+  padding: 4px;
+}
+.quantity-stepper output {
+  text-align: center;
+  font-weight: 900;
+}
 .cart-panel,
 .inventory {
   padding-top: 22px;

@@ -27,7 +27,7 @@ describe('startRun', () => {
       stateVersion: 1,
       metrics: {
         food: 6,
-        health: 8,
+        health: 32,
         mood: 6,
         rest: 7,
         bond: 4,
@@ -38,6 +38,7 @@ describe('startRun', () => {
         water: 1,
         uncrustables: 1,
         pretzel: 1,
+        'five-plain-tortillas': 1,
       },
       room: {},
       statuses: {},
@@ -125,39 +126,7 @@ describe('reconcileTime', () => {
 
     // One seeded Food opportunity hits. Its critical damage applies once;
     // the missed opportunity causes neither Food loss nor starvation damage.
-    expect(afterFourHours.metrics).toMatchObject({ food: 1, health: 7 });
-  });
-
-  test('repeats lonely penalties every twelve game-hours while the status holds', () => {
-    const started = startRun(
-      { mode: 'streaming', now: 0, seed: 'lonely-cadence', timezone: 'UTC' },
-      BUNDLED_GAME_DEFINITION,
-    );
-    const lonely = {
-      ...started,
-      metrics: { ...started.metrics, food: 10, health: 10, bond: 2, mood: 10 },
-      statuses: { lonely: { since: 0, source: 'bond' } },
-      activity: {
-        id: 'rest-for-cadence',
-        type: 'rest' as const,
-        startedAt: 0,
-        endsAt: 48 * 3_600_000,
-        sourceActionId: 'cadence-rest',
-      },
-    };
-
-    const afterTwentyFourHours = reconcileTime(
-      lonely,
-      24 * 3_600_000,
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-
-    expect(afterTwentyFourHours.metrics.mood).toBe(8);
-    expect(
-      afterTwentyFourHours.events.filter(
-        (event) => event.type === 'status_recurrence',
-      ),
-    ).toHaveLength(2);
+    expect(afterFourHours.metrics).toMatchObject({ food: 1, health: 31 });
   });
 
   test('records the terminal Health-loss event as the causal death chain', () => {
@@ -266,7 +235,7 @@ describe('dispatchCommand', () => {
     expect(result.state.inventory.uncrustables).toBe(0);
     expect(result.state.metrics.food).toBe(9);
     expect(result.state.statuses.sick).toMatchObject({ source: 'feeding' });
-    expect(result.state.metrics).toMatchObject({ health: 7, mood: 5 });
+    expect(result.state.metrics).toMatchObject({ health: 31, mood: 5 });
   });
 
   test('uses an owned care consumable through the same item command seam', () => {

@@ -12,7 +12,7 @@ export function messageFor(type: BuiltInEventType): string {
   if (type === 'food_craving') return 'Companion developed a food craving.';
   if (type === 'creative_inspiration')
     return 'Companion had a creative inspiration.';
-  if (type === 'socks') return 'The socks demand attention.';
+  if (type === 'socks') return 'Socks wants attention.';
   return 'Something benign happened in the room.';
 }
 

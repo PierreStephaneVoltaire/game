@@ -5,6 +5,10 @@
   export let disabled = false;
   export let onOpen: (itemId: string) => void;
   export let onAdd: (itemId: string) => Promise<void> | void;
+  export let onQuantity: (
+    itemId: string,
+    quantity: number,
+  ) => Promise<void> | void;
 </script>
 
 <div class="item-grid">
@@ -17,14 +21,24 @@
         ></button
       >
       <div class="item-footer">
-        <span>${item.price} · {item.stock} available</span><button
-          on:click={() => onAdd(item.id)}
-          disabled={disabled ||
-            !item.stock ||
-            !item.purchaseAllowed ||
-            item.inCart >= item.maximumCartQuantity}
-          title={item.purchaseBlockReason ?? undefined}>Add</button
-        >
+        <span>${item.price} · {item.stock} available</span>
+        <div class="quantity-stepper" aria-label={`${item.name} quantity`}>
+          <button
+            type="button"
+            aria-label={`Remove one ${item.name}`}
+            on:click={() => onQuantity(item.id, item.inCart - 1)}
+            disabled={disabled || item.inCart <= 0}>−</button
+          ><output aria-live="polite">{item.inCart}</output><button
+            type="button"
+            aria-label={`Add one ${item.name}`}
+            on:click={() => onAdd(item.id)}
+            disabled={disabled ||
+              !item.stock ||
+              !item.purchaseAllowed ||
+              item.inCart >= item.maximumCartQuantity}
+            title={item.purchaseBlockReason ?? undefined}>+</button
+          >
+        </div>
       </div>
       {#if item.purchaseBlockReason}
         <small class="purchase-note">{item.purchaseBlockReason}</small>

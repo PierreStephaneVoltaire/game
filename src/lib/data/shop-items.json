@@ -199,7 +199,8 @@
     "supportsQuantity": true,
     "tags": [
       "medicine",
-      "salty"
+      "salty",
+      "essential"
     ],
     "preferences": [],
     "effects": {},
@@ -2968,7 +2969,8 @@
     "tags": [
       "food",
       "drink",
-      "hydrating"
+      "hydrating",
+      "essential"
     ],
     "preferences": [
       "variable"
@@ -9564,6 +9566,85 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Stream Deck is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "clippers",
+    "name": "Clippers",
+    "narration": [
+      "set Clippers loose on the stream archive.",
+      "queued a fresh batch of stream highlights with Clippers."
+    ],
+    "category": "upgrade",
+    "price": 25,
+    "description": "Turns stream highlights into a temporary passive subscriber boost.",
+    "qualitativeNutritionHint": "Publishes clips daily for three days; extra copies stack and renew the shared timer.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "streaming-gear",
+      "clipping"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "activate_clippers",
+        "label": "Activate Clippers",
+        "kind": "interaction",
+        "consumes": true,
+        "progressionEffect": {
+          "type": "activate_clippers"
+        },
+        "tags": [
+          "career"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/clippers.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Clippers is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -18351,23 +18432,42 @@
     "id": "five-plain-tortillas",
     "name": "Five Plain Tortillas",
     "narration": [
-      "used Five Plain Tortillas to investigate the tortillas.",
-      "spent some time with Five Plain Tortillas."
+      "happily ate five plain tortillas.",
+      "settled in with five plain tortillas, exactly as intended."
     ],
-    "category": "decoration",
-    "price": 25,
-    "description": "Five plain tortillas. Why?!",
-    "qualitativeNutritionHint": "Investigating them is a single-use commitment to nonsense.",
-    "edible": false,
+    "category": "food",
+    "price": 2,
+    "description": "Five plain tortillas. A reliable comfort food.",
+    "qualitativeNutritionHint": "A familiar, filling comfort food with neutral risk scores.",
+    "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
-      "decoration",
-      "chaos"
+      "food",
+      "snack",
+      "stream-snack",
+      "favorite",
+      "comfort-food",
+      "essential"
     ],
-    "preferences": [],
-    "effects": {},
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 2,
+        "max": 2
+      }
+    },
     "nutritionScores": {
       "salt": 0,
       "water": 0,
@@ -18381,28 +18481,18 @@
       "protein": 0,
       "sugar": 0,
       "caffeine": 0,
-      "portion": 0
+      "portion": 1
     },
     "statusHooks": [],
     "automaticEventHooks": [],
     "itemActions": [
       {
-        "id": "investigate_tortillas",
-        "label": "Investigate the tortillas",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          },
-          "creativity": {
-            "min": 0,
-            "max": 1
-          }
-        },
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
         "consumes": true,
         "tags": [
-          "chaos"
+          "feeding"
         ]
       }
     ],
@@ -18411,24 +18501,23 @@
     "clearsStatuses": [],
     "image": "/items/generated/five-plain-tortillas.png",
     "nutrition": {
-      "serving": "Not applicable",
+      "serving": "100 g",
       "calories": null,
-      "sodiumMg": null,
+      "sodiumMg": 34.91,
       "sugarG": null,
       "proteinG": null,
-      "waterG": null,
+      "waterG": 48.42,
       "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Five Plain Tortillas is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
+      "sourceType": "usda_foundation",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2758997/nutrients",
+      "sourceReference": "FDC ID 2758997 — Tortilla, corn, shelf stable",
+      "retrievalDate": "2026-08-24",
+      "snapshotDate": "2026-04-30",
       "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
+        "calories": "Selected USDA record does not report energy.",
+        "sugarG": "Selected USDA record does not report total sugars.",
+        "proteinG": "Selected USDA record does not report protein.",
+        "caffeineMg": "Selected USDA record does not report caffeine."
       }
     }
   },
@@ -18643,7 +18732,8 @@
     "tags": [
       "medicine",
       "care",
-      "pain-relief"
+      "pain-relief",
+      "essential"
     ],
     "preferences": [],
     "effects": {},

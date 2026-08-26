@@ -10,10 +10,10 @@ function debtRun(): GameState {
     BUNDLED_GAME_DEFINITION,
   );
   const food = BUNDLED_GAME_DEFINITION.items.find(
-    (item) => item.category === 'food',
+    (item) => item.id === 'water',
   )!;
   const medicine = BUNDLED_GAME_DEFINITION.items.find(
-    (item) => item.category === 'medicine',
+    (item) => item.id === 'painkillers',
   )!;
   const care = BUNDLED_GAME_DEFINITION.items.find(
     (item) => item.category === 'care',
@@ -31,13 +31,13 @@ function debtRun(): GameState {
 }
 
 describe('medical-debt shopping through the engine seam', () => {
-  test('food and medicine bypass affordability with one Mood cost per command', () => {
+  test('tagged essentials bypass affordability with one Mood cost per command', () => {
     const initial = debtRun();
     const food = BUNDLED_GAME_DEFINITION.items.find(
-      (item) => item.category === 'food',
+      (item) => item.id === 'water',
     )!;
     const medicine = BUNDLED_GAME_DEFINITION.items.find(
-      (item) => item.category === 'medicine',
+      (item) => item.id === 'painkillers',
     )!;
 
     const foodPurchase = dispatchCommand(

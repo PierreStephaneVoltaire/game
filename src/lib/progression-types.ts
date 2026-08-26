@@ -51,6 +51,20 @@ export type ProgressionState = {
   awardedMilestones: CareerTier[];
   queuedEventStreams: QueuedEventStream[];
   permanentDonationBonus: boolean;
+  lastAutonomousStreamSelectedAt: number;
+  activeAudienceBoosts: Array<{
+    streamId: string;
+    startedAt: number;
+    expiresAt: number;
+    careerTier: CareerTier;
+    creativity: number;
+  }>;
+  streamStats: {
+    started: number;
+    completed: number;
+    interrupted: number;
+    elapsedMs: number;
+  };
 };
 
 export type TimedEffects = {
@@ -58,4 +72,9 @@ export type TimedEffects = {
   deferredRestLossAt: number | null;
   hyperfocusUntil: number | null;
   painReliefUntil: number | null;
+  clippers: {
+    stacks: number;
+    expiresAt: number;
+    nextClipAt: number;
+  } | null;
 };

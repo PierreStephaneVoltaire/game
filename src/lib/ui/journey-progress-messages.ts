@@ -3,6 +3,8 @@ import type { GameEvent } from '$lib/game-types';
 export const PROGRESSION_EVENT_TYPES = new Set([
   'donation_received',
   'followers_gained',
+  'natural_audience_growth',
+  'clipper_audience_growth',
   'career_milestone',
   'full_body_project_started',
   'full_body_project_completed',
@@ -21,6 +23,10 @@ export function progressionJourneyMessage(
   if (event.type === 'donation_received')
     return donationMessage(event, petName);
   if (event.type === 'followers_gained') return followerMessage(event, petName);
+  if (event.type === 'natural_audience_growth')
+    return `${petName}'s channel gained ${(event.followerDelta ?? 0).toLocaleString('en-US')} subscribers through natural audience growth.`;
+  if (event.type === 'clipper_audience_growth')
+    return `Clippers brought ${(event.followerDelta ?? 0).toLocaleString('en-US')} new subscribers to ${petName}'s channel.`;
   if (event.type === 'career_milestone')
     return milestoneMessage(event, petName);
   if (event.type === 'full_body_project_started')
@@ -51,8 +57,8 @@ function donationMessage(event: GameEvent, petName: string): string {
   const labels = {
     kind_bridiot: 'A kind Bridiot',
     raid_windfall: 'A raid windfall',
-    whale: 'A whale',
-    legendary_whale: 'A legendary whale',
+    whale: 'A major donor',
+    legendary_whale: 'A legendary donor',
   } as const;
   const donor = event.donationTier
     ? labels[event.donationTier]
@@ -79,16 +85,16 @@ function milestoneMessage(event: GameEvent, petName: string): string {
     sub_1k: `${petName}'s channel reached 1,000 subscribers! Better stream rates are now available.`,
     model_redesign: `${petName}'s model-redesign commission is now available.`,
     twitch_partner: `${petName} reached Twitch Partner! The best stream-rate band is now available.`,
-    sub_30k: `${petName}'s channel reached 30,000 subscribers.`,
+    sub_30k: `${petName}'s channel reached 30,000 subscribers! Subscriber Revenue now pays at 1.5x.`,
     tournament_appearance: `${petName} earned a tournament appearance! A special tournament stream is waiting for an open afternoon.`,
-    sub_50k: `${petName}'s channel reached 50,000 subscribers.`,
+    sub_50k: `${petName}'s channel reached 50,000 subscribers! Subscriber Revenue now pays at 2x.`,
     convention_guest: `${petName} became a Convention Guest! An appearance fee arrived, along with new set and model opportunities.`,
-    sub_100k: `${petName}'s channel reached 100,000 subscribers.`,
+    sub_100k: `${petName}'s channel reached 100,000 subscribers! Subscriber Revenue now pays at 3x.`,
     three_d_ready: `${petName}'s channel reached 3D Ready! The final model commission is now available.`,
-    sub_200k: `${petName}'s channel reached 200,000 subscribers.`,
-    sub_250k: `${petName}'s channel reached 250,000 subscribers.`,
-    sub_500k: `${petName}'s channel reached 500,000 subscribers.`,
-    sub_1m: `${petName}'s channel reached one million subscribers.`,
+    sub_200k: `${petName}'s channel reached 200,000 subscribers! Subscriber Revenue now pays at 4x.`,
+    sub_250k: `${petName}'s channel reached 250,000 subscribers! Subscriber Revenue now pays at 5x.`,
+    sub_500k: `${petName}'s channel reached 500,000 subscribers! Subscriber Revenue now pays at 7x.`,
+    sub_1m: `${petName}'s channel reached one million subscribers! Subscriber Revenue now pays at 10x.`,
   };
   return (
     messages[milestone] ??

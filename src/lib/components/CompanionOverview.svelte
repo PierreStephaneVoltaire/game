@@ -33,13 +33,15 @@
     {#each model.metrics as metric (metric.key)}
       <div class="metric">
         <div>
-          <span>{metric.label}</span><strong>{metric.value}/10</strong>
+          <span>{metric.label}</span><strong
+            >{metric.value}/{metric.maximum}</strong
+          >
         </div>
         <meter
           min="0"
-          max="10"
+          max={metric.maximum}
           value={metric.value}
-          aria-label={`${metric.label}: ${metric.value} out of 10`}
+          aria-label={`${metric.label}: ${metric.value} out of ${metric.maximum}`}
           >{metric.value}</meter
         >
       </div>
@@ -70,6 +72,14 @@
     >
     <span>Followers: {numbers.format(model.followers)}</span>
     <span>Career: {model.career.label}</span>
+    <span
+      >Streams: {numbers.format(model.streamStats.started)} started · {numbers.format(
+        model.streamStats.completed,
+      )} completed · {numbers.format(model.streamStats.interrupted)} interrupted</span
+    >
+    <span
+      >Stream time: {(model.streamStats.elapsedMs / 3_600_000).toFixed(1)} hours</span
+    >
     {#if model.career.nextMilestone}
       <span
         >Next milestone: {model.career.nextMilestone.label} · {numbers.format(

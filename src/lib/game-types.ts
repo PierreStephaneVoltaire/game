@@ -74,6 +74,9 @@ export type GameEvent = {
   amount?: number;
   followerDelta?: number;
   projectId?: string;
+  activityNarration?: string;
+  activityOutcome?: 'normal' | 'strong';
+  revenueMultiplier?: number;
 };
 
 export type HealthDamageSource = {
@@ -124,6 +127,8 @@ export type ConsumptionRecord = {
 
 export type GameHistory = {
   consumptions: ConsumptionRecord[];
+  /** The ten most recent successful food or drink feeds used for stone risk. */
+  kidneyStoneFeeds: ConsumptionRecord[];
   lastBondGainAt: number;
   lastCareAttemptAt: number;
   lastInteractionAt: number;

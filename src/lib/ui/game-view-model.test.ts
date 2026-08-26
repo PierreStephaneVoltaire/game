@@ -95,6 +95,20 @@ describe('game view model', () => {
       insured: true,
       consumedItemName: 'Insurance Card',
     });
+    expect(model.metrics.find((metric) => metric.key === 'health')).toEqual({
+      key: 'health',
+      label: 'Health',
+      value: 32,
+      maximum: 40,
+      percentage: 80,
+    });
+    expect(model.metrics.find((metric) => metric.key === 'food')).toEqual({
+      key: 'food',
+      label: 'Food',
+      value: 6,
+      maximum: 10,
+      percentage: 60,
+    });
   });
 
   it('exposes exact debt-aware purchase and checkout affordances', () => {

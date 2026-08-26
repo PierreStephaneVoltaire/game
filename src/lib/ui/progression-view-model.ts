@@ -23,7 +23,7 @@ export type ProjectViewModel = {
 };
 
 export type TimedEffectViewModel = {
-  key: 'hyperfocus' | 'pain_relief';
+  key: 'hyperfocus' | 'pain_relief' | 'clippers';
   label: string;
   endsAt: number;
 };
@@ -106,6 +106,15 @@ function effectsFor(state: GameState): TimedEffectViewModel[] {
       endsAt: state.timedEffects.hyperfocusUntil,
     });
   if (
+    state.timedEffects.clippers &&
+    state.timedEffects.clippers.expiresAt > state.now
+  )
+    effects.push({
+      key: 'clippers',
+      label: `Clippers ×${state.timedEffects.clippers.stacks}`,
+      endsAt: state.timedEffects.clippers.expiresAt,
+    });
+  if (
     state.timedEffects.painReliefUntil !== null &&
     state.timedEffects.painReliefUntil > state.now
   )
@@ -151,5 +160,6 @@ export function progressionPresentation(
     projects: projectsFor(state),
     activeAvatar: avatarFor(state),
     hospital: hospitalFor(state, definition),
+    streamStats: state.progression.streamStats,
   };
 }

@@ -1,6 +1,36 @@
 <script lang="ts">
   import { gameViewModel } from '$lib/game-session';
+  import {
+    graveyardExportFilename,
+    graveyardExportMarkdown,
+  } from '$lib/ui/graveyard-export';
   $: model = $gameViewModel;
+  const dateTime = (at: number, timezone: string) =>
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone,
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(at);
+  const duration = (start: number, end: number) => {
+    const totalHours = Math.floor((end - start) / 3_600_000);
+    const days = Math.floor(totalHours / 24);
+    const hours = totalHours % 24;
+    return `${days}d ${hours}h`;
+  };
+
+  function exportGraveyard() {
+    if (!model?.death) return;
+    const url = URL.createObjectURL(
+      new Blob([graveyardExportMarkdown(model)], {
+        type: 'text/markdown;charset=utf-8',
+      }),
+    );
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = graveyardExportFilename(model);
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 </script>
 
 <svelte:head><title>History · Companion</title></svelte:head>
@@ -31,6 +61,23 @@
         <div class="graveyard">
           <span aria-hidden="true">✦</span><strong>Graveyard</strong>
           <p>This run is complete. Its record remains available for review.</p>
+          <dl>
+            <div>
+              <dt>Started</dt>
+              <dd>{dateTime(model.runStartedAt, model.timezone)}</dd>
+            </div>
+            <div>
+              <dt>Ended</dt>
+              <dd>{dateTime(model.death.at, model.timezone)}</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd>{duration(model.runStartedAt, model.death.at)}</dd>
+            </div>
+          </dl>
+          <button type="button" on:click={exportGraveyard}
+            >Export journey and grave</button
+          >
         </div>
       </section>
     {/if}
@@ -118,6 +165,40 @@
     margin: 0;
     color: #766d7f;
     font-size: 0.8rem;
+  }
+  .graveyard dl {
+    grid-column: 2;
+    margin: 4px 0;
+    font-size: 0.78rem;
+  }
+  .graveyard dl div {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 8px;
+  }
+  .graveyard dt {
+    font-weight: 900;
+  }
+  .graveyard dd {
+    margin: 0;
+  }
+  .graveyard button {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 9px;
+    padding: 9px 13px;
+    border: 2px solid #512b9a;
+    color: #512b9a;
+    background: #fff;
+    box-shadow: 3px 3px 0 #f3a15f;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  .graveyard button:hover {
+    color: #fff;
+    background: #512b9a;
   }
   .event-log {
     border-top: 3px solid #512b9a;

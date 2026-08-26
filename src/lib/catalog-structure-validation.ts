@@ -114,6 +114,18 @@ export function validateItemStructure(
         issues.push(`action ${action.id} needs a valid service definition`);
       if (action.kind !== 'service' && action.service)
         issues.push(`action ${action.id} cannot define a service`);
+      if (
+        action.progressionEffect &&
+        action.progressionEffect.type !== 'activate_clippers'
+      )
+        issues.push(`action ${action.id} has an unknown progression effect`);
+      if (
+        action.progressionEffect?.type === 'activate_clippers' &&
+        (action.kind !== 'interaction' || action.consumes !== true)
+      )
+        issues.push(
+          `action ${action.id} must consume an interaction to activate Clippers`,
+        );
       if (action.effects)
         issues.push(
           ...validateEffects(action.effects, `action ${action.id} effect`),

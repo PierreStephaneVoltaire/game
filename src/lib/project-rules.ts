@@ -9,6 +9,7 @@ import {
   resolveFullBodyPayout,
 } from './project-economy-rules';
 import { appearanceIdForModelTier } from './companion-profile';
+import { creditIncome } from './income-rules';
 
 export function startFullBodyProject(
   state: GameState,
@@ -76,8 +77,7 @@ function completeProject(
   };
   if (project.type === 'full_body_commission')
     return {
-      ...state,
-      balance: state.balance + (project.payout ?? 0),
+      ...creditIncome(state, project.payout ?? 0),
       events: [...state.events, event],
     };
   const tier = project.modelTier ?? 1;

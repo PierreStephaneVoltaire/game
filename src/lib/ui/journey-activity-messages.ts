@@ -58,6 +58,8 @@ function activityEnded(
       ? `${name} had to stop Commission Work early, so the job did not pay out.`
       : `${name} finished Commission Work.`;
   if (type === 'stream') return streamEnded(events, event, name, interrupted);
+  if (!interrupted && event.activityNarration)
+    return event.activityNarration.replace(/^Companion\b/, name);
   const verbs: Partial<Record<Activity['type'], string>> = {
     rest: 'resting',
     socialize: 'socializing',
