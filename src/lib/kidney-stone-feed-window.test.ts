@@ -71,8 +71,8 @@ describe('Kidney Stone feed window', () => {
     expect(result.kidneyStoneFeeds).toEqual([]);
   });
 
-  test('a failed 72-hour passage roll schedules another 72-hour check', () => {
-    const checkAt = 72 * HOUR;
+  test('a failed 48-hour passage roll schedules another 48-hour check', () => {
+    const checkAt = 48 * HOUR;
     let failed: GameState | undefined;
     for (let index = 0; index < 100 && !failed; index += 1) {
       const initial = startRun(
@@ -92,7 +92,7 @@ describe('Kidney Stone feed window', () => {
             kidney_stone: {
               since: 0,
               source: 'rolling_nutrition',
-              lastPenaltyAt: 60 * HOUR,
+              lastPenaltyAt: 36 * HOUR,
               naturalPassAt: checkAt,
             },
           },
@@ -104,6 +104,6 @@ describe('Kidney Stone feed window', () => {
     }
 
     expect(failed).toBeDefined();
-    expect(failed!.statuses.kidney_stone?.naturalPassAt).toBe(144 * HOUR);
+    expect(failed!.statuses.kidney_stone?.naturalPassAt).toBe(96 * HOUR);
   });
 });

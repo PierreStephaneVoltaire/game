@@ -111,7 +111,7 @@ function checkoutCart(
         state,
         rejected(
           'debt',
-          'Medical debt permits food and medicine purchases only.',
+          'A negative cash balance permits essential purchases only.',
         ),
       );
   if (
@@ -215,7 +215,7 @@ function buyItem(
         state,
         rejected(
           'debt',
-          'Medical debt permits food and medicine purchases only.',
+          'A negative cash balance permits essential purchases only.',
         ),
       );
   if (

@@ -65,7 +65,7 @@ describe('Subscriber Revenue', () => {
     },
   );
 
-  test('repays Hospital debt while Sick and Hospital care remain active', () => {
+  test('credits income while Hospital care is active without creating cash debt', () => {
     const started = startRun(
       {
         mode: 'realtime',
@@ -99,7 +99,7 @@ describe('Subscriber Revenue', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(hospitalized.balance).toBeLessThan(0);
+    expect(hospitalized.balance).toBe(20);
     expect(result.balance).toBe(hospitalized.balance + 1);
     expect(result.activity?.type).toBe('medical_care');
     expect(result.statuses.sick).toBeDefined();

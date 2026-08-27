@@ -5,7 +5,11 @@ export type BuiltInEventType =
   | 'food_craving'
   | 'creative_inspiration'
   | 'socks'
-  | 'benign_room_event';
+  | 'benign_room_event'
+  | 'self_entertainment'
+  | 'stood_up_too_fast'
+  | 'tiny_walk'
+  | 'barely_moved_today';
 
 export function messageFor(type: BuiltInEventType): string {
   if (type === 'low_money_stress') return 'Companion is stressed about money.';
@@ -13,6 +17,14 @@ export function messageFor(type: BuiltInEventType): string {
   if (type === 'creative_inspiration')
     return 'Companion had a creative inspiration.';
   if (type === 'socks') return 'Socks wants attention.';
+  if (type === 'self_entertainment')
+    return 'Companion found something dumb online and laughed harder than expected.';
+  if (type === 'stood_up_too_fast')
+    return 'Companion stood up too fast and had to reconsider the whole idea.';
+  if (type === 'tiny_walk')
+    return 'Companion actually went for a tiny walk. Historic event.';
+  if (type === 'barely_moved_today')
+    return 'Companion realized she has barely moved today and feels gross about it.';
   return 'Something benign happened in the room.';
 }
 

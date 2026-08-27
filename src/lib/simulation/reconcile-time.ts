@@ -9,6 +9,7 @@ import { nextStatusBoundary } from '../status-rules';
 import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
 import { criticalMetrics, isCriticalState } from './health-resolution';
+import { resolvePostHealthRescues } from './post-health-rescue';
 
 export type ReconcileResult = Transition & {
   elapsedHours: number;
@@ -136,6 +137,24 @@ export function reconcileTime(
     },
     timedEffects: decay.timedEffects,
   };
+  const resolvedAnything =
+    decay.intervals > 0 || decay.healthIntervals > 0 || decay.bondIntervals > 0;
+  const eventIds: string[] = [];
+  if (resolvedAnything) {
+    const event = timeEvent(next, reconciliationNow, decay);
+    next = { ...next, events: [...next.events, event] };
+    eventIds.push(event.id);
+    if (!deathAt && decay.healthDamageSources.length > 0) {
+      const rescues = resolvePostHealthRescues({
+        state: next,
+        definition,
+        damageSources: decay.healthDamageSources,
+        damageEventId: event.id,
+      });
+      next = rescues.state;
+      eventIds.push(...rescues.eventIds);
+    }
+  }
   const timeline = resolveTimelineEffects({
     state: next,
     definition,
@@ -148,13 +167,14 @@ export function reconcileTime(
     preventLethal: options.preventLethalDecay,
   });
   next = timeline.state;
-  const eventIds = timeline.eventIds;
+  eventIds.push(...timeline.eventIds);
   deathAt = timeline.deathAt;
   reconciliationNow = timeline.reconciliationNow;
   const elapsedHours = timeline.resolvedElapsedHours;
+  if (resolvedAnything) next = { ...next, stateVersion: next.stateVersion + 1 };
 
   if (deathAt) {
-    if (!timeline.lethalEventId) {
+    if (!timeline.lethalEventId && !resolvedAnything) {
       const event = timeEvent(next, reconciliationNow, decay);
       next = appendEvent(next, event);
       eventIds.push(event.id);
@@ -189,13 +209,7 @@ export function reconcileTime(
     eventIds.push(...completion.eventIds);
   }
 
-  const resolvedAnything =
-    decay.intervals > 0 || decay.healthIntervals > 0 || decay.bondIntervals > 0;
-  if (resolvedAnything) {
-    const event = timeEvent(next, reconciliationNow, decay);
-    next = appendEvent(next, event);
-    eventIds.push(event.id);
-  } else if (eventIds.length > 0) {
+  if (!resolvedAnything && eventIds.length > 0) {
     next = { ...next, stateVersion: next.stateVersion + 1 };
   }
 
@@ -221,6 +235,10 @@ function timeEvent(
     healthDamageSources:
       decay.healthDamageSources.length > 0
         ? decay.healthDamageSources
+        : undefined,
+    rawNeedDamageSources:
+      decay.rawNeedDamageSources.length > 0
+        ? decay.rawNeedDamageSources
         : undefined,
     healthRecovery: decay.healthRecovery || undefined,
   };

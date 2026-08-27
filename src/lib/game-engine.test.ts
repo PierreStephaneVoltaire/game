@@ -102,8 +102,8 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(afterThreeHours.metrics).toMatchObject({ food: 5, rest: 6 });
-    expect(afterFourHours.metrics).toMatchObject({ food: 5, rest: 5 });
+    expect(afterThreeHours.metrics).toMatchObject({ food: 6, rest: 6 });
+    expect(afterFourHours.metrics).toMatchObject({ food: 6, rest: 5 });
     expect(afterFourHours.statuses.hungry).toBeUndefined();
     expect(afterFourHours.lastResolvedAt).toBe(startedAt + 4 * 60 * 60 * 1_000);
   });
@@ -124,9 +124,8 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    // One seeded Food opportunity hits. Its critical damage applies once;
-    // the missed opportunity causes neither Food loss nor starvation damage.
-    expect(afterFourHours.metrics).toMatchObject({ food: 1, health: 31 });
+    // This seed misses both Food decay opportunities at the reduced 65% rate.
+    expect(afterFourHours.metrics).toMatchObject({ food: 2, health: 32 });
   });
 
   test('records the terminal Health-loss event as the causal death chain', () => {

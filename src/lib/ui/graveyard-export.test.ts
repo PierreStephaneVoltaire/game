@@ -20,6 +20,11 @@ function record(): GameViewModel {
     timezone: 'UTC',
     seed: 'seed',
     balance: 0,
+    medicalDebt: {
+      total: 0,
+      nextScheduledPayment: 0,
+      discountedFullPayment: 0,
+    },
     followers: 100,
     streamStats: { started: 0, completed: 0, interrupted: 0, elapsedMs: 0 },
     career: {} as GameViewModel['career'],

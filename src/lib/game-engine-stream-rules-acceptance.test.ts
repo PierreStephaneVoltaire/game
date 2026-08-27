@@ -191,7 +191,7 @@ describe('automatic stream snacks and income', () => {
     );
     expect(snacks).toHaveLength(1);
     expect(result.inventory.cake).toBe(1);
-    expect(result.metrics.food).toBe(1);
+    expect(result.metrics.food).toBe(2);
     expect(result.activity).toBeNull();
     expect(result.events.some((event) => AUTO_TYPES.has(event.type))).toBe(
       false,

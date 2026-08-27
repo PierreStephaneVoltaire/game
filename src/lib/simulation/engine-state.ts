@@ -12,7 +12,8 @@ import {
   STATUS_NAMES,
   resolveAttemptStatus,
 } from '../status-rules';
-import { HEALTH_MAX, STAT_MIN } from '../game-constants';
+import { HEALTH_MAX, HOUR_MS, STAT_MIN } from '../game-constants';
+import rules from '../data/simulation-rules.json';
 import { statusTransitionMessage } from '../event-messages';
 import { recordDeath } from './death-resolution';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
@@ -48,6 +49,7 @@ export function isCompanionAttempt(type: GameCommand['type']): boolean {
     'buy_item',
     'set_cart_quantity',
     'checkout_cart',
+    'pay_medical_debt',
     'place_item',
     'unplace_item',
     'medical_care',
@@ -126,6 +128,13 @@ export function applyCriticalHealthMoodPenalty(
   sourceActionId: string,
 ): GameState {
   if (!isCriticalHealthForMood(before.metrics.health)) return state;
+  const lastPenalty = state.history.lastCriticalHealthMoodPenaltyAt;
+  if (
+    lastPenalty !== null &&
+    state.now - lastPenalty <
+      rules.statusRules.criticalHealthMoodCooldownHours * HOUR_MS
+  )
+    return state;
   const changed = (['food', 'rest', 'bond', 'creativity'] as const).some(
     (metric) => state.metrics[metric] !== before.metrics[metric],
   );
@@ -145,6 +154,10 @@ export function applyCriticalHealthMoodPenalty(
       mood: Math.max(STAT_MIN, state.metrics.mood + criticalHealthMoodDelta()),
     },
     events: [...state.events, event],
+    history: {
+      ...state.history,
+      lastCriticalHealthMoodPenaltyAt: state.now,
+    },
     stateVersion: state.stateVersion + 1,
   };
   return reconcileMetricSource(state, penalized, sourceActionId);
@@ -172,6 +185,9 @@ export function recordAttempt(
   const criticalPenalty =
     isCriticalHealthForMood(before.metrics.health) &&
     careMetricChanged &&
+    (state.history.lastCriticalHealthMoodPenaltyAt === null ||
+      state.now - state.history.lastCriticalHealthMoodPenaltyAt >=
+        rules.statusRules.criticalHealthMoodCooldownHours * HOUR_MS) &&
     !state.events.some(
       (event) =>
         event.type === 'critical_health_mood_penalty' &&
@@ -181,17 +197,15 @@ export function recordAttempt(
   const genuineAttempt = outcome.accepted || countsAsRefusal;
   let next: GameState = {
     ...state,
-    metrics:
-      becameAnnoyed || criticalPenalty
-        ? {
-            ...state.metrics,
-            mood: Math.max(
-              STAT_MIN,
-              state.metrics.mood -
-                (becameAnnoyed ? Math.abs(attemptStatus.moodDelta) : 0),
-            ),
-          }
-        : state.metrics,
+    metrics: becameAnnoyed
+      ? {
+          ...state.metrics,
+          mood: Math.max(
+            STAT_MIN,
+            state.metrics.mood - Math.abs(attemptStatus.moodDelta),
+          ),
+        }
+      : state.metrics,
     statuses: attemptStatus.statuses,
     history: {
       ...state.history,

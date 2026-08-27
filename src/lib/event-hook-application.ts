@@ -10,7 +10,7 @@ export function applyAutomaticHook(input: {
   metrics: Metrics;
   event: GameEvent;
   cooldowns: Record<string, number>;
-}): void {
+}): { balanceDelta: number } {
   const resolution = resolveAutomaticEventHook({
     state: input.state,
     commandId: input.commandId,
@@ -21,7 +21,10 @@ export function applyAutomaticHook(input: {
   if (Object.keys(resolution.metricDeltas).length)
     input.event.metricDeltas = resolution.metricDeltas;
   input.event.healthDamageSources = resolution.healthDamageSources;
+  input.event.message = resolution.message;
+  input.event.selectedOutcomeId = resolution.selectedOutcomeId;
+  input.event.amount = resolution.balanceDelta || undefined;
   if (resolution.cooldownAt)
-    input.cooldowns[`item_hook:${input.itemId}:${input.hook.id}`] =
-      resolution.cooldownAt;
+    input.cooldowns[resolution.cooldownKey] = resolution.cooldownAt;
+  return { balanceDelta: resolution.balanceDelta };
 }

@@ -23,10 +23,12 @@
   "timeDecay": {
     "intervalHours": 2,
     "foodPerInterval": 1,
-    "foodDecayProbability": 0.75,
+    "foodDecayProbability": 0.65,
     "restPerInterval": 1,
     "bondLossHours": 48,
-    "criticalNeed": { "lowMaximum": 2, "zeroLoss": 2, "lowLoss": 1 },
+    "criticalNeed": { "lowMaximum": 2, "zeroLoss": 1, "lowLoss": 1 },
+    "periodicNeedDamageCap": 2,
+    "autonomousRescueResetMinimum": 5,
     "healthRecovery": {
       "metricBaseline": 5,
       "buckets": [
@@ -43,7 +45,7 @@
     "criticalMaxHours": 2
   },
   "events": {
-    "autonomous": { "intervalHours": 2, "restWeight": 40 },
+    "autonomous": { "intervalHours": 2 },
     "offStreamSupport": {
       "weight": 10,
       "cooldownHours": 12,
@@ -59,14 +61,20 @@
       "benignRoom": 10,
       "fullBodyCommission": 5,
       "momsCarePackage": 5,
-      "restSnoring": 10
+      "restSnoring": 10,
+      "selfEntertainment": 5,
+      "stoodUpTooFast": 3,
+      "tinyWalk": 3,
+      "barelyMovedToday": 3
     },
     "cooldowns": {
       "creativeInspirationHours": 12,
       "socksHours": 6,
       "benignRoomHours": 4,
       "fullBodyCommissionLocalDays": 14,
-      "momsCarePackageHours": 72
+      "momsCarePackageHours": 72,
+      "selfEntertainmentHours": 24,
+      "stoodUpTooFastHours": 24
     },
     "effects": {
       "lowMoneyMood": -1,
@@ -174,7 +182,8 @@
     "sickClearFoodMaximum": 5,
     "sickClearHealthMinimum": 5,
     "criticalHealthMinimum": 1,
-    "criticalHealthMaximum": 8
+    "criticalHealthMaximum": 8,
+    "criticalHealthMoodCooldownHours": 12
   },
   "statusMetricDeltas": {
     "lonelyMood": -1,
@@ -199,18 +208,19 @@
   "fullFeedSicknessProbability": 0.35,
   "itemRefusalWasteProbability": 0.5,
   "sugarCrash": {
-    "servingsRequired": 3,
+    "effectiveSugarThreshold": 4,
     "delayHours": 2,
-    "proteinClearMinimum": 2
+    "windowHours": 6
   },
   "kidneyStoneRecurrenceHours": 12,
   "annoyance": { "min": 3, "max": 5 },
   "kidneyStone": {
     "feedWindowSize": 10,
-    "saltThreshold": 8,
+    "saltThreshold": 10,
+    "warningSaltThreshold": 6,
     "waterThreshold": 2,
     "probability": 0.05,
-    "naturalPassHours": 72,
+    "naturalPassHours": 48,
     "naturalPassProbability": 0.5,
     "painReliefHours": 12
   },
@@ -232,14 +242,16 @@
   },
   "debt": {
     "recoveryPenaltyDivisor": 2500,
-    "maximumRecoveryPenalty": 3,
+    "maximumRecoveryPenalty": 2,
     "purchaseMood": -1
   },
   "medicalCare": {
     "durationHours": 12,
     "cost": 10000,
     "insuredCost": 500,
-    "completion": { "health": 4, "food": 3, "rest": 3 }
+    "completion": { "health": 4, "food": 3, "rest": 3 },
+    "dailyPayment": { "uninsured": 150, "insured": 25 },
+    "fullPaymentMultiplier": 0.85
   },
   "projects": {
     "completionMidnights": 3,
@@ -255,6 +267,8 @@
     "naturalAudience": {
       "intervalHours": 2,
       "streamBoostDays": 7,
+      "fullValueBoostCount": 4,
+      "excessBoostMultiplier": 0.25,
       "creativityPerPoint": 0.02,
       "tierRates": {
         "debut": 1,

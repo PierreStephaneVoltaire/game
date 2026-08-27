@@ -113,7 +113,8 @@
       "food",
       "snack",
       "stream-snack",
-      "favorite"
+      "favorite",
+      "refrigerated"
     ],
     "preferences": [
       "liked"
@@ -9771,7 +9772,31 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "small-emote-commission",
+        "weight": 3,
+        "message": "Companion picked up a small emote commission on her own.",
+        "eligibility": "owned",
+        "effects": {
+          "creativity": {
+            "min": -1,
+            "max": -1
+          },
+          "rest": {
+            "min": -1,
+            "max": -1
+          }
+        },
+        "balanceEffect": {
+          "min": 20,
+          "max": 60
+        },
+        "cooldownHours": 36,
+        "sharedCooldownKey": "autonomous_side_gig",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "draw",
@@ -10574,7 +10599,27 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "merch-sample-sale",
+        "weight": 3,
+        "message": "A merch sample sale notification came through on its own.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "balanceEffect": {
+          "min": 15,
+          "max": 50
+        },
+        "cooldownHours": 48,
+        "sharedCooldownKey": "autonomous_side_gig",
+        "requiredCareerTier": "sub_1k"
+      }
+    ],
     "itemActions": [
       {
         "id": "inspect_merch",
@@ -11221,7 +11266,45 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-cozy-game",
+        "weight": 3,
+        "message": "Companion settled into a cozy game for a while.",
+        "eligibility": "owned",
+        "cooldownHours": 18,
+        "sharedCooldownKey": "autonomous_entertainment",
+        "requiresIdle": true,
+        "outcomes": [
+          {
+            "id": "cozy",
+            "weight": 85,
+            "message": "Companion settled into a cozy game and actually relaxed.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          },
+          {
+            "id": "one-more-turn",
+            "weight": 15,
+            "message": "Companion played one more turn several turns too late.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              },
+              "rest": {
+                "min": -1,
+                "max": -1
+              }
+            }
+          }
+        ]
+      }
+    ],
     "itemActions": [
       {
         "id": "play_cozy_game",
@@ -11504,7 +11587,31 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-visual-novel",
+        "weight": 3,
+        "message": "Companion got absorbed in a visual novel.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          },
+          "rest": {
+            "min": -1,
+            "max": -1
+          }
+        },
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "read_visual_novel",
@@ -13437,7 +13544,31 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-book",
+        "weight": 5,
+        "messages": [
+          "Companion quietly wandered off to read for a while.",
+          "Companion got suspiciously invested in the book she was reading.",
+          "Companion insists the book is educational. This is not convincing."
+        ],
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "read_book",
@@ -13522,7 +13653,49 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-long-book",
+        "weight": 3,
+        "message": "Companion disappeared into a really long book.",
+        "eligibility": "owned",
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true,
+        "outcomes": [
+          {
+            "id": "good-chapter",
+            "weight": 80,
+            "message": "Companion disappeared into a really long book and emerged inspired.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              },
+              "creativity": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          },
+          {
+            "id": "read-too-late",
+            "weight": 20,
+            "message": "Companion read the really long book far too late into the night.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              },
+              "rest": {
+                "min": -1,
+                "max": -1
+              }
+            }
+          }
+        ]
+      }
+    ],
     "itemActions": [
       {
         "id": "read_long_book",
@@ -13611,7 +13784,30 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-manga",
+        "weight": 5,
+        "messages": [
+          "Companion vanished into a manga for a while.",
+          "Companion called the manga research and refused follow-up questions."
+        ],
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "read_manga",
@@ -14141,7 +14337,27 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-coloring",
+        "weight": 3,
+        "message": "Companion colored a page instead of dealing with a blank canvas.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "cooldownHours": 18,
+        "sharedCooldownKey": "autonomous_creative_hobby",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "color",
@@ -16344,7 +16560,27 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-sketching",
+        "weight": 3,
+        "message": "Companion sketched a terrible idea before it could become intimidating.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "cooldownHours": 18,
+        "sharedCooldownKey": "autonomous_creative_hobby",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "sketch",
@@ -19273,6 +19509,135 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Convention Guest Set is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "can-opener",
+    "name": "Can Opener",
+    "narration": [
+      "found a way to make opening a can into an event.",
+      "used the Can Opener with intense and unnecessary focus."
+    ],
+    "category": "reusable",
+    "price": 35,
+    "description": "A practical kitchen tool with a statistically concerning user.",
+    "qualitativeNutritionHint": "Open a can manually, preferably without turning it into an emergency.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "reusable",
+      "kitchen"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-can-opener",
+        "weight": 3,
+        "message": "Companion found a way to make opening a can into an event.",
+        "eligibility": "owned",
+        "cooldownHours": 48,
+        "sharedCooldownKey": "kitchen_accident",
+        "requiresIdle": true,
+        "outcomes": [
+          {
+            "id": "normal",
+            "weight": 90,
+            "message": "Companion found a way to make opening a can into an event.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          },
+          {
+            "id": "minor-cut",
+            "weight": 9,
+            "message": "The can opened. Companion's hand also lost that interaction.",
+            "effects": {
+              "mood": {
+                "min": -1,
+                "max": 0
+              }
+            },
+            "healthDamage": {
+              "min": 1,
+              "max": 1,
+              "causeId": "can_opener_minor_cut",
+              "causeName": "Can opener cut"
+            }
+          },
+          {
+            "id": "serious-cut",
+            "weight": 1,
+            "message": "Companion managed to cut herself badly enough that this became an ER problem.",
+            "healthDamage": {
+              "min": 2,
+              "max": 2,
+              "causeId": "can_opener_serious_cut",
+              "causeName": "Serious can opener cut"
+            }
+          }
+        ]
+      }
+    ],
+    "itemActions": [
+      {
+        "id": "open_can",
+        "label": "Open a can",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": false
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/can-opener.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Can Opener is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",

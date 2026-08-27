@@ -180,7 +180,13 @@ describe('Medical Care and terminal state', () => {
     );
 
     expect(result.outcomes[0]).toMatchObject({ accepted: true });
-    expect(result.state.balance).toBe(-9_974);
+    expect(result.state.balance).toBeGreaterThanOrEqual(20);
+    expect(result.state.medicalDebt).toEqual([
+      expect.objectContaining({
+        originalPrincipal: 10_000,
+        remainingPrincipal: 10_000,
+      }),
+    ]);
     expect(result.state.now).toBe(12 * HOUR);
     expect(result.state.activity).toBeNull();
     expect(result.state.statuses.kidney_stone).toBeUndefined();

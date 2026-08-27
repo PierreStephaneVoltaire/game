@@ -1,6 +1,7 @@
 import type { GameDefinition } from './game-definition';
 import type { GameState } from './game-types';
 import rules from './data/simulation-rules.json';
+import { CAREER_TIERS } from './progression-types';
 
 export type Candidate =
   | 'none'
@@ -11,7 +12,10 @@ export type Candidate =
   | 'benign_room_event'
   | 'stream'
   | 'off_stream_support'
-  | 'autonomous_nap'
+  | 'self_entertainment'
+  | 'stood_up_too_fast'
+  | 'tiny_walk'
+  | 'barely_moved_today'
   | 'full_body_commission'
   | 'moms_care_package'
   | 'rest_snoring'
@@ -38,8 +42,15 @@ export function eventCandidates(
       .filter(
         (hook) =>
           (hook.eligibility === 'owned' ? owned : placed) &&
-          (state.history.eventCooldowns[`item_hook:${item.id}:${hook.id}`] ??
-            0) <= state.now,
+          (!hook.requiresIdle || !state.activity) &&
+          (hook.minimumFollowers === undefined ||
+            state.progression.followers >= hook.minimumFollowers) &&
+          (hook.requiredCareerTier === undefined ||
+            CAREER_TIERS.indexOf(state.progression.careerTier) >=
+              CAREER_TIERS.indexOf(hook.requiredCareerTier)) &&
+          (state.history.eventCooldowns[
+            hook.sharedCooldownKey ?? `item_hook:${item.id}:${hook.id}`
+          ] ?? 0) <= state.now,
       )
       .map((hook) => ({ itemId: item.id, hook }));
   });
@@ -121,10 +132,37 @@ export function eventCandidates(
           : 0,
     },
     {
-      type: 'autonomous_nap',
+      type: 'self_entertainment',
       weight:
-        !state.activity && state.metrics.rest <= 2
-          ? rules.events.autonomous.restWeight
+        !state.activity &&
+        (state.history.eventCooldowns.self_entertainment ?? 0) <= state.now
+          ? rules.events.weights.selfEntertainment
+          : 0,
+    },
+    {
+      type: 'stood_up_too_fast',
+      weight:
+        !state.activity &&
+        (state.history.eventCooldowns.stood_up_too_fast ?? 0) <= state.now
+          ? rules.events.weights.stoodUpTooFast
+          : 0,
+    },
+    {
+      type: 'tiny_walk',
+      weight:
+        !state.activity &&
+        state.history.oncePerLocalDate.movement_event !== date
+          ? rules.events.weights.tinyWalk
+          : 0,
+    },
+    {
+      type: 'barely_moved_today',
+      weight:
+        !state.activity &&
+        state.history.oncePerLocalDate.movement_event !== date &&
+        (state.history.lastMovementAt === null ||
+          state.now - state.history.lastMovementAt >= 24 * 60 * 60 * 1000)
+          ? rules.events.weights.barelyMovedToday
           : 0,
     },
     {

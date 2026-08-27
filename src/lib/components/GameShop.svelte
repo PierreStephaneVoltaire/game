@@ -135,17 +135,36 @@
           >←</a
         >
         <strong class:debt={model.debt.active} class="balance"
-          >{model.debt.active
-            ? `Debt: $${numbers.format(model.debt.amount)}`
-            : `$${numbers.format(model.balance)}`}</strong
+          >Cash: ${numbers.format(model.balance)}</strong
         >
       </div>
     </header>
     {#if model.debt.active}
       <p class="debt-notice" role="status">
-        While in debt, essential food, water, and medicine remain available.
-        Other purchases are paused.
+        While the cash balance is negative, essential food, water, and medicine
+        remain available. Other purchases are paused.
       </p>
+    {/if}
+    {#if model.medicalDebt.total > 0}
+      <section class="debt-notice" aria-label="Medical debt payment service">
+        <strong
+          >Medical principal: ${numbers.format(model.medicalDebt.total)}</strong
+        >
+        <p>
+          Next scheduled payment: ${numbers.format(
+            model.medicalDebt.nextScheduledPayment,
+          )}. Pay every bill now for ${numbers.format(
+            model.medicalDebt.discountedFullPayment,
+          )} after the 15% discount.
+        </p>
+        <button
+          type="button"
+          disabled={terminal ||
+            model.balance < model.medicalDebt.discountedFullPayment}
+          on:click={() => command({ type: 'pay_medical_debt' })}
+          >Pay Medical Debt in Full</button
+        >
+      </section>
     {/if}
     <div class="tabs" role="tablist" aria-label="Shop sections">
       {#each tabs as option (option)}{#if option !== 'detail' || selected}<button

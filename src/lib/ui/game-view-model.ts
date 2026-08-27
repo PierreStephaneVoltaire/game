@@ -26,6 +26,10 @@ import {
 } from './progression-view-model';
 import type { CompanionAppearance } from './companion';
 import { metricMaximum } from '$lib/game-constants';
+import {
+  discountedMedicalDebtPrice,
+  totalMedicalDebt,
+} from '$lib/medical-debt-rules';
 
 export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
 
@@ -48,6 +52,7 @@ export type GameIntent =
   | { type: 'place_item'; itemId: string; slot: string }
   | { type: 'set_cart_quantity'; itemId: string; quantity: number }
   | { type: 'checkout_cart' }
+  | { type: 'pay_medical_debt' }
   | { type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'wait' };
 export type GameViewModel = {
   companion: typeof companion;
@@ -59,6 +64,11 @@ export type GameViewModel = {
   timezone: string;
   seed: string;
   balance: number;
+  medicalDebt: {
+    total: number;
+    nextScheduledPayment: number;
+    discountedFullPayment: number;
+  };
   followers: number;
   streamStats: GameState['progression']['streamStats'];
   career: CareerViewModel;
@@ -160,6 +170,15 @@ export function createGameViewModel(
     timezone: state.timezone,
     seed: state.seed,
     balance: state.balance,
+    medicalDebt: {
+      total: totalMedicalDebt(state),
+      nextScheduledPayment: state.medicalDebt.reduce(
+        (sum, bill) =>
+          sum + Math.min(bill.scheduledDailyPayment, bill.remainingPrincipal),
+        0,
+      ),
+      discountedFullPayment: discountedMedicalDebtPrice(state),
+    },
     ...progressionPresentation(state, definition),
     metrics: metricKeys.map((key) => {
       const maximum = metricMaximum(key);
@@ -243,5 +262,7 @@ export function intentToCommand(
     };
   if (intent.type === 'checkout_cart')
     return { ...base, type: 'checkout_cart' };
+  if (intent.type === 'pay_medical_debt')
+    return { ...base, type: 'pay_medical_debt' };
   return { ...base, type: intent.type } as GameCommand;
 }

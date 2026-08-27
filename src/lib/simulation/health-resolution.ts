@@ -12,6 +12,7 @@ export type HealthResolution = {
   damage: number;
   delta: number;
   sources: HealthDamageSource[];
+  rawSources: HealthDamageSource[];
   lethal: boolean;
 };
 
@@ -80,11 +81,19 @@ export function resolveHealthWindow(input: {
           : 0;
     if (amount > 0) sources.push(sourceForCriticalMetric(metric, amount));
   }
+  const rawSources = sources;
+  const appliedSources = allocateNeedDamage(
+    rawSources,
+    rules.timeDecay.periodicNeedDamageCap,
+  );
   const recovery = Math.max(
     0,
     recoveryForMetrics(input.recoveryMetrics, input.recoveryPenalty ?? 0),
   );
-  const damage = sources.reduce((total, source) => total + source.amount, 0);
+  const damage = appliedSources.reduce(
+    (total, source) => total + source.amount,
+    0,
+  );
   const intendedHealth = Math.min(
     HEALTH_MAX,
     Math.max(STAT_MIN, input.health + recovery - damage),
@@ -97,9 +106,33 @@ export function resolveHealthWindow(input: {
     recovery,
     damage,
     delta: health - input.health,
-    sources,
+    sources: appliedSources,
+    rawSources,
     lethal: lethal && !input.preventLethal,
   };
+}
+
+function allocateNeedDamage(
+  sources: HealthDamageSource[],
+  cap: number,
+): HealthDamageSource[] {
+  const order: Record<string, number> = {
+    starving: 0,
+    sleep_deprived: 1,
+    depressed: 2,
+  };
+  let remaining = Math.max(0, cap);
+  return [...sources]
+    .sort(
+      (left, right) =>
+        right.amount - left.amount ||
+        (order[left.id] ?? 99) - (order[right.id] ?? 99),
+    )
+    .flatMap((source) => {
+      const amount = Math.min(source.amount, remaining);
+      remaining -= amount;
+      return amount > 0 ? [{ ...source, amount }] : [];
+    });
 }
 
 export function healthDamageSource(

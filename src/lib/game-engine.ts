@@ -17,6 +17,8 @@ import { handleItemActionCommand } from './commands/item-action-commands';
 import { resolveItemConsumption } from './commands/item-consumption';
 import { reconcileTime } from './simulation/reconcile-time';
 import { createRunState } from './simulation/run-state';
+import { resetPlayerCareRescueLocks } from './autonomous-rescue-rules';
+import { payMedicalDebtInFull } from './commands/medical-debt-commands';
 
 export const startRun = createRunState;
 export { reconcileTime };
@@ -141,6 +143,10 @@ export function dispatchCommand(
     const roomResult = handleRoomCommand(next, command, definition);
     next = roomResult.state;
     outcome = roomResult.outcome;
+  } else if (command.type === 'pay_medical_debt') {
+    const payment = payMedicalDebtInFull(next, command.commandId);
+    next = payment.state;
+    outcome = payment.outcome;
   } else if (
     command.type === 'wait' ||
     command.type === 'rest' ||
@@ -174,6 +180,7 @@ export function dispatchCommand(
     next = itemResult.state;
     outcome = itemResult.outcome;
   }
+  if (outcome.accepted) next = resetPlayerCareRescueLocks(timed, next);
   if (
     companionAttempt &&
     next.metrics.health > 0 &&

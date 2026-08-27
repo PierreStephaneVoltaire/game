@@ -37,7 +37,9 @@ export function createRunState(
     healthRemainderHours: 0,
     pendingFoodDecayHit: false,
     eventCooldowns: {},
-    oncePerLocalDate: {},
+    oncePerLocalDate: {
+      medical_debt_payment: localDate(input.now, input.timezone),
+    },
     cravingItemId: null,
     cravingStartedAt: null,
     cravingRefreshCount: 0,
@@ -48,6 +50,9 @@ export function createRunState(
     nextAutonomousAt:
       input.now + rules.events.autonomous.intervalHours * HOUR_MS,
     runStartedAt: input.now,
+    autonomousRescue: { foodLocked: false, restLocked: false },
+    lastCriticalHealthMoodPenaltyAt: null,
+    lastMovementAt: null,
   } as GameState['history'];
   const base: GameState = {
     definitionVersion: definition.version,
@@ -61,6 +66,7 @@ export function createRunState(
     metrics: { ...definition.startingMetrics },
     statuses: {},
     balance: definition.startingCurrency,
+    medicalDebt: [],
     inventory: { ...definition.startingInventory },
     room: {},
     roomModifiers: {},

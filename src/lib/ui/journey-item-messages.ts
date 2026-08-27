@@ -34,7 +34,7 @@ export function itemJourneyMessage(
   if (event.type === 'sick_feeding_harm')
     return `${petName}'s sickness worsened after ${itemName ?? 'that serving'}.`;
   if (event.type === 'kidney_stone_onset')
-    return `${petName} developed painful kidney stone symptoms after ${itemName ?? 'that serving'}.`;
+    return `${petName} developed painful kidney stone symptoms after ${itemName ?? 'that serving'}. Painkillers can reduce the discomfort.`;
   if (event.type === 'dizzy_spell_onset')
     return `${petName} had a dizzy spell. More salt and water may help it clear.`;
   if (event.type === 'full_feed_suppressed')

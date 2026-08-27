@@ -66,10 +66,18 @@
     <h2>Time</h2>
     <span>{model.formattedTime}</span>
     <strong class:debt-label={model.debt.active}
-      >{model.debt.active
-        ? `Debt: $${numbers.format(model.debt.amount)}`
-        : `Balance: $${numbers.format(model.balance)}`}</strong
+      >Cash balance: ${numbers.format(model.balance)}</strong
     >
+    {#if model.medicalDebt.total > 0}
+      <strong class="debt-label"
+        >Medical principal: ${numbers.format(model.medicalDebt.total)}</strong
+      >
+      <span
+        >Next scheduled payment: ${numbers.format(
+          model.medicalDebt.nextScheduledPayment,
+        )}</span
+      >
+    {/if}
     <span>Followers: {numbers.format(model.followers)}</span>
     <span>Career: {model.career.label}</span>
     <span
@@ -146,7 +154,9 @@
   <h2 id="hospital-dialog-title">Confirm hospital visit</h2>
   <p>This visit lasts {model.hospital.durationHours} game-hours.</p>
   <p>
-    Charge: <strong>${numbers.format(model.hospital.cost)}</strong>
+    Payment-plan principal: <strong
+      >${numbers.format(model.hospital.cost)}</strong
+    >
     ({model.hospital.insured ? 'insured' : 'uninsured'})
   </p>
   {#if model.hospital.consumedItemName}

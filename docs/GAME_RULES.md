@@ -68,14 +68,15 @@ Rest loss lands before the ordinary Rest loss. Natural Kidney Stone passage is
 resolved before a recurrence due at that same instant. At a shared two-hour
 boundary, due projects and milestones resolve first, the autonomous candidate
 is selected from the pre-Subscriber-Revenue state, Subscriber Revenue is
-credited, and an activity completion resolves afterward. Death stops all later
-work at its lethal boundary.
+credited, local-day medical payments resolve, and an activity completion
+resolves afterward. Periodic damage is recorded before any emergency rescue.
+Death stops all later work at its lethal boundary.
 
 ## Needs and Health
 
 ### Food, Rest, and Bond
 
-- Every two game-hours, Food has a 75% chance to lose 1.
+- Every two game-hours, Food has a 65% chance to lose 1.
 - Rest loses 1 every two game-hours while awake. It continues during
   Socialize, Play, streams, Hospital, and Commission Work.
 - Bond loses 1 after each 48 game-hours without a genuine Bond gain. A Bond
@@ -98,23 +99,27 @@ boundary. Each point above 5 contributes to a combined recovery score:
 |            4–6 |     +1 |
 |           7–15 |     +2 |
 
-While the balance is negative, subtract `floor(abs(balance) / 2500)` from the
-score, capped at 3. Debt never deals direct Health damage.
+While the cash balance is negative, subtract `floor(abs(balance) / 2500)` from
+the score, capped at 2. Medical payment-plan principal is separate and never
+causes this penalty. Debt never deals direct Health damage.
 
 After due Food and Rest decay, each critical need contributes separately:
 
 | Need value | Health damage |
 | ---------: | ------------: |
 |        1–2 |            −1 |
-|          0 |            −2 |
+|          0 |            −1 |
 
 Food damage requires a successful Food-decay opportunity since the last
 unprotected Health check. Recovery and eligible damage combine before Health
-is clamped and death is checked.
+is clamped and death is checked. Food, Rest, and Mood damage is capped at 2 in
+total per check. Applied attribution is allocated by descending raw damage,
+then Food, Rest, and Mood as the stable tie order; the ledger retains the raw
+uncapped sources for diagnostics.
 
 If Health is already 1–8 before an action phase, an actual Food, Rest, Bond, or
-Creativity change in that phase also causes Mood −1. A companion action and its
-following autonomous event are separate phases.
+Creativity change can also cause Mood −1. This penalty has one global 12-game-
+hour cooldown, including across the companion action and its following event.
 
 ## Persistent statuses
 
@@ -153,15 +158,18 @@ proper Rest can help.
 
 The ten most recent successful food or drink feeds contribute salt and water
 scores. A new feed is appended and the oldest is evicted before evaluation. If
-those ten-or-fewer feeds total at least salt 8 while water remains at most 2,
+those ten-or-fewer feeds total at least salt 10 while water remains at most 2,
 that feed makes a separate seeded 5% Kidney Stone roll. Refusals, rejections,
 and non-food Medicine actions do not enter this window.
 
-Onset applies Mood −1, Health −1, and Rest −2. After each 72 active hours, one
+Crossing into salt at least 6 with water at most 2 produces a qualitative
+warning. Onset applies Mood −1, Health −1, and Rest −2 and points to
+Painkillers. After each 48 active hours, one
 seeded 50% passage roll occurs. Success clears the status and grants Mood +1
 before a recurrence due at the same instant; failure schedules the next check
-72 hours later. Symptoms recur every 12 hours for Health −1 and Rest −1.
-Hospital also clears it and creates no immunity or cooldown.
+48 hours later. Symptoms recur every 12 hours for Health −1 and Rest −1.
+Hospital also clears it, removes the treated ten-feed exposure window, and
+creates no immunity or cooldown; a new onset requires new feeds.
 
 Painkillers cost $7 and can be consumed only while Kidney Stone is active.
 They suppress recurring Health and Rest harm for 12 game-hours without clearing
@@ -197,11 +205,13 @@ apology action.
 
 ### Sugar Crash and scheduled effects
 
-Three sugar servings in a rolling six-hour window schedule a Sugar Crash two
-hours later. Limited-Edition Dr Pepper counts as two servings; other sugary
-consumptions count as one. The crash applies Mood −2 and Rest −1. Completed Rest
-or a protein score of 2–3 clears an active crash but does not cancel one already
-scheduled.
+Each successful consumption contributes authored sugar and protein to one
+rolling six-hour window. `effective sugar = max(0, total sugar − total
+protein)`. An atomic post-item total of 4 or more schedules a Sugar Crash two
+hours later and exposes a visible warning. Later protein that drops the total
+below 4 cancels the pending crash immediately or clears an active crash. A
+cancelled crash cannot reschedule without a new consumption. An activated crash
+applies Mood −2 and Rest −1; completed Rest also clears it.
 
 A caffeine score of at least 2 moves the next awake Rest loss two hours later.
 Only one deferred loss can be pending, and more caffeine does not extend it.
@@ -265,19 +275,26 @@ Commission Work grant no completion reward. Streams retain elapsed-hour income
 and donation rolls but not base Followers or completion metrics. Hospital does
 not end early.
 
-### Hospital
+### Hospital and medical payment plans
 
 Hospital is available while Sick or Kidney Stone is active. A confirmation
-shows the 12-hour duration, charge, and whether an Insurance Card will be used.
+shows the 12-hour duration, payment-plan principal, and whether an Insurance Card will be used.
 Coverage is locked at visit start:
 
-- with a card, consume one card and charge $500;
-- without a card, charge $10,000.
+- with a card, consume one card and lock a $500 principal with $25 daily payments;
+- without a card, lock a $10,000 principal with $150 daily payments.
 
-The visit starts even when the charge creates debt. It protects Health, blocks
+No cash is charged at visit start. It protects Health, blocks
 other care, suppresses Kidney Stone recurrence, and continues Food and Rest
 decay. Completion clears Sick and Kidney Stone and applies Health +4, Food +3,
-and Rest +3.
+and Rest +3, then creates the locked medical bill.
+
+At each local midnight, after same-boundary project, autonomous, and Subscriber
+income, outstanding bills pay oldest first. A payment never takes cash below
+zero; unpaid principal remains without metric harm. While any principal exists,
+Shop always offers Pay Medical Debt in Full for
+`ceil(total remaining principal × 0.85)`. This service is all-or-nothing,
+clears every bill, creates no inventory, and is hidden when no bill remains.
 
 ### Commission Work
 
@@ -310,6 +327,16 @@ use ordinary salt, water, sugar, protein, preparation, refusal, Full, Sick, and
 Kidney Stone rules. Their attempts and refusals do not advance Annoyed or
 interaction-inactivity tracking and do not create another event opportunity.
 
+Emergency Food and Rest rescues are separate from the weighted pool. After a
+periodic check actually applies matching damage, an idle living companion at
+Food or Rest 0–2 may act once: Food consumes one acceptable owned Liked or
+Variable food through the ordinary feeding pipeline, then Rest may start the
+normal Rest activity. Snack Shelf prefers snack-tagged choices; Mini Fridge
+prefers useful drinks or refrigerated food. The Health damage is never
+refunded, no item is bought or created, and each metric has an independent
+lock. Only a player-commanded action that actually raises the matching metric
+to at least 5 resets its lock.
+
 A craving selects one available Liked food. Consuming it clears the craving and
 adds Bond +1. Otherwise it expires after 24 game-hours or the second shop
 refresh after onset, whichever comes first; expiry is narrated and frees the
@@ -326,7 +353,7 @@ profiles. Only qualitative hints appear in the game.
 Every two hours from the run's starting timestamp, both clock modes receive a
 time-owned weighted opportunity. Companion attempts have their own separate
 opportunities. During an activity, narration and stat events remain eligible,
-but another stream and autonomous Rest are not.
+unless their authored hook requires idle state; another stream cannot begin.
 
 | Candidate                 | Weight and eligibility                                                                                   |
 | ------------------------- | -------------------------------------------------------------------------------------------------------- |
@@ -336,7 +363,9 @@ but another stream and autonomous Rest are not.
 | Creative inspiration      | 15, 12-hour cooldown, Creativity +1                                                                      |
 | Socks                     | Requires a placed Cat Tree; weight 15 plus placement modifiers, six-hour cooldown, Mood −1/+1/+1 equally |
 | Benign room event         | 10, four-hour cooldown                                                                                   |
-| Autonomous Rest           | 40 at Rest 0–2 with no activity                                                                          |
+| Self-entertainment        | 5 while idle, Mood +1, 24-hour cooldown                                                                  |
+| Stood up too fast         | 3 while idle, seeded neutral/Rest −1/Health −1 outcomes, 24-hour cooldown                                |
+| Tiny walk / barely moved  | 3 each, one shared local-day slot; the negative event requires no movement in 24 hours                   |
 | Rare full-body commission | 5 with an owned Rigging Tablet, no active one, and a 14-local-day cooldown                               |
 | Mom's Care Package        | 5 in debt or at Food 0–2, 72-hour cooldown                                                               |
 | Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
@@ -348,7 +377,17 @@ Mood +1. The full-body commission is a nonblocking project that completes at
 the third local midnight and pays a seeded $400–$800. Placing Cat Tree adds 3
 to Socks weight.
 
-All catalogue-authored automatic hooks also join the weighted pool.
+All catalogue-authored automatic hooks also join the weighted pool. Hooks may
+use seeded message pools and outcomes, shared cooldowns, idle/career/Follower
+requirements, metric effects, explicit injury attribution, and positive
+income. Book and Manga share a 12-hour reading cooldown; selected games and
+creative hobbies share 18-hour cooldowns. Drawing Tablet can pay $20–$60 on a
+36-hour side-gig cooldown, and Merch Sample can pay $15–$50 after the 1K tier
+on a 48-hour side-gig cooldown.
+
+The reusable $35 Can Opener has a weight-3 idle hook and a 48-hour kitchen-
+accident cooldown: 90% Mood +1, 9% Health −1 with Mood −1..0, and 1% Health −2
+with ER narration. Its event Health loss is outside the periodic need cap.
 
 Off-stream support ignores all nonterminal stream blockers and remains
 eligible during any activity. It can be selected by either a time-owned or an
@@ -452,8 +491,8 @@ multiplier upgrade.
 ## Followers, milestones, and model projects
 
 Followers never decrease. Natural audience growth resolves every two
-game-hours. Each tick adds the current career tier's baseline plus every active
-stream contribution, rounded once. Every real stream start contributes for
+game-hours. Each tick adds the current career tier's baseline plus active
+stream contributions, rounded once. Every real stream start contributes for
 seven days using the career tier and Creativity at its start:
 
 ```text
@@ -462,8 +501,10 @@ stream contribution = snapshotted tier rate × (1 + snapshotted Creativity × 0.
 
 The per-tick tier rates are: Debut 1, First Model 2, 1K 10, Model Redesign 20,
 Twitch Partner 60, 30K 80, Tournament 100, 50K 150, Convention 200, 100K 300,
-3D Ready 400, 200K 500, 250K 1,000, 500K 2,000, and 1M 2,000. Overlapping
-streams stack and each expires independently at its exact seven-day boundary.
+3D Ready 400, 200K 500, 250K 1,000, 500K 2,000, and 1M 2,000. Contributions
+are ordered by `startedAt` and stream ID. The oldest four count at full value;
+every later contribution counts at 25%. When an older one expires, the next
+automatically moves into the full-value group. Each expires independently.
 Interrupted streams retain their contribution. Ordinary stream completion has
 no separate direct base-Follower award; donations and model rewards remain.
 
@@ -513,14 +554,14 @@ critical condition.
 
 ## Shop, Inventory, and room
 
-The catalogue has exactly 226 items:
+The catalogue has exactly 227 items:
 
 | Category   | Count |
 | ---------- | ----: |
 | Food       |   110 |
 | Medicine   |     2 |
 | Care       |     3 |
-| Reusable   |    73 |
+| Reusable   |    74 |
 | Upgrade    |    23 |
 | Decoration |    15 |
 
@@ -532,9 +573,10 @@ The catalogue additions include Insurance Card ($150, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($9; salt 2/water 2), Jar of Pickle Juice
 ($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($25;
 reusable Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Pepper
-($12; stock 1–2; two sugar servings), Convention Guest Set ($120), New Model
+($12; stock 1–2; high effective sugar), Convention Guest Set ($120), New Model
 Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
 Food and starter comfort item with Food +2 and Mood +2.
+The Can Opener is the 227th canonical item, a reusable priced at $35.
 
 Each local date receives a seeded 24-item rotation:
 
@@ -549,8 +591,8 @@ and one hydration-support item. Ordinary stock is seeded from 1 through 5; an it
 overrides that. Milestone-gated items join the candidate pool only after their
 unlock.
 
-Positive but insufficient balances cannot cross into debt by shopping. When a
-command begins with a negative balance, only catalogue items tagged Essential
+Positive but insufficient cash balances cannot cross below zero by shopping.
+When a command begins with a negative cash balance, only catalogue items tagged Essential
 can be purchased without an affordability check. Water, Five Plain Tortillas,
 Salt Tablet, and Painkillers are Essential; premium food and untagged items
 remain blocked. One successful Essential transaction made while already in
@@ -568,8 +610,9 @@ its fixed anchors and three-row layout.
 
 Journey shows natural narration for meaningful care, authored activity
 vignettes, reactions, catch-up events, off-stream support, donations,
-milestones, commissions, projects, medical
-recovery, craving expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
+milestones, commissions, projects, medical recovery, bills and payments,
+emergency rescues, sugar warnings, reading, side gigs, injuries, craving
+expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
 room changes, and death. The room displays only the latest projected Journey
 entry.
 

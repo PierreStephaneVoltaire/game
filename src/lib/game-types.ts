@@ -62,6 +62,8 @@ export type GameEvent = {
   preparation?: 'acceptable' | 'unpreferred';
   activityType?: Activity['type'];
   healthDamageSources?: HealthDamageSource[];
+  /** Uncapped Food/Rest/Mood pressure retained for balance diagnostics. */
+  rawNeedDamageSources?: HealthDamageSource[];
   healthRecovery?: number;
   purchases?: PurchaseRecord[];
   itemName?: string;
@@ -77,6 +79,13 @@ export type GameEvent = {
   activityNarration?: string;
   activityOutcome?: 'normal' | 'strong';
   revenueMultiplier?: number;
+  selectedOutcomeId?: string;
+  rescueMetric?: 'food' | 'rest';
+  rescueBlockedReason?: string;
+  medicalBillId?: string;
+  medicalPaymentIds?: string[];
+  fullValueAudienceBoostIds?: string[];
+  discountedAudienceBoostIds?: string[];
 };
 
 export type HealthDamageSource = {
@@ -152,6 +161,21 @@ export type GameHistory = {
   lastCommissionWorkDate: string | null;
   nextAutonomousAt: number;
   runStartedAt: number;
+  autonomousRescue: {
+    foodLocked: boolean;
+    restLocked: boolean;
+  };
+  lastCriticalHealthMoodPenaltyAt: number | null;
+  lastMovementAt: number | null;
+};
+
+export type MedicalDebtBill = {
+  id: string;
+  createdAt: number;
+  originalPrincipal: number;
+  remainingPrincipal: number;
+  scheduledDailyPayment: number;
+  insuredAtStart: boolean;
 };
 
 export type DeathRecord = {
@@ -181,6 +205,7 @@ export type GameState = {
   metrics: Metrics;
   statuses: Partial<Record<StatusName, StatusRecord>>;
   balance: number;
+  medicalDebt: MedicalDebtBill[];
   inventory: Record<string, number>;
   room: Record<string, string>;
   /** Exact applied room deltas make placement reversible under clamping. */
@@ -221,6 +246,12 @@ export type StartRunInput = {
 };
 
 export type GameCommand =
+  | {
+      type: 'pay_medical_debt';
+      commandId: string;
+      now: number;
+      expectedStateVersion?: number;
+    }
   | {
       type: 'use_item';
       commandId: string;

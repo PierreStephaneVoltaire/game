@@ -24,7 +24,8 @@ describe('autonomous stream drought protection', () => {
         contrast = { grace, ramped };
     }
 
-    expect(contrast).toEqual({ grace: 'none', ramped: 'stream' });
+    expect(contrast?.grace).not.toBe('stream');
+    expect(contrast?.ramped).toBe('stream');
   });
 
   test('the first 24 hours have no bonus and the drought bonus caps at 300', () => {

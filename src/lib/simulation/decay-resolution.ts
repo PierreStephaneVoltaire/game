@@ -31,6 +31,7 @@ export type DecayResolution = {
   pendingFoodDecayHit: boolean;
   lastBondGainAt: number;
   healthDamageSources: HealthDamageSource[];
+  rawNeedDamageSources: HealthDamageSource[];
   healthRecovery: number;
   timedEffects: GameState['timedEffects'];
 };
@@ -63,6 +64,7 @@ export function resolveDecay(
   let streamSnackRequests = 0;
   let deathAt: number | null = null;
   let healthDamageSources: HealthDamageSource[] = [];
+  let rawNeedDamageSources: HealthDamageSource[] = [];
   let healthRecovery = 0;
   const timedEffects = hyperfocus.timedEffects;
   let statusState = state;
@@ -139,6 +141,7 @@ export function resolveDecay(
     metrics.health = health.health;
     metricDeltas.health = (metricDeltas.health ?? 0) + health.delta;
     healthDamageSources = [...healthDamageSources, ...health.sources];
+    rawNeedDamageSources = [...rawNeedDamageSources, ...health.rawSources];
     healthRecovery += health.recovery;
     pendingFoodDecayHit = false;
     if (health.lethal) {
@@ -245,6 +248,7 @@ export function resolveDecay(
           bondIntervals * rules.timeDecay.bondLossHours * HOUR_MS
         : state.history.lastBondGainAt,
     healthDamageSources,
+    rawNeedDamageSources,
     healthRecovery,
     timedEffects,
   };

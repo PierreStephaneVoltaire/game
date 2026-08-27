@@ -4,8 +4,6 @@ import rules from '../data/simulation-rules.json';
 import { actionRandom } from '../seeded-rng';
 import { accepted, recordBondGain, rejected } from '../simulation/engine-state';
 import { resolveNutritionConsumption } from './nutrition-resolution';
-import { HOUR_MS } from '../game-constants';
-import { sugarCrashDelayHours } from '../status-rules';
 import {
   itemConsumptionEvents,
   selectItemNarration,
@@ -206,6 +204,22 @@ export function resolveItemConsumption(
         metricDeltas: { bond: 1 },
       }
     : undefined;
+  const sugarEvent: GameEvent | undefined = nutrition.sugarCrashTransition
+    ? {
+        id: `event-${state.events.length + consumptionEvents.length + ruleEvents.length + (cravingEvent ? 3 : 2)}`,
+        type:
+          nutrition.sugarCrashTransition === 'scheduled'
+            ? 'sugar_crash_warning'
+            : 'sugar_crash_averted',
+        at: state.now,
+        message:
+          nutrition.sugarCrashTransition === 'scheduled'
+            ? 'That is a lot of sugar in a short period. A sugar crash may be coming.'
+            : 'The rolling nutrition balance improved and the sugar crash was averted.',
+        sourceActionId: command.commandId,
+        status: 'sugar_crash',
+      }
+    : undefined;
   const kidneyOnsetEvent = ruleEvents.find(
     (ruleEvent) => ruleEvent.type === 'kidney_stone_onset',
   );
@@ -258,11 +272,7 @@ export function resolveItemConsumption(
       cravingRefreshCount: nutrition.fulfilledCraving
         ? 0
         : state.history.cravingRefreshCount,
-      sugarCrashDueAt:
-        nutrition.sugarServings >= rules.sugarCrash.servingsRequired &&
-        state.history.sugarCrashDueAt === null
-          ? state.now + sugarCrashDelayHours() * HOUR_MS
-          : state.history.sugarCrashDueAt,
+      sugarCrashDueAt: nutrition.sugarCrashDueAt,
     },
     timedEffects,
     events: [
@@ -271,6 +281,7 @@ export function resolveItemConsumption(
       ...consumptionEvents,
       ...ruleEvents,
       ...(cravingEvent ? [cravingEvent] : []),
+      ...(sugarEvent ? [sugarEvent] : []),
     ],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
@@ -284,6 +295,7 @@ export function resolveItemConsumption(
       event.id,
       ...consumptionEvents.map((item) => item.id),
       ...ruleEvents.map((item) => item.id),
+      ...(sugarEvent ? [sugarEvent.id] : []),
       ...(cravingEvent ? [cravingEvent.id] : []),
     ]),
   };

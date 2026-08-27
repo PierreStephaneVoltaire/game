@@ -135,6 +135,8 @@ function medicalCare(
     );
   const duration = rules.medicalCare.durationHours * HOUR_MS;
   const insuranceItemId = hospitalInsuranceItemId(state, definition);
+  const insuredAtStart = Boolean(insuranceItemId);
+  const principal = hospitalCost(state, definition);
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'activity_started',
@@ -151,8 +153,15 @@ function medicalCare(
       startedAt: state.now,
       endsAt: state.now + duration,
       sourceActionId: command.commandId,
+      payload: {
+        insuredAtStart,
+        principal,
+        scheduledDailyPayment: insuredAtStart
+          ? rules.medicalCare.dailyPayment.insured
+          : rules.medicalCare.dailyPayment.uninsured,
+        treatedKidneyStone: Boolean(state.statuses.kidney_stone),
+      },
     },
-    balance: state.balance - hospitalCost(state, definition),
     inventory: insuranceItemId
       ? {
           ...state.inventory,

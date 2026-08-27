@@ -11,12 +11,13 @@ import { startFullBodyProject } from './project-rules';
 import {
   chooseCarePackageFoods,
   chooseCravingFood,
-  resolveAutonomousNap,
 } from './event-autonomous-actions';
 import { applyAutomaticHook } from './event-hook-application';
 import { eventCandidates, localDateOrdinal } from './event-candidate-pool';
 import { reconcileMetricSource } from './status-rules/metric-source-reconciliation';
 import { resolveOffStreamSupport } from './off-stream-support-rules';
+import { creditIncome } from './income-rules';
+import { healthDamageSource } from './simulation/health-resolution';
 
 /** Resolves exactly one weighted autonomous opportunity for one companion attempt. */
 export function resolveAttemptEvent(
@@ -86,9 +87,6 @@ export function resolveAttemptEvent(
       stateVersion: state.stateVersion + 2,
     };
   }
-  if (selected === 'autonomous_nap') {
-    return resolveAutonomousNap(state, commandId, opportunityEvent);
-  }
   if (selected === 'off_stream_support') {
     return resolveOffStreamSupport(state, commandId, opportunityEvent);
   }
@@ -133,19 +131,20 @@ export function resolveAttemptEvent(
     type: selected.startsWith('item_hook:') ? 'item_automatic_hook' : selected,
     at: state.now,
     message: selectedHook
-      ? selectedHook.hook.message
+      ? (selectedHook.hook.message ?? 'Companion used an owned item.')
       : messageFor(selected as BuiltInEventType),
     sourceActionId: commandId,
   };
   const metrics = { ...state.metrics };
   let inventory = state.inventory;
+  let balanceDelta = 0;
   const cooldowns = { ...state.history.eventCooldowns };
   const oncePerLocalDate = { ...state.history.oncePerLocalDate };
   let cravingItemId = state.history.cravingItemId;
   let cravingStartedAt = state.history.cravingStartedAt;
   let cravingRefreshCount = state.history.cravingRefreshCount;
   if (selectedHook) {
-    applyAutomaticHook({
+    balanceDelta = applyAutomaticHook({
       state,
       commandId,
       itemId: selectedHook.itemId,
@@ -153,7 +152,7 @@ export function resolveAttemptEvent(
       metrics,
       event,
       cooldowns,
-    });
+    }).balanceDelta;
   }
   if (selected === 'low_money_stress') {
     metrics.mood = Math.max(
@@ -215,6 +214,53 @@ export function resolveAttemptEvent(
     cooldowns.moms_care_package =
       state.now + rules.events.cooldowns.momsCarePackageHours * HOUR_MS;
   }
+  if (selected === 'self_entertainment') {
+    metrics.mood = Math.min(STAT_MAX, metrics.mood + 1);
+    event.metricDeltas = { mood: 1 };
+    cooldowns.self_entertainment =
+      state.now + rules.events.cooldowns.selfEntertainmentHours * HOUR_MS;
+  }
+  if (selected === 'stood_up_too_fast') {
+    const roll = actionRandom(
+      state.seed,
+      state.stateVersion,
+      commandId,
+      'stood_up_too_fast',
+      'outcome',
+    );
+    const outcome = roll < 0.75 ? 'brief' : roll < 0.95 ? 'rough' : 'stumble';
+    event.selectedOutcomeId = outcome;
+    if (outcome === 'rough') {
+      metrics.rest = Math.max(STAT_MIN, metrics.rest - 1);
+      event.metricDeltas = { rest: -1 };
+    }
+    if (outcome === 'stumble') {
+      metrics.health = Math.max(STAT_MIN, metrics.health - 1);
+      event.metricDeltas = { health: -1 };
+      event.healthDamageSources = [
+        healthDamageSource(
+          'event',
+          'stood_up_too_fast',
+          'Stumble after standing too fast',
+          1,
+        ),
+      ];
+      event.message =
+        'Companion stood up too fast, got lightheaded, and stumbled.';
+    }
+    cooldowns.stood_up_too_fast =
+      state.now + rules.events.cooldowns.stoodUpTooFastHours * HOUR_MS;
+  }
+  if (selected === 'tiny_walk') {
+    metrics.mood = Math.min(STAT_MAX, metrics.mood + 1);
+    event.metricDeltas = { mood: 1 };
+    oncePerLocalDate.movement_event = date;
+  }
+  if (selected === 'barely_moved_today') {
+    metrics.mood = Math.max(STAT_MIN, metrics.mood - 1);
+    event.metricDeltas = { mood: -1 };
+    oncePerLocalDate.movement_event = date;
+  }
   if (selected === 'food_craving') {
     const food = chooseCravingFood(state, definition, commandId);
     if (!food)
@@ -235,10 +281,11 @@ export function resolveAttemptEvent(
     event.metricDeltas?.creativity !== undefined
   )
     event.metricDeltas = { ...event.metricDeltas, creativity: 0 };
+  const incomeState = creditIncome(state, balanceDelta);
   const normalized = reconcileMetricSource(
     state,
     {
-      ...state,
+      ...incomeState,
       metrics,
       inventory,
       history: {
@@ -248,6 +295,8 @@ export function resolveAttemptEvent(
         cravingItemId,
         cravingStartedAt,
         cravingRefreshCount,
+        lastMovementAt:
+          selected === 'tiny_walk' ? state.now : state.history.lastMovementAt,
       },
       events: [...state.events, opportunityEvent, event],
       stateVersion: state.stateVersion + 2,

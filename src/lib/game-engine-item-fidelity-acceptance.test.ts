@@ -160,7 +160,7 @@ describe('item and history fidelity', () => {
     ).toBe(false);
   });
 
-  test('critical Health penalizes the instant action and random event independently', () => {
+  test('critical Health Mood penalty is global across an instant action and event', () => {
     let resolved: GameState | undefined;
     for (let index = 0; index < 2_000 && !resolved; index += 1) {
       const initial = run(`critical-independent-${index}`);
@@ -190,7 +190,7 @@ describe('item and history fidelity', () => {
       resolved!.events.filter(
         (event) => event.type === 'critical_health_mood_penalty',
       ),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
   });
 
   test('a treating item clears Sick only at the documented metric thresholds', () => {

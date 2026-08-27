@@ -10,6 +10,7 @@ import {
   triggersOverstimulation,
 } from '../status-rules';
 import { clampMetric, HOUR_MS } from '../game-constants';
+import { resolveSugarCrashConsumption } from '../status-rules/sugar-crash';
 
 type UseItemCommand = Extract<GameCommand, { type: 'use_item' }>;
 
@@ -20,7 +21,9 @@ export type NutritionResolution = {
   itemMetricDeltas: Partial<GameState['metrics']>;
   consumptions: GameState['history']['consumptions'];
   kidneyStoneFeeds: GameState['history']['kidneyStoneFeeds'];
-  sugarServings: number;
+  effectiveSugar: number;
+  sugarCrashDueAt: number | null;
+  sugarCrashTransition: 'scheduled' | 'cancelled' | 'active_cleared' | null;
   fulfilledCraving: boolean;
   nutritionProfileId?: string;
   preparationRejected: boolean;
@@ -30,6 +33,7 @@ export type NutritionResolution = {
   sickFromFull: boolean;
   kidneyStone: boolean;
   kidneyStoneDeltas: Partial<GameState['metrics']>;
+  kidneyRiskWarning: boolean;
   dizzySpell: boolean;
   dizzySpellDeltas: Partial<GameState['metrics']>;
 };
@@ -169,24 +173,27 @@ export function resolveNutritionConsumption(
         -rules.kidneyStone.feedWindowSize,
       )
     : state.history.kidneyStoneFeeds;
+  const previousKidneySalt = state.history.kidneyStoneFeeds.reduce(
+    (total, consumption) => total + consumption.salt,
+    0,
+  );
+  const previousKidneyWater = state.history.kidneyStoneFeeds.reduce(
+    (total, consumption) => total + consumption.water,
+    0,
+  );
+  const kidneySalt = kidneyStoneFeeds.reduce(
+    (total, consumption) => total + consumption.salt,
+    0,
+  );
+  const kidneyWater = kidneyStoneFeeds.reduce(
+    (total, consumption) => total + consumption.water,
+    0,
+  );
   const priorNutrition = state.history.consumptions.filter(
     (consumption) =>
       consumption.at >=
       state.now - rules.nutrition.rollingWindowHours * HOUR_MS,
   );
-  const sugarServings = consumptions
-    .filter(
-      (consumption) =>
-        consumption.at >=
-        state.now - rules.nutrition.sugarWindowHours * HOUR_MS,
-    )
-    .reduce(
-      (total, consumption) =>
-        total +
-        (consumption.sugarServings ?? (consumption.sugarTagged ? 1 : 0)),
-      0,
-    );
-
   const nutritionResolution = resolveNutritionStatuses({
     metrics,
     statuses: state.statuses,
@@ -208,14 +215,8 @@ export function resolveNutritionConsumption(
       (total, consumption) => total + consumption.water,
       0,
     ),
-    kidneySalt: kidneyStoneFeeds.reduce(
-      (total, consumption) => total + consumption.salt,
-      0,
-    ),
-    kidneyWater: kidneyStoneFeeds.reduce(
-      (total, consumption) => total + consumption.water,
-      0,
-    ),
+    kidneySalt,
+    kidneyWater,
     kidneyStoneRoll: actionRandom(
       state.seed,
       state.stateVersion,
@@ -235,13 +236,13 @@ export function resolveNutritionConsumption(
   }
   let resolvedMetrics = nutritionResolution.metrics;
   let statuses = nutritionResolution.statuses;
-  if ((nutritionScores.protein ?? 0) >= rules.sugarCrash.proteinClearMinimum)
-    statuses = clearActionStatuses(
-      statuses,
-      resolvedMetrics,
-      ['sugar_crash'],
-      undefined,
-    );
+  const sugarCrash = resolveSugarCrashConsumption({
+    consumptions,
+    statuses,
+    dueAt: state.history.sugarCrashDueAt,
+    now: state.now,
+  });
+  statuses = sugarCrash.statuses;
   if (itemOverstimulated)
     resolvedMetrics = applyOverstimulation(
       resolvedMetrics,
@@ -264,7 +265,9 @@ export function resolveNutritionConsumption(
     itemMetricDeltas,
     consumptions,
     kidneyStoneFeeds,
-    sugarServings,
+    effectiveSugar: sugarCrash.effectiveSugar,
+    sugarCrashDueAt: sugarCrash.dueAt,
+    sugarCrashTransition: sugarCrash.transition,
     fulfilledCraving,
     nutritionProfileId: profile?.id,
     preparationRejected,
@@ -274,6 +277,13 @@ export function resolveNutritionConsumption(
     sickFromFull: nutritionResolution.sickFromFull,
     kidneyStone: nutritionResolution.kidneyStone,
     kidneyStoneDeltas: nutritionResolution.kidneyStoneDeltas,
+    kidneyRiskWarning:
+      kidneySalt >= rules.kidneyStone.warningSaltThreshold &&
+      kidneyWater <= rules.kidneyStone.waterThreshold &&
+      !(
+        previousKidneySalt >= rules.kidneyStone.warningSaltThreshold &&
+        previousKidneyWater <= rules.kidneyStone.waterThreshold
+      ),
     dizzySpell: nutritionResolution.dizzySpell,
     dizzySpellDeltas: nutritionResolution.dizzySpellDeltas,
   };

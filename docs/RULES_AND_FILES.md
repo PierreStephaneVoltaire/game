@@ -11,7 +11,7 @@ gameplay rules.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, strong-outcome chance, and authored Play/Socialize
   vignette pools.
-- `src/lib/data/shop-items.json` — the 226 canonical item definitions:
+- `src/lib/data/shop-items.json` — the 227 canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and generated PNG paths.
 - `src/lib/data/catalogue/food-items.jsonl`,
@@ -19,7 +19,7 @@ gameplay rules.
   individually authored catalogue inputs. Nutrition facts stay separate from
   gameplay values so the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  226-item allowlist. The compiler and validator reject missing, unexpected,
+  227-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   avatar path. Runtime code does not hardcode a companion name.
@@ -60,6 +60,8 @@ gameplay rules.
 - `src/lib/commands/room-commands.ts` and
   `src/lib/commands/shop-commands.ts` — placement, removal, shop rotation,
   cart, and purchase commands.
+- `src/lib/commands/medical-debt-commands.ts` — the all-or-nothing discounted
+  medical payoff command, kept separate from inventory purchases.
 - `src/lib/item-action-prerequisites.ts` — data-driven action
   prerequisite evaluation shared by the command layer and UI.
 - `src/lib/simulation/reconcile-time.ts` — chronological reconciliation and
@@ -72,7 +74,10 @@ gameplay rules.
   `src/lib/simulation/timeline-status-events.ts` — chronological autonomous
   opportunities, craving/shop deadlines, and narrated status transitions.
 - `src/lib/simulation/health-resolution.ts` — critical-state detection,
-  periodic recovery, and structured critical-need damage sources.
+  periodic recovery, capped applied damage, and raw/applied critical-need
+  damage sources.
+- `src/lib/simulation/post-health-rescue.ts` — ordered Food-then-Rest emergency
+  autonomy after an applied periodic Health event.
 - `src/lib/simulation/dizzy-resolution.ts` — run-age, activity-protection,
   rolling-salt, and seeded Dizzy checks at Health boundaries.
 - `src/lib/simulation/hyperfocus-resolution.ts` — scheduled Hyperfocus pinning,
@@ -81,6 +86,8 @@ gameplay rules.
   collection and causal event-chain construction.
 - `src/lib/simulation/activity-completion.ts` — completion of Rest,
   Socialize, Play, Hospital, Commission Work, and stream activities.
+- `src/lib/simulation/medical-care-completion.ts` — Hospital exposure clearing
+  and locked medical-bill creation.
 - `src/lib/simulation/engine-state.ts` and
   `src/lib/simulation/run-state.ts` — immutable state/event helpers and
   canonical death construction.
@@ -102,6 +109,8 @@ gameplay rules.
   post-source status normalization and once-only onset effects.
 - `src/lib/status-rules/natural-resolution.ts` — chronological Sick and Kidney
   Stone natural passage, including same-boundary passage-before-recurrence.
+- `src/lib/status-rules/sugar-crash.ts` — atomic six-hour effective-sugar
+  accumulation, scheduling, pending cancellation, and active clearance.
 - `src/lib/event-candidate-pool.ts`, `src/lib/event-autonomous-actions.ts`,
   and `src/lib/event-hook-application.ts` — weighted event eligibility and
   cohesive autonomous/event-hook resolutions behind `event-rules.ts`.
@@ -118,8 +127,12 @@ gameplay rules.
 - `src/lib/stream-rules.ts` — stream eligibility, drought-adjusted event
   weight, daypart adjustment, duration, and autonomous-stream activity
   creation.
-- `src/lib/billing-rules.ts` and `src/lib/debt-rules.ts` — Hospital coverage,
-  ownership caps, debt shopping eligibility, and debt recovery suppression.
+- `src/lib/billing-rules.ts`, `src/lib/medical-debt-rules.ts`, and
+  `src/lib/debt-rules.ts` — Hospital coverage, explicit payment-plan bills,
+  local-day payments, ownership caps, negative-cash shopping eligibility, and
+  negative-cash recovery suppression.
+- `src/lib/autonomous-rescue-rules.ts` — player-care-only reset rules for the
+  independent Food and Rest rescue locks.
 - `src/lib/income-rules.ts` — the shared positive-income/debt settlement path.
 - `src/lib/economy-rules.ts` — stream income, hourly donations, and coordinated
   donation/model career rewards.
@@ -148,6 +161,15 @@ gameplay rules.
   `src/lib/nutrition-validation.ts`, and
   `scripts/validate-assets.mjs` — strict catalogue, cross-reference,
   nutrition provenance, compiler-drift, and generated-PNG checks.
+- `docs/BALANCE_REPORT.md` and `docs/BALANCE_RESULTS.json` — the generated
+  validator-compatible balance diagnosis and per-run result contract. The
+  permanent skill contains both the unchanged canonical 50-run regression and
+  the configuration-driven P51–P100 extension; `run-expanded-study.mjs`
+  generates their separated 100-run analysis.
+- `.agents/skills/game-balance-simulation/data/expanded-profiles-*.json` — the
+  heterogeneous profile data. Shared schedule, session, care, shopping,
+  medical, trace, and report behavior lives in the adjacent generic script
+  modules rather than profile-specific branches.
 
 ## UI modules
 

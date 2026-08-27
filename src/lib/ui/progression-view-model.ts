@@ -23,7 +23,7 @@ export type ProjectViewModel = {
 };
 
 export type TimedEffectViewModel = {
-  key: 'hyperfocus' | 'pain_relief' | 'clippers';
+  key: 'hyperfocus' | 'pain_relief' | 'clippers' | 'sugar_crash_warning';
   label: string;
   endsAt: number;
 };
@@ -96,6 +96,15 @@ function projectsFor(state: GameState): ProjectViewModel[] {
 
 function effectsFor(state: GameState): TimedEffectViewModel[] {
   const effects: TimedEffectViewModel[] = [];
+  if (
+    state.history.sugarCrashDueAt !== null &&
+    state.history.sugarCrashDueAt > state.now
+  )
+    effects.push({
+      key: 'sugar_crash_warning',
+      label: 'Sugar Crash Warning',
+      endsAt: state.history.sugarCrashDueAt,
+    });
   if (
     state.timedEffects.hyperfocusUntil !== null &&
     state.timedEffects.hyperfocusUntil > state.now

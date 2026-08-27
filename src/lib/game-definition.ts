@@ -32,10 +32,29 @@ export type ItemActionDefinition = {
 export type AutomaticEventHookDefinition = {
   id: string;
   weight: number;
-  message: string;
+  message?: string;
+  messages?: string[];
   eligibility: 'owned' | 'placed';
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
+  balanceEffect?: EffectRange;
   cooldownHours?: number;
+  sharedCooldownKey?: string;
+  requiresIdle?: boolean;
+  requiredCareerTier?: CareerTier;
+  minimumFollowers?: number;
+  outcomes?: Array<{
+    id: string;
+    weight: number;
+    message: string;
+    effects?: Partial<Record<keyof Metrics, EffectRange>>;
+    balanceEffect?: EffectRange;
+    healthDamage?: {
+      min: number;
+      max: number;
+      causeId: string;
+      causeName: string;
+    };
+  }>;
 };
 
 export type ItemDefinition = {

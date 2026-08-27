@@ -18,6 +18,7 @@ import { subscriberRevenueMultiplier } from '../follower-rules';
 import { creditIncome } from '../income-rules';
 import rules from '../data/simulation-rules.json';
 import { resolveAudienceGrowth } from '../audience-growth-rules';
+import { processDailyMedicalPayments } from '../medical-debt-rules';
 
 export type TimelineEffectsInput = {
   state: GameState;
@@ -157,6 +158,14 @@ export function resolveTimelineEffects({
       events: [...next.events, event],
     };
     eventIds.push(event.id);
+  }
+  if (!deathAt) {
+    const medicalPayments = processDailyMedicalPayments(
+      next,
+      reconciliationNow,
+    );
+    next = medicalPayments.state;
+    eventIds.push(...medicalPayments.eventIds);
   }
   if (!deathAt) {
     const audience = resolveAudienceGrowth(next, reconciliationNow);

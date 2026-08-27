@@ -65,7 +65,7 @@ export function consumptionRuleEvents(input: {
       id: id(),
       type: 'kidney_stone_onset',
       at: state.now,
-      message: `${item.name} triggered kidney stone symptoms.`,
+      message: `${item.name} triggered kidney stone symptoms. Painkillers can reduce the discomfort.`,
       sourceActionId,
       causedBy: [event.id],
       status: 'kidney_stone',
@@ -79,6 +79,16 @@ export function consumptionRuleEvents(input: {
           [event.id],
         ),
       ],
+    });
+  else if (nutrition.kidneyRiskWarning)
+    events.push({
+      id: id(),
+      type: 'kidney_stone_risk_warning',
+      at: state.now,
+      message:
+        'Her food has been pretty salty lately. Water might be a good idea.',
+      sourceActionId,
+      causedBy: [event.id],
     });
   if (nutrition.dizzySpell)
     events.push({

@@ -25,7 +25,7 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 }
 
 describe('catalogue validation', () => {
-  test('accepts all 226 maintained catalogue records', () => {
+  test('accepts all 227 maintained catalogue records', () => {
     expect(validateCatalog(BUNDLED_GAME_DEFINITION, true)).toEqual([]);
   });
 

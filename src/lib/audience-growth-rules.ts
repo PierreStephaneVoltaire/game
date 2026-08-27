@@ -17,6 +17,10 @@ function appendFollowers(
   amount: number,
   type: 'natural_audience_growth' | 'clipper_audience_growth',
   message: string,
+  diagnostics?: {
+    fullValueAudienceBoostIds: string[];
+    discountedAudienceBoostIds: string[];
+  },
 ): { state: GameState; eventIds: string[] } {
   if (amount <= 0) return { state, eventIds: [] };
   const event: GameEvent = {
@@ -25,6 +29,7 @@ function appendFollowers(
     at,
     message,
     followerDelta: amount,
+    ...diagnostics,
   };
   const events = [event];
   let next: GameState = {
@@ -133,16 +138,35 @@ export function resolveAudienceGrowth(
   const eventIds: string[] = [];
   const naturalInterval = audienceRules.intervalHours * HOUR_MS;
   if ((at - state.history.runStartedAt) % naturalInterval === 0) {
-    const activeBoosts = next.progression.activeAudienceBoosts.filter(
-      (boost) => boost.expiresAt > at,
+    const activeBoosts = next.progression.activeAudienceBoosts
+      .filter((boost) => boost.expiresAt > at)
+      .sort(
+        (left, right) =>
+          left.startedAt - right.startedAt ||
+          left.streamId.localeCompare(right.streamId),
+      );
+    const fullValueBoosts = activeBoosts.slice(
+      0,
+      audienceRules.fullValueBoostCount,
+    );
+    const discountedBoosts = activeBoosts.slice(
+      audienceRules.fullValueBoostCount,
     );
     const amount = Math.round(
       tierRate(next.progression.careerTier) +
-        activeBoosts.reduce(
+        fullValueBoosts.reduce(
           (sum, boost) =>
             sum +
             tierRate(boost.careerTier) *
               (1 + boost.creativity * audienceRules.creativityPerPoint),
+          0,
+        ) +
+        discountedBoosts.reduce(
+          (sum, boost) =>
+            sum +
+            tierRate(boost.careerTier) *
+              (1 + boost.creativity * audienceRules.creativityPerPoint) *
+              audienceRules.excessBoostMultiplier,
           0,
         ),
     );
@@ -156,6 +180,14 @@ export function resolveAudienceGrowth(
       amount,
       'natural_audience_growth',
       `Natural audience growth added ${amount} subscribers.`,
+      {
+        fullValueAudienceBoostIds: fullValueBoosts.map(
+          (boost) => boost.streamId,
+        ),
+        discountedAudienceBoostIds: discountedBoosts.map(
+          (boost) => boost.streamId,
+        ),
+      },
     );
     next = growth.state;
     eventIds.push(...growth.eventIds);

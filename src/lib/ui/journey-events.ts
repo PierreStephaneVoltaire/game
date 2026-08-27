@@ -18,11 +18,7 @@ export type JourneyEntryViewModel = {
   sourceEventIds: string[];
 };
 
-const HIDDEN_TYPES = new Set([
-  'random_event_opportunity',
-  'shop_rotated',
-  'critical_health_mood_penalty',
-]);
+const HIDDEN_TYPES = new Set(['random_event_opportunity', 'shop_rotated']);
 
 export function projectJourney(
   events: GameEvent[],
@@ -196,6 +192,19 @@ function naturalNarrativeMessage(
 ): string | undefined {
   if (event.type === 'annoyance_warning')
     return `${petName} is getting frustrated. One more genuine refusal could leave them Annoyed.`;
+  if (event.type === 'critical_health_mood_penalty')
+    return `${petName}'s critical health made everything feel worse.`;
+  if (event.type === 'autonomous_food_rescue')
+    return personalize(event.message, petName);
+  if (
+    event.type === 'medical_debt_created' ||
+    event.type === 'medical_debt_daily_payment' ||
+    event.type === 'medical_debt_paid_in_full' ||
+    event.type === 'sugar_crash_warning' ||
+    event.type === 'sugar_crash_averted' ||
+    event.type === 'kidney_stone_risk_warning'
+  )
+    return personalize(event.message, petName);
   if (event.type === 'autonomous_nap_refused')
     return `${petName} tried to nap on their own, but could not settle.`;
   if (event.type === 'rest_snoring')

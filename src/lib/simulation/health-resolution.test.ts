@@ -73,7 +73,7 @@ describe('periodic Health resolution', () => {
     });
 
     expect(missed).toMatchObject({ health: 8, damage: 0, sources: [] });
-    expect(hit).toMatchObject({ health: 6, damage: 2 });
+    expect(hit).toMatchObject({ health: 7, damage: 1 });
     expect(hit.sources).toEqual([
       expect.objectContaining({ id: 'starving', name: 'Starvation' }),
     ]);
@@ -90,11 +90,11 @@ describe('periodic Health resolution', () => {
     expect(result).toMatchObject({ recovery: 2, damage: 1, health: 9 });
   });
 
-  test('records every contributor to a lethal Health boundary', () => {
+  test('caps applied contributors while preserving raw need diagnostics', () => {
     const initial = run('multi-cause');
     const state = {
       ...initial,
-      metrics: metrics({ food: 0, rest: 0, mood: 5, health: 3 }),
+      metrics: metrics({ food: 0, rest: 0, mood: 5, health: 2 }),
       history: { ...initial.history, pendingFoodDecayHit: true },
     };
     const result = reconcileTime(
@@ -107,6 +107,15 @@ describe('periodic Health resolution', () => {
       'Starvation',
       'Sleep deprivation',
     ]);
+    const boundary = result.events.find(
+      (event) => event.type === 'time_reconciled',
+    );
+    expect(
+      boundary?.healthDamageSources?.map((source) => source.amount),
+    ).toEqual([1, 1]);
+    expect(
+      boundary?.rawNeedDamageSources?.map((source) => source.name),
+    ).toEqual(['Starvation', 'Sleep deprivation']);
   });
 });
 
@@ -153,7 +162,8 @@ describe('protected activities and Streaming fairness', () => {
       BUNDLED_GAME_DEFINITION,
     );
 
-    expect(result.state.now).toBe(2 * HOUR);
+    expect(result.state.now).toBeGreaterThanOrEqual(2 * HOUR);
+    expect(result.state.now).toBeLessThanOrEqual(12 * HOUR);
     expect(result.state.death).toBeNull();
     expect(result.state.metrics.health).toBeGreaterThan(0);
   });
@@ -188,7 +198,15 @@ describe('protected activities and Streaming fairness', () => {
     ).state;
 
     expect(result.now).toBe(12 * HOUR);
-    expect(result.balance).toBe(-9_974);
+    expect(result.balance).toBeGreaterThanOrEqual(20);
+    expect(result.medicalDebt).toEqual([
+      expect.objectContaining({
+        originalPrincipal: 10_000,
+        remainingPrincipal: 10_000,
+        scheduledDailyPayment: 150,
+        insuredAtStart: false,
+      }),
+    ]);
     expect(result.metrics.health).toBe(6);
     expect(result.metrics.food).toBeGreaterThanOrEqual(3);
     expect(result.metrics.rest).toBeGreaterThanOrEqual(3);

@@ -7,7 +7,7 @@ const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('publishes exactly 226 canonical items in the locked category counts', () => {
+  test('publishes exactly 227 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
         (category) => [
@@ -19,12 +19,12 @@ describe('V2 catalogue definition seam', () => {
       ),
     );
 
-    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(226);
+    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(227);
     expect(counts).toEqual({
       food: 110,
       medicine: 2,
       care: 3,
-      reusable: 73,
+      reusable: 74,
       upgrade: 23,
       decoration: 15,
     });
@@ -56,6 +56,11 @@ describe('V2 catalogue definition seam', () => {
   });
 
   test('publishes the nine added items with their locked prices and metadata', () => {
+    expect(item('can-opener')).toMatchObject({
+      category: 'reusable',
+      price: 35,
+      consumable: false,
+    });
     expect(item('insurance-card')).toMatchObject({
       category: 'care',
       price: 150,

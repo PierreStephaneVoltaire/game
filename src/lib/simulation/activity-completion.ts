@@ -26,6 +26,8 @@ import { reconcileMetricSource } from '../status-rules/metric-source-reconciliat
 import { localDate } from '../shop-rules';
 import { creditIncome } from '../income-rules';
 import { recordStreamEnd } from '../audience-growth-rules';
+import { resetPlayerCareRescueLocks } from '../autonomous-rescue-rules';
+import { completeMedicalCare } from './medical-care-completion';
 
 export type ActivityCompletionInput = {
   state: GameState;
@@ -204,6 +206,8 @@ export function completeActivity({
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
   };
+  if (activity.type === 'medical_care' && !interrupted)
+    next = completeMedicalCare(next, activity, completedAt);
   if (activity.type === 'stream') {
     next = recordStreamEnd(next, elapsed, interrupted);
     const economy = completeStreamEconomy(
@@ -249,13 +253,21 @@ export function completeActivity({
     };
   }
   next = reconcileMetricSource(state, next, activity.sourceActionId);
+  if (!activity.payload?.autonomous)
+    next = resetPlayerCareRescueLocks(state, next);
   next = recordBondGain(next, state, completedAt);
   next = appendStatusTransitionEvents(
     next,
     beforeActivityStatuses,
     activity.sourceActionId,
   );
-  const eventIds = [event.id];
+  const eventIds = [
+    event.id,
+    ...next.events
+      .slice(state.events.length + 1)
+      .filter((item) => item.type === 'medical_debt_created')
+      .map((item) => item.id),
+  ];
   if (activity.type !== 'medical_care' && activity.type !== 'commission_work') {
     const beforePenaltyCount = next.events.length;
     next = applyCriticalHealthMoodPenalty(

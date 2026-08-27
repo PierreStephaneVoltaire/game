@@ -169,8 +169,12 @@ export function validateItemStructure(
         issues.push('automatic event hooks must be structured objects');
         continue;
       }
-      if (!hook.id?.trim() || !hook.message?.trim())
-        issues.push('automatic event hook needs an id and message');
+      if (
+        !hook.id?.trim() ||
+        (!hook.message?.trim() &&
+          !hook.messages?.some((message) => message.trim()))
+      )
+        issues.push('automatic event hook needs an id and message copy');
       if (hookIds.has(hook.id))
         issues.push(`duplicate automatic event hook id: ${hook.id}`);
       hookIds.add(hook.id);
@@ -187,6 +191,21 @@ export function validateItemStructure(
         issues.push(`automatic event hook ${hook.id} has invalid cooldown`);
       if (hook.effects)
         issues.push(...validateEffects(hook.effects, `hook ${hook.id} effect`));
+      for (const outcome of hook.outcomes ?? []) {
+        if (!outcome.id?.trim() || !outcome.message?.trim())
+          issues.push(`automatic event hook ${hook.id} has an invalid outcome`);
+        if (!Number.isFinite(outcome.weight) || outcome.weight <= 0)
+          issues.push(
+            `automatic event hook ${hook.id} outcome has invalid weight`,
+          );
+        if (outcome.effects)
+          issues.push(
+            ...validateEffects(
+              outcome.effects,
+              `hook ${hook.id} outcome effect`,
+            ),
+          );
+      }
     }
   }
   return issues;

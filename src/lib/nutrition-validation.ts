@@ -27,7 +27,7 @@ const COMPLETE_SOURCE_TYPE_COUNTS = {
   usda_foundation: 36,
   usda_fndds: 66,
   fictional_seeded_profile: 1,
-  not_applicable: 116,
+  not_applicable: 117,
 } as const;
 
 function validateScores(

@@ -237,7 +237,8 @@ describe('Wait, Medical Care, and active activity boundaries', () => {
       { type: 'medical_care', commandId: 'medical-streaming', now: 0 },
       BUNDLED_GAME_DEFINITION,
     );
-    expect(streaming.state.balance).toBe(-9_974);
+    expect(streaming.state.balance).toBeGreaterThanOrEqual(20);
+    expect(streaming.state.medicalDebt).toHaveLength(1);
     expect(streaming.state.activity).toBeNull();
     expect(streaming.state.statuses.kidney_stone).toBeUndefined();
 

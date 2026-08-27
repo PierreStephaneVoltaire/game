@@ -24,7 +24,7 @@ const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
   food: 110,
   medicine: 2,
   care: 3,
-  reusable: 73,
+  reusable: 74,
   upgrade: 23,
   decoration: 15,
 };
@@ -245,9 +245,9 @@ export function validateCatalog(
     }
   }
   if (requireComplete) {
-    if (definition.items.length !== 226)
+    if (definition.items.length !== 227)
       issues.push({
-        message: `expected 226 canonical items, found ${definition.items.length}`,
+        message: `expected 227 canonical items, found ${definition.items.length}`,
       });
     for (const [category, expected] of Object.entries(
       COMPLETE_CATEGORY_COUNTS,
