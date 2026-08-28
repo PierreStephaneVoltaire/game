@@ -4,6 +4,21 @@ import type {
   Project,
   TimedEffects,
 } from './progression-types';
+import type {
+  EndingKind,
+  EndingRiskClocks,
+  EndingUnlocks,
+  RunEnding,
+} from './ending-types';
+import type { GameHistory } from './game-history-types';
+import type {
+  FinancedObligation,
+  FinancialEffect,
+  LineOfCreditState,
+} from './financial-types';
+export type * from './ending-types';
+export type * from './game-history-types';
+export type * from './financial-types';
 export type {
   AppearanceId,
   CareerTier,
@@ -35,7 +50,8 @@ export type StatusName =
   | 'full'
   | 'low_energy'
   | 'sugar_crash'
-  | 'dizzy_spell';
+  | 'dizzy_spell'
+  | 'in_debt';
 
 export type StatusRecord = {
   since: number;
@@ -86,6 +102,13 @@ export type GameEvent = {
   medicalPaymentIds?: string[];
   fullValueAudienceBoostIds?: string[];
   discountedAudienceBoostIds?: string[];
+  endingKind?: EndingKind;
+  endingStage?: number;
+  financialEffect?: FinancialEffect;
+  lifeEventId?: string;
+  cashDelta?: number;
+  followerGrowthMultiplier?: number;
+  followerGrowthDurationHours?: number;
 };
 
 export type HealthDamageSource = {
@@ -93,10 +116,6 @@ export type HealthDamageSource = {
   id: string;
   name: string;
   amount: number;
-  eventIds: string[];
-};
-
-export type DeathCause = Pick<HealthDamageSource, 'kind' | 'id' | 'name'> & {
   eventIds: string[];
 };
 
@@ -121,54 +140,6 @@ export type Activity = {
   payload?: Record<string, string | number | boolean>;
 };
 
-export type ConsumptionRecord = {
-  at: number;
-  itemId: string;
-  salt: number;
-  water: number;
-  protein: number;
-  sugar: number;
-  caffeine?: number;
-  sugarServings?: number;
-  sugarTagged: boolean;
-  nutritionProfileId?: string;
-};
-
-export type GameHistory = {
-  consumptions: ConsumptionRecord[];
-  /** The ten most recent successful food or drink feeds used for stone risk. */
-  kidneyStoneFeeds: ConsumptionRecord[];
-  lastBondGainAt: number;
-  lastCareAttemptAt: number;
-  lastInteractionAt: number;
-  careAttemptStreak: number;
-  repeatAction: string | null;
-  repeatCount: number;
-  sugarCrashDueAt: number | null;
-  lastStatusReconcileAt: number;
-  decayRemainderHours: number;
-  healthRemainderHours: number;
-  pendingFoodDecayHit: boolean;
-  eventCooldowns: Record<string, number>;
-  oncePerLocalDate: Record<string, string>;
-  cravingItemId: string | null;
-  cravingStartedAt: number | null;
-  cravingRefreshCount: number;
-  annoyanceThreshold: number;
-  annoyanceWarningIssued: boolean;
-  /** Placement may reset Bond decay once per catalogue item type per 48 hours. */
-  bondPlacementResetAt: Record<string, number>;
-  lastCommissionWorkDate: string | null;
-  nextAutonomousAt: number;
-  runStartedAt: number;
-  autonomousRescue: {
-    foodLocked: boolean;
-    restLocked: boolean;
-  };
-  lastCriticalHealthMoodPenaltyAt: number | null;
-  lastMovementAt: number | null;
-};
-
 export type MedicalDebtBill = {
   id: string;
   createdAt: number;
@@ -176,14 +147,6 @@ export type MedicalDebtBill = {
   remainingPrincipal: number;
   scheduledDailyPayment: number;
   insuredAtStart: boolean;
-};
-
-export type DeathRecord = {
-  at: number;
-  /** Compatibility summary; player UI renders the structured causes. */
-  cause: string;
-  causes?: DeathCause[];
-  eventIds: string[];
 };
 
 export type ShopState = {
@@ -206,6 +169,8 @@ export type GameState = {
   statuses: Partial<Record<StatusName, StatusRecord>>;
   balance: number;
   medicalDebt: MedicalDebtBill[];
+  lineOfCredit: LineOfCreditState;
+  financedObligations: FinancedObligation[];
   inventory: Record<string, number>;
   room: Record<string, string>;
   /** Exact applied room deltas make placement reversible under clamping. */
@@ -217,7 +182,10 @@ export type GameState = {
   projects: Project[];
   events: GameEvent[];
   history: GameHistory;
-  death: DeathRecord | null;
+  endingRisks: EndingRiskClocks;
+  /** Non-terminal conclusions earned during this run. */
+  endingUnlocks: EndingUnlocks;
+  ending: RunEnding | null;
   processedCommands: Record<string, CommandReceipt>;
 };
 
@@ -246,6 +214,19 @@ export type StartRunInput = {
 };
 
 export type GameCommand =
+  | {
+      type: 'open_line_of_credit';
+      commandId: string;
+      now: number;
+      expectedStateVersion?: number;
+    }
+  | {
+      type: 'repay_line_of_credit';
+      commandId: string;
+      quantity: number;
+      now: number;
+      expectedStateVersion?: number;
+    }
   | {
       type: 'pay_medical_debt';
       commandId: string;

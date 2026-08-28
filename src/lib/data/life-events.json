@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "id": "tax_bill",
+      "weight": 0.2,
+      "minimumRunAgeHours": 168,
+      "cooldownHours": 336,
+      "outcomes": [
+        { "id": "small", "weight": 4, "message": "A tax bill arrived for $250.", "effects": { "cash": -250 } },
+        { "id": "medium", "weight": 3, "message": "A tax bill arrived for $750.", "effects": { "cash": -750 } },
+        { "id": "large", "weight": 2, "message": "A tax bill arrived for $1,500.", "effects": { "cash": -1500 } },
+        { "id": "audit", "weight": 1, "message": "A painful tax bill arrived for $2,500.", "effects": { "cash": -2500 } }
+      ]
+    },
+    {
+      "id": "webcam_failure",
+      "weight": 0.15,
+      "minimumRunAgeHours": 72,
+      "oncePerRun": true,
+      "outcomes": [
+        { "id": "basic", "weight": 3, "message": "The webcam failed; replacing it cost $150.", "effects": { "cash": -150 } },
+        { "id": "better", "weight": 2, "message": "The webcam failed; replacing it cost $300.", "effects": { "cash": -300 } },
+        { "id": "premium", "weight": 1, "message": "The webcam failed; replacing it cost $500.", "effects": { "cash": -500 } }
+      ]
+    },
+    {
+      "id": "gpu_failure",
+      "weight": 0.1,
+      "minimumRunAgeHours": 168,
+      "oncePerRun": true,
+      "outcomes": [
+        { "id": "repair", "weight": 3, "message": "The GPU failed; repairs cost $500.", "effects": { "cash": -500 } },
+        { "id": "replace", "weight": 2, "message": "The GPU failed; replacement cost $1,000.", "effects": { "cash": -1000 } },
+        { "id": "upgrade", "weight": 1, "message": "The GPU failed catastrophically; replacement cost $1,800.", "effects": { "cash": -1800 } }
+      ]
+    },
+    {
+      "id": "twitter_cancellation",
+      "weight": 0.1,
+      "minimumFollowers": 10000,
+      "cooldownHours": 720,
+      "outcomes": [
+        { "id": "minor", "weight": 3, "message": "A Twitter cancellation cost 2% of current Subscribers.", "effects": { "followersPercent": -0.02 } },
+        { "id": "major", "weight": 1, "message": "A Twitter cancellation cost 5% of current Subscribers.", "effects": { "followersPercent": -0.05 } }
+      ]
+    },
+    {
+      "id": "rain",
+      "weight": 1.5,
+      "cooldownHours": 24,
+      "message": "A day of rain lowered Mood.",
+      "effects": { "mood": -1 }
+    },
+    {
+      "id": "personal_purchase",
+      "weight": 0.5,
+      "minimumRunAgeHours": 24,
+      "cooldownHours": 72,
+      "outcomes": [
+        { "id": "snack_delivery", "weight": 4, "message": "A little personal purchase cost $25 and lifted Mood.", "effects": { "cash": -25, "mood": 1 } },
+        { "id": "merch", "weight": 3, "message": "An impulse merch purchase cost $60 and lifted Mood.", "effects": { "cash": -60, "mood": 1 } },
+        { "id": "collectible", "weight": 2, "message": "A collectible purchase cost $125 and lifted Mood.", "effects": { "cash": -125, "mood": 1 } },
+        { "id": "splurge", "weight": 1, "message": "A personal splurge cost $299 and greatly lifted Mood.", "effects": { "cash": -299, "mood": 2 } }
+      ]
+    },
+    {
+      "id": "sponsored_stream_deal",
+      "weight": 0.4,
+      "minimumFollowers": 1000,
+      "cooldownHours": 168,
+      "outcomes": [
+        { "id": "small", "weight": 3, "message": "A sponsored-stream deal paid $250.", "effects": { "cash": 250 } },
+        { "id": "medium", "weight": 2, "message": "A sponsored-stream deal paid $500.", "effects": { "cash": 500 } },
+        { "id": "large", "weight": 1, "message": "A sponsored-stream deal paid $1,000.", "effects": { "cash": 1000 } }
+      ]
+    },
+    {
+      "id": "agency_invitation",
+      "weight": 0.05,
+      "minimumFollowers": 100000,
+      "oncePerRun": true,
+      "requiresNoDiscoveryBoost": true,
+      "message": "An agency debut added 100,000 Subscribers and boosted discovery for seven days.",
+      "effects": { "followersFlat": 100000, "followerGrowthMultiplier": 1.5, "followerGrowthDurationHours": 168 }
+    },
+    {
+      "id": "algorithm_boost",
+      "weight": 0.3,
+      "minimumFollowers": 10000,
+      "cooldownHours": 336,
+      "requiresNoDiscoveryBoost": true,
+      "message": "The algorithm picked up the channel; natural discovery doubled for one day.",
+      "effects": { "followerGrowthMultiplier": 2, "followerGrowthDurationHours": 24 }
+    }
+  ]
+}

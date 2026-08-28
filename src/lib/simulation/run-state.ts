@@ -5,6 +5,7 @@ import { localDate, rotateShop } from '../shop-rules';
 import rules from '../data/simulation-rules.json';
 import { startingAppearanceId } from '../companion-profile';
 import { HOUR_MS } from '../game-constants';
+import { emptyEndingRiskClocks, reconcileRunEnding } from '../ending-rules';
 
 export function createRunState(
   input: StartRunInput,
@@ -67,6 +68,8 @@ export function createRunState(
     statuses: {},
     balance: definition.startingCurrency,
     medicalDebt: [],
+    lineOfCredit: { status: 'available' },
+    financedObligations: [],
     inventory: { ...definition.startingInventory },
     room: {},
     roomModifiers: {},
@@ -80,6 +83,7 @@ export function createRunState(
     },
     progression: {
       followers: rules.progression.startingFollowers,
+      peakFollowers: rules.progression.startingFollowers,
       careerTier: 'debut',
       unlockedModelTiers: [],
       completedModelTiers: [],
@@ -89,6 +93,7 @@ export function createRunState(
       permanentDonationBonus: false,
       lastAutonomousStreamSelectedAt: input.now,
       activeAudienceBoosts: [],
+      discoveryBoost: null,
       streamStats: {
         started: 0,
         completed: 0,
@@ -99,12 +104,14 @@ export function createRunState(
     projects: [],
     events: [],
     history,
-    death: null,
+    endingRisks: emptyEndingRiskClocks(),
+    endingUnlocks: { made_it: null },
+    ending: null,
     processedCommands: {},
   };
-  return {
+  return reconcileRunEnding({
     ...base,
     shop: rotateShop(base, definition, localDate(input.now, input.timezone)),
     events: [started],
-  };
+  });
 }

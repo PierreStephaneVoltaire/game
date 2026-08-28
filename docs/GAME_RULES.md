@@ -1,20 +1,22 @@
 # Companion-care rules
 
 The companion's identity is configurable, so this reference calls them “the
-companion.” Every run is a single memory-only life. It ends permanently at
-death and has no save recovery, restart, reset, inherited keepsakes, or
-separate offline-recap screen.
+companion.” Every run is a single memory-only life. A terminal Ending closes it
+permanently; `Made It` is a non-terminal Ending unlock. There is no save
+recovery, restart, reset, inherited keepsake, or separate offline-recap screen.
 
 ## Core rules
 
 - Health is a whole number from 0 through 40. Food, Mood, Rest, Bond, and
   Creativity are whole numbers from 0 through 10. Values clamp at those limits.
 - Health at 1–8 or Food, Rest, or Mood at 0–2 is a critical condition. Health
-  0 is terminal. Bond and Creativity are not critical conditions.
+  0 causes Death. Bond and Creativity are not critical conditions. Mood held
+  continuously at 0 can cause Quit Streaming.
 - All chance is seeded. The same seed, state, action, and opportunity produce
   the same outcome.
 - A run starts with Food 6, Health 32, Mood 6, Rest 7, Bond 4, Creativity 3,
-  $20, 100 Followers, one Water, one Uncrustables, one Pretzel, and one Five
+  $20, 100 current and peak Subscribers, an available Line of Credit, one
+  Water, one Uncrustables, one Pretzel, and one Five
   Plain Tortillas.
 - It also starts with no statuses, timed effects, activity, project, room
   items, career rewards, or completed model tiers, using the classic
@@ -70,7 +72,35 @@ boundary, due projects and milestones resolve first, the autonomous candidate
 is selected from the pre-Subscriber-Revenue state, Subscriber Revenue is
 credited, local-day medical payments resolve, and an activity completion
 resolves afterward. Periodic damage is recorded before any emergency rescue.
-Death stops all later work at its lethal boundary.
+At a shared timestamp, due activity completions, income, Hospital payments,
+LOC open charges, life events, and audience changes settle atomically before
+their derived statuses or Endings. Health reaching 0 still resolves first.
+
+### Run Endings and risk clocks
+
+A Run closes permanently with exactly one terminal outcome:
+
+| Ending         | Trigger                                                               |
+| -------------- | --------------------------------------------------------------------- |
+| Death          | Health reaches 0                                                      |
+| Quit Streaming | Mood remains at 0 continuously for 72 game-hours                      |
+| Financial Ruin | Total debt reaches $20,000                                            |
+
+The Mood countdown starts immediately at 0, clears as soon as Mood rises above
+0, and warns at 0, 24, and 48 hours. Financial Ruin has no countdown, grace
+period, delinquency state, or due date: every complete cash/debt operation
+checks it immediately. Death wins if Health reaches 0 in the same operation.
+
+Ending-risk countdowns are persistent simulation state but are displayed
+separately from statuses. Recovery clears the visible countdown immediately
+and adds one Journey recovery entry. Every later command after a terminal
+Ending is rejected with “This run is over” and
+cannot mutate the archived state.
+
+When current Subscribers first reach 3,000,000, `Made It` unlocks once with
+its exact time and causal audience event. It does not close the Run. Agency
+invitation is a career event, not an Ending. `She Cut You Off` remains
+unimplemented because no trigger has been approved.
 
 ## Needs and Health
 
@@ -99,9 +129,10 @@ boundary. Each point above 5 contributes to a combined recovery score:
 |            4–6 |     +1 |
 |           7–15 |     +2 |
 
-While the cash balance is negative, subtract `floor(abs(balance) / 2500)` from
-the score, capped at 2. Medical payment-plan principal is separate and never
-causes this penalty. Debt never deals direct Health damage.
+Financial pressure subtracts from this score, never deals direct Health
+damage, and has one combined cap of 2. Negative cash contributes
+`floor(abs(min(cash, 0)) / 2500)`. Total debt of at least $10,000 ensures a
+penalty of at least 1.
 
 After due Food and Rest decay, each critical need contributes separately:
 
@@ -272,7 +303,7 @@ interruptions do not grant completion rewards.
 Rest, Socialize, Play, streams, and Commission Work end if a condition that was
 not critical at their start becomes critical. Interrupted Socialize, Play, and
 Commission Work grant no completion reward. Streams retain elapsed-hour income
-and donation rolls but not base Followers or completion metrics. Hospital does
+and donation rolls but not base Subscribers or completion metrics. Hospital does
 not end early.
 
 ### Hospital and medical payment plans
@@ -391,7 +422,7 @@ with ER narration. Its event Health loss is outside the periodic need cap.
 
 Off-stream support ignores all nonterminal stream blockers and remains
 eligible during any activity. It can be selected by either a time-owned or an
-attempt-owned opportunity, pays income immediately, grants no Followers, and
+attempt-owned opportunity, pays income immediately, grants no Subscribers, and
 does not use or modify ordinary stream donation rules. Its selection neither
 starts a stream nor resets stream-drought protection.
 
@@ -442,14 +473,15 @@ round(hourly rate × elapsed hours × (0.5 + Creativity / 10))
 ```
 
 The starting hourly-rate band is $5–$15 and career milestones can replace it.
-Income is added immediately and naturally repays debt first. A normal
+Income is added immediately and reduces negative cash first; it does not repay
+Hospital principal or LOC units. A normal
 completion also applies Creativity −1, Rest −1, and an equal Mood −1/0/+1 roll.
 
 Every completed whole hour, including hours from an interrupted stream, gets
 an independent donation roll. Base chance is `2% + 0.5% × current Creativity`.
 The fourth model adds one permanent percentage point before multipliers.
 
-| Donation        | Weight |                  Amount | Followers |
+| Donation        | Weight |                  Amount | Subscribers |
 | --------------- | -----: | ----------------------: | --------: |
 | Kind Bridiot    |     55 |       $20–$60 uniformly |        +5 |
 | Raid windfall   |     27 |     $100–$400 uniformly |        +5 |
@@ -467,14 +499,15 @@ Every run earns a deterministic Subscriber Revenue payment on each two-hour
 boundary anchored to run start. It begins at `$1 × 1`, has no random roll, does
 not enter or consume the autonomous pool, and remains active through Sick,
 Hospital, Kidney Stone, streams, and every other activity or status. A terminal
-run earns no later payments. Like every positive income source, it immediately
-reduces debt before producing a positive balance.
+run earns no later payments. Like every positive income source, it reduces
+negative cash before producing a positive balance but does not erase explicit
+obligations.
 
 The highest unlocked multiplier replaces the previous one; multipliers do not
 stack. Each tick uses `round($1 × multiplier)`. The yields below show twelve
 ticks over 24 game-hours and are not local-date caps:
 
-| Followers | Multiplier | Per tick | 12-tick yield |
+| Peak Subscribers | Multiplier | Per tick | 12-tick yield |
 | --------: | ---------: | -------: | ------------: |
 |     0–29K |         1× |       $1 |           $12 |
 |    30,000 |       1.5× |       $2 |           $24 |
@@ -488,10 +521,10 @@ ticks over 24 game-hours and are not local-date caps:
 Routine payments stay out of Journey. The milestone entry announces each
 multiplier upgrade.
 
-## Followers, milestones, and model projects
+## Subscribers, milestones, and model projects
 
-Followers never decrease. Natural audience growth resolves every two
-game-hours. Each tick adds the current career tier's baseline plus active
+Natural audience growth resolves every two game-hours. Each tick adds the
+current career tier's baseline plus active
 stream contributions, rounded once. Every real stream start contributes for
 seven days using the career tier and Creativity at its start:
 
@@ -506,18 +539,21 @@ are ordered by `startedAt` and stream ID. The oldest four count at full value;
 every later contribution counts at 25%. When an older one expires, the next
 automatically moves into the full-value group. Each expires independently.
 Interrupted streams retain their contribution. Ordinary stream completion has
-no separate direct base-Follower award; donations and model rewards remain.
+no separate direct base-Subscriber award; donations and model rewards remain.
 
 Clippers are a $25 consumable Upgrade available from Debut. The first active
 Clipper pays immediately, then the stack publishes daily before a shared
-72-hour expiry. Each award is `50 Followers × current tier ordinal × stacks`.
+72-hour expiry. Each award is `50 Subscribers × current tier ordinal × stacks`.
 Using another Clipper adds a stack and renews the shared expiry without moving
 the already scheduled next daily tick or granting another immediate award.
 All stacks expire together.
 
-Milestones resolve in order, including several crossed by one result:
+Current Subscribers may fall after a life event. Peak Subscribers never fall;
+milestones and their one-time rewards use the peak and resolve in order,
+including several crossed by one result. Subscriber Revenue and stream-rate
+bands also remain unlocked after a loss.
 
-| Followers | Career tier and reward                                                                    |
+| Peak Subscribers | Career tier and reward                                                               |
 | --------: | ----------------------------------------------------------------------------------------- |
 |       100 | Debut; every run begins here                                                              |
 |       150 | First Model: first model tier unlocked                                                    |
@@ -538,7 +574,7 @@ Milestones resolve in order, including several crossed by one result:
 New Model Commission costs $300 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
 project ends at the third local midnight and grants Mood +3, Creativity +2,
-Followers +50, a new active appearance, and a queued fixed four-hour debut
+Subscribers +50, a new active appearance, and a queued fixed four-hour debut
 stream.
 
 The appearance identity progresses through 3.0-inspired, pixie-inspired,
@@ -552,13 +588,42 @@ a 13:00–19:59 opportunity occurs. Their fixed duration ignores ordinary
 Rest-duration subtraction, remains capped at midnight, and can end at a newly
 critical condition.
 
+## Debt, LOC, and life events
+
+Total debt is negative cash plus outstanding Hospital principal, the remaining
+LOC closure cost, and other explicitly authored financed principal. At $10,000,
+the persistent In Debt status appears; it clears immediately below $10,000.
+At $20,000, Financial Ruin occurs immediately with cause Insolvency and a
+structured breakdown of every component and the crossing transaction.
+
+The one-time Line of Credit costs $10 and advances $10,000 cash. It creates
+twenty permanent $600 repayment units ($12,000 total closure cost). Repayment
+units cannot be purchased on credit. Every later local-day boundary charges
+exactly $1,000 while any unit remains; that charge does not reduce the unit
+count or closure cost. Purchasing the twentieth unit closes the LOC atomically.
+
+Seeded VTuber-life events share the normal autonomous opportunity pool:
+
+- Tax, Webcam failure, and GPU failure select one fixed immediate expense and
+  create no inventory, repair state, or payment plan.
+- Twitter cancellation removes 2% or 5% of current Subscribers without
+  revoking peak progression.
+- Rain applies Mood −1 only.
+- Personal purchases atomically spend $25, $60, $125, or $299 and add their
+  authored Mood reward.
+- Sponsored-stream deals immediately credit $250, $500, or $1,000.
+- The one-time Agency debut adds 100,000 Subscribers and applies 1.5× natural
+  discovery for seven days.
+- Algorithm boost applies 2× natural discovery for one day. Discovery boosts
+  never overlap and affect neither Clippers nor direct Subscriber awards.
+
 ## Shop, Inventory, and room
 
-The catalogue has exactly 227 items:
+The catalogue has exactly 228 items:
 
 | Category   | Count |
 | ---------- | ----: |
-| Food       |   110 |
+| Food       |   111 |
 | Medicine   |     2 |
 | Care       |     3 |
 | Reusable   |    74 |
@@ -576,7 +641,10 @@ reusable Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Peppe
 ($12; stock 1–2; high effective sugar), Convention Guest Set ($120), New Model
 Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
 Food and starter comfort item with Food +2 and Mood +2.
-The Can Opener is the 227th canonical item, a reusable priced at $35.
+The Can Opener is a reusable priced at $35. Three-Month-Old Rotisserie Chicken
+is a $12 Variable Food and automatic stream snack. Consuming the complete item
+once applies Food +5, Health −8, and Creativity +2, creates no persistent
+status or recurrence, and attributes lethal damage directly to the item.
 
 Each local date receives a seeded 24-item rotation:
 
@@ -591,13 +659,12 @@ and one hydration-support item. Ordinary stock is seeded from 1 through 5; an it
 overrides that. Milestone-gated items join the candidate pool only after their
 unlock.
 
-Positive but insufficient cash balances cannot cross below zero by shopping.
-When a command begins with a negative cash balance, only catalogue items tagged Essential
-can be purchased without an affordability check. Water, Five Plain Tortillas,
-Salt Tablet, and Painkillers are Essential; premium food and untagged items
-remain blocked. One successful Essential transaction made while already in
-debt applies Mood −1, regardless of quantity or cart lines. The once-per-local-
-date low-money event remains separate.
+Every ordinary Food, Medicine, Care, Reusable, Upgrade, or Decoration purchase
+may cross cash below zero. The Shop shows Cash after checkout before the final
+command. Stock, ownership, quantity, rotation, and progression rules still
+apply. A successful ordinary transaction that begins with negative cash keeps
+the existing Mood −1 response, regardless of quantity or cart lines. LOC
+repayment units are not ordinary purchases and require enough positive cash.
 
 Non-quantity durables reject quantity above one in both direct purchases and
 carts. Ownership caps and stock limits still apply.
@@ -606,14 +673,16 @@ Placed room effects are removed by the exact amount that was originally
 applied, so clamping never makes placement changes irreversible. The room keeps
 its fixed anchors and three-row layout.
 
-## Journey and death
+## Journey and Endings
 
 Journey shows natural narration for meaningful care, authored activity
 vignettes, reactions, catch-up events, off-stream support, donations,
 milestones, commissions, projects, medical recovery, bills and payments,
 emergency rescues, sugar warnings, reading, side gigs, injuries, craving
 expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
-room changes, and death. The room displays only the latest projected Journey
+room changes, debt threshold crossings and recovery, LOC operations, life
+events and expiring discovery boosts, Made It, ending warnings and recoveries,
+and terminal Endings. The room displays only the latest projected Journey
 entry.
 
 It hides reconciliation, decay, Subscriber Revenue ticks, opportunity
@@ -621,8 +690,10 @@ bookkeeping, shop refreshes, nutrition counters, command receipts, and other
 internal mechanics. There is no attention-call system or separate offline
 recap.
 
-Death is terminal. The graveyard lists every structured cause, preserves the
-causal Journey that led to the final Health loss, and keeps the full narrated
-Journey available. Its export downloads a Markdown record containing the run
-details, every cause, the causal chain, and the complete Journey. It never
-infers causes by parsing narration text.
+Every terminal Ending keeps its causal Journey and full narrated Journey
+available. Death alone uses graveyard language and lists every structured
+Health-loss cause. Quit Streaming and Financial Ruin use a neutral archived-run
+card with trigger evidence. Made It remains visible as an earned non-terminal
+unlock. The Markdown export records the exact terminal Ending, causal chain,
+and complete Journey; Death causes are never inferred by parsing narration
+text.

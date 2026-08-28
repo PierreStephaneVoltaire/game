@@ -1,6 +1,7 @@
 import type { Activity, GameEvent, GameState } from '../game-types';
 import rules from '../data/simulation-rules.json';
 import { createMedicalDebtBill } from '../medical-debt-rules';
+import { finalizeFinancialOperation } from '../financial-rules';
 
 /** Apply the persistent state created by a completed Hospital activity. */
 export function completeMedicalCare(
@@ -27,7 +28,7 @@ export function completeMedicalCare(
     amount: bill.originalPrincipal,
     medicalBillId: bill.id,
   };
-  return {
+  const mutated: GameState = {
     ...state,
     history: {
       ...state.history,
@@ -38,4 +39,10 @@ export function completeMedicalCare(
     medicalDebt: [...state.medicalDebt, bill],
     events: [...state.events, event],
   };
+  return finalizeFinancialOperation({
+    before: state,
+    state: mutated,
+    triggerEventId: event.id,
+    kind: 'medical_debt_creation',
+  });
 }

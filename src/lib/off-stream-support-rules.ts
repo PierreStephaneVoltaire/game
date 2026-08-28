@@ -3,6 +3,7 @@ import { HOUR_MS } from './game-constants';
 import type { GameEvent, GameState } from './game-types';
 import { creditIncome } from './income-rules';
 import { actionRandom } from './seeded-rng';
+import { finalizeFinancialOperation } from './financial-rules';
 
 export function resolveOffStreamSupport(
   state: GameState,
@@ -31,7 +32,7 @@ export function resolveOffStreamSupport(
     amount,
   };
   const credited = creditIncome(state, amount);
-  return {
+  const mutated: GameState = {
     ...credited,
     history: {
       ...state.history,
@@ -44,4 +45,10 @@ export function resolveOffStreamSupport(
     events: [...state.events, opportunityEvent, event],
     stateVersion: state.stateVersion + 2,
   };
+  return finalizeFinancialOperation({
+    before: state,
+    state: mutated,
+    triggerEventId: event.id,
+    kind: 'off_stream_support_income',
+  });
 }

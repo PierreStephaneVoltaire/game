@@ -132,14 +132,14 @@ button:disabled {
   cursor: not-allowed;
   opacity: 0.45;
 }
-.death-card {
+.ending-card {
   padding: 14px;
   background: #ffe0e8;
 }
-.death-card h2 {
+.ending-card h2 {
   margin: 0 0 6px;
 }
-.death-card a {
+.ending-card a {
   color: inherit;
   font-weight: 800;
 }

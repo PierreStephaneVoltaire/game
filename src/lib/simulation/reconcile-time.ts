@@ -1,7 +1,6 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Transition } from '../game-types';
 import rules from '../data/simulation-rules.json';
-import { recordDeathIfNeeded } from './engine-state';
 import { completeActivity } from './activity-completion';
 import { resolveDecay } from './decay-resolution';
 import { resolveTimelineEffects } from './timeline-effects';
@@ -10,6 +9,7 @@ import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
 import { criticalMetrics, isCriticalState } from './health-resolution';
 import { resolvePostHealthRescues } from './post-health-rescue';
+import { nextEndingBoundary, reconcileRunEnding } from '../ending-rules';
 
 export type ReconcileResult = Transition & {
   elapsedHours: number;
@@ -27,10 +27,10 @@ export function reconcileTime(
   definition: GameDefinition,
   options: ReconcileOptions = {},
 ): ReconcileResult {
-  if (state.death)
+  if (state.ending)
     return { state, outcomes: [], elapsedHours: 0, eventIds: [] };
   if (state.metrics.health <= 0) {
-    const terminal = recordDeathIfNeeded(state);
+    const terminal = reconcileRunEnding(state);
     return {
       state: terminal,
       outcomes: [],
@@ -56,6 +56,7 @@ export function reconcileTime(
     state.lastResolvedAt,
     state.timezone,
   );
+  const nextEndingAt = nextEndingBoundary(state);
   const boundaries = [
     state.activity?.endsAt,
     state.history.sugarCrashDueAt ?? undefined,
@@ -63,6 +64,7 @@ export function reconcileTime(
     state.timedEffects.hyperfocusUntil ?? undefined,
     state.timedEffects.clippers?.nextClipAt,
     state.timedEffects.clippers?.expiresAt,
+    state.progression.discoveryBoost?.expiresAt,
     state.history.cravingStartedAt !== null
       ? state.history.cravingStartedAt + rules.craving.expiryHours * HOUR_MS
       : undefined,
@@ -72,6 +74,7 @@ export function reconcileTime(
     nextHealthAt,
     nextStatusAt,
     nextMidnightAt,
+    nextEndingAt,
   ].filter(
     (boundary): boundary is number =>
       typeof boundary === 'number' &&
@@ -173,6 +176,8 @@ export function reconcileTime(
   const elapsedHours = timeline.resolvedElapsedHours;
   if (resolvedAnything) next = { ...next, stateVersion: next.stateVersion + 1 };
 
+  if (next.ending) return result(next, eventIds, elapsedHours);
+
   if (deathAt) {
     if (!timeline.lethalEventId && !resolvedAnything) {
       const event = timeEvent(next, reconciliationNow, decay);
@@ -213,9 +218,9 @@ export function reconcileTime(
     next = { ...next, stateVersion: next.stateVersion + 1 };
   }
 
-  const beforeDeath = next.events.length;
-  next = recordDeathIfNeeded(next);
-  eventIds.push(...next.events.slice(beforeDeath).map((event) => event.id));
+  const beforeEnding = next.events.length;
+  next = reconcileRunEnding(next);
+  eventIds.push(...next.events.slice(beforeEnding).map((event) => event.id));
   if (!resolvedAnything && eventIds.length === 0)
     return { state: next, outcomes: [], elapsedHours, eventIds: [] };
   return result(next, eventIds, elapsedHours);
@@ -257,9 +262,11 @@ function terminalResult(
   eventIds: string[],
   elapsedHours: number,
 ): ReconcileResult {
-  const beforeDeath = state.events.length;
-  const terminal = recordDeathIfNeeded(state);
-  eventIds.push(...terminal.events.slice(beforeDeath).map((event) => event.id));
+  const beforeEnding = state.events.length;
+  const terminal = reconcileRunEnding(state);
+  eventIds.push(
+    ...terminal.events.slice(beforeEnding).map((event) => event.id),
+  );
   return result(terminal, eventIds, elapsedHours);
 }
 

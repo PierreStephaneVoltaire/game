@@ -10,6 +10,7 @@ import {
 } from './project-economy-rules';
 import { appearanceIdForModelTier } from './companion-profile';
 import { creditIncome } from './income-rules';
+import { finalizeFinancialOperation } from './financial-rules';
 
 export function startFullBodyProject(
   state: GameState,
@@ -75,11 +76,18 @@ function completeProject(
     projectId: project.id,
     amount: project.payout,
   };
-  if (project.type === 'full_body_commission')
-    return {
+  if (project.type === 'full_body_commission') {
+    const mutated: GameState = {
       ...creditIncome(state, project.payout ?? 0),
       events: [...state.events, event],
     };
+    return finalizeFinancialOperation({
+      before: state,
+      state: mutated,
+      triggerEventId: event.id,
+      kind: 'project_income',
+    });
+  }
   const tier = project.modelTier ?? 1;
   const withDebut = queueEventStream(
     {
@@ -124,7 +132,7 @@ function completeProject(
     at,
     milestoneEvents,
   );
-  return reconcileMetricSource(
+  const reconciled = reconcileMetricSource(
     state,
     {
       ...withMilestones,
@@ -132,4 +140,12 @@ function completeProject(
     },
     project.sourceActionId,
   );
+  return reconciled.balance === state.balance
+    ? reconciled
+    : finalizeFinancialOperation({
+        before: state,
+        state: reconciled,
+        triggerEventId: event.id,
+        kind: 'career_milestone_income',
+      });
 }

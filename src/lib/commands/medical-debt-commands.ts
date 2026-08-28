@@ -4,6 +4,7 @@ import {
   discountedMedicalDebtPrice,
   totalMedicalDebt,
 } from '../medical-debt-rules';
+import { finalizeFinancialOperation } from '../financial-rules';
 
 export function payMedicalDebtInFull(
   state: GameState,
@@ -36,15 +37,21 @@ export function payMedicalDebtInFull(
     amount: -price,
     medicalPaymentIds: paymentIds,
   };
-  return {
-    state: {
+  const mutated: GameState = {
       ...state,
       balance: state.balance - price,
       medicalDebt: [],
       events: [...state.events, event],
       stateVersion: state.stateVersion + 1,
       actionOrdinal: state.actionOrdinal + 1,
-    },
+    };
+  return {
+    state: finalizeFinancialOperation({
+      before: state,
+      state: mutated,
+      triggerEventId: event.id,
+      kind: 'medical_debt_full_payment',
+    }),
     outcome: accepted('medical_debt_paid', event.message, [event.id]),
   };
 }

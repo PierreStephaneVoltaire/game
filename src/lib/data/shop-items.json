@@ -3530,6 +3530,104 @@
     }
   },
   {
+    "id": "three_month_old_rotisserie_chicken",
+    "name": "Three-Month-Old Rotisserie Chicken",
+    "narration": [
+      "ate the three-month-old rotisserie chicken and somehow turned it into a funny story."
+    ],
+    "automaticNarration": [
+      "found and ate the three-month-old rotisserie chicken during the stream."
+    ],
+    "category": "food",
+    "price": 12,
+    "description": "A complete rotisserie chicken that has been sitting around for three months.",
+    "qualitativeNutritionHint": "Substantial protein cannot redeem three months of deeply questionable storage.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "stock": {
+      "min": 1,
+      "max": 1
+    },
+    "tags": [
+      "food",
+      "meal",
+      "stream-snack"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 5,
+        "max": 5
+      },
+      "health": {
+        "min": -8,
+        "max": -8
+      },
+      "creativity": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 3,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 3,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 5
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Eat the whole chicken",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/three_month_old_rotisserie_chicken.png",
+    "nutrition": {
+      "serving": "1 RACC (114 g)",
+      "calories": 189.2,
+      "sodiumMg": 53.6,
+      "sugarG": null,
+      "proteinG": 36.59,
+      "waterG": 74.44,
+      "caffeineMg": null,
+      "sourceType": "usda_foundation",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/331960/nutrients",
+      "sourceReference": "FDC ID 331960 — Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2026-04-30",
+      "nullReasons": {
+        "sugarG": "The selected USDA record does not report sugarG.",
+        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      }
+    }
+  },
+  {
     "id": "cake",
     "name": "Cake",
     "narration": [

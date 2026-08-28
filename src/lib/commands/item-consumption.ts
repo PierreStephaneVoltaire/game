@@ -4,18 +4,15 @@ import rules from '../data/simulation-rules.json';
 import { actionRandom } from '../seeded-rng';
 import { accepted, recordBondGain, rejected } from '../simulation/engine-state';
 import { resolveNutritionConsumption } from './nutrition-resolution';
-import {
-  itemConsumptionEvents,
-  selectItemNarration,
-} from './item-consumption-events';
+import { itemConsumptionEvents } from './item-consumption-events';
 import { consumptionRuleEvents } from './consumption-rule-events';
 import {
   actionOwnership,
   itemActionAvailable,
 } from '../item-action-prerequisites';
 import { resolveTimedEffectsAfterConsumption } from './consumption-timed-effects';
-import { healthDamageSource } from '../simulation/health-resolution';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { createItemUsedEvent } from './item-used-event';
 
 type UseItemCommand = Extract<GameCommand, { type: 'use_item' }>;
 
@@ -148,36 +145,15 @@ export function resolveItemConsumption(
   }
 
   const nutrition = resolveNutritionConsumption(state, command, item, action);
-  const event: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type: 'item_used',
-    at: state.now,
-    message: `${item.name} was used.`,
+  const event = createItemUsedEvent({
+    state,
+    item,
+    action,
     sourceActionId: command.commandId,
-    metricDeltas: nutrition.itemMetricDeltas,
+    itemMetricDeltas: nutrition.itemMetricDeltas,
     nutritionProfileId: nutrition.nutritionProfileId,
-    tags: action.tags,
-    cause: action.id,
-    itemName: item.name,
-    itemNarration: selectItemNarration({
-      state,
-      item,
-      action,
-      sourceActionId: command.commandId,
-    }),
-    actionLabel: action.label,
-    healthDamageSources:
-      (nutrition.itemMetricDeltas.health ?? 0) < 0
-        ? [
-            healthDamageSource(
-              'item',
-              item.id,
-              item.name,
-              nutrition.itemMetricDeltas.health ?? 0,
-            ),
-          ]
-        : undefined,
-  };
+    automatic: context.automatic,
+  });
   const consumptionEvents = itemConsumptionEvents({
     state,
     event,

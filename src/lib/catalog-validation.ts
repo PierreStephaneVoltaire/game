@@ -21,7 +21,7 @@ const CATEGORY_BANDS: Record<string, [number, number]> = {
   decoration: [25, 250],
 };
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
-  food: 110,
+  food: 111,
   medicine: 2,
   care: 3,
   reusable: 74,
@@ -245,9 +245,9 @@ export function validateCatalog(
     }
   }
   if (requireComplete) {
-    if (definition.items.length !== 227)
+    if (definition.items.length !== 228)
       issues.push({
-        message: `expected 227 canonical items, found ${definition.items.length}`,
+        message: `expected 228 canonical items, found ${definition.items.length}`,
       });
     for (const [category, expected] of Object.entries(
       COMPLETE_CATEGORY_COUNTS,

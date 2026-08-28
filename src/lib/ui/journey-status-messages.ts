@@ -92,6 +92,7 @@ function activeMessage(status: StatusName, name: string): string {
     low_energy: `${name} is running low on energy.`,
     sugar_crash: `${name} is having a sugar crash.`,
     dizzy_spell: `${name} is having a dizzy spell.`,
+    in_debt: `${name} is in debt.`,
   };
   return messages[status];
 }
@@ -112,6 +113,7 @@ function clearedMessage(status: StatusName, name: string): string {
     low_energy: `${name}'s energy has recovered.`,
     sugar_crash: `${name} has recovered from the sugar crash.`,
     dizzy_spell: `${name}'s dizzy spell has cleared.`,
+    in_debt: `${name} is no longer in debt.`,
   };
   return messages[status];
 }

@@ -51,6 +51,7 @@
   <StatusPanel
     statuses={model.statuses}
     effects={model.effects}
+    endingRisks={model.endingRisks}
     timezone={model.timezone}
   />
   {#if hospitalAvailable}
@@ -68,17 +69,39 @@
     <strong class:debt-label={model.debt.active}
       >Cash balance: ${numbers.format(model.balance)}</strong
     >
-    {#if model.medicalDebt.total > 0}
+    {#if model.debt.amount > 0}
       <strong class="debt-label"
-        >Medical principal: ${numbers.format(model.medicalDebt.total)}</strong
+        >Total debt: ${numbers.format(model.debt.amount)}</strong
       >
+      {#if model.debt.negativeCash > 0}<span
+          >Negative cash: ${numbers.format(model.debt.negativeCash)}</span
+        >{/if}
+      {#if model.debt.hospitalPrincipal > 0}<span
+          >Hospital principal: ${numbers.format(
+            model.debt.hospitalPrincipal,
+          )}</span
+        >{/if}
+      {#if model.debt.locClosureCost > 0}<span
+          >LOC closure cost: ${numbers.format(model.debt.locClosureCost)}</span
+        >{/if}
+    {/if}
+    {#if model.medicalDebt.total > 0}
       <span
         >Next scheduled payment: ${numbers.format(
           model.medicalDebt.nextScheduledPayment,
         )}</span
       >
     {/if}
-    <span>Followers: {numbers.format(model.followers)}</span>
+    <span>Subscribers: {numbers.format(model.followers)}</span>
+    <span>Peak Subscribers: {numbers.format(model.peakFollowers)}</span>
+    {#if model.lineOfCredit.status === 'open'}
+      <span
+        >LOC: {model.lineOfCredit.remainingUnits} units · ${numbers.format(
+          model.lineOfCredit.remainingClosureCost,
+        )} to close</span
+      >
+    {/if}
+    {#if model.madeItUnlocked}<strong>Ending unlocked: Made It</strong>{/if}
     <span>Career: {model.career.label}</span>
     <span
       >Streams: {numbers.format(model.streamStats.started)} started · {numbers.format(
@@ -120,7 +143,7 @@
         {activityTime(model.activity.endsAt)}.
       </p>
     {/if}
-    {#if model.mode === 'streaming' && !model.death}
+    {#if model.mode === 'streaming' && !model.ending}
       <button
         class="secondary-action"
         type="button"
@@ -130,14 +153,17 @@
     {/if}
   </section>
 
-  {#if model.death}
-    <section class="death-card" role="alert">
-      <h2>Run ended</h2>
-      <ul>
-        {#each model.death.causes as cause (cause.name)}<li>
-            {cause.name}
-          </li>{/each}
-      </ul>
+  {#if model.ending}
+    <section class="ending-card" role="alert">
+      <h2>{model.ending.title}</h2>
+      <p>{model.ending.explanation}</p>
+      {#if model.ending.kind === 'death'}
+        <ul>
+          {#each model.ending.causes as cause (cause.name)}<li>
+              {cause.name}
+            </li>{/each}
+        </ul>
+      {/if}
       <a href={resolve('/game/history')}>View the causal history</a>
     </section>
   {/if}

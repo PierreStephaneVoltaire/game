@@ -26,9 +26,12 @@ describe('item and history fidelity', () => {
       BUNDLED_GAME_DEFINITION,
     );
 
-    expect(result.outcomes[0]).toMatchObject({ accepted: false, kind: 'dead' });
+    expect(result.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'run_over',
+    });
     expect(result.state.inventory.water).toBe(1);
-    expect(result.state.death).not.toBeNull();
+    expect(result.state.ending?.kind).toBe('death');
   });
 
   test('direct use cannot bypass an item interaction', () => {
@@ -132,11 +135,11 @@ describe('item and history fidelity', () => {
     );
 
     expect(sickness?.metricDeltas?.health).toBe(-1);
-    expect(result.death?.cause).toBe('Sickness');
-    expect(result.death?.causes).toEqual([
+    expect(result.ending?.cause).toBe('Sickness');
+    expect(result.ending?.causes).toEqual([
       expect.objectContaining({ id: 'sick', name: 'Sickness' }),
     ]);
-    expect(result.death?.eventIds).toContain(sickness?.id);
+    expect(result.ending?.eventIds).toContain(sickness?.id);
   });
 
   test('The Concoction records its selected profile without a discovery event', () => {

@@ -7,7 +7,7 @@ const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('publishes exactly 227 canonical items in the locked category counts', () => {
+  test('publishes exactly 228 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
         (category) => [
@@ -19,9 +19,9 @@ describe('V2 catalogue definition seam', () => {
       ),
     );
 
-    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(227);
+    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(228);
     expect(counts).toEqual({
-      food: 110,
+      food: 111,
       medicine: 2,
       care: 3,
       reusable: 74,

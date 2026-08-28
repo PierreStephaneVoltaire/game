@@ -1,9 +1,9 @@
 <script lang="ts">
   import { gameViewModel } from '$lib/game-session';
   import {
-    graveyardExportFilename,
-    graveyardExportMarkdown,
-  } from '$lib/ui/graveyard-export';
+    runArchiveExportFilename,
+    runArchiveExportMarkdown,
+  } from '$lib/ui/run-archive-export';
   $: model = $gameViewModel;
   const dateTime = (at: number, timezone: string) =>
     new Intl.DateTimeFormat('en-US', {
@@ -18,16 +18,16 @@
     return `${days}d ${hours}h`;
   };
 
-  function exportGraveyard() {
-    if (!model?.death) return;
+  function exportArchive() {
+    if (!model?.ending) return;
     const url = URL.createObjectURL(
-      new Blob([graveyardExportMarkdown(model)], {
+      new Blob([runArchiveExportMarkdown(model)], {
         type: 'text/markdown;charset=utf-8',
       }),
     );
     const link = document.createElement('a');
     link.href = url;
-    link.download = graveyardExportFilename(model);
+    link.download = runArchiveExportFilename(model);
     link.click();
     URL.revokeObjectURL(url);
   }
@@ -43,15 +43,25 @@
         <h1>{model.companion.name}'s History</h1>
       </div>
     </div>
-    {#if model.death}
-      <section class="death-card" role="alert">
+    {#if model.ending}
+      <section class="ending-card" role="alert">
         <p class="eyebrow">TERMINAL RUN</p>
-        <h2>Cause of death</h2>
-        <ul class="death-causes">
-          {#each model.death.causes as cause (cause.name)}<li>
-              {cause.name}
-            </li>{/each}
-        </ul>
+        <h2>{model.ending.title}</h2>
+        <p>{model.ending.explanation}</p>
+        {#if model.ending.kind === 'death'}
+          <h3>Cause of death</h3>
+          <ul class="death-causes">
+            {#each model.ending.causes as cause (cause.name)}<li>
+                {cause.name}
+              </li>{/each}
+          </ul>
+        {:else if model.ending.evidence.length}
+          <ul>
+            {#each model.ending.evidence as evidence (evidence)}<li>
+                {evidence}
+              </li>{/each}
+          </ul>
+        {/if}
         <h3>Causal chain</h3>
         <ol>
           {#each model.causalEvents as event (event.id)}<li>
@@ -59,8 +69,16 @@
             </li>{/each}
         </ol>
         <div class="graveyard">
-          <span aria-hidden="true">✦</span><strong>Graveyard</strong>
-          <p>This run is complete. Its record remains available for review.</p>
+          {#if model.ending.kind === 'death'}
+            <span aria-hidden="true">✦</span><strong>Graveyard</strong>
+            <p>This run is complete. Its grave remains available for review.</p>
+          {:else}
+            <span aria-hidden="true">✦</span>
+            <strong>Archived run</strong>
+            <p>
+              This run is complete. Its record remains available for review.
+            </p>
+          {/if}
           <dl>
             <div>
               <dt>Started</dt>
@@ -68,20 +86,22 @@
             </div>
             <div>
               <dt>Ended</dt>
-              <dd>{dateTime(model.death.at, model.timezone)}</dd>
+              <dd>{dateTime(model.ending.at, model.timezone)}</dd>
             </div>
             <div>
               <dt>Duration</dt>
-              <dd>{duration(model.runStartedAt, model.death.at)}</dd>
+              <dd>{duration(model.runStartedAt, model.ending.at)}</dd>
             </div>
           </dl>
-          <button type="button" on:click={exportGraveyard}
-            >Export journey and grave</button
+          <button type="button" on:click={exportArchive}
+            >{model.ending.kind === 'death'
+              ? 'Export journey and grave'
+              : 'Export archived run'}</button
           >
         </div>
       </section>
     {/if}
-    <details class="event-log" open={!model.death}>
+    <details class="event-log" open={!model.ending}>
       <summary>{model.companion.name}'s journey</summary>
       <ol>
         {#each model.events as event (event.id)}<li>
@@ -123,25 +143,25 @@
     font-size: clamp(2.4rem, 6vw, 4.3rem);
     letter-spacing: -0.07em;
   }
-  .death-card {
+  .ending-card {
     margin-bottom: 24px;
     padding: clamp(20px, 4vw, 34px);
     border: 3px solid #512b9a;
     background: #ffe0e8;
   }
-  .death-card h2 {
+  .ending-card h2 {
     margin: 4px 0 7px;
     color: #512b9a;
     font-size: 2rem;
   }
-  .death-card h3 {
+  .ending-card h3 {
     margin: 22px 0 8px;
   }
-  .death-card ol {
+  .ending-card ol {
     margin: 0;
     padding-left: 22px;
   }
-  .death-card li {
+  .ending-card li {
     padding: 4px 0;
   }
   .death-causes {

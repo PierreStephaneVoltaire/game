@@ -110,7 +110,7 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death).toBeNull();
+    expect(result.ending).toBeNull();
     expect(result.shop.localDate).toBe('2026-08-23');
     expect(result.shop.cart).toEqual({});
     expect(
@@ -155,11 +155,11 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.cause).toBe('Kidney stone complications');
+    expect(result.ending?.cause).toBe('Kidney stone complications');
     expect(
       result.events.filter(
         (event) =>
-          event.at === result.death?.at &&
+          event.at === result.ending?.at &&
           event.type === 'critical_health_loss',
       ),
     ).toHaveLength(0);
@@ -211,7 +211,7 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.eventIds).toEqual([
+    expect(result.ending?.eventIds).toEqual([
       'kidney-onset-event',
       expect.stringMatching(/^event-/),
       expect.stringMatching(/^event-/),

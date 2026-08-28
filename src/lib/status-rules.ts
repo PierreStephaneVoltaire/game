@@ -5,6 +5,7 @@ import type {
   StatusRecord as GameStatusRecord,
 } from './game-types';
 import rules from './data/simulation-rules.json';
+import financialRules from './data/financial-rules.json';
 import { resolveStatusFixedPoint } from './status-rules/fixed-point';
 import { clampMetric, HOUR_MS, STAT_MIN } from './game-constants';
 import { STATUS_NAMES } from './status-rules/names';
@@ -14,7 +15,15 @@ export { nextStatusBoundary } from './status-rules/boundaries';
 import { applyStatusOnsetEffects } from './status-rules/context-statuses';
 import { statusTransitionMessage } from './event-messages';
 import { resolveNaturalStatusPassage } from './status-rules/natural-resolution';
+import {
+  applyLowStatusRecurrences,
+  type StatusEffectEvent,
+} from './status-rules/low-status-recurrences';
 export { applyStatusOnsetEffects };
+export {
+  applyLowStatusRecurrences,
+  type StatusEffectEvent,
+} from './status-rules/low-status-recurrences';
 export {
   applyOverstimulation,
   clearActionStatuses,
@@ -40,13 +49,6 @@ export function triggersOverstimulation(
 ): boolean {
   return isHighMood(mood) && moodDelta > 0;
 }
-
-export type StatusEffectEvent = {
-  status: GameStatusName;
-  metricDeltas: Partial<Metrics>;
-  message: string;
-  at?: number;
-};
 
 export function alignGameStatuses(
   metrics: Metrics,
@@ -98,45 +100,6 @@ export function alignGameStatuses(
   return next;
 }
 
-export function applyLowStatusRecurrences(
-  state: GameState,
-  at: number,
-): { statuses: GameState['statuses']; effects: StatusEffectEvent[] } {
-  const statuses = { ...state.statuses };
-  const effects: StatusEffectEvent[] = [];
-  for (const [status, metric] of [
-    ['lonely', 'bond'],
-    ['creative_block', 'creativity'],
-  ] as const) {
-    if (state.metrics[metric] > rules.statusRules.lowMetricOnsetMaximum)
-      continue;
-    const record = statuses[status];
-    if (!record) continue;
-    const lastPenaltyAt = record.lastPenaltyAt ?? record.since;
-    const recurrenceMs = rules.statusRules.recurrenceHours * HOUR_MS;
-    const occurrences = Math.floor((at - lastPenaltyAt) / recurrenceMs);
-    if (occurrences < 1) continue;
-    statuses[status] = {
-      ...record,
-      lastPenaltyAt: lastPenaltyAt + occurrences * recurrenceMs,
-    };
-    for (let occurrence = 0; occurrence < occurrences; occurrence += 1) {
-      effects.push({
-        status,
-        metricDeltas: {
-          mood: rules.statusMetricDeltas.lowStatusRecurrenceMood,
-        },
-        at: lastPenaltyAt + (occurrence + 1) * recurrenceMs,
-        message:
-          status === 'lonely'
-            ? 'Companion is still feeling lonely.'
-            : 'Companion is still creatively blocked.',
-      });
-    }
-  }
-  return { statuses, effects };
-}
-
 export function addStatus(
   state: GameState,
   status: GameStatusName,
@@ -146,6 +109,33 @@ export function addStatus(
   return state.statuses[status]
     ? state.statuses
     : { ...state.statuses, [status]: { since: at, source } };
+}
+
+export function alignFinancialStatus(
+  previous: GameState['statuses'],
+  totalDebt: number,
+  now: number,
+): {
+  statuses: GameState['statuses'];
+  entered: boolean;
+  cleared: boolean;
+} {
+  const active = totalDebt >= financialRules.debt.statusThreshold;
+  const wasActive = Boolean(previous.in_debt);
+  if (active === wasActive)
+    return { statuses: previous, entered: false, cleared: false };
+  if (active)
+    return {
+      statuses: {
+        ...previous,
+        in_debt: { since: now, source: 'total_debt' },
+      },
+      entered: true,
+      cleared: false,
+    };
+  const statuses = { ...previous };
+  delete statuses.in_debt;
+  return { statuses, entered: false, cleared: true };
 }
 
 export function clearStatus(

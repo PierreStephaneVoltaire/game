@@ -1,320 +1,394 @@
-# 60-Day Health, Career, Event, Nutrition, and Economy Diagnosis
+# 100-Run Controlled and Heterogeneous Balance Diagnosis
 
-Policy contract: canonical 50-run balance study v2
-
-This report is generated from the real seeded engine. It contains 18 Casual,
-12 Focused, 10 Optimal, and 10 exact 50%-neglect runs, stopped at death or 60
-game-days. The complete validator-compatible ledger is in
+Policy contract: canonical v2, heterogeneous
+extension v1. This report is generated from
+the real seeded engine. It preserves the maintained controlled 50 and adds one
+deterministic run for each profile P51–P100. Complete per-run data is in
 [BALANCE_RESULTS.json](./BALANCE_RESULTS.json).
-
-## Question and profile contract
-
-Can goal-directed players stay alive while reaching approximately 250K
-subscribers under Casual play, 500K under Focused play, and 1M under Optimal
-play without making exact 50% neglect safe?
-
-- Casual schedules 3–6 checks/day, responds at Food/Rest 4 and Mood 3, keeps a
-  nine-food inventory reserve, seeks one Clipper stack, model progression, and
-  Creativity 6.
-- Focused schedules 4–6 checks/day, keeps ten food, seeks two Clipper stacks,
-  model progression, and Creativity 8.
-- Optimal checks every two hours, responds at Food/Rest 6 and Mood 4, keeps 16
-  food, seeks three Clipper stacks, model progression, Creativity 9, and
-  proactively manages nutrition risk.
-- Neglect retains the Casual goals, skips every second scheduled visit, and
-  buys food only when immediate care requires it instead of stockpiling.
-- Kidney Stone responses rotate through unaware, instinctive hydration,
-  symptom management, delayed Hospital, and immediate Hospital. Optimal uses
-  informed prevention and treats critically only when necessary.
 
 ## Main result
 
-| Profile / target | Runs |    Survived |  Target hit | Median subs, all | Survivor median | Median target day | Median death day |
-| ---------------- | ---: | ----------: | ----------: | ---------------: | --------------: | ----------------: | ---------------: |
-| Casual / 250K    |   18 | 18 (100.0%) |  17 (94.4%) |        1,042,932 |       1,042,932 |             47.92 |                — |
-| Focused / 500K   |   12 | 12 (100.0%) |  11 (91.7%) |        1,695,469 |       1,695,469 |             50.42 |                — |
-| Optimal / 1M     |   10 | 10 (100.0%) | 10 (100.0%) |        3,793,501 |       3,793,501 |             44.83 |                — |
-| Neglect / 250K   |   10 |   2 (20.0%) |    0 (0.0%) |           13,542 |         159,952 |                 — |            25.00 |
+The heterogeneous extension remained physically alive in 19/50
+runs (38.0%) and reached the 60-day horizon in
+18/50 (36.0%). Its all-run median
+ending audience was 8,141;
+the horizon-completion median was
+666,556. The
+combined study observed 4065.8 run-days without merging the
+controlled cohorts into a misleading overall completion percentage.
 
-Managed survival is 100.0%; exact-neglect survival is
-20.0%. Progression failure and premature death are reported
-separately: survivor medians are never substituted for all-run medians.
+## Controlled regression benchmark
 
-## Milestone timing
+| Profile / target | Runs | Physically alive | 60-day completion | Target hit | Median subs, all | Completion median | Median target day | Median ending day |
+| ---------------- | ---: | ---------------: | ----------------: | ---------: | ---------------: | ----------------: | ----------------: | ----------------: |
+| Casual / 250K    |   18 |       17 (94.4%) |        14 (77.8%) | 10 (55.6%) |          428,634 |           674,016 |             48.92 |             22.89 |
+| Focused / 500K   |   12 |       11 (91.7%) |         9 (75.0%) |  7 (58.3%) |        1,545,587 |         1,963,201 |             48.25 |             34.75 |
+| Optimal / 1M     |   10 |      10 (100.0%) |       10 (100.0%) |  9 (90.0%) |        3,314,601 |         3,314,601 |             47.50 |                 — |
+| Neglect / 250K   |   10 |        2 (20.0%) |         1 (10.0%) |   0 (0.0%) |            1,471 |           175,298 |                 — |             23.21 |
 
-| Profile                |    1K |   10K |  100K |  250K |  500K |    1M |
-| ---------------------- | ----: | ----: | ----: | ----: | ----: | ----: |
-| Casual: runs reaching  |    18 |    18 |    17 |    17 |    13 |     9 |
-| Casual: median day     |  9.42 | 22.75 | 39.42 | 47.92 | 52.75 | 57.25 |
-| Focused: runs reaching |    12 |    12 |    12 |    11 |    11 |     9 |
-| Focused: median day    |  7.71 | 20.46 | 37.13 | 45.17 | 50.42 | 54.92 |
-| Optimal: runs reaching |    10 |    10 |    10 |    10 |    10 |    10 |
-| Optimal: median day    |  6.13 | 16.23 | 30.13 | 36.38 | 40.75 | 44.83 |
-| Neglect: runs reaching |     7 |     5 |     2 |     0 |     0 |     0 |
-| Neglect: median day    | 13.50 | 30.42 | 54.63 |     — |     — |     — |
+### Controlled outcomes by cohort
 
-## Subscriber sources and stream pressure
+| Group   | Active at horizon | Made It unlocked | Death | Quit Streaming | Financial Ruin |
+| ------- | ----------------: | ---------------: | ----: | -------------: | -------------: |
+| Casual  |                14 |                0 |     1 |              0 |              3 |
+| Focused |                 9 |                1 |     1 |              0 |              2 |
+| Optimal |                10 |                8 |     0 |              0 |              0 |
+| Neglect |                 1 |                0 |     8 |              0 |              1 |
 
-| Profile | Natural growth | Clippers | Donation followers | Model rewards | Other | Median active boost load |
-| ------- | -------------: | -------: | -----------------: | ------------: | ----: | -----------------------: |
-| Casual  |     17,533,189 |  109,000 |              1,610 |         2,650 | 1,800 |                     4.00 |
-| Focused |     17,541,638 |  149,500 |              1,265 |         2,000 | 1,200 |                     5.00 |
-| Optimal |     37,243,600 |  221,800 |              2,705 |         2,000 | 1,000 |                    12.50 |
-| Neglect |        443,663 |        0 |                210 |           450 | 1,000 |                     2.00 |
+## Heterogeneous archetypes
 
-Across all runs, 2,435 streams
-started, 2,001 completed,
-434 were interrupted,
-and exact stream time was 9378.05
-hours. Audience ticks recorded
-106,594
-full-value boost contributions and
-84,091
-discounted contributions; the largest active load was 22.
-The follower table separates natural growth, Clippers, donations, model rewards,
-and any residual source; it does not infer growth from final totals.
+| Group     | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| --------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| common    |   20 |       10 (50.0%) |        10 (50.0%) |  9 (45.0%) |          40,465 |               8.0 |               $839 |        $30,901 |
+| risky     |   15 |        2 (13.3%) |         2 (13.3%) |   1 (6.7%) |           1,657 |               0.0 |                $13 |        $22,049 |
+| edge      |    7 |        3 (42.9%) |         2 (28.6%) |  2 (28.6%) |          21,814 |               0.0 |                $28 |        $27,001 |
+| optimizer |    7 |        4 (57.1%) |         4 (57.1%) |  3 (42.9%) |         467,457 |              27.0 |             $5,007 |         $2,829 |
+| hostile   |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             996 |               0.0 |                 $0 |             $0 |
 
-## Survival, statuses, and damage
+### Heterogeneous outcomes by archetype
 
-| Damage source     | Raw need damage | Applied Health damage | Terminal cause appearances |
-| ----------------- | --------------: | --------------------: | -------------------------: |
-| starving          |           1,787 |                 1,787 |                          7 |
-| sleep_deprived    |             733 |                   733 |                          7 |
-| kidney_stone      |               0 |                   618 |                          0 |
-| depressed         |             112 |                    99 |                          0 |
-| stood_up_too_fast |               0 |                    27 |                          0 |
-| sick              |               0 |                    23 |                          0 |
+| Group     | Active at horizon | Made It unlocked | Death | Quit Streaming | Financial Ruin |
+| --------- | ----------------: | ---------------: | ----: | -------------: | -------------: |
+| common    |                10 |                0 |    10 |              0 |              0 |
+| risky     |                 2 |                0 |    13 |              0 |              0 |
+| edge      |                 2 |                0 |     4 |              0 |              1 |
+| optimizer |                 4 |                1 |     3 |              0 |              0 |
+| hostile   |                 0 |                0 |     1 |              0 |              0 |
+
+## Every heterogeneous profile
+
+| ID   | Profile                            | Type      | Outcome        |  Audience | Target | Min Health |    Cash |    Debt |
+| ---- | ---------------------------------- | --------- | -------------- | --------: | ------ | ---------: | ------: | ------: |
+| P51  | Morning and Night Only             | common    | death          |       234 | Missed |          0 |     $66 |      $0 |
+| P52  | Lunch-Break Player                 | common    | horizon        |   353,868 | d54.75 |         17 |  $2,789 |      $0 |
+| P53  | Workday Disappearing Act           | common    | death          |       726 | Missed |          0 |   $-345 |    $345 |
+| P54  | Weekend Binger                     | risky     | death          |       903 | Missed |          0 |  $2,434 |      $0 |
+| P55  | Two Days On, One Day Off           | common    | death          |    66,514 | Missed |          0 |  $1,353 |      $0 |
+| P56  | Three Days On, Two Days Off        | risky     | death          |       474 | Missed |          0 |    $553 |      $0 |
+| P57  | Forgetful Random Gaps              | common    | death          |       856 | Missed |          0 |   $-621 |    $621 |
+| P58  | Notification Ignorer               | common    | death          |     1,688 | Missed |          0 |   $-806 |    $806 |
+| P59  | Busy Retry Player                  | common    | death          |       995 | Missed |          0 |    $-91 |     $91 |
+| P60  | Busy Means I'll Check Tomorrow     | risky     | death          |    15,551 | Missed |          0 |   $-943 |    $943 |
+| P61  | Food-First Caregiver               | common    | horizon        |   318,308 | d55.25 |         16 |  $3,043 |      $0 |
+| P62  | Rest-First Caregiver               | common    | horizon        |    14,416 | Missed |         30 |    $324 |      $0 |
+| P63  | Mood-First Simp                    | risky     | death          |       182 | Missed |          0 |     $26 |      $0 |
+| P64  | Health Bar Watcher                 | risky     | horizon        |   126,102 | Missed |         16 |  $4,007 |      $0 |
+| P65  | Critical-Only Player               | risky     | death          |       651 | Missed |          0 |     $13 |      $0 |
+| P66  | Full Top-Up Player                 | common    | horizon        | 1,623,528 | d47.92 |         32 |  $5,261 |      $0 |
+| P67  | Worst-Stat-Only Player             | common    | death          |     4,748 | Missed |          0 |    $102 |      $0 |
+| P68  | Everything at 3 Is Fine            | risky     | death          |       428 | Missed |          0 |      $1 |      $0 |
+| P69  | Rescue Learner                     | edge      | death          |       248 | Missed |          0 |     $28 |      $0 |
+| P70  | Rescue Exploiter                   | edge      | death          |   159,054 | Missed |          0 |  $5,263 |      $0 |
+| P71  | Empty Pantry Procrastinator        | risky     | death          |     1,657 | Missed |          0 |      $1 |      $0 |
+| P72  | Pantry Hoarder                     | optimizer | death          |     6,249 | Missed |          0 | $-1,429 |  $1,429 |
+| P73  | Favorite-Food Repeater             | common    | horizon        | 1,448,103 | d47.42 |         28 | $16,612 |      $0 |
+| P74  | Dr Pepper Main                     | risky     | death          |       467 | Missed |          0 |    $117 |      $0 |
+| P75  | Sugar-Blind Player                 | common    | horizon        |   850,512 | d51.67 |         27 | $16,478 |      $0 |
+| P76  | Protein Counterplayer              | optimizer | horizon        |   821,651 | d56.25 |         31 |  $5,007 |      $0 |
+| P77  | Salt-Blind Player                  | common    | death          |       246 | Missed |          0 |    $-20 |     $20 |
+| P78  | Warning-Responsive Hydrator        | common    | horizon        |   614,975 | d53.58 |         32 |  $8,802 |      $0 |
+| P79  | Nutrition Min-Maxer                | optimizer | horizon        | 3,144,825 | d48.08 |         30 | $22,115 |      $0 |
+| P80  | Cheap-Calorie Buyer                | optimizer | horizon        |   467,457 | Missed |         31 | $11,928 |      $0 |
+| P81  | Cosmetic Whale, Tiny Pantry        | risky     | horizon        |   655,698 | d53.92 |         31 |  $4,094 |      $0 |
+| P82  | Money Hoarder                      | edge      | death          |       250 | Missed |          0 |    $172 |      $0 |
+| P83  | Perpetually Broke Shopper          | risky     | death          |    16,561 | Missed |          0 |   $-149 |    $149 |
+| P84  | Insurance-First Player             | common    | death          |     4,095 | Missed |          0 |   $-207 | $19,525 |
+| P85  | Insurance Too Late                 | risky     | death          |     7,992 | Missed |          0 |   $-486 |  $9,486 |
+| P86  | Never Hospital                     | risky     | death          |     3,818 | Missed |          0 |   $-466 |    $466 |
+| P87  | Immediate Hospital                 | edge      | financial_ruin |     9,176 | Missed |          6 | $-1,013 | $20,164 |
+| P88  | Hospital Only When Health Below 15 | risky     | death          |     2,499 | Missed |          0 | $-1,005 | $11,005 |
+| P89  | Painkiller Reliant                 | common    | horizon        | 1,084,762 | d49.75 |         31 |  $9,199 |  $6,850 |
+| P90  | Medical Debt Panic                 | common    | horizon        |   541,821 | d53.58 |         30 |  $8,080 |      $0 |
+| P91  | Debt Indifferent                   | edge      | horizon        |   677,414 | d49.33 |         31 |    $-85 |  $6,262 |
+| P92  | Stream Whenever Possible           | risky     | death          |       470 | Missed |          0 |     $20 |      $0 |
+| P93  | Healthy-Only Streamer              | common    | death          |     8,289 | Missed |          0 | $-2,643 |  $2,643 |
+| P94  | Early Grind, Late Coast            | optimizer | death          |     1,590 | Missed |          0 | $-1,074 |  $1,074 |
+| P95  | Late Grind                         | optimizer | death          |       380 | Missed |          0 |   $-326 |    $326 |
+| P96  | Book-and-Game Collector            | edge      | horizon        |   488,577 | d55.25 |         28 |  $4,189 |      $0 |
+| P97  | Room Buff Maxer                    | optimizer | horizon        |   925,292 | d55.67 |         27 |  $5,282 |      $0 |
+| P98  | Minimalist No-Luxury Run           | common    | horizon        | 1,223,880 | d48.25 |         32 |  $5,983 |      $0 |
+| P99  | Chaotic Item User                  | edge      | death          |    21,814 | Missed |          0 |   $-575 |    $575 |
+| P100 | Click Everything Player            | hostile   | death          |       996 | Missed |          0 |      $0 |      $0 |
+
+## Behavior-axis comparisons
+
+### Cadence model
+
+| Group          | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| -------------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| local_times    |    3 |        1 (33.3%) |         1 (33.3%) |  1 (33.3%) |             726 |               0.0 |                $66 |           $345 |
+| day_pattern    |    3 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             903 |               0.0 |             $1,353 |             $0 |
+| gap_pattern    |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             856 |               0.0 |              $-621 |           $621 |
+| fixed_interval |   41 |       18 (43.9%) |        17 (41.5%) | 14 (34.1%) |          14,416 |               0.0 |                $28 |        $80,414 |
+| phase_schedule |    2 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             985 |               0.0 |              $-700 |         $1,400 |
+
+### Care philosophy
+
+| Group           | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| --------------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| worst_only      |    3 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             856 |               0.0 |                $66 |           $621 |
+| threshold       |   38 |       15 (39.5%) |        14 (36.8%) | 13 (34.2%) |           8,733 |               0.0 |                $11 |        $82,159 |
+| priority        |    3 |        2 (66.7%) |         2 (66.7%) |  1 (33.3%) |          14,416 |              16.0 |               $324 |             $0 |
+| health_reactive |    1 |       1 (100.0%) |        1 (100.0%) |   0 (0.0%) |         126,102 |              16.0 |             $4,007 |             $0 |
+| critical_only   |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             651 |               0.0 |                $13 |             $0 |
+| top_up          |    1 |       1 (100.0%) |        1 (100.0%) | 1 (100.0%) |       1,623,528 |              32.0 |             $5,261 |             $0 |
+| minimal         |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             428 |               0.0 |                 $1 |             $0 |
+| rescue_learner  |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             248 |               0.0 |                $28 |             $0 |
+| rescue_exploit  |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |         159,054 |               0.0 |             $5,263 |             $0 |
+
+### Nutrition knowledge
+
+| Group            | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| ---------------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| ignore           |   44 |       14 (31.8%) |        13 (29.5%) | 11 (25.0%) |           5,499 |               0.0 |                $17 |        $82,780 |
+| preference_first |    2 |        1 (50.0%) |         1 (50.0%) |  1 (50.0%) |         724,285 |              14.0 |             $8,365 |             $0 |
+| protein_counter  |    1 |       1 (100.0%) |        1 (100.0%) | 1 (100.0%) |         821,651 |              31.0 |             $5,007 |             $0 |
+| warning_hydrator |    1 |       1 (100.0%) |        1 (100.0%) | 1 (100.0%) |         614,975 |              32.0 |             $8,802 |             $0 |
+| risk_minimizer   |    1 |       1 (100.0%) |        1 (100.0%) | 1 (100.0%) |       3,144,825 |              30.0 |            $22,115 |             $0 |
+| cheap_food       |    1 |       1 (100.0%) |        1 (100.0%) |   0 (0.0%) |         467,457 |              31.0 |            $11,928 |             $0 |
+
+### Spending intensity
+
+| Group   | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| ------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| normal  |   36 |       13 (36.1%) |        12 (33.3%) |  9 (25.0%) |           6,370 |               0.0 |                $84 |        $54,840 |
+| high    |   10 |        4 (40.0%) |         4 (40.0%) |  4 (40.0%) |          19,188 |               0.0 |                $10 |         $8,415 |
+| minimal |    4 |        2 (50.0%) |         2 (50.0%) |  2 (50.0%) |         272,958 |              15.0 |             $3,078 |        $19,525 |
+
+### Career strategy
+
+| Group                | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| -------------------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| healthy_only         |    3 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             234 |               0.0 |                $26 |         $2,643 |
+| casual               |   38 |       18 (47.4%) |        17 (44.7%) | 14 (36.8%) |          16,056 |               0.0 |               $110 |        $78,737 |
+| stream_when_possible |    7 |        1 (14.3%) |         1 (14.3%) |  1 (14.3%) |             903 |               0.0 |               $553 |             $0 |
+| early_grind          |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |           1,590 |               0.0 |            $-1,074 |         $1,074 |
+| late_grind           |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             380 |               0.0 |              $-326 |           $326 |
+
+### Hospital strategy
+
+| Group              | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| ------------------ | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| delayed_hospital   |    2 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |           2,165 |               0.0 |               $-70 |        $19,525 |
+| painkiller         |    2 |       2 (100.0%) |        2 (100.0%) | 2 (100.0%) |         719,315 |              24.0 |             $5,994 |         $6,850 |
+| hydrate            |   39 |       14 (35.9%) |        14 (35.9%) | 11 (28.2%) |           8,289 |               0.0 |               $117 |         $9,002 |
+| wait               |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             246 |               0.0 |               $-20 |            $20 |
+| critical_hospital  |    2 |        1 (50.0%) |         1 (50.0%) |  1 (50.0%) |       1,573,662 |              15.0 |            $10,555 |        $11,005 |
+| immediate_hospital |    3 |        2 (66.7%) |         1 (33.3%) |  1 (33.3%) |           9,176 |               6.0 |              $-486 |        $35,912 |
+| never_hospital     |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |           3,818 |               0.0 |              $-466 |           $466 |
+
+### Rescue awareness
+
+| Group                   | Runs | Physically alive | 60-day completion | Target hit | Median audience | Median min Health | Median ending cash | Remaining debt |
+| ----------------------- | ---: | ---------------: | ----------------: | ---------: | --------------: | ----------------: | -----------------: | -------------: |
+| normal                  |   48 |       19 (39.6%) |        18 (37.5%) | 15 (31.3%) |           8,141 |               0.0 |                $46 |        $82,780 |
+| relies_on_rescue        |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |             248 |               0.0 |                $28 |             $0 |
+| tries_to_exploit_rescue |    1 |         0 (0.0%) |          0 (0.0%) |   0 (0.0%) |         159,054 |               0.0 |             $5,263 |             $0 |
+
+## Physical survival, completion, recovery, and pressure
+
+| Damage source                      | Raw need damage | Applied Health damage | Terminal cause appearances |
+| ---------------------------------- | --------------: | --------------------: | -------------------------: |
+| starving                           |           4,339 |                 4,339 |                         27 |
+| sleep_deprived                     |           1,905 |                 1,905 |                         34 |
+| three_month_old_rotisserie_chicken |               0 |                 1,000 |                          0 |
+| kidney_stone                       |               0 |                   917 |                          2 |
+| depressed                          |             130 |                   112 |                          3 |
+| stood_up_too_fast                  |               0 |                    39 |                          0 |
+| sick                               |               0 |                    17 |                          0 |
 
 | Status         | Exposure hours |
 | -------------- | -------------: |
-| hungry         |       26405.35 |
-| sleep_deprived |       12565.05 |
-| low_energy     |        8520.30 |
-| kidney_stone   |        8289.30 |
-| starving       |        5651.85 |
-| dizzy_spell    |        4916.45 |
-| creative_block |        1149.35 |
-| depressed      |         761.55 |
-| overstimulated |         731.35 |
-| full           |         206.00 |
-| sick           |          26.00 |
+| hungry         |       34428.13 |
+| sleep_deprived |       19442.88 |
+| starving       |       17797.10 |
+| low_energy     |       17264.03 |
+| dizzy_spell    |       16147.15 |
+| kidney_stone   |       11365.15 |
+| creative_block |        5993.28 |
+| depressed      |        3258.45 |
+| overstimulated |        1125.80 |
+| full           |         637.50 |
+| sick           |          30.00 |
 
-Sugar Crash produced 744
-actual crashes after 791
-warnings; 215 pending
-crashes were averted. Recorded crash deltas total Mood
--1,488 and Rest
--744.
+32/50 profiles reached Health 8 or lower. 19/50 remained physically alive after receiving at least 20 points of cumulative Health recovery. Median time at Health 8 or lower was 8.25 hours.
 
-## Weighted events and direct impact
+## Care and visit behavior
 
-The study recorded 58,558 weighted opportunities across
-2739.6 run-days, or
-21.37 opportunities/day. Configured weight
-is shown beside observed selection frequency and direct ledger impact; weights
-are not unconditional probabilities because eligibility and cooldowns alter
-the pool.
+The extension recorded 7,432 Food actions,
+1,800 Rest actions, 2,499 Mood
+actions, and 363 Bond actions. There were
+1,005 attended
+visits with no care action and
+130 successful retry sessions.
 
-| Candidate            | Configured weight | Selections | Share | Recorded direct impact |
-| -------------------- | ----------------: | ---------: | ----: | ---------------------- |
-| none                 |               100 |     40,402 | 69.0% | Narration/state only   |
-| stream               |           Dynamic |      3,790 |  6.5% | Narration/state only   |
-| benign_room_event    |  Authored/dynamic |      3,434 |  5.9% | Narration/state only   |
-| creative_inspiration |                15 |      2,931 |  5.0% | creativity +2,906      |
-| food_craving         |                20 |      2,468 |  4.2% | Narration/state only   |
-| off_stream_support   |  Authored/dynamic |      2,377 |  4.1% | $+23,872               |
-| self_entertainment   |                 5 |        854 |  1.5% | mood +854              |
-| tiny_walk            |                 3 |        582 |  1.0% | mood +582              |
-| stood_up_too_fast    |                 3 |        578 |  1.0% | rest -123, health -27  |
-| barely_moved_today   |                 3 |        501 |  0.9% | mood -501              |
-| rest_snoring         |                10 |        361 |  0.6% | Narration/state only   |
-| moms_care_package    |                 5 |        190 |  0.3% | mood +190              |
-| low_money_stress     |                20 |         90 |  0.2% | mood -90               |
+## Nutrition counterplay
 
-### Seeded authored outcomes
+| ID  | Profile                     | Type      | Outcome |  Audience | Target | Min Health |    Cash | Debt |
+| --- | --------------------------- | --------- | ------- | --------: | ------ | ---------: | ------: | ---: |
+| P74 | Dr Pepper Main              | risky     | death   |       467 | Missed |          0 |    $117 |   $0 |
+| P75 | Sugar-Blind Player          | common    | horizon |   850,512 | d51.67 |         27 | $16,478 |   $0 |
+| P76 | Protein Counterplayer       | optimizer | horizon |   821,651 | d56.25 |         31 |  $5,007 |   $0 |
+| P77 | Salt-Blind Player           | common    | death   |       246 | Missed |          0 |    $-20 |  $20 |
+| P78 | Warning-Responsive Hydrator | common    | horizon |   614,975 | d53.58 |         32 |  $8,802 |   $0 |
+| P79 | Nutrition Min-Maxer         | optimizer | horizon | 3,144,825 | d48.08 |         30 | $22,115 |   $0 |
 
-| Outcome ID | Selections |
-| ---------- | ---------: |
-| brief      |        428 |
-| rough      |        123 |
-| stumble    |         27 |
+Across the heterogeneous profiles, the engine produced
+189
+Sugar Crash warnings,
+170
+actual crashes,
+67
+protein cancellations, and
+79
+Kidney Stone onsets.
 
-## Autonomous rescue
+## Rescue reliance and ordinary autonomy
 
-| Profile | Food rescues | Rest rescues | Blocked attempts | Survived |
-| ------- | -----------: | -----------: | ---------------: | -------: |
-| Casual  |          609 |          226 |              222 |    18/18 |
-| Focused |          331 |          118 |               76 |    12/12 |
-| Optimal |            5 |           11 |                0 |    10/10 |
-| Neglect |           23 |          145 |              740 |     2/10 |
+| ID  | Profile                     | Type      | Outcome |  Audience | Target | Min Health |   Cash | Debt |
+| --- | --------------------------- | --------- | ------- | --------: | ------ | ---------: | -----: | ---: |
+| P69 | Rescue Learner              | edge      | death   |       248 | Missed |          0 |    $28 |   $0 |
+| P70 | Rescue Exploiter            | edge      | death   |   159,054 | Missed |          0 | $5,263 |   $0 |
+| P71 | Empty Pantry Procrastinator | risky     | death   |     1,657 | Missed |          0 |     $1 |   $0 |
+| P96 | Book-and-Game Collector     | edge      | horizon |   488,577 | d55.25 |         28 | $4,189 |   $0 |
+| P97 | Room Buff Maxer             | optimizer | horizon |   925,292 | d55.67 |         27 | $5,282 |   $0 |
+| P98 | Minimalist No-Luxury Run    | common    | horizon | 1,223,880 | d48.25 |         32 | $5,983 |   $0 |
 
-| Rescue block reason                     | Count |
-| --------------------------------------- | ----: |
-| no_eligible_owned_food                  |   568 |
-| rescue_locked                           |   469 |
-| ordinary_consumption_did_not_raise_food |     1 |
+Food rescues totaled
+694 and Rest rescues
+totaled 386. Player
+actions reset 676
+Food locks and
+352
+Rest locks. The result contract records physical survival for 12/24 hours after rescue;
+that is a timing measure, not a causal claim that the rescue prevented death.
 
-Food and Rest rescues remain separately locked. The Neglect row is the
-important safety check: rescue frequency must be interpreted beside survival,
-not as evidence that autonomy can maintain a run indefinitely.
+## Hospital and medical economy
 
-## Kidney Stone and Hospital response
+| ID  | Profile                            | Type   | Outcome        |  Audience | Target | Min Health |    Cash |    Debt |
+| --- | ---------------------------------- | ------ | -------------- | --------: | ------ | ---------: | ------: | ------: |
+| P84 | Insurance-First Player             | common | death          |     4,095 | Missed |          0 |   $-207 | $19,525 |
+| P85 | Insurance Too Late                 | risky  | death          |     7,992 | Missed |          0 |   $-486 |  $9,486 |
+| P86 | Never Hospital                     | risky  | death          |     3,818 | Missed |          0 |   $-466 |    $466 |
+| P87 | Immediate Hospital                 | edge   | financial_ruin |     9,176 | Missed |          6 | $-1,013 | $20,164 |
+| P88 | Hospital Only When Health Below 15 | risky  | death          |     2,499 | Missed |          0 | $-1,005 | $11,005 |
+| P89 | Painkiller Reliant                 | common | horizon        | 1,084,762 | d49.75 |         31 |  $9,199 |  $6,850 |
+| P90 | Medical Debt Panic                 | common | horizon        |   541,821 | d53.58 |         30 |  $8,080 |      $0 |
+| P91 | Debt Indifferent                   | edge   | horizon        |   677,414 | d49.33 |         31 |    $-85 |  $6,262 |
 
-The cohort recorded 17,654 successful feeds, including
-16,686 player-commanded feeds,
-2,231 qualifying risky feeds,
-103 onsets, and 515 recurrences.
-44/50 runs experienced an onset. Among completed
-episodes, 65 cleared naturally and
-33 cleared through Hospital; 5
-remained active at death or the horizon.
-
-| Response         | Runs | Runs with stone | Onsets | Recurrences | Natural clears | Hospital clears | Survived | Medical payments |
-| ---------------- | ---: | --------------: | -----: | ----------: | -------------: | --------------: | -------: | ---------------: |
-| unaware          |    9 |               7 |     17 |         162 |             16 |               0 |        7 |               $0 |
-| instinctive      |    9 |               9 |     18 |         133 |             17 |               0 |        7 |               $0 |
-| wait             |    8 |               8 |     22 |         130 |             20 |               0 |        7 |               $0 |
-| delayed_hospital |    7 |               7 |     16 |          26 |              0 |              16 |        6 |          $26,036 |
-| hospital         |    7 |               6 |     17 |           1 |              0 |              17 |        5 |          $21,477 |
-| optimal          |   10 |               7 |     13 |          63 |             12 |               0 |       10 |               $0 |
-
-### Every affected run
-
-| Run        | Response         | Onsets | Recurrences | Natural clears | Hospital clears | Payments | Principal | Outcome     |
-| ---------- | ---------------- | -----: | ----------: | -------------: | --------------: | -------: | --------: | ----------- |
-| casual-01  | unaware          |      3 |          25 |              3 |               0 |       $0 |        $0 | Survived    |
-| casual-02  | instinctive      |      4 |          36 |              4 |               0 |       $0 |        $0 | Survived    |
-| casual-03  | wait             |      4 |          27 |              4 |               0 |       $0 |        $0 | Survived    |
-| casual-04  | delayed_hospital |      2 |           4 |              0 |               2 |   $6,200 |    $4,300 | Survived    |
-| casual-05  | hospital         |      2 |           0 |              0 |               2 |   $1,675 |    $8,825 | Survived    |
-| casual-06  | unaware          |      1 |           7 |              1 |               0 |       $0 |        $0 | Survived    |
-| casual-07  | instinctive      |      1 |           3 |              1 |               0 |       $0 |        $0 | Survived    |
-| casual-08  | wait             |      3 |          30 |              2 |               0 |       $0 |        $0 | Survived    |
-| casual-09  | delayed_hospital |      3 |           5 |              0 |               3 |   $5,205 |   $24,795 | Survived    |
-| casual-10  | hospital         |      5 |           0 |              0 |               5 |   $4,711 |   $45,289 | Survived    |
-| casual-11  | unaware          |      3 |          29 |              3 |               0 |       $0 |        $0 | Survived    |
-| casual-12  | instinctive      |      2 |          10 |              2 |               0 |       $0 |        $0 | Survived    |
-| casual-13  | wait             |      4 |          14 |              4 |               0 |       $0 |        $0 | Survived    |
-| casual-14  | delayed_hospital |      5 |           9 |              0 |               5 |   $4,200 |    $7,800 | Survived    |
-| casual-15  | hospital         |      2 |           0 |              0 |               2 |   $2,900 |    $7,600 | Survived    |
-| casual-16  | unaware          |      1 |          11 |              1 |               0 |       $0 |        $0 | Survived    |
-| casual-17  | instinctive      |      2 |           6 |              2 |               0 |       $0 |        $0 | Survived    |
-| casual-18  | wait             |      3 |           7 |              2 |               0 |       $0 |        $0 | Survived    |
-| focused-01 | unaware          |      6 |          41 |              5 |               0 |       $0 |        $0 | Survived    |
-| focused-02 | instinctive      |      3 |          13 |              3 |               0 |       $0 |        $0 | Survived    |
-| focused-03 | wait             |      1 |          11 |              1 |               0 |       $0 |        $0 | Survived    |
-| focused-04 | delayed_hospital |      1 |           1 |              0 |               1 |     $500 |        $0 | Survived    |
-| focused-05 | hospital         |      2 |           0 |              0 |               2 |   $6,604 |    $3,896 | Survived    |
-| focused-06 | unaware          |      2 |          38 |              2 |               0 |       $0 |        $0 | Survived    |
-| focused-07 | instinctive      |      3 |          49 |              3 |               0 |       $0 |        $0 | Survived    |
-| focused-08 | wait             |      3 |          12 |              3 |               0 |       $0 |        $0 | Survived    |
-| focused-09 | delayed_hospital |      3 |           3 |              0 |               3 |   $6,250 |    $4,750 | Survived    |
-| focused-10 | hospital         |      5 |           0 |              0 |               5 |   $5,360 |   $44,640 | Survived    |
-| focused-11 | unaware          |      1 |          11 |              1 |               0 |       $0 |        $0 | Survived    |
-| focused-12 | instinctive      |      1 |           3 |              1 |               0 |       $0 |        $0 | Survived    |
-| optimal-01 | optimal          |      1 |           3 |              1 |               0 |       $0 |        $0 | Survived    |
-| optimal-02 | optimal          |      3 |          21 |              3 |               0 |       $0 |        $0 | Survived    |
-| optimal-03 | optimal          |      2 |           6 |              1 |               0 |       $0 |        $0 | Survived    |
-| optimal-04 | optimal          |      1 |           4 |              1 |               0 |       $0 |        $0 | Survived    |
-| optimal-05 | optimal          |      2 |           8 |              2 |               0 |       $0 |        $0 | Survived    |
-| optimal-09 | optimal          |      2 |          15 |              2 |               0 |       $0 |        $0 | Survived    |
-| optimal-10 | optimal          |      2 |           6 |              2 |               0 |       $0 |        $0 | Survived    |
-| neglect-02 | instinctive      |      1 |           3 |              1 |               0 |       $0 |        $0 | Died d38.56 |
-| neglect-03 | wait             |      2 |           5 |              2 |               0 |       $0 |        $0 | Died d44.08 |
-| neglect-04 | delayed_hospital |      1 |           2 |              0 |               1 |   $3,533 |    $6,467 | Survived    |
-| neglect-05 | hospital         |      1 |           1 |              0 |               1 |     $227 |    $9,773 | Died d21.42 |
-| neglect-07 | instinctive      |      1 |          10 |              0 |               0 |       $0 |        $0 | Died d45.85 |
-| neglect-08 | wait             |      2 |          24 |              2 |               0 |       $0 |        $0 | Survived    |
-| neglect-09 | delayed_hospital |      1 |           2 |              0 |               1 |     $148 |    $9,852 | Died d13.59 |
-
-## Medical obligations and economy
-
-The study created 33 medical bills, including
-11 insured bills, and finished with
-$177,987 in explicit medical principal. It
-processed 434 scheduled payment events and
-0 discounted full-payoff events.
+The extension created
+11 bills, made
+99
+scheduled payments and
+0 discounted
+full payments, ending with
+$70,496 in
+explicit principal.
 
 | Source                    |     Total |
 | ------------------------- | --------: |
-| Income: stream            |  $191,572 |
-| Income: donations         |  $370,264 |
-| Income: subscriberRevenue |   $91,100 |
-| Income: offStreamSupport  |   $23,872 |
-| Income: appearances       |   $20,500 |
+| Income: stream            |  $213,927 |
+| Income: donations         |  $425,422 |
+| Income: subscriberRevenue |  $109,820 |
+| Income: offStreamSupport  |   $34,497 |
+| Income: appearances       |   $24,500 |
 | Income: commissions       |        $0 |
-| Income: projects          |        $0 |
+| Income: projects          |    $2,008 |
+| Income: lifeEvents        |   $58,250 |
+| Income: lineOfCredit      |        $0 |
 | Income: other             |        $0 |
-| Expense: shop             | −$102,524 |
-| Expense: hospital         |  −$47,513 |
+| Expense: shop             | −$137,947 |
+| Expense: hospital         |  −$40,973 |
+| Expense: lifeEvents       | −$133,151 |
+| Expense: lineOfCredit     |       −$0 |
 | Expense: other            |       −$0 |
-| Combined starting cash    |    $1,000 |
-| Combined ending cash      |  $548,271 |
+| Combined starting cash    |    $2,000 |
+| Combined ending cash      |  $558,353 |
 
-| Profile | Median ending cash | Median income | Shop spending | Medical payments | Remaining principal | Rejected purchases |
-| ------- | -----------------: | ------------: | ------------: | ---------------: | ------------------: | -----------------: |
-| Casual  |             $7,685 |       $10,645 |       $38,672 |          $24,891 |             $98,609 |                 15 |
-| Focused |             $8,501 |       $11,705 |       $28,951 |          $18,714 |             $53,286 |                 20 |
-| Optimal |            $28,331 |       $31,050 |       $26,824 |               $0 |                  $0 |                 36 |
-| Neglect |               $710 |        $1,652 |        $8,077 |           $3,908 |             $26,092 |                  1 |
+### Debt and Line of Credit diagnostics
 
-Every run satisfies `starting cash + income - expenses = ending cash`. Base
-stream income is the exact residual because the engine has no standalone base
-stream-pay event. Medical principal is separate from cash; only actual payments
-are expenses.
+| Financial diagnostic          |        Result |
+| ----------------------------- | ------------: |
+| Runs entering In Debt         |            19 |
+| Median peak total debt        |           $48 |
+| Maximum peak total debt       |       $28,660 |
+| Total In Debt exposure        | 3176.35 hours |
+| LOC uptake                    |        0 runs |
+| LOC repayment units purchased |             0 |
+| LOC remaining closure cost    |            $0 |
+| LOC cumulative open charges   |            $0 |
 
-## Per-run exceptions
+| Credit spending category | Amount financed into negative cash |
+| ------------------------ | ---------------------------------: |
+| food                     |                               $317 |
+| medicine                 |                                 $7 |
+| upgrade                  |                                 $0 |
+| care                     |                                 $0 |
+| reusable                 |                                 $0 |
+| decoration               |                                 $0 |
 
-| Run        | Outcome                       | Subscribers | Target | Stone onsets | Bills | Principal |
-| ---------- | ----------------------------- | ----------: | ------ | -----------: | ----: | --------: |
-| casual-01  | Survived                      |      53,702 | Missed |            3 |     0 |        $0 |
-| casual-04  | Survived                      |   1,841,566 | d46.58 |            2 |     2 |    $4,300 |
-| casual-05  | Survived                      |     583,706 | d53.83 |            2 |     2 |    $8,825 |
-| casual-09  | Survived                      |   1,108,862 | d47.92 |            3 |     3 |   $24,795 |
-| casual-10  | Survived                      |     285,892 | d59.25 |            5 |     5 |   $45,289 |
-| casual-14  | Survived                      |   1,266,348 | d45.92 |            5 |     5 |    $7,800 |
-| casual-15  | Survived                      |   1,181,494 | d47.67 |            2 |     2 |    $7,600 |
-| focused-05 | Survived                      |   2,023,085 | d48.42 |            2 |     2 |    $3,896 |
-| focused-07 | Survived                      |     112,880 | Missed |            3 |     0 |        $0 |
-| focused-09 | Survived                      |   1,781,965 | d50.42 |            3 |     3 |    $4,750 |
-| focused-10 | Survived                      |   1,496,683 | d51.92 |            5 |     5 |   $44,640 |
-| neglect-01 | Sleep deprivation             |         150 | Missed |            0 |     0 |        $0 |
-| neglect-02 | Starvation, Sleep deprivation |      21,002 | Missed |            1 |     0 |        $0 |
-| neglect-03 | Starvation                    |      45,023 | Missed |            2 |     0 |        $0 |
-| neglect-04 | Survived                      |     138,937 | Missed |            1 |     1 |    $6,467 |
-| neglect-05 | Starvation, Sleep deprivation |         728 | Missed |            1 |     1 |    $9,773 |
-| neglect-06 | Starvation, Sleep deprivation |       2,097 | Missed |            0 |     0 |        $0 |
-| neglect-07 | Starvation, Sleep deprivation |      49,963 | Missed |            1 |     0 |        $0 |
-| neglect-08 | Survived                      |     180,966 | Missed |            2 |     0 |        $0 |
-| neglect-09 | Starvation, Sleep deprivation |         376 | Missed |            1 |     1 |    $9,852 |
-| neglect-10 | Starvation, Sleep deprivation |       6,081 | Missed |            0 |     0 |        $0 |
+### VTuber-life events
 
-## Interpretation
+| Life event            | Resolutions |
+| --------------------- | ----------: |
+| rain                  |         723 |
+| personal_purchase     |         232 |
+| sponsored_stream_deal |         125 |
+| tax_bill              |          77 |
+| algorithm_boost       |          52 |
+| gpu_failure           |          43 |
+| webcam_failure        |          43 |
+| twitter_cancellation  |          24 |
+| agency_invitation     |           3 |
 
-1. **Survival separation:** 2/10
-   Neglect runs survive versus 40/40
-   managed runs. Interpret this independently from progression.
-2. **Progression consistency:** 11/12
-   Focused runs and 10/10
-   Optimal runs hit their targets. Compare survivor medians and boost loads
-   before changing a global audience rate.
-3. **Condition pressure:** 44/50 runs develop Kidney Stone.
-   The response table and affected-run appendix show whether Hospital,
-   hydration, or waiting explains survival and repeat treatment.
-4. **Medical economy:** actual medical payments consume 6.8%
-   of recorded income while $177,987 remains.
-   Principal and cash are separate, so a nonnegative balance is not evidence of
-   affordable care.
-5. **Counterfactual boundary:** this report contains diagnosis only. Test one
-   coherent lever family with paired seeds before recommending production
-   numbers.
+| Metric     | Additions | Losses |
+| ---------- | --------: | -----: |
+| food       |        +0 |     −0 |
+| health     |        +0 |     −0 |
+| mood       |      +244 |   −721 |
+| rest       |        +0 |     −0 |
+| bond       |        +0 |     −0 |
+| creativity |        +0 |     −0 |
 
-## Method limits
+Cash additions were $58,250;
+cash subtractions were $133,151.
+Subscriber additions were 300,000;
+Subscriber losses were 131,770.
+The study observed 55
+temporary natural-discovery boosts across
+1677.00 exposure-hours.
 
-- This is the maintained canonical policy, not a claim that it represents
-  every human play style. Policy version changes require intentional review.
-- Configured weights are reported with selections and direct impacts, but
-  dynamic eligible-pool exposure is not yet persisted by the production event
-  ledger.
-- This baseline changes no production rules. Any counterfactual must be run as
-  a separately labeled paired study with the same seeds and policy version.
+## Career aggression
+
+| ID  | Profile                  | Type      | Outcome | Audience | Target | Min Health |    Cash |   Debt |
+| --- | ------------------------ | --------- | ------- | -------: | ------ | ---------: | ------: | -----: |
+| P92 | Stream Whenever Possible | risky     | death   |      470 | Missed |          0 |     $20 |     $0 |
+| P93 | Healthy-Only Streamer    | common    | death   |    8,289 | Missed |          0 | $-2,643 | $2,643 |
+| P94 | Early Grind, Late Coast  | optimizer | death   |    1,590 | Missed |          0 | $-1,074 | $1,074 |
+| P95 | Late Grind               | optimizer | death   |      380 | Missed |          0 |   $-326 |   $326 |
+
+## Balance-question analysis
+
+1. **Max Health:** common-profile physical survival is 50.0% and risky-profile physical survival is 13.3%. This baseline alone does not authorize lowering Health; use the paired 30 HP run for causality.
+2. **Recovery:** 19 physically alive profiles recovered at least 20 Health cumulatively; inspect their minimum Health and critical-hours fields before attributing survival to the cap.
+3. **Rescue strength:** 0/3 rescue-stress profiles completed 60 days, with 142 successful rescues.
+4. **Positive autonomy:** P96/P97/P98 provide collector, room, and minimalist outcomes in the comparison table; autonomous Mood, injury, movement, and side-gig fields remain available per run.
+5. **Hospital viability:** 2/6 Hospital-oriented profiles completed 60 days and ended with $63,646 principal.
+6. **Nutrition clarity:** 3/3 informed profiles completed 60 days; compare their warnings, responses, crashes, and onsets with P74/P75/P77 in the result JSON.
+7. **Career cost:** P92–P95 separate aggressive, healthy-only, early-grind, and late-grind policies; their table reports exact outcomes, target timing, audience, cash, and debt without treating audience failure as an ending.
+
+## Method and counterfactual boundary
+
+- P51–P100 are configuration records interpreted by shared schedule, care,
+  shopping, nutrition, career, medical, debt, and autonomy strategies. Their
+  overlays are recorded per run.
+- Scheduled, attended, busy, skipped, and retried visits are distinct. A busy
+  visit is not silently moved unless its profile explicitly retries.
+- Profile decisions are deterministic. Gameplay continues to use the engine's
+  seed, state version, and command identity.
+- The 40 HP production baseline is reported here first. The requested paired
+  30 HP counterfactual remains a separately labeled experiment; it must not be
+  conflated with this baseline or a production rule change.
+- Financial Ruin used the production $20,000 total-debt threshold. The $15,000
+  counterfactual was not executed in this baseline and did not modify
+  production data.

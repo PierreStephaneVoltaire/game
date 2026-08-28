@@ -7,9 +7,28 @@ progress so rules and player-facing narration describe the same world.
 ## Run and time
 
 **Run**:
-One in-memory companion life from sign-in until death. A new sign-in or reload
-starts a separate run with no inherited state.
+One in-memory companion life from sign-in until an Ending. A new sign-in or
+reload starts a separate Run with no inherited state.
 _Avoid_: Save, account
+
+**Terminal Ending**:
+The permanent outcome that closes a Run: Death, Quit Streaming, or Financial
+Ruin. `Made It` is an Ending unlock, not a terminal guard.
+_Avoid_: Horizon, game over state, She Cut You Off
+
+**Ending unlock**:
+A recorded conclusion earned without closing the Run. `Made It` unlocks once
+when current Subscribers first reach 3,000,000.
+
+**Death**:
+The Ending in which the companion's Health reaches 0. It is the only Ending
+that means the companion is no longer physically alive.
+_Avoid_: Non-death Ending
+
+**Horizon Completion**:
+Reaching a declared simulation-study duration without an Ending. It completes
+the study observation, not the Run's domain lifecycle.
+_Avoid_: Survival, Ending
 
 **Game time**:
 The timestamp used by needs, activities, statuses, projects, events, and the
@@ -66,12 +85,29 @@ _Avoid_: Audit log, offline recap
 ## Economy and career
 
 **Medical debt**:
-A negative balance created by Hospital care. It limits shopping and reduces
-periodic Health recovery without directly damaging Health.
+A payment-plan obligation created by Hospital care and tracked separately from
+cash. Its principal is not a negative cash balance.
+_Avoid_: Cash debt
 
-**Followers**:
-A nondecreasing audience measure earned through completed streams, donations,
-and model projects.
+**Total debt**:
+Negative cash plus Hospital principal, remaining LOC closure cost, and other
+authored financed principal. It owns the In Debt and Financial Ruin thresholds.
+
+**Line of Credit (LOC)**:
+A one-time cash-advance contract closed only by purchasing all twenty fixed
+repayment units. Its daily open charge changes cash but never buys a unit.
+
+**Subscribers**:
+The current audience count. Life events may increase or decrease it.
+_Avoid_: Followers in player-facing copy
+
+**Peak Subscribers**:
+The greatest audience count reached. Career milestones and one-time rewards use
+this value so Subscriber losses never revoke or replay progression.
+
+**Life event**:
+A seeded, data-authored VTuber-life opportunity with explicit signed metric,
+cash, Subscriber, or temporary natural-discovery effects.
 
 **Career tier**:
 The highest ordered follower milestone the run has earned.

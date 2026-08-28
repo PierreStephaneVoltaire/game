@@ -6,11 +6,12 @@ import {
   supportsQuantity,
 } from '../simulation/engine-state';
 import {
-  debtPurchaseAllowed,
   progressionPurchaseAllowed,
   purchaseQuantity,
 } from '../billing-rules';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { finalizeFinancialOperation } from '../financial-rules';
+import rules from '../data/simulation-rules.json';
 
 export type ShopCommandResult = {
   handled: boolean;
@@ -105,15 +106,6 @@ function checkoutCart(
       state,
       rejected('unavailable', 'A progression purchase is no longer available.'),
     );
-  if (state.balance < 0)
-    if (lines.some((line) => !debtPurchaseAllowed(line.item)))
-      return result(
-        state,
-        rejected(
-          'debt',
-          'A negative cash balance permits essential purchases only.',
-        ),
-      );
   if (
     lines.some(
       (line) =>
@@ -147,9 +139,6 @@ function checkoutCart(
       state,
       rejected('unavailable', 'One or more cart items are out of stock.'),
     );
-  if (state.balance >= 0 && state.balance < total)
-    return result(state, rejected('insufficient_funds', 'Not enough money.'));
-
   const stock = { ...state.shop.stock };
   const inventory = { ...state.inventory };
   for (const line of lines) {
@@ -167,14 +156,21 @@ function checkoutCart(
       itemName: line.item.name,
       quantity: line.quantity,
     })),
-    metricDeltas: state.balance < 0 ? { mood: -1 } : undefined,
+    metricDeltas:
+      state.balance < 0 ? { mood: rules.debt.purchaseMood } : undefined,
   };
   const next: GameState = {
     ...state,
     balance: state.balance - total,
     metrics:
       state.balance < 0
-        ? { ...state.metrics, mood: Math.max(0, state.metrics.mood - 1) }
+        ? {
+            ...state.metrics,
+            mood: Math.max(
+              0,
+              state.metrics.mood + rules.debt.purchaseMood,
+            ),
+          }
         : state.metrics,
     inventory,
     shop: { ...state.shop, stock, cart: {} },
@@ -182,8 +178,18 @@ function checkoutCart(
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
+  const reconciled = reconcileMetricSource(state, next, command.commandId);
   return result(
-    reconcileMetricSource(state, next, command.commandId),
+    finalizeFinancialOperation({
+      before: state,
+      state: reconciled,
+      triggerEventId: event.id,
+      kind: 'shop_purchase',
+      purchaseCategory:
+        new Set(lines.map((line) => line.item.category)).size === 1
+          ? lines[0].item.category
+          : 'mixed',
+    }),
     accepted('cart_checked_out', event.message, [event.id]),
   );
 }
@@ -209,15 +215,6 @@ function buyItem(
       state,
       rejected('unavailable', 'That progression purchase is not available.'),
     );
-  if (state.balance < 0)
-    if (!debtPurchaseAllowed(item))
-      return result(
-        state,
-        rejected(
-          'debt',
-          'A negative cash balance permits essential purchases only.',
-        ),
-      );
   if (
     item.consumable === false &&
     !supportsQuantity(item) &&
@@ -243,9 +240,6 @@ function buyItem(
       state,
       rejected('quantity_cap', 'That quantity exceeds the item ownership cap.'),
     );
-  if (state.balance >= 0 && state.balance < item.price * quantity)
-    return result(state, rejected('insufficient_funds', 'Not enough money.'));
-
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'item_purchased',
@@ -253,14 +247,21 @@ function buyItem(
     message: `Bought ${quantity} ${item.name}.`,
     sourceActionId: command.commandId,
     purchases: [{ itemId: item.id, itemName: item.name, quantity }],
-    metricDeltas: state.balance < 0 ? { mood: -1 } : undefined,
+    metricDeltas:
+      state.balance < 0 ? { mood: rules.debt.purchaseMood } : undefined,
   };
   const next: GameState = {
     ...state,
     balance: state.balance - item.price * quantity,
     metrics:
       state.balance < 0
-        ? { ...state.metrics, mood: Math.max(0, state.metrics.mood - 1) }
+        ? {
+            ...state.metrics,
+            mood: Math.max(
+              0,
+              state.metrics.mood + rules.debt.purchaseMood,
+            ),
+          }
         : state.metrics,
     inventory: {
       ...state.inventory,
@@ -274,8 +275,15 @@ function buyItem(
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
+  const reconciled = reconcileMetricSource(state, next, command.commandId);
   return result(
-    reconcileMetricSource(state, next, command.commandId),
+    finalizeFinancialOperation({
+      before: state,
+      state: reconciled,
+      triggerEventId: event.id,
+      kind: 'shop_purchase',
+      purchaseCategory: item.category,
+    }),
     accepted('item_purchased', event.message, [event.id]),
   );
 }

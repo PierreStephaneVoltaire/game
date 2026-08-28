@@ -1,5 +1,4 @@
 import {
-  debtPurchaseAllowed,
   progressionPurchaseAllowed,
   purchaseQuantity,
 } from '$lib/billing-rules';
@@ -37,6 +36,7 @@ export type ItemViewModel = {
   maximumCartQuantity: number;
   purchaseAllowed: boolean;
   purchaseBlockReason: string | null;
+  resultingBalance: number;
 };
 
 export function createActionOwnership(
@@ -52,9 +52,7 @@ function purchasePresentation(
   owned: number,
   placed: boolean,
 ) {
-  const debtBlocked = state.balance < 0 && !debtPurchaseAllowed(item);
   const progressionBlocked = !progressionPurchaseAllowed(state, item);
-  const insufficientFunds = state.balance >= 0 && state.balance < item.price;
   const ownershipBlocked =
     item.consumable === false &&
     !item.supportsQuantity &&
@@ -69,18 +67,10 @@ function purchasePresentation(
       item.consumable === false && !item.supportsQuantity
         ? Math.min(1, availableQuantity)
         : availableQuantity,
-    purchaseAllowed:
-      !debtBlocked &&
-      !progressionBlocked &&
-      !insufficientFunds &&
-      !ownershipBlocked,
-    purchaseBlockReason: debtBlocked
-      ? 'Only essential items can be purchased while in debt.'
-      : progressionBlocked
+    purchaseAllowed: !progressionBlocked && !ownershipBlocked,
+    purchaseBlockReason: progressionBlocked
         ? 'No unlocked model commission is currently available.'
-        : insufficientFunds
-          ? 'Not enough money.'
-          : ownershipBlocked
+        : ownershipBlocked
             ? 'Already owned.'
             : null,
   };
@@ -122,6 +112,7 @@ export function itemFor(
     qualitativeHint: item.qualitativeNutritionHint,
     placedSlot,
     supportsQuantity: Boolean(item.supportsQuantity),
+    resultingBalance: state.balance - item.price,
     ...purchasePresentation(state, item, owned, Boolean(placedSlot)),
   };
 }

@@ -23,7 +23,12 @@ export type ProjectViewModel = {
 };
 
 export type TimedEffectViewModel = {
-  key: 'hyperfocus' | 'pain_relief' | 'clippers' | 'sugar_crash_warning';
+  key:
+    | 'hyperfocus'
+    | 'pain_relief'
+    | 'clippers'
+    | 'sugar_crash_warning'
+    | 'discovery_boost';
   label: string;
   endsAt: number;
 };
@@ -54,8 +59,12 @@ const careerLabels: Record<CareerTier, string> = {
 };
 
 function careerFor(state: GameState): CareerViewModel {
+  const peakFollowers = Math.max(
+    state.progression.followers,
+    state.progression.peakFollowers,
+  );
   const next = rules.progression.milestones.find(
-    (milestone) => milestone.followers > state.progression.followers,
+    (milestone) => milestone.followers > peakFollowers,
   );
   const key = state.progression.careerTier;
   return {
@@ -132,6 +141,15 @@ function effectsFor(state: GameState): TimedEffectViewModel[] {
       label: 'Pain Relief',
       endsAt: state.timedEffects.painReliefUntil,
     });
+  if (
+    state.progression.discoveryBoost &&
+    state.progression.discoveryBoost.expiresAt > state.now
+  )
+    effects.push({
+      key: 'discovery_boost',
+      label: `${state.progression.discoveryBoost.multiplier}× Natural Discovery`,
+      endsAt: state.progression.discoveryBoost.expiresAt,
+    });
   return effects;
 }
 
@@ -163,8 +181,11 @@ export function progressionPresentation(
 ) {
   return {
     followers: state.progression.followers,
+    peakFollowers: Math.max(
+      state.progression.followers,
+      state.progression.peakFollowers,
+    ),
     career: careerFor(state),
-    debt: { active: state.balance < 0, amount: Math.max(0, -state.balance) },
     effects: effectsFor(state),
     projects: projectsFor(state),
     activeAvatar: avatarFor(state),

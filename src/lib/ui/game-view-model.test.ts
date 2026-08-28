@@ -65,7 +65,15 @@ describe('game view model', () => {
         remaining: 19_500,
       },
     });
-    expect(model.debt).toEqual({ active: true, amount: 9_500 });
+    expect(model.debt).toEqual({
+      active: true,
+      amount: 9_500,
+      total: 9_500,
+      negativeCash: 9_500,
+      hospitalPrincipal: 0,
+      locClosureCost: 0,
+      otherFinancedPrincipal: 0,
+    });
     expect(model.effects).toEqual([
       {
         key: 'hyperfocus',
@@ -132,8 +140,8 @@ describe('game view model', () => {
     const byId = new Map(model.shop.map((item) => [item.id, item]));
 
     expect(byId.get('painkillers')?.purchaseAllowed).toBe(true);
-    expect(byId.get('insurance-card')?.purchaseAllowed).toBe(false);
-    expect(byId.get('rigging-tablet')?.purchaseAllowed).toBe(false);
+    expect(byId.get('insurance-card')?.purchaseAllowed).toBe(true);
+    expect(byId.get('rigging-tablet')?.purchaseAllowed).toBe(true);
     expect(byId.get('rigging-tablet')?.maximumCartQuantity).toBe(1);
     expect(model.cartCheckoutAllowed).toBe(true);
 
@@ -147,7 +155,11 @@ describe('game view model', () => {
       },
       BUNDLED_GAME_DEFINITION,
     );
-    expect(mixed.cartCheckoutAllowed).toBe(false);
+    expect(mixed.cartCheckoutAllowed).toBe(true);
+    expect(mixed.cartResultingBalance).toBe(
+      state.balance -
+        (byId.get('painkillers')!.price + byId.get('insurance-card')!.price),
+    );
   });
 
   it('projects Commission Work through the owned Rigging Tablet detail', () => {
@@ -170,5 +182,109 @@ describe('game view model', () => {
       label: 'Commission Work',
       available: true,
     });
+  });
+
+  it('presents ending risks separately from statuses with countdowns', () => {
+    const initial = startedState();
+    const model = createGameViewModel(
+      {
+        ...initial,
+        now: startedAt + 24 * HOUR_MS,
+        metrics: { ...initial.metrics, mood: 0 },
+        endingRisks: {
+          quit_streaming: {
+            triggerStartedAt: startedAt,
+            warningStages: [0, 24],
+            warningEventIds: [],
+          },
+        },
+      },
+      BUNDLED_GAME_DEFINITION,
+    );
+
+    expect(model.statuses).toEqual([]);
+    expect(model.endingRisks).toEqual([
+      {
+        kind: 'quit_streaming',
+        label: 'Quit Streaming risk',
+        remaining: 48,
+        unit: 'hours',
+      },
+    ]);
+  });
+
+  it.each([
+    ['death', 'Death', 'Health reached 0.'],
+    [
+      'quit_streaming',
+      'Quit Streaming',
+      'Mood remained at 0 continuously for 72 game-hours.',
+    ],
+    [
+      'financial_ruin',
+      'Financial Ruin',
+      'Total debt reached $20,000.',
+    ],
+  ] as const)('presents the %s ending card', (kind, title, explanation) => {
+    const initial = startedState();
+    const common = {
+      at: startedAt + HOUR_MS,
+      triggerStartedAt: startedAt,
+      eventIds: [],
+    };
+    const ending: GameState['ending'] =
+      kind === 'death'
+        ? {
+            kind,
+            at: common.at,
+            cause: 'Starvation',
+            causes: [
+              {
+                kind: 'status',
+                id: 'starving',
+                name: 'Starvation',
+                eventIds: [],
+              },
+            ],
+            eventIds: [],
+          }
+        : kind === 'financial_ruin'
+          ? {
+              ...common,
+              kind,
+              cause: 'Insolvency',
+              endingBalance: -20_001,
+              totalDebt: 20_001,
+              debtComponents: {
+                negativeCash: 20_001,
+                hospitalPrincipal: 0,
+                locClosureCost: 0,
+                otherFinancedPrincipal: 0,
+                total: 20_001,
+              },
+              triggerEventId: 'trigger',
+            }
+        : {
+              ...common,
+              kind,
+              durationHours: 72,
+              endingMetricValue: 0,
+            };
+    const model = createGameViewModel(
+      { ...initial, ending },
+      BUNDLED_GAME_DEFINITION,
+    );
+    expect(model.ending).toMatchObject({ kind, title, explanation });
+    expect(model.endingRisks).toEqual([]);
+    expect(model.commandsDisabled).toBe(true);
+    if (kind === 'death')
+      expect(model.ending?.causes).toEqual([{ name: 'Starvation' }]);
+  });
+
+  it('keeps commands enabled for an active run', () => {
+    expect(
+      createGameViewModel(startedState(), BUNDLED_GAME_DEFINITION)
+        .commandsDisabled,
+    ).toBe(false);
   });
 });

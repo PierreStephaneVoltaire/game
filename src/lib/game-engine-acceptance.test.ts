@@ -24,7 +24,8 @@ function comparableTimeline(state: GameState) {
     shop: state.shop,
     activity: state.activity,
     history: state.history,
-    death: state.death,
+    endingRisks: state.endingRisks,
+    ending: state.ending,
     events: state.events.slice(1),
   };
 }
@@ -192,7 +193,7 @@ describe('Medical Care and terminal state', () => {
     expect(result.state.statuses.kidney_stone).toBeUndefined();
   });
 
-  test('keeps Realtime Medical Care active and rejects all post-death mutation', () => {
+  test('keeps Realtime Medical Care active and rejects all post-ending mutation', () => {
     const initial = run('realtime');
     const care = dispatchCommand(
       {
@@ -206,16 +207,24 @@ describe('Medical Care and terminal state', () => {
     );
     expect(care.state.activity?.type).toBe('medical_care');
 
-    const dead = { ...initial, death: { at: 0, cause: 'Cause', eventIds: [] } };
+    const ended = {
+      ...initial,
+      ending: {
+        kind: 'death' as const,
+        at: 0,
+        cause: 'Cause',
+        eventIds: [],
+      },
+    };
     const rejected = dispatchCommand(
-      dead,
+      ended,
       { type: 'wait', commandId: 'after-death', now: 0 },
       BUNDLED_GAME_DEFINITION,
     );
     expect(rejected.outcomes[0]).toMatchObject({
       accepted: false,
-      kind: 'dead',
+      kind: 'run_over',
     });
-    expect(rejected.state.metrics).toEqual(dead.metrics);
+    expect(rejected.state).toBe(ended);
   });
 });

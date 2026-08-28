@@ -2,7 +2,7 @@ import type { GameDefinition } from './game-definition';
 import type { GameEvent, GameState } from './game-types';
 import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
-import { startAutonomousStream, streamWeight } from './stream-rules';
+import { startAutonomousStream } from './stream-rules';
 import rules from './data/simulation-rules.json';
 import { messageFor, type BuiltInEventType } from './event-messages';
 
@@ -13,11 +13,12 @@ import {
   chooseCravingFood,
 } from './event-autonomous-actions';
 import { applyAutomaticHook } from './event-hook-application';
-import { eventCandidates, localDateOrdinal } from './event-candidate-pool';
-import { reconcileMetricSource } from './status-rules/metric-source-reconciliation';
+import { localDateOrdinal } from './event-candidate-pool';
 import { resolveOffStreamSupport } from './off-stream-support-rules';
-import { creditIncome } from './income-rules';
 import { healthDamageSource } from './simulation/health-resolution';
+import { resolveLifeEvent } from './life-event-rules';
+import { selectAttemptEvent } from './event-selection';
+import { finalizeBuiltInEvent } from './event-resolution-finalizer';
 
 /** Resolves exactly one weighted autonomous opportunity for one companion attempt. */
 export function resolveAttemptEvent(
@@ -26,40 +27,11 @@ export function resolveAttemptEvent(
   definition: GameDefinition,
 ): GameState {
   const date = localDate(state.now, state.timezone);
-  const resolvedStreamWeight = streamWeight(state, commandId);
-  const candidates = eventCandidates(
+  const { selected, opportunityEvent } = selectAttemptEvent(
     state,
+    commandId,
     definition,
-    date,
-    resolvedStreamWeight,
   );
-  const total = candidates.reduce(
-    (sum, candidate) => sum + candidate.weight,
-    0,
-  );
-  let remaining =
-    actionRandom(
-      state.seed,
-      state.stateVersion,
-      commandId,
-      'autonomous_event',
-      'pool',
-    ) * total;
-  const selected =
-    state.progression.queuedEventStreams.length > 0 && resolvedStreamWeight > 0
-      ? 'stream'
-      : (candidates.find((candidate) => {
-          remaining -= candidate.weight;
-          return remaining < 0;
-        })?.type ?? 'none');
-  const opportunityEvent: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type: 'random_event_opportunity',
-    at: state.now,
-    message: 'A random event opportunity occurred.',
-    sourceActionId: commandId,
-    cause: selected,
-  };
   if (selected === 'none')
     return {
       ...state,
@@ -107,6 +79,17 @@ export function resolveAttemptEvent(
     };
     return startFullBodyProject(withOpportunity, commandId);
   }
+  if (selected.startsWith('life_event:'))
+    return resolveLifeEvent(
+      {
+        ...state,
+        events: [...state.events, opportunityEvent],
+        stateVersion: state.stateVersion + 1,
+      },
+      selected.slice('life_event:'.length),
+      state.now,
+      commandId,
+    );
 
   const selectedHook = selected.startsWith('item_hook:')
     ? definition.items
@@ -281,36 +264,19 @@ export function resolveAttemptEvent(
     event.metricDeltas?.creativity !== undefined
   )
     event.metricDeltas = { ...event.metricDeltas, creativity: 0 };
-  const incomeState = creditIncome(state, balanceDelta);
-  const normalized = reconcileMetricSource(
+  return finalizeBuiltInEvent({
     state,
-    {
-      ...incomeState,
-      metrics,
-      inventory,
-      history: {
-        ...state.history,
-        eventCooldowns: cooldowns,
-        oncePerLocalDate,
-        cravingItemId,
-        cravingStartedAt,
-        cravingRefreshCount,
-        lastMovementAt:
-          selected === 'tiny_walk' ? state.now : state.history.lastMovementAt,
-      },
-      events: [...state.events, opportunityEvent, event],
-      stateVersion: state.stateVersion + 2,
-    },
     commandId,
-  );
-  return {
-    ...normalized,
-    history: {
-      ...normalized.history,
-      lastBondGainAt:
-        normalized.metrics.bond > state.metrics.bond
-          ? state.now
-          : normalized.history.lastBondGainAt,
-    },
-  };
+    selected,
+    opportunityEvent,
+    event,
+    metrics,
+    inventory,
+    balanceDelta,
+    cooldowns,
+    oncePerLocalDate,
+    cravingItemId,
+    cravingStartedAt,
+    cravingRefreshCount,
+  });
 }

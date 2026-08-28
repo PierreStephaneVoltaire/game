@@ -169,6 +169,10 @@ export function projectJourney(
       push(entries, event, `${petName} died.`);
       continue;
     }
+    if (event.type === 'run_ended') {
+      push(entries, event, event.message);
+      continue;
+    }
     const narrativeMessage = naturalNarrativeMessage(event, petName);
     if (narrativeMessage) push(entries, event, narrativeMessage);
   }
@@ -202,7 +206,17 @@ function naturalNarrativeMessage(
     event.type === 'medical_debt_paid_in_full' ||
     event.type === 'sugar_crash_warning' ||
     event.type === 'sugar_crash_averted' ||
-    event.type === 'kidney_stone_risk_warning'
+    event.type === 'kidney_stone_risk_warning' ||
+    event.type === 'ending_risk_warning' ||
+    event.type === 'ending_risk_recovered' ||
+    event.type === 'debt_status_entered' ||
+    event.type === 'debt_status_recovered' ||
+    event.type === 'line_of_credit_opened' ||
+    event.type === 'line_of_credit_repaid' ||
+    event.type === 'loc_open_charge' ||
+    event.type === 'life_event_resolved' ||
+    event.type === 'life_event_effect_expired' ||
+    event.type === 'ending_unlocked'
   )
     return personalize(event.message, petName);
   if (event.type === 'autonomous_nap_refused')

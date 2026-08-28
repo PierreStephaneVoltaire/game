@@ -20,6 +20,13 @@
     "bond": 4,
     "creativity": 3
   },
+  "endings": {
+    "quitStreaming": {
+      "zeroMetric": "mood",
+      "durationHours": 72,
+      "warningHours": [0, 24, 48]
+    }
+  },
   "timeDecay": {
     "intervalHours": 2,
     "foodPerInterval": 1,
@@ -241,8 +248,6 @@
     "expiry": { "creativity": -2, "rest": -2 }
   },
   "debt": {
-    "recoveryPenaltyDivisor": 2500,
-    "maximumRecoveryPenalty": 2,
     "purchaseMood": -1
   },
   "medicalCare": {

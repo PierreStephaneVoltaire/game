@@ -6,7 +6,7 @@ import type {
 } from '../game-types';
 
 export function recordDeath(state: GameState): GameState {
-  if (state.death || state.metrics.health > 0) return state;
+  if (state.ending || state.metrics.health > 0) return state;
   const finalDamageEvent = [...state.events]
     .reverse()
     .find((event) => (event.metricDeltas?.health ?? 0) < 0);
@@ -44,7 +44,8 @@ export function recordDeath(state: GameState): GameState {
   };
   return {
     ...state,
-    death: {
+    ending: {
+      kind: 'death',
       at: state.now,
       cause,
       causes,

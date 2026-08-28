@@ -245,7 +245,12 @@ describe('off-stream support', () => {
     const result = dispatchCommand(
       {
         ...initial,
-        death: { at: NOW, cause: 'test', eventIds: [] },
+        ending: {
+          kind: 'death',
+          at: NOW,
+          cause: 'test',
+          eventIds: [],
+        },
       },
       {
         type: 'use_item',

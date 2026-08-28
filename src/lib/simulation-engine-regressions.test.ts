@@ -273,7 +273,7 @@ describe('chronological terminal boundaries', () => {
     };
     const result = reconcileTime(nearDeath, 24 * HOUR, BUNDLED_GAME_DEFINITION);
 
-    expect(result.state.death).not.toBeNull();
+    expect(result.state.ending?.kind).toBe('death');
     expect(result.state.now).toBe(2 * HOUR);
     expect(result.state.lastResolvedAt).toBe(result.state.now);
   });

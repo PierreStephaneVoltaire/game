@@ -45,11 +45,6 @@ export function purchaseQuantity(
   );
 }
 
-/** Categories that remain purchasable after the balance was already negative. */
-export function debtPurchaseAllowed(item: ItemDefinition): boolean {
-  return item.tags.includes('essential');
-}
-
 /** Dynamic service eligibility that must hold when an item is purchased. */
 export function progressionPurchaseAllowed(
   state: GameState,

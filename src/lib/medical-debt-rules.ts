@@ -1,6 +1,7 @@
 import type { GameEvent, GameState, MedicalDebtBill } from './game-types';
 import rules from './data/simulation-rules.json';
 import { localDate } from './shop-rules';
+import { finalizeFinancialOperation } from './financial-rules';
 
 export function totalMedicalDebt(state: GameState): number {
   return state.medicalDebt.reduce(
@@ -82,5 +83,14 @@ export function processDailyMedicalPayments(
     medicalPaymentIds: paymentIds,
   };
   next = { ...next, events: [...next.events, event] };
-  return { state: next, eventIds: [event.id] };
+  next = finalizeFinancialOperation({
+    before: state,
+    state: next,
+    triggerEventId: event.id,
+    kind: 'medical_debt_daily_payment',
+  });
+  return {
+    state: next,
+    eventIds: next.events.slice(state.events.length).map(({ id }) => id),
+  };
 }

@@ -114,8 +114,8 @@ function validatePng(bytes, filename) {
   return messages.map((message) => `${filename}: ${message}`);
 }
 
-if (catalogue.length !== 227)
-  issues.push(`expected 227 catalogue entries, found ${catalogue.length}`);
+if (catalogue.length !== 228)
+  issues.push(`expected 228 catalogue entries, found ${catalogue.length}`);
 const paths = catalogue.map((item) => item.image);
 if (new Set(paths).size !== catalogue.length)
   issues.push('catalogue references must use unique PNG paths');

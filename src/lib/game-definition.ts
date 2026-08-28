@@ -62,6 +62,8 @@ export type ItemDefinition = {
   name: string;
   /** Seeded player-facing sentence fragments, prefixed with the configured companion name. */
   narration: string[];
+  /** Optional stream-snack-specific authored sentence fragments. */
+  automaticNarration?: string[];
   category: string;
   price: number;
   image: string;

@@ -43,6 +43,7 @@ const STATUS_NAMES: Record<StatusName, string> = {
   low_energy: 'Low Energy',
   sugar_crash: 'Sugar Crash',
   dizzy_spell: 'Dizzy Spell',
+  in_debt: 'In Debt',
 };
 
 export function statusDisplayName(status: StatusName): string {

@@ -3,6 +3,7 @@
 
   export let lines: Array<{ item: ItemViewModel; quantity: number }> = [];
   export let total = 0;
+  export let resultingBalance = 0;
   export let checkoutAllowed = false;
   export let disabled = false;
   export let onQuantity: (
@@ -48,6 +49,11 @@
       </div>
     {/each}
     <p class="total"><span>Total</span><strong>${total}</strong></p>
+    <p class="total"
+      ><span>Cash after checkout</span><strong
+        >${resultingBalance}</strong
+      ></p
+    >
     <button
       class="checkout"
       on:click={onCheckout}

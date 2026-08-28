@@ -194,7 +194,7 @@ function preferenceTier(
 }
 
 function foodBlockedReason(state: GameState): string | null {
-  if (state.death || state.metrics.health <= 0) return 'dead';
+  if (state.ending || state.metrics.health <= 0) return 'dead';
   if (state.metrics.food > rules.timeDecay.criticalNeed.lowMaximum)
     return 'food_above_rescue_threshold';
   if (state.activity) return 'busy';
@@ -203,7 +203,7 @@ function foodBlockedReason(state: GameState): string | null {
 }
 
 function restBlockedReason(state: GameState): string | null {
-  if (state.death || state.metrics.health <= 0) return 'dead';
+  if (state.ending || state.metrics.health <= 0) return 'dead';
   if (state.metrics.rest > rules.timeDecay.criticalNeed.lowMaximum)
     return 'rest_above_rescue_threshold';
   if (state.activity) return 'busy';

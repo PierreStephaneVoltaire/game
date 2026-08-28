@@ -14,11 +14,10 @@ import { completeDueProjects } from '../project-rules';
 import { resolveTimelineOpportunities } from './timeline-opportunities';
 import { appendTimelineStatusEvents } from './timeline-status-events';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
-import { subscriberRevenueMultiplier } from '../follower-rules';
-import { creditIncome } from '../income-rules';
-import rules from '../data/simulation-rules.json';
 import { resolveAudienceGrowth } from '../audience-growth-rules';
 import { processDailyMedicalPayments } from '../medical-debt-rules';
+import { processLineOfCreditOpenCharge } from '../commands/line-of-credit-commands';
+import { processSubscriberRevenue } from '../subscriber-revenue-rules';
 
 export type TimelineEffectsInput = {
   state: GameState;
@@ -135,31 +134,12 @@ export function resolveTimelineEffects({
     next = opportunities.state;
     eventIds.push(...opportunities.eventIds);
   }
-  if (
-    !deathAt &&
-    (reconciliationNow - next.history.runStartedAt) %
-      (rules.progression.subscriberRevenue.intervalHours * HOUR_MS) ===
-      0
-  ) {
-    const revenueMultiplier = subscriberRevenueMultiplier(next);
-    const amount = Math.round(
-      rules.progression.subscriberRevenue.baseAmount * revenueMultiplier,
-    );
-    const event: GameEvent = {
-      id: `event-${next.events.length + 1}`,
-      type: 'subscriber_revenue',
-      at: reconciliationNow,
-      message: `Subscriber Revenue paid $${amount}.`,
-      amount,
-      revenueMultiplier,
-    };
-    next = {
-      ...creditIncome(next, amount),
-      events: [...next.events, event],
-    };
-    eventIds.push(event.id);
+  if (!deathAt && !next.ending) {
+    const revenue = processSubscriberRevenue(next, reconciliationNow);
+    next = revenue.state;
+    eventIds.push(...revenue.eventIds);
   }
-  if (!deathAt) {
+  if (!deathAt && !next.ending) {
     const medicalPayments = processDailyMedicalPayments(
       next,
       reconciliationNow,
@@ -167,12 +147,17 @@ export function resolveTimelineEffects({
     next = medicalPayments.state;
     eventIds.push(...medicalPayments.eventIds);
   }
-  if (!deathAt) {
+  if (!deathAt && !next.ending) {
+    const locCharge = processLineOfCreditOpenCharge(next, reconciliationNow);
+    next = locCharge.state;
+    eventIds.push(...locCharge.eventIds);
+  }
+  if (!deathAt && !next.ending) {
     const audience = resolveAudienceGrowth(next, reconciliationNow);
     next = audience.state;
     eventIds.push(...audience.eventIds);
   }
-  if (!deathAt) {
+  if (!deathAt && !next.ending) {
     const statusEvents = appendTimelineStatusEvents({
       state: next,
       reconciliation: statusReconciliation,
@@ -184,6 +169,7 @@ export function resolveTimelineEffects({
 
   if (
     !deathAt &&
+    !next.ending &&
     next.statuses.kidney_stone &&
     next.activity?.type !== 'medical_care'
   ) {

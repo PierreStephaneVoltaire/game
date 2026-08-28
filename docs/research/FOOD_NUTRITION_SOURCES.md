@@ -2,7 +2,7 @@
 
 ## Scope and reproducible method
 
-This note is the primary-source research ledger for the canonical catalogue’s **110 food records plus Salt Tablet (111 sourced records total)**. Non-food items and Painkillers carry explicit not-applicable provenance in the compiled catalogue.
+This note is the primary-source research ledger for the canonical catalogue’s **111 food records plus Salt Tablet (112 sourced records total)**. Non-food items and Painkillers carry explicit not-applicable provenance in the compiled catalogue. Three-Month-Old Rotisserie Chicken reuses the exact pinned Chicken nutrient record; its age-specific gameplay harm is authored mechanics, not a derived nutrition claim.
 
 - **Foundation foods:** exact records from USDA FoodData Central’s [April 30, 2026 Foundation JSON archive](https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_foundation_food_json_2026-04-30.zip). Foundation is USDA’s analytically derived data type; see the [USDA data-type documentation](https://fdc.nal.usda.gov/data-documentation/). The selected serving is the record’s FDA reference amount customarily consumed (RACC) when present, otherwise an exact published household portion.
 - **Prepared foods:** exact records from USDA [FNDDS 2021–2023 JSON](https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_survey_food_json_2024-10-31.zip), the as-consumed dietary-survey data type. The archive is the FNDDS component carried by the April 2026 full FDC snapshot. Each row records both FDC ID and FNDDS food code.

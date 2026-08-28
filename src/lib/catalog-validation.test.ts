@@ -25,7 +25,7 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 }
 
 describe('catalogue validation', () => {
-  test('accepts all 227 maintained catalogue records', () => {
+  test('accepts all 228 maintained catalogue records', () => {
     expect(validateCatalog(BUNDLED_GAME_DEFINITION, true)).toEqual([]);
   });
 
@@ -263,7 +263,7 @@ describe('catalogue validation', () => {
       validateCatalog(wrongMix, true).map((issue) => issue.message),
     ).toEqual(
       expect.arrayContaining([
-        'expected 36 usda_foundation nutrition records, found 37',
+        'expected 37 usda_foundation nutrition records, found 38',
         'expected 66 usda_fndds nutrition records, found 65',
       ]),
     );

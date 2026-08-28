@@ -7,11 +7,11 @@ gameplay rules.
 ## Source data
 
 - `src/lib/data/simulation-rules.json` — bounds, initial state, decay cadence,
-  and configurable simulation values.
+  Ending thresholds/warning stages, and configurable simulation values.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, strong-outcome chance, and authored Play/Socialize
   vignette pools.
-- `src/lib/data/shop-items.json` — the 227 canonical item definitions:
+- `src/lib/data/shop-items.json` — the 228 canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and generated PNG paths.
 - `src/lib/data/catalogue/food-items.jsonl`,
@@ -19,10 +19,13 @@ gameplay rules.
   individually authored catalogue inputs. Nutrition facts stay separate from
   gameplay values so the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  227-item allowlist. The compiler and validator reject missing, unexpected,
+  228-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   avatar path. Runtime code does not hardcode a companion name.
+- `src/lib/data/financial-rules.json`, `ending-rules.json`, and
+  `life-events.json` — versioned debt/LOC thresholds, the Made It threshold,
+  and authored weighted VTuber-life event eligibility, outcomes, and effects.
 - `src/lib/companion-profile.ts` — typed, environment-neutral access to the
   configured identity and tier-ordered appearance IDs.
 - `scripts/generate-canonical-catalogue.mjs` — deterministic compiler from
@@ -31,8 +34,13 @@ gameplay rules.
 ## Runtime modules
 
 - `src/lib/game-types.ts` — run state, commands, events, outcomes, activities,
-  history, and terminal death records.
-- `src/lib/progression-types.ts` — Followers, career tiers, projects, queued
+  history, and shared simulation records.
+- `src/lib/game-history-types.ts` — consumption history and chronological Run
+  memory kept out of the shared command/event type module.
+- `src/lib/ending-types.ts` — discriminated Run Ending records and separate
+  Ending-risk clock state.
+- `src/lib/progression-types.ts` — current/peak Subscribers, career tiers,
+  projects, queued
   event streams, appearances, donations, autonomous-stream selection history,
   and scheduled-effect state.
 - `src/lib/game-definition.ts` — versioned bundled definition and repository
@@ -41,6 +49,11 @@ gameplay rules.
   simulation limits shared by runtime modules.
 - `src/lib/game-engine.ts` — pure `startRun`, `dispatchCommand`, and
   `reconcileTime` public seam.
+- `src/lib/ending-rules.ts` — pure terminal reconciliation for Death and the
+  persistent Quit Streaming Mood-risk clock. Financial Ruin is finalized by
+  the financial operation seam; Made It is a non-terminal audience unlock.
+- `src/lib/ending-rules/messages.ts` — player-facing warning, recovery, and
+  non-death Ending event copy used by the Ending rules module.
 - `src/lib/commands/activity-commands.ts` — start, wait, and timed-activity
   command resolution.
 - `src/lib/commands/progression-actions.ts` — Commission Work and data-driven
@@ -55,6 +68,8 @@ gameplay rules.
   Pain Relief, and authored status/reaction events for item consumption.
 - `src/lib/commands/item-consumption-events.ts` — seeded catalogue narration
   selection and preparation-event construction for item consumption.
+- `src/lib/commands/item-used-event.ts` — the structured primary consumption
+  event, including manual/automatic narration and item damage attribution.
 - `src/lib/commands/nutrition-resolution.ts` — catalogue nutrition effects
   and deterministic nutrition-event outcomes.
 - `src/lib/commands/room-commands.ts` and
@@ -70,6 +85,8 @@ gameplay rules.
   `src/lib/simulation/timeline-effects.ts` — interval decay plus ordered
   project, autonomous-opportunity, Subscriber Revenue, status, and recurrence
   effects.
+- `src/lib/subscriber-revenue-rules.ts` — interval eligibility, payout, and
+  atomic financial settlement for Subscriber Revenue.
 - `src/lib/simulation/timeline-opportunities.ts` and
   `src/lib/simulation/timeline-status-events.ts` — chronological autonomous
   opportunities, craving/shop deadlines, and narrated status transitions.
@@ -83,14 +100,18 @@ gameplay rules.
 - `src/lib/simulation/hyperfocus-resolution.ts` — scheduled Hyperfocus pinning,
   expiry penalties, and suppression of concurrent Creativity effects.
 - `src/lib/simulation/death-resolution.ts` — structured terminal cause
-  collection and causal event-chain construction.
+  collection and causal event-chain construction for the Death Ending.
 - `src/lib/simulation/activity-completion.ts` — completion of Rest,
   Socialize, Play, Hospital, Commission Work, and stream activities.
+- `src/lib/simulation/activity-financial-settlement.ts` — Commission payout
+  narration and atomic post-activity debt/Ending reconciliation.
 - `src/lib/simulation/medical-care-completion.ts` — Hospital exposure clearing
   and locked medical-bill creation.
 - `src/lib/simulation/engine-state.ts` and
   `src/lib/simulation/run-state.ts` — immutable state/event helpers and
-  canonical death construction.
+  canonical Run construction.
+- `src/lib/simulation/status-transition-events.ts` — generic narrated status
+  transitions, with debt-specific events left to atomic financial settlement.
 - `src/lib/audience-growth-rules.ts` — the deep module for stream-start
   audience snapshots, two-hour natural growth, Clippers activation/ticks,
   milestone settlement, and exact stream statistics.
@@ -107,13 +128,19 @@ gameplay rules.
   chronological deadlines, and the canonical status vocabulary.
 - `src/lib/status-rules/metric-source-reconciliation.ts` — uniform
   post-source status normalization and once-only onset effects.
+- `src/lib/status-rules/low-status-recurrences.ts` — chronological Lonely and
+  Creative Block recurrence calculation behind the status-rules facade.
 - `src/lib/status-rules/natural-resolution.ts` — chronological Sick and Kidney
   Stone natural passage, including same-boundary passage-before-recurrence.
 - `src/lib/status-rules/sugar-crash.ts` — atomic six-hour effective-sugar
   accumulation, scheduling, pending cancellation, and active clearance.
-- `src/lib/event-candidate-pool.ts`, `src/lib/event-autonomous-actions.ts`,
-  and `src/lib/event-hook-application.ts` — weighted event eligibility and
-  cohesive autonomous/event-hook resolutions behind `event-rules.ts`.
+- `src/lib/event-candidate-pool.ts`, `src/lib/event-selection.ts`,
+  `src/lib/event-autonomous-actions.ts`, and
+  `src/lib/event-hook-application.ts` — weighted event eligibility, seeded
+  selection, and cohesive autonomous/event-hook resolutions behind
+  `event-rules.ts`.
+- `src/lib/event-resolution-finalizer.ts` — shared event result aggregation
+  and atomic financial reconciliation after automatic events.
 - `src/lib/activity-rules.ts` — seeded activity distributions, refusals,
   normal/strong authored-vignette selection, and completion effects.
 - `src/lib/event-rules.ts` — deterministic automatic event opportunity rules.
@@ -127,18 +154,24 @@ gameplay rules.
 - `src/lib/stream-rules.ts` — stream eligibility, drought-adjusted event
   weight, daypart adjustment, duration, and autonomous-stream activity
   creation.
-- `src/lib/billing-rules.ts`, `src/lib/medical-debt-rules.ts`, and
-  `src/lib/debt-rules.ts` — Hospital coverage, explicit payment-plan bills,
-  local-day payments, ownership caps, negative-cash shopping eligibility, and
-  negative-cash recovery suppression.
+- `src/lib/billing-rules.ts` and `src/lib/medical-debt-rules.ts` — Hospital
+  coverage, explicit payment-plan bills, local-day payments, and ownership
+  caps.
+- `src/lib/financial-rules.ts`, `src/lib/financial-types.ts`, and
+  `src/lib/commands/line-of-credit-commands.ts` — total-debt projection,
+  financial-pressure recovery penalty, atomic threshold/ending finalization,
+  persistent LOC origination, repayment units, and daily open charges.
 - `src/lib/autonomous-rescue-rules.ts` — player-care-only reset rules for the
   independent Food and Rest rescue locks.
 - `src/lib/income-rules.ts` — the shared positive-income/debt settlement path.
 - `src/lib/economy-rules.ts` — stream income, hourly donations, and coordinated
   donation/model career rewards.
 - `src/lib/donation-rules.ts` and `src/lib/follower-rules.ts` — independent
-  hourly stream-donation tiers, milestone ordering, Subscriber Revenue
-  multipliers, and career stream-rate bands.
+  hourly stream-donation tiers, signed current-Subscriber settlement, peak
+  milestone ordering, Made It unlocks, Subscriber Revenue multipliers, and
+  career stream-rate bands.
+- `src/lib/life-event-rules.ts` — data-authored, seeded, atomic life-event
+  effects, eligibility/cooldowns, and temporary natural-discovery boosts.
 - `src/lib/project-rules.ts` and `src/lib/project-economy-rules.ts` — rare and
   model project creation, third-local-midnight completion, rewards, and debut
   queues.
@@ -148,10 +181,16 @@ gameplay rules.
   in-memory browser/controller boundary.
 - `src/lib/ui/journey-events.ts` — player-facing narrative projection over the
   immutable internal event ledger.
+- `src/lib/ui/ending-view-model.ts` — Ending-specific cards and countdown
+  presentation kept outside the general game view model.
+- `src/lib/ui/financial-view-model.ts` — total-debt, Hospital, and LOC
+  presentation kept outside Svelte components and the general view model.
 - `src/lib/ui/journey-activity-messages.ts` — authored Play/Socialize vignette
   projection and generic narration for other activities.
-- `src/lib/ui/graveyard-export.ts` — portable Markdown serialization for a
-  terminal run's grave details, causal chain, and complete Journey.
+- `src/lib/ui/run-archive-export.ts` — portable Markdown serialization for all
+  Endings, using graveyard wording only for Death.
+- `src/lib/ui/graveyard-export.ts` — Death-only compatibility adapter over the
+  generic Run archive export.
 - `src/lib/ui/journey-status-messages.ts` — natural status onset, improvement,
   and recovery narration used by the Journey projection.
 - `src/lib/ui/` — companion profile, centralized game copy, and typed view
@@ -165,7 +204,9 @@ gameplay rules.
   validator-compatible balance diagnosis and per-run result contract. The
   permanent skill contains both the unchanged canonical 50-run regression and
   the configuration-driven P51–P100 extension; `run-expanded-study.mjs`
-  generates their separated 100-run analysis.
+  generates four isolated 25-profile batch reports and merges their summarized
+  JSON into the separated 100-run analysis without retaining every simulation
+  history in one process.
 - `.agents/skills/game-balance-simulation/data/expanded-profiles-*.json` — the
   heterogeneous profile data. Shared schedule, session, care, shopping,
   medical, trace, and report behavior lives in the adjacent generic script
@@ -195,18 +236,18 @@ gameplay rules.
 - `src/lib/components/room-scene.css` — daypart room, companion, and placement
   anchor presentation.
 - `src/lib/components/CompanionOverview.svelte` — metrics, statuses, timed
-  effects, Time/Money, debt, Followers, career, appearance, and project
-  progress.
+  effects, separate Ending risks, Time/Money, debt, Subscribers, career,
+  appearance, and project progress.
 - `src/lib/components/GameShop.svelte`, `ShoppingCart.svelte`,
-  `ShopItemGrid.svelte`, and `ItemDetail.svelte` — URL-addressable Shop, Cart,
-  Inventory, item detail, debt-aware buying, and data-authored activity/service
-  actions.
+  `LineOfCreditPanel.svelte`, `ShopItemGrid.svelte`, and `ItemDetail.svelte` —
+  URL-addressable Shop, Cart, Inventory, item detail, debt-aware buying, LOC
+  servicing, and data-authored activity/service actions.
 - `src/lib/ui/progression-view-model.ts` and
   `src/lib/ui/journey-progress-messages.ts` — career/project presentation and
   natural progression narration.
-- `src/routes/game/history/+page.svelte` — narrated Journey, structured death
-  cause list and causal Journey, graveyard presentation, and local Markdown
-  export.
+- `src/routes/game/history/+page.svelte` — narrated Journey, Ending-specific
+  evidence and causal Journey, Death-only graveyard presentation, neutral Run
+  archives, and local Markdown export.
 
 Keep status behavior behind `status-rules.ts`, all configurable values in
 data, and all simulation uncertainty in `seeded-rng.ts`. Realtime has no

@@ -10,7 +10,7 @@
   $: model = $gameViewModel;
   $: daypart = model ? daypartFor(model.now, model.timezone) : 'day';
   $: edibleItems = model?.inventory.filter((item) => item.edible) ?? [];
-  $: careBlocked = Boolean(model?.activity || model?.death);
+  $: careBlocked = Boolean(model?.activity || model?.commandsDisabled);
   $: latestEvent = model?.events[model.events.length - 1]?.message ?? '';
 
   async function act(intent: GameIntent) {

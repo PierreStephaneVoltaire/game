@@ -8,8 +8,13 @@ export function selectItemNarration(input: {
   item: ItemDefinition;
   action: ItemActionDefinition;
   sourceActionId: string;
+  automatic?: boolean;
 }): string {
   const { state, item, action, sourceActionId } = input;
+  const narration =
+    input.automatic && item.automaticNarration?.length
+      ? item.automaticNarration
+      : item.narration;
   const index = Math.floor(
     actionRandom(
       state.seed,
@@ -17,9 +22,9 @@ export function selectItemNarration(input: {
       sourceActionId,
       'item_narration',
       `${item.id}:${action.id}`,
-    ) * item.narration.length,
+    ) * narration.length,
   );
-  return item.narration[index];
+  return narration[index];
 }
 
 export function itemConsumptionEvents(input: {

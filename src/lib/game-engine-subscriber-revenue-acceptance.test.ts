@@ -128,7 +128,7 @@ describe('Subscriber Revenue', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.at).toBe(dying.now + 2 * HOUR);
+    expect(result.ending?.at).toBe(dying.now + 2 * HOUR);
     expect(
       result.events.some((event) => event.type === 'subscriber_revenue'),
     ).toBe(false);

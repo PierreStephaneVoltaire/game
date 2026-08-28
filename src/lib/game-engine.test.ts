@@ -43,7 +43,7 @@ describe('startRun', () => {
       room: {},
       statuses: {},
       activity: null,
-      death: null,
+      ending: null,
     });
     expect(state.events[0]).toMatchObject({
       type: 'run_started',
@@ -145,12 +145,12 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     );
 
-    expect(result.state.death).toBeTruthy();
-    expect(result.state.death?.causes).toEqual([
+    expect(result.state.ending?.kind).toBe('death');
+    expect(result.state.ending?.causes).toEqual([
       expect.objectContaining({ name: 'Starvation' }),
     ]);
     expect(result.state.events.at(-1)).toMatchObject({ type: 'death' });
-    expect(result.state.death?.eventIds).toContain(
+    expect(result.state.ending?.eventIds).toContain(
       result.state.events.at(-1)?.id,
     );
   });

@@ -43,7 +43,10 @@ export type QueuedEventStream = {
 };
 
 export type ProgressionState = {
+  /** Current audience size; life events can reduce it. */
   followers: number;
+  /** Highest audience size reached; career progression never moves backward. */
+  peakFollowers: number;
   careerTier: CareerTier;
   unlockedModelTiers: Array<1 | 2 | 3 | 4>;
   completedModelTiers: Array<1 | 2 | 3 | 4>;
@@ -59,6 +62,12 @@ export type ProgressionState = {
     careerTier: CareerTier;
     creativity: number;
   }>;
+  discoveryBoost: {
+    eventId: string;
+    multiplier: number;
+    startedAt: number;
+    expiresAt: number;
+  } | null;
   streamStats: {
     started: number;
     completed: number;

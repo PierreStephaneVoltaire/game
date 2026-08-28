@@ -26,20 +26,48 @@ function record(): GameViewModel {
       discountedFullPayment: 0,
     },
     followers: 100,
+    peakFollowers: 100,
     streamStats: { started: 0, completed: 0, interrupted: 0, elapsedMs: 0 },
     career: {} as GameViewModel['career'],
-    debt: { active: false, amount: 0 },
+    debt: {
+      active: false,
+      amount: 0,
+      total: 0,
+      negativeCash: 0,
+      hospitalPrincipal: 0,
+      locClosureCost: 0,
+      otherFinancedPrincipal: 0,
+    },
+    lineOfCredit: {
+      status: 'available',
+      remainingUnits: 0,
+      remainingClosureCost: 0,
+      cumulativeOpenCharges: 0,
+      repaymentUnitPrice: 600,
+      dailyOpenCharge: 1_000,
+      applicationPrice: 10,
+      cashAdvance: 10_000,
+      totalUnits: 20,
+      totalClosureCost: 12_000,
+    },
+    madeItUnlocked: false,
     effects: [],
     projects: [],
     activeAvatar: {} as GameViewModel['activeAvatar'],
     hospital: {} as GameViewModel['hospital'],
     metrics: [],
     statuses: [],
+    endingRisks: [],
     activity: null,
-    death: {
+    ending: {
+      kind: 'death',
       at: Date.UTC(2026, 7, 23, 12),
+      title: 'Death',
+      explanation: 'Health reached 0.',
+      evidence: [],
       causes: [{ name: 'Starvation' }, { name: 'Sleep deprivation' }],
     },
+    commandsDisabled: true,
     events: [
       {
         id: 'journey-1',
@@ -68,6 +96,7 @@ function record(): GameViewModel {
     catalogue: [],
     cart: [],
     cartTotal: 0,
+    cartResultingBalance: 0,
     cartCheckoutAllowed: false,
     categories: [],
   };
@@ -94,7 +123,7 @@ describe('graveyard export', () => {
   });
 
   test('rejects export before a grave exists', () => {
-    const living = { ...record(), death: null };
+    const living = { ...record(), ending: null };
     expect(() => graveyardExportMarkdown(living)).toThrow(/no grave/i);
     expect(() => graveyardExportFilename(living)).toThrow(/no grave/i);
   });

@@ -28,6 +28,10 @@ import { creditIncome } from '../income-rules';
 import { recordStreamEnd } from '../audience-growth-rules';
 import { resetPlayerCareRescueLocks } from '../autonomous-rescue-rules';
 import { completeMedicalCare } from './medical-care-completion';
+import {
+  appendCommissionPayoutEvent,
+  settleActivityFinances,
+} from './activity-financial-settlement';
 
 export type ActivityCompletionInput = {
   state: GameState;
@@ -236,22 +240,13 @@ export function completeActivity({
       events: [...next.events, ...economy.events],
     };
   }
-  if (activity.type === 'commission_work' && !interrupted) {
-    next = {
-      ...next,
-      events: [
-        ...next.events,
-        {
-          id: `event-${next.events.length + 1}`,
-          type: 'full_body_project_completed',
-          at: completedAt,
-          message: `Commission Work paid out $${commissionPayout}.`,
-          sourceActionId: activity.sourceActionId,
-          amount: commissionPayout,
-        },
-      ],
-    };
-  }
+  if (activity.type === 'commission_work' && !interrupted)
+    next = appendCommissionPayoutEvent(
+      next,
+      activity,
+      completedAt,
+      commissionPayout,
+    );
   next = reconcileMetricSource(state, next, activity.sourceActionId);
   if (!activity.payload?.autonomous)
     next = resetPlayerCareRescueLocks(state, next);
@@ -261,13 +256,14 @@ export function completeActivity({
     beforeActivityStatuses,
     activity.sourceActionId,
   );
-  const eventIds = [
-    event.id,
-    ...next.events
-      .slice(state.events.length + 1)
-      .filter((item) => item.type === 'medical_debt_created')
-      .map((item) => item.id),
-  ];
+  const financial = settleActivityFinances({
+    before: state,
+    state: next,
+    activity,
+    completionEvent: event,
+  });
+  next = financial.state;
+  const eventIds = financial.eventIds;
   if (activity.type !== 'medical_care' && activity.type !== 'commission_work') {
     const beforePenaltyCount = next.events.length;
     next = applyCriticalHealthMoodPenalty(

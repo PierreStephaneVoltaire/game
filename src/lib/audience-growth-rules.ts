@@ -1,7 +1,7 @@
 import rules from './data/simulation-rules.json';
 import { HOUR_MS } from './game-constants';
 import type { CareerTier, GameEvent, GameState } from './game-types';
-import { applyFollowerMilestones } from './follower-rules';
+import { settleFollowerChange } from './follower-rules';
 import { CAREER_TIERS } from './progression-types';
 
 const audienceRules = rules.progression.naturalAudience;
@@ -23,26 +23,26 @@ function appendFollowers(
   },
 ): { state: GameState; eventIds: string[] } {
   if (amount <= 0) return { state, eventIds: [] };
-  const event: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type,
+  const settled = settleFollowerChange(state, {
+    amount,
     at,
+    sourceActionId: type,
+    eventType: type,
     message,
-    followerDelta: amount,
-    ...diagnostics,
-  };
-  const events = [event];
-  let next: GameState = {
-    ...state,
-    progression: {
-      ...state.progression,
-      followers: state.progression.followers + amount,
-    },
-    events: [...state.events, event],
-  };
-  next = applyFollowerMilestones(next, type, at, events);
-  next = { ...next, events: [...state.events, ...events] };
-  return { state: next, eventIds: events.map((item) => item.id) };
+  });
+  if (diagnostics && settled.eventIds.length) {
+    const eventId = settled.eventIds[0];
+    return {
+      ...settled,
+      state: {
+        ...settled.state,
+        events: settled.state.events.map((event) =>
+          event.id === eventId ? { ...event, ...diagnostics } : event,
+        ),
+      },
+    };
+  }
+  return settled;
 }
 
 /** Register one real stream start and snapshot its career and Creativity. */
@@ -136,6 +136,26 @@ export function resolveAudienceGrowth(
 ): { state: GameState; eventIds: string[] } {
   let next = state;
   const eventIds: string[] = [];
+  if (
+    next.progression.discoveryBoost &&
+    next.progression.discoveryBoost.expiresAt <= at
+  ) {
+    const expired = next.progression.discoveryBoost;
+    const event: GameEvent = {
+      id: `event-${next.events.length + 1}`,
+      type: 'life_event_effect_expired',
+      at: expired.expiresAt,
+      message: `${expired.eventId.replaceAll('_', ' ')} discovery boost ended.`,
+      lifeEventId: expired.eventId,
+      followerGrowthMultiplier: expired.multiplier,
+    };
+    next = {
+      ...next,
+      progression: { ...next.progression, discoveryBoost: null },
+      events: [...next.events, event],
+    };
+    eventIds.push(event.id);
+  }
   const naturalInterval = audienceRules.intervalHours * HOUR_MS;
   if ((at - state.history.runStartedAt) % naturalInterval === 0) {
     const activeBoosts = next.progression.activeAudienceBoosts
@@ -152,7 +172,7 @@ export function resolveAudienceGrowth(
     const discountedBoosts = activeBoosts.slice(
       audienceRules.fullValueBoostCount,
     );
-    const amount = Math.round(
+    const baseAmount =
       tierRate(next.progression.careerTier) +
         fullValueBoosts.reduce(
           (sum, boost) =>
@@ -168,7 +188,9 @@ export function resolveAudienceGrowth(
               (1 + boost.creativity * audienceRules.creativityPerPoint) *
               audienceRules.excessBoostMultiplier,
           0,
-        ),
+        );
+    const amount = Math.round(
+      baseAmount * (next.progression.discoveryBoost?.multiplier ?? 1),
     );
     next = {
       ...next,

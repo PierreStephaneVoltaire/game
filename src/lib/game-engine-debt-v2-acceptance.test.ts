@@ -77,7 +77,7 @@ describe('medical-debt shopping through the engine seam', () => {
     expect(cartPurchase.state.metrics.mood).toBe(5);
   });
 
-  test('care and every other non-medical category remain blocked in debt', () => {
+  test('every ordinary category remains available on credit', () => {
     const initial = debtRun();
     for (const category of ['care', 'reusable', 'upgrade', 'decoration']) {
       const blocked = BUNDLED_GAME_DEFINITION.items.find(
@@ -102,12 +102,16 @@ describe('medical-debt shopping through the engine seam', () => {
         BUNDLED_GAME_DEFINITION,
       );
       expect(result.outcomes[0], category).toMatchObject({
-        accepted: false,
-        kind: 'debt',
+        accepted: true,
+        kind: 'item_purchased',
       });
-      expect(result.state.balance, category).toBe(initial.balance);
-      expect(result.state.metrics.mood, category).toBe(initial.metrics.mood);
-      expect(result.state.inventory[blocked.id] ?? 0, category).toBe(0);
+      expect(result.state.balance, category).toBe(
+        initial.balance - blocked.price,
+      );
+      expect(result.state.metrics.mood, category).toBe(
+        initial.metrics.mood - 1,
+      );
+      expect(result.state.inventory[blocked.id] ?? 0, category).toBe(1);
     }
   });
 });

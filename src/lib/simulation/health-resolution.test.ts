@@ -103,7 +103,7 @@ describe('periodic Health resolution', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.causes?.map((cause) => cause.name)).toEqual([
+    expect(result.ending?.causes?.map((cause) => cause.name)).toEqual([
       'Starvation',
       'Sleep deprivation',
     ]);
@@ -164,7 +164,7 @@ describe('protected activities and Streaming fairness', () => {
 
     expect(result.state.now).toBeGreaterThanOrEqual(2 * HOUR);
     expect(result.state.now).toBeLessThanOrEqual(12 * HOUR);
-    expect(result.state.death).toBeNull();
+    expect(result.state.ending).toBeNull();
     expect(result.state.metrics.health).toBeGreaterThan(0);
   });
 
@@ -213,6 +213,6 @@ describe('protected activities and Streaming fairness', () => {
     expect(result.metrics.mood).toBeGreaterThanOrEqual(3);
     expect(result.statuses.sick).toBeUndefined();
     expect(result.statuses.kidney_stone).toBeUndefined();
-    expect(result.death).toBeNull();
+    expect(result.ending).toBeNull();
   });
 });

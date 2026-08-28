@@ -36,7 +36,7 @@
         <RunSettings
           mode={$gameViewModel.mode}
           seed={$gameViewModel.seed}
-          dead={Boolean($gameViewModel.death)}
+          ended={Boolean($gameViewModel.ending)}
         />
       {/if}
     </div>

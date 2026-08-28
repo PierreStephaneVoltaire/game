@@ -6,6 +6,7 @@
   import { gameViewModel, sendGameIntent } from '$lib/game-session';
   import type { GameIntent } from '$lib/ui/game-view-model';
   import ItemDetail from './ItemDetail.svelte';
+  import LineOfCreditPanel from './LineOfCreditPanel.svelte';
   import ShopItemGrid from './ShopItemGrid.svelte';
   import ShoppingCart from './ShoppingCart.svelte';
   import './shop.css';
@@ -27,8 +28,8 @@
     ) ?? [];
   $: cartLines =
     model?.cart.map((item) => ({ item, quantity: item.inCart })) ?? [];
-  $: blocked = Boolean(model?.activity || model?.death);
-  $: terminal = Boolean(model?.death);
+  $: blocked = Boolean(model?.activity || model?.commandsDisabled);
+  $: terminal = Boolean(model?.commandsDisabled);
   $: if (
     model &&
     typeof window !== 'undefined' &&
@@ -106,6 +107,15 @@
     const transition = await command({ type: 'checkout_cart' });
     if (transition?.kind === 'cart_checked_out') setTab('inventory');
   }
+  async function openLineOfCredit() {
+    await command({ type: 'open_line_of_credit' });
+  }
+  async function repayLineOfCredit(quantity: number) {
+    await command({
+      type: 'repay_line_of_credit',
+      quantity,
+    });
+  }
   async function performItemAction(itemId: string, action: string) {
     if (blocked) return;
     await command({ type: 'item_action', itemId, action });
@@ -141,10 +151,17 @@
     </header>
     {#if model.debt.active}
       <p class="debt-notice" role="status">
-        While the cash balance is negative, essential food, water, and medicine
-        remain available. Other purchases are paused.
+        Total debt: ${numbers.format(model.debt.amount)}. Ordinary purchases
+        remain available on credit and can push Cash further below zero.
       </p>
     {/if}
+    <LineOfCreditPanel
+      balance={model.balance}
+      lineOfCredit={model.lineOfCredit}
+      disabled={terminal}
+      onOpen={openLineOfCredit}
+      onRepay={repayLineOfCredit}
+    />
     {#if model.medicalDebt.total > 0}
       <section class="debt-notice" aria-label="Medical debt payment service">
         <strong
@@ -218,6 +235,7 @@
       <ShoppingCart
         lines={cartLines}
         total={model.cartTotal}
+        resultingBalance={model.cartResultingBalance}
         checkoutAllowed={model.cartCheckoutAllowed}
         disabled={terminal}
         onQuantity={cartQuantity}

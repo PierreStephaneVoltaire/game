@@ -29,7 +29,7 @@ The intended relationship is:
 
 > Player care is the primary survival/progression engine. Bri's autonomy makes the simulation feel human and occasionally softens mistakes, but long neglect still ends the run.
 
-A player who disappears for roughly 3–4 days in Realtime should still be expected to reach terminal collapse through the existing death/depression path. Owning every useful room item must not turn a zero-input run into an immortal run.
+A player who disappears for roughly 3–4 days in Realtime should still be expected to approach or reach an Ending through physical collapse, zero Mood, or zero Bond. Owning every useful room item must not turn a zero-input run into an immortal run.
 
 ---
 
@@ -111,6 +111,8 @@ The current repository already has the correct broad separation:
 - `scripts/generate-canonical-catalogue.mjs` — deterministic catalogue compiler.
 - `src/lib/data/shop-items.json` — generated canonical output.
 - `src/lib/game-types.ts` — run state/events/activity/history.
+- `src/lib/ending-types.ts` and `src/lib/ending-rules.ts` — explicit Ending
+  records, risk clocks, chronological boundaries, and reconciliation.
 - `src/lib/game-definition.ts` — typed item and automatic-hook definitions.
 - `src/lib/simulation/health-resolution.ts` — periodic Health behavior.
 - `src/lib/event-candidate-pool.ts` — weighted autonomous event candidates.
@@ -866,11 +868,11 @@ The common outcome is still funny/positive.
 
 Initial balancing values:
 
-| Outcome | Weight | Effect |
-| --- | ---: | --- |
-| normal/funny | 90 | Mood +1, optionally Creativity +1 |
-| minor cut | 9 | Health -1, Mood delta between -1 and 0 |
-| serious cut / ER | 1 | Health -2, strong Journey narration |
+| Outcome          | Weight | Effect                                 |
+| ---------------- | -----: | -------------------------------------- |
+| normal/funny     |     90 | Mood +1, optionally Creativity +1      |
+| minor cut        |      9 | Health -1, Mood delta between -1 and 0 |
+| serious cut / ER |      1 | Health -2, strong Journey narration    |
 
 The exact numbers belong in data and may be tuned.
 
@@ -951,11 +953,11 @@ Initial cooldown:
 
 Example initial weights:
 
-| Outcome | Weight | Effect |
-| --- | ---: | --- |
-| brief lightheadedness | 75 | narration only |
-| rough spell | 20 | Rest -1 or Mood -1 |
-| stumble | 5 | Health -1 |
+| Outcome               | Weight | Effect             |
+| --------------------- | -----: | ------------------ |
+| brief lightheadedness |     75 | narration only     |
+| rough spell           |     20 | Rest -1 or Mood -1 |
+| stumble               |      5 | Health -1          |
 
 All outcome selection must be seeded.
 
@@ -1780,13 +1782,13 @@ Use a larger stable seed bank if convenient, but keep a fixed regression subset 
 
 Use these as initial acceptance guidance:
 
-| Cohort | Target |
-| --- | --- |
-| Casual | >=85% survive 60 days |
-| Focused | >=90% survive 60 days |
-| 50%-neglect | <=10% survive |
-| Full AFK | expected terminal collapse around 72–96h; must not become immortal |
-| Hospital users | survival should approach their parent cohort rather than 0% |
+| Cohort         | Target                                                             |
+| -------------- | ------------------------------------------------------------------ |
+| Casual         | >=85% survive 60 days                                              |
+| Focused        | >=90% survive 60 days                                              |
+| 50%-neglect    | <=10% survive                                                      |
+| Full AFK       | expected terminal collapse around 72–96h; must not become immortal |
+| Hospital users | survival should approach their parent cohort rather than 0%        |
 
 For Full AFK, also test a deliberately favorable inventory:
 
@@ -1959,22 +1961,25 @@ If the repository already contains an approved placeholder mechanism, use that m
 
 ---
 
-# PART S — DEFERRED / DO NOT IMPLEMENT IN THIS PASS
+# PART S — TERMINAL OUTCOMES
 
-## 57. Deferred terminal outcomes
+## 57. Generalized Run Endings
 
-Do not redesign the terminal-state architecture in this pass.
+The terminal-state architecture uses four explicit outcomes:
 
-Specifically defer:
+- Death when Health reaches 0;
+- Cut Off after Bond remains at 0 for 72 continuous game-hours;
+- Quit Streaming after Mood remains at 0 for 72 continuous game-hours;
+- Financial Ruin after cash remains below −$20,000 for seven complete
+  consecutive local days.
 
-- Financial Ruin;
-- "She Cut You Off";
-- a generalized non-death terminal record;
-- tax/CRA/IRS endings.
+Risk clocks are separate from statuses. At a shared timestamp, scheduled
+activity completion, income, and payments settle before non-death Endings;
+Death retains first precedence, followed by Cut Off, Quit Streaming, and
+Financial Ruin. Medical principal does not count as cash. Reports distinguish
+the exact outcome, physical survival, and 60-day Horizon Completion.
 
-The existing Mood/Health depression collapse remains capable of ending neglected runs.
-
-A future pass can change persistent Mood/Bond failure into non-death endings once survival behavior is stable.
+Tax/CRA/IRS endings remain deferred.
 
 ---
 

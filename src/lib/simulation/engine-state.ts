@@ -9,39 +9,12 @@ import type {
 import {
   criticalHealthMoodDelta,
   isCriticalHealthForMood,
-  STATUS_NAMES,
   resolveAttemptStatus,
 } from '../status-rules';
 import { HEALTH_MAX, HOUR_MS, STAT_MIN } from '../game-constants';
 import rules from '../data/simulation-rules.json';
-import { statusTransitionMessage } from '../event-messages';
-import { recordDeath } from './death-resolution';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
-
-export function appendStatusTransitionEvents(
-  state: GameState,
-  before: GameState['statuses'],
-  sourceActionId: string,
-): GameState {
-  const changes: GameEvent[] = [];
-  for (const status of STATUS_NAMES) {
-    const wasActive = Boolean(before[status]);
-    const isActive = Boolean(state.statuses[status]);
-    if (wasActive === isActive) continue;
-    changes.push({
-      id: `event-${state.events.length + changes.length + 1}`,
-      type: isActive ? 'status_added' : 'status_cleared',
-      at: state.now,
-      message: statusTransitionMessage(status, isActive),
-      sourceActionId,
-      status,
-      cause: isActive ? state.statuses[status]?.source : 'explicit_action',
-    });
-  }
-  return changes.length
-    ? { ...state, events: [...state.events, ...changes] }
-    : state;
-}
+export { appendStatusTransitionEvents } from './status-transition-events';
 
 export function isCompanionAttempt(type: GameCommand['type']): boolean {
   return ![
@@ -50,14 +23,12 @@ export function isCompanionAttempt(type: GameCommand['type']): boolean {
     'set_cart_quantity',
     'checkout_cart',
     'pay_medical_debt',
+    'open_line_of_credit',
+    'repay_line_of_credit',
     'place_item',
     'unplace_item',
     'medical_care',
   ].includes(type);
-}
-
-export function recordDeathIfNeeded(state: GameState): GameState {
-  return recordDeath(state);
 }
 
 export function supportsQuantity(item: ItemDefinition): boolean {
