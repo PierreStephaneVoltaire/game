@@ -74,6 +74,7 @@ export type ItemDefinition = {
   consumable?: boolean;
   supportsQuantity?: boolean;
   maximumOwned?: number;
+  maximumLifetimePurchases?: number;
   stock?: { min: number; max: number };
   sugarServings?: number;
   progression?: {

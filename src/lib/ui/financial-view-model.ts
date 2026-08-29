@@ -36,12 +36,7 @@ export function financialPresentation(state: GameState) {
         state.lineOfCredit.status === 'open'
           ? state.lineOfCredit.remainingClosureCost
           : 0,
-      cumulativeOpenCharges:
-        state.lineOfCredit.status === 'available'
-          ? 0
-          : state.lineOfCredit.cumulativeOpenCharges,
       repaymentUnitPrice: financialRules.lineOfCredit.repaymentUnitPrice,
-      dailyOpenCharge: financialRules.lineOfCredit.dailyOpenCharge,
       applicationPrice: financialRules.lineOfCredit.applicationPrice,
       cashAdvance: financialRules.lineOfCredit.cashAdvance,
       totalUnits: financialRules.lineOfCredit.repaymentUnitCount,

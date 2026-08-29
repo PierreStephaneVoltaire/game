@@ -1,7 +1,6 @@
 import financialRules from '../data/financial-rules.json';
 import { finalizeFinancialOperation } from '../financial-rules';
 import type { GameCommand, GameEvent, GameState, Outcome } from '../game-types';
-import { localDate } from '../shop-rules';
 import { accepted, rejected } from '../simulation/engine-state';
 
 type LocCommand = Extract<
@@ -25,9 +24,20 @@ function openLineOfCredit(
   if (state.lineOfCredit.status !== 'available')
     return {
       state,
-      outcome: rejected('unavailable', 'The Line of Credit is no longer available.'),
+      outcome: rejected(
+        'unavailable',
+        'The Line of Credit is no longer available.',
+      ),
     };
   const config = financialRules.lineOfCredit;
+  if (state.balance < config.applicationPrice)
+    return {
+      state,
+      outcome: rejected(
+        'insufficient_funds',
+        'The Line of Credit opening fee cannot be purchased on credit.',
+      ),
+    };
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'line_of_credit_opened',
@@ -42,10 +52,8 @@ function openLineOfCredit(
     lineOfCredit: {
       status: 'open',
       openedAt: state.now,
-      lastOpenChargeDate: localDate(state.now, state.timezone),
       remainingUnits: config.repaymentUnitCount,
       remainingClosureCost: config.totalClosureCost,
-      cumulativeOpenCharges: 0,
     },
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
@@ -77,7 +85,10 @@ function repayLineOfCredit(
   if (quantity < 1 || quantity > loc.remainingUnits)
     return {
       state,
-      outcome: rejected('quantity_cap', 'That repayment quantity is unavailable.'),
+      outcome: rejected(
+        'quantity_cap',
+        'That repayment quantity is unavailable.',
+      ),
     };
   const price = quantity * financialRules.lineOfCredit.repaymentUnitPrice;
   if (state.balance < price)
@@ -89,10 +100,7 @@ function repayLineOfCredit(
       ),
     };
   const remainingUnits = loc.remainingUnits - quantity;
-  const remainingClosureCost = Math.max(
-    0,
-    loc.remainingClosureCost - price,
-  );
+  const remainingClosureCost = Math.max(0, loc.remainingClosureCost - price);
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'line_of_credit_repaid',
@@ -110,7 +118,6 @@ function repayLineOfCredit(
             status: 'closed',
             openedAt: loc.openedAt,
             closedAt: state.now,
-            cumulativeOpenCharges: loc.cumulativeOpenCharges,
           }
         : { ...loc, remainingUnits, remainingClosureCost },
     events: [...state.events, event],
@@ -126,45 +133,5 @@ function repayLineOfCredit(
   return {
     state: next,
     outcome: accepted('line_of_credit_repaid', event.message, [event.id]),
-  };
-}
-
-export function processLineOfCreditOpenCharge(
-  state: GameState,
-  at: number,
-): { state: GameState; eventIds: string[] } {
-  const loc = state.lineOfCredit;
-  if (loc.status !== 'open' || at <= loc.openedAt)
-    return { state, eventIds: [] };
-  const date = localDate(at, state.timezone);
-  if (date === loc.lastOpenChargeDate) return { state, eventIds: [] };
-  const amount = financialRules.lineOfCredit.dailyOpenCharge;
-  const event: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type: 'loc_open_charge',
-    at,
-    message: `The open Line of Credit charged $${amount.toLocaleString('en-US')}.`,
-    amount: -amount,
-  };
-  const mutated: GameState = {
-    ...state,
-    balance: state.balance - amount,
-    lineOfCredit: {
-      ...loc,
-      lastOpenChargeDate: date,
-      cumulativeOpenCharges: loc.cumulativeOpenCharges + amount,
-    },
-    events: [...state.events, event],
-    stateVersion: state.stateVersion + 1,
-  };
-  const next = finalizeFinancialOperation({
-    before: state,
-    state: mutated,
-    triggerEventId: event.id,
-    kind: 'loc_open_charge',
-  });
-  return {
-    state: next,
-    eventIds: next.events.slice(state.events.length).map((item) => item.id),
   };
 }

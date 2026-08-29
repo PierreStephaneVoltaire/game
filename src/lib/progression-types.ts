@@ -1,5 +1,5 @@
 export type DonationTier =
-  'kind_bridiot' | 'raid_windfall' | 'whale' | 'legendary_whale';
+  'kind_supporter' | 'raid_windfall' | 'whale' | 'legendary_whale';
 
 export const CAREER_TIERS = [
   'debut',
@@ -62,12 +62,13 @@ export type ProgressionState = {
     careerTier: CareerTier;
     creativity: number;
   }>;
-  discoveryBoost: {
+  agencyJoinedAt: number | null;
+  discoveryBoosts: Array<{
     eventId: string;
     multiplier: number;
     startedAt: number;
     expiresAt: number;
-  } | null;
+  }>;
   streamStats: {
     started: number;
     completed: number;

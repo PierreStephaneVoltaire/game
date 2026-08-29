@@ -43,6 +43,12 @@ export function validateItemStructure(
   )
     issues.push('maximumOwned must be a positive integer');
   if (
+    item.maximumLifetimePurchases !== undefined &&
+    (!Number.isInteger(item.maximumLifetimePurchases) ||
+      item.maximumLifetimePurchases < 1)
+  )
+    issues.push('maximumLifetimePurchases must be a positive integer');
+  if (
     item.stock &&
     (!Number.isInteger(item.stock.min) ||
       !Number.isInteger(item.stock.max) ||

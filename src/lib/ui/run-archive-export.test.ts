@@ -13,8 +13,8 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
       kind === 'death'
         ? 'Death'
         : kind === 'quit_streaming'
-            ? 'Quit Streaming'
-            : 'Financial Ruin',
+          ? 'Quit Streaming'
+          : 'Financial Ruin',
     explanation:
       kind === 'death'
         ? 'Health reached 0.'
@@ -54,10 +54,8 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
       status: 'available',
       remainingUnits: 0,
       remainingClosureCost: 0,
-      cumulativeOpenCharges: 0,
       repaymentUnitPrice: 600,
-      dailyOpenCharge: 1_000,
-      applicationPrice: 10,
+      applicationPrice: 50,
       cashAdvance: 10_000,
       totalUnits: 20,
       totalClosureCost: 12_000,

@@ -55,7 +55,7 @@ export function progressionJourneyMessage(
 
 function donationMessage(event: GameEvent, petName: string): string {
   const labels = {
-    kind_bridiot: 'A kind Bridiot',
+    kind_supporter: 'A kind supporter',
     raid_windfall: 'A raid windfall',
     whale: 'A major donor',
     legendary_whale: 'A legendary donor',

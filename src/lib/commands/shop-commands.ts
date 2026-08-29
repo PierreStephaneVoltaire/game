@@ -6,12 +6,14 @@ import {
   supportsQuantity,
 } from '../simulation/engine-state';
 import {
-  progressionPurchaseAllowed,
+  purchaseAllowed,
   purchaseQuantity,
+  recordLifetimePurchases,
 } from '../billing-rules';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { finalizeFinancialOperation } from '../financial-rules';
 import rules from '../data/simulation-rules.json';
+import { purchaseMetrics } from './shop-purchase-effects';
 
 export type ShopCommandResult = {
   handled: boolean;
@@ -49,7 +51,7 @@ function setCartQuantity(
       state,
       rejected('unavailable', 'That item is not in today’s shop.'),
     );
-  if (!progressionPurchaseAllowed(state, item))
+  if (!purchaseAllowed(state, item))
     return result(
       state,
       rejected('unavailable', 'That progression purchase is not available.'),
@@ -101,7 +103,7 @@ function checkoutCart(
   );
   if (!lines.length)
     return result(state, rejected('empty_cart', 'Your cart is empty.'));
-  if (lines.some((line) => !progressionPurchaseAllowed(state, line.item)))
+  if (lines.some((line) => !purchaseAllowed(state, line.item)))
     return result(
       state,
       rejected('unavailable', 'A progression purchase is no longer available.'),
@@ -162,18 +164,13 @@ function checkoutCart(
   const next: GameState = {
     ...state,
     balance: state.balance - total,
-    metrics:
-      state.balance < 0
-        ? {
-            ...state.metrics,
-            mood: Math.max(
-              0,
-              state.metrics.mood + rules.debt.purchaseMood,
-            ),
-          }
-        : state.metrics,
+    metrics: purchaseMetrics(state),
     inventory,
     shop: { ...state.shop, stock, cart: {} },
+    history: recordLifetimePurchases(
+      state,
+      lines.map((line) => ({ itemId: line.item.id, quantity: line.quantity })),
+    ),
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
@@ -210,7 +207,7 @@ function buyItem(
     available < requestedQuantity
   )
     return result(state, rejected('unavailable', 'That item is out of stock.'));
-  if (!progressionPurchaseAllowed(state, item))
+  if (!purchaseAllowed(state, item))
     return result(
       state,
       rejected('unavailable', 'That progression purchase is not available.'),
@@ -253,16 +250,7 @@ function buyItem(
   const next: GameState = {
     ...state,
     balance: state.balance - item.price * quantity,
-    metrics:
-      state.balance < 0
-        ? {
-            ...state.metrics,
-            mood: Math.max(
-              0,
-              state.metrics.mood + rules.debt.purchaseMood,
-            ),
-          }
-        : state.metrics,
+    metrics: purchaseMetrics(state),
     inventory: {
       ...state.inventory,
       [item.id]: (state.inventory[item.id] ?? 0) + quantity,
@@ -271,6 +259,7 @@ function buyItem(
       ...state.shop,
       stock: { ...state.shop.stock, [item.id]: available - quantity },
     },
+    history: recordLifetimePurchases(state, [{ itemId: item.id, quantity }]),
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,

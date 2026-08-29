@@ -2,7 +2,6 @@ import type { GameDefinition } from './game-definition';
 import type { GameState } from './game-types';
 import rules from './data/simulation-rules.json';
 import { CAREER_TIERS } from './progression-types';
-import { eligibleLifeEvents } from './life-event-rules';
 
 export type Candidate =
   | 'none'
@@ -20,7 +19,6 @@ export type Candidate =
   | 'full_body_commission'
   | 'moms_care_package'
   | 'rest_snoring'
-  | `life_event:${string}`
   | `item_hook:${string}`;
 
 export function eventCandidates(
@@ -197,10 +195,6 @@ export function eventCandidates(
     ...itemHooks.map(({ itemId, hook }) => ({
       type: `item_hook:${itemId}:${hook.id}` as const,
       weight: hook.weight,
-    })),
-    ...eligibleLifeEvents(state).map(({ id, weight }) => ({
-      type: `life_event:${id}` as const,
-      weight,
     })),
   ];
 }

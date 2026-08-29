@@ -49,11 +49,9 @@
       </div>
     {/each}
     <p class="total"><span>Total</span><strong>${total}</strong></p>
-    <p class="total"
-      ><span>Cash after checkout</span><strong
-        >${resultingBalance}</strong
-      ></p
-    >
+    <p class="total">
+      <span>Cash after checkout</span><strong>${resultingBalance}</strong>
+    </p>
     <button
       class="checkout"
       on:click={onCheckout}

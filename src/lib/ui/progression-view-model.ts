@@ -28,7 +28,8 @@ export type TimedEffectViewModel = {
     | 'pain_relief'
     | 'clippers'
     | 'sugar_crash_warning'
-    | 'discovery_boost';
+    | 'discovery_boost'
+    | `discovery_boost:${string}`;
   label: string;
   endsAt: number;
 };
@@ -141,14 +142,13 @@ function effectsFor(state: GameState): TimedEffectViewModel[] {
       label: 'Pain Relief',
       endsAt: state.timedEffects.painReliefUntil,
     });
-  if (
-    state.progression.discoveryBoost &&
-    state.progression.discoveryBoost.expiresAt > state.now
-  )
+  for (const boost of state.progression.discoveryBoosts.filter(
+    (candidate) => candidate.expiresAt > state.now,
+  ))
     effects.push({
-      key: 'discovery_boost',
-      label: `${state.progression.discoveryBoost.multiplier}× Natural Discovery`,
-      endsAt: state.progression.discoveryBoost.expiresAt,
+      key: `discovery_boost:${boost.eventId}`,
+      label: `${boost.eventId.replaceAll('_', ' ')} · ${boost.multiplier}× Natural Discovery`,
+      endsAt: boost.expiresAt,
     });
   return effects;
 }

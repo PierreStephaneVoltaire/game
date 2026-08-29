@@ -40,21 +40,36 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
   test('manual consumption applies the atomic effect once and consumes it', () => {
     const result = dispatchCommand(
       stocked(),
-      { type: 'use_item', commandId: 'eat-old-chicken', itemId: ITEM_ID, now: 0 },
+      {
+        type: 'use_item',
+        commandId: 'eat-old-chicken',
+        itemId: ITEM_ID,
+        now: 0,
+      },
       BUNDLED_GAME_DEFINITION,
     ).state;
     const event = result.events.find(
       (candidate) => candidate.sourceActionId === 'eat-old-chicken',
     );
 
-    expect(result.metrics).toMatchObject({ food: 6, health: 12, creativity: 4 });
+    expect(result.metrics).toMatchObject({
+      food: 6,
+      health: 12,
+      creativity: 4,
+    });
     expect(result.inventory[ITEM_ID]).toBe(0);
     expect(event?.metricDeltas).toMatchObject({
       food: 5,
       health: -8,
       creativity: 2,
     });
-    expect(event?.itemNarration).toContain('three-month-old rotisserie chicken');
+    expect(event).toMatchObject({
+      itemId: ITEM_ID,
+      itemUseMode: 'manual',
+    });
+    expect(event?.itemNarration).toContain(
+      'three-month-old rotisserie chicken',
+    );
     expect(result.statuses.sick).toBeUndefined();
   });
 
@@ -62,7 +77,12 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
     const state = stocked();
     const result = resolveItemConsumption(
       state,
-      { type: 'use_item', commandId: 'stream:snack:0', itemId: ITEM_ID, now: 0 },
+      {
+        type: 'use_item',
+        commandId: 'stream:snack:0',
+        itemId: ITEM_ID,
+        now: 0,
+      },
       BUNDLED_GAME_DEFINITION,
       { automatic: true },
     ).state;
@@ -70,15 +90,80 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
       (candidate) => candidate.sourceActionId === 'stream:snack:0',
     );
 
-    expect(result.metrics).toMatchObject({ food: 6, health: 12, creativity: 4 });
+    expect(result.metrics).toMatchObject({
+      food: 6,
+      health: 12,
+      creativity: 4,
+    });
     expect(result.inventory[ITEM_ID]).toBe(0);
+    expect(event).toMatchObject({
+      itemId: ITEM_ID,
+      itemUseMode: 'automatic_stream_snack',
+    });
     expect(event?.itemNarration).toContain('during the stream');
+  });
+
+  test('lifetime purchase cap remains after the consumed item leaves inventory', () => {
+    const state = {
+      ...stocked(),
+      balance: 100,
+      inventory: {},
+      shop: {
+        ...stocked().shop,
+        itemIds: [ITEM_ID],
+        stock: { [ITEM_ID]: 1 },
+      },
+    };
+    const purchased = dispatchCommand(
+      state,
+      {
+        type: 'buy_item',
+        commandId: 'buy-old-chicken',
+        itemId: ITEM_ID,
+        now: 0,
+      },
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+    const consumed = dispatchCommand(
+      purchased,
+      {
+        type: 'use_item',
+        commandId: 'eat-bought-chicken',
+        itemId: ITEM_ID,
+        now: 0,
+      },
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+    const refreshed = {
+      ...consumed,
+      shop: { ...consumed.shop, itemIds: [ITEM_ID], stock: { [ITEM_ID]: 1 } },
+    };
+    const blocked = dispatchCommand(
+      refreshed,
+      {
+        type: 'buy_item',
+        commandId: 'buy-second-chicken',
+        itemId: ITEM_ID,
+        now: 0,
+      },
+      BUNDLED_GAME_DEFINITION,
+    );
+    expect(consumed.history.lifetimePurchases[ITEM_ID]).toBe(1);
+    expect(blocked.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'unavailable',
+    });
   });
 
   test('a lethal bite attributes death to the item', () => {
     const result = dispatchCommand(
       stocked(8),
-      { type: 'use_item', commandId: 'fatal-old-chicken', itemId: ITEM_ID, now: 0 },
+      {
+        type: 'use_item',
+        commandId: 'fatal-old-chicken',
+        itemId: ITEM_ID,
+        now: 0,
+      },
       BUNDLED_GAME_DEFINITION,
     ).state;
 

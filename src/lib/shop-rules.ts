@@ -3,7 +3,7 @@ import type { GameDefinition } from './game-definition';
 import type { GameState, ShopState } from './game-types';
 import rules from './data/simulation-rules.json';
 import { DAY_MS, HOUR_MS, LOCAL_MIDNIGHT_SEARCH_HOURS } from './game-constants';
-import { progressionPurchaseAllowed } from './billing-rules';
+import { purchaseAllowed } from './billing-rules';
 import { CAREER_TIERS } from './progression-types';
 
 export function rotateShop(
@@ -19,7 +19,7 @@ export function rotateShop(
         (!required ||
           currentCareer >=
             CAREER_TIERS.indexOf(required as (typeof CAREER_TIERS)[number])) &&
-        progressionPurchaseAllowed(state, item)
+        purchaseAllowed(state, item)
       );
     })
     .sort(

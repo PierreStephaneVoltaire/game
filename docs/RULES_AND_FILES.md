@@ -22,10 +22,12 @@ gameplay rules.
   228-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
-  avatar path. Runtime code does not hardcode a companion name.
+  generic avatar path. Runtime code does not hardcode a companion name; the
+  name-isolation validator keeps that display-only value out of structural
+  identifiers, paths, assets, and infrastructure examples.
 - `src/lib/data/financial-rules.json`, `ending-rules.json`, and
   `life-events.json` — versioned debt/LOC thresholds, the Made It threshold,
-  and authored weighted VTuber-life event eligibility, outcomes, and effects.
+  and authored reciprocal-probability VTuber-life event outcomes and effects.
 - `src/lib/companion-profile.ts` — typed, environment-neutral access to the
   configured identity and tier-ordered appearance IDs.
 - `scripts/generate-canonical-catalogue.mjs` — deterministic compiler from
@@ -33,8 +35,10 @@ gameplay rules.
 
 ## Runtime modules
 
-- `src/lib/game-types.ts` — run state, commands, events, outcomes, activities,
-  history, and shared simulation records.
+- `src/lib/game-types.ts` — run state, events, outcomes, activities, history,
+  and shared simulation records.
+- `src/lib/game-command-types.ts` — the complete typed command union accepted
+  by the simulation engine.
 - `src/lib/game-history-types.ts` — consumption history and chronological Run
   memory kept out of the shared command/event type module.
 - `src/lib/ending-types.ts` — discriminated Run Ending records and separate
@@ -160,7 +164,7 @@ gameplay rules.
 - `src/lib/financial-rules.ts`, `src/lib/financial-types.ts`, and
   `src/lib/commands/line-of-credit-commands.ts` — total-debt projection,
   financial-pressure recovery penalty, atomic threshold/ending finalization,
-  persistent LOC origination, repayment units, and daily open charges.
+  persistent cash-only LOC origination, repayment units, and settlement.
 - `src/lib/autonomous-rescue-rules.ts` — player-care-only reset rules for the
   independent Food and Rest rescue locks.
 - `src/lib/income-rules.ts` — the shared positive-income/debt settlement path.
@@ -170,8 +174,13 @@ gameplay rules.
   hourly stream-donation tiers, signed current-Subscriber settlement, peak
   milestone ordering, Made It unlocks, Subscriber Revenue multipliers, and
   career stream-rate bands.
-- `src/lib/life-event-rules.ts` — data-authored, seeded, atomic life-event
-  effects, eligibility/cooldowns, and temporary natural-discovery boosts.
+- `src/lib/life-event-rules.ts` and `src/lib/life-event-scheduler.ts` —
+  data-authored, run-anchored, seeded, atomic life-event effects and temporary
+  natural-discovery boosts; the dedicated scheduler owns the 30-minute
+  boundary cadence and terminal-event stopping rules.
+- `src/lib/simulation/reconcile-time-boundaries.ts` — chronological boundary
+  planning and non-recursive catch-up for the dedicated 30-minute life-event
+  scheduler during long time reconciliation.
 - `src/lib/project-rules.ts` and `src/lib/project-economy-rules.ts` — rare and
   model project creation, third-local-midnight completion, rewards, and debut
   queues.
@@ -197,16 +206,27 @@ gameplay rules.
   model mapping.
 - `src/lib/catalog-validation.ts`,
   `src/lib/catalog-structure-validation.ts`,
-  `src/lib/nutrition-validation.ts`, and
-  `scripts/validate-assets.mjs` — strict catalogue, cross-reference,
-  nutrition provenance, compiler-drift, and generated-PNG checks.
-- `docs/BALANCE_REPORT.md` and `docs/BALANCE_RESULTS.json` — the generated
-  validator-compatible balance diagnosis and per-run result contract. The
-  permanent skill contains both the unchanged canonical 50-run regression and
-  the configuration-driven P51–P100 extension; `run-expanded-study.mjs`
-  generates four isolated 25-profile batch reports and merges their summarized
-  JSON into the separated 100-run analysis without retaining every simulation
-  history in one process.
+  `src/lib/nutrition-validation.ts`, `scripts/validate-assets.mjs`, and
+  `scripts/validate-name-isolation.mjs` —
+  strict catalogue, cross-reference, nutrition provenance, compiler-drift,
+  generated-PNG, and display-name boundary checks. The name validator allows
+  authored/display prose and the configured profile field, while rejecting
+  names in filenames, asset paths, identifiers, IDs, seeds, infrastructure,
+  cookies, state paths, and fenced code examples.
+- `docs/ECONOMY_EVENTS_BALANCE_REPORT.md`,
+  `docs/ECONOMY_EVENTS_BALANCE_RESULTS.json`,
+  `docs/LOC_BALANCE_RESULTS.json`, and
+  `docs/LIFE_EVENT_FREQUENCY_RESULTS.json` — generated balance-study outputs;
+  the permanent skill contains the unchanged canonical regression and
+  configuration-driven extension without retaining every simulation history in
+  one process.
+- `scripts/run-life-event-frequency-study.mjs`,
+  `scripts/life-event-frequency-study.ts`, and
+  `scripts/validate-life-event-frequency.mjs`
+  — permanent seeded life-event frequency runner. It executes 1,000 isolated
+  60-day runs (2,880 scheduler boundaries each) in 40 batches of 25 or fewer,
+  then merges and validates the generic JSON output. Invoke it with
+  `pnpm study:life-events`.
 - `.agents/skills/game-balance-simulation/data/expanded-profiles-*.json` — the
   heterogeneous profile data. Shared schedule, session, care, shopping,
   medical, trace, and report behavior lives in the adjacent generic script

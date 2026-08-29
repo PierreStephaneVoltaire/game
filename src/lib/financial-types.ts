@@ -19,16 +19,13 @@ export type LineOfCreditState =
   | {
       status: 'open';
       openedAt: number;
-      lastOpenChargeDate: string;
       remainingUnits: number;
       remainingClosureCost: number;
-      cumulativeOpenCharges: number;
     }
   | {
       status: 'closed';
       openedAt: number;
       closedAt: number;
-      cumulativeOpenCharges: number;
     };
 
 export type FinancialEffect = {

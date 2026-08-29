@@ -136,11 +136,14 @@ export function resolveAudienceGrowth(
 ): { state: GameState; eventIds: string[] } {
   let next = state;
   const eventIds: string[] = [];
-  if (
-    next.progression.discoveryBoost &&
-    next.progression.discoveryBoost.expiresAt <= at
-  ) {
-    const expired = next.progression.discoveryBoost;
+  const expiredDiscoveryBoosts = next.progression.discoveryBoosts
+    .filter((boost) => boost.expiresAt <= at)
+    .sort(
+      (left, right) =>
+        left.expiresAt - right.expiresAt ||
+        left.eventId.localeCompare(right.eventId),
+    );
+  for (const expired of expiredDiscoveryBoosts) {
     const event: GameEvent = {
       id: `event-${next.events.length + 1}`,
       type: 'life_event_effect_expired',
@@ -151,7 +154,12 @@ export function resolveAudienceGrowth(
     };
     next = {
       ...next,
-      progression: { ...next.progression, discoveryBoost: null },
+      progression: {
+        ...next.progression,
+        discoveryBoosts: next.progression.discoveryBoosts.filter(
+          (boost) => boost !== expired,
+        ),
+      },
       events: [...next.events, event],
     };
     eventIds.push(event.id);
@@ -174,24 +182,27 @@ export function resolveAudienceGrowth(
     );
     const baseAmount =
       tierRate(next.progression.careerTier) +
-        fullValueBoosts.reduce(
-          (sum, boost) =>
-            sum +
-            tierRate(boost.careerTier) *
-              (1 + boost.creativity * audienceRules.creativityPerPoint),
-          0,
-        ) +
-        discountedBoosts.reduce(
-          (sum, boost) =>
-            sum +
-            tierRate(boost.careerTier) *
-              (1 + boost.creativity * audienceRules.creativityPerPoint) *
-              audienceRules.excessBoostMultiplier,
-          0,
-        );
-    const amount = Math.round(
-      baseAmount * (next.progression.discoveryBoost?.multiplier ?? 1),
+      fullValueBoosts.reduce(
+        (sum, boost) =>
+          sum +
+          tierRate(boost.careerTier) *
+            (1 + boost.creativity * audienceRules.creativityPerPoint),
+        0,
+      ) +
+      discountedBoosts.reduce(
+        (sum, boost) =>
+          sum +
+          tierRate(boost.careerTier) *
+            (1 + boost.creativity * audienceRules.creativityPerPoint) *
+            audienceRules.excessBoostMultiplier,
+        0,
+      );
+    const discoveryMultiplier = next.progression.discoveryBoosts.reduce(
+      (product, boost) =>
+        boost.expiresAt > at ? product * boost.multiplier : product,
+      1,
     );
+    const amount = Math.round(baseAmount * discoveryMultiplier);
     next = {
       ...next,
       progression: { ...next.progression, activeAudienceBoosts: activeBoosts },

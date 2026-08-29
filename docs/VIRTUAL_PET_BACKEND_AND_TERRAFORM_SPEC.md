@@ -2,7 +2,7 @@
 
 **Status:** DRAFT IMPLEMENTATION SPEC  
 **Date:** 2026-08-26  
-**Companion gameplay spec:** `BRI_VIRTUAL_PET_IMPLEMENTATION_SPEC.md`  
+**Companion gameplay rules:** `GAME_RULES.md`  
 **Purpose:** Define the persistence API, Azure Functions behavior, Azure Table Storage layout, static asset hosting, runtime AI epitaph flow, and Terraform-owned infrastructure. Hand this file to a coding model together with the gameplay spec.
 
 ---
@@ -142,14 +142,14 @@ Authentication remains in the existing Azure Functions API. Mixing AWS compute w
 
 Use these implementation baselines unless the repository already pins a compatible newer patch:
 
-| Component | Baseline | Release information |
-|---|---|---|
-| Azure Functions runtime | 4.x | Required by the Node.js v4 programming model |
-| Node.js | 22.23.1 | Node 22 first released 2024-04-24; 22.23.1 released 2026-07-28; supported by Static Web Apps managed Functions as `node:22` |
-| Azure Functions Node programming model | v4 | Define functions in TypeScript with `@azure/functions`; do not create v3-style per-function `function.json` files |
-| Passport core, if used | 0.7.0 | Published 2023-11-27; optional authentication-strategy adapter, not the session or database layer |
-| Terraform CLI | 1.16.x | Terraform 1.16.0 released 2026-08-26 |
-| AzureRM provider | 5.2.x | AzureRM 5.2.0 released 2026-08-20 |
+| Component                              | Baseline | Release information                                                                                                         |
+| -------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Azure Functions runtime                | 4.x      | Required by the Node.js v4 programming model                                                                                |
+| Node.js                                | 22.23.1  | Node 22 first released 2024-04-24; 22.23.1 released 2026-07-28; supported by Static Web Apps managed Functions as `node:22` |
+| Azure Functions Node programming model | v4       | Define functions in TypeScript with `@azure/functions`; do not create v3-style per-function `function.json` files           |
+| Passport core, if used                 | 0.7.0    | Published 2023-11-27; optional authentication-strategy adapter, not the session or database layer                           |
+| Terraform CLI                          | 1.16.x   | Terraform 1.16.0 released 2026-08-26                                                                                        |
+| AzureRM provider                       | 5.2.x    | AzureRM 5.2.0 released 2026-08-20                                                                                           |
 
 Terraform constraints should be equivalent to:
 
@@ -347,31 +347,31 @@ The hash has low entropy and can be enumerated. That is accepted because it is a
 
 Create these four tables:
 
-| Table | Purpose |
-|---|---|
-| `Users` | Account profile, password hash, recovery information, and owned game hashes |
-| `AuthRecords` | OAuth identity mappings, login sessions, password-reset tokens, and email-verification tokens |
-| `GameData` | Canonical current state, immutable event segments, and canonical grave records |
-| `RuntimeCounters` | Low-cost global counters such as the daily AI call budget |
+| Table             | Purpose                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| `Users`           | Account profile, password hash, recovery information, and owned game hashes                   |
+| `AuthRecords`     | OAuth identity mappings, login sessions, password-reset tokens, and email-verification tokens |
+| `GameData`        | Canonical current state, immutable event segments, and canonical grave records                |
+| `RuntimeCounters` | Low-cost global counters such as the daily AI call budget                                     |
 
 Do not create one table per player or one table per game.
 
 ### 7.1 `Users`
 
-| Property | Value |
-|---|---|
-| `PartitionKey` | `"USER"` |
-| `RowKey` | Normalized unique username |
-| `userId` | Server-generated opaque account ID |
-| `displayName` | Optional player-facing name |
-| `passwordHash` | Salted password hash plus algorithm parameters |
-| `recoveryEmail` | Normalized recovery address |
-| `recoveryEmailVerified` | Boolean |
-| `gameHashesJson` | JSON array of every game hash owned by the account |
-| `linkedProvidersJson` | JSON array containing `discord` and/or `google` when explicitly linked |
-| `createdAt` | ISO-8601 UTC timestamp |
-| `updatedAt` | ISO-8601 UTC timestamp |
-| `schemaVersion` | User entity schema version |
+| Property                | Value                                                                  |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `PartitionKey`          | `"USER"`                                                               |
+| `RowKey`                | Normalized unique username                                             |
+| `userId`                | Server-generated opaque account ID                                     |
+| `displayName`           | Optional player-facing name                                            |
+| `passwordHash`          | Salted password hash plus algorithm parameters                         |
+| `recoveryEmail`         | Normalized recovery address                                            |
+| `recoveryEmailVerified` | Boolean                                                                |
+| `gameHashesJson`        | JSON array of every game hash owned by the account                     |
+| `linkedProvidersJson`   | JSON array containing `discord` and/or `google` when explicitly linked |
+| `createdAt`             | ISO-8601 UTC timestamp                                                 |
+| `updatedAt`             | ISO-8601 UTC timestamp                                                 |
+| `schemaVersion`         | User entity schema version                                             |
 
 At this scale, a constant partition is acceptable. Conditional creation of this entity enforces username uniqueness. Do not add a separate `UsernameIndex` table.
 
@@ -385,14 +385,14 @@ Do not create a `UserGames` or `PlayerGames` table.
 
 Use one table with entity types separated by partition key:
 
-| Record | `PartitionKey` | `RowKey` | Required values |
-|---|---|---|---|
-| Discord identity | `OAUTH#DISCORD` | Discord user ID | `username`, `userId`, timestamps |
-| Google identity | `OAUTH#GOOGLE` | Google OIDC `sub` | `username`, `userId`, timestamps |
-| OAuth state/onboarding | `OAUTH_STATE` | SHA-256 of random state/onboarding token | `provider`, pending provider subject/profile, `expiresAt`, `usedAt` |
-| Login session | `SESSION` | SHA-256 of random session token | `username`, `userId`, `expiresAt`, `createdAt` |
-| Password reset | `RESET` | SHA-256 of random reset token | `username`, `userId`, `expiresAt`, `usedAt` |
-| Email verification | `VERIFY_EMAIL` | SHA-256 of random verification token | `username`, `userId`, `email`, `expiresAt`, `usedAt` |
+| Record                 | `PartitionKey`  | `RowKey`                                 | Required values                                                     |
+| ---------------------- | --------------- | ---------------------------------------- | ------------------------------------------------------------------- |
+| Discord identity       | `OAUTH#DISCORD` | Discord user ID                          | `username`, `userId`, timestamps                                    |
+| Google identity        | `OAUTH#GOOGLE`  | Google OIDC `sub`                        | `username`, `userId`, timestamps                                    |
+| OAuth state/onboarding | `OAUTH_STATE`   | SHA-256 of random state/onboarding token | `provider`, pending provider subject/profile, `expiresAt`, `usedAt` |
+| Login session          | `SESSION`       | SHA-256 of random session token          | `username`, `userId`, `expiresAt`, `createdAt`                      |
+| Password reset         | `RESET`         | SHA-256 of random reset token            | `username`, `userId`, `expiresAt`, `usedAt`                         |
+| Email verification     | `VERIFY_EMAIL`  | SHA-256 of random verification token     | `username`, `userId`, `email`, `expiresAt`, `usedAt`                |
 
 This is not a username index. It is required because OAuth callbacks, session cookies, and reset links begin with provider/token identifiers rather than the local username.
 
@@ -418,37 +418,37 @@ This allows the state update and its newly appended event segment to use one ato
 
 #### Current state entity
 
-| Property | Value |
-|---|---|
-| `PartitionKey` | `gameHash` |
-| `RowKey` | `STATE` |
-| `ownerUserId` | Owning account ID |
-| `ownerUsername` | Normalized owner username for direct authorization checks |
-| `lifeStatus` | `active` or `dead` |
-| `stateVersion` | Monotonically increasing integer |
-| `stateSchemaVersion` | Serialized state contract version |
-| `rulesVersion` | Gameplay rules used by this life |
-| `quotePackVersion` | Static dialogue pack version |
-| `lastResolvedAt` | Last frontend reconciliation boundary in UTC |
-| `lastEventSequence` | Last committed immutable event sequence |
-| `createdAt` | Creation timestamp |
-| `diedAt` | Null until death |
-| `deathId` | Null until death |
-| `stateJson` | Compact serialized canonical gameplay state |
+| Property             | Value                                                     |
+| -------------------- | --------------------------------------------------------- |
+| `PartitionKey`       | `gameHash`                                                |
+| `RowKey`             | `STATE`                                                   |
+| `ownerUserId`        | Owning account ID                                         |
+| `ownerUsername`      | Normalized owner username for direct authorization checks |
+| `lifeStatus`         | `active` or `dead`                                        |
+| `stateVersion`       | Monotonically increasing integer                          |
+| `stateSchemaVersion` | Serialized state contract version                         |
+| `rulesVersion`       | Gameplay rules used by this life                          |
+| `quotePackVersion`   | Static dialogue pack version                              |
+| `lastResolvedAt`     | Last frontend reconciliation boundary in UTC              |
+| `lastEventSequence`  | Last committed immutable event sequence                   |
+| `createdAt`          | Creation timestamp                                        |
+| `diedAt`             | Null until death                                          |
+| `deathId`            | Null until death                                          |
+| `stateJson`          | Compact serialized canonical gameplay state               |
 
 `stateJson` must remain below **48 KiB UTF-8**. Azure Table Storage permits a 1 MiB entity, but individual property limits and protocol overhead make using the entire entity limit unsafe. Return `413 STATE_TOO_LARGE` before calling storage.
 
 #### Event segment entities
 
-| Property | Value |
-|---|---|
-| `PartitionKey` | `gameHash` |
-| `RowKey` | `EVENT#` plus zero-padded starting sequence |
-| `startSequence` | First event sequence in the segment |
-| `endSequence` | Last event sequence in the segment |
-| `eventCount` | Number of events |
-| `createdAt` | Commit timestamp |
-| `eventsJson` | Serialized immutable events |
+| Property        | Value                                       |
+| --------------- | ------------------------------------------- |
+| `PartitionKey`  | `gameHash`                                  |
+| `RowKey`        | `EVENT#` plus zero-padded starting sequence |
+| `startSequence` | First event sequence in the segment         |
+| `endSequence`   | Last event sequence in the segment          |
+| `eventCount`    | Number of events                            |
+| `createdAt`     | Commit timestamp                            |
+| `eventsJson`    | Serialized immutable events                 |
 
 Example row key:
 
@@ -467,19 +467,19 @@ Requirements:
 
 #### Grave entity
 
-| Property | Value |
-|---|---|
-| `PartitionKey` | `gameHash` |
-| `RowKey` | `GRAVE` |
-| `deathId` | Unique death identifier |
-| `ownerUserId` | Owning account ID |
-| `ownerUsername` | Normalized owner username |
-| `diedAt` | ISO-8601 UTC timestamp |
+| Property              | Value                                                            |
+| --------------------- | ---------------------------------------------------------------- |
+| `PartitionKey`        | `gameHash`                                                       |
+| `RowKey`              | `GRAVE`                                                          |
+| `deathId`             | Unique death identifier                                          |
+| `ownerUserId`         | Owning account ID                                                |
+| `ownerUsername`       | Normalized owner username                                        |
+| `diedAt`              | ISO-8601 UTC timestamp                                           |
 | `structuredCauseJson` | Deterministic cause and contributing events from the game engine |
-| `generationStatus` | `pending`, `generated`, or `fallback` |
-| `epitaph` | Final text shown on the grave |
-| `model` | Model identifier when AI succeeded; null for fallback |
-| `generatedAt` | Completion timestamp |
+| `generationStatus`    | `pending`, `generated`, or `fallback`                            |
+| `epitaph`             | Final text shown on the grave                                    |
+| `model`               | Model identifier when AI succeeded; null for fallback            |
+| `generatedAt`         | Completion timestamp                                             |
 
 The grave and state rows are canonical.
 
@@ -498,12 +498,12 @@ Use this only for cheap operational limits.
 
 Daily grave-AI counter:
 
-| Property | Value |
-|---|---|
-| `PartitionKey` | UTC date as `YYYY-MM-DD` |
-| `RowKey` | `GRAVE_AI` |
-| `count` | Number of AI attempts reserved that day |
-| `updatedAt` | UTC timestamp |
+| Property       | Value                                   |
+| -------------- | --------------------------------------- |
+| `PartitionKey` | UTC date as `YYYY-MM-DD`                |
+| `RowKey`       | `GRAVE_AI`                              |
+| `count`        | Number of AI attempts reserved that day |
+| `updatedAt`    | UTC timestamp                           |
 
 Increment using ETag-based optimistic concurrency. If the configured daily limit has been reached, use the deterministic fallback epitaph and do not call the model.
 
@@ -931,23 +931,23 @@ Returns a minimal liveness response. It may perform a cheap storage reachability
 
 ## 11. Status and error mapping
 
-| HTTP status | Stable code | Meaning |
-|---:|---|---|
-| 400 | `INVALID_REQUEST` | Body, route key, schema, or event sequence is invalid |
-| 401 | `AUTHENTICATION_REQUIRED` | No valid account session exists |
-| 403 | `GAME_NOT_OWNED` | Authenticated user does not own the active game |
-| 404 | `USER_NOT_FOUND` | User does not exist |
-| 404 | `GAME_NOT_FOUND` | Game hash does not exist |
-| 404 | `GRAVE_NOT_FOUND` | No grave exists for the game hash |
-| 409 | `USERNAME_TAKEN` | Normalized username already exists |
-| 409 | `OAUTH_IDENTITY_LINKED` | Provider identity already belongs to another account |
-| 409 | `GAME_DEAD` | Normal state update attempted after death |
-| 409 | `INVALID_LIFECYCLE_TRANSITION` | Caller attempted to mutate protected lifecycle fields |
-| 412 | `STALE_STATE` | ETag or expected version no longer matches |
-| 413 | `STATE_TOO_LARGE` | State or event payload exceeds configured limit |
-| 429 | `TOO_MANY_REQUESTS` | Optional cost/abuse guardrail was reached |
-| 500 | `PERSISTENCE_ERROR` | Unexpected storage failure |
-| 503 | `GAME_HASH_RETRY_EXHAUSTED` | Game-hash collision retries were exhausted |
+| HTTP status | Stable code                    | Meaning                                               |
+| ----------: | ------------------------------ | ----------------------------------------------------- |
+|         400 | `INVALID_REQUEST`              | Body, route key, schema, or event sequence is invalid |
+|         401 | `AUTHENTICATION_REQUIRED`      | No valid account session exists                       |
+|         403 | `GAME_NOT_OWNED`               | Authenticated user does not own the active game       |
+|         404 | `USER_NOT_FOUND`               | User does not exist                                   |
+|         404 | `GAME_NOT_FOUND`               | Game hash does not exist                              |
+|         404 | `GRAVE_NOT_FOUND`              | No grave exists for the game hash                     |
+|         409 | `USERNAME_TAKEN`               | Normalized username already exists                    |
+|         409 | `OAUTH_IDENTITY_LINKED`        | Provider identity already belongs to another account  |
+|         409 | `GAME_DEAD`                    | Normal state update attempted after death             |
+|         409 | `INVALID_LIFECYCLE_TRANSITION` | Caller attempted to mutate protected lifecycle fields |
+|         412 | `STALE_STATE`                  | ETag or expected version no longer matches            |
+|         413 | `STATE_TOO_LARGE`              | State or event payload exceeds configured limit       |
+|         429 | `TOO_MANY_REQUESTS`            | Optional cost/abuse guardrail was reached             |
+|         500 | `PERSISTENCE_ERROR`            | Unexpected storage failure                            |
+|         503 | `GAME_HASH_RETRY_EXHAUSTED`    | Game-hash collision retries were exhausted            |
 
 Map the Azure Table conditional-update failure to `412`, not a generic `500`.
 
@@ -984,13 +984,13 @@ Do not send the full lifetime ledger.
 
 Default limits:
 
-| Setting | Default |
-|---|---:|
-| Event tail | 20 relevant/recent events |
-| Model timeout | 8 seconds |
-| Maximum output | 80 tokens |
-| Attempts per grave | 1 normal attempt |
-| Global daily AI attempts | 50 |
+| Setting                  |                   Default |
+| ------------------------ | ------------------------: |
+| Event tail               | 20 relevant/recent events |
+| Model timeout            |                 8 seconds |
+| Maximum output           |                 80 tokens |
+| Attempts per grave       |          1 normal attempt |
+| Global daily AI attempts |                        50 |
 
 ### 12.3 Output contract
 
@@ -1201,7 +1201,7 @@ Tag at minimum:
 
 ```hcl
 tags = {
-  application = "bri-virtual-pet"
+  application = "virtual-pet"
   environment = var.environment
   managed_by  = "terraform"
 }
@@ -1283,7 +1283,7 @@ API_SCHEMA_VERSION=1
 MAX_STATE_BYTES=49152
 MAX_EVENT_SEGMENT_BYTES=49152
 APP_BASE_URL=
-SESSION_COOKIE_NAME=bri_session
+SESSION_COOKIE_NAME=virtual_pet_session
 SESSION_TTL_DAYS=30
 PASSWORD_HASH_ALGORITHM=scrypt
 PASSWORD_RESET_TTL_MINUTES=20
@@ -1362,7 +1362,7 @@ for the application stack using an `azurerm` backend.
 The production backend key should be stable, for example:
 
 ```text
-bri-virtual-pet/prod.tfstate
+virtual-pet/prod.tfstate
 ```
 
 CI authentication to Azure should use GitHub OIDC/workload identity rather than a long-lived service-principal secret.
@@ -1640,18 +1640,18 @@ Managed Static Web Apps API requests have a 45-second maximum duration. The mode
 
 Required cost choices:
 
-| Component | Initial choice |
-|---|---|
-| Frontend/assets | Static Web Apps Free |
-| API | Managed Functions included with Static Web Apps |
-| State | Standard LRS Table Storage |
-| Accounts/sessions | The same Table Storage account; no managed IdP |
-| Password-reset email | Low-volume transactional email adapter |
-| Runtime AI | At most once per grave, capped daily |
-| Quote extraction | Offline, manually reviewed |
-| CDN | None beyond Static Web Apps distribution |
-| API gateway | None |
-| Monitoring | Compact logs; paid ingestion opt-in |
+| Component            | Initial choice                                  |
+| -------------------- | ----------------------------------------------- |
+| Frontend/assets      | Static Web Apps Free                            |
+| API                  | Managed Functions included with Static Web Apps |
+| State                | Standard LRS Table Storage                      |
+| Accounts/sessions    | The same Table Storage account; no managed IdP  |
+| Password-reset email | Low-volume transactional email adapter          |
+| Runtime AI           | At most once per grave, capped daily            |
+| Quote extraction     | Offline, manually reviewed                      |
+| CDN                  | None beyond Static Web Apps distribution        |
+| API gateway          | None                                            |
+| Monitoring           | Compact logs; paid ingestion opt-in             |
 
 Expected cost at 10–300 users should remain far below $50 CAD/month unless AI, email, or logging is misconfigured.
 

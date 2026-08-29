@@ -4,6 +4,9 @@ The companion's identity is configurable, so this reference calls them “the
 companion.” Every run is a single memory-only life. A terminal Ending closes it
 permanently; `Made It` is a non-terminal Ending unlock. There is no save
 recovery, restart, reset, inherited keepsake, or separate offline-recap screen.
+The configured display name and authored player-facing copy may use the chosen
+name; runtime identifiers, IDs, paths, assets, seeds, and infrastructure names
+remain generic.
 
 ## Core rules
 
@@ -73,18 +76,18 @@ is selected from the pre-Subscriber-Revenue state, Subscriber Revenue is
 credited, local-day medical payments resolve, and an activity completion
 resolves afterward. Periodic damage is recorded before any emergency rescue.
 At a shared timestamp, due activity completions, income, Hospital payments,
-LOC open charges, life events, and audience changes settle atomically before
+LOC settlement, life events, and audience changes settle atomically before
 their derived statuses or Endings. Health reaching 0 still resolves first.
 
 ### Run Endings and risk clocks
 
 A Run closes permanently with exactly one terminal outcome:
 
-| Ending         | Trigger                                                               |
-| -------------- | --------------------------------------------------------------------- |
-| Death          | Health reaches 0                                                      |
-| Quit Streaming | Mood remains at 0 continuously for 72 game-hours                      |
-| Financial Ruin | Total debt reaches $20,000                                            |
+| Ending         | Trigger                                          |
+| -------------- | ------------------------------------------------ |
+| Death          | Health reaches 0                                 |
+| Quit Streaming | Mood remains at 0 continuously for 72 game-hours |
+| Financial Ruin | Total debt reaches $20,000                       |
 
 The Mood countdown starts immediately at 0, clears as soon as Mood rises above
 0, and warns at 0, 24, and 48 hours. Financial Ruin has no countdown, grace
@@ -482,11 +485,11 @@ an independent donation roll. Base chance is `2% + 0.5% × current Creativity`.
 The fourth model adds one permanent percentage point before multipliers.
 
 | Donation        | Weight |                  Amount | Subscribers |
-| --------------- | -----: | ----------------------: | --------: |
-| Kind Bridiot    |     55 |       $20–$60 uniformly |        +5 |
-| Raid windfall   |     27 |     $100–$400 uniformly |        +5 |
-| Major donor     |     14 | $1,000–$3,000 uniformly |       +30 |
-| Legendary donor |      4 |         exactly $10,000 |       +30 |
+| --------------- | -----: | ----------------------: | ----------: |
+| Kind supporter  |     55 |       $20–$60 uniformly |          +5 |
+| Raid windfall   |     27 |     $100–$400 uniformly |          +5 |
+| Major donor     |     14 | $1,000–$3,000 uniformly |         +30 |
+| Legendary donor |      4 |         exactly $10,000 |         +30 |
 
 Legendary is eligible only at Creativity 10. Below 10, the other tier weights
 are normalized rather than doubled. June 29 and November 14 triple donation
@@ -508,15 +511,15 @@ stack. Each tick uses `round($1 × multiplier)`. The yields below show twelve
 ticks over 24 game-hours and are not local-date caps:
 
 | Peak Subscribers | Multiplier | Per tick | 12-tick yield |
-| --------: | ---------: | -------: | ------------: |
-|     0–29K |         1× |       $1 |           $12 |
-|    30,000 |       1.5× |       $2 |           $24 |
-|    50,000 |         2× |       $2 |           $24 |
-|   100,000 |         3× |       $3 |           $36 |
-|   200,000 |         4× |       $4 |           $48 |
-|   250,000 |         5× |       $5 |           $60 |
-|   500,000 |         7× |       $7 |           $84 |
-| 1,000,000 |        10× |      $10 |          $120 |
+| ---------------: | ---------: | -------: | ------------: |
+|            0–29K |         1× |       $1 |           $12 |
+|           30,000 |       1.5× |       $2 |           $24 |
+|           50,000 |         2× |       $2 |           $24 |
+|          100,000 |         3× |       $3 |           $36 |
+|          200,000 |         4× |       $4 |           $48 |
+|          250,000 |         5× |       $5 |           $60 |
+|          500,000 |         7× |       $7 |           $84 |
+|        1,000,000 |        10× |      $10 |          $120 |
 
 Routine payments stay out of Journey. The milestone entry announces each
 multiplier upgrade.
@@ -553,23 +556,23 @@ milestones and their one-time rewards use the peak and resolve in order,
 including several crossed by one result. Subscriber Revenue and stream-rate
 bands also remain unlocked after a loss.
 
-| Peak Subscribers | Career tier and reward                                                               |
-| --------: | ----------------------------------------------------------------------------------------- |
-|       100 | Debut; every run begins here                                                              |
-|       150 | First Model: first model tier unlocked                                                    |
-|     1,000 | 1K Subscribers: hourly stream rate $8–$18 and Mood +2                                     |
-|     5,000 | Model Redesign: second model tier unlocked                                                |
-|    10,000 | Twitch Partner: hourly stream rate $10–$22                                                |
-|    30,000 | 30K Subscribers: Subscriber Revenue 1.5×                                                  |
-|    40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
-|    50,000 | 50K Subscribers: Subscriber Revenue 2×                                                    |
-|    75,000 | Convention Guest: $500 appearance fee and Convention Guest Set                            |
-|   100,000 | 100K Subscribers: Subscriber Revenue 3×                                                   |
-|   150,000 | 3D Ready: fourth model tier unlocked                                                      |
-|   200,000 | 200K Subscribers: Subscriber Revenue 4×                                                   |
-|   250,000 | 250K Subscribers: Subscriber Revenue 5×                                                   |
-|   500,000 | 500K Subscribers: Subscriber Revenue 7×                                                   |
-| 1,000,000 | 1M Subscribers: Subscriber Revenue 10×                                                    |
+| Peak Subscribers | Career tier and reward                                                                    |
+| ---------------: | ----------------------------------------------------------------------------------------- |
+|              100 | Debut; every run begins here                                                              |
+|              150 | First Model: first model tier unlocked                                                    |
+|            1,000 | 1K Subscribers: hourly stream rate $8–$18 and Mood +2                                     |
+|            5,000 | Model Redesign: second model tier unlocked                                                |
+|           10,000 | Twitch Partner: hourly stream rate $10–$22                                                |
+|           30,000 | 30K Subscribers: Subscriber Revenue 1.5×                                                  |
+|           40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
+|           50,000 | 50K Subscribers: Subscriber Revenue 2×                                                    |
+|           75,000 | Convention Guest: $500 appearance fee and Convention Guest Set                            |
+|          100,000 | 100K Subscribers: Subscriber Revenue 3×                                                   |
+|          150,000 | 3D Ready: fourth model tier unlocked                                                      |
+|          200,000 | 200K Subscribers: Subscriber Revenue 4×                                                   |
+|          250,000 | 250K Subscribers: Subscriber Revenue 5×                                                   |
+|          500,000 | 500K Subscribers: Subscriber Revenue 7×                                                   |
+|        1,000,000 | 1M Subscribers: Subscriber Revenue 10×                                                    |
 
 New Model Commission costs $300 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
@@ -596,26 +599,31 @@ the persistent In Debt status appears; it clears immediately below $10,000.
 At $20,000, Financial Ruin occurs immediately with cause Insolvency and a
 structured breakdown of every component and the crossing transaction.
 
-The one-time Line of Credit costs $10 and advances $10,000 cash. It creates
-twenty permanent $600 repayment units ($12,000 total closure cost). Repayment
-units cannot be purchased on credit. Every later local-day boundary charges
-exactly $1,000 while any unit remains; that charge does not reduce the unit
-count or closure cost. Purchasing the twentieth unit closes the LOC atomically.
+The one-time Line of Credit is cash-only: it costs $50 and advances $10,000
+cash. It creates twenty permanent $600 repayment units ($12,000 total closure
+cost). Repayment units cannot be purchased on credit. There are no daily or
+time-based charges; purchasing the twentieth unit closes the LOC atomically.
 
-Seeded VTuber-life events share the normal autonomous opportunity pool:
+Seeded VTuber-life events use a dedicated run-anchored scheduler every 30
+minutes (not the ordinary autonomous opportunity pool). Each boundary rolls
+the authored reciprocal probabilities in specification order. Successful
+events resolve chronologically and no later event resolves after a terminal
+Ending:
 
 - Tax, Webcam failure, and GPU failure select one fixed immediate expense and
   create no inventory, repair state, or payment plan.
-- Twitter cancellation removes 2% or 5% of current Subscribers without
+- Twitter cancellation removes 1%, 2%, or 3% of current Subscribers without
   revoking peak progression.
 - Rain applies Mood −1 only.
-- Personal purchases atomically spend $25, $60, $125, or $299 and add their
+- Personal purchases atomically spend $25, $50, $100, $200, or $299 and add their
   authored Mood reward.
-- Sponsored-stream deals immediately credit $250, $500, or $1,000.
+- Sponsored-stream deals immediately credit $250, $500, $1,000, or $2,000.
 - The one-time Agency debut adds 100,000 Subscribers and applies 1.5× natural
   discovery for seven days.
-- Algorithm boost applies 2× natural discovery for one day. Discovery boosts
-  never overlap and affect neither Clippers nor direct Subscriber awards.
+- Algorithm boost applies 1.5× natural discovery for one day. Agency and
+  Algorithm boosts are tracked separately; when both are active they multiply
+  natural growth to 2.25×. Discovery boosts affect neither Clippers nor direct
+  Subscriber awards.
 
 ## Shop, Inventory, and room
 
@@ -642,9 +650,11 @@ reusable Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Peppe
 Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
 Food and starter comfort item with Food +2 and Mood +2.
 The Can Opener is a reusable priced at $35. Three-Month-Old Rotisserie Chicken
-is a $12 Variable Food and automatic stream snack. Consuming the complete item
-once applies Food +5, Health −8, and Creativity +2, creates no persistent
-status or recurrence, and attributes lethal damage directly to the item.
+is an $8 Variable Food with stock, ownership, and lifetime-purchase limit 1;
+it participates in ordinary shop rotation and automatic stream snacks.
+Consuming the complete item once applies Food +5, Health −8, and Creativity
++2, creates no persistent status or recurrence, and attributes lethal damage
+directly to the item. Its gameplay nutrition scores are all zero.
 
 Each local date receives a seeded 24-item rotation:
 

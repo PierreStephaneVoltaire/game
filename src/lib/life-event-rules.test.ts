@@ -85,11 +85,13 @@ describe('authored life events', () => {
     );
 
     expect(resolved.progression.followers).toBe(200_000);
-    expect(resolved.progression.discoveryBoost).toMatchObject({
-      eventId: 'agency_invitation',
-      multiplier: 1.5,
-      expiresAt: 168 * 60 * 60 * 1000,
-    });
+    expect(resolved.progression.discoveryBoosts).toContainEqual(
+      expect.objectContaining({
+        eventId: 'agency_invitation',
+        multiplier: 1.5,
+        expiresAt: 168 * 60 * 60 * 1000,
+      }),
+    );
     expect(resolved.ending).toBeNull();
   });
 });

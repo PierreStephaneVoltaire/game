@@ -24,6 +24,8 @@ export function createItemUsedEvent(input: {
     nutritionProfileId: input.nutritionProfileId,
     tags: action.tags,
     cause: action.id,
+    itemId: item.id,
+    itemUseMode: automatic ? 'automatic_stream_snack' : 'manual',
     itemName: item.name,
     itemNarration: selectItemNarration({
       state,

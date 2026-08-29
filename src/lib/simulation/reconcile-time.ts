@@ -1,15 +1,15 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Transition } from '../game-types';
-import rules from '../data/simulation-rules.json';
 import { completeActivity } from './activity-completion';
 import { resolveDecay } from './decay-resolution';
 import { resolveTimelineEffects } from './timeline-effects';
-import { nextStatusBoundary } from '../status-rules';
-import { nextLocalMidnight } from '../shop-rules';
-import { HOUR_MS } from '../game-constants';
 import { criticalMetrics, isCriticalState } from './health-resolution';
 import { resolvePostHealthRescues } from './post-health-rescue';
-import { nextEndingBoundary, reconcileRunEnding } from '../ending-rules';
+import { reconcileRunEnding } from '../ending-rules';
+import {
+  catchUpLifeEvents,
+  nextReconciliationBoundaries,
+} from './reconcile-time-boundaries';
 
 export type ReconcileResult = Transition & {
   elapsedHours: number;
@@ -43,46 +43,32 @@ export function reconcileTime(
   if (now <= state.lastResolvedAt)
     return { state, outcomes: [], elapsedHours: 0, eventIds: [] };
 
-  const intervalHours = rules.timeDecay.intervalHours;
-  const nextDecayAt =
-    state.lastResolvedAt +
-    (intervalHours - state.history.decayRemainderHours) * HOUR_MS;
-  const nextHealthAt = state.activity
-    ? undefined
-    : state.lastResolvedAt +
-      (intervalHours - state.history.healthRemainderHours) * HOUR_MS;
-  const nextStatusAt = nextStatusBoundary(state, state.lastResolvedAt);
-  const nextMidnightAt = nextLocalMidnight(
-    state.lastResolvedAt,
-    state.timezone,
-  );
-  const nextEndingAt = nextEndingBoundary(state);
-  const boundaries = [
-    state.activity?.endsAt,
-    state.history.sugarCrashDueAt ?? undefined,
-    state.timedEffects.deferredRestLossAt ?? undefined,
-    state.timedEffects.hyperfocusUntil ?? undefined,
-    state.timedEffects.clippers?.nextClipAt,
-    state.timedEffects.clippers?.expiresAt,
-    state.progression.discoveryBoost?.expiresAt,
-    state.history.cravingStartedAt !== null
-      ? state.history.cravingStartedAt + rules.craving.expiryHours * HOUR_MS
-      : undefined,
-    state.history.nextAutonomousAt,
-    ...state.projects.map((project) => project.completesAt),
-    nextDecayAt,
-    nextHealthAt,
-    nextStatusAt,
-    nextMidnightAt,
-    nextEndingAt,
-  ].filter(
-    (boundary): boundary is number =>
-      typeof boundary === 'number' &&
-      boundary > state.lastResolvedAt &&
-      boundary < now,
-  );
-  const nextBoundary = boundaries.length ? Math.min(...boundaries) : null;
+  const { lifeEventBoundary, nextRegularBoundary, nextBoundary } =
+    nextReconciliationBoundaries(state, now);
   if (nextBoundary !== null) {
+    if (nextBoundary === lifeEventBoundary) {
+      const lifeCatchUp = catchUpLifeEvents(state, now, nextRegularBoundary);
+      const throughTarget = reconcileTime(
+        lifeCatchUp.state,
+        now,
+        definition,
+        options,
+      );
+      return {
+        state: throughTarget.state,
+        outcomes: [
+          ...lifeCatchUp.eventIds.map((id) => ({
+            accepted: true,
+            kind: 'time_reconciled',
+            message: 'Time reconciled.',
+            eventIds: [id],
+          })),
+          ...throughTarget.outcomes,
+        ],
+        elapsedHours: throughTarget.elapsedHours,
+        eventIds: [...lifeCatchUp.eventIds, ...throughTarget.eventIds],
+      };
+    }
     const throughBoundary = reconcileTime(
       state,
       nextBoundary,

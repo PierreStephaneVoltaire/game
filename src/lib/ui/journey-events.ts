@@ -213,7 +213,6 @@ function naturalNarrativeMessage(
     event.type === 'debt_status_recovered' ||
     event.type === 'line_of_credit_opened' ||
     event.type === 'line_of_credit_repaid' ||
-    event.type === 'loc_open_charge' ||
     event.type === 'life_event_resolved' ||
     event.type === 'life_event_effect_expired' ||
     event.type === 'ending_unlocked'

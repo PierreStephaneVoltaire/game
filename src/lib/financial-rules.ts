@@ -34,9 +34,7 @@ export function recoveryPenaltyForFinancialPressure(state: GameState): number {
   const debt = debtBreakdown(state);
   const negativeCashPenalty = Math.min(
     financialRules.debt.combinedRecoveryPenaltyCap,
-    Math.floor(
-      debt.negativeCash / financialRules.debt.recoveryPenaltyDivisor,
-    ),
+    Math.floor(debt.negativeCash / financialRules.debt.recoveryPenaltyDivisor),
   );
   return Math.min(
     financialRules.debt.combinedRecoveryPenaltyCap,
@@ -82,9 +80,9 @@ export function finalizeFinancialOperation(input: {
       message: aligned.entered
         ? `Total debt reached $${afterDebt.total.toLocaleString('en-US')}.`
         : `Total debt fell to $${afterDebt.total.toLocaleString('en-US')}.`,
-      sourceActionId:
-        next.events.find((candidate) => candidate.id === input.triggerEventId)
-          ?.sourceActionId,
+      sourceActionId: next.events.find(
+        (candidate) => candidate.id === input.triggerEventId,
+      )?.sourceActionId,
       status: 'in_debt',
       causedBy: [input.triggerEventId],
       financialEffect: effect,

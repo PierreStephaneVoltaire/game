@@ -1,7 +1,4 @@
-import {
-  progressionPurchaseAllowed,
-  purchaseQuantity,
-} from '$lib/billing-rules';
+import { purchaseAllowed, purchaseQuantity } from '$lib/billing-rules';
 import type { GameDefinition, ItemDefinition } from '$lib/game-definition';
 import type { GameState } from '$lib/game-types';
 import {
@@ -52,7 +49,11 @@ function purchasePresentation(
   owned: number,
   placed: boolean,
 ) {
-  const progressionBlocked = !progressionPurchaseAllowed(state, item);
+  const lifetimeBlocked =
+    item.maximumLifetimePurchases !== undefined &&
+    (state.history.lifetimePurchases[item.id] ?? 0) >=
+      item.maximumLifetimePurchases;
+  const progressionBlocked = !lifetimeBlocked && !purchaseAllowed(state, item);
   const ownershipBlocked =
     item.consumable === false &&
     !item.supportsQuantity &&
@@ -68,11 +69,13 @@ function purchasePresentation(
         ? Math.min(1, availableQuantity)
         : availableQuantity,
     purchaseAllowed: !progressionBlocked && !ownershipBlocked,
-    purchaseBlockReason: progressionBlocked
+    purchaseBlockReason: lifetimeBlocked
+      ? 'Lifetime purchase limit reached.'
+      : progressionBlocked
         ? 'No unlocked model commission is currently available.'
         : ownershipBlocked
-            ? 'Already owned.'
-            : null,
+          ? 'Already owned.'
+          : null,
   };
 }
 

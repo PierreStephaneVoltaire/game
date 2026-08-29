@@ -143,7 +143,7 @@
       "specialDateMultiplier": 3,
       "tournamentMultiplier": 3,
       "tiers": [
-        { "id": "kind_bridiot", "weight": 55, "minimum": 20, "maximum": 60 },
+        { "id": "kind_supporter", "weight": 55, "minimum": 20, "maximum": 60 },
         { "id": "raid_windfall", "weight": 27, "minimum": 100, "maximum": 400 },
         { "id": "whale", "weight": 14, "minimum": 1000, "maximum": 3000 },
         {

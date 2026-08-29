@@ -1,28 +1,12 @@
 /* eslint-disable no-undef */
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { extname, join } from 'node:path';
+import { findNameIsolationIssues } from './validate-name-isolation.mjs';
 
 const root = new URL('../', import.meta.url);
 const maintainedRoots = ['src', 'e2e', 'scripts'];
 const sourceExtensions = new Set(['.ts', '.svelte', '.css', '.mjs']);
 const issues = [];
-const companionProfile = JSON.parse(
-  await readFile(new URL('src/lib/data/pet-profile.json', root), 'utf8'),
-);
-const escapedCompanionName = companionProfile.displayName.replace(
-  /[.*+?^${}()|[\]\\]/g,
-  '\\$&',
-);
-const companionNamePattern = new RegExp(`\\b${escapedCompanionName}\\b`, 'i');
-const companionAvatarPath = companionProfile.avatarPath.toLowerCase();
-
-function hardcodesCompanion(source) {
-  return (
-    companionNamePattern.test(source) ||
-    source.toLowerCase().includes(companionAvatarPath)
-  );
-}
-
 async function filesBelow(path) {
   const entries = await readdir(new URL(`${path}/`, root));
   const files = [];
@@ -53,8 +37,6 @@ for (const path of files) {
     )
   )
     issues.push(`${path}: contains unfinished-product language`);
-  if (hardcodesCompanion(source))
-    issues.push(`${path}: hardcodes the configured companion identity`);
 }
 
 for (const path of files.filter(
@@ -62,8 +44,6 @@ for (const path of files.filter(
 )) {
   if (path === 'src/lib/data/pet-profile.json') continue;
   const source = await readFile(new URL(path, root), 'utf8');
-  if (hardcodesCompanion(source))
-    issues.push(`${path}: hardcodes the configured companion identity`);
   if (
     /\b(poc|prototype|playtest|stub|todo|fixme)\b|coming soon|not implemented|no-op/i.test(
       source,
@@ -71,6 +51,8 @@ for (const path of files.filter(
   )
     issues.push(`${path}: contains unfinished-product language`);
 }
+
+issues.push(...(await findNameIsolationIssues()));
 
 const gameplayFiles = files.filter(
   (path) => path.startsWith('src/lib/') && sourceExtensions.has(extname(path)),

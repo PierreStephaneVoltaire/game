@@ -2,8 +2,7 @@ import { describe, expect, test } from 'vitest';
 
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
-import { debtBreakdown } from './financial-rules';
-import { DAY_MS, HOUR_MS } from './game-constants';
+import { HOUR_MS } from './game-constants';
 
 function run() {
   return startRun(
@@ -44,107 +43,6 @@ describe('economy specification through the engine seam', () => {
       kind: 'item_purchased',
     });
     expect(result.state.balance).toBe(1 - item.price);
-  });
-
-  test('LOC origination creates the complete obligation and In Debt status', () => {
-    const result = dispatchCommand(
-      run(),
-      { type: 'open_line_of_credit', commandId: 'open-loc', now: 0 },
-      BUNDLED_GAME_DEFINITION,
-    );
-
-    expect(result.outcomes[0]).toMatchObject({
-      accepted: true,
-      kind: 'line_of_credit_opened',
-    });
-    expect(result.state.balance).toBe(10_010);
-    expect(result.state.lineOfCredit).toMatchObject({
-      status: 'open',
-      remainingUnits: 20,
-      remainingClosureCost: 12_000,
-      cumulativeOpenCharges: 0,
-    });
-    expect(debtBreakdown(result.state)).toEqual({
-      negativeCash: 0,
-      hospitalPrincipal: 0,
-      locClosureCost: 12_000,
-      otherFinancedPrincipal: 0,
-      total: 12_000,
-    });
-    expect(result.state.statuses.in_debt).toBeDefined();
-    expect(
-      result.state.events.filter((event) => event.type === 'debt_status_entered'),
-    ).toHaveLength(1);
-  });
-
-  test('LOC repayment cannot use credit and the twentieth unit closes it', () => {
-    const opened = dispatchCommand(
-      run(),
-      { type: 'open_line_of_credit', commandId: 'open-loc', now: 0 },
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-    const rejected = dispatchCommand(
-      { ...opened, balance: 599 },
-      {
-        type: 'repay_line_of_credit',
-        commandId: 'repay-unaffordable',
-        quantity: 1,
-        now: 0,
-      },
-      BUNDLED_GAME_DEFINITION,
-    );
-    expect(rejected.outcomes[0]).toMatchObject({
-      accepted: false,
-      kind: 'insufficient_funds',
-    });
-    expect(rejected.state.lineOfCredit).toEqual(opened.lineOfCredit);
-
-    const closed = dispatchCommand(
-      { ...opened, balance: 12_000 },
-      {
-        type: 'repay_line_of_credit',
-        commandId: 'repay-all',
-        quantity: 20,
-        now: 0,
-      },
-      BUNDLED_GAME_DEFINITION,
-    );
-    expect(closed.state.balance).toBe(0);
-    expect(closed.state.lineOfCredit).toMatchObject({ status: 'closed' });
-    expect(closed.state.statuses.in_debt).toBeUndefined();
-    expect(debtBreakdown(closed.state).total).toBe(0);
-  });
-
-  test('an open LOC charges exactly $1,000 at each later local midnight', () => {
-    const opened = dispatchCommand(
-      run(),
-      { type: 'open_line_of_credit', commandId: 'open-loc', now: 0 },
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-    let nextDay = opened;
-    while (nextDay.now < DAY_MS)
-      nextDay = reconcileTime(
-        nextDay,
-        DAY_MS,
-        BUNDLED_GAME_DEFINITION,
-      ).state;
-
-    expect(nextDay.lineOfCredit).toMatchObject({
-      remainingUnits: 20,
-      remainingClosureCost: 12_000,
-      cumulativeOpenCharges: 1_000,
-    });
-    const charges = nextDay.events.filter(
-      (event) => event.type === 'loc_open_charge',
-    );
-    expect(charges).toHaveLength(1);
-    expect(charges[0]).toMatchObject({
-      amount: -1_000,
-      financialEffect: { cashDelta: -1_000 },
-    });
-
-    const replay = reconcileTime(nextDay, DAY_MS, BUNDLED_GAME_DEFINITION).state;
-    expect(replay).toEqual(nextDay);
   });
 
   test('the operation crossing $20,000 total debt ends immediately', () => {
@@ -223,9 +121,8 @@ describe('economy specification through the engine seam', () => {
       totalDebt: 20_000,
     });
     expect(result.state.ending?.eventIds).toContain(
-      result.state.events.find(
-        (event) => event.type === 'medical_debt_created',
-      )?.id,
+      result.state.events.find((event) => event.type === 'medical_debt_created')
+        ?.id,
     );
   });
 

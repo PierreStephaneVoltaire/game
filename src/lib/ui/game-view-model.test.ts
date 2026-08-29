@@ -220,11 +220,7 @@ describe('game view model', () => {
       'Quit Streaming',
       'Mood remained at 0 continuously for 72 game-hours.',
     ],
-    [
-      'financial_ruin',
-      'Financial Ruin',
-      'Total debt reached $20,000.',
-    ],
+    ['financial_ruin', 'Financial Ruin', 'Total debt reached $20,000.'],
   ] as const)('presents the %s ending card', (kind, title, explanation) => {
     const initial = startedState();
     const common = {
@@ -264,7 +260,7 @@ describe('game view model', () => {
               },
               triggerEventId: 'trigger',
             }
-        : {
+          : {
               ...common,
               kind,
               durationHours: 72,

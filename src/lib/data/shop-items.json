@@ -3539,13 +3539,15 @@
       "found and ate the three-month-old rotisserie chicken during the stream."
     ],
     "category": "food",
-    "price": 12,
+    "price": 8,
     "description": "A complete rotisserie chicken that has been sitting around for three months.",
-    "qualitativeNutritionHint": "Substantial protein cannot redeem three months of deeply questionable storage.",
+    "qualitativeNutritionHint": "The joke lands harder than any nutritional benefit.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
+    "maximumOwned": 1,
+    "maximumLifetimePurchases": 1,
     "stock": {
       "min": 1,
       "max": 1
@@ -3577,19 +3579,19 @@
       }
     },
     "nutritionScores": {
-      "salt": 1,
+      "salt": 0,
       "water": 0,
-      "protein": 3,
+      "protein": 0,
       "sugar": 0,
       "caffeine": 0
     },
     "properties": {
-      "salt": 1,
+      "salt": 0,
       "water": 0,
-      "protein": 3,
+      "protein": 0,
       "sugar": 0,
       "caffeine": 0,
-      "portion": 5
+      "portion": 0
     },
     "statusHooks": [],
     "automaticEventHooks": [],

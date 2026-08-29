@@ -16,8 +16,11 @@ import { appendTimelineStatusEvents } from './timeline-status-events';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { resolveAudienceGrowth } from '../audience-growth-rules';
 import { processDailyMedicalPayments } from '../medical-debt-rules';
-import { processLineOfCreditOpenCharge } from '../commands/line-of-credit-commands';
 import { processSubscriberRevenue } from '../subscriber-revenue-rules';
+import {
+  nextLifeEventBoundary,
+  processLifeEventBoundary,
+} from '../life-event-scheduler';
 
 export type TimelineEffectsInput = {
   state: GameState;
@@ -125,6 +128,13 @@ export function resolveTimelineEffects({
   }
 
   if (!deathAt) {
+    if (!next.ending && nextLifeEventBoundary(next) === reconciliationNow) {
+      const lifeEvents = processLifeEventBoundary(next, reconciliationNow);
+      next = lifeEvents.state;
+      eventIds.push(...lifeEvents.eventIds);
+    }
+  }
+  if (!deathAt && !next.ending) {
     const opportunities = resolveTimelineOpportunities({
       state: next,
       definition,
@@ -146,11 +156,6 @@ export function resolveTimelineEffects({
     );
     next = medicalPayments.state;
     eventIds.push(...medicalPayments.eventIds);
-  }
-  if (!deathAt && !next.ending) {
-    const locCharge = processLineOfCreditOpenCharge(next, reconciliationNow);
-    next = locCharge.state;
-    eventIds.push(...locCharge.eventIds);
   }
   if (!deathAt && !next.ending) {
     const audience = resolveAudienceGrowth(next, reconciliationNow);

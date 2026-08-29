@@ -97,7 +97,7 @@ export function completeStreamEconomy(
 function donationLabel(tier: GameEvent['donationTier']): string {
   if (tier === 'whale') return 'A major donor';
   if (tier === 'legendary_whale') return 'A legendary donor';
-  if (tier === 'kind_bridiot') return 'A kind Bridiot';
+  if (tier === 'kind_supporter') return 'A kind supporter';
   return 'A raid windfall';
 }
 

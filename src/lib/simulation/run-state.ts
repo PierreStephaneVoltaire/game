@@ -25,6 +25,7 @@ export function createRunState(
     );
   const history = {
     consumptions: [],
+    lifetimePurchases: {},
     kidneyStoneFeeds: [],
     lastBondGainAt: input.now,
     lastCareAttemptAt: input.now,
@@ -54,6 +55,12 @@ export function createRunState(
     autonomousRescue: { foodLocked: false, restLocked: false },
     lastCriticalHealthMoodPenaltyAt: null,
     lastMovementAt: null,
+    lifeEventScheduler: {
+      boundariesProcessed: 0,
+      successfulRolls: {},
+      suppressedAgencyInvitations: 0,
+      multiSuccessBoundaries: 0,
+    },
   } as GameState['history'];
   const base: GameState = {
     definitionVersion: definition.version,
@@ -93,7 +100,8 @@ export function createRunState(
       permanentDonationBonus: false,
       lastAutonomousStreamSelectedAt: input.now,
       activeAudienceBoosts: [],
-      discoveryBoost: null,
+      agencyJoinedAt: null,
+      discoveryBoosts: [],
       streamStats: {
         started: 0,
         completed: 0,
@@ -109,9 +117,14 @@ export function createRunState(
     ending: null,
     processedCommands: {},
   };
+  const shop = rotateShop(
+    base,
+    definition,
+    localDate(input.now, input.timezone),
+  );
   return reconcileRunEnding({
     ...base,
-    shop: rotateShop(base, definition, localDate(input.now, input.timezone)),
-    events: [started],
+    shop,
+    events: [{ ...started, shopItemIds: shop.itemIds }],
   });
 }

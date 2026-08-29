@@ -16,7 +16,6 @@ import { applyAutomaticHook } from './event-hook-application';
 import { localDateOrdinal } from './event-candidate-pool';
 import { resolveOffStreamSupport } from './off-stream-support-rules';
 import { healthDamageSource } from './simulation/health-resolution';
-import { resolveLifeEvent } from './life-event-rules';
 import { selectAttemptEvent } from './event-selection';
 import { finalizeBuiltInEvent } from './event-resolution-finalizer';
 
@@ -79,18 +78,6 @@ export function resolveAttemptEvent(
     };
     return startFullBodyProject(withOpportunity, commandId);
   }
-  if (selected.startsWith('life_event:'))
-    return resolveLifeEvent(
-      {
-        ...state,
-        events: [...state.events, opportunityEvent],
-        stateVersion: state.stateVersion + 1,
-      },
-      selected.slice('life_event:'.length),
-      state.now,
-      commandId,
-    );
-
   const selectedHook = selected.startsWith('item_hook:')
     ? definition.items
         .flatMap((item) =>

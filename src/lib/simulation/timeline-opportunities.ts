@@ -85,6 +85,7 @@ export function resolveTimelineOpportunities(input: {
       type: 'shop_rotated',
       at: input.at,
       message: 'The shop refreshed for a new local day.',
+      shopItemIds: next.shop.itemIds,
     };
     next = { ...next, events: [...next.events, event] };
     eventIds.push(event.id);

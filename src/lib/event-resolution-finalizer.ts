@@ -38,11 +38,7 @@ export function finalizeBuiltInEvent(input: {
             ? input.state.now
             : input.state.history.lastMovementAt,
       },
-      events: [
-        ...input.state.events,
-        input.opportunityEvent,
-        input.event,
-      ],
+      events: [...input.state.events, input.opportunityEvent, input.event],
       stateVersion: input.state.stateVersion + 2,
     },
     input.commandId,

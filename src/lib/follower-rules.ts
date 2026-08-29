@@ -194,8 +194,7 @@ export function streamRateFor(state: GameState): [number, number] {
   const rate = progressionRules.milestones
     .filter(
       (milestone) =>
-        milestone.streamRate &&
-        progressionFollowers >= milestone.followers,
+        milestone.streamRate && progressionFollowers >= milestone.followers,
     )
     .at(-1)?.streamRate;
   return (

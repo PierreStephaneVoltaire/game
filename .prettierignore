@@ -4,3 +4,4 @@ plan_updated.md
 stream-economy-and-care-rebalance-requirements.md
 pnpm-lock.yaml
 src/lib/data/shop-items.json
+.tmp-*.json

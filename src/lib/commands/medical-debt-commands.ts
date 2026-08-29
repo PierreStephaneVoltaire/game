@@ -38,13 +38,13 @@ export function payMedicalDebtInFull(
     medicalPaymentIds: paymentIds,
   };
   const mutated: GameState = {
-      ...state,
-      balance: state.balance - price,
-      medicalDebt: [],
-      events: [...state.events, event],
-      stateVersion: state.stateVersion + 1,
-      actionOrdinal: state.actionOrdinal + 1,
-    };
+    ...state,
+    balance: state.balance - price,
+    medicalDebt: [],
+    events: [...state.events, event],
+    stateVersion: state.stateVersion + 1,
+    actionOrdinal: state.actionOrdinal + 1,
+  };
   return {
     state: finalizeFinancialOperation({
       before: state,

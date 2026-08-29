@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { progressionPurchaseAllowed } from '../billing-rules';
+import { purchaseAllowed } from '../billing-rules';
 import { BUNDLED_GAME_DEFINITION } from '../game-definition';
 import { dispatchCommand, reconcileTime, startRun } from '../game-engine';
 import type { GameState } from '../game-types';
@@ -186,9 +186,9 @@ describe('V2 edge regressions', () => {
       ...state,
       progression: { ...state.progression, unlockedModelTiers: [1 as const] },
     };
-    expect(progressionPurchaseAllowed(eligible, item)).toBe(true);
+    expect(purchaseAllowed(eligible, item)).toBe(true);
     expect(
-      progressionPurchaseAllowed(
+      purchaseAllowed(
         {
           ...eligible,
           projects: [
@@ -206,7 +206,7 @@ describe('V2 edge regressions', () => {
       ),
     ).toBe(false);
     expect(
-      progressionPurchaseAllowed(
+      purchaseAllowed(
         {
           ...eligible,
           progression: { ...eligible.progression, completedModelTiers: [1] },

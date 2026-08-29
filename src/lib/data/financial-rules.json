@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "debt": {
     "statusThreshold": 10000,
     "financialRuinThreshold": 20000,
@@ -8,11 +8,11 @@
     "combinedRecoveryPenaltyCap": 2
   },
   "lineOfCredit": {
-    "applicationPrice": 10,
+    "applicationPrice": 50,
     "cashAdvance": 10000,
     "repaymentUnitCount": 20,
     "repaymentUnitPrice": 600,
     "totalClosureCost": 12000,
-    "dailyOpenCharge": 1000
+    "financeChargeRate": 0.2
   }
 }

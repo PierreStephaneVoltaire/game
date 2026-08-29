@@ -25,9 +25,7 @@
       )} cash advance. Close it with {lineOfCredit.totalUnits} × ${numbers.format(
         lineOfCredit.repaymentUnitPrice,
       )} repayment units (${numbers.format(lineOfCredit.totalClosureCost)} total).
-      Every later open local day costs ${numbers.format(
-        lineOfCredit.dailyOpenCharge,
-      )}.
+      Time passing creates no additional charge.
     </p>
     <button type="button" {disabled} on:click={onOpen}
       >Open Line of Credit</button
@@ -41,9 +39,8 @@
       )}</strong
     >
     <p>
-      {lineOfCredit.remainingUnits} repayment units remain. The daily open charge
-      is ${numbers.format(lineOfCredit.dailyOpenCharge)}. Repayment units cannot
-      be bought on credit.
+      {lineOfCredit.remainingUnits} repayment units remain. Repayment units cannot
+      be bought on credit, and the remaining cost does not change with time.
     </p>
     <label>
       Units

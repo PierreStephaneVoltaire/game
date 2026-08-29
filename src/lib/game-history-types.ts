@@ -13,6 +13,8 @@ export type ConsumptionRecord = {
 
 export type GameHistory = {
   consumptions: ConsumptionRecord[];
+  /** Successful purchases retained after consumable inventory is used. */
+  lifetimePurchases: Record<string, number>;
   /** The ten most recent successful food or drink feeds used for stone risk. */
   kidneyStoneFeeds: ConsumptionRecord[];
   lastBondGainAt: number;
@@ -44,4 +46,10 @@ export type GameHistory = {
   };
   lastCriticalHealthMoodPenaltyAt: number | null;
   lastMovementAt: number | null;
+  lifeEventScheduler: {
+    boundariesProcessed: number;
+    successfulRolls: Record<string, number>;
+    suppressedAgencyInvitations: number;
+    multiSuccessBoundaries: number;
+  };
 };
