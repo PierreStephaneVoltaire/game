@@ -13,7 +13,7 @@
       }
     },
     {
-      "route": "/bri.svg",
+      "route": "/companions/*",
       "headers": {
         "cache-control": "public, max-age=3600"
       }
@@ -21,7 +21,7 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/_app/*", "/items/*", "/bri.svg"]
+    "exclude": ["/_app/*", "/items/*", "/companions/*"]
   },
   "globalHeaders": {
     "x-content-type-options": "nosniff",
