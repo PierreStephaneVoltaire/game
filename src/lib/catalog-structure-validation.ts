@@ -1,5 +1,6 @@
 import type { EffectRange, ItemDefinition } from './game-definition';
 import { isStatusName } from './status-rules';
+import { CAREER_TIERS } from './progression-types';
 
 const METRICS = new Set([
   'food',
@@ -34,6 +35,55 @@ export function validateItemStructure(
   allTags: Set<string>,
 ): string[] {
   const issues: string[] = [];
+  if (typeof item.supportsQuantity !== 'boolean')
+    issues.push('supportsQuantity must be explicitly authored');
+  if (
+    item.maximumOwned !== undefined &&
+    (!Number.isInteger(item.maximumOwned) || item.maximumOwned < 1)
+  )
+    issues.push('maximumOwned must be a positive integer');
+  if (
+    item.maximumLifetimePurchases !== undefined &&
+    (!Number.isInteger(item.maximumLifetimePurchases) ||
+      item.maximumLifetimePurchases < 1)
+  )
+    issues.push('maximumLifetimePurchases must be a positive integer');
+  if (
+    item.stock &&
+    (!Number.isInteger(item.stock.min) ||
+      !Number.isInteger(item.stock.max) ||
+      item.stock.min < 1 ||
+      item.stock.max < item.stock.min)
+  )
+    issues.push('stock must contain a valid positive min/max range');
+  if (
+    item.sugarServings !== undefined &&
+    (!Number.isInteger(item.sugarServings) || item.sugarServings < 1)
+  )
+    issues.push('sugarServings must be a positive integer');
+  if (
+    item.progression?.requiredCareerTier !== undefined &&
+    !CAREER_TIERS.includes(
+      item.progression.requiredCareerTier as (typeof CAREER_TIERS)[number],
+    )
+  )
+    issues.push('progression references an unknown career tier');
+  for (const modifier of item.eventPoolModifiers ?? []) {
+    if (!modifier.eventId?.trim())
+      issues.push('event-pool modifier needs an event id');
+    if (!Number.isFinite(modifier.weightDelta) || modifier.weightDelta === 0)
+      issues.push(
+        `event-pool modifier ${modifier.eventId} needs a nonzero weight`,
+      );
+    if (!['owned', 'placed'].includes(modifier.eligibility))
+      issues.push(
+        `event-pool modifier ${modifier.eventId} has invalid eligibility`,
+      );
+    if (modifier.eligibility === 'placed' && !item.roomSlot)
+      issues.push(
+        `event-pool modifier ${modifier.eventId} cannot require placement`,
+      );
+  }
   const actions = item.itemActions;
   if (!Array.isArray(actions)) issues.push('item actions missing');
   else {
@@ -48,8 +98,40 @@ export function validateItemStructure(
       if (actionIds.has(action.id))
         issues.push(`duplicate item action id: ${action.id}`);
       actionIds.add(action.id);
-      if (!['consume', 'interaction'].includes(action.kind))
+      if (
+        !['consume', 'interaction', 'activity', 'service'].includes(action.kind)
+      )
         issues.push(`unknown item action kind: ${action.kind}`);
+      if (
+        action.kind === 'activity' &&
+        (action.activity?.type !== 'commission_work' ||
+          !Number.isFinite(action.activity.durationHours) ||
+          action.activity.durationHours <= 0)
+      )
+        issues.push(`action ${action.id} needs a valid activity definition`);
+      if (action.kind !== 'activity' && action.activity)
+        issues.push(`action ${action.id} cannot define an activity`);
+      if (
+        action.kind === 'service' &&
+        !['model_commission', 'full_body_commission'].includes(
+          action.service?.type ?? '',
+        )
+      )
+        issues.push(`action ${action.id} needs a valid service definition`);
+      if (action.kind !== 'service' && action.service)
+        issues.push(`action ${action.id} cannot define a service`);
+      if (
+        action.progressionEffect &&
+        action.progressionEffect.type !== 'activate_clippers'
+      )
+        issues.push(`action ${action.id} has an unknown progression effect`);
+      if (
+        action.progressionEffect?.type === 'activate_clippers' &&
+        (action.kind !== 'interaction' || action.consumes !== true)
+      )
+        issues.push(
+          `action ${action.id} must consume an interaction to activate Clippers`,
+        );
       if (action.effects)
         issues.push(
           ...validateEffects(action.effects, `action ${action.id} effect`),
@@ -93,8 +175,12 @@ export function validateItemStructure(
         issues.push('automatic event hooks must be structured objects');
         continue;
       }
-      if (!hook.id?.trim() || !hook.message?.trim())
-        issues.push('automatic event hook needs an id and message');
+      if (
+        !hook.id?.trim() ||
+        (!hook.message?.trim() &&
+          !hook.messages?.some((message) => message.trim()))
+      )
+        issues.push('automatic event hook needs an id and message copy');
       if (hookIds.has(hook.id))
         issues.push(`duplicate automatic event hook id: ${hook.id}`);
       hookIds.add(hook.id);
@@ -111,6 +197,21 @@ export function validateItemStructure(
         issues.push(`automatic event hook ${hook.id} has invalid cooldown`);
       if (hook.effects)
         issues.push(...validateEffects(hook.effects, `hook ${hook.id} effect`));
+      for (const outcome of hook.outcomes ?? []) {
+        if (!outcome.id?.trim() || !outcome.message?.trim())
+          issues.push(`automatic event hook ${hook.id} has an invalid outcome`);
+        if (!Number.isFinite(outcome.weight) || outcome.weight <= 0)
+          issues.push(
+            `automatic event hook ${hook.id} outcome has invalid weight`,
+          );
+        if (outcome.effects)
+          issues.push(
+            ...validateEffects(
+              outcome.effects,
+              `hook ${hook.id} outcome effect`,
+            ),
+          );
+      }
     }
   }
   return issues;

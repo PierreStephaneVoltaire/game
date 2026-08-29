@@ -12,21 +12,21 @@ import {
 import { isStatusName } from './status-rules';
 
 const CATEGORY_BANDS: Record<string, [number, number]> = {
-  food: [1, 8],
+  food: [1, 15],
   medicine: [5, 15],
-  care: [5, 15],
+  care: [5, 250],
   accessory: [25, 250],
   reusable: [25, 250],
-  upgrade: [25, 250],
+  upgrade: [25, 350],
   decoration: [25, 250],
 };
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
-  food: 107,
-  medicine: 1,
-  care: 1,
-  reusable: 73,
-  upgrade: 20,
-  decoration: 14,
+  food: 111,
+  medicine: 2,
+  care: 3,
+  reusable: 74,
+  upgrade: 23,
+  decoration: 15,
 };
 const METRICS = new Set([
   'food',
@@ -41,7 +41,6 @@ const PREFERENCES = new Set([
   'disliked',
   'specific_preparation',
   'variable',
-  'never_had',
 ]);
 const ROOM_SLOTS = new Set([
   'bed',
@@ -89,6 +88,18 @@ function validateItem(
   const issues: string[] = [];
   if (!item.id || !item.name || !item.description)
     issues.push('missing identity/display field');
+  if (!Array.isArray(item.narration) || item.narration.length === 0)
+    issues.push('item narration needs at least one authored line');
+  else {
+    if (new Set(item.narration).size !== item.narration.length)
+      issues.push('duplicate item narration');
+    if (item.narration.some((line) => !line.trim()))
+      issues.push('empty item narration');
+    if (item.narration.some((line) => /\bdiscover(?:ed|ing|s)?\b/i.test(line)))
+      issues.push(
+        'item narration must not treat familiar items as discoveries',
+      );
+  }
   if (FORBIDDEN_ALIASES.has(item.id))
     issues.push('catalogue contains a non-canonical alias');
   if (!(item.category in CATEGORY_BANDS)) issues.push('unknown item category');
@@ -105,7 +116,7 @@ function validateItem(
     issues.push('qualitative nutrition hint is missing or generic');
   if (
     companionNamePattern.test(
-      `${item.description} ${item.qualitativeNutritionHint}`,
+      `${item.description} ${item.qualitativeNutritionHint} ${(item.narration ?? []).join(' ')}`,
     )
   )
     issues.push('catalogue copy hardcodes the companion name');
@@ -234,9 +245,9 @@ export function validateCatalog(
     }
   }
   if (requireComplete) {
-    if (definition.items.length !== 216)
+    if (definition.items.length !== 228)
       issues.push({
-        message: `expected 216 canonical items, found ${definition.items.length}`,
+        message: `expected 228 canonical items, found ${definition.items.length}`,
       });
     for (const [category, expected] of Object.entries(
       COMPLETE_CATEGORY_COUNTS,

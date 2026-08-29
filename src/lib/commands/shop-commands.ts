@@ -5,6 +5,15 @@ import {
   rejected,
   supportsQuantity,
 } from '../simulation/engine-state';
+import {
+  purchaseAllowed,
+  purchaseQuantity,
+  recordLifetimePurchases,
+} from '../billing-rules';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { finalizeFinancialOperation } from '../financial-rules';
+import rules from '../data/simulation-rules.json';
+import { purchaseMetrics } from './shop-purchase-effects';
 
 export type ShopCommandResult = {
   handled: boolean;
@@ -37,16 +46,26 @@ function setCartQuantity(
   const item = definition.items.find(
     (candidate) => candidate.id === command.itemId,
   );
-  const available = state.shop.stock[command.itemId] ?? 0;
-  const quantity = Math.max(
-    0,
-    Math.min(available, Math.floor(command.quantity)),
-  );
   if (!item || !state.shop.itemIds.includes(command.itemId))
     return result(
       state,
       rejected('unavailable', 'That item is not in today’s shop.'),
     );
+  if (!purchaseAllowed(state, item))
+    return result(
+      state,
+      rejected('unavailable', 'That progression purchase is not available.'),
+    );
+  if (
+    item.consumable === false &&
+    !supportsQuantity(item) &&
+    command.quantity > 1
+  )
+    return result(
+      state,
+      rejected('quantity_cap', 'That durable item can only be purchased once.'),
+    );
+  const quantity = purchaseQuantity(state, item, command.quantity);
   const cart = { ...state.shop.cart };
   if (quantity) cart[item.id] = quantity;
   else delete cart[item.id];
@@ -84,10 +103,10 @@ function checkoutCart(
   );
   if (!lines.length)
     return result(state, rejected('empty_cart', 'Your cart is empty.'));
-  if (state.balance < 0)
+  if (lines.some((line) => !purchaseAllowed(state, line.item)))
     return result(
       state,
-      rejected('debt', 'Purchases are unavailable while medical debt remains.'),
+      rejected('unavailable', 'A progression purchase is no longer available.'),
     );
   if (
     lines.some(
@@ -103,15 +122,25 @@ function checkoutCart(
       rejected('duplicate', 'You already own that durable item.'),
     );
   if (
+    lines.some(
+      (line) =>
+        purchaseQuantity(state, line.item, line.quantity) !== line.quantity,
+    )
+  )
+    return result(
+      state,
+      rejected(
+        'quantity_cap',
+        'One or more cart quantities exceed an ownership cap.',
+      ),
+    );
+  if (
     lines.some((line) => (state.shop.stock[line.item.id] ?? 0) < line.quantity)
   )
     return result(
       state,
       rejected('unavailable', 'One or more cart items are out of stock.'),
     );
-  if (state.balance < total)
-    return result(state, rejected('insufficient_funds', 'Not enough money.'));
-
   const stock = { ...state.shop.stock };
   const inventory = { ...state.inventory };
   for (const line of lines) {
@@ -124,17 +153,42 @@ function checkoutCart(
     at: state.now,
     message: `Checked out ${lines.length} item${lines.length === 1 ? '' : 's'}.`,
     sourceActionId: command.commandId,
+    purchases: lines.map((line) => ({
+      itemId: line.item.id,
+      itemName: line.item.name,
+      quantity: line.quantity,
+    })),
+    metricDeltas:
+      state.balance < 0 ? { mood: rules.debt.purchaseMood } : undefined,
   };
   const next: GameState = {
     ...state,
     balance: state.balance - total,
+    metrics: purchaseMetrics(state),
     inventory,
     shop: { ...state.shop, stock, cart: {} },
+    history: recordLifetimePurchases(
+      state,
+      lines.map((line) => ({ itemId: line.item.id, quantity: line.quantity })),
+    ),
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
-  return result(next, accepted('cart_checked_out', event.message, [event.id]));
+  const reconciled = reconcileMetricSource(state, next, command.commandId);
+  return result(
+    finalizeFinancialOperation({
+      before: state,
+      state: reconciled,
+      triggerEventId: event.id,
+      kind: 'shop_purchase',
+      purchaseCategory:
+        new Set(lines.map((line) => line.item.category)).size === 1
+          ? lines[0].item.category
+          : 'mixed',
+    }),
+    accepted('cart_checked_out', event.message, [event.id]),
+  );
 }
 
 function buyItem(
@@ -145,18 +199,27 @@ function buyItem(
   const item = definition.items.find(
     (candidate) => candidate.id === command.itemId,
   );
-  const quantity = Math.max(1, Math.floor(command.quantity ?? 1));
+  const requestedQuantity = Math.max(1, Math.floor(command.quantity ?? 1));
   const available = state.shop.stock[command.itemId] ?? 0;
   if (
     !item ||
     !state.shop.itemIds.includes(command.itemId) ||
-    available < quantity
+    available < requestedQuantity
   )
     return result(state, rejected('unavailable', 'That item is out of stock.'));
-  if (state.balance < 0)
+  if (!purchaseAllowed(state, item))
     return result(
       state,
-      rejected('debt', 'Purchases are unavailable while medical debt remains.'),
+      rejected('unavailable', 'That progression purchase is not available.'),
+    );
+  if (
+    item.consumable === false &&
+    !supportsQuantity(item) &&
+    requestedQuantity > 1
+  )
+    return result(
+      state,
+      rejected('quantity_cap', 'That durable item can only be purchased once.'),
     );
   if (
     item.consumable === false &&
@@ -168,19 +231,26 @@ function buyItem(
       state,
       rejected('duplicate', 'You already own that durable item.'),
     );
-  if (state.balance < item.price * quantity)
-    return result(state, rejected('insufficient_funds', 'Not enough money.'));
-
+  const quantity = purchaseQuantity(state, item, requestedQuantity);
+  if (quantity < requestedQuantity)
+    return result(
+      state,
+      rejected('quantity_cap', 'That quantity exceeds the item ownership cap.'),
+    );
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'item_purchased',
     at: state.now,
     message: `Bought ${quantity} ${item.name}.`,
     sourceActionId: command.commandId,
+    purchases: [{ itemId: item.id, itemName: item.name, quantity }],
+    metricDeltas:
+      state.balance < 0 ? { mood: rules.debt.purchaseMood } : undefined,
   };
   const next: GameState = {
     ...state,
     balance: state.balance - item.price * quantity,
+    metrics: purchaseMetrics(state),
     inventory: {
       ...state.inventory,
       [item.id]: (state.inventory[item.id] ?? 0) + quantity,
@@ -189,11 +259,22 @@ function buyItem(
       ...state.shop,
       stock: { ...state.shop.stock, [item.id]: available - quantity },
     },
+    history: recordLifetimePurchases(state, [{ itemId: item.id, quantity }]),
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
-  return result(next, accepted('item_purchased', event.message, [event.id]));
+  const reconciled = reconcileMetricSource(state, next, command.commandId);
+  return result(
+    finalizeFinancialOperation({
+      before: state,
+      state: reconciled,
+      triggerEventId: event.id,
+      kind: 'shop_purchase',
+      purchaseCategory: item.category,
+    }),
+    accepted('item_purchased', event.message, [event.id]),
+  );
 }
 
 function result(state: GameState, outcome: Outcome): ShopCommandResult {

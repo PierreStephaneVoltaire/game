@@ -1,50 +1,53 @@
-import type { GameDefinition, ItemDefinition } from '$lib/game-definition';
+import type { GameDefinition } from '$lib/game-definition';
 import type {
   GameCommand,
-  GameEvent,
   GameState,
   MetricName,
   StatusName,
 } from '$lib/game-types';
 import { companion } from './companion';
+import { gameCopy, statusLabel } from './game-copy';
 import {
-  actionOwnership,
-  itemActionAvailable,
-} from '$lib/item-action-prerequisites';
-import { eventLabel, gameCopy, statusLabel } from './game-copy';
+  projectCausalJourney,
+  projectJourney,
+  type JourneyEntryViewModel,
+} from './journey-events';
+import {
+  createActionOwnership,
+  itemFor,
+  type ItemViewModel,
+} from './item-view-model';
+import {
+  progressionPresentation,
+  type CareerViewModel,
+  type HospitalViewModel,
+  type ProjectViewModel,
+  type TimedEffectViewModel,
+} from './progression-view-model';
+import type { CompanionAppearance } from './companion';
+import { metricMaximum } from '$lib/game-constants';
+import {
+  endingPresentation,
+  endingRiskPresentation,
+  type EndingRiskViewModel,
+  type EndingViewModel,
+} from './ending-view-model';
+import {
+  financialPresentation,
+  type FinancialViewModel,
+} from './financial-view-model';
 
-type CatalogueItem = ItemDefinition;
-export type ItemActionViewModel = {
-  id: string;
-  label: string;
-  available: boolean;
-};
+export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
+export type { EndingRiskViewModel, EndingViewModel } from './ending-view-model';
 
 export type MetricViewModel = {
   key: MetricName;
   label: string;
   value: number;
+  maximum: number;
   percentage: number;
 };
-export type ItemViewModel = {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  image: string;
-  description: string;
-  edible: boolean;
-  itemActions: ItemActionViewModel[];
-  roomSlot: string | null;
-  owned: number;
-  stock: number;
-  inCart: number;
-  qualitativeHint: string;
-  placedSlot: string | null;
-};
-export type EventViewModel = Pick<GameEvent, 'id' | 'at' | 'message'> & {
-  label: string;
-};
+export type EventViewModel = JourneyEntryViewModel;
 export type ActivityViewModel = {
   label: string;
   endsAt: number;
@@ -56,21 +59,38 @@ export type GameIntent =
   | { type: 'place_item'; itemId: string; slot: string }
   | { type: 'set_cart_quantity'; itemId: string; quantity: number }
   | { type: 'checkout_cart' }
+  | { type: 'pay_medical_debt' }
+  | { type: 'open_line_of_credit' }
+  | { type: 'repay_line_of_credit'; quantity: number }
   | { type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'wait' };
 export type GameViewModel = {
   companion: typeof companion;
   mode: GameState['mode'];
   modeLabel: string;
   now: number;
+  runStartedAt: number;
   formattedTime: string;
   timezone: string;
   seed: string;
   balance: number;
+  medicalDebt: FinancialViewModel['medicalDebt'];
+  followers: number;
+  peakFollowers: number;
+  streamStats: GameState['progression']['streamStats'];
+  career: CareerViewModel;
+  debt: FinancialViewModel['debt'];
+  lineOfCredit: FinancialViewModel['lineOfCredit'];
+  madeItUnlocked: boolean;
+  effects: TimedEffectViewModel[];
+  projects: ProjectViewModel[];
+  activeAvatar: CompanionAppearance;
+  hospital: HospitalViewModel;
   metrics: MetricViewModel[];
   statuses: Array<{ key: StatusName; label: string }>;
+  endingRisks: EndingRiskViewModel[];
   activity: ActivityViewModel | null;
-  death: { at: number; cause: string } | null;
-  eventCount: number;
+  ending: EndingViewModel | null;
+  commandsDisabled: boolean;
   events: EventViewModel[];
   causalEvents: EventViewModel[];
   anchors: Array<{ key: string; label: string; item: ItemViewModel | null }>;
@@ -79,6 +99,8 @@ export type GameViewModel = {
   catalogue: ItemViewModel[];
   cart: ItemViewModel[];
   cartTotal: number;
+  cartResultingBalance: number;
+  cartCheckoutAllowed: boolean;
   categories: string[];
 };
 
@@ -92,54 +114,12 @@ const metricKeys: MetricName[] = [
 ];
 const anchorKeys = Object.keys(gameCopy.anchors);
 
-function itemFor(
-  state: GameState,
-  definition: GameDefinition,
-  id: string | undefined,
-  ownership: ReturnType<typeof actionOwnership>,
-): ItemViewModel | null {
-  if (!id) return null;
-  const item = definition.items.find((candidate) => candidate.id === id) as
-    CatalogueItem | undefined;
-  if (!item) return null;
-  const owned = state.inventory[id] ?? 0;
-  const placedSlot =
-    Object.entries(state.room).find(([, placedId]) => placedId === id)?.[0] ??
-    null;
-  const itemActions = (item.itemActions ?? []).map((action) => ({
-    id: action.id,
-    label: action.label,
-    available: itemActionAvailable(item.id, action, ownership),
-  }));
-  const presentationOwned = owned + (placedSlot ? 1 : 0);
-  return {
-    id: item.id,
-    name: item.name,
-    category: item.category,
-    price: item.price,
-    image: item.image,
-    description: item.description,
-    edible: item.edible,
-    itemActions,
-    roomSlot: item.roomSlot ?? null,
-    owned: presentationOwned,
-    stock: state.shop.stock[id] ?? 0,
-    inCart: state.shop.cart[id] ?? 0,
-    qualitativeHint: item.qualitativeNutritionHint,
-    placedSlot,
-  };
-}
-
 function formatTime(value: number, timezone: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
     dateStyle: 'medium',
     timeStyle: 'short',
     timeZone: timezone,
   }).format(value);
-}
-
-function personalizeEventMessage(message: string): string {
-  return message.replace(/^Companion\b/, companion.name);
 }
 
 export function daypartFor(now: number, timezone: string): string {
@@ -166,11 +146,7 @@ export function createGameViewModel(
   definition: GameDefinition,
   locale = 'en-US',
 ): GameViewModel {
-  const ownership = actionOwnership(
-    state.inventory,
-    state.room,
-    definition.items,
-  );
+  const ownership = createActionOwnership(state, definition);
   const catalogue = definition.items
     .map((item) => itemFor(state, definition, item.id, ownership))
     .filter((item): item is ItemViewModel => Boolean(item));
@@ -181,50 +157,55 @@ export function createGameViewModel(
   const cart = Object.keys(state.shop.cart)
     .map((id) => itemFor(state, definition, id, ownership))
     .filter((item): item is ItemViewModel => Boolean(item));
-  const causalEvents = state.death
-    ? state.events.filter((event) => state.death?.eventIds.includes(event.id))
+  const events = projectJourney(state.events, companion.name);
+  const causalEventViews = state.ending
+    ? projectCausalJourney(state.events, state.ending.eventIds, companion.name)
     : [];
-  const events = state.events.map((event) => ({
-    id: event.id,
-    at: event.at,
-    message: personalizeEventMessage(event.message),
-    label: eventLabel(event.type),
-  }));
-  const causalEventViews = causalEvents.map((event) => ({
-    id: event.id,
-    at: event.at,
-    message: personalizeEventMessage(event.message),
-    label: eventLabel(event.type),
-  }));
+  const cartTotal = cart.reduce(
+    (sum, item) => sum + item.price * item.inCart,
+    0,
+  );
+  const cartCheckoutAllowed =
+    cart.length > 0 &&
+    cart.every(
+      (item) => item.purchaseAllowed && item.inCart <= item.maximumCartQuantity,
+    );
   return {
     companion,
     mode: state.mode,
     modeLabel: gameCopy.mode[state.mode],
     now: state.now,
+    runStartedAt: state.history.runStartedAt,
     formattedTime: formatTime(state.now, state.timezone, locale),
     timezone: state.timezone,
     seed: state.seed,
     balance: state.balance,
-    metrics: metricKeys.map((key) => ({
-      key,
-      label: gameCopy.metrics[key],
-      value: state.metrics[key],
-      percentage: state.metrics[key] * 10,
-    })),
+    ...financialPresentation(state),
+    madeItUnlocked: state.endingUnlocks.made_it !== null,
+    ...progressionPresentation(state, definition),
+    metrics: metricKeys.map((key) => {
+      const maximum = metricMaximum(key);
+      return {
+        key,
+        label: gameCopy.metrics[key],
+        value: state.metrics[key],
+        maximum,
+        percentage: (state.metrics[key] / maximum) * 100,
+      };
+    }),
     statuses: (Object.keys(state.statuses) as StatusName[]).map((key) => ({
       key,
       label: statusLabel(key),
     })),
+    endingRisks: endingRiskPresentation(state),
     activity: state.activity
       ? {
           label: gameCopy.activity[state.activity.type],
           endsAt: state.activity.endsAt,
         }
       : null,
-    death: state.death
-      ? { at: state.death.at, cause: state.death.cause }
-      : null,
-    eventCount: state.events.length,
+    ending: endingPresentation(state),
+    commandsDisabled: state.ending !== null,
     events,
     causalEvents: causalEventViews,
     anchors: anchorKeys.map((key) => ({
@@ -236,7 +217,9 @@ export function createGameViewModel(
     shop,
     catalogue,
     cart,
-    cartTotal: cart.reduce((sum, item) => sum + item.price * item.inCart, 0),
+    cartTotal,
+    cartResultingBalance: state.balance - cartTotal,
+    cartCheckoutAllowed,
     categories: [...new Set(shop.map((item) => item.category))].sort(),
   };
 }
@@ -278,5 +261,15 @@ export function intentToCommand(
     };
   if (intent.type === 'checkout_cart')
     return { ...base, type: 'checkout_cart' };
+  if (intent.type === 'pay_medical_debt')
+    return { ...base, type: 'pay_medical_debt' };
+  if (intent.type === 'open_line_of_credit')
+    return { ...base, type: 'open_line_of_credit' };
+  if (intent.type === 'repay_line_of_credit')
+    return {
+      ...base,
+      type: 'repay_line_of_credit',
+      quantity: intent.quantity,
+    };
   return { ...base, type: intent.type } as GameCommand;
 }

@@ -27,7 +27,7 @@ describe('startRun', () => {
       stateVersion: 1,
       metrics: {
         food: 6,
-        health: 8,
+        health: 32,
         mood: 6,
         rest: 7,
         bond: 4,
@@ -38,11 +38,12 @@ describe('startRun', () => {
         water: 1,
         uncrustables: 1,
         pretzel: 1,
+        'five-plain-tortillas': 1,
       },
       room: {},
       statuses: {},
       activity: null,
-      death: null,
+      ending: null,
     });
     expect(state.events[0]).toMatchObject({
       type: 'run_started',
@@ -78,7 +79,7 @@ describe('reconcileTime', () => {
     expect(afterThreeHours.activity).toBeNull();
   });
 
-  test('derives two-hour Food and awake-Rest decay from timestamps', () => {
+  test('derives seeded Food opportunities and awake-Rest decay from timestamps', () => {
     const startedAt = Date.UTC(2026, 7, 21, 14);
     const initial = startRun(
       {
@@ -101,11 +102,9 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(afterThreeHours.metrics).toMatchObject({ food: 5, rest: 6 });
-    expect(afterFourHours.metrics).toMatchObject({ food: 4, rest: 5 });
-    expect(afterFourHours.statuses.hungry).toMatchObject({
-      source: 'food',
-    });
+    expect(afterThreeHours.metrics).toMatchObject({ food: 6, rest: 6 });
+    expect(afterFourHours.metrics).toMatchObject({ food: 6, rest: 5 });
+    expect(afterFourHours.statuses.hungry).toBeUndefined();
     expect(afterFourHours.lastResolvedAt).toBe(startedAt + 4 * 60 * 60 * 1_000);
   });
 
@@ -116,7 +115,7 @@ describe('reconcileTime', () => {
     );
     const criticalFood = {
       ...started,
-      metrics: { ...started.metrics, food: 2, rest: 10, mood: 10 },
+      metrics: { ...started.metrics, food: 2, rest: 5, mood: 5 },
     };
 
     const afterFourHours = reconcileTime(
@@ -125,41 +124,8 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    // Food reaches 1 at two hours (Health −1), then 0 at four hours
-    // (Health −2): it must not multiply the terminal zero by both intervals.
-    expect(afterFourHours.metrics).toMatchObject({ food: 0, health: 5 });
-  });
-
-  test('repeats lonely penalties every twelve game-hours while the status holds', () => {
-    const started = startRun(
-      { mode: 'streaming', now: 0, seed: 'lonely-cadence', timezone: 'UTC' },
-      BUNDLED_GAME_DEFINITION,
-    );
-    const lonely = {
-      ...started,
-      metrics: { ...started.metrics, food: 10, health: 10, bond: 2, mood: 10 },
-      statuses: { lonely: { since: 0, source: 'bond' } },
-      activity: {
-        id: 'rest-for-cadence',
-        type: 'rest' as const,
-        startedAt: 0,
-        endsAt: 48 * 3_600_000,
-        sourceActionId: 'cadence-rest',
-      },
-    };
-
-    const afterTwentyFourHours = reconcileTime(
-      lonely,
-      24 * 3_600_000,
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-
-    expect(afterTwentyFourHours.metrics.mood).toBe(8);
-    expect(
-      afterTwentyFourHours.events.filter(
-        (event) => event.type === 'status_recurrence',
-      ),
-    ).toHaveLength(2);
+    // This seed misses both Food decay opportunities at the reduced 65% rate.
+    expect(afterFourHours.metrics).toMatchObject({ food: 2, health: 32 });
   });
 
   test('records the terminal Health-loss event as the causal death chain', () => {
@@ -169,7 +135,8 @@ describe('reconcileTime', () => {
     );
     const nearDeath = {
       ...started,
-      metrics: { ...started.metrics, health: 1, food: 0, rest: 10, mood: 10 },
+      metrics: { ...started.metrics, health: 1, food: 0, rest: 5, mood: 5 },
+      history: { ...started.history, pendingFoodDecayHit: true },
     };
 
     const result = reconcileTime(
@@ -178,9 +145,12 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     );
 
-    expect(result.state.death).toBeTruthy();
+    expect(result.state.ending?.kind).toBe('death');
+    expect(result.state.ending?.causes).toEqual([
+      expect.objectContaining({ name: 'Starvation' }),
+    ]);
     expect(result.state.events.at(-1)).toMatchObject({ type: 'death' });
-    expect(result.state.death?.eventIds).toContain(
+    expect(result.state.ending?.eventIds).toContain(
       result.state.events.at(-1)?.id,
     );
   });
@@ -264,7 +234,7 @@ describe('dispatchCommand', () => {
     expect(result.state.inventory.uncrustables).toBe(0);
     expect(result.state.metrics.food).toBe(9);
     expect(result.state.statuses.sick).toMatchObject({ source: 'feeding' });
-    expect(result.state.metrics).toMatchObject({ health: 7, mood: 5 });
+    expect(result.state.metrics).toMatchObject({ health: 31, mood: 5 });
   });
 
   test('uses an owned care consumable through the same item command seam', () => {

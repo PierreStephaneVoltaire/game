@@ -1,19 +1,30 @@
 import rules from './data/simulation-rules.json';
 import items from './data/shop-items.json';
-import type { Metrics, StatusName } from './game-types';
+import type { CareerTier, Metrics, StatusName } from './game-types';
 
 export type EffectRange = { min: number; max: number };
 
 export type ItemActionDefinition = {
   id: string;
   label: string;
-  kind: 'consume' | 'interaction';
+  kind: 'consume' | 'interaction' | 'activity' | 'service';
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
   consumes?: boolean;
   requirements?: {
     ownedItemIdsAll?: string[];
     ownedItemTagsAny?: string[];
+    minimumMetrics?: Partial<Metrics>;
+    blockedStatuses?: StatusName[];
+    requiredCareerTier?: CareerTier;
   };
+  activity?: {
+    type: 'commission_work';
+    durationHours: number;
+  };
+  service?: {
+    type: 'model_commission' | 'full_body_commission';
+  };
+  progressionEffect?: { type: 'activate_clippers' };
   clearsStatuses?: StatusName[];
   tags?: string[];
 };
@@ -21,15 +32,38 @@ export type ItemActionDefinition = {
 export type AutomaticEventHookDefinition = {
   id: string;
   weight: number;
-  message: string;
+  message?: string;
+  messages?: string[];
   eligibility: 'owned' | 'placed';
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
+  balanceEffect?: EffectRange;
   cooldownHours?: number;
+  sharedCooldownKey?: string;
+  requiresIdle?: boolean;
+  requiredCareerTier?: CareerTier;
+  minimumFollowers?: number;
+  outcomes?: Array<{
+    id: string;
+    weight: number;
+    message: string;
+    effects?: Partial<Record<keyof Metrics, EffectRange>>;
+    balanceEffect?: EffectRange;
+    healthDamage?: {
+      min: number;
+      max: number;
+      causeId: string;
+      causeName: string;
+    };
+  }>;
 };
 
 export type ItemDefinition = {
   id: string;
   name: string;
+  /** Seeded player-facing sentence fragments, prefixed with the configured companion name. */
+  narration: string[];
+  /** Optional stream-snack-specific authored sentence fragments. */
+  automaticNarration?: string[];
   category: string;
   price: number;
   image: string;
@@ -39,6 +73,19 @@ export type ItemDefinition = {
   usable?: boolean;
   consumable?: boolean;
   supportsQuantity?: boolean;
+  maximumOwned?: number;
+  maximumLifetimePurchases?: number;
+  stock?: { min: number; max: number };
+  sugarServings?: number;
+  progression?: {
+    requiredCareerTier?: CareerTier;
+    modelTier?: 1 | 2 | 3 | 4;
+  };
+  eventPoolModifiers?: Array<{
+    eventId: string;
+    weightDelta: number;
+    eligibility: 'owned' | 'placed';
+  }>;
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
   tags: string[];
   preferences?: string[];

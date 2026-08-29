@@ -8,7 +8,13 @@ const catalogueUrl = new URL(
   '../src/lib/data/shop-items.json',
   import.meta.url,
 );
+const companionDirectory = new URL('../static/companions/', import.meta.url);
+const petProfileUrl = new URL(
+  '../src/lib/data/pet-profile.json',
+  import.meta.url,
+);
 const catalogue = JSON.parse(await readFile(catalogueUrl, 'utf8'));
+const petProfile = JSON.parse(await readFile(petProfileUrl, 'utf8'));
 const files = new Set(
   (await readdir(assetDirectory)).filter((file) => file.endsWith('.png')),
 );
@@ -108,8 +114,8 @@ function validatePng(bytes, filename) {
   return messages.map((message) => `${filename}: ${message}`);
 }
 
-if (catalogue.length !== 216)
-  issues.push(`expected 216 catalogue entries, found ${catalogue.length}`);
+if (catalogue.length !== 228)
+  issues.push(`expected 228 catalogue entries, found ${catalogue.length}`);
 const paths = catalogue.map((item) => item.image);
 if (new Set(paths).size !== catalogue.length)
   issues.push('catalogue references must use unique PNG paths');
@@ -139,8 +145,39 @@ for (const file of files) {
     issues.push(`${file}: not referenced by the canonical catalogue`);
 }
 
+const companionFiles = new Set(
+  (await readdir(companionDirectory)).filter((file) => file.endsWith('.png')),
+);
+const companionAppearances = petProfile.appearances.filter(
+  (appearance) => appearance.id !== 'classic',
+);
+if (companionAppearances.length !== 4)
+  issues.push(
+    `expected 4 configured companion appearances, found ${companionAppearances.length}`,
+  );
+for (const appearance of companionAppearances) {
+  const filename = appearance.assetPath.replace('/companions/', '');
+  if (!companionFiles.has(filename)) {
+    issues.push(
+      `${appearance.id}: missing companion asset ${appearance.assetPath}`,
+    );
+    continue;
+  }
+  const bytes = await readFile(new URL(filename, companionDirectory));
+  issues.push(...validatePng(bytes, `companions/${filename}`));
+}
+for (const file of companionFiles)
+  if (
+    !companionAppearances.some(
+      (appearance) => appearance.assetPath === `/companions/${file}`,
+    )
+  )
+    issues.push(`${file}: not referenced by the companion profile`);
+
 if (issues.length) {
   console.error(issues.join('\n'));
   process.exit(1);
 }
-console.log(`validated ${catalogue.length} generated catalogue PNG assets`);
+console.log(
+  `validated ${catalogue.length} catalogue PNGs and ${companionAppearances.length} companion appearances across ${companionFiles.size} ${companionFiles.size === 1 ? 'PNG' : 'PNGs'}`,
+);

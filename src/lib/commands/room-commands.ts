@@ -7,6 +7,10 @@ import {
   recordBondGain,
   rejected,
 } from '../simulation/engine-state';
+import { healthDamageSource } from '../simulation/health-resolution';
+import { HOUR_MS } from '../game-constants';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import rules from '../data/simulation-rules.json';
 
 export type RoomCommandResult = {
   handled: boolean;
@@ -45,12 +49,39 @@ function placeItem(
       state,
       rejected('room_occupied', 'That room anchor is occupied.'),
     );
+  const bondResetAt = state.history.bondPlacementResetAt[item.id] ?? 0;
+  const bondAvailable = state.now >= bondResetAt;
+  const roomEffects = bondAvailable
+    ? item.roomEffects
+    : Object.fromEntries(
+        Object.entries(item.roomEffects ?? {}).filter(
+          ([metric]) => metric !== 'bond',
+        ),
+      );
+  const roomDelta = appliedRoomMetricDelta(
+    state.metrics,
+    roomEffects,
+    definition.metricMin,
+    definition.metricMax,
+  );
   const event = {
     id: `event-${state.events.length + 1}`,
     type: 'item_placed',
     at: state.now,
     message: `Placed ${item.name} in the room.`,
     sourceActionId: command.commandId,
+    metricDeltas: roomDelta,
+    healthDamageSources:
+      (roomDelta.health ?? 0) < 0
+        ? [
+            healthDamageSource(
+              'item',
+              item.id,
+              item.name,
+              roomDelta.health ?? 0,
+            ),
+          ]
+        : undefined,
   };
   const next: GameState = {
     ...state,
@@ -58,25 +89,34 @@ function placeItem(
     inventory: { ...state.inventory, [command.itemId]: quantity - 1 },
     metrics: applyRoomMetricDelta(
       state.metrics,
-      item.roomEffects,
+      roomEffects,
       definition.metricMin,
       definition.metricMax,
     ),
     roomModifiers: {
       ...state.roomModifiers,
-      [command.slot]: appliedRoomMetricDelta(
-        state.metrics,
-        item.roomEffects,
-        definition.metricMin,
-        definition.metricMax,
-      ),
+      [command.slot]: roomDelta,
+    },
+    history: {
+      ...state.history,
+      bondPlacementResetAt:
+        (roomDelta.bond ?? 0) > 0
+          ? {
+              ...state.history.bondPlacementResetAt,
+              [item.id]:
+                state.now + rules.room.bondPlacementCooldownHours * HOUR_MS,
+            }
+          : state.history.bondPlacementResetAt,
     },
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
   return result(
-    recordBondGain(next, state),
+    recordBondGain(
+      reconcileMetricSource(state, next, command.commandId),
+      state,
+    ),
     accepted('item_placed', event.message, [event.id]),
   );
 }
@@ -92,12 +132,25 @@ function unplaceItem(
     : undefined;
   if (!item)
     return result(state, rejected('unavailable', 'That room anchor is empty.'));
+  const unplacedMetrics = applyRoomMetricDelta(
+    state.metrics,
+    state.roomModifiers[command.slot] ?? item.roomEffects,
+    definition.metricMin,
+    definition.metricMax,
+    -1,
+  );
+  const healthDelta = unplacedMetrics.health - state.metrics.health;
   const event = {
     id: `event-${state.events.length + 1}`,
     type: 'item_unplaced',
     at: state.now,
     message: `Removed ${item.name} from the room.`,
     sourceActionId: command.commandId,
+    metricDeltas: { health: healthDelta },
+    healthDamageSources:
+      healthDelta < 0
+        ? [healthDamageSource('item', item.id, item.name, healthDelta)]
+        : undefined,
   };
   const next: GameState = {
     ...state,
@@ -108,13 +161,7 @@ function unplaceItem(
       ...state.inventory,
       [item.id]: (state.inventory[item.id] ?? 0) + 1,
     },
-    metrics: applyRoomMetricDelta(
-      state.metrics,
-      state.roomModifiers[command.slot] ?? item.roomEffects,
-      definition.metricMin,
-      definition.metricMax,
-      -1,
-    ),
+    metrics: unplacedMetrics,
     roomModifiers: Object.fromEntries(
       Object.entries(state.roomModifiers).filter(
         ([slot]) => slot !== command.slot,
@@ -124,7 +171,10 @@ function unplaceItem(
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
-  return result(next, accepted('item_unplaced', event.message, [event.id]));
+  return result(
+    reconcileMetricSource(state, next, command.commandId),
+    accepted('item_unplaced', event.message, [event.id]),
+  );
 }
 
 function result(state: GameState, outcome: Outcome): RoomCommandResult {

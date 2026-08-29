@@ -5,14 +5,11 @@ import type {
   StatusRecord,
 } from '../game-types';
 import type { StatusEffectEvent } from '../status-rules';
-import {
-  addStatus,
-  alignGameStatuses,
-  clearStatus,
-  isHighMood,
-} from '../status-rules';
+import { addStatus, clearStatus, isHighMood } from '../status-rules';
 import rules from '../data/simulation-rules.json';
-import { STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, STAT_MIN } from '../game-constants';
+export { resolveNutritionStatuses } from './nutrition-statuses';
+export type { NutritionStatusResolution } from './nutrition-statuses';
 
 export function overstimulationMoodDelta(): number {
   return rules.statusMetricDeltas.overstimulatedMood;
@@ -91,10 +88,7 @@ export function applyStatusOnsetEffects(
     if (previous[status] || !next[status]) return;
     for (const [metric, delta] of Object.entries(deltas)) {
       const name = metric as keyof Metrics;
-      result[name] = Math.max(
-        STAT_MIN,
-        Math.min(STAT_MAX, result[name] + (delta ?? 0)),
-      );
+      result[name] = clampMetric(name, result[name] + (delta ?? 0));
     }
     events.push({ status, metricDeltas: deltas, message });
   };
@@ -158,17 +152,38 @@ export function applyOverstimulation(
 export function resolveAttemptStatus(
   state: GameState,
   accepted: boolean,
+  countsAsRefusal = !accepted,
 ): {
   statuses: GameState['statuses'];
   careAttemptStreak: number;
   moodDelta: number;
+  warning: boolean;
 } {
-  const careAttemptStreak = accepted ? 0 : state.history.careAttemptStreak + 1;
+  const careAttemptStreak = accepted
+    ? 0
+    : countsAsRefusal
+      ? state.history.careAttemptStreak + 1
+      : state.history.careAttemptStreak;
+  if (state.statuses.annoyed && !accepted)
+    return {
+      statuses: state.statuses,
+      careAttemptStreak: state.history.careAttemptStreak,
+      moodDelta: 0,
+      warning: false,
+    };
   if (
     careAttemptStreak < state.history.annoyanceThreshold ||
     state.statuses.annoyed
   )
-    return { statuses: state.statuses, careAttemptStreak, moodDelta: 0 };
+    return {
+      statuses: state.statuses,
+      careAttemptStreak,
+      moodDelta: 0,
+      warning:
+        countsAsRefusal &&
+        !state.history.annoyanceWarningIssued &&
+        careAttemptStreak === state.history.annoyanceThreshold - 1,
+    };
   return {
     statuses: addStatus(
       state,
@@ -178,101 +193,6 @@ export function resolveAttemptStatus(
     ),
     careAttemptStreak: 0,
     moodDelta: rules.statusMetricDeltas.annoyedMood,
-  };
-}
-
-export type NutritionStatusResolution = {
-  metrics: Metrics;
-  statuses: GameState['statuses'];
-  metricDeltas: Partial<Metrics>;
-  sickFeedingHarm: boolean;
-  sickFeedingDeltas: Partial<Metrics>;
-  sickFromFull: boolean;
-  kidneyStone: boolean;
-  kidneyStoneDeltas: Partial<Metrics>;
-};
-
-export function resolveNutritionStatuses(input: {
-  metrics: Metrics;
-  statuses: GameState['statuses'];
-  now: number;
-  wasSick: boolean;
-  wasFull: boolean;
-  fullFeedRoll: number;
-  priorSalt: number;
-  priorWater: number;
-  kidneyStoneRoll: number;
-}): NutritionStatusResolution {
-  const result = { ...input.metrics };
-  const metricDeltas: Partial<Metrics> = {};
-  const addMetric = (metric: keyof Metrics, delta: number) => {
-    result[metric] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, result[metric] + delta),
-    );
-    metricDeltas[metric] = (metricDeltas[metric] ?? 0) + delta;
-  };
-  if (input.wasSick) {
-    addMetric('health', rules.statusMetricDeltas.sickHealth);
-    addMetric('mood', rules.statusMetricDeltas.sickMood);
-  }
-  const sickFromFull =
-    input.wasFull &&
-    !input.wasSick &&
-    input.fullFeedRoll < rules.fullFeedSicknessProbability;
-  if (sickFromFull) {
-    addMetric('health', rules.statusMetricDeltas.fullHealth);
-    addMetric('mood', rules.statusMetricDeltas.fullMood);
-  }
-  const kidneyStone =
-    !input.statuses.kidney_stone &&
-    input.priorSalt >= rules.kidneyStone.saltThreshold &&
-    input.priorWater <= rules.kidneyStone.waterThreshold &&
-    input.kidneyStoneRoll < rules.kidneyStone.probability;
-  if (kidneyStone) {
-    addMetric('mood', rules.statusMetricDeltas.kidneyStoneMood);
-    addMetric('health', rules.statusMetricDeltas.kidneyStoneHealth);
-    addMetric('rest', rules.statusMetricDeltas.kidneyStoneRest);
-  }
-  let statuses = alignGameStatuses(result, input.statuses, input.now);
-  if (sickFromFull)
-    statuses = addStatus(
-      { metrics: result, statuses } as GameState,
-      'sick',
-      'feeding',
-      input.now,
-    );
-  if (kidneyStone)
-    statuses = addStatus(
-      { metrics: result, statuses } as GameState,
-      'kidney_stone',
-      'rolling_nutrition',
-      input.now,
-    );
-  return {
-    metrics: result,
-    statuses,
-    metricDeltas,
-    sickFeedingHarm: input.wasSick,
-    sickFeedingDeltas: input.wasSick
-      ? {
-          health: rules.statusMetricDeltas.sickHealth,
-          mood: rules.statusMetricDeltas.sickMood,
-        }
-      : sickFromFull
-        ? {
-            health: rules.statusMetricDeltas.fullHealth,
-            mood: rules.statusMetricDeltas.fullMood,
-          }
-        : {},
-    sickFromFull,
-    kidneyStone,
-    kidneyStoneDeltas: kidneyStone
-      ? {
-          mood: rules.statusMetricDeltas.kidneyStoneMood,
-          health: rules.statusMetricDeltas.kidneyStoneHealth,
-          rest: rules.statusMetricDeltas.kidneyStoneRest,
-        }
-      : {},
+    warning: false,
   };
 }

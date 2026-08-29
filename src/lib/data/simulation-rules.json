@@ -1,30 +1,63 @@
 {
   "statRange": { "min": 0, "max": 10 },
+  "healthMaximum": 40,
   "startingCurrency": 20,
   "startingInventory": {
     "water": 1,
     "uncrustables": 1,
-    "pretzel": 1
+    "pretzel": 1,
+    "five-plain-tortillas": 1
+  },
+  "room": {
+    "bondPlacementCooldownHours": 48
   },
   "maxCartQuantity": 20,
   "startingMetrics": {
     "food": 6,
-    "health": 8,
+    "health": 32,
     "mood": 6,
     "rest": 7,
     "bond": 4,
     "creativity": 3
   },
+  "endings": {
+    "quitStreaming": {
+      "zeroMetric": "mood",
+      "durationHours": 72,
+      "warningHours": [0, 24, 48]
+    }
+  },
   "timeDecay": {
     "intervalHours": 2,
     "foodPerInterval": 1,
+    "foodDecayProbability": 0.65,
     "restPerInterval": 1,
     "bondLossHours": 48,
-    "criticalNeed": { "lowMaximum": 2, "zeroLoss": 2, "lowLoss": 1 }
+    "criticalNeed": { "lowMaximum": 2, "zeroLoss": 1, "lowLoss": 1 },
+    "periodicNeedDamageCap": 2,
+    "autonomousRescueResetMinimum": 5,
+    "healthRecovery": {
+      "metricBaseline": 5,
+      "buckets": [
+        { "minimumScore": 4, "health": 1 },
+        { "minimumScore": 7, "health": 2 }
+      ]
+    }
   },
   "nutrition": { "rollingWindowHours": 48, "sugarWindowHours": 6 },
-  "wait": { "minHours": 1, "maxHours": 12 },
+  "wait": {
+    "minHours": 1,
+    "maxHours": 12,
+    "criticalMinHours": 1,
+    "criticalMaxHours": 2
+  },
   "events": {
+    "autonomous": { "intervalHours": 2 },
+    "offStreamSupport": {
+      "weight": 10,
+      "cooldownHours": 12,
+      "payout": { "minimum": 5, "maximum": 15 }
+    },
     "weights": {
       "none": 100,
       "lowMoneyBalanceThreshold": 10,
@@ -32,17 +65,29 @@
       "foodCraving": 20,
       "creativeInspiration": 15,
       "socks": 15,
-      "benignRoom": 10
+      "benignRoom": 10,
+      "fullBodyCommission": 5,
+      "momsCarePackage": 5,
+      "restSnoring": 10,
+      "selfEntertainment": 5,
+      "stoodUpTooFast": 3,
+      "tinyWalk": 3,
+      "barelyMovedToday": 3
     },
     "cooldowns": {
       "creativeInspirationHours": 12,
       "socksHours": 6,
-      "benignRoomHours": 4
+      "benignRoomHours": 4,
+      "fullBodyCommissionLocalDays": 14,
+      "momsCarePackageHours": 72,
+      "selfEntertainmentHours": 24,
+      "stoodUpTooFastHours": 24
     },
     "effects": {
       "lowMoneyMood": -1,
       "creativeInspirationCreativity": 1,
-      "socksMood": [-1, 0, 1]
+      "socksMood": [-1, 1, 1],
+      "carePackageMood": 1
     }
   },
   "stream": {
@@ -54,14 +99,21 @@
       "kidney_stone",
       "depressed",
       "low_energy",
-      "overstimulated"
+      "overstimulated",
+      "dizzy_spell"
     ],
     "weight": {
       "base": 50,
       "moodCoefficient": 25,
       "creativityCoefficient": 25,
       "metricCenter": 5,
-      "metricScale": 5
+      "metricScale": 5,
+      "managedNutritionBonus": 5,
+      "drought": {
+        "graceHours": 24,
+        "weightPerHour": 4,
+        "maximumBonus": 300
+      }
     },
     "dayparts": [
       { "fromHour": 4, "toHour": 8, "multiplier": 0.5 },
@@ -81,6 +133,27 @@
       "rateSlots": 11,
       "baseMultiplier": 0.5,
       "creativityDivisor": 10
+    },
+    "donations": {
+      "baseChance": 0.02,
+      "creativityChance": 0.005,
+      "finalDebutBonus": 0.01,
+      "followers": 5,
+      "whaleFollowerBonus": 25,
+      "specialDateMultiplier": 3,
+      "tournamentMultiplier": 3,
+      "tiers": [
+        { "id": "kind_supporter", "weight": 55, "minimum": 20, "maximum": 60 },
+        { "id": "raid_windfall", "weight": 27, "minimum": 100, "maximum": 400 },
+        { "id": "whale", "weight": 14, "minimum": 1000, "maximum": 3000 },
+        {
+          "id": "legendary_whale",
+          "weight": 4,
+          "minimum": 10000,
+          "maximum": 10000,
+          "requiredCreativity": 10
+        }
+      ]
     },
     "completion": { "creativity": -1, "rest": -1, "mood": [-1, 0, 1] },
     "snackFloor": 2
@@ -102,36 +175,6 @@
       "minimumAffordableCount": 1
     }
   },
-  "activities": {
-    "socializeMinutes": [15, 30, 45, 60],
-    "playHours": [1, 2, 3],
-    "restBands": {
-      "low": { "maxRest": 2, "hours": [7, 8, 9], "cutoffs": [0.2, 0.7] },
-      "medium": { "maxRest": 5, "hours": [6, 7, 8], "cutoffs": [0.3, 0.8] },
-      "high": { "hours": [4, 5, 6], "cutoffs": [0.5, 0.85] }
-    },
-    "restRefusal": {
-      "restAtOrAbove": 10,
-      "restBandAt": 8,
-      "cutoffAt8": 0.8,
-      "cutoffAt9": 0.9
-    },
-    "refusal": {
-      "moodAtOrBelow": 2,
-      "moodProbability": 0.2,
-      "restAtOrBelow": 2,
-      "restProbability": 0.2,
-      "annoyedProbability": 0.5,
-      "repeatIncrement": 0.1,
-      "repeatCap": 0.3,
-      "maximum": 0.9
-    },
-    "completion": {
-      "socialize": { "mood": 1, "bond": 1 },
-      "play": { "mood": 1, "creativity": 1 },
-      "rest": { "healthDivisor": 4, "moodDivisor": 6 }
-    }
-  },
   "statusRules": {
     "lowMetricOnsetMaximum": 2,
     "lowMetricClearMinimum": 5,
@@ -146,7 +189,8 @@
     "sickClearFoodMaximum": 5,
     "sickClearHealthMinimum": 5,
     "criticalHealthMinimum": 1,
-    "criticalHealthMaximum": 2
+    "criticalHealthMaximum": 8,
+    "criticalHealthMoodCooldownHours": 12
   },
   "statusMetricDeltas": {
     "lonelyMood": -1,
@@ -171,16 +215,151 @@
   "fullFeedSicknessProbability": 0.35,
   "itemRefusalWasteProbability": 0.5,
   "sugarCrash": {
-    "servingsRequired": 3,
+    "effectiveSugarThreshold": 4,
     "delayHours": 2,
-    "proteinClearMinimum": 2
+    "windowHours": 6
   },
   "kidneyStoneRecurrenceHours": 12,
-  "annoyance": { "min": 2, "max": 5 },
+  "annoyance": { "min": 3, "max": 5 },
   "kidneyStone": {
-    "saltThreshold": 8,
+    "feedWindowSize": 10,
+    "saltThreshold": 10,
+    "warningSaltThreshold": 6,
     "waterThreshold": 2,
-    "probability": 0.35
+    "probability": 0.05,
+    "naturalPassHours": 48,
+    "naturalPassProbability": 0.5,
+    "painReliefHours": 12
   },
-  "medicalCare": { "durationHours": 12, "cost": 10000 }
+  "dizzySpell": {
+    "exemptHours": 24,
+    "probability": 0.35,
+    "saltMaximum": 3,
+    "clearSaltMinimum": 5,
+    "clearWaterMinimum": 4,
+    "onset": { "rest": -1, "mood": -1 }
+  },
+  "sick": { "naturalPassHours": 48 },
+  "craving": { "expiryHours": 24, "refreshLimit": 2 },
+  "caffeine": { "minimumScore": 2, "deferHours": 2 },
+  "hyperfocus": {
+    "durationHours": 6,
+    "pinnedCreativity": 10,
+    "expiry": { "creativity": -2, "rest": -2 }
+  },
+  "debt": {
+    "purchaseMood": -1
+  },
+  "medicalCare": {
+    "durationHours": 12,
+    "cost": 10000,
+    "insuredCost": 500,
+    "completion": { "health": 4, "food": 3, "rest": 3 },
+    "dailyPayment": { "uninsured": 150, "insured": 25 },
+    "fullPaymentMultiplier": 0.85
+  },
+  "projects": {
+    "completionMidnights": 3,
+    "fullBodyPayout": { "minimum": 400, "maximum": 800 },
+    "modelCost": 300,
+    "modelCompletion": { "mood": 3, "creativity": 2, "followers": 50 },
+    "modelDebutHours": 4,
+    "tournamentHours": 8
+  },
+  "progression": {
+    "startingFollowers": 100,
+    "subscriberRevenue": { "intervalHours": 2, "baseAmount": 1 },
+    "naturalAudience": {
+      "intervalHours": 2,
+      "streamBoostDays": 7,
+      "fullValueBoostCount": 4,
+      "excessBoostMultiplier": 0.25,
+      "creativityPerPoint": 0.02,
+      "tierRates": {
+        "debut": 1,
+        "first_model": 2,
+        "sub_1k": 10,
+        "model_redesign": 20,
+        "twitch_partner": 60,
+        "sub_30k": 80,
+        "tournament_appearance": 100,
+        "sub_50k": 150,
+        "convention_guest": 200,
+        "sub_100k": 300,
+        "three_d_ready": 400,
+        "sub_200k": 500,
+        "sub_250k": 1000,
+        "sub_500k": 2000,
+        "sub_1m": 2000
+      }
+    },
+    "clippers": {
+      "durationHours": 72,
+      "intervalHours": 24,
+      "followersPerTierPerStack": 50
+    },
+    "milestones": [
+      { "id": "debut", "followers": 100 },
+      { "id": "first_model", "followers": 150, "unlockModelTier": 1 },
+      { "id": "sub_1k", "followers": 1000, "streamRate": [8, 18], "mood": 2 },
+      { "id": "model_redesign", "followers": 5000, "unlockModelTier": 2 },
+      { "id": "twitch_partner", "followers": 10000, "streamRate": [10, 22] },
+      {
+        "id": "sub_30k",
+        "followers": 30000,
+        "subscriberRevenueMultiplier": 1.5
+      },
+      {
+        "id": "tournament_appearance",
+        "followers": 40000,
+        "unlockModelTier": 3
+      },
+      {
+        "id": "sub_50k",
+        "followers": 50000,
+        "subscriberRevenueMultiplier": 2
+      },
+      { "id": "convention_guest", "followers": 75000, "appearanceFee": 500 },
+      {
+        "id": "sub_100k",
+        "followers": 100000,
+        "subscriberRevenueMultiplier": 3
+      },
+      { "id": "three_d_ready", "followers": 150000, "unlockModelTier": 4 },
+      {
+        "id": "sub_200k",
+        "followers": 200000,
+        "subscriberRevenueMultiplier": 4
+      },
+      {
+        "id": "sub_250k",
+        "followers": 250000,
+        "subscriberRevenueMultiplier": 5
+      },
+      {
+        "id": "sub_500k",
+        "followers": 500000,
+        "subscriberRevenueMultiplier": 7
+      },
+      {
+        "id": "sub_1m",
+        "followers": 1000000,
+        "subscriberRevenueMultiplier": 10
+      }
+    ]
+  },
+  "specialDates": [
+    {
+      "month": 6,
+      "day": 29,
+      "streamWeightMultiplier": 2,
+      "donationChanceMultiplier": 3
+    },
+    {
+      "month": 11,
+      "day": 14,
+      "streamWeightMultiplier": 2,
+      "donationChanceMultiplier": 3
+    }
+  ]
 }

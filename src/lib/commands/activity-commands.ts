@@ -1,11 +1,19 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Outcome } from '../game-types';
 import rules from '../data/simulation-rules.json';
-import { chooseDuration, refusalProbability } from '../activity-rules';
+import {
+  chooseActivityVignette,
+  chooseDuration,
+  refusalProbability,
+} from '../activity-rules';
 import { actionRandom } from '../seeded-rng';
-import { applyOverstimulation, isHighMood } from '../status-rules';
 import { accepted, rejected } from '../simulation/engine-state';
 import { HOUR_MS } from '../game-constants';
+import {
+  criticalMetrics,
+  isCriticalState,
+} from '../simulation/health-resolution';
+import { hospitalCost, hospitalInsuranceItemId } from '../billing-rules';
 
 export type ActivityCommandResult = {
   handled: boolean;
@@ -22,19 +30,26 @@ type ActivityFields = {
 type ActivityCommand =
   | (ActivityFields & { type: 'wait' })
   | (ActivityFields & { type: 'medical_care' })
-  | (ActivityFields & { type: 'rest' | 'socialize' | 'play' });
+  | (ActivityFields & { type: 'rest' | 'socialize' | 'play' })
+  | (ActivityFields & { type: 'commission_work' });
 type WaitCommand = Extract<ActivityCommand, { type: 'wait' }>;
 type MedicalCareCommand = Extract<ActivityCommand, { type: 'medical_care' }>;
 type CompanionCommand = Extract<
   ActivityCommand,
   { type: 'rest' | 'socialize' | 'play' }
 >;
+type CommissionCommand = Extract<ActivityCommand, { type: 'commission_work' }>;
 
-type ReconcileResult = { state: GameState; eventIds: string[] };
+type ReconcileResult = {
+  state: GameState;
+  eventIds: string[];
+  elapsedHours: number;
+};
 type Reconcile = (
   state: GameState,
   now: number,
   definition: GameDefinition,
+  options?: { stopAtCritical?: boolean; preventLethalDecay?: boolean },
 ) => ReconcileResult;
 
 export function handleActivityCommand(
@@ -45,8 +60,23 @@ export function handleActivityCommand(
 ): ActivityCommandResult {
   if (command.type === 'wait')
     return wait(state, command, definition, reconcile);
-  if (command.type === 'medical_care') return medicalCare(state, command);
+  if (command.type === 'medical_care')
+    return medicalCare(state, command, definition);
+  if (command.type === 'commission_work') return commissionWork(state, command);
   return companionActivity(state, command);
+}
+
+function commissionWork(
+  state: GameState,
+  command: CommissionCommand,
+): ActivityCommandResult {
+  return result(
+    state,
+    rejected(
+      'unavailable',
+      `Commission Work is launched from the Rigging Tablet. (${command.commandId})`,
+    ),
+  );
 }
 
 function wait(
@@ -63,8 +93,11 @@ function wait(
         'Advance time is available in Streaming mode only.',
       ),
     );
+  const critical = isCriticalState(state);
+  const minimum = critical ? rules.wait.criticalMinHours : rules.wait.minHours;
+  const maximum = critical ? rules.wait.criticalMaxHours : rules.wait.maxHours;
   const hours =
-    rules.wait.minHours +
+    minimum +
     Math.floor(
       actionRandom(
         state.seed,
@@ -73,14 +106,18 @@ function wait(
         'wait',
         'hours',
       ) *
-        (rules.wait.maxHours - rules.wait.minHours + 1),
+        (maximum - minimum + 1),
     );
-  const waited = reconcile(state, state.now + hours * HOUR_MS, definition);
+  const waited = reconcile(state, state.now + hours * HOUR_MS, definition, {
+    stopAtCritical: !critical,
+    preventLethalDecay: !critical,
+  });
+  const actualHoursValue = waited.elapsedHours;
   return result(
     waited.state,
     accepted(
       'waited',
-      `Time advanced ${hours} hour${hours === 1 ? '' : 's'}.`,
+      `Time advanced ${formatHours(actualHoursValue)}.`,
       waited.eventIds,
     ),
   );
@@ -89,19 +126,24 @@ function wait(
 function medicalCare(
   state: GameState,
   command: MedicalCareCommand,
+  definition: GameDefinition,
 ): ActivityCommandResult {
-  if (!state.statuses.kidney_stone)
+  if (!state.statuses.kidney_stone && !state.statuses.sick)
     return result(
       state,
-      rejected('unavailable', 'Medical Care is not needed.'),
+      rejected('unavailable', 'Hospital care is not needed.'),
     );
   const duration = rules.medicalCare.durationHours * HOUR_MS;
+  const insuranceItemId = hospitalInsuranceItemId(state, definition);
+  const insuredAtStart = Boolean(insuranceItemId);
+  const principal = hospitalCost(state, definition);
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'activity_started',
     at: state.now,
-    message: 'Medical Care started.',
+    message: 'Hospital visit started.',
     sourceActionId: command.commandId,
+    activityType: 'medical_care',
   };
   const next: GameState = {
     ...state,
@@ -111,8 +153,24 @@ function medicalCare(
       startedAt: state.now,
       endsAt: state.now + duration,
       sourceActionId: command.commandId,
+      payload: {
+        insuredAtStart,
+        principal,
+        scheduledDailyPayment: insuredAtStart
+          ? rules.medicalCare.dailyPayment.insured
+          : rules.medicalCare.dailyPayment.uninsured,
+        treatedKidneyStone: Boolean(state.statuses.kidney_stone),
+      },
     },
-    balance: state.balance - rules.medicalCare.cost,
+    inventory: insuranceItemId
+      ? {
+          ...state.inventory,
+          [insuranceItemId]: Math.max(
+            0,
+            (state.inventory[insuranceItemId] ?? 0) - 1,
+          ),
+        }
+      : state.inventory,
     actionOrdinal: state.actionOrdinal + 1,
     stateVersion: state.stateVersion + 1,
     events: [...state.events, event],
@@ -120,7 +178,7 @@ function medicalCare(
   return {
     handled: true,
     state: next,
-    outcome: accepted('medical_started', 'Medical Care started.', [event.id]),
+    outcome: accepted('medical_started', 'Hospital visit started.', [event.id]),
     completionOwnsAttemptOpportunity: true,
   };
 }
@@ -129,25 +187,7 @@ function companionActivity(
   state: GameState,
   command: CompanionCommand,
 ): ActivityCommandResult {
-  const overstimulated =
-    (command.type === 'socialize' || command.type === 'play') &&
-    isHighMood(state.metrics.mood);
   let next = state;
-  if (overstimulated) {
-    const stimulation = applyOverstimulation(
-      next.metrics,
-      next.statuses,
-      'high_mood_attempt',
-      next.now,
-      true,
-    );
-    next = {
-      ...next,
-      metrics: stimulation.metrics,
-      statuses: stimulation.statuses,
-      stateVersion: next.stateVersion + 1,
-    };
-  }
   const duration = chooseDuration(command.type, next, command.commandId);
   if (command.type === 'rest' && duration === 0)
     return result(
@@ -162,19 +202,24 @@ function companionActivity(
       command.commandId,
       'refusal',
       'attempt',
-    ) < refusalProbability(next, command.type)
+    ) < refusalProbability(next)
   )
     return result(
       next,
       rejected('refused', 'Companion refused that interaction.'),
     );
 
+  const vignette =
+    command.type === 'socialize' || command.type === 'play'
+      ? chooseActivityVignette(command.type, next, command.commandId)
+      : undefined;
   const event: GameEvent = {
     id: `event-${next.events.length + 1}`,
     type: 'activity_started',
     at: next.now,
     message: `${activityLabel(command.type)} started.`,
     sourceActionId: command.commandId,
+    activityType: command.type,
   };
   next = {
     ...next,
@@ -184,7 +229,17 @@ function companionActivity(
       startedAt: next.now,
       endsAt: next.now + duration,
       sourceActionId: command.commandId,
-      payload: overstimulated ? { suppressMoodGain: true } : undefined,
+      payload: {
+        ...(vignette
+          ? {
+              activityOutcome: vignette.outcome,
+              activityNarration: vignette.narration,
+            }
+          : {}),
+        startingRest: next.metrics.rest,
+        startingMood: next.metrics.mood,
+        startingCriticalMetrics: criticalMetrics(next.metrics).join(','),
+      },
     },
     actionOrdinal: next.actionOrdinal + 1,
     stateVersion: next.stateVersion + 1,
@@ -215,4 +270,9 @@ function result(state: GameState, outcome: Outcome): ActivityCommandResult {
 function activityLabel(type: CompanionCommand['type']): string {
   if (type === 'socialize') return 'Socializing';
   return type[0].toUpperCase() + type.slice(1);
+}
+
+function formatHours(hours: number): string {
+  const rounded = Math.round(hours * 100) / 100;
+  return `${rounded} hour${rounded === 1 ? '' : 's'}`;
 }

@@ -4,12 +4,15 @@ import rules from '../data/simulation-rules.json';
 import { actionRandom } from '../seeded-rng';
 import { accepted, recordBondGain, rejected } from '../simulation/engine-state';
 import { resolveNutritionConsumption } from './nutrition-resolution';
-import { HOUR_MS } from '../game-constants';
-import { sugarCrashDelayHours } from '../status-rules';
+import { itemConsumptionEvents } from './item-consumption-events';
+import { consumptionRuleEvents } from './consumption-rule-events';
 import {
   actionOwnership,
   itemActionAvailable,
 } from '../item-action-prerequisites';
+import { resolveTimedEffectsAfterConsumption } from './consumption-timed-effects';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { createItemUsedEvent } from './item-used-event';
 
 type UseItemCommand = Extract<GameCommand, { type: 'use_item' }>;
 
@@ -36,6 +39,31 @@ export function resolveItemConsumption(
       state,
       outcome: rejected('unavailable', 'That item is not available.'),
     };
+  const isHyperfocusItem = item.tags.includes('hyperfocus');
+  if (
+    isHyperfocusItem &&
+    state.timedEffects.hyperfocusUntil !== null &&
+    state.timedEffects.hyperfocusUntil > state.now
+  )
+    return {
+      state,
+      outcome: rejected('unavailable', 'Hyperfocus is already active.'),
+    };
+  if (item.tags.includes('pain-relief') || item.tags.includes('pain_relief')) {
+    if (!state.statuses.kidney_stone)
+      return {
+        state,
+        outcome: rejected('unavailable', 'Pain Relief is not needed.'),
+      };
+    if (
+      state.timedEffects.painReliefUntil !== null &&
+      state.timedEffects.painReliefUntil > state.now
+    )
+      return {
+        state,
+        outcome: rejected('unavailable', 'Pain Relief is already active.'),
+      };
+  }
   if (!action)
     return {
       state,
@@ -98,6 +126,7 @@ export function resolveItemConsumption(
         ? `${item.name} was refused and wasted.`
         : `${item.name} was refused.`,
       sourceActionId: command.commandId,
+      itemName: item.name,
     };
     const next: GameState = {
       ...state,
@@ -116,129 +145,55 @@ export function resolveItemConsumption(
   }
 
   const nutrition = resolveNutritionConsumption(state, command, item, action);
-  const event: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type: 'item_used',
-    at: state.now,
-    message: `${item.name} was used.`,
+  const event = createItemUsedEvent({
+    state,
+    item,
+    action,
     sourceActionId: command.commandId,
-    metricDeltas: nutrition.itemMetricDeltas,
+    itemMetricDeltas: nutrition.itemMetricDeltas,
     nutritionProfileId: nutrition.nutritionProfileId,
-    tags: action.tags,
-    cause: action.id,
-  };
-  const discoveries: GameEvent[] = [];
-  if (item.preferences?.includes('liked'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_reaction',
-      at: state.now,
-      message: `${item.name} was enjoyed.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: 'liked',
-    });
-  if (item.preferences?.includes('disliked'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_reaction',
-      at: state.now,
-      message: `${item.name} was tolerated.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: 'disliked',
-    });
-  if (item.preferences?.includes('variable'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_discovery',
-      at: state.now,
-      message: `The companion discovered something new about ${item.name}.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: 'variable',
-    });
-  if (item.preferences?.includes('specific_preparation'))
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'item_preparation',
-      at: state.now,
-      message: nutrition.preparationRejected
-        ? `${item.name} was served in an unpreferred preparation.`
-        : `${item.name} was served in an acceptable preparation.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      discovery: nutrition.preparationRejected
-        ? 'unpreferred_preparation'
-        : 'acceptable_preparation',
-    });
-  if (nutrition.nutritionProfileId)
-    discoveries.push({
-      id: `event-${state.events.length + discoveries.length + 2}`,
-      type: 'nutrition_profile_discovered',
-      at: state.now,
-      message: `The companion discovered profile ${nutrition.nutritionProfileId} for ${item.name}.`,
-      sourceActionId: command.commandId,
-      cause: event.id,
-      nutritionProfileId: nutrition.nutritionProfileId,
-      discovery: 'variable_profile',
-    });
-  const ruleEvents: GameEvent[] = [];
-  if (nutrition.fullFeedSuppressed)
-    ruleEvents.push({
-      id: `event-${state.events.length + discoveries.length + ruleEvents.length + 2}`,
-      type: 'full_feed_suppressed',
-      at: state.now,
-      message: nutrition.sickFeedingHarm
-        ? `${item.name} did not increase Food because the companion was sick.`
-        : `${item.name} did not increase Food because the companion was full.`,
-      sourceActionId: command.commandId,
-      causedBy: [event.id],
-      status: 'full',
-      metricDeltas: { food: 0 },
-    });
-  if (nutrition.sickFromFull)
-    ruleEvents.push({
-      id: `event-${state.events.length + discoveries.length + ruleEvents.length + 2}`,
-      type: 'sickness_onset',
-      at: state.now,
-      message: `${item.name} caused sickness from overfeeding.`,
-      sourceActionId: command.commandId,
-      causedBy: [event.id],
-      status: 'sick',
-      metricDeltas: nutrition.sickFeedingDeltas,
-    });
-  if (nutrition.sickFeedingHarm)
-    ruleEvents.push({
-      id: `event-${state.events.length + discoveries.length + ruleEvents.length + 2}`,
-      type: 'sick_feeding_harm',
-      at: state.now,
-      message: `${item.name} harmed the sick companion.`,
-      sourceActionId: command.commandId,
-      causedBy: [event.id],
-      status: 'sick',
-      metricDeltas: nutrition.sickFeedingDeltas,
-    });
-  if (nutrition.kidneyStone)
-    ruleEvents.push({
-      id: `event-${state.events.length + discoveries.length + ruleEvents.length + 2}`,
-      type: 'kidney_stone_onset',
-      at: state.now,
-      message: `${item.name} triggered kidney stone symptoms.`,
-      sourceActionId: command.commandId,
-      causedBy: [event.id],
-      status: 'kidney_stone',
-      metricDeltas: nutrition.kidneyStoneDeltas,
-    });
+    automatic: context.automatic,
+  });
+  const consumptionEvents = itemConsumptionEvents({
+    state,
+    event,
+    item,
+    nutrition,
+    sourceActionId: command.commandId,
+  });
+  const ruleEvents = consumptionRuleEvents({
+    state,
+    item,
+    nutrition,
+    sourceActionId: command.commandId,
+    precedingEventCount: consumptionEvents.length,
+    event,
+  });
   const cravingEvent = nutrition.fulfilledCraving
     ? {
-        id: `event-${state.events.length + discoveries.length + ruleEvents.length + 2}`,
+        id: `event-${state.events.length + consumptionEvents.length + ruleEvents.length + 2}`,
         type: 'craving_fulfilled' as const,
         at: state.now,
         message: `${item.name} fulfilled the craving.`,
         sourceActionId: command.commandId,
         cause: item.id,
         metricDeltas: { bond: 1 },
+      }
+    : undefined;
+  const sugarEvent: GameEvent | undefined = nutrition.sugarCrashTransition
+    ? {
+        id: `event-${state.events.length + consumptionEvents.length + ruleEvents.length + (cravingEvent ? 3 : 2)}`,
+        type:
+          nutrition.sugarCrashTransition === 'scheduled'
+            ? 'sugar_crash_warning'
+            : 'sugar_crash_averted',
+        at: state.now,
+        message:
+          nutrition.sugarCrashTransition === 'scheduled'
+            ? 'That is a lot of sugar in a short period. A sugar crash may be coming.'
+            : 'The rolling nutrition balance improved and the sugar crash was averted.',
+        sourceActionId: command.commandId,
+        status: 'sugar_crash',
       }
     : undefined;
   const kidneyOnsetEvent = ruleEvents.find(
@@ -253,9 +208,28 @@ export function resolveItemConsumption(
         },
       }
     : nutrition.statuses;
+  const timedEffects = resolveTimedEffectsAfterConsumption(
+    state,
+    item,
+    nutrition,
+    command.now,
+  );
+  const hyperfocusActive =
+    timedEffects.hyperfocusUntil !== null &&
+    command.now < timedEffects.hyperfocusUntil;
+  if (hyperfocusActive) {
+    nutrition.metrics.creativity = 10;
+    event.metricDeltas = {
+      ...event.metricDeltas,
+      creativity: 10 - state.metrics.creativity,
+    };
+  }
   const next: GameState = {
     ...state,
-    metrics: nutrition.metrics,
+    metrics: {
+      ...nutrition.metrics,
+      ...(hyperfocusActive ? { creativity: 10 } : {}),
+    },
     inventory: {
       ...state.inventory,
       [item.id]: action.consumes === true ? owned - 1 : owned,
@@ -264,31 +238,40 @@ export function resolveItemConsumption(
     history: {
       ...state.history,
       consumptions: nutrition.consumptions,
+      kidneyStoneFeeds: nutrition.kidneyStoneFeeds,
       cravingItemId: nutrition.fulfilledCraving
         ? null
         : state.history.cravingItemId,
-      sugarCrashDueAt:
-        nutrition.sugarServings.length >= rules.sugarCrash.servingsRequired &&
-        state.history.sugarCrashDueAt === null
-          ? state.now + sugarCrashDelayHours() * HOUR_MS
-          : state.history.sugarCrashDueAt,
+      cravingStartedAt: nutrition.fulfilledCraving
+        ? null
+        : state.history.cravingStartedAt,
+      cravingRefreshCount: nutrition.fulfilledCraving
+        ? 0
+        : state.history.cravingRefreshCount,
+      sugarCrashDueAt: nutrition.sugarCrashDueAt,
     },
+    timedEffects,
     events: [
       ...state.events,
       event,
-      ...discoveries,
+      ...consumptionEvents,
       ...ruleEvents,
       ...(cravingEvent ? [cravingEvent] : []),
+      ...(sugarEvent ? [sugarEvent] : []),
     ],
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
   return {
-    state: recordBondGain(next, state),
+    state: recordBondGain(
+      reconcileMetricSource(state, next, command.commandId),
+      state,
+    ),
     outcome: accepted('item_used', event.message, [
       event.id,
-      ...discoveries.map((item) => item.id),
+      ...consumptionEvents.map((item) => item.id),
       ...ruleEvents.map((item) => item.id),
+      ...(sugarEvent ? [sugarEvent.id] : []),
       ...(cravingEvent ? [cravingEvent.id] : []),
     ]),
   };

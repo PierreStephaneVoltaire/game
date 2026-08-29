@@ -165,7 +165,7 @@ describe('stream duration and local-midnight rules', () => {
 });
 
 describe('automatic stream snacks and income', () => {
-  test('multiple floor requests consume owned ordinary food without another opportunity', () => {
+  test('successful floor requests consume owned ordinary food without another opportunity', () => {
     const initial = preparedRun(0, 'snack-normal', 'UTC', 'realtime');
     const state = {
       ...initial,
@@ -189,9 +189,10 @@ describe('automatic stream snacks and income', () => {
         event.type === 'item_used' &&
         event.sourceActionId?.startsWith('stream-source:snack:'),
     );
-    expect(snacks).toHaveLength(2);
-    expect(result.inventory.cake).toBe(0);
-    expect(result.metrics.food).toBeGreaterThanOrEqual(2);
+    expect(snacks).toHaveLength(1);
+    expect(result.inventory.cake).toBe(1);
+    expect(result.metrics.food).toBe(2);
+    expect(result.activity).toBeNull();
     expect(result.events.some((event) => AUTO_TYPES.has(event.type))).toBe(
       false,
     );
@@ -259,7 +260,7 @@ describe('automatic stream snacks and income', () => {
       2 * HOUR,
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(result.balance).toBe(-974);
+    expect(result.balance).toBe(-973);
     expect(result.activity).toBeNull();
   });
 });

@@ -9,36 +9,12 @@ import type {
 import {
   criticalHealthMoodDelta,
   isCriticalHealthForMood,
-  STATUS_NAMES,
   resolveAttemptStatus,
 } from '../status-rules';
-import { STAT_MIN } from '../game-constants';
-import { statusTransitionMessage } from '../event-messages';
-
-export function appendStatusTransitionEvents(
-  state: GameState,
-  before: GameState['statuses'],
-  sourceActionId: string,
-): GameState {
-  const changes: GameEvent[] = [];
-  for (const status of STATUS_NAMES) {
-    const wasActive = Boolean(before[status]);
-    const isActive = Boolean(state.statuses[status]);
-    if (wasActive === isActive) continue;
-    changes.push({
-      id: `event-${state.events.length + changes.length + 1}`,
-      type: isActive ? 'status_added' : 'status_cleared',
-      at: state.now,
-      message: statusTransitionMessage(status, isActive),
-      sourceActionId,
-      status,
-      cause: isActive ? state.statuses[status]?.source : 'explicit_action',
-    });
-  }
-  return changes.length
-    ? { ...state, events: [...state.events, ...changes] }
-    : state;
-}
+import { HEALTH_MAX, HOUR_MS, STAT_MIN } from '../game-constants';
+import rules from '../data/simulation-rules.json';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+export { appendStatusTransitionEvents } from './status-transition-events';
 
 export function isCompanionAttempt(type: GameCommand['type']): boolean {
   return ![
@@ -46,35 +22,13 @@ export function isCompanionAttempt(type: GameCommand['type']): boolean {
     'buy_item',
     'set_cart_quantity',
     'checkout_cart',
+    'pay_medical_debt',
+    'open_line_of_credit',
+    'repay_line_of_credit',
     'place_item',
     'unplace_item',
     'medical_care',
   ].includes(type);
-}
-
-export function recordDeathIfNeeded(state: GameState): GameState {
-  if (state.death || state.metrics.health > 0) return state;
-  const finalCause = [...state.events]
-    .reverse()
-    .find((event) => (event.metricDeltas?.health ?? 0) < 0);
-  const cause =
-    finalCause?.message ?? 'Final Health loss from a critical need.';
-  const causalIds = finalCause
-    ? [...(finalCause.causedBy ?? []), finalCause.id]
-    : [];
-  const deathEvent: GameEvent = {
-    id: `event-${state.events.length + 1}`,
-    type: 'death',
-    at: state.now,
-    message: 'Companion died.',
-    cause,
-    causedBy: causalIds,
-  };
-  return {
-    ...state,
-    death: { at: state.now, cause, eventIds: [...causalIds, deathEvent.id] },
-    events: [...state.events, deathEvent],
-  };
 }
 
 export function supportsQuantity(item: ItemDefinition): boolean {
@@ -96,7 +50,10 @@ export function applyRoomMetricDelta(
     const metric = key as keyof GameState['metrics'];
     next[metric] = Math.max(
       min,
-      Math.min(max, next[metric] + (value ?? 0) * multiplier),
+      Math.min(
+        metric === 'health' ? HEALTH_MAX : max,
+        next[metric] + (value ?? 0) * multiplier,
+      ),
     );
   }
   return next;
@@ -112,7 +69,13 @@ export function appliedRoomMetricDelta(
   const applied: Partial<GameState['metrics']> = {};
   for (const [key, value] of Object.entries(effects)) {
     const metric = key as keyof GameState['metrics'];
-    const target = Math.max(min, Math.min(max, metrics[metric] + (value ?? 0)));
+    const target = Math.max(
+      min,
+      Math.min(
+        metric === 'health' ? HEALTH_MAX : max,
+        metrics[metric] + (value ?? 0),
+      ),
+    );
     applied[metric] = target - metrics[metric];
   }
   return applied;
@@ -136,6 +99,13 @@ export function applyCriticalHealthMoodPenalty(
   sourceActionId: string,
 ): GameState {
   if (!isCriticalHealthForMood(before.metrics.health)) return state;
+  const lastPenalty = state.history.lastCriticalHealthMoodPenaltyAt;
+  if (
+    lastPenalty !== null &&
+    state.now - lastPenalty <
+      rules.statusRules.criticalHealthMoodCooldownHours * HOUR_MS
+  )
+    return state;
   const changed = (['food', 'rest', 'bond', 'creativity'] as const).some(
     (metric) => state.metrics[metric] !== before.metrics[metric],
   );
@@ -148,15 +118,20 @@ export function applyCriticalHealthMoodPenalty(
     sourceActionId,
     metricDeltas: { mood: criticalHealthMoodDelta() },
   };
-  return {
+  const penalized: GameState = {
     ...state,
     metrics: {
       ...state.metrics,
       mood: Math.max(STAT_MIN, state.metrics.mood + criticalHealthMoodDelta()),
     },
     events: [...state.events, event],
+    history: {
+      ...state.history,
+      lastCriticalHealthMoodPenaltyAt: state.now,
+    },
     stateVersion: state.stateVersion + 1,
   };
+  return reconcileMetricSource(state, penalized, sourceActionId);
 }
 
 export function recordAttempt(
@@ -166,7 +141,14 @@ export function recordAttempt(
   sourceActionId?: string,
   attemptType?: GameCommand['type'],
 ): GameState {
-  const attemptStatus = resolveAttemptStatus(state, outcome.accepted);
+  const countsAsRefusal =
+    outcome.kind === 'refused' &&
+    !(attemptType === 'rest' && before.metrics.rest >= 10);
+  const attemptStatus = resolveAttemptStatus(
+    state,
+    outcome.accepted,
+    countsAsRefusal,
+  );
   const becameAnnoyed = attemptStatus.moodDelta !== 0;
   const careMetricChanged = (
     ['food', 'rest', 'bond', 'creativity'] as const
@@ -174,35 +156,44 @@ export function recordAttempt(
   const criticalPenalty =
     isCriticalHealthForMood(before.metrics.health) &&
     careMetricChanged &&
+    (state.history.lastCriticalHealthMoodPenaltyAt === null ||
+      state.now - state.history.lastCriticalHealthMoodPenaltyAt >=
+        rules.statusRules.criticalHealthMoodCooldownHours * HOUR_MS) &&
     !state.events.some(
       (event) =>
         event.type === 'critical_health_mood_penalty' &&
         event.sourceActionId === sourceActionId,
     );
   const interaction = attemptType === 'socialize' || attemptType === 'play';
-  const next = {
+  const genuineAttempt = outcome.accepted || countsAsRefusal;
+  let next: GameState = {
     ...state,
-    metrics:
-      becameAnnoyed || criticalPenalty
-        ? {
-            ...state.metrics,
-            mood: Math.max(
-              STAT_MIN,
-              state.metrics.mood -
-                (becameAnnoyed ? Math.abs(attemptStatus.moodDelta) : 0),
-            ),
-          }
-        : state.metrics,
+    metrics: becameAnnoyed
+      ? {
+          ...state.metrics,
+          mood: Math.max(
+            STAT_MIN,
+            state.metrics.mood - Math.abs(attemptStatus.moodDelta),
+          ),
+        }
+      : state.metrics,
     statuses: attemptStatus.statuses,
     history: {
       ...state.history,
-      lastCareAttemptAt: before.now,
-      lastInteractionAt: before.now,
-      careAttemptStreak: becameAnnoyed
-        ? 0
+      lastCareAttemptAt: genuineAttempt
+        ? before.now
+        : state.history.lastCareAttemptAt,
+      lastInteractionAt: genuineAttempt
+        ? before.now
+        : state.history.lastInteractionAt,
+      careAttemptStreak: attemptStatus.careAttemptStreak,
+      annoyanceWarningIssued: becameAnnoyed
+        ? false
         : outcome.accepted
-          ? 0
-          : state.history.careAttemptStreak + 1,
+          ? false
+          : countsAsRefusal
+            ? state.history.annoyanceWarningIssued || attemptStatus.warning
+            : state.history.annoyanceWarningIssued,
       repeatAction: interaction ? attemptType : null,
       repeatCount: interaction
         ? state.history.repeatAction === attemptType
@@ -212,6 +203,18 @@ export function recordAttempt(
     },
     stateVersion: state.stateVersion + 1,
   };
+  if (attemptStatus.warning) {
+    const warning: GameEvent = {
+      id: `event-${next.events.length + 1}`,
+      type: 'annoyance_warning',
+      at: next.now,
+      message: 'The companion is getting frustrated by repeated attempts.',
+      sourceActionId,
+      status: 'annoyed',
+    };
+    next = { ...next, events: [...next.events, warning] };
+  }
+  next = reconcileMetricSource(state, next, sourceActionId ?? 'attempt-status');
   return criticalPenalty
     ? applyCriticalHealthMoodPenalty(next, before, sourceActionId ?? 'attempt')
     : next;
@@ -241,6 +244,8 @@ export function remember(
     message: outcome.message,
     sourceActionId: commandId,
     causedBy: outcome.eventIds,
+    outcomeKind: outcome.kind,
+    outcomeAccepted: outcome.accepted,
   };
   const receiptState = {
     ...state,
