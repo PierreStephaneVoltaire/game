@@ -53,7 +53,11 @@ export async function beginGameSession(
 }
 
 export async function ensureGameSession(): Promise<void> {
-  if (!activeController.current) await beginGameSession('realtime');
+  if (!activeController.current) {
+    await beginGameSession('realtime');
+    return;
+  }
+  await reconcileGameClock();
 }
 
 async function sendGameCommand(command: GameCommand): Promise<Outcome> {

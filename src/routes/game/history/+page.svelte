@@ -1,6 +1,36 @@
 <script lang="ts">
   import { gameViewModel } from '$lib/game-session';
+  import {
+    runArchiveExportFilename,
+    runArchiveExportMarkdown,
+  } from '$lib/ui/run-archive-export';
   $: model = $gameViewModel;
+  const dateTime = (at: number, timezone: string) =>
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: timezone,
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(at);
+  const duration = (start: number, end: number) => {
+    const totalHours = Math.floor((end - start) / 3_600_000);
+    const days = Math.floor(totalHours / 24);
+    const hours = totalHours % 24;
+    return `${days}d ${hours}h`;
+  };
+
+  function exportArchive() {
+    if (!model?.ending) return;
+    const url = URL.createObjectURL(
+      new Blob([runArchiveExportMarkdown(model)], {
+        type: 'text/markdown;charset=utf-8',
+      }),
+    );
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = runArchiveExportFilename(model);
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 </script>
 
 <svelte:head><title>History · Companion</title></svelte:head>
@@ -13,25 +43,66 @@
         <h1>{model.companion.name}'s History</h1>
       </div>
     </div>
-    {#if model.death}
-      <section class="death-card" role="alert">
+    {#if model.ending}
+      <section class="ending-card" role="alert">
         <p class="eyebrow">TERMINAL RUN</p>
-        <h2>Cause of death</h2>
-        <p>{model.death.cause}</p>
+        <h2>{model.ending.title}</h2>
+        <p>{model.ending.explanation}</p>
+        {#if model.ending.kind === 'death'}
+          <h3>Cause of death</h3>
+          <ul class="death-causes">
+            {#each model.ending.causes as cause (cause.name)}<li>
+                {cause.name}
+              </li>{/each}
+          </ul>
+        {:else if model.ending.evidence.length}
+          <ul>
+            {#each model.ending.evidence as evidence (evidence)}<li>
+                {evidence}
+              </li>{/each}
+          </ul>
+        {/if}
         <h3>Causal chain</h3>
         <ol>
           {#each model.causalEvents as event (event.id)}<li>
-              <strong>{event.label}</strong><span> — {event.message}</span>
+              <span>{event.message}</span>
             </li>{/each}
         </ol>
         <div class="graveyard">
-          <span aria-hidden="true">✦</span><strong>Graveyard</strong>
-          <p>This run is complete. Its record remains available for review.</p>
+          {#if model.ending.kind === 'death'}
+            <span aria-hidden="true">✦</span><strong>Graveyard</strong>
+            <p>This run is complete. Its grave remains available for review.</p>
+          {:else}
+            <span aria-hidden="true">✦</span>
+            <strong>Archived run</strong>
+            <p>
+              This run is complete. Its record remains available for review.
+            </p>
+          {/if}
+          <dl>
+            <div>
+              <dt>Started</dt>
+              <dd>{dateTime(model.runStartedAt, model.timezone)}</dd>
+            </div>
+            <div>
+              <dt>Ended</dt>
+              <dd>{dateTime(model.ending.at, model.timezone)}</dd>
+            </div>
+            <div>
+              <dt>Duration</dt>
+              <dd>{duration(model.runStartedAt, model.ending.at)}</dd>
+            </div>
+          </dl>
+          <button type="button" on:click={exportArchive}
+            >{model.ending.kind === 'death'
+              ? 'Export journey and grave'
+              : 'Export archived run'}</button
+          >
         </div>
       </section>
     {/if}
-    <details class="event-log" open={!model.death}>
-      <summary>Full event log</summary>
+    <details class="event-log" open={!model.ending}>
+      <summary>{model.companion.name}'s journey</summary>
       <ol>
         {#each model.events as event (event.id)}<li>
             <time datetime={new Date(event.at).toISOString()}
@@ -40,11 +111,7 @@
                 dateStyle: 'medium',
                 timeStyle: 'short',
               }).format(event.at)}</time
-            ><span
-              ><strong>{event.label}</strong><span>
-                — {event.message}</span
-              ></span
-            >
+            ><span>{event.message}</span>
           </li>{/each}
       </ol>
     </details>
@@ -76,26 +143,30 @@
     font-size: clamp(2.4rem, 6vw, 4.3rem);
     letter-spacing: -0.07em;
   }
-  .death-card {
+  .ending-card {
     margin-bottom: 24px;
     padding: clamp(20px, 4vw, 34px);
     border: 3px solid #512b9a;
     background: #ffe0e8;
   }
-  .death-card h2 {
+  .ending-card h2 {
     margin: 4px 0 7px;
     color: #512b9a;
     font-size: 2rem;
   }
-  .death-card h3 {
+  .ending-card h3 {
     margin: 22px 0 8px;
   }
-  .death-card ol {
+  .ending-card ol {
     margin: 0;
     padding-left: 22px;
   }
-  .death-card li {
+  .ending-card li {
     padding: 4px 0;
+  }
+  .death-causes {
+    margin: 8px 0 0;
+    padding-left: 22px;
   }
   .graveyard {
     display: grid;
@@ -114,6 +185,40 @@
     margin: 0;
     color: #766d7f;
     font-size: 0.8rem;
+  }
+  .graveyard dl {
+    grid-column: 2;
+    margin: 4px 0;
+    font-size: 0.78rem;
+  }
+  .graveyard dl div {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 8px;
+  }
+  .graveyard dt {
+    font-weight: 900;
+  }
+  .graveyard dd {
+    margin: 0;
+  }
+  .graveyard button {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 9px;
+    padding: 9px 13px;
+    border: 2px solid #512b9a;
+    color: #512b9a;
+    background: #fff;
+    box-shadow: 3px 3px 0 #f3a15f;
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  .graveyard button:hover {
+    color: #fff;
+    background: #512b9a;
   }
   .event-log {
     border-top: 3px solid #512b9a;
@@ -141,13 +246,6 @@
   .event-log time {
     color: #766d7f;
     font-size: 0.75rem;
-  }
-  .event-log strong {
-    display: block;
-    margin-bottom: 3px;
-    color: #512b9a;
-    font-size: 0.72rem;
-    text-transform: capitalize;
   }
   .event-log span {
     font-size: 0.82rem;

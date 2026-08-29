@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { resolve } from '$app/paths';
   import { gameViewModel, sendGameIntent } from '$lib/game-session';
   import { daypartFor, type GameIntent } from '$lib/ui/game-view-model';
-  import StatusPanel from './StatusPanel.svelte';
+  import CompanionOverview from './CompanionOverview.svelte';
   import './room.css';
   import './room-scene.css';
 
@@ -11,7 +10,7 @@
   $: model = $gameViewModel;
   $: daypart = model ? daypartFor(model.now, model.timezone) : 'day';
   $: edibleItems = model?.inventory.filter((item) => item.edible) ?? [];
-  $: careBlocked = Boolean(model?.activity || model?.death);
+  $: careBlocked = Boolean(model?.activity || model?.commandsDisabled);
   $: latestEvent = model?.events[model.events.length - 1]?.message ?? '';
 
   async function act(intent: GameIntent) {
@@ -41,15 +40,6 @@
     if (careBlocked) return;
     await act({ type: 'unplace_item', slot });
   }
-
-  function activityTime(value: number) {
-    return model
-      ? new Intl.DateTimeFormat('en-US', {
-          timeZone: model.timezone,
-          timeStyle: 'short',
-        }).format(value)
-      : '';
-  }
 </script>
 
 <svelte:head>
@@ -59,63 +49,12 @@
 {#if model}
   <main class={`room-page daypart-${daypart}`}>
     <section class="overview-row" data-game-row="overview">
-      <aside class="overview-column">
-        <section class="metrics" aria-label="Current metrics">
-          <h1>{model.companion.name}</h1>
-          {#each model.metrics as metric (metric.key)}
-            <div class="metric">
-              <div>
-                <span>{metric.label}</span><strong>{metric.value}/10</strong>
-              </div>
-              <meter
-                min="0"
-                max="10"
-                value={metric.value}
-                aria-label={`${metric.label}: ${metric.value} out of 10`}
-                >{metric.value}</meter
-              >
-            </div>
-          {/each}
-        </section>
-
-        <StatusPanel statuses={model.statuses} />
-        {#if model.statuses.some((status) => status.key === 'kidney_stone')}
-          <button
-            class="secondary-action"
-            type="button"
-            on:click={() => act({ type: 'medical_care' })}
-            disabled={careBlocked}>Medical Care</button
-          >
-        {/if}
-
-        <section class="time-balance" aria-label="Time and balance">
-          <h2>Time</h2>
-          <span>{model.formattedTime}</span>
-          <strong>Balance: ${model.balance}</strong>
-          {#if model.activity}
-            <p class="activity" role="status">
-              {model.companion.name} is {model.activity.label} until
-              {activityTime(model.activity.endsAt)}.
-            </p>
-          {/if}
-          {#if model.mode === 'streaming' && !model.death}
-            <button
-              class="secondary-action"
-              type="button"
-              on:click={() => act({ type: 'wait' })}
-              disabled={careBlocked}>Advance time</button
-            >
-          {/if}
-        </section>
-
-        {#if model.death}
-          <section class="death-card" role="alert">
-            <h2>Run ended</h2>
-            <p>{model.death.cause}</p>
-            <a href={resolve('/game/history')}>View the causal history</a>
-          </section>
-        {/if}
-      </aside>
+      <CompanionOverview
+        {model}
+        disabled={careBlocked}
+        {errorMessage}
+        onIntent={act}
+      />
 
       <section class="room-card" aria-label={`${model.companion.name}'s room`}>
         <div class="room-scene">
@@ -148,14 +87,15 @@
           {/each}
           <img
             class="companion"
-            src={model.companion.avatar}
+            src={model.activeAvatar.assetPath}
             alt={model.companion.name}
+            data-appearance-id={model.activeAvatar.id}
             width="176"
             height="176"
           />
         </div>
         <div class="companion-caption" aria-live="polite">
-          <span>{errorMessage || latestEvent}</span>
+          <span>{latestEvent}</span>
         </div>
       </section>
     </section>

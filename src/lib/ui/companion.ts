@@ -1,21 +1,23 @@
-import profile from '$lib/data/pet-profile.json';
+import { companionProfile } from '$lib/companion-profile';
+import type { AppearanceId } from '$lib/game-types';
 
 export type CompanionProfile = {
   name: string;
   avatar: string;
   pronouns?: string;
+  appearances: CompanionAppearance[];
 };
 
-type PetProfile = {
-  displayName: string;
-  avatarPath: string;
-  pronouns?: string;
+export type CompanionAppearance = {
+  id: AppearanceId;
+  label: string;
+  assetPath: string;
 };
-const source = profile as PetProfile;
 
 /** The bundled identity is data-driven so the UI never becomes a second pet definition. */
 export const companion: CompanionProfile = {
-  name: source.displayName,
-  avatar: source.avatarPath,
-  pronouns: source.pronouns,
+  name: companionProfile.displayName,
+  avatar: companionProfile.avatarPath,
+  pronouns: companionProfile.pronouns,
+  appearances: companionProfile.appearances,
 };

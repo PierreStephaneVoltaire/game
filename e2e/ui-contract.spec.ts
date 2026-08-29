@@ -42,8 +42,17 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
     overviewColumn.getByRole('region', { name: 'Status' }),
   ).toBeVisible();
   await expect(overviewColumn.getByText(/Balance:/)).toBeVisible();
+  await expect(overviewColumn.getByText('Followers: 100')).toBeVisible();
+  await expect(overviewColumn.getByText('Career: Debut')).toBeVisible();
+  await expect(
+    overviewColumn.getByText('Next milestone: First Model · 50 to go'),
+  ).toBeVisible();
   const room = firstRow.getByRole('region', { name: /room/i });
   await expect(room).toBeVisible();
+  await expect(room.locator('img.companion')).toHaveAttribute(
+    'data-appearance-id',
+    'classic',
+  );
   expect(
     await overviewColumn.evaluate((element) => ({
       display: getComputedStyle(element).display,
@@ -109,9 +118,7 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
   await expect(page.getByRole('link', { name: /back to room/i })).toBeVisible();
   await page.getByRole('link', { name: /back to room/i }).click();
 
-  await expect(page.locator('.companion-caption')).toHaveText(
-    'Just rainbows and sunshine.',
-  );
+  await expect(page.locator('.companion-caption')).toHaveText(/journey began/i);
   const settings = page.locator('details.settings');
   await settings.locator('summary', { hasText: 'Settings' }).click();
   await expect(settings).toContainText('Realtime mode');

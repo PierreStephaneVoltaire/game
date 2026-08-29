@@ -5,7 +5,6 @@ import {
   appendStatusTransitionEvents,
   isCompanionAttempt,
   recordAttempt,
-  recordDeathIfNeeded,
   rejected,
   remember,
 } from './simulation/engine-state';
@@ -17,6 +16,10 @@ import { handleItemActionCommand } from './commands/item-action-commands';
 import { resolveItemConsumption } from './commands/item-consumption';
 import { reconcileTime } from './simulation/reconcile-time';
 import { createRunState } from './simulation/run-state';
+import { resetPlayerCareRescueLocks } from './autonomous-rescue-rules';
+import { payMedicalDebtInFull } from './commands/medical-debt-commands';
+import { reconcileRunEnding } from './ending-rules';
+import { handleLineOfCreditCommand } from './commands/line-of-credit-commands';
 
 export const startRun = createRunState;
 export { reconcileTime };
@@ -26,28 +29,20 @@ export function dispatchCommand(
   command: GameCommand,
   definition: GameDefinition,
 ): Transition {
-  const prior = state.processedCommands[command.commandId];
-  if (prior)
+  if (state.ending)
     return {
       state,
-      outcomes: [prior.outcome],
+      outcomes: [rejected('run_over', 'This run is over.')],
     };
-  if (state.death)
-    return rememberAndCompleteStreaming(
-      state,
-      command.commandId,
-      rejected('dead', 'This run is over.'),
-      definition,
-    );
+  const prior = state.processedCommands[command.commandId];
+  if (prior) return { state, outcomes: [prior.outcome] };
 
   const timed = reconcileTime(state, command.now, definition).state;
-  if (timed.death)
-    return rememberAndCompleteStreaming(
-      timed,
-      command.commandId,
-      rejected('dead', 'This run is over.'),
-      definition,
-    );
+  if (timed.ending)
+    return {
+      state: timed,
+      outcomes: [rejected('run_over', 'This run is over.')],
+    };
   const companionAttempt = isCompanionAttempt(command.type);
   if (
     command.expectedStateVersion !== undefined &&
@@ -92,7 +87,7 @@ export function dispatchCommand(
       command = { ...command, type: 'use_item' };
     } else {
       return rememberAndCompleteStreaming(
-        recordDeathIfNeeded(itemActionResult.state),
+        reconcileRunEnding(itemActionResult.state),
         command.commandId,
         itemActionResult.outcome,
         definition,
@@ -113,14 +108,26 @@ export function dispatchCommand(
       'perform_item_action',
     ].includes(command.type)
   )
-    return rememberAndCompleteStreaming(
-      recordAttempt(
-        resolveAttemptEvent(next, command.commandId, definition),
-        rejected('activity_blocked', 'Companion is busy right now.'),
-        next,
+    if (command.type === 'medical_care')
+      return rememberAndCompleteStreaming(
+        timed,
         command.commandId,
-        command.type,
-      ),
+        rejected('activity_blocked', 'Companion is busy right now.'),
+        definition,
+      );
+  if (
+    next.activity &&
+    [
+      'rest',
+      'socialize',
+      'play',
+      'medical_care',
+      'use_item',
+      'perform_item_action',
+    ].includes(command.type)
+  )
+    return rememberAndCompleteStreaming(
+      resolveAttemptEvent(next, command.commandId, definition),
       command.commandId,
       rejected('activity_blocked', 'Companion is busy right now.'),
       definition,
@@ -129,6 +136,17 @@ export function dispatchCommand(
     const roomResult = handleRoomCommand(next, command, definition);
     next = roomResult.state;
     outcome = roomResult.outcome;
+  } else if (command.type === 'pay_medical_debt') {
+    const payment = payMedicalDebtInFull(next, command.commandId);
+    next = payment.state;
+    outcome = payment.outcome;
+  } else if (
+    command.type === 'open_line_of_credit' ||
+    command.type === 'repay_line_of_credit'
+  ) {
+    const loc = handleLineOfCreditCommand(next, command);
+    next = loc.state;
+    outcome = loc.outcome;
   } else if (
     command.type === 'wait' ||
     command.type === 'rest' ||
@@ -162,6 +180,7 @@ export function dispatchCommand(
     next = itemResult.state;
     outcome = itemResult.outcome;
   }
+  if (outcome.accepted) next = resetPlayerCareRescueLocks(timed, next);
   if (
     companionAttempt &&
     next.metrics.health > 0 &&
@@ -175,7 +194,7 @@ export function dispatchCommand(
   if (companionAttempt)
     next = recordAttempt(next, outcome, timed, command.commandId, command.type);
   next = appendStatusTransitionEvents(next, timed.statuses, command.commandId);
-  next = recordDeathIfNeeded(next);
+  next = reconcileRunEnding(next);
   return rememberAndCompleteStreaming(
     next,
     command.commandId,
@@ -192,7 +211,7 @@ function rememberAndCompleteStreaming(
 ): Transition {
   const transition = remember(state, commandId, outcome);
   let next = transition.state;
-  while (next.mode === 'streaming' && next.activity && !next.death) {
+  while (next.mode === 'streaming' && next.activity && !next.ending) {
     const before = next;
     next = reconcileTime(next, next.activity.endsAt, definition).state;
     if (next === before) break;

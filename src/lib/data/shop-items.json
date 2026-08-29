@@ -2,6 +2,10 @@
   {
     "id": "dr-pepper",
     "name": "Dr Pepper",
+    "narration": [
+      "happily drank Dr Pepper.",
+      "savored every sip of Dr Pepper."
+    ],
     "category": "food",
     "price": 2,
     "description": "Liquid serotonin, obviously.",
@@ -93,6 +97,10 @@
   {
     "id": "uncrustables",
     "name": "Uncrustables",
+    "narration": [
+      "happily ate Uncrustables.",
+      "savored every bite of Uncrustables."
+    ],
     "category": "food",
     "price": 3,
     "description": "Crust removed, problem solved.",
@@ -105,7 +113,8 @@
       "food",
       "snack",
       "stream-snack",
-      "favorite"
+      "favorite",
+      "refrigerated"
     ],
     "preferences": [
       "liked"
@@ -177,6 +186,10 @@
   {
     "id": "salt-tablet",
     "name": "Salt Tablet",
+    "narration": [
+      "used Salt Tablet to take salt tablet.",
+      "spent some time with Salt Tablet."
+    ],
     "category": "medicine",
     "price": 7,
     "description": "All the salt. None of the snack.",
@@ -187,7 +200,8 @@
     "supportsQuantity": true,
     "tags": [
       "medicine",
-      "salty"
+      "salty",
+      "essential"
     ],
     "preferences": [],
     "effects": {},
@@ -249,6 +263,10 @@
   {
     "id": "waffle",
     "name": "Waffle",
+    "narration": [
+      "happily ate Waffle.",
+      "savored every bite of Waffle."
+    ],
     "category": "food",
     "price": 4,
     "description": "Crispy grid of buttery carbs.",
@@ -328,6 +346,10 @@
   {
     "id": "pancake",
     "name": "Pancake",
+    "narration": [
+      "happily ate Pancake.",
+      "savored every bite of Pancake."
+    ],
     "category": "food",
     "price": 4,
     "description": "Soft stack of syrup-ready carbs.",
@@ -407,6 +429,10 @@
   {
     "id": "orange-juice",
     "name": "Orange juice",
+    "narration": [
+      "happily drank Orange juice.",
+      "savored every sip of Orange juice."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet citrus, preferably pulp-free.",
@@ -489,6 +515,10 @@
   {
     "id": "tea",
     "name": "Tea",
+    "narration": [
+      "happily drank Tea.",
+      "savored every sip of Tea."
+    ],
     "category": "food",
     "price": 2,
     "description": "Warm mug, gentle caffeine.",
@@ -575,6 +605,10 @@
   {
     "id": "chocolate-milk",
     "name": "Chocolate milk",
+    "narration": [
+      "happily drank Chocolate milk.",
+      "savored every sip of Chocolate milk."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sugar, dairy, and some protein.",
@@ -658,6 +692,10 @@
   {
     "id": "pasta",
     "name": "Pasta",
+    "narration": [
+      "happily ate Pasta.",
+      "savored every bite of Pasta."
+    ],
     "category": "food",
     "price": 4,
     "description": "A bowl of dependable carbs.",
@@ -741,6 +779,10 @@
   {
     "id": "butter",
     "name": "Butter",
+    "narration": [
+      "happily ate Butter.",
+      "savored every bite of Butter."
+    ],
     "category": "food",
     "price": 2,
     "description": "Concentrated fat; fixes many problems.",
@@ -821,6 +863,10 @@
   {
     "id": "bbq-chips",
     "name": "BBQ chips",
+    "narration": [
+      "happily ate BBQ chips.",
+      "savored every bite of BBQ chips."
+    ],
     "category": "food",
     "price": 2,
     "description": "Smoky crunch with a heavy salt coat.",
@@ -905,6 +951,10 @@
   {
     "id": "sour-cream",
     "name": "Sour cream",
+    "narration": [
+      "happily ate Sour cream.",
+      "savored every bite of Sour cream."
+    ],
     "category": "food",
     "price": 2,
     "description": "Cool, creamy, and calorie-dense.",
@@ -989,6 +1039,10 @@
   {
     "id": "lettuce",
     "name": "Lettuce",
+    "narration": [
+      "happily ate Lettuce.",
+      "savored every bite of Lettuce."
+    ],
     "category": "food",
     "price": 2,
     "description": "Crisp leaves, mostly water.",
@@ -1075,6 +1129,10 @@
   {
     "id": "tomato",
     "name": "Tomato",
+    "narration": [
+      "happily ate Tomato.",
+      "savored every bite of Tomato."
+    ],
     "category": "food",
     "price": 2,
     "description": "Juicy, acidic, technically fruit.",
@@ -1161,6 +1219,10 @@
   {
     "id": "toast",
     "name": "Toast",
+    "narration": [
+      "happily ate Toast.",
+      "savored every bite of Toast."
+    ],
     "category": "food",
     "price": 2,
     "description": "A butter-ready rectangle of stability.",
@@ -1240,6 +1302,10 @@
   {
     "id": "ketchup",
     "name": "Ketchup",
+    "narration": [
+      "happily ate Ketchup.",
+      "savored every bite of Ketchup."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sweet tomato sauce in disguise.",
@@ -1320,6 +1386,10 @@
   {
     "id": "mustard",
     "name": "Mustard",
+    "narration": [
+      "happily ate Mustard.",
+      "savored every bite of Mustard."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sharp, tangy, and sneakily salty.",
@@ -1403,6 +1473,10 @@
   {
     "id": "broccoli",
     "name": "Broccoli",
+    "narration": [
+      "happily ate Broccoli.",
+      "savored every bite of Broccoli."
+    ],
     "category": "food",
     "price": 3,
     "description": "Tiny trees packed with fiber.",
@@ -1487,6 +1561,10 @@
   {
     "id": "corn",
     "name": "Corn",
+    "narration": [
+      "happily ate Corn.",
+      "savored every bite of Corn."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sweet little kernels of starch.",
@@ -1571,6 +1649,10 @@
   {
     "id": "banana",
     "name": "Banana",
+    "narration": [
+      "happily ate Banana.",
+      "savored every bite of Banana."
+    ],
     "category": "food",
     "price": 1,
     "description": "Soft, sweet, potassium-rich.",
@@ -1657,6 +1739,10 @@
   {
     "id": "potato-chips",
     "name": "Potato chips",
+    "narration": [
+      "happily ate Potato chips.",
+      "savored every bite of Potato chips."
+    ],
     "category": "food",
     "price": 2,
     "description": "Thin potatoes buried in salt.",
@@ -1741,6 +1827,10 @@
   {
     "id": "doritos",
     "name": "Doritos",
+    "narration": [
+      "happily ate Doritos.",
+      "savored every bite of Doritos."
+    ],
     "category": "food",
     "price": 2,
     "description": "Neon dust and aggressive seasoning.",
@@ -1831,6 +1921,10 @@
   {
     "id": "cheez-its",
     "name": "Cheez-Its",
+    "narration": [
+      "happily ate Cheez-Its.",
+      "savored every bite of Cheez-Its."
+    ],
     "category": "food",
     "price": 2,
     "description": "Tiny cheese squares with plenty of salt.",
@@ -1918,6 +2012,10 @@
   {
     "id": "cucumber",
     "name": "Cucumber",
+    "narration": [
+      "happily ate Cucumber.",
+      "savored every bite of Cucumber."
+    ],
     "category": "food",
     "price": 2,
     "description": "Cold, crisp, mostly water.",
@@ -2005,6 +2103,10 @@
   {
     "id": "garlic-bread",
     "name": "Garlic bread",
+    "narration": [
+      "happily ate Garlic bread.",
+      "savored every bite of Garlic bread."
+    ],
     "category": "food",
     "price": 3,
     "description": "Buttery carbs with irresponsible garlic.",
@@ -2084,6 +2186,10 @@
   {
     "id": "rice",
     "name": "Rice",
+    "narration": [
+      "happily ate Rice.",
+      "savored every bite of Rice."
+    ],
     "category": "food",
     "price": 3,
     "description": "Plain, filling, dependable carbs.",
@@ -2167,6 +2273,10 @@
   {
     "id": "hash-brown",
     "name": "Hash Brown",
+    "narration": [
+      "happily ate Hash Brown.",
+      "savored every bite of Hash Brown."
+    ],
     "category": "food",
     "price": 3,
     "description": "Crispy shredded potatoes and salt.",
@@ -2249,6 +2359,10 @@
   {
     "id": "tater-tots",
     "name": "Tater tots",
+    "narration": [
+      "happily ate Tater tots.",
+      "savored every bite of Tater tots."
+    ],
     "category": "food",
     "price": 3,
     "description": "Tiny potato cylinders with crunch.",
@@ -2331,6 +2445,10 @@
   {
     "id": "mashed-potatoes",
     "name": "Mashed potatoes",
+    "narration": [
+      "happily ate Mashed potatoes.",
+      "savored every bite of Mashed potatoes."
+    ],
     "category": "food",
     "price": 3,
     "description": "Soft, buttery comfort carbs.",
@@ -2410,6 +2528,10 @@
   {
     "id": "milkshake",
     "name": "Milkshake",
+    "narration": [
+      "happily drank Milkshake.",
+      "savored every sip of Milkshake."
+    ],
     "category": "food",
     "price": 4,
     "description": "Dessert, dairy, and sugar through a straw.",
@@ -2489,12 +2611,16 @@
     }
   },
   {
-    "id": "taco",
-    "name": "Taco",
+    "id": "mini-tacos",
+    "name": "Mini Tacos",
+    "narration": [
+      "happily ate Mini Tacos.",
+      "savored every bite of Mini Tacos."
+    ],
     "category": "food",
     "price": 5,
-    "description": "Protein, carbs, toppings, structural risk.",
-    "qualitativeNutritionHint": "A mixed meal with protein, starch, and potentially plenty of salt.",
+    "description": "Small tacos, big feelings, structurally sound enough.",
+    "qualitativeNutritionHint": "A favorite little meal with protein, starch, and a salty edge.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -2555,7 +2681,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/taco.png",
+    "image": "/items/generated/mini-tacos.png",
     "nutrition": {
       "serving": "1 small/regular (105 g)",
       "calories": 258.3,
@@ -2566,7 +2692,7 @@
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708514/nutrients",
-      "sourceReference": "FDC ID 2708514 / food code 58102000 — Taco, NFS",
+      "sourceReference": "FDC ID 2708514 / food code 58102000 — Taco, NFS; gameplay name Mini Tacos",
       "retrievalDate": "2026-08-22",
       "snapshotDate": "2024-10-31"
     }
@@ -2574,6 +2700,10 @@
   {
     "id": "burrito",
     "name": "Burrito",
+    "narration": [
+      "happily ate Burrito.",
+      "savored every bite of Burrito."
+    ],
     "category": "food",
     "price": 6,
     "description": "An entire meal under tortilla containment.",
@@ -2657,6 +2787,10 @@
   {
     "id": "fries",
     "name": "Fries",
+    "narration": [
+      "happily ate Fries.",
+      "savored every bite of Fries."
+    ],
     "category": "food",
     "price": 3,
     "description": "Crispy potatoes carrying a lot of salt.",
@@ -2740,6 +2874,10 @@
   {
     "id": "sausage",
     "name": "Sausage",
+    "narration": [
+      "ate Sausage.",
+      "finished a serving of Sausage."
+    ],
     "category": "food",
     "price": 3,
     "description": "Salty, fatty, protein-packed mystery.",
@@ -2817,6 +2955,10 @@
   {
     "id": "water",
     "name": "Water",
+    "narration": [
+      "begrudgingly drank some water because it was healthy.",
+      "reluctantly drank some water, knowing it was good for them."
+    ],
     "category": "food",
     "price": 1,
     "description": "Literally just water.",
@@ -2828,7 +2970,8 @@
     "tags": [
       "food",
       "drink",
-      "hydrating"
+      "hydrating",
+      "essential"
     ],
     "preferences": [
       "variable"
@@ -2893,6 +3036,10 @@
   {
     "id": "watermelon",
     "name": "Watermelon",
+    "narration": [
+      "ate Watermelon.",
+      "finished a serving of Watermelon."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet, crisp, mostly water.",
@@ -2971,6 +3118,10 @@
   {
     "id": "grape",
     "name": "Grape",
+    "narration": [
+      "ate Grape.",
+      "finished a serving of Grape."
+    ],
     "category": "food",
     "price": 2,
     "description": "Tiny juice packets with skin attached.",
@@ -3052,6 +3203,10 @@
   {
     "id": "yogurt",
     "name": "Yogurt",
+    "narration": [
+      "ate Yogurt.",
+      "finished a serving of Yogurt."
+    ],
     "category": "food",
     "price": 3,
     "description": "Tangy protein with texture variance.",
@@ -3131,6 +3286,10 @@
   {
     "id": "granola",
     "name": "Granola",
+    "narration": [
+      "ate Granola.",
+      "finished a serving of Granola."
+    ],
     "category": "food",
     "price": 3,
     "description": "Crunchy sugar wearing a health-food badge.",
@@ -3207,6 +3366,10 @@
   {
     "id": "cheese",
     "name": "Cheese",
+    "narration": [
+      "ate Cheese.",
+      "finished a serving of Cheese."
+    ],
     "category": "food",
     "price": 3,
     "description": "Dense fat, protein, and strong opinions.",
@@ -3286,6 +3449,10 @@
   {
     "id": "chicken",
     "name": "Chicken",
+    "narration": [
+      "ate Chicken.",
+      "finished a serving of Chicken."
+    ],
     "category": "food",
     "price": 5,
     "description": "Lean, boring, high-protein.",
@@ -3363,8 +3530,112 @@
     }
   },
   {
+    "id": "three_month_old_rotisserie_chicken",
+    "name": "Three-Month-Old Rotisserie Chicken",
+    "narration": [
+      "ate the three-month-old rotisserie chicken and somehow turned it into a funny story."
+    ],
+    "automaticNarration": [
+      "found and ate the three-month-old rotisserie chicken during the stream."
+    ],
+    "category": "food",
+    "price": 8,
+    "description": "A complete rotisserie chicken that has been sitting around for three months.",
+    "qualitativeNutritionHint": "The joke lands harder than any nutritional benefit.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "maximumOwned": 1,
+    "maximumLifetimePurchases": 1,
+    "stock": {
+      "min": 1,
+      "max": 1
+    },
+    "tags": [
+      "food",
+      "meal",
+      "stream-snack"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 5,
+        "max": 5
+      },
+      "health": {
+        "min": -8,
+        "max": -8
+      },
+      "creativity": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Eat the whole chicken",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/three_month_old_rotisserie_chicken.png",
+    "nutrition": {
+      "serving": "1 RACC (114 g)",
+      "calories": 189.2,
+      "sodiumMg": 53.6,
+      "sugarG": null,
+      "proteinG": 36.59,
+      "waterG": 74.44,
+      "caffeineMg": null,
+      "sourceType": "usda_foundation",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/331960/nutrients",
+      "sourceReference": "FDC ID 331960 — Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2026-04-30",
+      "nullReasons": {
+        "sugarG": "The selected USDA record does not report sugarG.",
+        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      }
+    }
+  },
+  {
     "id": "cake",
     "name": "Cake",
+    "narration": [
+      "ate Cake.",
+      "finished a serving of Cake."
+    ],
     "category": "food",
     "price": 4,
     "description": "Frosting, flour, and a sugar spike.",
@@ -3445,6 +3716,10 @@
   {
     "id": "popcorn",
     "name": "Popcorn",
+    "narration": [
+      "ate Popcorn.",
+      "finished a serving of Popcorn."
+    ],
     "category": "food",
     "price": 2,
     "description": "Light crunch until a kernel fights back.",
@@ -3521,6 +3796,10 @@
   {
     "id": "carrot",
     "name": "Carrot",
+    "narration": [
+      "ate Carrot.",
+      "finished a serving of Carrot."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sweet root with a serious crunch.",
@@ -3602,6 +3881,10 @@
   {
     "id": "ranch-dressing",
     "name": "Ranch dressing",
+    "narration": [
+      "ate Ranch dressing.",
+      "finished a serving of Ranch dressing."
+    ],
     "category": "food",
     "price": 3,
     "description": "Creamy, salty vegetable camouflage.",
@@ -3679,6 +3962,10 @@
   {
     "id": "raisins",
     "name": "Raisins",
+    "narration": [
+      "ate Raisins.",
+      "finished a serving of Raisins."
+    ],
     "category": "food",
     "price": 2,
     "description": "Grapes with the water removed.",
@@ -3757,6 +4044,10 @@
   {
     "id": "lollipop",
     "name": "Lollipop",
+    "narration": [
+      "ate Lollipop.",
+      "finished a serving of Lollipop."
+    ],
     "category": "food",
     "price": 1,
     "description": "Flavored sugar with a time commitment.",
@@ -3833,6 +4124,10 @@
   {
     "id": "chocolate",
     "name": "Chocolate",
+    "narration": [
+      "ate Chocolate.",
+      "finished a serving of Chocolate."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sugar, fat, instant gratification.",
@@ -3911,6 +4206,10 @@
   {
     "id": "caramel",
     "name": "Caramel",
+    "narration": [
+      "ate Caramel.",
+      "finished a serving of Caramel."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sugar, but stickier.",
@@ -3989,6 +4288,10 @@
   {
     "id": "peanuts",
     "name": "Peanuts",
+    "narration": [
+      "ate Peanuts.",
+      "finished a serving of Peanuts."
+    ],
     "category": "food",
     "price": 2,
     "description": "Crunchy protein and fat in tiny form.",
@@ -4069,6 +4372,10 @@
   {
     "id": "tuna",
     "name": "Tuna",
+    "narration": [
+      "ate Tuna.",
+      "finished a serving of Tuna."
+    ],
     "category": "food",
     "price": 4,
     "description": "A suspicious amount of lean protein.",
@@ -4146,6 +4453,10 @@
   {
     "id": "pepperoni",
     "name": "Pepperoni",
+    "narration": [
+      "ate Pepperoni.",
+      "finished a serving of Pepperoni."
+    ],
     "category": "food",
     "price": 2,
     "description": "Greasy little circles loaded with salt.",
@@ -4224,6 +4535,10 @@
   {
     "id": "pretzel",
     "name": "Pretzel",
+    "narration": [
+      "ate Pretzel.",
+      "finished a serving of Pretzel."
+    ],
     "category": "food",
     "price": 2,
     "description": "Dry crunch with a salt coating.",
@@ -4303,6 +4618,10 @@
   {
     "id": "cupcake",
     "name": "Cupcake",
+    "narration": [
+      "ate Cupcake.",
+      "finished a serving of Cupcake."
+    ],
     "category": "food",
     "price": 3,
     "description": "Portable frosting with cake underneath.",
@@ -4381,6 +4700,10 @@
   {
     "id": "french-toast",
     "name": "French toast",
+    "narration": [
+      "reluctantly ate French toast.",
+      "managed to get through French toast."
+    ],
     "category": "food",
     "price": 4,
     "description": "Soft bread soaked in egg and sugar.",
@@ -4461,6 +4784,10 @@
   {
     "id": "egg",
     "name": "Egg",
+    "narration": [
+      "reluctantly ate Egg.",
+      "managed to get through Egg."
+    ],
     "category": "food",
     "price": 2,
     "description": "Protein in a shell. See eggcup incident.",
@@ -4545,6 +4872,10 @@
   {
     "id": "bacon",
     "name": "Bacon",
+    "narration": [
+      "reluctantly ate Bacon.",
+      "managed to get through Bacon."
+    ],
     "category": "food",
     "price": 3,
     "description": "Crispy fat, protein, and a lot of salt.",
@@ -4629,6 +4960,10 @@
   {
     "id": "ham",
     "name": "Ham",
+    "narration": [
+      "reluctantly ate Ham.",
+      "managed to get through Ham."
+    ],
     "category": "food",
     "price": 4,
     "description": "Cured protein with plenty of sodium.",
@@ -4717,6 +5052,10 @@
   {
     "id": "apple-juice",
     "name": "Apple juice",
+    "narration": [
+      "reluctantly drank Apple juice.",
+      "managed to get through Apple juice."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet apple-flavored hydration.",
@@ -4800,6 +5139,10 @@
   {
     "id": "lemonade",
     "name": "Lemonade",
+    "narration": [
+      "reluctantly drank Lemonade.",
+      "managed to get through Lemonade."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sugar, water, aggressive citrus.",
@@ -4883,6 +5226,10 @@
   {
     "id": "coffee",
     "name": "Coffee",
+    "narration": [
+      "reluctantly drank Coffee.",
+      "managed to get through Coffee."
+    ],
     "category": "food",
     "price": 2,
     "description": "Bitter caffeine delivery system.",
@@ -4970,6 +5317,10 @@
   {
     "id": "milk",
     "name": "Milk",
+    "narration": [
+      "reluctantly drank Milk.",
+      "managed to get through Milk."
+    ],
     "category": "food",
     "price": 3,
     "description": "Calcium and protein in liquid form.",
@@ -5056,6 +5407,10 @@
   {
     "id": "pear",
     "name": "Pear",
+    "narration": [
+      "reluctantly ate Pear.",
+      "managed to get through Pear."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sweet fruit with a grainy texture.",
@@ -5141,6 +5496,10 @@
   {
     "id": "orange",
     "name": "Orange",
+    "narration": [
+      "reluctantly ate Orange.",
+      "managed to get through Orange."
+    ],
     "category": "food",
     "price": 2,
     "description": "Juicy citrus with built-in pulp.",
@@ -5226,6 +5585,10 @@
   {
     "id": "cantaloupe",
     "name": "Cantaloupe",
+    "narration": [
+      "reluctantly ate Cantaloupe.",
+      "managed to get through Cantaloupe."
+    ],
     "category": "food",
     "price": 3,
     "description": "Soft melon with a very specific texture.",
@@ -5311,6 +5674,10 @@
   {
     "id": "blueberry",
     "name": "Blueberry",
+    "narration": [
+      "reluctantly ate Blueberry.",
+      "managed to get through Blueberry."
+    ],
     "category": "food",
     "price": 3,
     "description": "Tiny berries with a sudden pop.",
@@ -5396,6 +5763,10 @@
   {
     "id": "raspberry",
     "name": "Raspberry",
+    "narration": [
+      "reluctantly ate Raspberry.",
+      "managed to get through Raspberry."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet-tart fruit full of seeds.",
@@ -5481,6 +5852,10 @@
   {
     "id": "kiwi",
     "name": "Kiwi",
+    "narration": [
+      "reluctantly ate Kiwi.",
+      "managed to get through Kiwi."
+    ],
     "category": "food",
     "price": 3,
     "description": "Fuzzy outside, soft and seedy inside.",
@@ -5566,6 +5941,10 @@
   {
     "id": "hot-dog",
     "name": "Hot dog",
+    "narration": [
+      "reluctantly ate Hot dog.",
+      "managed to get through Hot dog."
+    ],
     "category": "food",
     "price": 4,
     "description": "Processed protein, bun, and lots of salt.",
@@ -5650,6 +6029,10 @@
   {
     "id": "chicken-finger",
     "name": "Chicken Finger",
+    "narration": [
+      "reluctantly ate Chicken Finger.",
+      "managed to get through Chicken Finger."
+    ],
     "category": "food",
     "price": 5,
     "description": "Protein wearing crispy armor.",
@@ -5734,6 +6117,10 @@
   {
     "id": "onion",
     "name": "Onion",
+    "narration": [
+      "reluctantly ate Onion.",
+      "managed to get through Onion."
+    ],
     "category": "food",
     "price": 2,
     "description": "Crunchy raw; slippery when cooked.",
@@ -5819,6 +6206,10 @@
   {
     "id": "pineapple",
     "name": "Pineapple",
+    "narration": [
+      "reluctantly ate Pineapple.",
+      "managed to get through Pineapple."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet, acidic, and mildly hostile.",
@@ -5905,6 +6296,10 @@
   {
     "id": "gummies",
     "name": "Gummies",
+    "narration": [
+      "reluctantly ate Gummies.",
+      "managed to get through Gummies."
+    ],
     "category": "food",
     "price": 2,
     "description": "Concentrated sugar with mandatory chewing.",
@@ -5988,6 +6383,10 @@
   {
     "id": "acai-bowl",
     "name": "Açaí Bowl",
+    "narration": [
+      "reluctantly ate Açaí Bowl.",
+      "managed to get through Açaí Bowl."
+    ],
     "category": "food",
     "price": 6,
     "description": "Cold fruit under a pile of textures.",
@@ -6077,6 +6476,10 @@
   {
     "id": "celery",
     "name": "Celery",
+    "narration": [
+      "reluctantly ate Celery.",
+      "managed to get through Celery."
+    ],
     "category": "food",
     "price": 2,
     "description": "Crunchy water reinforced with strings.",
@@ -6164,6 +6567,10 @@
   {
     "id": "cherry",
     "name": "Cherry",
+    "narration": [
+      "reluctantly ate Cherry.",
+      "managed to get through Cherry."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet fruit built around a pit.",
@@ -6250,6 +6657,10 @@
   {
     "id": "peas",
     "name": "Peas",
+    "narration": [
+      "reluctantly ate Peas.",
+      "managed to get through Peas."
+    ],
     "category": "food",
     "price": 3,
     "description": "Tiny green bursts of fiber and protein.",
@@ -6336,6 +6747,10 @@
   {
     "id": "almond",
     "name": "Almond",
+    "narration": [
+      "reluctantly ate Almond.",
+      "managed to get through Almond."
+    ],
     "category": "food",
     "price": 3,
     "description": "Dry crunch packed with fat and protein.",
@@ -6422,6 +6837,10 @@
   {
     "id": "sunflower-seeds",
     "name": "Sunflower seeds",
+    "narration": [
+      "reluctantly ate Sunflower seeds.",
+      "managed to get through Sunflower seeds."
+    ],
     "category": "food",
     "price": 2,
     "description": "Tiny nutrition behind manual labor.",
@@ -6508,6 +6927,10 @@
   {
     "id": "salsa",
     "name": "Salsa",
+    "narration": [
+      "reluctantly ate Salsa.",
+      "managed to get through Salsa."
+    ],
     "category": "food",
     "price": 2,
     "description": "Tomato, acid, chunks, and surprise heat.",
@@ -6593,6 +7016,10 @@
   {
     "id": "hummus",
     "name": "Hummus",
+    "narration": [
+      "reluctantly ate Hummus.",
+      "managed to get through Hummus."
+    ],
     "category": "food",
     "price": 3,
     "description": "Chickpeas blended into protein paste.",
@@ -6678,6 +7105,10 @@
   {
     "id": "coconut",
     "name": "Coconut",
+    "narration": [
+      "reluctantly ate Coconut.",
+      "managed to get through Coconut."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet fat with stubborn shreds.",
@@ -6761,6 +7192,10 @@
   {
     "id": "turkey",
     "name": "Turkey",
+    "narration": [
+      "reluctantly ate Turkey.",
+      "managed to get through Turkey."
+    ],
     "category": "food",
     "price": 5,
     "description": "Lean protein with dry potential.",
@@ -6845,6 +7280,10 @@
   {
     "id": "cranberry-sauce",
     "name": "Cranberry sauce",
+    "narration": [
+      "reluctantly ate Cranberry sauce.",
+      "managed to get through Cranberry sauce."
+    ],
     "category": "food",
     "price": 3,
     "description": "Tart fruit buried under sugar.",
@@ -6927,6 +7366,10 @@
   {
     "id": "sweet-potato",
     "name": "Sweet Potato",
+    "narration": [
+      "reluctantly ate Sweet Potato.",
+      "managed to get through Sweet Potato."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet, starchy, vitamin-heavy.",
@@ -7008,6 +7451,10 @@
   {
     "id": "goldfish",
     "name": "Goldfish",
+    "narration": [
+      "reluctantly ate Goldfish.",
+      "managed to get through Goldfish."
+    ],
     "category": "food",
     "price": 2,
     "description": "Tiny cheese crackers. Not actual fish.",
@@ -7096,6 +7543,10 @@
   {
     "id": "meatballs",
     "name": "Meatballs",
+    "narration": [
+      "reluctantly ate Meatballs.",
+      "managed to get through Meatballs."
+    ],
     "category": "food",
     "price": 5,
     "description": "Dense spheres of seasoned protein.",
@@ -7180,6 +7631,10 @@
   {
     "id": "nachos",
     "name": "Nachos",
+    "narration": [
+      "reluctantly ate Nachos.",
+      "managed to get through Nachos."
+    ],
     "category": "food",
     "price": 4,
     "description": "Chips, cheese, salt, structural chaos.",
@@ -7263,6 +7718,10 @@
   {
     "id": "bbq-ribs",
     "name": "BBQ ribs",
+    "narration": [
+      "reluctantly ate BBQ ribs.",
+      "managed to get through BBQ ribs."
+    ],
     "category": "food",
     "price": 7,
     "description": "Fatty protein, sweet sauce, bone logistics.",
@@ -7347,6 +7806,10 @@
   {
     "id": "meat-loaf",
     "name": "Meat loaf",
+    "narration": [
+      "reluctantly ate Meat loaf.",
+      "managed to get through Meat loaf."
+    ],
     "category": "food",
     "price": 6,
     "description": "Dense baked protein in loaf form.",
@@ -7431,6 +7894,10 @@
   {
     "id": "roast-beef",
     "name": "Roast beef",
+    "narration": [
+      "reluctantly ate Roast beef.",
+      "managed to get through Roast beef."
+    ],
     "category": "food",
     "price": 6,
     "description": "Roasted protein, usually served gray.",
@@ -7512,6 +7979,10 @@
   {
     "id": "chicken-pot-pie",
     "name": "Chicken pot pie",
+    "narration": [
+      "reluctantly ate Chicken pot pie.",
+      "managed to get through Chicken pot pie."
+    ],
     "category": "food",
     "price": 7,
     "description": "Protein and vegetables under soft pastry.",
@@ -7596,6 +8067,10 @@
   {
     "id": "bagel",
     "name": "Bagel",
+    "narration": [
+      "carefully tried Bagel.",
+      "gave Bagel a cautious first bite."
+    ],
     "category": "food",
     "price": 3,
     "description": "Dense, chewy carbs; preparation matters.",
@@ -7679,6 +8154,10 @@
   {
     "id": "apple",
     "name": "Apple",
+    "narration": [
+      "carefully tried Apple.",
+      "gave Apple a cautious first bite."
+    ],
     "category": "food",
     "price": 2,
     "description": "Sweet, crisp, fibrous, skin included.",
@@ -7767,6 +8246,10 @@
   {
     "id": "lemon",
     "name": "Lemon",
+    "narration": [
+      "carefully tried Lemon.",
+      "gave Lemon a cautious first bite."
+    ],
     "category": "food",
     "price": 1,
     "description": "An extremely sour vitamin-C grenade.",
@@ -7848,6 +8331,10 @@
   {
     "id": "strawberry",
     "name": "Strawberry",
+    "narration": [
+      "carefully tried Strawberry.",
+      "gave Strawberry a cautious first bite."
+    ],
     "category": "food",
     "price": 3,
     "description": "Sweet fruit with seeds everywhere.",
@@ -7935,6 +8422,10 @@
   {
     "id": "bread",
     "name": "Bread",
+    "narration": [
+      "carefully tried Bread.",
+      "gave Bread a cautious first bite."
+    ],
     "category": "food",
     "price": 2,
     "description": "Basic carbs with endless configuration options.",
@@ -8016,6 +8507,10 @@
   {
     "id": "cheeseburger",
     "name": "Cheeseburger",
+    "narration": [
+      "carefully tried Cheeseburger.",
+      "gave Cheeseburger a cautious first bite."
+    ],
     "category": "food",
     "price": 6,
     "description": "Protein, fat, carbs, several variables.",
@@ -8100,6 +8595,10 @@
   {
     "id": "steak",
     "name": "Steak",
+    "narration": [
+      "carefully tried Steak.",
+      "gave Steak a cautious first bite."
+    ],
     "category": "food",
     "price": 8,
     "description": "Dense protein with adjustable doneness.",
@@ -8184,6 +8683,10 @@
   {
     "id": "ice-cream",
     "name": "Ice cream",
+    "narration": [
+      "carefully tried Ice cream.",
+      "gave Ice cream a cautious first bite."
+    ],
     "category": "food",
     "price": 4,
     "description": "Cold dairy, fat, and plenty of sugar.",
@@ -8266,6 +8769,10 @@
   {
     "id": "brownie",
     "name": "Brownie",
+    "narration": [
+      "carefully tried Brownie.",
+      "gave Brownie a cautious first bite."
+    ],
     "category": "food",
     "price": 3,
     "description": "Dense chocolate with serious sugar potential.",
@@ -8350,6 +8857,10 @@
   {
     "id": "salad",
     "name": "Salad",
+    "narration": [
+      "carefully tried Salad.",
+      "gave Salad a cautious first bite."
+    ],
     "category": "food",
     "price": 5,
     "description": "A responsible pile of uncontrolled variables.",
@@ -8433,6 +8944,10 @@
   {
     "id": "sushi",
     "name": "Sushi",
+    "narration": [
+      "carefully tried Sushi.",
+      "gave Sushi a cautious first bite."
+    ],
     "category": "food",
     "price": 7,
     "description": "Rice, protein, and texture roulette.",
@@ -8517,6 +9032,10 @@
   {
     "id": "gravy",
     "name": "Gravy",
+    "narration": [
+      "carefully tried Gravy.",
+      "gave Gravy a cautious first bite."
+    ],
     "category": "food",
     "price": 2,
     "description": "Salty liquid fat for other food.",
@@ -8599,12 +9118,16 @@
     }
   },
   {
-    "id": "pizza",
-    "name": "Pizza",
+    "id": "cheeseless-toppingless-pizza",
+    "name": "Cheeseless Toppingless Pizza",
+    "narration": [
+      "carefully tried Cheeseless Toppingless Pizza.",
+      "gave Cheeseless Toppingless Pizza a cautious first bite."
+    ],
     "category": "food",
     "price": 5,
-    "description": "Carbs, fat, salt, infinite configuration problems.",
-    "qualitativeNutritionHint": "Rich, salty comfort food with countless preparation variables.",
+    "description": "The safe order: crust, sauce, and no surprises.",
+    "qualitativeNutritionHint": "A favorite comfort meal with a specific plain preparation and a salty edge.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -8619,7 +9142,7 @@
     ],
     "context": {
       "refusalProbability": 0.4,
-      "preparationAcceptance": 0.75,
+      "preparationAcceptance": 0.85,
       "dislikedEffects": {
         "mood": {
           "min": -1,
@@ -8666,7 +9189,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pizza.png",
+    "image": "/items/generated/cheeseless-toppingless-pizza.png",
     "nutrition": {
       "serving": "1 piece, NFS (119 g)",
       "calories": 316.5,
@@ -8677,14 +9200,25 @@
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708614/nutrients",
-      "sourceReference": "FDC ID 2708614 / food code 58106210 — Pizza, cheese, from restaurant or fast food, NS as to type of crust",
+      "sourceReference": "FDC ID 2708614 / food code 58106210 — Pizza, cheese, from restaurant or fast food, NS as to type of crust; proxy for the cheeseless/toppingless preparation",
       "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately"
+      }
     }
   },
   {
     "id": "apple-pie",
     "name": "Apple pie",
+    "narration": [
+      "carefully tried Apple pie.",
+      "gave Apple pie a cautious first bite."
+    ],
     "category": "food",
     "price": 4,
     "description": "Fruit surrounded by butter and sugar.",
@@ -8767,6 +9301,10 @@
   {
     "id": "fruit-smoothie",
     "name": "Fruit Smoothie",
+    "narration": [
+      "carefully tried Fruit Smoothie.",
+      "took a cautious sip of Fruit Smoothie."
+    ],
     "category": "food",
     "price": 5,
     "description": "Several fruits compressed past texture.",
@@ -8849,12 +9387,16 @@
     }
   },
   {
-    "id": "mystery-snack",
-    "name": "Mystery Snack",
+    "id": "the-concoction",
+    "name": "The Concoction",
+    "narration": [
+      "bravely drank The Concoction.",
+      "finished The Concoction without asking what was in it."
+    ],
     "category": "food",
     "price": 4,
-    "description": "Could be delicious. Could be a surprise.",
-    "qualitativeNutritionHint": "Its nutrition comes from one of three seeded fictional profiles.",
+    "description": "Jello, soda, peanut butter cookies, taco seasoning, and three cups of pickle juice.",
+    "qualitativeNutritionHint": "A seeded fictional mystery meal whose nutrition is intentionally unpredictable.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -8900,7 +9442,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mystery-snack.png",
+    "image": "/items/generated/the-concoction.png",
     "nutrition": {
       "serving": "1 mystery portion",
       "calories": null,
@@ -8911,7 +9453,7 @@
       "caffeineMg": null,
       "sourceType": "fictional_seeded_profile",
       "sourceUrl": null,
-      "sourceReference": "Explicit fictional profiles A/B/C; no real-world nutrition claim.",
+      "sourceReference": "Explicit fictional profiles A/B/C for The Concoction; no real-world nutrition claim.",
       "retrievalDate": "2026-08-22",
       "fictionalProfiles": [
         {
@@ -8979,6 +9521,10 @@
   {
     "id": "studio-mic",
     "name": "Studio Mic",
+    "narration": [
+      "used Studio Mic to record a voice clip.",
+      "spent some time with Studio Mic."
+    ],
     "category": "reusable",
     "price": 145,
     "description": "Chat can hear everything now. Everything.",
@@ -9057,6 +9603,10 @@
   {
     "id": "stream-deck",
     "name": "Stream Deck",
+    "narration": [
+      "used Stream Deck to practice shortcuts.",
+      "spent some time with Stream Deck."
+    ],
     "category": "reusable",
     "price": 110,
     "description": "More buttons means more professional.",
@@ -9129,8 +9679,91 @@
     }
   },
   {
+    "id": "clippers",
+    "name": "Clippers",
+    "narration": [
+      "set Clippers loose on the stream archive.",
+      "queued a fresh batch of stream highlights with Clippers."
+    ],
+    "category": "upgrade",
+    "price": 25,
+    "description": "Turns stream highlights into a temporary passive subscriber boost.",
+    "qualitativeNutritionHint": "Publishes clips daily for three days; extra copies stack and renew the shared timer.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "streaming-gear",
+      "clipping"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "activate_clippers",
+        "label": "Activate Clippers",
+        "kind": "interaction",
+        "consumes": true,
+        "progressionEffect": {
+          "type": "activate_clippers"
+        },
+        "tags": [
+          "career"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/clippers.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Clippers is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
     "id": "new-keyboard",
     "name": "New Keyboard",
+    "narration": [
+      "used New Keyboard to write ideas.",
+      "spent some time with New Keyboard."
+    ],
     "category": "reusable",
     "price": 85,
     "description": "Click clack, productivity allegedly.",
@@ -9205,6 +9838,10 @@
   {
     "id": "drawing-tablet",
     "name": "Drawing Tablet",
+    "narration": [
+      "used Drawing Tablet to draw something.",
+      "spent some time with Drawing Tablet."
+    ],
     "category": "reusable",
     "price": 180,
     "description": "For productive creative endeavors. Obviously.",
@@ -9235,7 +9872,31 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "small-emote-commission",
+        "weight": 3,
+        "message": "Companion picked up a small emote commission on her own.",
+        "eligibility": "owned",
+        "effects": {
+          "creativity": {
+            "min": -1,
+            "max": -1
+          },
+          "rest": {
+            "min": -1,
+            "max": -1
+          }
+        },
+        "balanceEffect": {
+          "min": 20,
+          "max": 60
+        },
+        "cooldownHours": 36,
+        "sharedCooldownKey": "autonomous_side_gig",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "draw",
@@ -9283,6 +9944,10 @@
   {
     "id": "monitor",
     "name": "Monitor",
+    "narration": [
+      "used Monitor to organize the workspace.",
+      "spent some time with Monitor."
+    ],
     "category": "reusable",
     "price": 160,
     "description": "More screen for more problems.",
@@ -9361,6 +10026,10 @@
   {
     "id": "pc-parts",
     "name": "PC Parts",
+    "narration": [
+      "used PC Parts to tune the computer.",
+      "spent some time with PC Parts."
+    ],
     "category": "reusable",
     "price": 200,
     "description": "Tiny upgrades for a mighty setup.",
@@ -9439,6 +10108,10 @@
   {
     "id": "webcam",
     "name": "Webcam",
+    "narration": [
+      "used Webcam to take a test photo.",
+      "spent some time with Webcam."
+    ],
     "category": "reusable",
     "price": 95,
     "description": "Say hi to the camera.",
@@ -9517,6 +10190,10 @@
   {
     "id": "desk-chair",
     "name": "Desk Chair",
+    "narration": [
+      "admired Desk Chair in the room.",
+      "took another look at Desk Chair."
+    ],
     "category": "reusable",
     "price": 175,
     "description": "Sitting equipment, but expensive.",
@@ -9580,6 +10257,10 @@
   {
     "id": "live2d-model",
     "name": "Live2D Model",
+    "narration": [
+      "used Live2D Model to rehearse with the model.",
+      "spent some time with Live2D Model."
+    ],
     "category": "reusable",
     "price": 225,
     "description": "Just one more model. Promise.",
@@ -9658,6 +10339,10 @@
   {
     "id": "model-outfit",
     "name": "Model Outfit",
+    "narration": [
+      "used Model Outfit to preview the outfit.",
+      "spent some time with Model Outfit."
+    ],
     "category": "reusable",
     "price": 90,
     "description": "The model needed clothes too.",
@@ -9736,6 +10421,10 @@
   {
     "id": "rigging-software-upgrade",
     "name": "Rigging Software Upgrade",
+    "narration": [
+      "used Rigging Software Upgrade to practice rigging.",
+      "spent some time with Rigging Software Upgrade."
+    ],
     "category": "reusable",
     "price": 150,
     "description": "More parameters. More jiggle.",
@@ -9814,6 +10503,10 @@
   {
     "id": "commissioned-art",
     "name": "Commissioned Art",
+    "narration": [
+      "admired Commissioned Art in the room.",
+      "took another look at Commissioned Art."
+    ],
     "category": "reusable",
     "price": 120,
     "description": "Supporting artists is financially responsible.",
@@ -9891,6 +10584,10 @@
   {
     "id": "stream-decorations",
     "name": "Stream Decorations",
+    "narration": [
+      "admired Stream Decorations in the room.",
+      "took another look at Stream Decorations."
+    ],
     "category": "reusable",
     "price": 70,
     "description": "Chat will definitely notice these.",
@@ -9968,6 +10665,10 @@
   {
     "id": "merch-sample",
     "name": "Merch Sample",
+    "narration": [
+      "used Merch Sample to inspect the merch sample.",
+      "spent some time with Merch Sample."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "Quality control requires keeping one.",
@@ -9998,7 +10699,27 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "merch-sample-sale",
+        "weight": 3,
+        "message": "A merch sample sale notification came through on its own.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "balanceEffect": {
+          "min": 15,
+          "max": 50
+        },
+        "cooldownHours": 48,
+        "sharedCooldownKey": "autonomous_side_gig",
+        "requiredCareerTier": "sub_1k"
+      }
+    ],
     "itemActions": [
       {
         "id": "inspect_merch",
@@ -10046,6 +10767,10 @@
   {
     "id": "new-game",
     "name": "New Game",
+    "narration": [
+      "used New Game to play the new game.",
+      "spent some time with New Game."
+    ],
     "category": "reusable",
     "price": 55,
     "description": "Surely chat recommended something normal.",
@@ -10136,6 +10861,10 @@
   {
     "id": "horror-game",
     "name": "Horror Game",
+    "narration": [
+      "used Horror Game to play the horror game.",
+      "spent some time with Horror Game."
+    ],
     "category": "reusable",
     "price": 35,
     "description": "This seemed wise at checkout.",
@@ -10226,6 +10955,10 @@
   {
     "id": "friendslop-game",
     "name": "Friendslop Game",
+    "narration": [
+      "used Friendslop Game to play with friends.",
+      "spent some time with Friendslop Game."
+    ],
     "category": "reusable",
     "price": 40,
     "description": "Better with friends. Worse for everyone else.",
@@ -10317,6 +11050,10 @@
   {
     "id": "soulslike",
     "name": "Soulslike",
+    "narration": [
+      "used Soulslike to attempt the soulslike.",
+      "spent some time with Soulslike."
+    ],
     "category": "reusable",
     "price": 50,
     "description": "How hard could it possibly be?",
@@ -10407,6 +11144,10 @@
   {
     "id": "indie-game",
     "name": "Indie Game",
+    "narration": [
+      "used Indie Game to try the indie game.",
+      "spent some time with Indie Game."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "$12 and suspiciously good reviews.",
@@ -10497,6 +11238,10 @@
   {
     "id": "cursed-steam-game",
     "name": "Cursed Steam Game",
+    "narration": [
+      "used Cursed Steam Game to play the cursed game.",
+      "spent some time with Cursed Steam Game."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "The reviews said 'Overwhelmingly Positive.'",
@@ -10587,6 +11332,10 @@
   {
     "id": "cozy-game",
     "name": "Cozy Game",
+    "narration": [
+      "used Cozy Game to play the cozy game.",
+      "spent some time with Cozy Game."
+    ],
     "category": "reusable",
     "price": 35,
     "description": "Low stakes. Allegedly.",
@@ -10617,7 +11366,45 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-cozy-game",
+        "weight": 3,
+        "message": "Companion settled into a cozy game for a while.",
+        "eligibility": "owned",
+        "cooldownHours": 18,
+        "sharedCooldownKey": "autonomous_entertainment",
+        "requiresIdle": true,
+        "outcomes": [
+          {
+            "id": "cozy",
+            "weight": 85,
+            "message": "Companion settled into a cozy game and actually relaxed.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          },
+          {
+            "id": "one-more-turn",
+            "weight": 15,
+            "message": "Companion played one more turn several turns too late.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              },
+              "rest": {
+                "min": -1,
+                "max": -1
+              }
+            }
+          }
+        ]
+      }
+    ],
     "itemActions": [
       {
         "id": "play_cozy_game",
@@ -10677,6 +11464,10 @@
   {
     "id": "party-game",
     "name": "Party Game",
+    "narration": [
+      "used Party Game to play the party game.",
+      "spent some time with Party Game."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "A friendship stress test with menus.",
@@ -10768,6 +11559,10 @@
   {
     "id": "rhythm-game",
     "name": "Rhythm Game",
+    "narration": [
+      "used Rhythm Game to play the rhythm game.",
+      "spent some time with Rhythm Game."
+    ],
     "category": "reusable",
     "price": 50,
     "description": "Timing, music, immediate regret.",
@@ -10858,6 +11653,10 @@
   {
     "id": "visual-novel",
     "name": "Visual Novel",
+    "narration": [
+      "used Visual Novel to read the visual novel.",
+      "spent some time with Visual Novel."
+    ],
     "category": "reusable",
     "price": 40,
     "description": "Reading with branching consequences.",
@@ -10888,7 +11687,31 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-visual-novel",
+        "weight": 3,
+        "message": "Companion got absorbed in a visual novel.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          },
+          "rest": {
+            "min": -1,
+            "max": -1
+          }
+        },
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "read_visual_novel",
@@ -10949,6 +11772,10 @@
   {
     "id": "console",
     "name": "Console",
+    "narration": [
+      "used Console to have a console night.",
+      "spent some time with Console."
+    ],
     "category": "reusable",
     "price": 240,
     "description": "A little extra fun for the room.",
@@ -11039,6 +11866,10 @@
   {
     "id": "controller",
     "name": "Controller",
+    "narration": [
+      "used Controller to play an owned game.",
+      "spent some time with Controller."
+    ],
     "category": "reusable",
     "price": 65,
     "description": "Buttons, clicks, and cozy games.",
@@ -11129,6 +11960,10 @@
   {
     "id": "second-controller",
     "name": "Second Controller",
+    "narration": [
+      "used Second Controller to have a co-op night.",
+      "spent some time with Second Controller."
+    ],
     "category": "reusable",
     "price": 65,
     "description": "Now the backseating can be local.",
@@ -11223,6 +12058,10 @@
   {
     "id": "cat-treats",
     "name": "Cat Treats",
+    "narration": [
+      "used Cat Treats to give the cat a treat.",
+      "spent some time with Cat Treats."
+    ],
     "category": "care",
     "price": 8,
     "description": "The actual currency of the household.",
@@ -11304,6 +12143,10 @@
   {
     "id": "catnip",
     "name": "Catnip",
+    "narration": [
+      "used Catnip to share the catnip.",
+      "spent some time with Catnip."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "What could possibly go wrong?",
@@ -11399,6 +12242,10 @@
   {
     "id": "cat-toy",
     "name": "Cat Toy",
+    "narration": [
+      "used Cat Toy to play with the cat.",
+      "spent some time with Cat Toy."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "It moves. Someone must destroy it.",
@@ -11495,6 +12342,10 @@
   {
     "id": "feather-wand",
     "name": "Feather Wand",
+    "narration": [
+      "used Feather Wand to play with the feather wand.",
+      "spent some time with Feather Wand."
+    ],
     "category": "reusable",
     "price": 35,
     "description": "Exercise for a cat. And a person.",
@@ -11581,6 +12432,10 @@
   {
     "id": "laser-pointer",
     "name": "Laser Pointer",
+    "narration": [
+      "used Laser Pointer to play with the laser pointer.",
+      "spent some time with Laser Pointer."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "Tiny red enemy detected.",
@@ -11663,6 +12518,10 @@
   {
     "id": "cardboard-box",
     "name": "Cardboard Box",
+    "narration": [
+      "admired Cardboard Box in the room.",
+      "took another look at Cardboard Box."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "Better than the expensive toy beside it.",
@@ -11740,6 +12599,10 @@
   {
     "id": "cat-bed",
     "name": "Cat Bed",
+    "narration": [
+      "admired Cat Bed in the room.",
+      "took another look at Cat Bed."
+    ],
     "category": "reusable",
     "price": 55,
     "description": "A dedicated place to sleep.",
@@ -11803,6 +12666,10 @@
   {
     "id": "cat-tree",
     "name": "Cat Tree",
+    "narration": [
+      "admired Cat Tree in the room.",
+      "took another look at Cat Tree."
+    ],
     "category": "reusable",
     "price": 140,
     "description": "Vertical cat infrastructure.",
@@ -11848,6 +12715,13 @@
         "cooldownHours": 12
       }
     ],
+    "eventPoolModifiers": [
+      {
+        "eventId": "socks",
+        "weightDelta": 3,
+        "eligibility": "placed"
+      }
+    ],
     "itemActions": [],
     "roomSlot": "cat-corner",
     "roomEffects": {
@@ -11881,6 +12755,10 @@
   {
     "id": "scratching-post",
     "name": "Scratching Post",
+    "narration": [
+      "admired Scratching Post in the room.",
+      "took another look at Scratching Post."
+    ],
     "category": "reusable",
     "price": 65,
     "description": "An optimistic attempt to save the furniture.",
@@ -11958,6 +12836,10 @@
   {
     "id": "cat-tunnel",
     "name": "Cat Tunnel",
+    "narration": [
+      "used Cat Tunnel to play by the cat tunnel.",
+      "spent some time with Cat Tunnel."
+    ],
     "category": "reusable",
     "price": 50,
     "description": "Someone has entered the tube.",
@@ -12040,6 +12922,10 @@
   {
     "id": "window-perch",
     "name": "Window Perch",
+    "narration": [
+      "admired Window Perch in the room.",
+      "took another look at Window Perch."
+    ],
     "category": "reusable",
     "price": 85,
     "description": "Premium access to bird television.",
@@ -12117,6 +13003,10 @@
   {
     "id": "cat-brush",
     "name": "Cat Brush",
+    "narration": [
+      "used Cat Brush to brush the cat.",
+      "spent some time with Cat Brush."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "Removes fur; relocates it elsewhere.",
@@ -12198,6 +13088,10 @@
   {
     "id": "cat-costume",
     "name": "Cat Costume",
+    "narration": [
+      "used Cat Costume to try the cat costume.",
+      "spent some time with Cat Costume."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "The cat did not approve this purchase.",
@@ -12232,7 +13126,7 @@
       {
         "id": "cat-costume_event",
         "weight": 4,
-        "message": "The cat discovered where the costume was stored and objected.",
+        "message": "The cat found where the costume was stored and objected.",
         "eligibility": "owned",
         "effects": {
           "mood": {
@@ -12293,6 +13187,10 @@
   {
     "id": "tiny-cat-hat",
     "name": "Tiny Cat Hat",
+    "narration": [
+      "used Tiny Cat Hat to try the tiny cat hat.",
+      "spent some time with Tiny Cat Hat."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "Excellent for approximately four seconds.",
@@ -12388,6 +13286,10 @@
   {
     "id": "cat-camera",
     "name": "Cat Camera",
+    "narration": [
+      "used Cat Camera to check the cat camera.",
+      "spent some time with Cat Camera."
+    ],
     "category": "reusable",
     "price": 100,
     "description": "Cat surveillance system online.",
@@ -12483,6 +13385,10 @@
   {
     "id": "automatic-feeder",
     "name": "Automatic Feeder",
+    "narration": [
+      "admired Automatic Feeder in the room.",
+      "took another look at Automatic Feeder."
+    ],
     "category": "reusable",
     "price": 125,
     "description": "Removes one opportunity for human error.",
@@ -12546,6 +13452,10 @@
   {
     "id": "fancy-cat-fountain",
     "name": "Fancy Cat Fountain",
+    "narration": [
+      "admired Fancy Cat Fountain in the room.",
+      "took another look at Fancy Cat Fountain."
+    ],
     "category": "reusable",
     "price": 115,
     "description": "Maybe someone in this house will drink water.",
@@ -12609,6 +13519,10 @@
   {
     "id": "socks-plushie",
     "name": "Socks Plushie",
+    "narration": [
+      "used Socks Plushie to offer a plushie apology.",
+      "spent some time with Socks Plushie."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "A plush copy of the household cat.",
@@ -12696,6 +13610,10 @@
   {
     "id": "book",
     "name": "Book",
+    "narration": [
+      "used Book to read the book.",
+      "spent some time with Book."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "A few hundred pages of disappearing for a while.",
@@ -12726,7 +13644,31 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-book",
+        "weight": 5,
+        "messages": [
+          "Companion quietly wandered off to read for a while.",
+          "Companion got suspiciously invested in the book she was reading.",
+          "Companion insists the book is educational. This is not convincing."
+        ],
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "read_book",
@@ -12777,6 +13719,10 @@
   {
     "id": "really-long-book",
     "name": "Really Long Book",
+    "narration": [
+      "used Really Long Book to read the really long book.",
+      "spent some time with Really Long Book."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "Unavailable for several business days.",
@@ -12807,7 +13753,49 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-long-book",
+        "weight": 3,
+        "message": "Companion disappeared into a really long book.",
+        "eligibility": "owned",
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true,
+        "outcomes": [
+          {
+            "id": "good-chapter",
+            "weight": 80,
+            "message": "Companion disappeared into a really long book and emerged inspired.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              },
+              "creativity": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          },
+          {
+            "id": "read-too-late",
+            "weight": 20,
+            "message": "Companion read the really long book far too late into the night.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              },
+              "rest": {
+                "min": -1,
+                "max": -1
+              }
+            }
+          }
+        ]
+      }
+    ],
     "itemActions": [
       {
         "id": "read_long_book",
@@ -12862,6 +13850,10 @@
   {
     "id": "manga",
     "name": "Manga",
+    "narration": [
+      "used Manga to read the manga.",
+      "spent some time with Manga."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "Reading, but with pictures.",
@@ -12892,7 +13884,30 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-manga",
+        "weight": 5,
+        "messages": [
+          "Companion vanished into a manga for a while.",
+          "Companion called the manga research and refused follow-up questions."
+        ],
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "cooldownHours": 12,
+        "sharedCooldownKey": "autonomous_reading",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "read_manga",
@@ -12943,6 +13958,10 @@
   {
     "id": "red-vs-blue-box-set",
     "name": "Red vs. Blue Box Set",
+    "narration": [
+      "used Red vs. Blue Box Set to rewatch red vs. blue.",
+      "spent some time with Red vs. Blue Box Set."
+    ],
     "category": "reusable",
     "price": 80,
     "description": "Time for another completely necessary rewatch.",
@@ -13029,6 +14048,10 @@
   {
     "id": "glee-box-set",
     "name": "Glee Box Set",
+    "narration": [
+      "used Glee Box Set to rewatch glee.",
+      "spent some time with Glee Box Set."
+    ],
     "category": "reusable",
     "price": 75,
     "description": "This can only end emotionally.",
@@ -13115,6 +14138,10 @@
   {
     "id": "movie-rental",
     "name": "Movie Rental",
+    "narration": [
+      "used Movie Rental to have a movie night.",
+      "spent some time with Movie Rental."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "Two hours of mandatory not-working.",
@@ -13201,6 +14228,10 @@
   {
     "id": "board-game",
     "name": "Board Game",
+    "narration": [
+      "used Board Game to have a game night.",
+      "spent some time with Board Game."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "Requires locating other humans.",
@@ -13283,6 +14314,10 @@
   {
     "id": "puzzle",
     "name": "Puzzle",
+    "narration": [
+      "used Puzzle to work on the puzzle.",
+      "spent some time with Puzzle."
+    ],
     "category": "reusable",
     "price": 35,
     "description": "One thousand tiny problems in one box.",
@@ -13368,6 +14403,10 @@
   {
     "id": "coloring-book",
     "name": "Coloring Book",
+    "narration": [
+      "used Coloring Book to color a page.",
+      "spent some time with Coloring Book."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "Productive procrastination.",
@@ -13398,7 +14437,27 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-coloring",
+        "weight": 3,
+        "message": "Companion colored a page instead of dealing with a blank canvas.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "cooldownHours": 18,
+        "sharedCooldownKey": "autonomous_creative_hobby",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "color",
@@ -13449,6 +14508,10 @@
   {
     "id": "lego-set",
     "name": "LEGO Set",
+    "narration": [
+      "used LEGO Set to build the lego set.",
+      "spent some time with LEGO Set."
+    ],
     "category": "reusable",
     "price": 85,
     "description": "Expensive plastic meditation.",
@@ -13534,6 +14597,10 @@
   {
     "id": "karaoke-machine",
     "name": "Karaoke Machine",
+    "narration": [
+      "used Karaoke Machine to have a karaoke night.",
+      "spent some time with Karaoke Machine."
+    ],
     "category": "reusable",
     "price": 130,
     "description": "The neighbors have been warned.",
@@ -13624,6 +14691,10 @@
   {
     "id": "headphones",
     "name": "Headphones",
+    "narration": [
+      "used Headphones to listen with headphones.",
+      "spent some time with Headphones."
+    ],
     "category": "reusable",
     "price": 95,
     "description": "Everything else has been muted.",
@@ -13707,6 +14778,10 @@
   {
     "id": "blanket",
     "name": "Blanket",
+    "narration": [
+      "admired Blanket in the room.",
+      "took another look at Blanket."
+    ],
     "category": "reusable",
     "price": 45,
     "description": "Entertainment may now occur horizontally.",
@@ -13770,6 +14845,10 @@
   {
     "id": "photo-album",
     "name": "Photo Album",
+    "narration": [
+      "used Photo Album to look through memories.",
+      "spent some time with Photo Album."
+    ],
     "category": "reusable",
     "price": 55,
     "description": "Evidence that any of this happened.",
@@ -13851,6 +14930,10 @@
   {
     "id": "book-club-pick",
     "name": "Book Club Pick",
+    "narration": [
+      "used Book Club Pick to read together.",
+      "spent some time with Book Club Pick."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "Homework, but emotionally approved.",
@@ -13938,6 +15021,10 @@
   {
     "id": "blanket-fort-supplies",
     "name": "Blanket Fort Supplies",
+    "narration": [
+      "used Blanket Fort Supplies to build a blanket fort.",
+      "spent some time with Blanket Fort Supplies."
+    ],
     "category": "reusable",
     "price": 50,
     "description": "A structurally questionable retreat.",
@@ -14024,6 +15111,10 @@
   {
     "id": "cooking-supplies",
     "name": "Cooking Supplies",
+    "narration": [
+      "used Cooking Supplies to cook together.",
+      "spent some time with Cooking Supplies."
+    ],
     "category": "reusable",
     "price": 70,
     "description": "This could become food.",
@@ -14114,6 +15205,10 @@
   {
     "id": "new-bed",
     "name": "New Bed",
+    "narration": [
+      "admired New Bed in the room.",
+      "took another look at New Bed."
+    ],
     "category": "upgrade",
     "price": 225,
     "description": "A compelling argument for going to sleep.",
@@ -14177,6 +15272,10 @@
   {
     "id": "soft-mattress",
     "name": "Soft Mattress",
+    "narration": [
+      "admired Soft Mattress in the room.",
+      "took another look at Soft Mattress."
+    ],
     "category": "upgrade",
     "price": 200,
     "description": "Dangerously comfortable.",
@@ -14241,6 +15340,10 @@
   {
     "id": "fresh-bedsheets",
     "name": "Fresh Bedsheets",
+    "narration": [
+      "used Fresh Bedsheets to change the sheets.",
+      "spent some time with Fresh Bedsheets."
+    ],
     "category": "upgrade",
     "price": 60,
     "description": "The bed has been reset.",
@@ -14322,6 +15425,10 @@
   {
     "id": "weighted-blanket",
     "name": "Weighted Blanket",
+    "narration": [
+      "admired Weighted Blanket in the room.",
+      "took another look at Weighted Blanket."
+    ],
     "category": "upgrade",
     "price": 95,
     "description": "Maximum cozy achieved.",
@@ -14386,6 +15493,10 @@
   {
     "id": "pillow",
     "name": "Pillow",
+    "narration": [
+      "admired Pillow in the room.",
+      "took another look at Pillow."
+    ],
     "category": "upgrade",
     "price": 40,
     "description": "One more could not hurt.",
@@ -14449,6 +15560,10 @@
   {
     "id": "body-pillow",
     "name": "Body Pillow",
+    "narration": [
+      "admired Body Pillow in the room.",
+      "took another look at Body Pillow."
+    ],
     "category": "upgrade",
     "price": 55,
     "description": "Technically furniture.",
@@ -14512,6 +15627,10 @@
   {
     "id": "sofa",
     "name": "Sofa",
+    "narration": [
+      "admired Sofa in the room.",
+      "took another look at Sofa."
+    ],
     "category": "upgrade",
     "price": 210,
     "description": "Sitting without being at the computer.",
@@ -14576,6 +15695,10 @@
   {
     "id": "beanbag-chair",
     "name": "Beanbag Chair",
+    "narration": [
+      "admired Beanbag Chair in the room.",
+      "took another look at Beanbag Chair."
+    ],
     "category": "upgrade",
     "price": 90,
     "description": "Productivity drops dramatically nearby.",
@@ -14641,6 +15764,10 @@
   {
     "id": "new-desk",
     "name": "New Desk",
+    "narration": [
+      "admired New Desk in the room.",
+      "took another look at New Desk."
+    ],
     "category": "upgrade",
     "price": 190,
     "description": "More surface area to cover in stuff.",
@@ -14704,6 +15831,10 @@
   {
     "id": "bookshelf",
     "name": "Bookshelf",
+    "narration": [
+      "admired Bookshelf in the room.",
+      "took another look at Bookshelf."
+    ],
     "category": "upgrade",
     "price": 145,
     "description": "Storage for the inevitable book problem.",
@@ -14767,6 +15898,10 @@
   {
     "id": "bedside-lamp",
     "name": "Bedside Lamp",
+    "narration": [
+      "admired Bedside Lamp in the room.",
+      "took another look at Bedside Lamp."
+    ],
     "category": "upgrade",
     "price": 55,
     "description": "The big light is no longer required.",
@@ -14830,6 +15965,10 @@
   {
     "id": "fairy-lights",
     "name": "Fairy Lights",
+    "narration": [
+      "admired Fairy Lights in the room.",
+      "took another look at Fairy Lights."
+    ],
     "category": "upgrade",
     "price": 45,
     "description": "Tiny lights make everything better.",
@@ -14907,6 +16046,10 @@
   {
     "id": "blackout-curtains",
     "name": "Blackout Curtains",
+    "narration": [
+      "admired Blackout Curtains in the room.",
+      "took another look at Blackout Curtains."
+    ],
     "category": "upgrade",
     "price": 80,
     "description": "Outside privileges revoked.",
@@ -14984,6 +16127,10 @@
   {
     "id": "rug",
     "name": "Rug",
+    "narration": [
+      "admired Rug in the room.",
+      "took another look at Rug."
+    ],
     "category": "upgrade",
     "price": 75,
     "description": "The floor has been upgraded.",
@@ -15047,6 +16194,10 @@
   {
     "id": "plants",
     "name": "Plants",
+    "narration": [
+      "admired Plants in the room.",
+      "took another look at Plants."
+    ],
     "category": "upgrade",
     "price": 45,
     "description": "Responsibility, but decorative.",
@@ -15125,6 +16276,10 @@
   {
     "id": "fake-plants",
     "name": "Fake Plants",
+    "narration": [
+      "admired Fake Plants in the room.",
+      "took another look at Fake Plants."
+    ],
     "category": "upgrade",
     "price": 35,
     "description": "Responsibility removed.",
@@ -15202,6 +16357,10 @@
   {
     "id": "wall-art",
     "name": "Wall Art",
+    "narration": [
+      "admired Wall Art in the room.",
+      "took another look at Wall Art."
+    ],
     "category": "upgrade",
     "price": 65,
     "description": "The wall looked suspiciously empty.",
@@ -15265,6 +16424,10 @@
   {
     "id": "mini-fridge",
     "name": "Mini Fridge",
+    "narration": [
+      "admired Mini Fridge in the room.",
+      "took another look at Mini Fridge."
+    ],
     "category": "upgrade",
     "price": 170,
     "description": "Dr Pepper logistics optimized.",
@@ -15328,6 +16491,10 @@
   {
     "id": "snack-shelf",
     "name": "Snack Shelf",
+    "narration": [
+      "admired Snack Shelf in the room.",
+      "took another look at Snack Shelf."
+    ],
     "category": "upgrade",
     "price": 85,
     "description": "Emergency provisions within arm’s reach.",
@@ -15391,6 +16558,10 @@
   {
     "id": "cat-corner",
     "name": "Cat Corner",
+    "narration": [
+      "admired Cat Corner in the room.",
+      "took another look at Cat Corner."
+    ],
     "category": "upgrade",
     "price": 125,
     "description": "A cat owns part of the room now.",
@@ -15455,6 +16626,10 @@
   {
     "id": "sketchbook",
     "name": "Sketchbook",
+    "narration": [
+      "used Sketchbook to sketch an idea.",
+      "spent some time with Sketchbook."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "Blank pages waiting for terrible ideas.",
@@ -15485,7 +16660,27 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-sketching",
+        "weight": 3,
+        "message": "Companion sketched a terrible idea before it could become intimidating.",
+        "eligibility": "owned",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "cooldownHours": 18,
+        "sharedCooldownKey": "autonomous_creative_hobby",
+        "requiresIdle": true
+      }
+    ],
     "itemActions": [
       {
         "id": "sketch",
@@ -15536,6 +16731,10 @@
   {
     "id": "fancy-pens",
     "name": "Fancy Pens",
+    "narration": [
+      "used Fancy Pens to write with the fancy pens.",
+      "spent some time with Fancy Pens."
+    ],
     "category": "reusable",
     "price": 30,
     "description": "Buying supplies counts as creating.",
@@ -15617,6 +16816,10 @@
   {
     "id": "paint-set",
     "name": "Paint Set",
+    "narration": [
+      "used Paint Set to paint something.",
+      "spent some time with Paint Set."
+    ],
     "category": "reusable",
     "price": 55,
     "description": "The desk is in danger.",
@@ -15698,6 +16901,10 @@
   {
     "id": "craft-supplies",
     "name": "Craft Supplies",
+    "narration": [
+      "used Craft Supplies to make something together.",
+      "spent some time with Craft Supplies."
+    ],
     "category": "reusable",
     "price": 50,
     "description": "Future mess, neatly packaged.",
@@ -15784,6 +16991,10 @@
   {
     "id": "sewing-kit",
     "name": "Sewing Kit",
+    "narration": [
+      "used Sewing Kit to sew something.",
+      "spent some time with Sewing Kit."
+    ],
     "category": "reusable",
     "price": 60,
     "description": "This could become something.",
@@ -15865,6 +17076,10 @@
   {
     "id": "3d-printer",
     "name": "3D Printer",
+    "narration": [
+      "used 3D Printer to print a model.",
+      "spent some time with 3D Printer."
+    ],
     "category": "reusable",
     "price": 230,
     "description": "Every stupid idea can become physical.",
@@ -15946,6 +17161,10 @@
   {
     "id": "model-kit",
     "name": "Model Kit",
+    "narration": [
+      "used Model Kit to assemble the model kit.",
+      "spent some time with Model Kit."
+    ],
     "category": "reusable",
     "price": 65,
     "description": "Assembly and patience sold separately.",
@@ -16031,6 +17250,10 @@
   {
     "id": "camera",
     "name": "Camera",
+    "narration": [
+      "used Camera to take photos.",
+      "spent some time with Camera."
+    ],
     "category": "reusable",
     "price": 185,
     "description": "Bad decisions, now in higher resolution.",
@@ -16112,6 +17335,10 @@
   {
     "id": "polaroid-camera",
     "name": "Polaroid Camera",
+    "narration": [
+      "used Polaroid Camera to take a polaroid.",
+      "spent some time with Polaroid Camera."
+    ],
     "category": "reusable",
     "price": 120,
     "description": "Memories with a material cost.",
@@ -16198,6 +17425,10 @@
   {
     "id": "notebook",
     "name": "Notebook",
+    "narration": [
+      "used Notebook to write down ideas.",
+      "spent some time with Notebook."
+    ],
     "category": "reusable",
     "price": 25,
     "description": "For ideas that might get written down.",
@@ -16275,6 +17506,10 @@
   {
     "id": "whiteboard",
     "name": "Whiteboard",
+    "narration": [
+      "used Whiteboard to map out ideas.",
+      "spent some time with Whiteboard."
+    ],
     "category": "reusable",
     "price": 70,
     "description": "The plan is real once there are arrows.",
@@ -16352,6 +17587,10 @@
   {
     "id": "music-software",
     "name": "Music Software",
+    "narration": [
+      "used Music Software to make music.",
+      "spent some time with Music Software."
+    ],
     "category": "reusable",
     "price": 160,
     "description": "New creative rabbit hole unlocked.",
@@ -16438,6 +17677,10 @@
   {
     "id": "sword",
     "name": "Sword",
+    "narration": [
+      "admired Sword in the room.",
+      "took another look at Sword."
+    ],
     "category": "decoration",
     "price": 120,
     "description": "A sword is now part of the room. Sure.",
@@ -16515,6 +17758,10 @@
   {
     "id": "battle-axe",
     "name": "Battle Axe",
+    "narration": [
+      "admired Battle Axe in the room.",
+      "took another look at Battle Axe."
+    ],
     "category": "decoration",
     "price": 145,
     "description": "Apparently the sword was not enough.",
@@ -16592,6 +17839,10 @@
   {
     "id": "second-sword",
     "name": "Second Sword",
+    "narration": [
+      "admired Second Sword in the room.",
+      "took another look at Second Sword."
+    ],
     "category": "decoration",
     "price": 110,
     "description": "Dual wielding has entered the budget.",
@@ -16670,6 +17921,10 @@
   {
     "id": "dagger",
     "name": "Dagger",
+    "narration": [
+      "admired Dagger in the room.",
+      "took another look at Dagger."
+    ],
     "category": "decoration",
     "price": 75,
     "description": "For when the sword is inconvenient.",
@@ -16733,6 +17988,10 @@
   {
     "id": "knight-helmet",
     "name": "Knight Helmet",
+    "narration": [
+      "used Knight Helmet to wear the knight helmet.",
+      "spent some time with Knight Helmet."
+    ],
     "category": "decoration",
     "price": 95,
     "description": "Provides no meaningful protection indoors.",
@@ -16814,6 +18073,10 @@
   {
     "id": "traffic-cone",
     "name": "Traffic Cone",
+    "narration": [
+      "admired Traffic Cone in the room.",
+      "took another look at Traffic Cone."
+    ],
     "category": "decoration",
     "price": 35,
     "description": "Do not ask.",
@@ -16891,6 +18154,10 @@
   {
     "id": "life-size-cardboard-cutout",
     "name": "Life-Size Cardboard Cutout",
+    "narration": [
+      "admired Life-Size Cardboard Cutout in the room.",
+      "took another look at Life-Size Cardboard Cutout."
+    ],
     "category": "decoration",
     "price": 85,
     "description": "This will be funny exactly once.",
@@ -16968,6 +18235,10 @@
   {
     "id": "fog-machine",
     "name": "Fog Machine",
+    "narration": [
+      "used Fog Machine to activate the fog machine.",
+      "spent some time with Fog Machine."
+    ],
     "category": "decoration",
     "price": 150,
     "description": "Every room can be a boss arena.",
@@ -17063,6 +18334,10 @@
   {
     "id": "disco-ball",
     "name": "Disco Ball",
+    "narration": [
+      "used Disco Ball to dance under the disco ball.",
+      "spent some time with Disco Ball."
+    ],
     "category": "decoration",
     "price": 125,
     "description": "Absolutely essential infrastructure.",
@@ -17163,6 +18438,10 @@
   {
     "id": "giant-plushie",
     "name": "Giant Plushie",
+    "narration": [
+      "admired Giant Plushie in the room.",
+      "took another look at Giant Plushie."
+    ],
     "category": "decoration",
     "price": 100,
     "description": "Furniture with a face.",
@@ -17241,6 +18520,10 @@
   {
     "id": "tiny-shopping-cart",
     "name": "Tiny Shopping Cart",
+    "narration": [
+      "admired Tiny Shopping Cart in the room.",
+      "took another look at Tiny Shopping Cart."
+    ],
     "category": "decoration",
     "price": 45,
     "description": "Storage for tiny groceries.",
@@ -17304,6 +18587,10 @@
   {
     "id": "rubber-duck",
     "name": "Rubber Duck",
+    "narration": [
+      "admired Rubber Duck in the room.",
+      "took another look at Rubber Duck."
+    ],
     "category": "decoration",
     "price": 25,
     "description": "It knows what it did.",
@@ -17381,6 +18668,10 @@
   {
     "id": "mystery-box",
     "name": "Mystery Box",
+    "narration": [
+      "used Mystery Box to open the mystery box.",
+      "spent some time with Mystery Box."
+    ],
     "category": "decoration",
     "price": 60,
     "description": "Financial decision pending.",
@@ -17476,17 +18767,309 @@
   {
     "id": "five-plain-tortillas",
     "name": "Five Plain Tortillas",
-    "category": "decoration",
-    "price": 25,
-    "description": "Five plain tortillas. Why?!",
-    "qualitativeNutritionHint": "Investigating them is a single-use commitment to nonsense.",
+    "narration": [
+      "happily ate five plain tortillas.",
+      "settled in with five plain tortillas, exactly as intended."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Five plain tortillas. A reliable comfort food.",
+    "qualitativeNutritionHint": "A familiar, filling comfort food with neutral risk scores.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "stream-snack",
+      "favorite",
+      "comfort-food",
+      "essential"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/five-plain-tortillas.png",
+    "nutrition": {
+      "serving": "100 g",
+      "calories": null,
+      "sodiumMg": 34.91,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": 48.42,
+      "caffeineMg": null,
+      "sourceType": "usda_foundation",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2758997/nutrients",
+      "sourceReference": "FDC ID 2758997 — Tortilla, corn, shelf stable",
+      "retrievalDate": "2026-08-24",
+      "snapshotDate": "2026-04-30",
+      "nullReasons": {
+        "calories": "Selected USDA record does not report energy.",
+        "sugarG": "Selected USDA record does not report total sugars.",
+        "proteinG": "Selected USDA record does not report protein.",
+        "caffeineMg": "Selected USDA record does not report caffeine."
+      }
+    }
+  },
+  {
+    "id": "jar-of-pickle-juice",
+    "name": "Jar of Pickle Juice",
+    "narration": [
+      "happily drank Jar of Pickle Juice.",
+      "savored every sip of Jar of Pickle Juice."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "A briny beverage and a questionable coping strategy.",
+    "qualitativeNutritionHint": "A salty, hydrating favorite with an unmistakably pickled personality.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "drink",
+      "favorite",
+      "hydrating",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 3,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 3,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/jar-of-pickle-juice.png",
+    "nutrition": {
+      "serving": "1 fl oz (30 mL)",
+      "calories": 2,
+      "sodiumMg": 250,
+      "sugarG": 0,
+      "proteinG": 0,
+      "waterG": 29.5,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708914/nutrients",
+      "sourceReference": "FDC ID 2708914 / food code 56603010 — Pickle juice, dill; gameplay portion is one jar serving",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "sodiumMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "limited-edition-dr-pepper",
+    "name": "Limited-Edition Dr Pepper",
+    "narration": [
+      "cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.",
+      "drank Limited-Edition Dr Pepper and locked into six hours of Hyperfocus."
+    ],
+    "category": "food",
+    "price": 12,
+    "description": "The forbidden flavor for a very productive afternoon.",
+    "qualitativeNutritionHint": "A rare, extra-sugary caffeinated drink with a dramatic energy spike.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "stock": {
+      "min": 1,
+      "max": 2
+    },
+    "sugarServings": 2,
+    "tags": [
+      "food",
+      "drink",
+      "caffeinated",
+      "favorite",
+      "sugar",
+      "rare-stock",
+      "hyperfocus"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      },
+      "rest": {
+        "min": -1,
+        "max": -1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 1,
+      "protein": 0,
+      "sugar": 3,
+      "caffeine": 3
+    },
+    "properties": {
+      "salt": 0,
+      "water": 1,
+      "protein": 0,
+      "sugar": 3,
+      "caffeine": 3,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/limited-edition-dr-pepper.png",
+    "nutrition": {
+      "serving": "12 fl oz",
+      "calories": 150,
+      "sodiumMg": 55,
+      "sugarG": 39,
+      "proteinG": 0,
+      "waterG": null,
+      "caffeineMg": 41,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.kdpproductfacts.com/product/a0e3h000003LJzZAAW/detail",
+      "sourceReference": "KDP product a0e3h000003LJzZAAW; limited-edition gameplay variant uses the same 12 fl oz label baseline",
+      "retrievalDate": "2026-08-22",
+      "qualifiers": {
+        "caffeineMg": "approximately"
+      },
+      "nullReasons": {
+        "waterG": "The first-party product label does not report waterG."
+      }
+    }
+  },
+  {
+    "id": "painkillers",
+    "name": "Painkillers",
+    "narration": [
+      "took Painkillers, easing the kidney stone symptoms for a while.",
+      "took Painkillers and settled into twelve hours of Pain Relief."
+    ],
+    "category": "medicine",
+    "price": 7,
+    "description": "Twelve hours of less stone-related misery; the stone remains.",
+    "qualitativeNutritionHint": "A short comfort window for a painful episode, without pretending to cure it.",
     "edible": false,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
-      "decoration",
-      "chaos"
+      "medicine",
+      "care",
+      "pain-relief",
+      "essential"
     ],
     "preferences": [],
     "effects": {},
@@ -17509,29 +19092,20 @@
     "automaticEventHooks": [],
     "itemActions": [
       {
-        "id": "investigate_tortillas",
-        "label": "Investigate the tortillas",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          },
-          "creativity": {
-            "min": 0,
-            "max": 1
-          }
-        },
+        "id": "take_painkillers",
+        "label": "Take painkillers",
+        "kind": "consume",
         "consumes": true,
         "tags": [
-          "chaos"
+          "care",
+          "pain-relief"
         ]
       }
     ],
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/five-plain-tortillas.png",
+    "image": "/items/generated/painkillers.png",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -17542,7 +19116,628 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Five Plain Tortillas is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Painkillers is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "electrolyte-sachet",
+    "name": "Electrolyte Sachet",
+    "narration": [
+      "mixed an Electrolyte Sachet for a measured salt-and-water boost.",
+      "drank an Electrolyte Sachet to bring salt and hydration back into balance."
+    ],
+    "category": "care",
+    "price": 9,
+    "description": "Salt and water in a packet for the medically sensible plot twist.",
+    "qualitativeNutritionHint": "A care supply designed to pair hydration with a deliberate electrolyte boost.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "care",
+      "hydrating",
+      "salty"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 2,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "take_electrolyte",
+        "label": "Take electrolyte sachet",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "care"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/electrolyte-sachet.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Electrolyte Sachet is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "insurance-card",
+    "name": "Insurance Card",
+    "narration": [
+      "reviewed the Insurance Card coverage.",
+      "checked what the Insurance Card would cover at the hospital."
+    ],
+    "category": "care",
+    "price": 150,
+    "description": "A tiny rectangle that makes the hospital bill less theatrical.",
+    "qualitativeNutritionHint": "A one-claim care safeguard for an expensive medical emergency.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "maximumOwned": 1,
+    "tags": [
+      "care",
+      "medical",
+      "insurance"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "inspect_insurance_card",
+        "label": "Review insurance coverage",
+        "kind": "interaction",
+        "consumes": false,
+        "tags": [
+          "care",
+          "insurance"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/insurance-card.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Insurance Card is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "rigging-tablet",
+    "name": "Rigging Tablet",
+    "narration": [
+      "used Rigging Tablet to commission work.",
+      "spent some time with Rigging Tablet."
+    ],
+    "category": "upgrade",
+    "price": 200,
+    "description": "The portable workstation for turning commissions into rent money.",
+    "qualitativeNutritionHint": "A professional creative tool that opens a focused commission-work activity.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "upgrade",
+      "streaming-gear",
+      "rigging"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "commission_work",
+        "label": "Commission Work",
+        "kind": "activity",
+        "consumes": false,
+        "tags": [
+          "commission"
+        ],
+        "effects": {
+          "rest": {
+            "min": -2,
+            "max": -2
+          },
+          "creativity": {
+            "min": -1,
+            "max": -1
+          },
+          "mood": {
+            "min": -1,
+            "max": 0
+          }
+        },
+        "requirements": {
+          "minimumMetrics": {
+            "creativity": 4
+          },
+          "blockedStatuses": [
+            "sleep_deprived",
+            "depressed"
+          ]
+        },
+        "activity": {
+          "type": "commission_work",
+          "durationHours": 6
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/rigging-tablet.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Rigging Tablet is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "new-model-commission",
+    "name": "New Model Commission",
+    "narration": [
+      "used New Model Commission to start model commission.",
+      "spent some time with New Model Commission."
+    ],
+    "category": "upgrade",
+    "price": 300,
+    "description": "Three local dates of rigging for one more model debut.",
+    "qualitativeNutritionHint": "A long-term creative upgrade reserved for an unlocked career tier.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "upgrade",
+      "commission",
+      "model"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "first_model"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "start_model_commission",
+        "label": "Start model commission",
+        "kind": "service",
+        "consumes": false,
+        "tags": [
+          "model"
+        ],
+        "service": {
+          "type": "model_commission"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/new-model-commission.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: New Model Commission is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "sheet-of-cute-stickers",
+    "name": "Sheet of Cute Stickers",
+    "narration": [
+      "begrudgingly confronted the Sheet of Cute Stickers.",
+      "stared down the Sheet of Cute Stickers and immediately regretted it."
+    ],
+    "category": "decoration",
+    "price": 25,
+    "description": "Cute, colorful, and absolutely not welcome here.",
+    "qualitativeNutritionHint": "A cursed decorative sheet whose tiny adhesive shapes are a known hazard.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "cursed"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "confront_stickers",
+        "label": "Confront the stickers",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -2,
+            "max": -2
+          }
+        },
+        "consumes": false,
+        "tags": [
+          "cursed"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/sheet-of-cute-stickers.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Sheet of Cute Stickers is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "convention-guest-set",
+    "name": "Convention Guest Set",
+    "narration": [
+      "admired Convention Guest Set in the room.",
+      "took another look at Convention Guest Set."
+    ],
+    "category": "decoration",
+    "price": 120,
+    "description": "A convention backdrop, badge display, and guest-signing setup.",
+    "qualitativeNutritionHint": "A milestone display that turns convention memories into room energy.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "career"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "convention_guest"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "wall",
+    "roomEffects": {
+      "mood": 1
+    },
+    "clearsStatuses": [],
+    "image": "/items/generated/convention-guest-set.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Convention Guest Set is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "can-opener",
+    "name": "Can Opener",
+    "narration": [
+      "found a way to make opening a can into an event.",
+      "used the Can Opener with intense and unnecessary focus."
+    ],
+    "category": "reusable",
+    "price": 35,
+    "description": "A practical kitchen tool with a statistically concerning user.",
+    "qualitativeNutritionHint": "Open a can manually, preferably without turning it into an emergency.",
+    "edible": false,
+    "usable": true,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "reusable",
+      "kitchen"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [
+      {
+        "id": "autonomous-can-opener",
+        "weight": 3,
+        "message": "Companion found a way to make opening a can into an event.",
+        "eligibility": "owned",
+        "cooldownHours": 48,
+        "sharedCooldownKey": "kitchen_accident",
+        "requiresIdle": true,
+        "outcomes": [
+          {
+            "id": "normal",
+            "weight": 90,
+            "message": "Companion found a way to make opening a can into an event.",
+            "effects": {
+              "mood": {
+                "min": 1,
+                "max": 1
+              }
+            }
+          },
+          {
+            "id": "minor-cut",
+            "weight": 9,
+            "message": "The can opened. Companion's hand also lost that interaction.",
+            "effects": {
+              "mood": {
+                "min": -1,
+                "max": 0
+              }
+            },
+            "healthDamage": {
+              "min": 1,
+              "max": 1,
+              "causeId": "can_opener_minor_cut",
+              "causeName": "Can opener cut"
+            }
+          },
+          {
+            "id": "serious-cut",
+            "weight": 1,
+            "message": "Companion managed to cut herself badly enough that this became an ER problem.",
+            "healthDamage": {
+              "min": 2,
+              "max": 2,
+              "causeId": "can_opener_serious_cut",
+              "causeName": "Serious can opener cut"
+            }
+          }
+        ]
+      }
+    ],
+    "itemActions": [
+      {
+        "id": "open_can",
+        "label": "Open a can",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": false
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/can-opener.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Can Opener is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",

@@ -268,11 +268,12 @@ describe('chronological terminal boundaries', () => {
     const initial = atStart();
     const nearDeath = {
       ...initial,
-      metrics: { ...initial.metrics, health: 1, food: 0, rest: 10, mood: 10 },
+      metrics: { ...initial.metrics, health: 1, food: 0, rest: 5, mood: 5 },
+      history: { ...initial.history, pendingFoodDecayHit: true },
     };
     const result = reconcileTime(nearDeath, 24 * HOUR, BUNDLED_GAME_DEFINITION);
 
-    expect(result.state.death).not.toBeNull();
+    expect(result.state.ending?.kind).toBe('death');
     expect(result.state.now).toBe(2 * HOUR);
     expect(result.state.lastResolvedAt).toBe(result.state.now);
   });

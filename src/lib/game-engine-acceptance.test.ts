@@ -24,7 +24,8 @@ function comparableTimeline(state: GameState) {
     shop: state.shop,
     activity: state.activity,
     history: state.history,
-    death: state.death,
+    endingRisks: state.endingRisks,
+    ending: state.ending,
     events: state.events.slice(1),
   };
 }
@@ -128,16 +129,8 @@ describe('daily shop and economy public seam', () => {
     ).toBe(true);
   });
 
-  test('blocks ordinary purchases in debt and duplicate durable ownership', () => {
+  test('blocks duplicate durable ownership', () => {
     const initial = run();
-    const shopItem = initial.shop.itemIds[0];
-    const inDebt = dispatchCommand(
-      { ...initial, balance: -1 },
-      { type: 'buy_item', commandId: 'debt-buy', itemId: shopItem, now: 0 },
-      BUNDLED_GAME_DEFINITION,
-    );
-    expect(inDebt.outcomes[0]).toMatchObject({ accepted: false, kind: 'debt' });
-
     const durable = initial.shop.itemIds
       .map((id) => BUNDLED_GAME_DEFINITION.items.find((item) => item.id === id))
       .find((item) => item?.consumable === false && !item.supportsQuantity);
@@ -188,13 +181,19 @@ describe('Medical Care and terminal state', () => {
     );
 
     expect(result.outcomes[0]).toMatchObject({ accepted: true });
-    expect(result.state.balance).toBe(-9_980);
+    expect(result.state.balance).toBeGreaterThanOrEqual(20);
+    expect(result.state.medicalDebt).toEqual([
+      expect.objectContaining({
+        originalPrincipal: 10_000,
+        remainingPrincipal: 10_000,
+      }),
+    ]);
     expect(result.state.now).toBe(12 * HOUR);
     expect(result.state.activity).toBeNull();
     expect(result.state.statuses.kidney_stone).toBeUndefined();
   });
 
-  test('keeps Realtime Medical Care active and rejects all post-death mutation', () => {
+  test('keeps Realtime Medical Care active and rejects all post-ending mutation', () => {
     const initial = run('realtime');
     const care = dispatchCommand(
       {
@@ -208,16 +207,24 @@ describe('Medical Care and terminal state', () => {
     );
     expect(care.state.activity?.type).toBe('medical_care');
 
-    const dead = { ...initial, death: { at: 0, cause: 'Cause', eventIds: [] } };
+    const ended = {
+      ...initial,
+      ending: {
+        kind: 'death' as const,
+        at: 0,
+        cause: 'Cause',
+        eventIds: [],
+      },
+    };
     const rejected = dispatchCommand(
-      dead,
+      ended,
       { type: 'wait', commandId: 'after-death', now: 0 },
       BUNDLED_GAME_DEFINITION,
     );
     expect(rejected.outcomes[0]).toMatchObject({
       accepted: false,
-      kind: 'dead',
+      kind: 'run_over',
     });
-    expect(rejected.state.metrics).toEqual(dead.metrics);
+    expect(rejected.state).toBe(ended);
   });
 });

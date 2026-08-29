@@ -2,7 +2,7 @@
   import type { GameMode } from '$lib/game-types';
   export let mode: GameMode = 'realtime';
   export let seed = '';
-  export let dead = false;
+  export let ended = false;
 
   const modeLabel = (value: GameMode) =>
     value === 'streaming' ? 'Streaming mode' : 'Realtime mode';
@@ -14,7 +14,7 @@
     <p>Current mode: <strong>{modeLabel(mode)}</strong></p>
     <p>Seed: <code>{seed}</code></p>
     <p>
-      {#if dead}This game has ended.
+      {#if ended}This game has ended.
       {:else}This game is active.
       {/if} The time mode is selected before entering the room.
     </p>

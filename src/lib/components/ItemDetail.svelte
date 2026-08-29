@@ -12,6 +12,10 @@
   let dialog: HTMLDialogElement;
   const anchorLabel = (value: string) =>
     gameCopy.anchors[value as keyof typeof gameCopy.anchors];
+  const tagLabel = (value: string) =>
+    value
+      .replaceAll(/[-_]+/g, ' ')
+      .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
   onMount(() => dialog.showModal());
 </script>
@@ -35,6 +39,9 @@
     <p>{item.description}</p>
     <p class="hint">{item.qualitativeHint}</p>
     <p>Owned: ×{item.owned} · {item.category}</p>
+    {#if item.tags.length}<ul class="tags" aria-label="Item tags">
+        {#each item.tags as tag (tag)}<li>{tagLabel(tag)}</li>{/each}
+      </ul>{/if}
     {#if message}<p class="outcome" role="status" aria-live="polite">
         {message}
       </p>{/if}
@@ -112,6 +119,24 @@
   }
   .hint {
     font-style: italic;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tags li {
+    padding: 4px 8px;
+    border: 1px solid #8d386e;
+    border-radius: 999px;
+    color: #8d386e;
+    background: #fff;
+    font-size: 0.68rem;
+    font-weight: 800;
   }
   .actions,
   .placement {

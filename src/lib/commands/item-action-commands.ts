@@ -21,7 +21,18 @@ import {
   triggersOverstimulation,
 } from '../status-rules';
 import { resolveAttemptEvent } from '../event-rules';
-import { STAT_MAX, STAT_MIN } from '../game-constants';
+import { clampMetric, HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
+import { healthDamageSource } from '../simulation/health-resolution';
+import rules from '../data/simulation-rules.json';
+import {
+  actionRequirementFailure,
+  startCommissionWork,
+  startModelCommission,
+  startFullBodyCommission,
+} from './progression-actions';
+import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
+import { selectItemNarration } from './item-consumption-events';
+import { performClipperAction } from './clipper-action';
 
 export type ItemActionCommandResult = {
   handled: boolean;
@@ -73,6 +84,40 @@ export function handleItemActionCommand(
       definition,
       'The companion does not have the required item for that action.',
     );
+  const requirementFailure = actionRequirementFailure(state, itemAction);
+  if (requirementFailure)
+    return unavailable(state, command, definition, requirementFailure);
+  if (
+    itemAction.kind === 'activity' &&
+    itemAction.activity?.type === 'commission_work'
+  )
+    return {
+      handled: true,
+      ...startCommissionWork(state, command, item, itemAction, definition),
+    };
+  if (
+    itemAction.kind === 'service' &&
+    itemAction.service?.type === 'model_commission'
+  )
+    return {
+      handled: true,
+      ...startModelCommission(state, command, item, itemAction, definition),
+    };
+  if (
+    itemAction.kind === 'service' &&
+    itemAction.service?.type === 'full_body_commission'
+  )
+    return {
+      handled: true,
+      ...startFullBodyCommission(state, command, item, itemAction, definition),
+    };
+  if (itemAction.progressionEffect?.type === 'activate_clippers') {
+    const result = performClipperAction(state, command, item, itemAction);
+    return {
+      handled: true,
+      ...result,
+    };
+  }
 
   const actionDeltas: Partial<GameState['metrics']> = {};
   const actionMetrics = { ...state.metrics };
@@ -89,10 +134,7 @@ export function handleItemActionCommand(
       ),
     );
     actionDeltas[name] = delta;
-    actionMetrics[name] = Math.max(
-      STAT_MIN,
-      Math.min(STAT_MAX, actionMetrics[name] + delta),
-    );
+    actionMetrics[name] = clampMetric(name, actionMetrics[name] + delta);
   }
   const actionOverstimulated = triggersOverstimulation(
     state.metrics.mood,
@@ -125,6 +167,13 @@ export function handleItemActionCommand(
       true,
       false,
     ).statuses;
+  if (
+    state.timedEffects.hyperfocusUntil !== null &&
+    state.now < state.timedEffects.hyperfocusUntil
+  ) {
+    actionDeltas.creativity = 10 - state.metrics.creativity;
+    actionMetrics.creativity = 10;
+  }
 
   const actionEvent: GameEvent = {
     id: `event-${state.events.length + 1}`,
@@ -136,6 +185,25 @@ export function handleItemActionCommand(
     status: itemAction.clearsStatuses?.[0],
     tags: itemAction.tags,
     cause: itemAction.id,
+    itemName: item.name,
+    itemNarration: selectItemNarration({
+      state,
+      item,
+      action: itemAction,
+      sourceActionId: command.commandId,
+    }),
+    actionLabel: itemAction.label,
+    healthDamageSources:
+      (actionDeltas.health ?? 0) < 0
+        ? [
+            healthDamageSource(
+              'item',
+              item.id,
+              item.name,
+              actionDeltas.health ?? 0,
+            ),
+          ]
+        : undefined,
   };
   let actionState: GameState = {
     ...state,
@@ -149,9 +217,18 @@ export function handleItemActionCommand(
           }
         : state.inventory,
     events: [...state.events, actionEvent],
+    timedEffects:
+      item.tags.includes('pain-relief') || item.tags.includes('pain_relief')
+        ? {
+            ...state.timedEffects,
+            painReliefUntil:
+              state.now + rules.kidneyStone.painReliefHours * HOUR_MS,
+          }
+        : state.timedEffects,
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
+  actionState = reconcileMetricSource(state, actionState, command.commandId);
   actionState = recordBondGain(actionState, state);
   const actionOutcome = accepted('item_action_performed', actionEvent.message, [
     actionEvent.id,
@@ -197,12 +274,5 @@ function unavailable(
   message: string,
 ): ItemActionCommandResult {
   const outcome = rejected('unavailable', message);
-  const attempted = recordAttempt(
-    resolveAttemptEvent(state, command.commandId, definition),
-    outcome,
-    state,
-    command.commandId,
-    command.type,
-  );
-  return { handled: true, state: attempted, outcome };
+  return { handled: true, state, outcome };
 }

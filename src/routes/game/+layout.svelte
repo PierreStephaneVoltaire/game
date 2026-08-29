@@ -15,10 +15,8 @@
     const reconcile = () => {
       if (document.visibilityState === 'visible') void reconcileGameClock();
     };
-    const timer = window.setInterval(reconcile, 60_000);
     document.addEventListener('visibilitychange', reconcile);
     return () => {
-      window.clearInterval(timer);
       document.removeEventListener('visibilitychange', reconcile);
     };
   });
@@ -38,7 +36,7 @@
         <RunSettings
           mode={$gameViewModel.mode}
           seed={$gameViewModel.seed}
-          dead={Boolean($gameViewModel.death)}
+          ended={Boolean($gameViewModel.ending)}
         />
       {/if}
     </div>

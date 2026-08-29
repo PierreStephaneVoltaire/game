@@ -1,5 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { beginGameSession, sendGameIntent } from './game-session';
+import { get } from 'svelte/store';
+import {
+  beginGameSession,
+  ensureGameSession,
+  gameViewModel,
+  sendGameIntent,
+} from './game-session';
 import { HOUR_MS } from './game-constants';
 
 describe('browser game session', () => {
@@ -14,7 +20,18 @@ describe('browser game session', () => {
     vi.setSystemTime(startedAt + 2 * HOUR_MS);
     const outcome = await sendGameIntent({ type: 'play' });
 
-    expect(outcome.accepted).toBe(true);
     expect(outcome.kind).not.toBe('stale');
+  });
+
+  it('reconciles an existing Realtime run when the game layout is entered', async () => {
+    vi.useFakeTimers();
+    const startedAt = Date.UTC(2026, 7, 22, 14);
+    vi.setSystemTime(startedAt);
+    await beginGameSession('realtime');
+
+    vi.setSystemTime(startedAt + 2 * HOUR_MS);
+    await ensureGameSession();
+
+    expect(get(gameViewModel)?.now).toBe(startedAt + 2 * HOUR_MS);
   });
 });

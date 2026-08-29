@@ -2,6 +2,9 @@ import { describe, expect, test } from 'vitest';
 
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, startRun } from './game-engine';
+import { eventCandidates } from './event-candidate-pool';
+import { streamWeight } from './stream-rules';
+import { localDate } from './shop-rules';
 import type { GameState, StatusName } from './game-types';
 
 const STREAM_SEED = '00000010000000100000001000000010';
@@ -34,15 +37,17 @@ const blockers: Array<{
 ];
 
 describe('autonomous streaming public seam', () => {
-  test('control seed and command produce a stream candidate when eligible', () => {
-    const result = dispatchCommand(
-      streamRun(),
-      { type: 'socialize', commandId: 'ui-1', now: STREAM_NOW },
+  test('control state exposes a weighted stream candidate when eligible', () => {
+    const state = streamRun();
+    const candidates = eventCandidates(
+      state,
       BUNDLED_GAME_DEFINITION,
+      localDate(state.now, state.timezone),
+      streamWeight(state, 'ui-1'),
     );
     expect(
-      result.state.events.some((event) => event.type === 'stream_candidate'),
-    ).toBe(true);
+      candidates.find((candidate) => candidate.type === 'stream')?.weight,
+    ).toBeGreaterThan(0);
   });
 
   test.each(blockers)(

@@ -6,6 +6,9 @@
   import { gameViewModel, sendGameIntent } from '$lib/game-session';
   import type { GameIntent } from '$lib/ui/game-view-model';
   import ItemDetail from './ItemDetail.svelte';
+  import LineOfCreditPanel from './LineOfCreditPanel.svelte';
+  import ShopItemGrid from './ShopItemGrid.svelte';
+  import ShoppingCart from './ShoppingCart.svelte';
   import './shop.css';
 
   type Tab = 'shop' | 'cart' | 'inventory' | 'detail';
@@ -17,6 +20,7 @@
   let message = '';
   let detailReturn: 'shop' | 'inventory' = 'shop';
   let lastNormalizedUrl = '';
+  const numbers = new Intl.NumberFormat('en-US');
   $: selected = model?.catalogue.find((item) => item.id === selectedId) ?? null;
   $: visible =
     model?.shop.filter(
@@ -24,8 +28,8 @@
     ) ?? [];
   $: cartLines =
     model?.cart.map((item) => ({ item, quantity: item.inCart })) ?? [];
-  $: blocked = Boolean(model?.activity || model?.death);
-  $: terminal = Boolean(model?.death);
+  $: blocked = Boolean(model?.activity || model?.commandsDisabled);
+  $: terminal = Boolean(model?.commandsDisabled);
   $: if (
     model &&
     typeof window !== 'undefined' &&
@@ -103,6 +107,15 @@
     const transition = await command({ type: 'checkout_cart' });
     if (transition?.kind === 'cart_checked_out') setTab('inventory');
   }
+  async function openLineOfCredit() {
+    await command({ type: 'open_line_of_credit' });
+  }
+  async function repayLineOfCredit(quantity: number) {
+    await command({
+      type: 'repay_line_of_credit',
+      quantity,
+    });
+  }
   async function performItemAction(itemId: string, action: string) {
     if (blocked) return;
     await command({ type: 'item_action', itemId, action });
@@ -131,9 +144,45 @@
         <a class="back-link" href={resolve('/game')} aria-label="Back to room"
           >←</a
         >
-        <strong class="balance">${model.balance}</strong>
+        <strong class:debt={model.debt.active} class="balance"
+          >Cash: ${numbers.format(model.balance)}</strong
+        >
       </div>
     </header>
+    {#if model.debt.active}
+      <p class="debt-notice" role="status">
+        Total debt: ${numbers.format(model.debt.amount)}. Ordinary purchases
+        remain available on credit and can push Cash further below zero.
+      </p>
+    {/if}
+    <LineOfCreditPanel
+      balance={model.balance}
+      lineOfCredit={model.lineOfCredit}
+      disabled={terminal}
+      onOpen={openLineOfCredit}
+      onRepay={repayLineOfCredit}
+    />
+    {#if model.medicalDebt.total > 0}
+      <section class="debt-notice" aria-label="Medical debt payment service">
+        <strong
+          >Medical principal: ${numbers.format(model.medicalDebt.total)}</strong
+        >
+        <p>
+          Next scheduled payment: ${numbers.format(
+            model.medicalDebt.nextScheduledPayment,
+          )}. Pay every bill now for ${numbers.format(
+            model.medicalDebt.discountedFullPayment,
+          )} after the 15% discount.
+        </p>
+        <button
+          type="button"
+          disabled={terminal ||
+            model.balance < model.medicalDebt.discountedFullPayment}
+          on:click={() => command({ type: 'pay_medical_debt' })}
+          >Pay Medical Debt in Full</button
+        >
+      </section>
+    {/if}
     <div class="tabs" role="tablist" aria-label="Shop sections">
       {#each tabs as option (option)}{#if option !== 'detail' || selected}<button
             role="tab"
@@ -174,74 +223,24 @@
                 )}>{option}</button
             >{/each}
         </nav>
-        <div class="item-grid">
-          {#each visible as item (item.id)}<article class="item-card">
-              <button class="item-open" on:click={() => openItem(item.id)}
-                ><img
-                  src={item.image}
-                  alt={item.name}
-                  width="88"
-                  height="88"
-                /><span
-                  ><strong>{item.name}</strong><small
-                    >{item.qualitativeHint}</small
-                  ></span
-                ></button
-              >
-              <div class="item-footer">
-                <span>${item.price} · {item.stock} available</span><button
-                  on:click={() => add(item.id)}
-                  disabled={terminal ||
-                    !item.stock ||
-                    model.balance < item.price}>Add</button
-                >
-              </div>
-            </article>{/each}
-        </div>
+        <ShopItemGrid
+          items={visible}
+          disabled={terminal}
+          onOpen={openItem}
+          onAdd={add}
+          onQuantity={cartQuantity}
+        />
       </section>
     {:else if tab === 'cart'}
-      <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
-      <section
-        id="cart-panel"
-        class="cart-panel"
-        role="tabpanel"
-        tabindex="-1"
-        aria-labelledby="cart-heading"
-      >
-        <h2 id="cart-heading">Cart</h2>
-        {#if !cartLines.length}<p class="empty">
-            Your cart is empty.
-          </p>{:else}{#each cartLines as line (line.item.id)}<div
-              class="cart-line"
-            >
-              <img src={line.item.image} alt="" width="52" height="52" /><span
-                ><strong>{line.item.name}</strong><small
-                  >${line.item.price} each</small
-                ></span
-              >
-              <div>
-                <button
-                  aria-label={`Remove one ${line.item.name}`}
-                  on:click={() => cartQuantity(line.item.id, line.quantity - 1)}
-                  disabled={terminal}>−</button
-                ><output>{line.quantity}</output><button
-                  aria-label={`Add one ${line.item.name}`}
-                  on:click={() => cartQuantity(line.item.id, line.quantity + 1)}
-                  disabled={terminal}>+</button
-                >
-              </div>
-              <strong>${line.item.price * line.quantity}</strong>
-            </div>{/each}
-          <p class="total">
-            <span>Total</span><strong>${model.cartTotal}</strong>
-          </p>
-          <button
-            class="checkout"
-            on:click={checkout}
-            disabled={terminal || model.cartTotal > model.balance}
-            >Checkout</button
-          >{/if}
-      </section>
+      <ShoppingCart
+        lines={cartLines}
+        total={model.cartTotal}
+        resultingBalance={model.cartResultingBalance}
+        checkoutAllowed={model.cartCheckoutAllowed}
+        disabled={terminal}
+        onQuantity={cartQuantity}
+        onCheckout={checkout}
+      />
     {:else if tab === 'inventory'}
       <!-- svelte-ignore a11y_no_noninteractive_element_to_interactive_role -->
       <section

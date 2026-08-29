@@ -93,7 +93,7 @@ describe('calendar and terminal timeline boundaries', () => {
       },
       activity: {
         id: 'calendar-rest',
-        type: 'rest' as const,
+        type: 'medical_care' as const,
         startedAt,
         endsAt: Date.UTC(2026, 7, 23, 2),
         sourceActionId: 'calendar-rest',
@@ -110,7 +110,7 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death).toBeNull();
+    expect(result.ending).toBeNull();
     expect(result.shop.localDate).toBe('2026-08-23');
     expect(result.shop.cart).toEqual({});
     expect(
@@ -139,6 +139,14 @@ describe('calendar and terminal timeline boundaries', () => {
           lastPenaltyAt: 0,
         },
       },
+      activity: {
+        id: 'protected-rest',
+        type: 'rest' as const,
+        startedAt: 0,
+        endsAt: 24 * HOUR,
+        sourceActionId: 'protected-rest',
+        payload: { startingCriticalMetrics: 'health' },
+      },
     };
 
     const result = reconcileTime(
@@ -147,11 +155,11 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.cause).toBe('Kidney stone symptoms worsened.');
+    expect(result.ending?.cause).toBe('Kidney stone complications');
     expect(
       result.events.filter(
         (event) =>
-          event.at === result.death?.at &&
+          event.at === result.ending?.at &&
           event.type === 'critical_health_loss',
       ),
     ).toHaveLength(0);
@@ -187,6 +195,14 @@ describe('calendar and terminal timeline boundaries', () => {
           metricDeltas: { health: -1 },
         },
       ],
+      activity: {
+        id: 'protected-rest',
+        type: 'rest' as const,
+        startedAt: 0,
+        endsAt: 24 * HOUR,
+        sourceActionId: 'protected-rest',
+        payload: { startingCriticalMetrics: 'health' },
+      },
     };
 
     const result = reconcileTime(
@@ -195,7 +211,7 @@ describe('calendar and terminal timeline boundaries', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.death?.eventIds).toEqual([
+    expect(result.ending?.eventIds).toEqual([
       'kidney-onset-event',
       expect.stringMatching(/^event-/),
       expect.stringMatching(/^event-/),

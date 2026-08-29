@@ -30,14 +30,15 @@ export const gameCopy = {
     socialize: 'Socialize',
     play: 'Play',
     wait: 'Wait',
-    medical: 'Medical Care',
+    medical: 'Hospital',
   },
   activity: {
     rest: 'resting',
     socialize: 'socializing',
     play: 'playing',
     stream: 'streaming',
-    medical_care: 'receiving Medical Care',
+    medical_care: 'at the hospital',
+    commission_work: 'working on a commission',
   },
   empty: {
     run: 'Starting…',
@@ -48,40 +49,5 @@ export const gameCopy = {
 
 export const statusLabel = (value: StatusName) => statusDisplayName(value);
 
-const EVENT_LABELS: Record<string, string> = {
-  run_started: 'Run started',
-  activity_started: 'Activity started',
-  activity_completed: 'Activity completed',
-  item_used: 'Item action',
-  item_refused: 'Item refused',
-  item_placed: 'Item placed',
-  item_unplaced: 'Item removed',
-  item_purchased: 'Item purchased',
-  cart_checked_out: 'Cart checked out',
-  status_added: 'Status added',
-  status_cleared: 'Status cleared',
-  status_onset: 'Status onset',
-  status_recurrence: 'Status recurrence',
-  death: 'Run ended',
-  stream_candidate: 'Stream opportunity',
-  time_reconciled: 'Time advanced',
-  shop_rotated: 'Shop refreshed',
-  craving_fulfilled: 'Craving fulfilled',
-  critical_health_loss: 'Critical health loss',
-  kidney_stone_recurrence: 'Kidney stone recurrence',
-  sugar_crash: 'Sugar crash',
-  critical_health_mood_penalty: 'Critical health penalty',
-  random_event_opportunity: 'Random event opportunity',
-  item_reaction: 'Item reaction',
-  item_discovery: 'Item discovery',
-  item_preparation: 'Preparation discovery',
-  nutrition_profile_discovered: 'Nutrition profile discovered',
-  full_feed_suppressed: 'Food suppressed',
-  sickness_onset: 'Sickness onset',
-  sick_feeding_harm: 'Sick feeding harm',
-  kidney_stone_onset: 'Kidney stone onset',
-};
-
-export const eventLabel = (value: string) => EVENT_LABELS[value] ?? 'Run event';
 import { statusDisplayName } from '$lib/event-messages';
 import type { StatusName } from '$lib/game-types';

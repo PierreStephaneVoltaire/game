@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, startRun } from './game-engine';
 import type { GameState } from './game-types';
+import { projectJourney } from './ui/journey-events';
 
 function run(seed: string): GameState {
   const state = startRun(
@@ -25,9 +26,12 @@ describe('item and history fidelity', () => {
       BUNDLED_GAME_DEFINITION,
     );
 
-    expect(result.outcomes[0]).toMatchObject({ accepted: false, kind: 'dead' });
+    expect(result.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'run_over',
+    });
     expect(result.state.inventory.water).toBe(1);
-    expect(result.state.death).not.toBeNull();
+    expect(result.state.ending?.kind).toBe('death');
   });
 
   test('direct use cannot bypass an item interaction', () => {
@@ -64,6 +68,24 @@ describe('item and history fidelity', () => {
     expect(result.outcomes[0].accepted).toBe(true);
     expect(result.state.inventory.water).toBe(0);
     expect(event?.tags).toContain('feeding');
+  });
+
+  test('Water uses one of its authored reluctant narration lines', () => {
+    const state = { ...run('water-narration'), inventory: { water: 1 } };
+    const result = dispatchCommand(
+      state,
+      { type: 'use_item', commandId: 'drink-water', itemId: 'water', now: 0 },
+      BUNDLED_GAME_DEFINITION,
+    );
+    const item = BUNDLED_GAME_DEFINITION.items.find(
+      (candidate) => candidate.id === 'water',
+    )!;
+    const message = projectJourney(result.state.events, 'Nova').find((entry) =>
+      entry.message.includes('water'),
+    )?.message;
+
+    expect(item.narration.map((line) => `Nova ${line}`)).toContain(message);
+    expect(message).not.toMatch(/tried|discover/i);
   });
 
   test('full feeding records Food suppression and distinct causal rule events', () => {
@@ -113,31 +135,35 @@ describe('item and history fidelity', () => {
     );
 
     expect(sickness?.metricDeltas?.health).toBe(-1);
-    expect(result.death?.cause).toBe(
-      'Uncrustables caused sickness from overfeeding.',
-    );
-    expect(result.death?.eventIds).toContain(sickness?.id);
+    expect(result.ending?.cause).toBe('Sickness');
+    expect(result.ending?.causes).toEqual([
+      expect.objectContaining({ id: 'sick', name: 'Sickness' }),
+    ]);
+    expect(result.ending?.eventIds).toContain(sickness?.id);
   });
 
-  test('Mystery Snack records only the selected profile identity', () => {
+  test('The Concoction records its selected profile without a discovery event', () => {
     const result = dispatchCommand(
-      { ...run('mystery-profile'), inventory: { 'mystery-snack': 1 } },
+      { ...run('mystery-profile'), inventory: { 'the-concoction': 1 } },
       {
         type: 'use_item',
         commandId: 'mystery-consume',
-        itemId: 'mystery-snack',
+        itemId: 'the-concoction',
         now: 0,
       },
       BUNDLED_GAME_DEFINITION,
     );
-    const event = result.state.events.find(
-      (item) => item.type === 'nutrition_profile_discovered',
-    );
+    const event = result.state.events.find((item) => item.type === 'item_used');
     expect(['A', 'B', 'C']).toContain(event?.nutritionProfileId);
     expect(event?.message).not.toMatch(/sodium|calorie|protein|sugar/i);
+    expect(
+      result.state.events.some((item) =>
+        ['item_discovery', 'nutrition_profile_discovered'].includes(item.type),
+      ),
+    ).toBe(false);
   });
 
-  test('critical Health penalizes the instant action and random event independently', () => {
+  test('critical Health Mood penalty is global across an instant action and event', () => {
     let resolved: GameState | undefined;
     for (let index = 0; index < 2_000 && !resolved; index += 1) {
       const initial = run(`critical-independent-${index}`);
@@ -167,7 +193,7 @@ describe('item and history fidelity', () => {
       resolved!.events.filter(
         (event) => event.type === 'critical_health_mood_penalty',
       ),
-    ).toHaveLength(2);
+    ).toHaveLength(1);
   });
 
   test('a treating item clears Sick only at the documented metric thresholds', () => {

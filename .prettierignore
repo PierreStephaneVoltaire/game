@@ -1,5 +1,7 @@
 .agents/
 MAIN_APP_PLAYTEST_SPEC.md
 plan_updated.md
+stream-economy-and-care-rebalance-requirements.md
 pnpm-lock.yaml
 src/lib/data/shop-items.json
+.tmp-*.json
