@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "builtInEvents": {
     "low_money_stress": [
       "{pet} opened her bank app, made a noise, and closed it immediately.",
@@ -131,9 +131,7 @@
       "Taxes: ${amount}. The government does not accept channel points.",
       "${amount} in taxes. The corpo era did not prepare her for this."
     ],
-    "stood_up_too_fast_damage_cause": [
-      "Lost a 1v1 against gravity"
-    ],
+    "stood_up_too_fast_damage_cause": ["Lost a 1v1 against gravity"],
     "stood_up_too_fast_stumble": [
       "{pet} stood up too fast, saw the void, and the void tripped her.",
       "{pet} went vertical too quickly and paid the toll.",
@@ -201,7 +199,6 @@
       "Friend time is over. {pet} already misses the noise.",
       "{pet} wants to talk about vore.",
       "{pet} wants to talk about her next stream idea."
-
     ],
     "play": [
       "Game session over. {pet} swears she was 'about to win.'",
@@ -216,8 +213,8 @@
     ],
     "commission_work": [
       "Rigging done. Another model can blink now. You're welcome.",
-       "Rigging done. Next we'll draw her pregnant.",
-       "Rigging done. {pet} hid all her mistakes with jiggle physics.",
+      "Rigging done. Next we'll draw her pregnant.",
+      "Rigging done. {pet} hid all her mistakes with jiggle physics.",
       "Commission shipped. Two thousand layers, only mild screaming.",
       "Another rig delivered. The client cried. Good tears."
     ],

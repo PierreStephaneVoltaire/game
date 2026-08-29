@@ -3,6 +3,17 @@ import { describe, expect, test } from 'vitest';
 import type { GameEvent } from '$lib/game-types';
 import { companion } from './companion';
 import { projectCausalJourney, projectJourney } from './journey-events';
+import eventTexts from '$lib/data/event-texts.json';
+import { interpolateText } from '$lib/seeded-text';
+
+function resolvedTemplates(
+  id: keyof typeof eventTexts.eventTemplates,
+  values: Record<string, string | number>,
+): string[] {
+  return eventTexts.eventTemplates[id].map((template) =>
+    interpolateText(template, values),
+  );
+}
 
 describe('Journey projection', () => {
   test('filters engine bookkeeping and narrates meaningful transitions', () => {
@@ -54,14 +65,25 @@ describe('Journey projection', () => {
       },
     ];
 
-    expect(
-      projectJourney(events, 'Nova').map((event) => event.message),
-    ).toEqual([
+    const messages = projectJourney(events, 'Nova').map(
+      (event) => event.message,
+    );
+    expect(messages.slice(0, 2)).toEqual([
       "Nova's journey began.",
       'Nova is starving.',
-      'You bought Water ×2 for Nova.',
-      'You bought Cake for Nova.',
     ]);
+    expect(
+      resolvedTemplates('journey_player_purchase', {
+        pet: 'Nova',
+        item: 'Water ×2',
+      }),
+    ).toContain(messages[2]);
+    expect(
+      resolvedTemplates('journey_player_purchase', {
+        pet: 'Nova',
+        item: 'Cake',
+      }),
+    ).toContain(messages[3]);
   });
 
   test('uses natural causal narration without exposing metric bookkeeping', () => {
@@ -176,13 +198,42 @@ describe('Journey projection', () => {
       ],
       companion.name,
     );
-    expect(entries.map(({ message }) => message)).toEqual([
-      `You bought Painkillers for ${companion.name}.`,
-      `You bought Water ×3 for ${companion.name}.`,
-      `${companion.name} bought Painkillers.`,
-      `Mom sent a Care Package gift with Water and Pretzel. It lifted ${companion.name}'s spirits.`,
-      `${companion.name}'s channel gained a subscriber.`,
-      `${companion.name}'s channel gained 4 subscribers.`,
-    ]);
+    const messages = entries.map(({ message }) => message);
+    expect(
+      resolvedTemplates('journey_player_purchase', {
+        pet: companion.name,
+        item: 'Painkillers',
+      }),
+    ).toContain(messages[0]);
+    expect(
+      resolvedTemplates('journey_player_purchase', {
+        pet: companion.name,
+        item: 'Water ×3',
+      }),
+    ).toContain(messages[1]);
+    expect(
+      resolvedTemplates('journey_companion_purchase', {
+        pet: companion.name,
+        item: 'Painkillers',
+      }),
+    ).toContain(messages[2]);
+    expect(
+      resolvedTemplates('journey_care_package', {
+        pet: companion.name,
+        message: 'Mom sent a Care Package gift with Water and Pretzel.',
+      }),
+    ).toContain(messages[3]);
+    expect(
+      resolvedTemplates('journey_subscriber_growth_one', {
+        pet: companion.name,
+        count: '1',
+      }),
+    ).toContain(messages[4]);
+    expect(
+      resolvedTemplates('journey_subscriber_growth_many', {
+        pet: companion.name,
+        count: '4',
+      }),
+    ).toContain(messages[5]);
   });
 });

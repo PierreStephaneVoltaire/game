@@ -101,8 +101,9 @@ command after a terminal Ending is rejected with “This run is over” and
 cannot mutate the archived state.
 
 Ending event messages, warning/recovery copy, Journey death narration, and
-Ending-card titles and explanations are authored in `ending-rules.json` and
-loaded by the simulation and presentation layers.
+Ending-card titles and explanations are authored as text pools in
+`ending-rules.json`. A seeded option is selected from each applicable pool and
+then its placeholders are filled by the simulation or presentation layer.
 
 When current Subscribers first reach 3,000,000, `Made It` unlocks once with
 its exact time and causal audience event. It does not close the Run. Agency
@@ -649,20 +650,29 @@ Ending:
 
 ## Shop, Inventory, and room
 
-The catalogue has exactly 228 items:
+The catalogue has exactly 232 items:
 
 | Category   | Count |
 | ---------- | ----: |
-| Food       |   111 |
+| Food       |   114 |
 | Medicine   |     2 |
 | Care       |     3 |
-| Reusable   |    74 |
+| Reusable   |    75 |
 | Upgrade    |    23 |
 | Decoration |    15 |
 
 The renamed items are Mini Tacos, Cheeseless Toppingless Pizza, and The
 Concoction. Cheeseless Toppingless Pizza has an 85% acceptable-preparation
 chance.
+
+The lore-text merge patch adds Jaffa Cakes ($3), Oatmeal ($2), Homegrown
+Chocolate Chip Cookies ($4), and Ring Fit ($60). The three Foods are Liked and
+use their authored nutrition scores/effects; their provenance records clone
+the explicitly named comparable catalogue nutrition source. Ring Fit is a
+single-use interaction that requires owned game-control equipment and applies
+its authored seeded Mood, Rest, and Creativity effects. The same patch replaces
+listed descriptions and item-use narration by canonical ID without altering
+unlisted gameplay fields.
 
 The catalogue additions include Insurance Card ($150, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($9; salt 2/water 2), Jar of Pickle Juice

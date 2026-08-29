@@ -22,6 +22,7 @@ import { resolveOffStreamSupport } from './off-stream-support-rules';
 import { healthDamageSource } from './simulation/health-resolution';
 import { selectAttemptEvent } from './event-selection';
 import { finalizeBuiltInEvent } from './event-resolution-finalizer';
+import { selectSeededText, stateTextContext } from './seeded-text';
 
 /** Resolves exactly one weighted autonomous opportunity for one companion attempt. */
 export function resolveAttemptEvent(
@@ -29,6 +30,7 @@ export function resolveAttemptEvent(
   commandId: string,
   definition: GameDefinition,
 ): GameState {
+  const textContext = stateTextContext(state, commandId);
   const date = localDate(state.now, state.timezone);
   const { selected, opportunityEvent } = selectAttemptEvent(
     state,
@@ -100,13 +102,21 @@ export function resolveAttemptEvent(
       events: [...state.events, opportunityEvent],
       stateVersion: state.stateVersion + 1,
     };
+  const selectedHookMessage = selectedHook?.hook.messages?.length
+    ? selectSeededText(
+        selectedHook.hook.messages,
+        textContext,
+        `itemHook.${selectedHook.itemId}.${selectedHook.hook.id}`,
+      )
+    : selectedHook?.hook.message;
   const event: GameEvent = {
     id: `event-${state.events.length + 2}`,
     type: selected.startsWith('item_hook:') ? 'item_automatic_hook' : selected,
     at: state.now,
     message: selectedHook
-      ? (selectedHook.hook.message ?? eventTemplate('item_hook_fallback'))
-      : messageFor(selected as BuiltInEventType),
+      ? (selectedHookMessage ??
+        eventTemplate('item_hook_fallback', {}, textContext))
+      : messageFor(selected as BuiltInEventType, textContext),
     sourceActionId: commandId,
   };
   const metrics = { ...state.metrics };
@@ -169,7 +179,7 @@ export function resolveAttemptEvent(
     cooldowns.room =
       state.now + rules.events.cooldowns.benignRoomHours * HOUR_MS;
   if (selected === 'rest_snoring') {
-    event.message = messageFor('rest_snoring');
+    event.message = messageFor('rest_snoring', textContext);
     cooldowns[`rest_snoring:${state.activity?.id ?? commandId}`] = state.now;
   }
   if (selected === 'moms_care_package') {
@@ -178,10 +188,12 @@ export function resolveAttemptEvent(
     for (const food of foods)
       inventory[food.id] = (inventory[food.id] ?? 0) + 1;
     event.message = foods.length
-      ? eventTemplate('moms_care_package_with_items', {
-          items: foods.map((food) => food.name).join(' and '),
-        })
-      : messageFor('moms_care_package');
+      ? eventTemplate(
+          'moms_care_package_with_items',
+          { items: foods.map((food) => food.name).join(' and ') },
+          textContext,
+        )
+      : messageFor('moms_care_package', textContext);
     event.metricDeltas = { mood: rules.events.effects.carePackageMood };
     metrics.mood = Math.min(
       STAT_MAX,
@@ -217,11 +229,15 @@ export function resolveAttemptEvent(
         healthDamageSource(
           'event',
           'stood_up_too_fast',
-          eventTemplate('stood_up_too_fast_damage_cause'),
+          eventTemplate('stood_up_too_fast_damage_cause', {}, textContext),
           1,
         ),
       ];
-      event.message = eventTemplate('stood_up_too_fast_stumble');
+      event.message = eventTemplate(
+        'stood_up_too_fast_stumble',
+        {},
+        textContext,
+      );
     }
     cooldowns.stood_up_too_fast =
       state.now + rules.events.cooldowns.stoodUpTooFastHours * HOUR_MS;
@@ -247,7 +263,11 @@ export function resolveAttemptEvent(
     cravingItemId = food.id;
     cravingStartedAt = state.now;
     cravingRefreshCount = 0;
-    event.message = eventTemplate('food_craving_item', { item: food.name });
+    event.message = eventTemplate(
+      'food_craving_item',
+      { item: food.name },
+      textContext,
+    );
     event.cause = cravingItemId;
   }
   if (

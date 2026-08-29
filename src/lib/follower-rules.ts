@@ -5,6 +5,7 @@ import { creditIncome } from './income-rules';
 import { STAT_MAX } from './game-constants';
 import type { CareerTier, GameEvent, GameState } from './game-types';
 import { finalizeFinancialOperation } from './financial-rules';
+import { stateTextContext } from './seeded-text';
 
 const progressionRules = rules.progression as {
   milestones: Array<{
@@ -119,7 +120,10 @@ export function applyFollowerMilestones(
       id: `event-${state.events.length + events.length + 1}`,
       type: 'ending_unlocked',
       at,
-      message: madeItUnlockedMessage(endingRules.madeIt.followers),
+      message: madeItUnlockedMessage(
+        endingRules.madeIt.followers,
+        stateTextContext(state, sourceActionId),
+      ),
       sourceActionId,
       endingKind: 'made_it',
       causedBy: events[0] ? [events[0].id] : undefined,

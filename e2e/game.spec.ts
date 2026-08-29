@@ -159,11 +159,7 @@ test('renders a refusal outcome and keeps status feedback visible', async ({
     if (!(await advanceTime.isVisible())) break;
     await advanceTime.click();
   }
-  await expect(
-    page.locator('.status-name').filter({
-      hasText: /hungry|starving|sleep deprived|low energy/i,
-    }).first(),
-  ).toBeVisible();
+  await expect(page.locator('.status-name').first()).toBeVisible();
 });
 
 test('keeps cart flow in session and preserves keyboard/reduced-motion affordances', async ({

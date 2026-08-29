@@ -4,8 +4,16 @@
     runArchiveExportFilename,
     runArchiveExportMarkdown,
   } from '$lib/ui/run-archive-export';
-  import { endingHistoryTexts } from '$lib/ending-rules/messages';
+  import { endingHistoryCopy } from '$lib/ending-rules/messages';
   $: model = $gameViewModel;
+  $: historyTexts = model?.ending
+    ? endingHistoryCopy({
+        seed: model.seed,
+        stateVersion: model.stateVersion ?? 0,
+        actionId: `ending-history:${model.ending.kind}:${model.ending.at}`,
+        petName: model.companion.name,
+      })
+    : null;
   const dateTime = (at: number, timezone: string) =>
     new Intl.DateTimeFormat('en-US', {
       timeZone: timezone,
@@ -44,13 +52,13 @@
         <h1>{model.companion.name}'s History</h1>
       </div>
     </div>
-    {#if model.ending}
+    {#if model.ending && historyTexts}
       <section class="ending-card" role="alert">
-        <p class="eyebrow">{endingHistoryTexts.terminalRunEyebrow}</p>
+        <p class="eyebrow">{historyTexts.terminalRunEyebrow}</p>
         <h2>{model.ending.title}</h2>
         <p>{model.ending.explanation}</p>
         {#if model.ending.kind === 'death'}
-          <h3>{endingHistoryTexts.causeOfDeath}</h3>
+          <h3>{historyTexts.causeOfDeath}</h3>
           <ul class="death-causes">
             {#each model.ending.causes as cause, index (`${cause.name}:${index}`)}<li
               >
@@ -65,7 +73,7 @@
               </li>{/each}
           </ul>
         {/if}
-        <h3>{endingHistoryTexts.causalChain}</h3>
+        <h3>{historyTexts.causalChain}</h3>
         <ol>
           {#each model.causalEvents as event, index (`${event.id}:${index}`)}<li
             >
@@ -75,32 +83,32 @@
         <div class="graveyard">
           {#if model.ending.kind === 'death'}
             <span aria-hidden="true">✦</span><strong
-              >{endingHistoryTexts.graveyard}</strong
+              >{historyTexts.graveyard}</strong
             >
-            <p>{endingHistoryTexts.graveyardSummary}</p>
+            <p>{historyTexts.graveyardSummary}</p>
           {:else}
             <span aria-hidden="true">✦</span>
-            <strong>{endingHistoryTexts.archivedRun}</strong>
-            <p>{endingHistoryTexts.archivedRunSummary}</p>
+            <strong>{historyTexts.archivedRun}</strong>
+            <p>{historyTexts.archivedRunSummary}</p>
           {/if}
           <dl>
             <div>
-              <dt>{endingHistoryTexts.started}</dt>
+              <dt>{historyTexts.started}</dt>
               <dd>{dateTime(model.runStartedAt, model.timezone)}</dd>
             </div>
             <div>
-              <dt>{endingHistoryTexts.ended}</dt>
+              <dt>{historyTexts.ended}</dt>
               <dd>{dateTime(model.ending.at, model.timezone)}</dd>
             </div>
             <div>
-              <dt>{endingHistoryTexts.duration}</dt>
+              <dt>{historyTexts.duration}</dt>
               <dd>{duration(model.runStartedAt, model.ending.at)}</dd>
             </div>
           </dl>
           <button type="button" on:click={exportArchive}
             >{model.ending.kind === 'death'
-              ? endingHistoryTexts.exportGrave
-              : endingHistoryTexts.exportArchive}</button
+              ? historyTexts.exportGrave
+              : historyTexts.exportArchive}</button
           >
         </div>
       </section>

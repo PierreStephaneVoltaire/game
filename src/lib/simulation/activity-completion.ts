@@ -17,7 +17,6 @@ import {
 } from '../status-rules';
 import { resolveAttemptEvent } from '../event-rules';
 import { clampMetric, HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
-import { activityCompletionMessage } from '../event-messages';
 import {
   completeStreamEconomy,
   resolveCommissionWorkPayout,
@@ -32,6 +31,7 @@ import {
   appendCommissionPayoutEvent,
   settleActivityFinances,
 } from './activity-financial-settlement';
+import { activityCompletionNarration } from './activity-completion-message';
 
 export type ActivityCompletionInput = {
   state: GameState;
@@ -123,9 +123,7 @@ export function completeActivity({
     id: `event-${state.events.length + 1}`,
     type: interrupted ? 'activity_interrupted' : 'activity_completed',
     at: completedAt,
-    message: interrupted
-      ? `${activityCompletionMessage(activity.type).replace(/ finished\.$/, '')} ended early.`
-      : activityCompletionMessage(activity.type),
+    message: activityCompletionNarration(state, activity, interrupted),
     sourceActionId: activity.sourceActionId,
     metricDeltas: delta,
     activityType: activity.type,

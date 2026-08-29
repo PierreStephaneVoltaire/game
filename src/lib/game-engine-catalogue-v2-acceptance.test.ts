@@ -2,12 +2,26 @@ import { describe, expect, test } from 'vitest';
 
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { startRun } from './game-engine';
+import mergeItems from './data/merge-item.json';
 
 const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('publishes exactly 228 canonical items in the locked category counts', () => {
+  test('applies every authored lore override and merge addition', () => {
+    for (const override of mergeItems.overrides)
+      expect(item(override.id)).toMatchObject(override);
+    for (const added of mergeItems.newItems) {
+      const expected = Object.fromEntries(
+        Object.entries(added).filter(
+          ([key]) => !['cloneNutritionFrom', 'image'].includes(key),
+        ),
+      );
+      expect(item(added.id)).toMatchObject(expected);
+    }
+  });
+
+  test('publishes exactly 232 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
         (category) => [
@@ -19,12 +33,12 @@ describe('V2 catalogue definition seam', () => {
       ),
     );
 
-    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(228);
+    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(232);
     expect(counts).toEqual({
-      food: 111,
+      food: 114,
       medicine: 2,
       care: 3,
-      reusable: 74,
+      reusable: 75,
       upgrade: 23,
       decoration: 15,
     });

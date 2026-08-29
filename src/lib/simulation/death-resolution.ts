@@ -5,6 +5,7 @@ import type {
   HealthDamageSource,
 } from '../game-types';
 import { deathCauseText, deathEventMessage } from '../ending-rules/messages';
+import { stateTextContext, type SeededTextContext } from '../seeded-text';
 
 export function recordDeath(state: GameState): GameState {
   if (state.ending || state.metrics.health > 0) return state;
@@ -19,13 +20,17 @@ export function recordDeath(state: GameState): GameState {
           event.sourceActionId === finalDamageEvent.sourceActionId,
       )
     : [];
+  const textContext = stateTextContext(
+    state,
+    finalDamageEvent?.sourceActionId ?? `death:${state.now}`,
+  );
   const sources = finalDamageEvents.length
     ? finalDamageEvents.flatMap((event) =>
         event.healthDamageSources?.length
           ? event.healthDamageSources
-          : [fallbackSource(event)],
+          : [fallbackSource(event, textContext)],
       )
-    : [unknownSource()];
+    : [unknownSource(textContext)];
   const causes = deduplicateCauses(sources);
   const causalIds = unique([
     ...sources.flatMap((source) => source.eventIds),
@@ -39,7 +44,7 @@ export function recordDeath(state: GameState): GameState {
     id: `event-${state.events.length + 1}`,
     type: 'death',
     at: state.now,
-    message: deathEventMessage(),
+    message: deathEventMessage(textContext),
     cause,
     causedBy: causalIds,
   };
@@ -75,20 +80,28 @@ function deduplicateCauses(sources: HealthDamageSource[]): DeathCause[] {
   return causes;
 }
 
-function fallbackSource(event: GameEvent): HealthDamageSource {
+function fallbackSource(
+  event: GameEvent,
+  textContext: SeededTextContext,
+): HealthDamageSource {
   if (event.status === 'sick')
-    return source('status', 'sick', deathCauseText('sickness'), event);
+    return source(
+      'status',
+      'sick',
+      deathCauseText('sickness', textContext),
+      event,
+    );
   if (event.status === 'kidney_stone')
     return source(
       'status',
       'kidney_stone',
-      deathCauseText('kidneyStoneComplications'),
+      deathCauseText('kidneyStoneComplications', textContext),
       event,
     );
   return source(
     event.cause ? 'item' : 'event',
     event.cause ?? event.type,
-    event.message || deathCauseText('unknown'),
+    event.message || deathCauseText('unknown', textContext),
     event,
   );
 }
@@ -108,11 +121,11 @@ function source(
   };
 }
 
-function unknownSource(): HealthDamageSource {
+function unknownSource(textContext: SeededTextContext): HealthDamageSource {
   return {
     kind: 'event',
     id: 'unknown',
-    name: deathCauseText('unknown'),
+    name: deathCauseText('unknown', textContext),
     amount: 0,
     eventIds: [],
   };

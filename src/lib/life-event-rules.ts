@@ -26,6 +26,7 @@ import {
   selectEquipmentExpenseItem,
   selectPersonalPurchase,
 } from './life-event-random-resolution';
+import { stateTextContext } from './seeded-text';
 
 export type { LifeEventDefinition, LifeEventEffects } from './life-event-types';
 
@@ -112,17 +113,26 @@ export function resolveLifeEvent(
   const cashDelta = effects.cash ?? 0;
   const followerDelta = followerChange(state, effects);
   const resolvedEventId = `event-${state.events.length + 1}`;
+  const textContext = stateTextContext(state, sourceActionId);
   const resolvedMessage = purchasedItem
-    ? eventTemplate('personal_purchase', { item: purchasedItem.name })
+    ? eventTemplate(
+        'personal_purchase',
+        { item: purchasedItem.name },
+        textContext,
+      )
     : definition.messageTemplateId
-      ? eventTemplate(definition.messageTemplateId, {
-          amount: Math.abs(cashDelta).toLocaleString('en-US'),
-          item: failedEquipment?.name ?? '',
-        })
+      ? eventTemplate(
+          definition.messageTemplateId,
+          {
+            amount: Math.abs(cashDelta).toLocaleString('en-US'),
+            item: failedEquipment?.name ?? '',
+          },
+          textContext,
+        )
       : outcome?.messageId
-        ? lifeEventMessage(outcome.messageId)
+        ? lifeEventMessage(outcome.messageId, textContext)
         : definition.messageId
-          ? lifeEventMessage(definition.messageId)
+          ? lifeEventMessage(definition.messageId, textContext)
           : eventId;
   const event: GameEvent = {
     id: resolvedEventId,

@@ -11,7 +11,10 @@ import {
 } from './journey-progress-messages';
 import { statusJourneyMessage } from './journey-status-messages';
 import { uniquePresentationId } from './unique-presentation-id';
-import { eventTemplate } from '$lib/event-messages';
+import {
+  journeyTextContext,
+  purchaseJourneyMessage,
+} from './journey-purchase-messages';
 
 export type JourneyEntryViewModel = {
   id: string;
@@ -25,6 +28,7 @@ const HIDDEN_TYPES = new Set(['random_event_opportunity', 'shop_rotated']);
 export function projectJourney(
   events: GameEvent[],
   petName: string,
+  seed: string | number = 'journey-presentation',
 ): JourneyEntryViewModel[] {
   const entries: JourneyEntryViewModel[] = [];
   const transitionKeys = new Set<string>();
@@ -134,7 +138,11 @@ export function projectJourney(
       continue;
     }
     if (PROGRESSION_EVENT_TYPES.has(event.type)) {
-      const message = progressionJourneyMessage(event, petName);
+      const message = progressionJourneyMessage(
+        event,
+        petName,
+        journeyTextContext(seed, event, petName),
+      );
       if (message) push(entries, event, message);
       continue;
     }
@@ -143,7 +151,12 @@ export function projectJourney(
         entries.push({
           id: uniquePresentationId(entries, `${event.id}:purchase:${index}`),
           at: event.at,
-          message: purchaseMessage(event, purchase, petName),
+          message: purchaseJourneyMessage(
+            event,
+            purchase,
+            petName,
+            journeyTextContext(seed, event, petName),
+          ),
           sourceEventIds: [event.id],
         }),
       );
@@ -174,27 +187,14 @@ export function projectJourney(
   return entries;
 }
 
-function purchaseMessage(
-  event: GameEvent,
-  purchase: NonNullable<GameEvent['purchases']>[number],
-  petName: string,
-): string {
-  const item =
-    purchase.quantity === 1
-      ? purchase.itemName
-      : `${purchase.itemName} ×${purchase.quantity}`;
-  return event.purchaseActor === 'companion'
-    ? eventTemplate('journey_companion_purchase', { pet: petName, item })
-    : eventTemplate('journey_player_purchase', { pet: petName, item });
-}
-
 export function projectCausalJourney(
   events: GameEvent[],
   eventIds: string[],
   petName: string,
+  seed: string | number = 'journey-presentation',
 ): JourneyEntryViewModel[] {
   const ids = new Set(eventIds);
-  return projectJourney(events, petName).filter((entry) =>
+  return projectJourney(events, petName, seed).filter((entry) =>
     entry.sourceEventIds.some((id) => ids.has(id)),
   );
 }
