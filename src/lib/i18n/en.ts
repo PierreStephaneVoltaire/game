@@ -1,5 +1,5 @@
 export const en = {
-  metaTitle: '{pet} Virtual Pet',
+  metaTitle: 'Legally Distinct Virtual Pet',
   metaDescription:
     'A tiny virtual-pet adventure for looking after your little star.',
   wordmark: 'VIRTUAL {pet}',

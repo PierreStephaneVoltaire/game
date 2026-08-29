@@ -160,9 +160,8 @@ describe('Journey status and timed-effect narration', () => {
       'Nova cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.',
       'Nova took Painkillers, easing the kidney stone symptoms for a while.',
       "Nova's craving faded before it could be fulfilled.",
-      'Bought 2 Soup.',
-      'Bought 1 Medicine.',
-      'Buying essentials while already in debt weighed on Nova.',
+      'You bought Soup ×2 for Nova.',
+      'You bought Medicine for Nova.',
       "Nova's Hyperfocus wore off, leaving them less creative and in need of rest.",
     ]);
   });

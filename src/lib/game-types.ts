@@ -83,6 +83,7 @@ export type GameEvent = {
   rawNeedDamageSources?: HealthDamageSource[];
   healthRecovery?: number;
   purchases?: PurchaseRecord[];
+  purchaseActor?: 'player' | 'companion';
   itemName?: string;
   /** Catalogue-authored sentence fragment selected for this item use. */
   itemNarration?: string;

@@ -160,6 +160,7 @@
   },
   "shop": {
     "maximumItems": 24,
+    "initialGuaranteedItemIds": ["clippers"],
     "stock": { "minimum": 1, "range": 5 },
     "mix": {
       "food": 12,
@@ -246,9 +247,6 @@
     "durationHours": 6,
     "pinnedCreativity": 10,
     "expiry": { "creativity": -2, "rest": -2 }
-  },
-  "debt": {
-    "purchaseMood": -1
   },
   "medicalCare": {
     "durationHours": 12,

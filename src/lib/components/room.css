@@ -107,7 +107,7 @@
   margin: 38px 0 0;
 }
 .care-actions button,
-.food-choices button {
+.feed-quantity button {
   border: 3px solid #512b9a;
   color: #512b9a;
   background: #fff;
@@ -123,10 +123,6 @@
   padding: 0;
   place-items: center;
   font-size: 0.78rem;
-}
-.food-choices button {
-  min-height: 54px;
-  padding: 11px;
 }
 button:disabled {
   cursor: not-allowed;
@@ -216,17 +212,41 @@ button:disabled {
   grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
   gap: 16px;
 }
-.food-choices button {
+.food-choice {
   display: grid;
   gap: 5px;
   place-items: center;
+  min-height: 54px;
+  padding: 11px;
+  border: 3px solid #512b9a;
+  background: #fff;
+  box-shadow: 5px 5px 0 #f3a15f;
 }
 .food-choices img {
   image-rendering: pixelated;
 }
-.food-choices span,
-.food-choices small {
+.food-choices span {
   color: #766d7f;
+}
+.feed-quantity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.feed-quantity button {
+  display: grid;
+  width: 34px;
+  min-height: 34px;
+  padding: 0;
+  place-items: center;
+}
+.feed-quantity output {
+  min-width: 1.5rem;
+  text-align: center;
+  font-weight: 800;
+}
+.feed-confirmation {
+  margin-top: 24px;
 }
 button:focus-visible,
 a:focus-visible {

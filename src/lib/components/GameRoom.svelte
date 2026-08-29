@@ -7,6 +7,7 @@
 
   let feedDialog: HTMLDialogElement;
   let errorMessage = '';
+  let selectedFood: Record<string, number> = {};
   $: model = $gameViewModel;
   $: daypart = model ? daypartFor(model.now, model.timezone) : 'day';
   $: edibleItems = model?.inventory.filter((item) => item.edible) ?? [];
@@ -28,11 +29,36 @@
 
   function openFeedDialog() {
     errorMessage = '';
+    selectedFood = {};
     feedDialog.showModal();
   }
 
-  async function feed(itemId: string) {
-    await act({ type: 'item_action', itemId, action: 'consume' });
+  function changeSelectedFood(
+    itemId: string,
+    delta: number,
+    available: number,
+  ) {
+    const quantity = Math.max(
+      0,
+      Math.min(available, (selectedFood[itemId] ?? 0) + delta),
+    );
+    selectedFood = { ...selectedFood, [itemId]: quantity };
+  }
+
+  $: selectedFoodCount = Object.values(selectedFood).reduce(
+    (total, quantity) => total + quantity,
+    0,
+  );
+
+  async function feedSelected() {
+    const items = edibleItems
+      .map((item) => ({
+        itemId: item.id,
+        quantity: selectedFood[item.id] ?? 0,
+      }))
+      .filter((item) => item.quantity > 0);
+    if (!items.length) return;
+    await act({ type: 'feed_items', items });
     feedDialog.close();
   }
 
@@ -144,17 +170,48 @@
       {#if edibleItems.length}
         <div class="food-choices">
           {#each edibleItems as item (item.id)}
-            <button
-              type="button"
+            <section
+              class="food-choice"
               aria-label={`${item.name}, ${item.owned} available`}
-              on:click={() => feed(item.id)}
             >
               <img src={item.image} alt="" width="72" height="72" />
               <strong>{item.name}</strong>
               <span>×{item.owned}</span>
-              <small>{item.qualitativeHint}</small>
-            </button>
+              <div
+                class="feed-quantity"
+                aria-label={`Quantity of ${item.name}`}
+              >
+                <button
+                  type="button"
+                  aria-label={`Remove ${item.name} from feed selection`}
+                  on:click={() => changeSelectedFood(item.id, -1, item.owned)}
+                  disabled={(selectedFood[item.id] ?? 0) === 0}>−</button
+                >
+                <output aria-label={`${item.name} selected`}
+                  >{selectedFood[item.id] ?? 0}</output
+                >
+                <button
+                  type="button"
+                  aria-label={`Add ${item.name} to feed selection`}
+                  on:click={() => changeSelectedFood(item.id, 1, item.owned)}
+                  disabled={(selectedFood[item.id] ?? 0) >= item.owned}>+</button
+                >
+              </div>
+            </section>
           {/each}
+        </div>
+        <div class="dialog-actions feed-confirmation">
+          <button
+            type="button"
+            class="secondary"
+            on:click={() => feedDialog.close()}>Cancel</button
+          >
+          <button
+            type="button"
+            on:click={feedSelected}
+            disabled={selectedFoodCount === 0 || careBlocked}
+            >Feed selected ({selectedFoodCount})</button
+          >
         </div>
       {:else}
         <p>There is nothing edible in the inventory.</p>

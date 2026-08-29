@@ -62,6 +62,11 @@ export function rotateShop(
     (item) => item.category === 'medicine' || item.category === 'care',
   );
   take(rules.shop.mix.reusable, (item) => item.category === 'reusable');
+  if (date === localDate(state.history.runStartedAt, state.timezone))
+    for (const itemId of rules.shop.initialGuaranteedItemIds) {
+      const guaranteed = candidates.find((item) => item.id === itemId);
+      if (guaranteed && !chosen.includes(guaranteed)) chosen.push(guaranteed);
+    }
   take(rules.shop.mix.upgrade, (item) => item.category === 'upgrade');
   take(rules.shop.mix.decoration, (item) => item.category === 'decoration');
 

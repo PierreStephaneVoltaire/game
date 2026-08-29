@@ -1,19 +1,6 @@
 /** Commands accepted by the simulation engine. */
 export type GameCommand =
   | {
-      type: 'open_line_of_credit';
-      commandId: string;
-      now: number;
-      expectedStateVersion?: number;
-    }
-  | {
-      type: 'repay_line_of_credit';
-      commandId: string;
-      quantity: number;
-      now: number;
-      expectedStateVersion?: number;
-    }
-  | {
       type: 'pay_medical_debt';
       commandId: string;
       now: number;
@@ -23,6 +10,14 @@ export type GameCommand =
       type: 'use_item';
       commandId: string;
       itemId: string;
+      now: number;
+      expectedStateVersion?: number;
+    }
+  | {
+      /** Consume a deterministic, ordered set of edible inventory units. */
+      type: 'feed_items';
+      commandId: string;
+      items: Array<{ itemId: string; quantity: number }>;
       now: number;
       expectedStateVersion?: number;
     }

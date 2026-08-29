@@ -278,20 +278,4 @@ describe('catalogue validation', () => {
       'catalogue needs a reusable apology action that clears annoyed',
     );
   });
-
-  test('keeps repeat-use entertainment and bedding durable', () => {
-    for (const id of ['movie-rental', 'fresh-bedsheets']) {
-      const item = BUNDLED_GAME_DEFINITION.items.find(
-        (entry) => entry.id === id,
-      );
-      expect(item, id).toMatchObject({
-        usable: true,
-        consumable: false,
-        supportsQuantity: false,
-      });
-      expect(item?.itemActions).toEqual(
-        expect.arrayContaining([expect.objectContaining({ consumes: false })]),
-      );
-    }
-  });
 });

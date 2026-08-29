@@ -30,8 +30,8 @@ function debtRun(): GameState {
   };
 }
 
-describe('medical-debt shopping through the engine seam', () => {
-  test('tagged essentials bypass affordability with one Mood cost per command', () => {
+describe('shopping while Balance is negative through the engine seam', () => {
+  test('ordinary purchases remain available without a debt Mood penalty', () => {
     const initial = debtRun();
     const food = BUNDLED_GAME_DEFINITION.items.find(
       (item) => item.id === 'water',
@@ -56,7 +56,7 @@ describe('medical-debt shopping through the engine seam', () => {
       kind: 'item_purchased',
     });
     expect(foodPurchase.state.balance).toBe(-1 - food.price * 2);
-    expect(foodPurchase.state.metrics.mood).toBe(5);
+    expect(foodPurchase.state.metrics.mood).toBe(6);
 
     const cartPurchase = dispatchCommand(
       {
@@ -74,7 +74,7 @@ describe('medical-debt shopping through the engine seam', () => {
       kind: 'cart_checked_out',
     });
     expect(cartPurchase.state.balance).toBe(-1 - food.price - medicine.price);
-    expect(cartPurchase.state.metrics.mood).toBe(5);
+    expect(cartPurchase.state.metrics.mood).toBe(6);
   });
 
   test('every ordinary category remains available on credit', () => {
@@ -108,9 +108,7 @@ describe('medical-debt shopping through the engine seam', () => {
       expect(result.state.balance, category).toBe(
         initial.balance - blocked.price,
       );
-      expect(result.state.metrics.mood, category).toBe(
-        initial.metrics.mood - 1,
-      );
+      expect(result.state.metrics.mood, category).toBe(initial.metrics.mood);
       expect(result.state.inventory[blocked.id] ?? 0, category).toBe(1);
     }
   });

@@ -1,4 +1,5 @@
 import type { GameEvent } from '$lib/game-types';
+import { eventTemplate } from '$lib/event-messages';
 
 export const PROGRESSION_EVENT_TYPES = new Set([
   'donation_received',
@@ -24,7 +25,7 @@ export function progressionJourneyMessage(
     return donationMessage(event, petName);
   if (event.type === 'followers_gained') return followerMessage(event, petName);
   if (event.type === 'natural_audience_growth')
-    return `${petName}'s channel gained ${(event.followerDelta ?? 0).toLocaleString('en-US')} subscribers through natural audience growth.`;
+    return subscriberGrowthMessage(petName, event.followerDelta ?? 0);
   if (event.type === 'clipper_audience_growth')
     return `Clippers brought ${(event.followerDelta ?? 0).toLocaleString('en-US')} new subscribers to ${petName}'s channel.`;
   if (event.type === 'career_milestone')
@@ -49,8 +50,21 @@ export function progressionJourneyMessage(
   if (event.type === 'model_debut_stream')
     return `${petName} went live to debut the new model.`;
   if (event.type === 'moms_care_package')
-    return `${event.message} It lifted ${petName}'s spirits.`;
+    return eventTemplate('journey_care_package', {
+      message: event.message,
+      pet: petName,
+    });
   return undefined;
+}
+
+function subscriberGrowthMessage(petName: string, count: number): string {
+  const formatted = count.toLocaleString('en-US');
+  return eventTemplate(
+    count === 1
+      ? 'journey_subscriber_growth_one'
+      : 'journey_subscriber_growth_many',
+    { pet: petName, count: formatted },
+  );
 }
 
 function donationMessage(event: GameEvent, petName: string): string {

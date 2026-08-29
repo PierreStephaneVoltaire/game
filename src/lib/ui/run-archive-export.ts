@@ -1,4 +1,5 @@
 import type { GameViewModel } from './game-view-model';
+import { endingArchiveTexts } from '$lib/ending-rules/messages';
 
 function formatTimestamp(at: number, timezone: string): string {
   return new Intl.DateTimeFormat('en-US', {
@@ -26,16 +27,18 @@ export function runArchiveExportMarkdown(model: GameViewModel): string {
   const timestamp = (at: number) => formatTimestamp(at, model.timezone);
   const death = ending.kind === 'death';
   const lines = [
-    `# ${model.companion.name}'s ${death ? 'Graveyard Record' : 'Archived Run'}`,
+    `# ${model.companion.name}'s ${death ? endingArchiveTexts.graveyardRecord : endingArchiveTexts.archivedRun}`,
     '',
-    `- Outcome: ${ending.title}`,
-    `- Run started: ${timestamp(model.runStartedAt)}`,
-    `- Run ended: ${timestamp(ending.at)}`,
-    `- Duration: ${formatDuration(model.runStartedAt, ending.at)}`,
-    `- Mode: ${model.modeLabel}`,
-    `- Timezone: ${model.timezone}`,
+    `- ${endingArchiveTexts.outcome}: ${ending.title}`,
+    `- ${endingArchiveTexts.runStarted}: ${timestamp(model.runStartedAt)}`,
+    `- ${endingArchiveTexts.runEnded}: ${timestamp(ending.at)}`,
+    `- ${endingArchiveTexts.duration}: ${formatDuration(model.runStartedAt, ending.at)}`,
+    `- ${endingArchiveTexts.mode}: ${model.modeLabel}`,
+    `- ${endingArchiveTexts.timezone}: ${model.timezone}`,
     '',
-    death ? '## Cause of death' : '## Ending',
+    death
+      ? `## ${endingArchiveTexts.causeOfDeath}`
+      : `## ${endingArchiveTexts.ending}`,
     '',
     ...(death
       ? ending.causes.map((cause) => `- ${cleanLine(cause.name)}`)
@@ -45,14 +48,14 @@ export function runArchiveExportMarkdown(model: GameViewModel): string {
           ...ending.evidence.map((line) => `- ${cleanLine(line)}`),
         ]),
     '',
-    '## Causal chain',
+    `## ${endingArchiveTexts.causalChain}`,
     '',
     ...model.causalEvents.map(
       (event, index) =>
         `${index + 1}. ${timestamp(event.at)} — ${cleanLine(event.message)}`,
     ),
     '',
-    '## Journey',
+    `## ${endingArchiveTexts.journey}`,
     '',
     ...model.events.map(
       (event) => `- ${timestamp(event.at)} — ${cleanLine(event.message)}`,

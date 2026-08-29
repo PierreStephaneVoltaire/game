@@ -33,6 +33,7 @@ import {
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { selectItemNarration } from './item-consumption-events';
 import { performClipperAction } from './clipper-action';
+import { inventoryAfterConsumedUnit } from './inventory-mutations';
 
 export type ItemActionCommandResult = {
   handled: boolean;
@@ -211,10 +212,7 @@ export function handleItemActionCommand(
     statuses: actionStatuses,
     inventory:
       itemAction.consumes === true
-        ? {
-            ...state.inventory,
-            [item.id]: Math.max(0, (state.inventory[item.id] ?? 0) - 1),
-          }
+        ? inventoryAfterConsumedUnit(state.inventory, item.id)
         : state.inventory,
     events: [...state.events, actionEvent],
     timedEffects:

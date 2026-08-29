@@ -10,6 +10,8 @@ import {
   progressionJourneyMessage,
 } from './journey-progress-messages';
 import { statusJourneyMessage } from './journey-status-messages';
+import { uniquePresentationId } from './unique-presentation-id';
+import { eventTemplate } from '$lib/event-messages';
 
 export type JourneyEntryViewModel = {
   id: string;
@@ -139,19 +141,12 @@ export function projectJourney(
     if (event.purchases?.length) {
       event.purchases.forEach((purchase, index) =>
         entries.push({
-          id: `${event.id}:purchase:${index}`,
+          id: uniquePresentationId(entries, `${event.id}:purchase:${index}`),
           at: event.at,
-          message: `Bought ${purchase.quantity} ${purchase.itemName}.`,
+          message: purchaseMessage(event, purchase, petName),
           sourceEventIds: [event.id],
         }),
       );
-      if ((event.metricDeltas?.mood ?? 0) < 0)
-        entries.push({
-          id: `${event.id}:debt`,
-          at: event.at,
-          message: `Buying essentials while already in debt weighed on ${petName}.`,
-          sourceEventIds: [event.id],
-        });
       continue;
     }
     if (ITEM_NARRATIVE_TYPES.has(event.type)) {
@@ -166,7 +161,7 @@ export function projectJourney(
       continue;
     }
     if (event.type === 'death') {
-      push(entries, event, `${petName} died.`);
+      push(entries, event, personalize(event.message, petName));
       continue;
     }
     if (event.type === 'run_ended') {
@@ -177,6 +172,20 @@ export function projectJourney(
     if (narrativeMessage) push(entries, event, narrativeMessage);
   }
   return entries;
+}
+
+function purchaseMessage(
+  event: GameEvent,
+  purchase: NonNullable<GameEvent['purchases']>[number],
+  petName: string,
+): string {
+  const item =
+    purchase.quantity === 1
+      ? purchase.itemName
+      : `${purchase.itemName} ×${purchase.quantity}`;
+  return event.purchaseActor === 'companion'
+    ? eventTemplate('journey_companion_purchase', { pet: petName, item })
+    : eventTemplate('journey_player_purchase', { pet: petName, item });
 }
 
 export function projectCausalJourney(
@@ -282,7 +291,7 @@ function push(
   id = event.id,
 ) {
   entries.push({
-    id,
+    id: uniquePresentationId(entries, id),
     at: event.at,
     message,
     sourceEventIds,

@@ -35,10 +35,8 @@ export type MetricRunEnding = MetricEnding<'quit_streaming'>;
 export type FinancialRuinEnding = {
   kind: 'financial_ruin';
   at: number;
-  cause: 'Insolvency';
+  cause: string;
   endingBalance: number;
-  totalDebt: number;
-  debtComponents: import('./financial-types').DebtBreakdown;
   triggerEventId: string;
   eventIds: string[];
   causes?: never;

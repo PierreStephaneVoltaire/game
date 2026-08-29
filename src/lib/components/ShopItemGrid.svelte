@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { ItemViewModel } from '$lib/ui/game-view-model';
+  import type { ShopOfferViewModel } from '$lib/ui/game-view-model';
+  import QuantityStepper from './QuantityStepper.svelte';
 
-  export let items: ItemViewModel[] = [];
+  export let items: ShopOfferViewModel[] = [];
   export let disabled = false;
-  export let onOpen: (itemId: string) => void;
-  export let onAdd: (itemId: string) => Promise<void> | void;
+  export let onOpen: (offer: ShopOfferViewModel) => void;
   export let onQuantity: (
     itemId: string,
     quantity: number,
@@ -14,35 +14,31 @@
 <div class="item-grid">
   {#each items as item (item.id)}
     <article class="item-card">
-      <button class="item-open" on:click={() => onOpen(item.id)}
-        ><img src={item.image} alt={item.name} width="88" height="88" /><span
-          ><strong>{item.name}</strong><small>{item.qualitativeHint}</small
-          ></span
-        ></button
+      <div class="item-body">
+        {#if item.image}<img
+            src={item.image}
+            alt=""
+            width="88"
+            height="88"
+          />{:else}<span class="offer-symbol" aria-hidden="true">$</span>{/if}
+        <strong>{item.name}</strong>
+      </div>
+      <button
+        class="item-info"
+        type="button"
+        aria-label={`View details for ${item.name}`}
+        on:click={() => onOpen(item)}>Info</button
       >
       <div class="item-footer">
-        <span>${item.price} · {item.stock} available</span>
-        <div class="quantity-stepper" aria-label={`${item.name} quantity`}>
-          <button
-            type="button"
-            aria-label={`Remove one ${item.name}`}
-            on:click={() => onQuantity(item.id, item.inCart - 1)}
-            disabled={disabled || item.inCart <= 0}>−</button
-          ><output aria-live="polite">{item.inCart}</output><button
-            type="button"
-            aria-label={`Add one ${item.name}`}
-            on:click={() => onAdd(item.id)}
-            disabled={disabled ||
-              !item.stock ||
-              !item.purchaseAllowed ||
-              item.inCart >= item.maximumCartQuantity}
-            title={item.purchaseBlockReason ?? undefined}>+</button
-          >
-        </div>
+        <span>${item.price} · {item.availabilityLabel}</span>
+        <QuantityStepper
+          value={item.inCart}
+          maximum={item.maximumCartQuantity}
+          label={item.name}
+          disabled={disabled || !item.purchaseAllowed}
+          onChange={(quantity) => onQuantity(item.id, quantity)}
+        />
       </div>
-      {#if item.purchaseBlockReason}
-        <small class="purchase-note">{item.purchaseBlockReason}</small>
-      {/if}
     </article>
   {/each}
 </div>

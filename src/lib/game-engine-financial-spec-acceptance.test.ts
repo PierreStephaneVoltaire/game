@@ -45,7 +45,7 @@ describe('economy specification through the engine seam', () => {
     expect(result.state.balance).toBe(1 - item.price);
   });
 
-  test('the operation crossing $20,000 total debt ends immediately', () => {
+  test('the operation crossing −$20,000 Balance ends immediately', () => {
     const initial = run();
     const item = BUNDLED_GAME_DEFINITION.items.find(
       (candidate) => candidate.price >= 100,
@@ -53,17 +53,7 @@ describe('economy specification through the engine seam', () => {
     const result = dispatchCommand(
       {
         ...initial,
-        balance: 0,
-        medicalDebt: [
-          {
-            id: 'medical-bill:test',
-            createdAt: 0,
-            originalPrincipal: 19_950,
-            remainingPrincipal: 19_950,
-            scheduledDailyPayment: 150,
-            insuredAtStart: false,
-          },
-        ],
+        balance: -19_950,
         shop: {
           ...initial.shop,
           itemIds: [item.id],
@@ -82,7 +72,7 @@ describe('economy specification through the engine seam', () => {
     expect(result.state.ending).toMatchObject({
       kind: 'financial_ruin',
       cause: 'Insolvency',
-      totalDebt: 19_950 + item.price,
+      endingBalance: -19_950 - item.price,
       triggerEventId: expect.any(String),
     });
     expect(
@@ -93,7 +83,7 @@ describe('economy specification through the engine seam', () => {
     });
   });
 
-  test('Hospital principal enters debt status and can cause immediate ruin', () => {
+  test('Hospital principal alone does not activate In Debt or Financial Ruin', () => {
     const initial = run();
     const result = dispatchCommand(
       {
@@ -115,28 +105,46 @@ describe('economy specification through the engine seam', () => {
       BUNDLED_GAME_DEFINITION,
     );
 
-    expect(result.state.ending).toMatchObject({
-      kind: 'financial_ruin',
-      cause: 'Insolvency',
-      totalDebt: 20_000,
-    });
-    expect(result.state.ending?.eventIds).toContain(
-      result.state.events.find((event) => event.type === 'medical_debt_created')
-        ?.id,
-    );
+    expect(result.state.ending).toBeNull();
+    expect(result.state.statuses.in_debt).toBeUndefined();
+    expect(
+      result.state.medicalDebt.reduce(
+        (sum, bill) => sum + bill.remainingPrincipal,
+        0,
+      ),
+    ).toBe(20_000);
   });
 
-  test('positive income clears In Debt immediately when total debt recovers', () => {
+  test('−$1 activates In Debt and $0 clears it', () => {
     const initial = run();
-    const recovered = reconcileTime(
+    const water = BUNDLED_GAME_DEFINITION.items.find(
+      ({ id }) => id === 'water',
+    )!;
+    const indebted = dispatchCommand(
       {
         ...initial,
-        balance: -10_000,
-        statuses: {
-          in_debt: { since: 0, source: 'total_debt' },
+        balance: 0,
+        shop: {
+          ...initial.shop,
+          itemIds: [water.id],
+          stock: { [water.id]: 1 },
         },
+      },
+      {
+        type: 'buy_item',
+        commandId: 'cross-below-zero',
+        itemId: water.id,
+        now: 0,
+      },
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+    expect(indebted.balance).toBe(-1);
+    expect(indebted.statuses.in_debt).toBeDefined();
+    const recovered = reconcileTime(
+      {
+        ...indebted,
         history: {
-          ...initial.history,
+          ...indebted.history,
           nextAutonomousAt: 4 * HOUR_MS,
         },
       },
@@ -144,7 +152,7 @@ describe('economy specification through the engine seam', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(recovered.balance).toBe(-9_999);
+    expect(recovered.balance).toBe(0);
     expect(recovered.statuses.in_debt).toBeUndefined();
     expect(
       recovered.events.filter(

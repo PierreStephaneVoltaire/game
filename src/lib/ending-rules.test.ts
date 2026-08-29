@@ -4,6 +4,15 @@ import { dispatchCommand, startRun } from './game-engine';
 import { reconcileRunEnding } from './ending-rules';
 import { HOUR_MS } from './game-constants';
 import type { GameState } from './game-types';
+import endingRuleData from './data/ending-rules.json';
+import {
+  deathEventMessage,
+  endingRiskRecoveryMessage,
+  endingWarningMessage,
+  madeItUnlockedMessage,
+  runEndingMessage,
+  runOverMessage,
+} from './ending-rules/messages';
 
 function run(now = 0) {
   return startRun(
@@ -25,6 +34,24 @@ function at(state: GameState, now: number): GameState {
 }
 
 describe('Quit Streaming ending timer', () => {
+  test('loads authored Ending messages from ending rule data', () => {
+    expect(endingWarningMessage('quit_streaming', 0)).toBe(
+      endingRuleData.texts.events.quitStreamingWarningStarted,
+    );
+    expect(endingWarningMessage('quit_streaming', 24)).toContain('24');
+    expect(endingRiskRecoveryMessage('quit_streaming')).toBe(
+      endingRuleData.texts.events.quitStreamingRecovered,
+    );
+    expect(runEndingMessage('financial_ruin')).toBe(
+      endingRuleData.texts.events.runEndedFinancialRuin,
+    );
+    expect(deathEventMessage()).toBe(endingRuleData.texts.events.death);
+    expect(madeItUnlockedMessage(endingRuleData.madeIt.followers)).toContain(
+      '3,000,000',
+    );
+    expect(runOverMessage()).toBe(endingRuleData.texts.events.runOver);
+  });
+
   test('ends at 72 continuous Mood-zero hours, but not before', () => {
     const risk = quitRisk();
     expect(at(risk, 72 * HOUR_MS - 1).ending).toBeNull();

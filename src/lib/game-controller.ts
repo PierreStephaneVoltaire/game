@@ -40,7 +40,7 @@ export class GameController {
       outcomes: transition.eventIds.map((id) => ({
         accepted: true,
         kind: 'time_reconciled',
-        message: 'Time reconciled.',
+        message: 'The game caught up.',
         eventIds: [id],
       })),
     };

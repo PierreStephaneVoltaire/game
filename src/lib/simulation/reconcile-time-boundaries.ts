@@ -1,4 +1,5 @@
 import type { GameState } from '../game-types';
+import type { GameDefinition } from '../game-definition';
 import rules from '../data/simulation-rules.json';
 import { nextStatusBoundary } from '../status-rules';
 import { nextLocalMidnight } from '../shop-rules';
@@ -82,13 +83,19 @@ export function catchUpLifeEvents(
   state: GameState,
   now: number,
   nextRegularBoundary: number,
+  definition: GameDefinition,
 ): { state: GameState; eventIds: string[] } {
   let lifeState = state;
   const eventIds: string[] = [];
   while (!lifeState.ending) {
     const boundary = nextLifeEventBoundary(lifeState);
     if (boundary > now || boundary > nextRegularBoundary) break;
-    const lifeEvents = processLifeEventBoundary(lifeState, boundary);
+    const lifeEvents = processLifeEventBoundary(
+      lifeState,
+      boundary,
+      undefined,
+      definition,
+    );
     lifeState = lifeEvents.state;
     eventIds.push(...lifeEvents.eventIds);
   }
