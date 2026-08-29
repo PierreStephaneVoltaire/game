@@ -1,0 +1,31 @@
+{
+  "routes": [
+    {
+      "route": "/_app/immutable/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "route": "/items/*",
+      "headers": {
+        "cache-control": "public, max-age=3600"
+      }
+    },
+    {
+      "route": "/bri.svg",
+      "headers": {
+        "cache-control": "public, max-age=3600"
+      }
+    }
+  ],
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/_app/*", "/items/*", "/bri.svg"]
+  },
+  "globalHeaders": {
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "same-origin",
+    "x-frame-options": "DENY"
+  }
+}
