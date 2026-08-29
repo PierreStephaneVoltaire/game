@@ -65,19 +65,22 @@ describe('run-anchored life-event scheduler', () => {
     });
   });
 
-  test('does not resolve after a terminal event or process later successes', () => {
-    const insolvent = {
+  test('does not resolve cash-loss events while Balance is negative', () => {
+    const inDebt = {
       ...run(),
-      balance: -20_000,
+      balance: -1,
     };
-    const result = processLifeEventBoundary(insolvent, LIFE_EVENT_INTERVAL_MS, [
-      'gpu_failure',
+    const result = processLifeEventBoundary(inDebt, LIFE_EVENT_INTERVAL_MS, [
+      'equipment_failure',
       'tax_bill',
     ]);
-    expect(result.state.ending?.kind).toBe('financial_ruin');
+    expect(result.state.ending).toBeNull();
+    expect(result.state.balance).toBe(-1);
     expect(
       result.state.events.filter(
-        (event) => event.lifeEventId === 'gpu_failure',
+        (event) =>
+          event.lifeEventId === 'equipment_failure' ||
+          event.lifeEventId === 'tax_bill',
       ),
     ).toHaveLength(0);
   });

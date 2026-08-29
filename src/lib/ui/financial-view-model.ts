@@ -22,8 +22,8 @@ export function financialPresentation(state: GameState) {
       discountedFullPayment: discountedMedicalDebtPrice(state),
     },
     debt: {
-      active: breakdown.total > 0,
-      amount: breakdown.total,
+      active: state.balance < 0,
+      amount: Math.max(0, -state.balance),
       ...breakdown,
     },
     lineOfCredit: {

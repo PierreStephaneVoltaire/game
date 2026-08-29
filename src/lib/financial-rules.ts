@@ -2,6 +2,7 @@ import financialRules from './data/financial-rules.json';
 import type { DebtBreakdown, FinancialEffect } from './financial-types';
 import type { GameEvent, GameState } from './game-types';
 import { alignFinancialStatus } from './status-rules';
+import { financialRuinCause, runEndingMessage } from './ending-rules/messages';
 
 export function debtBreakdown(state: GameState): DebtBreakdown {
   const negativeCash = Math.max(0, -state.balance);
@@ -30,21 +31,6 @@ export function debtBreakdown(state: GameState): DebtBreakdown {
   };
 }
 
-export function recoveryPenaltyForFinancialPressure(state: GameState): number {
-  const debt = debtBreakdown(state);
-  const negativeCashPenalty = Math.min(
-    financialRules.debt.combinedRecoveryPenaltyCap,
-    Math.floor(debt.negativeCash / financialRules.debt.recoveryPenaltyDivisor),
-  );
-  return Math.min(
-    financialRules.debt.combinedRecoveryPenaltyCap,
-    Math.max(
-      negativeCashPenalty,
-      debt.total >= financialRules.debt.statusThreshold ? 1 : 0,
-    ),
-  );
-}
-
 /**
  * Finalize one complete cash/debt operation. The caller supplies the already
  * mutated state and its trigger event; this module owns derived debt evidence,
@@ -67,19 +53,15 @@ export function finalizeFinancialOperation(input: {
     purchaseCategory: input.purchaseCategory,
   };
   let next = patchTriggerEvent(input.state, input.triggerEventId, effect);
-  const aligned = alignFinancialStatus(
-    next.statuses,
-    afterDebt.total,
-    next.now,
-  );
+  const aligned = alignFinancialStatus(next.statuses, next.balance, next.now);
   if (aligned.entered || aligned.cleared) {
     const event: GameEvent = {
       id: `event-${next.events.length + 1}`,
       type: aligned.entered ? 'debt_status_entered' : 'debt_status_recovered',
       at: next.now,
       message: aligned.entered
-        ? `Total debt reached $${afterDebt.total.toLocaleString('en-US')}.`
-        : `Total debt fell to $${afterDebt.total.toLocaleString('en-US')}.`,
+        ? 'Balance fell below $0.'
+        : 'Balance returned to $0 or above.',
       sourceActionId: next.events.find(
         (candidate) => candidate.id === input.triggerEventId,
       )?.sourceActionId,
@@ -98,7 +80,8 @@ export function finalizeFinancialOperation(input: {
   if (
     next.ending ||
     next.metrics.health <= 0 ||
-    afterDebt.total < financialRules.debt.financialRuinThreshold
+    input.before.balance <= -financialRules.debt.financialRuinBalance ||
+    next.balance > -financialRules.debt.financialRuinBalance
   )
     return next;
   const causedBy = [
@@ -115,10 +98,10 @@ export function finalizeFinancialOperation(input: {
     id: `event-${next.events.length + 1}`,
     type: 'run_ended',
     at: next.now,
-    message: 'The run ended: Financial Ruin.',
+    message: runEndingMessage('financial_ruin'),
     causedBy,
     endingKind: 'financial_ruin',
-    cause: 'Insolvency',
+    cause: financialRuinCause(),
     financialEffect: effect,
   };
   return {
@@ -126,10 +109,8 @@ export function finalizeFinancialOperation(input: {
     ending: {
       kind: 'financial_ruin',
       at: next.now,
-      cause: 'Insolvency',
+      cause: financialRuinCause(),
       endingBalance: next.balance,
-      totalDebt: afterDebt.total,
-      debtComponents: afterDebt,
       triggerEventId: input.triggerEventId,
       eventIds: [...causedBy, event.id],
     },

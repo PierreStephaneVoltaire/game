@@ -8,7 +8,6 @@ import {
   isHealthProtectedActivity,
   resolveHealthWindow,
 } from './health-resolution';
-import { recoveryPenaltyForFinancialPressure } from '../financial-rules';
 import { resolveDizzyHealthCheck } from './dizzy-resolution';
 import {
   pinHyperfocusStatusEffects,
@@ -136,7 +135,7 @@ export function resolveDecay(
       recoveryMetrics,
       foodDecayHit: pendingFoodDecayHit,
       preventLethal: options.preventLethal,
-      recoveryPenalty: recoveryPenaltyForFinancialPressure(state),
+      recoveryPenalty: 0,
     });
     metrics.health = health.health;
     metricDeltas.health = (metricDeltas.health ?? 0) + health.delta;

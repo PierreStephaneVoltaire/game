@@ -1,6 +1,72 @@
 {
-  "version": 1,
+  "version": 2,
   "madeIt": {
     "followers": 3000000
+  },
+  "texts": {
+    "events": {
+      "death": "Companion died.",
+      "financialRuinCause": "Insolvency",
+      "financialRuinRecovered": "Balance recovered.",
+      "financialRuinWarning": "Balance is approaching Financial Ruin.",
+      "madeItUnlocked": "Made It unlocked at {followers} Subscribers.",
+      "quitStreamingRecovered": "Mood recovered; the Quit Streaming countdown cleared.",
+      "quitStreamingWarningContinued": "Mood has remained at 0 for {hours} hours.",
+      "quitStreamingWarningStarted": "Mood reached 0. The Quit Streaming countdown began.",
+      "runEndedFinancialRuin": "The run ended: Financial Ruin.",
+      "runEndedQuitStreaming": "The run ended: Quit Streaming.",
+      "runOver": "This run is over."
+    },
+    "history": {
+      "terminalRunEyebrow": "TERMINAL RUN",
+      "causeOfDeath": "Cause of death",
+      "causalChain": "Causal chain",
+      "graveyard": "Graveyard",
+      "graveyardSummary": "This run is complete. Its grave remains available for review.",
+      "archivedRun": "Archived run",
+      "archivedRunSummary": "This run is complete. Its record remains available for review.",
+      "started": "Started",
+      "ended": "Ended",
+      "duration": "Duration",
+      "exportGrave": "Export journey and grave",
+      "exportArchive": "Export archived run"
+    },
+    "archive": {
+      "graveyardRecord": "Graveyard Record",
+      "archivedRun": "Archived Run",
+      "outcome": "Outcome",
+      "runStarted": "Run started",
+      "runEnded": "Run ended",
+      "duration": "Duration",
+      "mode": "Mode",
+      "timezone": "Timezone",
+      "causeOfDeath": "Cause of death",
+      "ending": "Ending",
+      "causalChain": "Causal chain",
+      "journey": "Journey"
+    },
+    "presentation": {
+      "death": {
+        "title": "Death",
+        "explanation": "Health reached 0."
+      },
+      "quitStreaming": {
+        "title": "Quit Streaming",
+        "explanation": "Mood remained at 0 continuously for {durationHours} game-hours.",
+        "evidence": "The countdown began {durationHours} hours before the ending.",
+        "riskLabel": "Quit Streaming risk"
+      },
+      "financialRuin": {
+        "title": "Financial Ruin",
+        "explanation": "Balance crossed −${threshold}.",
+        "causeEvidence": "Cause: {cause}.",
+        "balanceEvidence": "Ending cash balance: ${balance}."
+      }
+    },
+    "deathCauses": {
+      "sickness": "Sickness",
+      "kidneyStoneComplications": "Kidney stone complications",
+      "unknown": "Unknown cause"
+    }
   }
 }

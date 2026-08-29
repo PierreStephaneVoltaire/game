@@ -132,12 +132,29 @@ export function validateItemStructure(
         issues.push(
           `action ${action.id} must consume an interaction to activate Clippers`,
         );
+      if (
+        !item.roomSlot &&
+        action.service?.type === 'model_commission' &&
+        action.consumes !== true
+      )
+        issues.push(
+          `model-commission service ${action.id} must consume its inventory item`,
+        );
       if (action.effects)
         issues.push(
           ...validateEffects(action.effects, `action ${action.id} effect`),
         );
       if (typeof action.consumes !== 'boolean')
         issues.push(`action ${action.id} must explicitly author consumes`);
+      if (
+        !item.roomSlot &&
+        action.effects &&
+        Object.keys(action.effects).length > 0 &&
+        action.consumes !== true
+      )
+        issues.push(
+          `non-room stat action ${action.id} must consume its inventory item`,
+        );
       for (const id of action.requirements?.ownedItemIdsAll ?? [])
         if (!allIds.has(id))
           issues.push(`action ${action.id} references unknown item: ${id}`);

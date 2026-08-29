@@ -1,5 +1,6 @@
 import rules from './data/simulation-rules.json';
 import endingRules from './data/ending-rules.json';
+import { madeItUnlockedMessage } from './ending-rules/messages';
 import { creditIncome } from './income-rules';
 import { STAT_MAX } from './game-constants';
 import type { CareerTier, GameEvent, GameState } from './game-types';
@@ -118,7 +119,7 @@ export function applyFollowerMilestones(
       id: `event-${state.events.length + events.length + 1}`,
       type: 'ending_unlocked',
       at,
-      message: 'Made It unlocked at 3,000,000 Subscribers.',
+      message: madeItUnlockedMessage(endingRules.madeIt.followers),
       sourceActionId,
       endingKind: 'made_it',
       causedBy: events[0] ? [events[0].id] : undefined,

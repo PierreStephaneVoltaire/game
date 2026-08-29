@@ -42,7 +42,9 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
     overviewColumn.getByRole('region', { name: 'Status' }),
   ).toBeVisible();
   await expect(overviewColumn.getByText(/Balance:/)).toBeVisible();
-  await expect(overviewColumn.getByText('Followers: 100')).toBeVisible();
+  await expect(
+    overviewColumn.getByText('Subscribers: 100', { exact: true }),
+  ).toBeVisible();
   await expect(overviewColumn.getByText('Career: Debut')).toBeVisible();
   await expect(
     overviewColumn.getByText('Next milestone: First Model · 50 to go'),
@@ -130,10 +132,17 @@ test('uses the exact two-column overview, uniform control rows, and item dialogs
   });
   await expect(feedDialog).toBeVisible();
   await expect(
-    feedDialog.getByRole('button', { name: /Uncrustables/ }),
+    feedDialog.getByRole('button', { name: /Add Uncrustables/ }),
   ).toBeVisible();
-  await expect(feedDialog.getByRole('button', { name: /Water/ })).toBeVisible();
   await expect(
-    feedDialog.getByRole('button', { name: /Pretzel/ }),
+    feedDialog.getByRole('button', { name: /Add Water/ }),
   ).toBeVisible();
+  await expect(
+    feedDialog.getByRole('button', { name: /Add Pretzel/ }),
+  ).toBeVisible();
+  await feedDialog.getByRole('button', { name: /Add Water/ }).click();
+  await feedDialog.getByRole('button', { name: /Add Pretzel/ }).click();
+  await expect(
+    feedDialog.getByRole('button', { name: 'Feed selected (2)' }),
+  ).toBeEnabled();
 });

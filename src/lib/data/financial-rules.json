@@ -1,11 +1,7 @@
 {
   "version": 2,
   "debt": {
-    "statusThreshold": 10000,
-    "financialRuinThreshold": 20000,
-    "financialRuinCounterfactualThreshold": 15000,
-    "recoveryPenaltyDivisor": 2500,
-    "combinedRecoveryPenaltyCap": 2
+    "financialRuinBalance": 20000
   },
   "lineOfCredit": {
     "applicationPrice": 50,

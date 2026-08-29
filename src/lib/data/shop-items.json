@@ -9531,8 +9531,8 @@
     "qualitativeNutritionHint": "Record a quick voice clip when an idea is easier spoken than typed.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -9571,7 +9571,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -9613,8 +9613,8 @@
     "qualitativeNutritionHint": "Practice shortcuts to turn a crowded setup into muscle memory.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -9649,7 +9649,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -9770,8 +9770,8 @@
     "qualitativeNutritionHint": "Use the fresh keys to capture an idea before it disappears.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -9806,7 +9806,7 @@
             "max": 2
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -9848,8 +9848,8 @@
     "qualitativeNutritionHint": "A direct route from restless hands to a finished sketch.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -9912,7 +9912,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -9954,8 +9954,8 @@
     "qualitativeNutritionHint": "Tidy the workspace and make visual projects easier to juggle.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -9994,7 +9994,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10036,8 +10036,8 @@
     "qualitativeNutritionHint": "Tuning the computer can inspire progress or test patience.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -10076,7 +10076,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10118,8 +10118,8 @@
     "qualitativeNutritionHint": "A test photo offers a low-stakes excuse to adjust the setup.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -10158,7 +10158,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10267,8 +10267,8 @@
     "qualitativeNutritionHint": "Rehearsal makes the model feel expressive before it goes public.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -10307,7 +10307,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10349,8 +10349,8 @@
     "qualitativeNutritionHint": "Preview a new look for a small burst of creative play.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -10389,7 +10389,7 @@
             "max": 2
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10431,8 +10431,8 @@
     "qualitativeNutritionHint": "Practice the controls to explore more expressive movement.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -10471,7 +10471,7 @@
             "max": -1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10675,8 +10675,8 @@
     "qualitativeNutritionHint": "Inspect the sample closely before trusting the design.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "streaming-gear"
@@ -10735,7 +10735,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10777,8 +10777,8 @@
     "qualitativeNutritionHint": "A fresh game offers novelty without choosing a stream topic.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -10829,7 +10829,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10871,8 +10871,8 @@
     "qualitativeNutritionHint": "Play when a tense surprise sounds more fun than restful.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -10923,7 +10923,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -10965,8 +10965,8 @@
     "qualitativeNutritionHint": "Best used for a noisy shared session with friends.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11018,7 +11018,7 @@
           "play",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11060,8 +11060,8 @@
     "qualitativeNutritionHint": "Attempt a difficult run when frustration feels worth the challenge.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11112,7 +11112,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11154,8 +11154,8 @@
     "qualitativeNutritionHint": "Try the odd little game and see whether its ideas land.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11206,7 +11206,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11248,8 +11248,8 @@
     "qualitativeNutritionHint": "Open the suspicious purchase for unpredictable entertainment.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11300,7 +11300,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11342,8 +11342,8 @@
     "qualitativeNutritionHint": "Choose this for gentle play with a calmer pace.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11432,7 +11432,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11474,8 +11474,8 @@
     "qualitativeNutritionHint": "A social game night brings energy and a little chaos.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11527,7 +11527,7 @@
           "play",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11569,8 +11569,8 @@
     "qualitativeNutritionHint": "Good timing turns music into an active creative break.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11621,7 +11621,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11663,8 +11663,8 @@
     "qualitativeNutritionHint": "Read through a branching story for quieter entertainment.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game"
@@ -11740,7 +11740,7 @@
           "play",
           "read"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11782,8 +11782,8 @@
     "qualitativeNutritionHint": "A console night makes the room feel built for play.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game-control"
@@ -11834,7 +11834,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11876,8 +11876,8 @@
     "qualitativeNutritionHint": "Use it with an owned game; the controller alone is not the activity.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game-control"
@@ -11928,7 +11928,7 @@
         "tags": [
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -11970,8 +11970,8 @@
     "qualitativeNutritionHint": "Pair it with the console for a genuinely shared game night.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "game-control"
@@ -12026,7 +12026,7 @@
           "play",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -12153,8 +12153,8 @@
     "qualitativeNutritionHint": "Share it when a burst of feline chaos sounds welcome.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -12210,7 +12210,7 @@
         "tags": [
           "cat-care"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -12252,8 +12252,8 @@
     "qualitativeNutritionHint": "A simple excuse to stop working and play with the cat.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -12310,7 +12310,7 @@
           "cat-care",
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -12352,8 +12352,8 @@
     "qualitativeNutritionHint": "Interactive cat play that strengthens the household bond.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -12400,7 +12400,7 @@
           "cat-care",
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -12442,8 +12442,8 @@
     "qualitativeNutritionHint": "A lively chase game with a chance of overstimulation.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -12486,7 +12486,7 @@
           "cat-care",
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -12846,8 +12846,8 @@
     "qualitativeNutritionHint": "Play beside the tunnel for an energetic shared diversion.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -12890,7 +12890,7 @@
           "cat-care",
           "play"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13013,8 +13013,8 @@
     "qualitativeNutritionHint": "A grooming session can be soothing when cooperation holds.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -13056,7 +13056,7 @@
         "tags": [
           "cat-care"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13098,8 +13098,8 @@
     "qualitativeNutritionHint": "Trying the outfit is funny, risky, and entirely optional.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -13155,7 +13155,7 @@
         "tags": [
           "cat-care"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13197,8 +13197,8 @@
     "qualitativeNutritionHint": "A very brief costume experiment with unpredictable approval.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -13254,7 +13254,7 @@
         "tags": [
           "cat-care"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13296,8 +13296,8 @@
     "qualitativeNutritionHint": "Check in remotely for reassurance and occasional cat drama.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "cat-care"
@@ -13353,7 +13353,7 @@
         "tags": [
           "cat-care"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13620,8 +13620,8 @@
     "qualitativeNutritionHint": "Settle in with a manageable read for a quiet mental break.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "read"
@@ -13687,7 +13687,7 @@
         "tags": [
           "read"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13729,8 +13729,8 @@
     "qualitativeNutritionHint": "A deeper reading session rewards patience and available energy.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "read"
@@ -13818,7 +13818,7 @@
         "tags": [
           "read"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13860,8 +13860,8 @@
     "qualitativeNutritionHint": "A visual reading break that is easy to pick up and enjoy.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "read"
@@ -13926,7 +13926,7 @@
         "tags": [
           "read"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -13968,8 +13968,8 @@
     "qualitativeNutritionHint": "A familiar rewatch makes for dependable comfort viewing.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "watch"
@@ -14016,7 +14016,7 @@
           "watch",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14058,8 +14058,8 @@
     "qualitativeNutritionHint": "Rewatch when musical drama sounds emotionally worthwhile.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "watch"
@@ -14106,7 +14106,7 @@
           "watch",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14145,11 +14145,11 @@
     "category": "reusable",
     "price": 25,
     "description": "Two hours of mandatory not-working.",
-    "qualitativeNutritionHint": "Keep it in the library for repeat movie nights; it is not consumed.",
+    "qualitativeNutritionHint": "Put on a rented movie for one dedicated night away from work.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "watch"
@@ -14192,7 +14192,7 @@
             "max": 0
           }
         },
-        "consumes": false,
+        "consumes": true,
         "tags": [
           "watch",
           "social"
@@ -14238,8 +14238,8 @@
     "qualitativeNutritionHint": "Bring people together for a social, mildly competitive evening.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "social"
@@ -14282,7 +14282,7 @@
           "play",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14324,8 +14324,8 @@
     "qualitativeNutritionHint": "Work piece by piece for focused creativity with uncertain patience.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -14371,7 +14371,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14413,8 +14413,8 @@
     "qualitativeNutritionHint": "Color a page when structured creativity feels easier than a blank canvas.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -14476,7 +14476,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14518,8 +14518,8 @@
     "qualitativeNutritionHint": "Build slowly for hands-on focus and a satisfying result.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -14565,7 +14565,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14607,8 +14607,8 @@
     "qualitativeNutritionHint": "Sing together when volume and confidence are both available.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "social"
@@ -14659,7 +14659,7 @@
           "music",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14701,8 +14701,8 @@
     "qualitativeNutritionHint": "Listen privately for a focused mood reset.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable"
     ],
@@ -14743,7 +14743,7 @@
         "tags": [
           "music"
         ],
-        "consumes": false,
+        "consumes": true,
         "clearsStatuses": [
           "overstimulated"
         ]
@@ -14855,8 +14855,8 @@
     "qualitativeNutritionHint": "Look back through shared memories for a gentle social moment.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "social"
@@ -14898,7 +14898,7 @@
         "tags": [
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -14940,8 +14940,8 @@
     "qualitativeNutritionHint": "Read together when conversation and concentration overlap.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "read",
@@ -14989,7 +14989,7 @@
           "read",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -15031,8 +15031,8 @@
     "qualitativeNutritionHint": "Build a temporary retreat for playful shared downtime.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "social"
@@ -15079,7 +15079,7 @@
           "make",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -15121,8 +15121,8 @@
     "qualitativeNutritionHint": "Cook together for creative connection, not an inventory meal.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "social"
@@ -15173,7 +15173,7 @@
           "make",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -15347,11 +15347,11 @@
     "category": "upgrade",
     "price": 60,
     "description": "The bed has been reset.",
-    "qualitativeNutritionHint": "A permanent bedding upgrade that supports repeat restful use.",
+    "qualitativeNutritionHint": "Change into a fresh set for a small, restorative reset.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "upgrade",
       "comfort"
@@ -15390,7 +15390,7 @@
             "max": 2
           }
         },
-        "consumes": false,
+        "consumes": true,
         "tags": [
           "care"
         ]
@@ -16636,8 +16636,8 @@
     "qualitativeNutritionHint": "Sketch an imperfect idea before it has time to become intimidating.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -16699,7 +16699,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -16741,8 +16741,8 @@
     "qualitativeNutritionHint": "Put the satisfying stationery to work on a small creative task.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -16784,7 +16784,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -16826,8 +16826,8 @@
     "qualitativeNutritionHint": "Make something colorful, accepting that the desk may suffer.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -16869,7 +16869,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -16911,8 +16911,8 @@
     "qualitativeNutritionHint": "A shared making session trades tidiness for connection.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -16959,7 +16959,7 @@
           "make",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17001,8 +17001,8 @@
     "qualitativeNutritionHint": "Turn patience and fabric into a practical creative project.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17044,7 +17044,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17086,8 +17086,8 @@
     "qualitativeNutritionHint": "Print a physical idea when experimentation sounds exciting.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17129,7 +17129,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17171,8 +17171,8 @@
     "qualitativeNutritionHint": "Assembly offers focused creativity with a possible frustration tax.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17218,7 +17218,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17260,8 +17260,8 @@
     "qualitativeNutritionHint": "Take deliberate photos to turn a walk into a creative exercise.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17303,7 +17303,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17345,8 +17345,8 @@
     "qualitativeNutritionHint": "Create a physical memory during a shared photo moment.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17393,7 +17393,7 @@
           "make",
           "social"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17435,8 +17435,8 @@
     "qualitativeNutritionHint": "Write down loose ideas before they crowd the rest of the day.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17474,7 +17474,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17516,8 +17516,8 @@
     "qualitativeNutritionHint": "Map the mess into arrows, clusters, and a workable next thought.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17555,7 +17555,7 @@
         "tags": [
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17597,8 +17597,8 @@
     "qualitativeNutritionHint": "Make a track when a demanding creative rabbit hole feels welcome.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "creative"
@@ -17645,7 +17645,7 @@
           "music",
           "make"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -17998,8 +17998,8 @@
     "qualitativeNutritionHint": "Wear it briefly for costume-driven silliness, not protection.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "decoration",
       "chaos"
@@ -18041,7 +18041,7 @@
         "tags": [
           "costume"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -18245,8 +18245,8 @@
     "qualitativeNutritionHint": "Activate it for theatrical chaos and unpredictable mood.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "decoration",
       "chaos"
@@ -18302,7 +18302,7 @@
         "tags": [
           "chaos"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -18344,8 +18344,8 @@
     "qualitativeNutritionHint": "Dance under it for an energetic creative break.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "decoration",
       "chaos"
@@ -18406,7 +18406,7 @@
           "music",
           "chaos"
         ],
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,
@@ -19297,8 +19297,8 @@
     "qualitativeNutritionHint": "A professional creative tool that opens a focused commission-work activity.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "upgrade",
       "streaming-gear",
@@ -19328,7 +19328,7 @@
         "id": "commission_work",
         "label": "Commission Work",
         "kind": "activity",
-        "consumes": false,
+        "consumes": true,
         "tags": [
           "commission"
         ],
@@ -19400,8 +19400,8 @@
     "qualitativeNutritionHint": "A long-term creative upgrade reserved for an unlocked career tier.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "upgrade",
       "commission",
@@ -19434,7 +19434,7 @@
         "id": "start_model_commission",
         "label": "Start model commission",
         "kind": "service",
-        "consumes": false,
+        "consumes": true,
         "tags": [
           "model"
         ],
@@ -19482,8 +19482,8 @@
     "qualitativeNutritionHint": "A cursed decorative sheet whose tiny adhesive shapes are a known hazard.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "decoration",
       "cursed"
@@ -19518,7 +19518,7 @@
             "max": -2
           }
         },
-        "consumes": false,
+        "consumes": true,
         "tags": [
           "cursed"
         ]
@@ -19633,8 +19633,8 @@
     "qualitativeNutritionHint": "Open a can manually, preferably without turning it into an emergency.",
     "edible": false,
     "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
+    "consumable": true,
+    "supportsQuantity": true,
     "tags": [
       "reusable",
       "kitchen"
@@ -19720,7 +19720,7 @@
             "max": 1
           }
         },
-        "consumes": false
+        "consumes": true
       }
     ],
     "roomSlot": null,

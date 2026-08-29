@@ -4,6 +4,7 @@ import type {
   GameState,
   HealthDamageSource,
 } from '../game-types';
+import { deathCauseText, deathEventMessage } from '../ending-rules/messages';
 
 export function recordDeath(state: GameState): GameState {
   if (state.ending || state.metrics.health > 0) return state;
@@ -38,7 +39,7 @@ export function recordDeath(state: GameState): GameState {
     id: `event-${state.events.length + 1}`,
     type: 'death',
     at: state.now,
-    message: 'Companion died.',
+    message: deathEventMessage(),
     cause,
     causedBy: causalIds,
   };
@@ -76,18 +77,18 @@ function deduplicateCauses(sources: HealthDamageSource[]): DeathCause[] {
 
 function fallbackSource(event: GameEvent): HealthDamageSource {
   if (event.status === 'sick')
-    return source('status', 'sick', 'Sickness', event);
+    return source('status', 'sick', deathCauseText('sickness'), event);
   if (event.status === 'kidney_stone')
     return source(
       'status',
       'kidney_stone',
-      'Kidney stone complications',
+      deathCauseText('kidneyStoneComplications'),
       event,
     );
   return source(
     event.cause ? 'item' : 'event',
     event.cause ?? event.type,
-    event.message || 'Unknown cause',
+    event.message || deathCauseText('unknown'),
     event,
   );
 }
@@ -111,7 +112,7 @@ function unknownSource(): HealthDamageSource {
   return {
     kind: 'event',
     id: 'unknown',
-    name: 'Unknown cause',
+    name: deathCauseText('unknown'),
     amount: 0,
     eventIds: [],
   };

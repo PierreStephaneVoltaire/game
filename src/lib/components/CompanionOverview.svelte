@@ -48,12 +48,7 @@
     {/each}
   </section>
 
-  <StatusPanel
-    statuses={model.statuses}
-    effects={model.effects}
-    endingRisks={model.endingRisks}
-    timezone={model.timezone}
-  />
+  <StatusPanel statuses={model.statuses} />
   {#if hospitalAvailable}
     <button
       class="secondary-action"
@@ -66,41 +61,9 @@
   <section class="time-balance" aria-label="Time and balance">
     <h2>Time</h2>
     <span>{model.formattedTime}</span>
-    <strong class:debt-label={model.debt.active}
-      >Cash balance: ${numbers.format(model.balance)}</strong
-    >
-    {#if model.debt.amount > 0}
-      <strong class="debt-label"
-        >Total debt: ${numbers.format(model.debt.amount)}</strong
-      >
-      {#if model.debt.negativeCash > 0}<span
-          >Negative cash: ${numbers.format(model.debt.negativeCash)}</span
-        >{/if}
-      {#if model.debt.hospitalPrincipal > 0}<span
-          >Hospital principal: ${numbers.format(
-            model.debt.hospitalPrincipal,
-          )}</span
-        >{/if}
-      {#if model.debt.locClosureCost > 0}<span
-          >LOC closure cost: ${numbers.format(model.debt.locClosureCost)}</span
-        >{/if}
-    {/if}
-    {#if model.medicalDebt.total > 0}
-      <span
-        >Next scheduled payment: ${numbers.format(
-          model.medicalDebt.nextScheduledPayment,
-        )}</span
-      >
-    {/if}
+    <strong>Balance: ${numbers.format(model.balance)}</strong>
     <span>Subscribers: {numbers.format(model.followers)}</span>
     <span>Peak Subscribers: {numbers.format(model.peakFollowers)}</span>
-    {#if model.lineOfCredit.status === 'open'}
-      <span
-        >LOC: {model.lineOfCredit.remainingUnits} units · ${numbers.format(
-          model.lineOfCredit.remainingClosureCost,
-        )} to close</span
-      >
-    {/if}
     {#if model.madeItUnlocked}<strong>Ending unlocked: Made It</strong>{/if}
     <span>Career: {model.career.label}</span>
     <span

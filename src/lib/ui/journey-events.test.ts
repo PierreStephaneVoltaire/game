@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import type { GameEvent } from '$lib/game-types';
+import { companion } from './companion';
 import { projectCausalJourney, projectJourney } from './journey-events';
 
 describe('Journey projection', () => {
@@ -58,8 +59,8 @@ describe('Journey projection', () => {
     ).toEqual([
       "Nova's journey began.",
       'Nova is starving.',
-      'Bought 2 Water.',
-      'Bought 1 Cake.',
+      'You bought Water ×2 for Nova.',
+      'You bought Cake for Nova.',
     ]);
   });
 
@@ -98,6 +99,90 @@ describe('Journey projection', () => {
     ).toEqual([
       "Nova's health suffered from Starvation and Sleep deprivation.",
       'Nova died.',
+    ]);
+  });
+
+  test('keeps duplicate raw event ids renderable with unique Journey keys', () => {
+    const entries = projectJourney(
+      [
+        {
+          id: 'duplicate',
+          type: 'stream_candidate',
+          at: 1,
+          message: 'Companion started streaming.',
+        },
+        {
+          id: 'duplicate',
+          type: 'stream_candidate',
+          at: 2,
+          message: 'Companion started streaming.',
+        },
+      ],
+      'Nova',
+    );
+
+    expect(entries).toHaveLength(2);
+    expect(entries.map((entry) => entry.id)).toEqual([
+      'duplicate',
+      'duplicate:duplicate:2',
+    ]);
+    expect(new Set(entries.map((entry) => entry.id)).size).toBe(2);
+  });
+
+  test('distinguishes player purchases, autonomous purchases, gifts, and subscriber counts', () => {
+    const entries = projectJourney(
+      [
+        {
+          id: 'player',
+          type: 'cart_checked_out',
+          at: 1,
+          message: 'complete',
+          purchaseActor: 'player',
+          purchases: [
+            { itemId: 'painkillers', itemName: 'Painkillers', quantity: 1 },
+            { itemId: 'water', itemName: 'Water', quantity: 3 },
+          ],
+        },
+        {
+          id: 'autonomous-purchase',
+          type: 'life_event_resolved',
+          at: 2,
+          message: 'Companion bought Painkillers.',
+          purchaseActor: 'companion',
+          purchases: [
+            { itemId: 'painkillers', itemName: 'Painkillers', quantity: 1 },
+          ],
+        },
+        {
+          id: 'gift',
+          type: 'moms_care_package',
+          at: 3,
+          message: 'Mom sent a Care Package gift with Water and Pretzel.',
+        },
+        {
+          id: 'one',
+          type: 'natural_audience_growth',
+          at: 4,
+          message: 'internal',
+          followerDelta: 1,
+        },
+        {
+          id: 'many',
+          type: 'natural_audience_growth',
+          at: 5,
+          message: 'internal',
+          followerDelta: 4,
+        },
+      ],
+      companion.name,
+    );
+    expect(entries.map(({ message }) => message)).toEqual([
+      `You bought Painkillers for ${companion.name}.`,
+      `You bought Water ×3 for ${companion.name}.`,
+      `${companion.name} bought Painkillers.`,
+      `Mom sent a Care Package gift with Water and Pretzel. It lifted ${companion.name}'s spirits.`,
+      `${companion.name}'s channel gained a subscriber.`,
+      `${companion.name}'s channel gained 4 subscribers.`,
     ]);
   });
 });

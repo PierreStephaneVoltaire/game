@@ -25,7 +25,10 @@ import {
   type TimedEffectViewModel,
 } from './progression-view-model';
 import type { CompanionAppearance } from './companion';
-import { metricMaximum } from '$lib/game-constants';
+import {
+  LINE_OF_CREDIT_OFFER_ID,
+  metricMaximum,
+} from '$lib/game-constants';
 import {
   endingPresentation,
   endingRiskPresentation,
@@ -36,8 +39,14 @@ import {
   financialPresentation,
   type FinancialViewModel,
 } from './financial-view-model';
+import {
+  catalogueShopOffer,
+  lineOfCreditShopOffer,
+  type ShopOfferViewModel,
+} from './shop-offer-view-model';
 
 export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
+export type { ShopOfferViewModel } from './shop-offer-view-model';
 export type { EndingRiskViewModel, EndingViewModel } from './ending-view-model';
 
 export type MetricViewModel = {
@@ -54,14 +63,13 @@ export type ActivityViewModel = {
 };
 export type GameIntent =
   | { type: 'use_item'; itemId: string }
+  | { type: 'feed_items'; items: Array<{ itemId: string; quantity: number }> }
   | { type: 'item_action'; itemId: string; action: string }
   | { type: 'unplace_item'; slot: string }
   | { type: 'place_item'; itemId: string; slot: string }
   | { type: 'set_cart_quantity'; itemId: string; quantity: number }
   | { type: 'checkout_cart' }
   | { type: 'pay_medical_debt' }
-  | { type: 'open_line_of_credit' }
-  | { type: 'repay_line_of_credit'; quantity: number }
   | { type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'wait' };
 export type GameViewModel = {
   companion: typeof companion;
@@ -95,9 +103,9 @@ export type GameViewModel = {
   causalEvents: EventViewModel[];
   anchors: Array<{ key: string; label: string; item: ItemViewModel | null }>;
   inventory: ItemViewModel[];
-  shop: ItemViewModel[];
+  shop: ShopOfferViewModel[];
   catalogue: ItemViewModel[];
-  cart: ItemViewModel[];
+  cart: ShopOfferViewModel[];
   cartTotal: number;
   cartResultingBalance: number;
   cartCheckoutAllowed: boolean;
@@ -151,13 +159,18 @@ export function createGameViewModel(
     .map((item) => itemFor(state, definition, item.id, ownership))
     .filter((item): item is ItemViewModel => Boolean(item));
   const inventory = catalogue.filter((item) => item.owned > 0);
-  const shop = state.shop.itemIds
+  const shopItems = state.shop.itemIds
     .map((id) => itemFor(state, definition, id, ownership))
     .filter((item): item is ItemViewModel => Boolean(item));
+  const shop = [
+    lineOfCreditShopOffer(state),
+    ...shopItems.map(catalogueShopOffer),
+  ];
   const cart = Object.keys(state.shop.cart)
-    .map((id) => itemFor(state, definition, id, ownership))
-    .filter((item): item is ItemViewModel => Boolean(item));
+    .map((id) => shop.find((offer) => offer.id === id))
+    .filter((offer): offer is ShopOfferViewModel => Boolean(offer));
   const events = projectJourney(state.events, companion.name);
+  const finances = financialPresentation(state);
   const causalEventViews = state.ending
     ? projectCausalJourney(state.events, state.ending.eventIds, companion.name)
     : [];
@@ -180,7 +193,7 @@ export function createGameViewModel(
     timezone: state.timezone,
     seed: state.seed,
     balance: state.balance,
-    ...financialPresentation(state),
+    ...finances,
     madeItUnlocked: state.endingUnlocks.made_it !== null,
     ...progressionPresentation(state, definition),
     metrics: metricKeys.map((key) => {
@@ -193,11 +206,11 @@ export function createGameViewModel(
         percentage: (state.metrics[key] / maximum) * 100,
       };
     }),
+    endingRisks: endingRiskPresentation(state),
     statuses: (Object.keys(state.statuses) as StatusName[]).map((key) => ({
       key,
       label: statusLabel(key),
     })),
-    endingRisks: endingRiskPresentation(state),
     activity: state.activity
       ? {
           label: gameCopy.activity[state.activity.type],
@@ -218,8 +231,21 @@ export function createGameViewModel(
     catalogue,
     cart,
     cartTotal,
-    cartResultingBalance: state.balance - cartTotal,
-    cartCheckoutAllowed,
+    cartResultingBalance:
+      state.balance -
+      cartTotal +
+      (state.lineOfCredit.status === 'available' &&
+      (state.shop.cart[LINE_OF_CREDIT_OFFER_ID] ?? 0) === 1
+        ? finances.lineOfCredit.cashAdvance
+        : 0),
+    cartCheckoutAllowed:
+      cartCheckoutAllowed &&
+      !(
+        state.lineOfCredit.status === 'open' &&
+        state.balance <
+          (state.shop.cart[LINE_OF_CREDIT_OFFER_ID] ?? 0) *
+            finances.lineOfCredit.repaymentUnitPrice
+      ),
     categories: [...new Set(shop.map((item) => item.category))].sort(),
   };
 }
@@ -236,6 +262,8 @@ export function intentToCommand(
   } as const;
   if (intent.type === 'use_item')
     return { ...base, type: 'use_item', itemId: intent.itemId };
+  if (intent.type === 'feed_items')
+    return { ...base, type: 'feed_items', items: intent.items };
   if (intent.type === 'item_action')
     return {
       ...base,
@@ -263,13 +291,5 @@ export function intentToCommand(
     return { ...base, type: 'checkout_cart' };
   if (intent.type === 'pay_medical_debt')
     return { ...base, type: 'pay_medical_debt' };
-  if (intent.type === 'open_line_of_credit')
-    return { ...base, type: 'open_line_of_credit' };
-  if (intent.type === 'repay_line_of_credit')
-    return {
-      ...base,
-      type: 'repay_line_of_credit',
-      quantity: intent.quantity,
-    };
   return { ...base, type: intent.type } as GameCommand;
 }

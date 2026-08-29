@@ -142,7 +142,7 @@ describe('game view model', () => {
     expect(byId.get('painkillers')?.purchaseAllowed).toBe(true);
     expect(byId.get('insurance-card')?.purchaseAllowed).toBe(true);
     expect(byId.get('rigging-tablet')?.purchaseAllowed).toBe(true);
-    expect(byId.get('rigging-tablet')?.maximumCartQuantity).toBe(1);
+    expect(byId.get('rigging-tablet')?.maximumCartQuantity).toBe(3);
     expect(model.cartCheckoutAllowed).toBe(true);
 
     const mixed = createGameViewModel(
@@ -220,7 +220,7 @@ describe('game view model', () => {
       'Quit Streaming',
       'Mood remained at 0 continuously for 72 game-hours.',
     ],
-    ['financial_ruin', 'Financial Ruin', 'Total debt reached $20,000.'],
+    ['financial_ruin', 'Financial Ruin', 'Balance crossed −$20,000.'],
   ] as const)('presents the %s ending card', (kind, title, explanation) => {
     const initial = startedState();
     const common = {
@@ -250,14 +250,6 @@ describe('game view model', () => {
               kind,
               cause: 'Insolvency',
               endingBalance: -20_001,
-              totalDebt: 20_001,
-              debtComponents: {
-                negativeCash: 20_001,
-                hospitalPrincipal: 0,
-                locClosureCost: 0,
-                otherFinancedPrincipal: 0,
-                total: 20_001,
-              },
               triggerEventId: 'trigger',
             }
           : {

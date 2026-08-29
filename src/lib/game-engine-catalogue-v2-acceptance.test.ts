@@ -59,7 +59,9 @@ describe('V2 catalogue definition seam', () => {
     expect(item('can-opener')).toMatchObject({
       category: 'reusable',
       price: 35,
-      consumable: false,
+      consumable: true,
+      supportsQuantity: true,
+      itemActions: [expect.objectContaining({ consumes: true })],
     });
     expect(item('insurance-card')).toMatchObject({
       category: 'care',
@@ -122,11 +124,14 @@ describe('V2 catalogue definition seam', () => {
     expect(item('new-model-commission')).toMatchObject({
       category: 'upgrade',
       price: 300,
+      consumable: true,
+      supportsQuantity: true,
       progression: { requiredCareerTier: 'first_model' },
       itemActions: [
         expect.objectContaining({
           id: 'start_model_commission',
           kind: 'service',
+          consumes: true,
           service: { type: 'model_commission' },
         }),
       ],

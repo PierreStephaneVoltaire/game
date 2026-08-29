@@ -23,11 +23,10 @@ export function isCompanionAttempt(type: GameCommand['type']): boolean {
     'set_cart_quantity',
     'checkout_cart',
     'pay_medical_debt',
-    'open_line_of_credit',
-    'repay_line_of_credit',
     'place_item',
     'unplace_item',
     'medical_care',
+    'feed_items',
   ].includes(type);
 }
 

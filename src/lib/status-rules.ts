@@ -5,7 +5,6 @@ import type {
   StatusRecord as GameStatusRecord,
 } from './game-types';
 import rules from './data/simulation-rules.json';
-import financialRules from './data/financial-rules.json';
 import { resolveStatusFixedPoint } from './status-rules/fixed-point';
 import { clampMetric, HOUR_MS, STAT_MIN } from './game-constants';
 import { STATUS_NAMES } from './status-rules/names';
@@ -113,14 +112,14 @@ export function addStatus(
 
 export function alignFinancialStatus(
   previous: GameState['statuses'],
-  totalDebt: number,
+  balance: number,
   now: number,
 ): {
   statuses: GameState['statuses'];
   entered: boolean;
   cleared: boolean;
 } {
-  const active = totalDebt >= financialRules.debt.statusThreshold;
+  const active = balance < 0;
   const wasActive = Boolean(previous.in_debt);
   if (active === wasActive)
     return { statuses: previous, entered: false, cleared: false };
@@ -128,7 +127,7 @@ export function alignFinancialStatus(
     return {
       statuses: {
         ...previous,
-        in_debt: { since: now, source: 'total_debt' },
+        in_debt: { since: now, source: 'balance' },
       },
       entered: true,
       cleared: false,

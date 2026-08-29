@@ -83,22 +83,26 @@ their derived statuses or Endings. Health reaching 0 still resolves first.
 
 A Run closes permanently with exactly one terminal outcome:
 
-| Ending         | Trigger                                          |
-| -------------- | ------------------------------------------------ |
-| Death          | Health reaches 0                                 |
-| Quit Streaming | Mood remains at 0 continuously for 72 game-hours |
-| Financial Ruin | Total debt reaches $20,000                       |
+| Ending         | Trigger                                                  |
+| -------------- | -------------------------------------------------------- |
+| Death          | Health reaches 0                                         |
+| Quit Streaming | Mood remains at 0 continuously for 72 game-hours         |
+| Financial Ruin | Balance crosses from above −$20,000 to −$20,000 or below |
 
 The Mood countdown starts immediately at 0, clears as soon as Mood rises above
 0, and warns at 0, 24, and 48 hours. Financial Ruin has no countdown, grace
-period, delinquency state, or due date: every complete cash/debt operation
-checks it immediately. Death wins if Health reaches 0 in the same operation.
+period, delinquency state, or due date: every complete Balance operation checks
+for the crossing immediately. Unpaid obligations do not count toward it. Death
+wins if Health reaches 0 in the same operation.
 
-Ending-risk countdowns are persistent simulation state but are displayed
-separately from statuses. Recovery clears the visible countdown immediately
-and adds one Journey recovery entry. Every later command after a terminal
-Ending is rejected with “This run is over” and
+Ending-risk countdowns are persistent simulation state but are not exposed in
+the live Status panel. Recovery adds one Journey recovery entry. Every later
+command after a terminal Ending is rejected with “This run is over” and
 cannot mutate the archived state.
+
+Ending event messages, warning/recovery copy, Journey death narration, and
+Ending-card titles and explanations are authored in `ending-rules.json` and
+loaded by the simulation and presentation layers.
 
 When current Subscribers first reach 3,000,000, `Made It` unlocks once with
 its exact time and causal audience event. It does not close the Run. Agency
@@ -132,10 +136,8 @@ boundary. Each point above 5 contributes to a combined recovery score:
 |            4–6 |     +1 |
 |           7–15 |     +2 |
 
-Financial pressure subtracts from this score, never deals direct Health
-damage, and has one combined cap of 2. Negative cash contributes
-`floor(abs(min(cash, 0)) / 2500)`. Total debt of at least $10,000 ensures a
-penalty of at least 1.
+Balance, medical bills, and the Line of Credit do not reduce this recovery
+score and do not otherwise apply debt-specific metric penalties.
 
 After due Food and Rest decay, each critical need contributes separately:
 
@@ -256,8 +258,8 @@ Limited-Edition Dr Pepper sets Creativity to 10 and pins it for six game-hours.
 Other Creativity changes are suppressed during Hyperfocus. At expiry,
 Creativity loses 2 and Rest loses 2; a newly critical condition can interrupt
 an eligible activity. Another can cannot be used during Hyperfocus and is not
-consumed or counted toward Annoyed. Hyperfocus and Pain Relief are displayed as
-timed effects, not persistent statuses.
+consumed or counted toward Annoyed. Hyperfocus and Pain Relief are scheduled
+effects, not persistent statuses.
 
 ## Companion actions
 
@@ -344,6 +346,12 @@ and an equal Mood −1 or 0 roll, followed by one deferred companion opportunity
 
 ## Feeding, nutrition, and cravings
 
+The Feed dialog can select quantities across several owned edible items before
+one confirmation. Selected units resolve in stable item order through the same
+ordinary single-item feeding pipeline, so each can be refused, consumed, or
+trigger its normal follow-up effects independently. Resolution stops if a
+terminal Ending occurs.
+
 Every catalogue item owns an array of possible Journey lines. An accepted use
 selects one line with seeded randomness and prefixes the configured companion
 name. Items are familiar possessions and foods, so item use never produces a
@@ -401,13 +409,13 @@ unless their authored hook requires idle state; another stream cannot begin.
 | Stood up too fast         | 3 while idle, seeded neutral/Rest −1/Health −1 outcomes, 24-hour cooldown                                |
 | Tiny walk / barely moved  | 3 each, one shared local-day slot; the negative event requires no movement in 24 hours                   |
 | Rare full-body commission | 5 with an owned Rigging Tablet, no active one, and a 14-local-day cooldown                               |
-| Mom's Care Package        | 5 in debt or at Food 0–2, 72-hour cooldown                                                               |
+| Mom's Care Package        | 5 below $0 Balance or at Food 0–2, 72-hour cooldown                                                      |
 | Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
 | Autonomous stream         | Dynamic                                                                                                  |
 | Off-stream support        | 10, 12-hour cooldown, $5–$15 uniformly                                                                   |
 
-Mom's Care Package adds two seeded Liked foods, distinct where possible, and
-Mood +1. The full-body commission is a nonblocking project that completes at
+Mom's Care Package clearly records two seeded Liked foods as gifts, distinct
+where possible, and adds Mood +1. The full-body commission is a nonblocking project that completes at
 the third local midnight and pays a seeded $400–$800. Placing Cat Tree adds 3
 to Socks weight.
 
@@ -544,8 +552,9 @@ automatically moves into the full-value group. Each expires independently.
 Interrupted streams retain their contribution. Ordinary stream completion has
 no separate direct base-Subscriber award; donations and model rewards remain.
 
-Clippers are a $25 consumable Upgrade available from Debut. The first active
-Clipper pays immediately, then the stack publishes daily before a shared
+Clippers are a $25 consumable Upgrade available from Debut and are guaranteed
+in the initial shop rotation. The first active Clipper pays immediately, then
+the stack publishes daily before a shared
 72-hour expiry. Each award is `50 Subscribers × current tier ordinal × stacks`.
 Using another Clipper adds a stack and renews the shared expiry without moving
 the already scheduled next daily tick or granting another immediate award.
@@ -593,16 +602,20 @@ critical condition.
 
 ## Debt, LOC, and life events
 
-Total debt is negative cash plus outstanding Hospital principal, the remaining
-LOC closure cost, and other explicitly authored financed principal. At $10,000,
-the persistent In Debt status appears; it clears immediately below $10,000.
-At $20,000, Financial Ruin occurs immediately with cause Insolvency and a
-structured breakdown of every component and the crossing transaction.
+`In Debt` is a display-only persistent status. It appears whenever Balance is
+below $0 and clears at $0 or above. Hospital principal, the remaining LOC cost,
+and other unpaid obligations do not activate it and do not apply recovery or
+stat penalties. Financial Ruin occurs only when a Balance-changing transaction
+crosses from above −$20,000 to −$20,000 or below; its record keeps the ending
+Balance and causal transaction.
 
-The one-time Line of Credit is cash-only: it costs $50 and advances $10,000
-cash. It creates twenty permanent $600 repayment units ($12,000 total closure
-cost). Repayment units cannot be purchased on credit. There are no daily or
-time-based charges; purchasing the twentieth unit closes the LOC atomically.
+The one-time Line of Credit is a permanent ordinary Shop offer. While
+available, one $50 opening unit may be added to the cart; checkout charges the
+$50 and advances $10,000 atomically even when starting Balance is below $50.
+Once open, the same card sells twenty total $600 repayment units, limited by
+the remaining count. A repayment checkout requires starting Balance to cover
+the repayment portion. Once closed, the card remains in place but cannot be
+added. There are no daily or time-based charges.
 
 Seeded VTuber-life events use a dedicated run-anchored scheduler every 30
 minutes (not the ordinary autonomous opportunity pool). Each boundary rolls
@@ -610,14 +623,23 @@ the authored reciprocal probabilities in specification order. Successful
 events resolve chronologically and no later event resolves after a terminal
 Ending:
 
-- Tax, Webcam failure, and GPU failure select one fixed immediate expense and
-  create no inventory, repair state, or payment plan.
+- Tax bills charge a seeded, uniformly selected whole-dollar amount from $100
+  through $1,000. Equipment Failure selects one seeded PC-related catalogue
+  item from its JSON-authored pool and charges a separate seeded whole-dollar
+  replacement cost from $30 through $500. Neither event creates inventory,
+  repair state, or a payment plan. They are eligible only while starting
+  Balance is $0 or above, so a rare expense may create debt but cannot recur
+  while Balance remains negative.
 - Twitter cancellation removes 1%, 2%, or 3% of current Subscribers without
   revoking peak progression.
 - Rain applies Mood −1 only.
-- Personal purchases atomically spend $25, $50, $100, $200, or $299 and add their
-  authored Mood reward.
-- Sponsored-stream deals immediately credit $250, $500, $1,000, or $2,000.
+- A personal purchase selects exactly one seeded item from the entire unlocked
+  catalogue, independent of rotation and stock. It respects progression,
+  ownership, and lifetime limits, requires the real item price to fit within
+  current Balance, adds the item and purchase record, deducts that price, and
+  adds Mood +1. With no eligible affordable item, it cannot occur.
+- Sponsored-stream deals immediately credit a seeded, uniformly selected
+  whole-dollar amount from $250 through $2,000.
 - The one-time Agency debut adds 100,000 Subscribers and applies 1.5× natural
   discovery for seven days.
 - Algorithm boost applies 1.5× natural discovery for one day. Agency and
@@ -645,16 +667,19 @@ chance.
 The catalogue additions include Insurance Card ($150, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($9; salt 2/water 2), Jar of Pickle Juice
 ($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($25;
-reusable Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Pepper
+single-use Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Pepper
 ($12; stock 1–2; high effective sugar), Convention Guest Set ($120), New Model
 Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
 Food and starter comfort item with Food +2 and Mood +2.
-The Can Opener is a reusable priced at $35. Three-Month-Old Rotisserie Chicken
+The Can Opener is a single-use item priced at $35. Three-Month-Old Rotisserie Chicken
 is an $8 Variable Food with stock, ownership, and lifetime-purchase limit 1;
 it participates in ordinary shop rotation and automatic stream snacks.
 Consuming the complete item once applies Food +5, Health −8, and Creativity
 +2, creates no persistent status or recurrence, and attributes lethal damage
 directly to the item. Its gameplay nutrition scores are all zero.
+
+Non-furniture items with stat-granting or commission actions are consumed when
+their action succeeds; only placed room furniture remains permanently reusable.
 
 Each local date receives a seeded 24-item rotation:
 
@@ -670,14 +695,19 @@ overrides that. Milestone-gated items join the candidate pool only after their
 unlock.
 
 Every ordinary Food, Medicine, Care, Reusable, Upgrade, or Decoration purchase
-may cross cash below zero. The Shop shows Cash after checkout before the final
-command. Stock, ownership, quantity, rotation, and progression rules still
-apply. A successful ordinary transaction that begins with negative cash keeps
-the existing Mood −1 response, regardless of quantity or cart lines. LOC
-repayment units are not ordinary purchases and require enough positive cash.
+may cross Balance below zero. The Shop previews the real Balance after checkout,
+including the LOC opening advance. Stock, ownership, quantity, rotation, and
+progression rules still apply. Shopping while below $0 has no separate Mood or
+recovery penalty. Mixed catalogue/LOC carts settle atomically.
 
 Non-quantity durables reject quantity above one in both direct purchases and
 carts. Ownership caps and stock limits still apply.
+
+Shop card bodies are inert. Only the `+` and `−` controls change cart quantity;
+a separate Info control opens details. Quantity controls support click,
+keyboard operation, and press-and-hold adjustment without inserting feedback
+that moves the grid. Inventory is projected only from actual owned inventory
+and appears as a searchable, filterable grid with 24 items per page.
 
 Placed room effects are removed by the exact amount that was originally
 applied, so clamping never makes placement changes irreversible. The room keeps
@@ -690,7 +720,7 @@ vignettes, reactions, catch-up events, off-stream support, donations,
 milestones, commissions, projects, medical recovery, bills and payments,
 emergency rescues, sugar warnings, reading, side gigs, injuries, craving
 expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
-room changes, debt threshold crossings and recovery, LOC operations, life
+room changes, Balance debt crossings and recovery, LOC operations, life
 events and expiring discovery boosts, Made It, ending warnings and recoveries,
 and terminal Endings. The room displays only the latest projected Journey
 entry.

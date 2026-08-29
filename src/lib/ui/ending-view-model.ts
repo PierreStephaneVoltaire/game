@@ -1,6 +1,11 @@
 import type { GameState, RunEndingKind } from '$lib/game-types';
 import { HOUR_MS } from '$lib/game-constants';
 import rules from '$lib/data/simulation-rules.json';
+import financialRules from '$lib/data/financial-rules.json';
+import {
+  endingPresentationTexts,
+  formatEndingMessage,
+} from '$lib/ending-rules/messages';
 
 export type EndingViewModel = {
   kind: RunEndingKind;
@@ -25,8 +30,8 @@ export function endingPresentation(state: GameState): EndingViewModel | null {
     return {
       kind: ending.kind,
       at: ending.at,
-      title: 'Death',
-      explanation: 'Health reached 0.',
+      title: endingPresentationTexts.death.title,
+      explanation: endingPresentationTexts.death.explanation,
       evidence: [],
       causes: ending.causes?.map((cause) => ({ name: cause.name })) ?? [
         { name: ending.cause },
@@ -36,22 +41,37 @@ export function endingPresentation(state: GameState): EndingViewModel | null {
     return {
       kind: ending.kind,
       at: ending.at,
-      title: 'Quit Streaming',
-      explanation: 'Mood remained at 0 continuously for 72 game-hours.',
+      title: endingPresentationTexts.quitStreaming.title,
+      explanation: formatEndingMessage(
+        endingPresentationTexts.quitStreaming.explanation,
+        { durationHours: ending.durationHours },
+      ),
       evidence: [
-        `The countdown began ${ending.durationHours} hours before the ending.`,
+        formatEndingMessage(endingPresentationTexts.quitStreaming.evidence, {
+          durationHours: ending.durationHours,
+        }),
       ],
       causes: [],
     };
   return {
     kind: ending.kind,
     at: ending.at,
-    title: 'Financial Ruin',
-    explanation: 'Total debt reached $20,000.',
+    title: endingPresentationTexts.financialRuin.title,
+    explanation: formatEndingMessage(
+      endingPresentationTexts.financialRuin.explanation,
+      {
+        threshold:
+          financialRules.debt.financialRuinBalance.toLocaleString('en-US'),
+      },
+    ),
     evidence: [
-      `Cause: ${ending.cause}.`,
-      `Total debt: $${ending.totalDebt.toLocaleString('en-US')}.`,
-      `Ending cash balance: $${ending.endingBalance.toLocaleString('en-US')}.`,
+      formatEndingMessage(endingPresentationTexts.financialRuin.causeEvidence, {
+        cause: ending.cause,
+      }),
+      formatEndingMessage(
+        endingPresentationTexts.financialRuin.balanceEvidence,
+        { balance: ending.endingBalance.toLocaleString('en-US') },
+      ),
     ],
     causes: [],
   };
@@ -62,7 +82,12 @@ export function endingRiskPresentation(
 ): EndingRiskViewModel[] {
   if (state.ending) return [];
   const result: EndingRiskViewModel[] = [];
-  appendMetricRisk(result, state, 'quit_streaming', 'Quit Streaming risk');
+  appendMetricRisk(
+    result,
+    state,
+    'quit_streaming',
+    endingPresentationTexts.quitStreaming.riskLabel,
+  );
   return result;
 }
 

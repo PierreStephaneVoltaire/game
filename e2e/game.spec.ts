@@ -81,7 +81,10 @@ test('normalizes invalid shop queries and exposes item detail', async ({
 }) => {
   await page.goto('/game/shop?tab=unknown&category=unknown&item=missing');
   await expect(page).toHaveURL(/\/game\/shop\?tab=shop$/);
-  await page.locator('.item-open').first().click();
+  await page
+    .getByRole('button', { name: /^View details for / })
+    .nth(1)
+    .click();
   await expect(page).toHaveURL(/tab=detail&item=/);
   await expect(page.getByText('ITEM DETAIL', { exact: true })).toBeVisible();
   await expect(page.getByRole('list', { name: 'Item tags' })).toBeVisible();
@@ -93,7 +96,7 @@ test('renders the selected feed outcome and advances streaming time', async ({
   await page.goto('/game/shop?tab=inventory');
   await page.getByRole('button', { name: /Water/ }).click();
   await page.getByRole('button', { name: 'Feed companion' }).click();
-  await expect(page.locator('.message')).toContainText('Water was used.');
+  await expect(page.locator('.outcome')).toContainText('Water was used.');
 
   await signInAndChooseMode(page, 'Streaming mode');
   await page.getByRole('button', { name: 'Advance time' }).click();
@@ -136,8 +139,15 @@ test('renders a refusal outcome and keeps status feedback visible', async ({
   page,
 }) => {
   await signInAndChooseMode(page, 'Streaming mode');
-  await page.getByRole('button', { name: 'Rest' }).click();
-  await page.getByRole('button', { name: 'Rest' }).click();
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    await page.getByRole('button', { name: 'Rest' }).click();
+    if (
+      /refus/i.test(
+        (await page.locator('.companion-caption span').textContent()) ?? '',
+      )
+    )
+      break;
+  }
   await expect(page.locator('.companion-caption span')).toContainText(/refus/i);
   await expect(page.getByRole('region', { name: 'Status' })).toBeVisible();
   for (let attempt = 0; attempt < 8; attempt += 1) {
@@ -152,7 +162,7 @@ test('renders a refusal outcome and keeps status feedback visible', async ({
   await expect(
     page.locator('.status-name').filter({
       hasText: /hungry|starving|sleep deprived|low energy/i,
-    }),
+    }).first(),
   ).toBeVisible();
 });
 
@@ -242,20 +252,20 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
   await page
     .locator('.item-card')
     .filter({ hasText: 'Socks Plushie' })
-    .getByRole('button', { name: 'Add' })
+    .getByRole('button', { name: 'Add one Socks Plushie', exact: true })
     .click();
   await page.getByRole('tab', { name: /Cart/ }).click();
   await page.getByRole('button', { name: 'Checkout' }).click();
   await page.getByRole('button', { name: /Socks Plushie/ }).click();
   await page.getByRole('button', { name: 'Offer a plushie apology' }).click();
-  await expect(page.locator('.message')).toContainText(
+  await expect(page.locator('.outcome')).toContainText(
     'Offer a plushie apology performed.',
   );
   await expect(page.getByText('Owned: ×1')).toBeVisible();
   await page.getByRole('button', { name: 'Place item' }).click();
   await expect(page.getByRole('button', { name: 'Unplace' })).toBeVisible();
   await page.getByRole('button', { name: 'Unplace' }).click();
-  await expect(page.locator('.message')).toContainText('Removed');
+  await expect(page.locator('.outcome')).toContainText('Removed');
   await page.getByRole('button', { name: 'Close item details' }).click();
   await page.getByRole('tab', { name: /Inventory/ }).click();
   await page.getByRole('button', { name: /Socks Plushie/ }).click();

@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "builtInEvents": {
+    "low_money_stress": "Companion is stressed about money.",
+    "food_craving": "Companion developed a food craving.",
+    "creative_inspiration": "Companion had a creative inspiration.",
+    "socks": "Socks wants attention.",
+    "benign_room_event": "Something benign happened in the room.",
+    "self_entertainment": "Companion found something dumb online and laughed harder than expected.",
+    "stood_up_too_fast": "Companion stood up too fast and had to reconsider the whole idea.",
+    "tiny_walk": "Companion actually went for a tiny walk. Historic event.",
+    "barely_moved_today": "Companion realized she has barely moved today and feels gross about it.",
+    "moms_care_package": "Mom sent a Care Package gift.",
+    "rest_snoring": "The companion snored through the rest of the room."
+  },
+  "eventTemplates": {
+    "food_craving_item": "Companion is craving {item}.",
+    "equipment_failure": "Companion's {item} failed and cost ${amount} to replace.",
+    "item_hook_fallback": "Companion used an owned item.",
+    "journey_care_package": "{message} It lifted {pet}'s spirits.",
+    "journey_companion_purchase": "{pet} bought {item}.",
+    "journey_player_purchase": "You bought {item} for {pet}.",
+    "journey_subscriber_growth_many": "{pet}'s channel gained {count} subscribers.",
+    "journey_subscriber_growth_one": "{pet}'s channel gained a subscriber.",
+    "moms_care_package_with_items": "Mom sent a Care Package gift with {items}.",
+    "personal_purchase": "Companion bought {item}.",
+    "random_event_opportunity": "A random event opportunity occurred.",
+    "sponsored_stream_deal": "A sponsored-stream deal paid ${amount}.",
+    "status_activated": "{status} became active.",
+    "status_cleared": "{status} cleared.",
+    "tax_bill": "A tax bill arrived for ${amount}.",
+    "stood_up_too_fast_damage_cause": "Stumble after standing too fast",
+    "stood_up_too_fast_stumble": "Companion stood up too fast, got lightheaded, and stumbled."
+  },
+  "lifeEvents": {
+    "agency_invitation": "An agency debut added 100,000 Subscribers and brought more viewers for seven days.",
+    "algorithm_boost": "The algorithm picked up the channel, bringing more viewers for one day.",
+    "rain": "A day of rain lowered Mood.",
+    "twitter_cancellation_major": "A Twitter cancellation cost 3% of current Subscribers.",
+    "twitter_cancellation_minor": "A Twitter cancellation cost 1% of current Subscribers.",
+    "twitter_cancellation_moderate": "A Twitter cancellation cost 2% of current Subscribers."
+  },
+  "statusNames": {
+    "starving": "Starving",
+    "hungry": "Hungry",
+    "sleep_deprived": "Sleep Deprived",
+    "depressed": "Depressed",
+    "lonely": "Lonely",
+    "creative_block": "Creative Block",
+    "annoyed": "Annoyed",
+    "sick": "Sick",
+    "overstimulated": "Overstimulated",
+    "kidney_stone": "Kidney Stone",
+    "full": "Full",
+    "low_energy": "Low Energy",
+    "sugar_crash": "Sugar Crash",
+    "dizzy_spell": "Dizzy Spell",
+    "in_debt": "In Debt"
+  },
+  "activityCompletions": {
+    "rest": "Rest finished.",
+    "socialize": "Socializing finished.",
+    "play": "Play finished.",
+    "stream": "The stream finished.",
+    "commission_work": "Commission work finished.",
+    "medical_care": "The hospital visit finished."
+  }
+}

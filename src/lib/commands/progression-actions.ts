@@ -17,6 +17,7 @@ import type { Project } from '../game-types';
 import { HOUR_MS } from '../game-constants';
 import { criticalMetrics } from '../simulation/health-resolution';
 import { CAREER_TIERS } from '../progression-types';
+import { inventoryAfterConsumedUnit } from './inventory-mutations';
 
 export type ProgressionActionResult = {
   state: GameState;
@@ -101,6 +102,10 @@ export function startCommissionWork(
   };
   const next: GameState = {
     ...state,
+    inventory:
+      action.consumes === true
+        ? inventoryAfterConsumedUnit(state.inventory, item.id)
+        : state.inventory,
     activity: {
       id: `activity-${state.actionOrdinal + 1}`,
       type: 'commission_work',
@@ -184,10 +189,10 @@ export function startModelCommission(
   };
   const next: GameState = {
     ...state,
-    inventory: {
-      ...state.inventory,
-      [item.id]: Math.max(0, (state.inventory[item.id] ?? 0) - 1),
-    },
+    inventory:
+      action.consumes === true
+        ? inventoryAfterConsumedUnit(state.inventory, item.id)
+        : state.inventory,
     projects: [...state.projects, project],
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,

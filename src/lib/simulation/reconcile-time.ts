@@ -47,7 +47,12 @@ export function reconcileTime(
     nextReconciliationBoundaries(state, now);
   if (nextBoundary !== null) {
     if (nextBoundary === lifeEventBoundary) {
-      const lifeCatchUp = catchUpLifeEvents(state, now, nextRegularBoundary);
+      const lifeCatchUp = catchUpLifeEvents(
+        state,
+        now,
+        nextRegularBoundary,
+        definition,
+      );
       const throughTarget = reconcileTime(
         lifeCatchUp.state,
         now,
@@ -60,7 +65,7 @@ export function reconcileTime(
           ...lifeCatchUp.eventIds.map((id) => ({
             accepted: true,
             kind: 'time_reconciled',
-            message: 'Time reconciled.',
+            message: 'The game caught up.',
             eventIds: [id],
           })),
           ...throughTarget.outcomes,
@@ -276,7 +281,7 @@ function result(
     outcomes: eventIds.map((id) => ({
       accepted: true,
       kind: 'time_reconciled',
-      message: 'Time reconciled.',
+      message: 'The game caught up.',
       eventIds: [id],
     })),
     elapsedHours,

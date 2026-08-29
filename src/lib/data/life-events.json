@@ -1,83 +1,29 @@
 {
-  "version": 2,
+  "version": 4,
   "intervalMinutes": 30,
   "events": [
     {
       "id": "rain",
       "rollDenominator": 960,
-      "message": "A day of rain lowered Mood.",
+      "messageId": "rain",
       "effects": { "mood": -1 }
     },
     {
       "id": "personal_purchase",
       "rollDenominator": 1920,
-      "outcomes": [
-        {
-          "id": "small",
-          "weight": 30,
-          "message": "A little personal purchase cost $25 and lifted Mood.",
-          "effects": { "cash": -25, "mood": 1 }
-        },
-        {
-          "id": "medium",
-          "weight": 30,
-          "message": "An impulse purchase cost $50 and lifted Mood.",
-          "effects": { "cash": -50, "mood": 1 }
-        },
-        {
-          "id": "large",
-          "weight": 20,
-          "message": "A personal purchase cost $100 and lifted Mood.",
-          "effects": { "cash": -100, "mood": 1 }
-        },
-        {
-          "id": "splurge",
-          "weight": 15,
-          "message": "A personal splurge cost $200 and greatly lifted Mood.",
-          "effects": { "cash": -200, "mood": 2 }
-        },
-        {
-          "id": "collectible",
-          "weight": 5,
-          "message": "A collectible purchase cost $299 and greatly lifted Mood.",
-          "effects": { "cash": -299, "mood": 2 }
-        }
-      ]
+      "requiresNonnegativeBalance": true,
+      "behavior": { "type": "catalogue_purchase", "quantity": 1, "mood": 1 }
     },
     {
       "id": "sponsored_stream_deal",
       "rollDenominator": 2400,
-      "outcomes": [
-        {
-          "id": "small",
-          "weight": 50,
-          "message": "A sponsored-stream deal paid $250.",
-          "effects": { "cash": 250 }
-        },
-        {
-          "id": "medium",
-          "weight": 30,
-          "message": "A sponsored-stream deal paid $500.",
-          "effects": { "cash": 500 }
-        },
-        {
-          "id": "large",
-          "weight": 15,
-          "message": "A sponsored-stream deal paid $1,000.",
-          "effects": { "cash": 1000 }
-        },
-        {
-          "id": "major",
-          "weight": 5,
-          "message": "A sponsored-stream deal paid $2,000.",
-          "effects": { "cash": 2000 }
-        }
-      ]
+      "messageTemplateId": "sponsored_stream_deal",
+      "cashRange": { "minimum": 250, "maximum": 2000 }
     },
     {
       "id": "algorithm_boost",
       "rollDenominator": 2400,
-      "message": "The algorithm picked up the channel; natural discovery increased for one day.",
+      "messageId": "algorithm_boost",
       "effects": {
         "followerGrowthMultiplier": 1.5,
         "followerGrowthDurationHours": 24
@@ -86,44 +32,29 @@
     {
       "id": "tax_bill",
       "rollDenominator": 4800,
-      "outcomes": [
-        {
-          "id": "small",
-          "weight": 50,
-          "message": "A tax bill arrived for $250.",
-          "effects": { "cash": -250 }
-        },
-        {
-          "id": "medium",
-          "weight": 30,
-          "message": "A tax bill arrived for $500.",
-          "effects": { "cash": -500 }
-        },
-        {
-          "id": "large",
-          "weight": 15,
-          "message": "A tax bill arrived for $1,000.",
-          "effects": { "cash": -1000 }
-        },
-        {
-          "id": "major",
-          "weight": 5,
-          "message": "A painful tax bill arrived for $2,000.",
-          "effects": { "cash": -2000 }
-        }
-      ]
+      "requiresNonnegativeBalance": true,
+      "messageTemplateId": "tax_bill",
+      "cashRange": { "minimum": -1000, "maximum": -100 }
     },
     {
-      "id": "webcam_failure",
-      "rollDenominator": 6400,
-      "message": "The webcam failed; replacement cost $300.",
-      "effects": { "cash": -300 }
-    },
-    {
-      "id": "gpu_failure",
-      "rollDenominator": 9600,
-      "message": "The GPU failed; replacement cost $1,500.",
-      "effects": { "cash": -1500 }
+      "id": "equipment_failure",
+      "rollDenominator": 3840,
+      "requiresNonnegativeBalance": true,
+      "messageTemplateId": "equipment_failure",
+      "cashRange": { "minimum": -500, "maximum": -30 },
+      "behavior": {
+        "type": "catalogue_item_expense",
+        "eligibleItemIds": [
+          "studio-mic",
+          "stream-deck",
+          "new-keyboard",
+          "drawing-tablet",
+          "monitor",
+          "pc-parts",
+          "webcam",
+          "rigging-tablet"
+        ]
+      }
     },
     {
       "id": "twitter_cancellation",
@@ -132,19 +63,19 @@
         {
           "id": "minor",
           "weight": 60,
-          "message": "A Twitter cancellation cost 1% of current Subscribers.",
+          "messageId": "twitter_cancellation_minor",
           "effects": { "followersPercent": -0.01, "followersMinimumLoss": 1 }
         },
         {
           "id": "moderate",
           "weight": 30,
-          "message": "A Twitter cancellation cost 2% of current Subscribers.",
+          "messageId": "twitter_cancellation_moderate",
           "effects": { "followersPercent": -0.02, "followersMinimumLoss": 1 }
         },
         {
           "id": "major",
           "weight": 10,
-          "message": "A Twitter cancellation cost 3% of current Subscribers.",
+          "messageId": "twitter_cancellation_major",
           "effects": { "followersPercent": -0.03, "followersMinimumLoss": 1 }
         }
       ]
@@ -153,7 +84,7 @@
       "id": "agency_invitation",
       "rollDenominator": 48000,
       "oncePerRun": true,
-      "message": "An agency debut added 100,000 Subscribers and boosted discovery for seven days.",
+      "messageId": "agency_invitation",
       "effects": {
         "followersFlat": 100000,
         "followerGrowthMultiplier": 1.5,

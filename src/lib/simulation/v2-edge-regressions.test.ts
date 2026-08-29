@@ -236,6 +236,7 @@ describe('V2 edge regressions', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
     expect(started.history.lastCommissionWorkDate).toBeNull();
+    expect(started.inventory['rigging-tablet']).toBe(0);
     const interrupted = reconcileTime(
       {
         ...started,

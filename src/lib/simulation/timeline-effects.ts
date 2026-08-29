@@ -129,7 +129,12 @@ export function resolveTimelineEffects({
 
   if (!deathAt) {
     if (!next.ending && nextLifeEventBoundary(next) === reconciliationNow) {
-      const lifeEvents = processLifeEventBoundary(next, reconciliationNow);
+      const lifeEvents = processLifeEventBoundary(
+        next,
+        reconciliationNow,
+        undefined,
+        definition,
+      );
       next = lifeEvents.state;
       eventIds.push(...lifeEvents.eventIds);
     }

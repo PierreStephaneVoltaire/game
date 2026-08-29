@@ -4,6 +4,7 @@
     runArchiveExportFilename,
     runArchiveExportMarkdown,
   } from '$lib/ui/run-archive-export';
+  import { endingHistoryTexts } from '$lib/ending-rules/messages';
   $: model = $gameViewModel;
   const dateTime = (at: number, timezone: string) =>
     new Intl.DateTimeFormat('en-US', {
@@ -45,58 +46,61 @@
     </div>
     {#if model.ending}
       <section class="ending-card" role="alert">
-        <p class="eyebrow">TERMINAL RUN</p>
+        <p class="eyebrow">{endingHistoryTexts.terminalRunEyebrow}</p>
         <h2>{model.ending.title}</h2>
         <p>{model.ending.explanation}</p>
         {#if model.ending.kind === 'death'}
-          <h3>Cause of death</h3>
+          <h3>{endingHistoryTexts.causeOfDeath}</h3>
           <ul class="death-causes">
-            {#each model.ending.causes as cause (cause.name)}<li>
+            {#each model.ending.causes as cause, index (`${cause.name}:${index}`)}<li
+              >
                 {cause.name}
               </li>{/each}
           </ul>
         {:else if model.ending.evidence.length}
           <ul>
-            {#each model.ending.evidence as evidence (evidence)}<li>
+            {#each model.ending.evidence as evidence, index (`${evidence}:${index}`)}<li
+              >
                 {evidence}
               </li>{/each}
           </ul>
         {/if}
-        <h3>Causal chain</h3>
+        <h3>{endingHistoryTexts.causalChain}</h3>
         <ol>
-          {#each model.causalEvents as event (event.id)}<li>
+          {#each model.causalEvents as event, index (`${event.id}:${index}`)}<li
+            >
               <span>{event.message}</span>
             </li>{/each}
         </ol>
         <div class="graveyard">
           {#if model.ending.kind === 'death'}
-            <span aria-hidden="true">✦</span><strong>Graveyard</strong>
-            <p>This run is complete. Its grave remains available for review.</p>
+            <span aria-hidden="true">✦</span><strong
+              >{endingHistoryTexts.graveyard}</strong
+            >
+            <p>{endingHistoryTexts.graveyardSummary}</p>
           {:else}
             <span aria-hidden="true">✦</span>
-            <strong>Archived run</strong>
-            <p>
-              This run is complete. Its record remains available for review.
-            </p>
+            <strong>{endingHistoryTexts.archivedRun}</strong>
+            <p>{endingHistoryTexts.archivedRunSummary}</p>
           {/if}
           <dl>
             <div>
-              <dt>Started</dt>
+              <dt>{endingHistoryTexts.started}</dt>
               <dd>{dateTime(model.runStartedAt, model.timezone)}</dd>
             </div>
             <div>
-              <dt>Ended</dt>
+              <dt>{endingHistoryTexts.ended}</dt>
               <dd>{dateTime(model.ending.at, model.timezone)}</dd>
             </div>
             <div>
-              <dt>Duration</dt>
+              <dt>{endingHistoryTexts.duration}</dt>
               <dd>{duration(model.runStartedAt, model.ending.at)}</dd>
             </div>
           </dl>
           <button type="button" on:click={exportArchive}
             >{model.ending.kind === 'death'
-              ? 'Export journey and grave'
-              : 'Export archived run'}</button
+              ? endingHistoryTexts.exportGrave
+              : endingHistoryTexts.exportArchive}</button
           >
         </div>
       </section>
@@ -104,7 +108,7 @@
     <details class="event-log" open={!model.ending}>
       <summary>{model.companion.name}'s journey</summary>
       <ol>
-        {#each model.events as event (event.id)}<li>
+        {#each model.events as event, index (`${event.id}:${index}`)}<li>
             <time datetime={new Date(event.at).toISOString()}
               >{new Intl.DateTimeFormat('en-US', {
                 timeZone: model.timezone,

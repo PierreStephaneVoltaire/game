@@ -16,6 +16,7 @@ export function clampMetric(metric: MetricName, value: number): number {
 }
 export const STARTING_CURRENCY = simulationRules.startingCurrency;
 export const MAX_CART_QUANTITY = simulationRules.maxCartQuantity;
+export const LINE_OF_CREDIT_OFFER_ID = 'line-of-credit';
 export const HOUR_MS = 3_600_000;
 export const MINUTE_MS = 60_000;
 export const DAY_MS = 24 * HOUR_MS;

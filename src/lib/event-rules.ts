@@ -4,7 +4,11 @@ import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
 import { startAutonomousStream } from './stream-rules';
 import rules from './data/simulation-rules.json';
-import { messageFor, type BuiltInEventType } from './event-messages';
+import {
+  eventTemplate,
+  messageFor,
+  type BuiltInEventType,
+} from './event-messages';
 
 import { DAY_MS, HOUR_MS, STAT_MAX, STAT_MIN } from './game-constants';
 import { startFullBodyProject } from './project-rules';
@@ -42,9 +46,9 @@ export function resolveAttemptEvent(
     const started = startAutonomousStream(state, commandId);
     const generated = started.events
       .slice(state.events.length)
-      .map((event) => ({
+      .map((event, index) => ({
         ...event,
-        id: `event-${state.events.length + 2}`,
+        id: `event-${state.events.length + index + 2}`,
       }));
     return {
       ...started,
@@ -101,7 +105,7 @@ export function resolveAttemptEvent(
     type: selected.startsWith('item_hook:') ? 'item_automatic_hook' : selected,
     at: state.now,
     message: selectedHook
-      ? (selectedHook.hook.message ?? 'Companion used an owned item.')
+      ? (selectedHook.hook.message ?? eventTemplate('item_hook_fallback'))
       : messageFor(selected as BuiltInEventType),
     sourceActionId: commandId,
   };
@@ -165,7 +169,7 @@ export function resolveAttemptEvent(
     cooldowns.room =
       state.now + rules.events.cooldowns.benignRoomHours * HOUR_MS;
   if (selected === 'rest_snoring') {
-    event.message = 'The companion snored through the rest of the room.';
+    event.message = messageFor('rest_snoring');
     cooldowns[`rest_snoring:${state.activity?.id ?? commandId}`] = state.now;
   }
   if (selected === 'moms_care_package') {
@@ -174,8 +178,10 @@ export function resolveAttemptEvent(
     for (const food of foods)
       inventory[food.id] = (inventory[food.id] ?? 0) + 1;
     event.message = foods.length
-      ? `Mom's Care Package arrived with ${foods.map((food) => food.name).join(' and ')}.`
-      : "Mom's Care Package arrived.";
+      ? eventTemplate('moms_care_package_with_items', {
+          items: foods.map((food) => food.name).join(' and '),
+        })
+      : messageFor('moms_care_package');
     event.metricDeltas = { mood: rules.events.effects.carePackageMood };
     metrics.mood = Math.min(
       STAT_MAX,
@@ -211,12 +217,11 @@ export function resolveAttemptEvent(
         healthDamageSource(
           'event',
           'stood_up_too_fast',
-          'Stumble after standing too fast',
+          eventTemplate('stood_up_too_fast_damage_cause'),
           1,
         ),
       ];
-      event.message =
-        'Companion stood up too fast, got lightheaded, and stumbled.';
+      event.message = eventTemplate('stood_up_too_fast_stumble');
     }
     cooldowns.stood_up_too_fast =
       state.now + rules.events.cooldowns.stoodUpTooFastHours * HOUR_MS;
@@ -242,7 +247,7 @@ export function resolveAttemptEvent(
     cravingItemId = food.id;
     cravingStartedAt = state.now;
     cravingRefreshCount = 0;
-    event.message = `Companion is craving ${food.name}.`;
+    event.message = eventTemplate('food_craving_item', { item: food.name });
     event.cause = cravingItemId;
   }
   if (

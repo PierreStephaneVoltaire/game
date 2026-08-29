@@ -19,7 +19,8 @@ import { createRunState } from './simulation/run-state';
 import { resetPlayerCareRescueLocks } from './autonomous-rescue-rules';
 import { payMedicalDebtInFull } from './commands/medical-debt-commands';
 import { reconcileRunEnding } from './ending-rules';
-import { handleLineOfCreditCommand } from './commands/line-of-credit-commands';
+import { runOverMessage } from './ending-rules/messages';
+import { resolveBatchFeeding } from './commands/batch-feeding';
 
 export const startRun = createRunState;
 export { reconcileTime };
@@ -32,7 +33,7 @@ export function dispatchCommand(
   if (state.ending)
     return {
       state,
-      outcomes: [rejected('run_over', 'This run is over.')],
+      outcomes: [rejected('run_over', runOverMessage())],
     };
   const prior = state.processedCommands[command.commandId];
   if (prior) return { state, outcomes: [prior.outcome] };
@@ -41,7 +42,7 @@ export function dispatchCommand(
   if (timed.ending)
     return {
       state: timed,
-      outcomes: [rejected('run_over', 'This run is over.')],
+      outcomes: [rejected('run_over', runOverMessage())],
     };
   const companionAttempt = isCompanionAttempt(command.type);
   if (
@@ -141,13 +142,6 @@ export function dispatchCommand(
     next = payment.state;
     outcome = payment.outcome;
   } else if (
-    command.type === 'open_line_of_credit' ||
-    command.type === 'repay_line_of_credit'
-  ) {
-    const loc = handleLineOfCreditCommand(next, command);
-    next = loc.state;
-    outcome = loc.outcome;
-  } else if (
     command.type === 'wait' ||
     command.type === 'rest' ||
     command.type === 'socialize' ||
@@ -179,6 +173,15 @@ export function dispatchCommand(
     });
     next = itemResult.state;
     outcome = itemResult.outcome;
+  } else if (command.type === 'feed_items') {
+    const batch = resolveBatchFeeding(
+      next,
+      command,
+      definition,
+      (working, child) => dispatchCommand(working, child, definition),
+    );
+    next = batch.state;
+    outcome = batch.outcome;
   }
   if (outcome.accepted) next = resetPlayerCareRescueLocks(timed, next);
   if (
