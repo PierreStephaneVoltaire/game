@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Game Balance Simulation'
+  short_description: 'Run reproducible human-play balance studies'
+  default_prompt: 'Use $game-balance-simulation to run either the maintained canonical 50-run regression or the 100-run behavioral-coverage study and analyze its validated survival, progression, conditions, events, and economy report.'

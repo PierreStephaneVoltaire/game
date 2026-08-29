@@ -1,0 +1,335 @@
+[
+  {
+    "id": "P76",
+    "label": "Protein Counterplayer",
+    "archetype": "optimizer",
+    "target": 500000,
+    "schedule": { "type": "fixed_interval", "intervalHours": 4.8 },
+    "shopping": { "foodSelection": "nutrition_safe" },
+    "nutrition": { "strategy": "protein_counter" },
+    "overlays": []
+  },
+  {
+    "id": "P77",
+    "label": "Salt-Blind Player",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": { "foodSelection": "food_gain", "insurance": "after_incident" },
+    "nutrition": { "strategy": "ignore" },
+    "medical": { "strategy": "wait" },
+    "overlays": [
+      "preference_stubborn",
+      "status_ignorance",
+      "medical_misunderstanding"
+    ]
+  },
+  {
+    "id": "P78",
+    "label": "Warning-Responsive Hydrator",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "nutrition": { "strategy": "warning_hydrator" },
+    "medical": { "strategy": "hydrate" },
+    "overlays": []
+  },
+  {
+    "id": "P79",
+    "label": "Nutrition Min-Maxer",
+    "archetype": "optimizer",
+    "target": 1000000,
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 3,
+      "retryAfterBusyHours": 1
+    },
+    "care": {
+      "foodThreshold": 6,
+      "restThreshold": 5,
+      "moodThreshold": 4,
+      "actionsPerVisit": "until_safe"
+    },
+    "shopping": { "foodReserve": 12, "foodSelection": "nutrition_safe" },
+    "nutrition": { "strategy": "risk_minimizer" },
+    "career": { "strategy": "stream_when_possible", "clipperStacks": 3 },
+    "medical": { "strategy": "critical_hospital", "healthThreshold": 8 },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P80",
+    "label": "Cheap-Calorie Buyer",
+    "archetype": "optimizer",
+    "target": 500000,
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": { "foodReserve": 8, "foodSelection": "cheap" },
+    "nutrition": { "strategy": "cheap_food" },
+    "overlays": []
+  },
+  {
+    "id": "P81",
+    "label": "Cosmetic Whale, Tiny Pantry",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": {
+      "foodReserve": 2,
+      "priorityTags": ["room", "game", "read", "cat", "streaming-gear"],
+      "spendAggressiveness": "high"
+    },
+    "overlays": ["shop_rotation_bad_luck", "preference_stubborn"]
+  },
+  {
+    "id": "P82",
+    "label": "Money Hoarder",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": {
+      "minimumCashReserve": 500,
+      "spendAggressiveness": "minimal",
+      "avoidTags": ["clipping", "decoration", "room"]
+    },
+    "overlays": []
+  },
+  {
+    "id": "P83",
+    "label": "Perpetually Broke Shopper",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": {
+      "foodReserve": 3,
+      "priorityTags": ["reusable", "decoration", "upgrade"],
+      "spendAggressiveness": "high"
+    },
+    "overlays": ["shop_rotation_bad_luck", "status_ignorance"]
+  },
+  {
+    "id": "P84",
+    "label": "Insurance-First Player",
+    "archetype": "common",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 6,
+      "retryAfterBusyHours": 1
+    },
+    "shopping": {
+      "foodReserve": 6,
+      "insurance": "asap",
+      "spendAggressiveness": "minimal"
+    },
+    "medical": { "strategy": "delayed_hospital", "hospitalDelayHours": 24 },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P85",
+    "label": "Insurance Too Late",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "shopping": { "insurance": "after_incident" },
+    "medical": { "strategy": "immediate_hospital" },
+    "overlays": ["medical_misunderstanding"]
+  },
+  {
+    "id": "P86",
+    "label": "Never Hospital",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "medical": { "strategy": "never_hospital" },
+    "overlays": ["busy_lost"]
+  },
+  {
+    "id": "P87",
+    "label": "Immediate Hospital",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "medical": { "strategy": "immediate_hospital" },
+    "overlays": []
+  },
+  {
+    "id": "P88",
+    "label": "Hospital Only When Health Below 15",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "medical": { "strategy": "critical_hospital", "healthThreshold": 15 },
+    "overlays": []
+  },
+  {
+    "id": "P89",
+    "label": "Painkiller Reliant",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "medical": { "strategy": "painkiller", "painkillerCycles": 3 },
+    "overlays": []
+  },
+  {
+    "id": "P90",
+    "label": "Medical Debt Panic",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": { "foodReserve": 4, "spendAggressiveness": "minimal" },
+    "debt": { "strategy": "panic_cut_spending" },
+    "overlays": []
+  },
+  {
+    "id": "P91",
+    "label": "Financial Ruin Validator",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": {
+      "insurance": "after_incident",
+      "spendAggressiveness": "high"
+    },
+    "medical": { "strategy": "immediate_hospital" },
+    "debt": { "strategy": "ignore" },
+    "expectedOutcome": "financial_ruin",
+    "overlays": [
+      "medical_misunderstanding",
+      "ending_validation:financial_ruin"
+    ]
+  },
+  {
+    "id": "P92",
+    "label": "Stream Whenever Possible",
+    "archetype": "risky",
+    "target": 500000,
+    "schedule": { "type": "fixed_interval", "intervalHours": 4 },
+    "care": {
+      "foodThreshold": 1,
+      "restThreshold": 1,
+      "healthPanicThreshold": 10,
+      "actionsPerVisit": 1
+    },
+    "shopping": {
+      "priorityTags": ["streaming-gear", "clipping"],
+      "spendAggressiveness": "high"
+    },
+    "career": {
+      "strategy": "stream_when_possible",
+      "minimumFood": 1,
+      "minimumRest": 1,
+      "minimumHealth": 10,
+      "clipperStacks": 3
+    },
+    "overlays": []
+  },
+  {
+    "id": "P93",
+    "label": "Healthy-Only Streamer",
+    "archetype": "common",
+    "target": 500000,
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 5,
+      "retryAfterBusyHours": 1
+    },
+    "career": {
+      "strategy": "healthy_only",
+      "minimumFood": 6,
+      "minimumRest": 6,
+      "minimumMood": 5,
+      "minimumHealth": 30,
+      "clipperStacks": 1
+    },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P94",
+    "label": "Early Grind, Late Coast",
+    "archetype": "optimizer",
+    "target": 500000,
+    "schedule": {
+      "type": "phase_schedule",
+      "phases": [
+        { "untilFollowers": 250000, "intervalHours": 3 },
+        { "intervalHours": 8 }
+      ]
+    },
+    "care": { "foodThreshold": 5, "restThreshold": 5, "moodThreshold": 4 },
+    "career": { "strategy": "early_grind", "clipperStacks": 3 },
+    "overlays": []
+  },
+  {
+    "id": "P95",
+    "label": "Late Grind",
+    "archetype": "optimizer",
+    "target": 500000,
+    "schedule": {
+      "type": "phase_schedule",
+      "phases": [
+        { "untilDay": 20, "intervalHours": 8 },
+        { "untilDay": 40, "intervalHours": 4 },
+        { "afterDay": 40, "intervalHours": 2.5 }
+      ]
+    },
+    "career": { "strategy": "late_grind", "clipperStacks": 3 },
+    "overlays": []
+  },
+  {
+    "id": "P96",
+    "label": "Book-and-Game Collector",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "shopping": {
+      "foodReserve": 5,
+      "preferredItemIds": [
+        "book",
+        "manga",
+        "really-long-book",
+        "cozy-game",
+        "visual-novel"
+      ],
+      "priorityTags": ["read", "game"],
+      "spendAggressiveness": "high"
+    },
+    "overlays": ["preference_stubborn"]
+  },
+  {
+    "id": "P97",
+    "label": "Room Buff Maxer",
+    "archetype": "optimizer",
+    "target": 500000,
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "shopping": {
+      "foodReserve": 5,
+      "priorityTags": ["room"],
+      "spendAggressiveness": "high",
+      "placeRoomItems": true
+    },
+    "behavior": { "optimizeRoom": true },
+    "overlays": []
+  },
+  {
+    "id": "P98",
+    "label": "Minimalist No-Luxury Run",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "shopping": {
+      "avoidTags": ["read", "game", "decoration", "room", "cat"],
+      "spendAggressiveness": "minimal"
+    },
+    "behavior": { "noLuxury": true },
+    "overlays": ["busy_lost"]
+  },
+  {
+    "id": "P99",
+    "label": "Chaotic Item User",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": {
+      "foodReserve": 5,
+      "priorityTags": ["reusable"],
+      "spendAggressiveness": "high"
+    },
+    "behavior": { "useNewItems": true },
+    "overlays": ["preference_stubborn", "status_ignorance"]
+  },
+  {
+    "id": "P100",
+    "label": "Quit Streaming Boundary Validator",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "controlledEndingSetup": "quit_streaming_due",
+    "expectedOutcome": "quit_streaming",
+    "overlays": [
+      "controlled_ending_boundary",
+      "ending_validation:quit_streaming"
+    ]
+  }
+]

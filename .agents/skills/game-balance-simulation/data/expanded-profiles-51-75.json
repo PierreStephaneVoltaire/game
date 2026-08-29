@@ -1,0 +1,376 @@
+[
+  {
+    "id": "P51",
+    "label": "Morning and Night Only",
+    "archetype": "common",
+    "schedule": { "type": "local_times", "localTimes": ["08:00", "22:00"] },
+    "care": {
+      "strategy": "worst_only",
+      "actionsPerVisit": 1,
+      "restThreshold": 3,
+      "moodThreshold": 2,
+      "priority": ["food", "rest", "mood", "bond"]
+    },
+    "shopping": {
+      "foodReserve": 4,
+      "foodSelection": "cheap",
+      "waitForPreferred": true
+    },
+    "career": {
+      "strategy": "healthy_only",
+      "minimumFood": 4,
+      "minimumRest": 4,
+      "eveningOnly": true
+    },
+    "medical": { "strategy": "delayed_hospital", "hospitalDelayHours": 72 },
+    "overlays": ["busy_lost", "shop_rotation_bad_luck", "status_ignorance"]
+  },
+  {
+    "id": "P52",
+    "label": "Lunch-Break Player",
+    "archetype": "common",
+    "schedule": {
+      "type": "local_times",
+      "weekdayTimes": ["07:30", "12:30", "19:00"],
+      "weekendTimes": ["12:00", "21:00"],
+      "retryAfterBusyHours": 1
+    },
+    "care": { "weekdayQuickOnly": true },
+    "shopping": { "foodReserve": 5 },
+    "career": { "strategy": "casual", "eveningOnly": true },
+    "medical": {
+      "strategy": "painkiller",
+      "hospitalDelayHours": 48,
+      "painkillerCycles": 1
+    },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P53",
+    "label": "Workday Disappearing Act",
+    "archetype": "common",
+    "schedule": {
+      "type": "local_times",
+      "weekdayTimes": ["07:00", "19:00"],
+      "weekendTimes": ["08:00", "12:00", "16:00", "21:00"]
+    },
+    "shopping": { "foodReserve": 6 },
+    "career": { "strategy": "casual", "weekendHeavy": true },
+    "overlays": ["busy_lost"]
+  },
+  {
+    "id": "P54",
+    "label": "Weekend Binger",
+    "archetype": "risky",
+    "schedule": {
+      "type": "day_pattern",
+      "checksByWeekday": [1, 1, 1, 1, 2, 6, 6]
+    },
+    "care": { "weekdayCoreOnly": true, "actionsPerVisit": "until_safe" },
+    "shopping": { "foodReserve": 10, "waitForPreferred": true },
+    "career": { "strategy": "stream_when_possible", "weekendHeavy": true },
+    "overlays": ["busy_lost", "shop_rotation_bad_luck"]
+  },
+  {
+    "id": "P55",
+    "label": "Two Days On, One Day Off",
+    "archetype": "common",
+    "schedule": {
+      "type": "day_pattern",
+      "cycleChecksPerDay": [5, 5, 0],
+      "retryAfterBusyHours": 1
+    },
+    "shopping": { "foodReserve": 8 },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P56",
+    "label": "Three Days On, Two Days Off",
+    "archetype": "risky",
+    "schedule": { "type": "day_pattern", "cycleChecksPerDay": [4, 4, 4, 0, 0] },
+    "care": {
+      "actionsPerVisit": "until_safe",
+      "targetFood": 7,
+      "targetRest": 7,
+      "targetMood": 6
+    },
+    "shopping": { "foodReserve": 10 },
+    "career": { "strategy": "stream_when_possible" },
+    "overlays": []
+  },
+  {
+    "id": "P57",
+    "label": "Forgetful Random Gaps",
+    "archetype": "common",
+    "schedule": {
+      "type": "gap_pattern",
+      "gapPatternHours": [4, 5, 9, 4, 12, 6, 5],
+      "retryAfterBusyHours": 1
+    },
+    "care": { "strategy": "worst_only", "actionsPerVisit": 1 },
+    "shopping": { "foodReserve": 6, "waitForPreferred": true },
+    "overlays": ["busy_retry", "shop_rotation_bad_luck", "status_ignorance"]
+  },
+  {
+    "id": "P58",
+    "label": "Notification Ignorer",
+    "archetype": "common",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 4,
+      "skipEvery": 3,
+      "skipAfterSafe": true
+    },
+    "overlays": ["busy_lost"]
+  },
+  {
+    "id": "P59",
+    "label": "Busy Retry Player",
+    "archetype": "common",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 6,
+      "retryAfterBusyHours": 1
+    },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P60",
+    "label": "Busy Means I'll Check Tomorrow",
+    "archetype": "risky",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 6,
+      "skipNextAfterBusy": true
+    },
+    "shopping": { "insurance": "after_incident" },
+    "overlays": ["busy_lost", "medical_misunderstanding"]
+  },
+  {
+    "id": "P61",
+    "label": "Food-First Caregiver",
+    "archetype": "common",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 5,
+      "retryAfterBusyHours": 1
+    },
+    "care": {
+      "strategy": "priority",
+      "foodThreshold": 5,
+      "restThreshold": 1,
+      "moodThreshold": 2,
+      "priority": ["food", "mood", "rest", "bond"]
+    },
+    "shopping": { "foodReserve": 8 },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P62",
+    "label": "Rest-First Caregiver",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "care": {
+      "strategy": "priority",
+      "foodThreshold": 2,
+      "restThreshold": 5,
+      "moodThreshold": 2,
+      "priority": ["rest", "food", "mood", "bond"]
+    },
+    "overlays": []
+  },
+  {
+    "id": "P63",
+    "label": "Mood-First Simp",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "care": {
+      "strategy": "priority",
+      "foodThreshold": 2,
+      "restThreshold": 2,
+      "moodThreshold": 6,
+      "priority": ["mood", "bond", "food", "rest"]
+    },
+    "shopping": {
+      "foodReserve": 3,
+      "priorityTags": ["read", "game", "cat", "room"],
+      "foodSelection": "preference",
+      "spendAggressiveness": "high"
+    },
+    "career": { "strategy": "healthy_only", "minimumMood": 6 },
+    "overlays": ["preference_stubborn"]
+  },
+  {
+    "id": "P64",
+    "label": "Health Bar Watcher",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "care": {
+      "strategy": "health_reactive",
+      "healthPanicThreshold": 30,
+      "actionsPerVisit": "until_safe"
+    },
+    "shopping": { "foodReserve": 5 },
+    "overlays": []
+  },
+  {
+    "id": "P65",
+    "label": "Critical-Only Player",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 4 },
+    "care": {
+      "strategy": "critical_only",
+      "foodThreshold": 2,
+      "restThreshold": 2,
+      "moodThreshold": 1,
+      "actionsPerVisit": 1
+    },
+    "career": { "strategy": "stream_when_possible" },
+    "overlays": ["busy_lost", "status_ignorance"]
+  },
+  {
+    "id": "P66",
+    "label": "Full Top-Up Player",
+    "archetype": "common",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 8,
+      "retryAfterBusyHours": 1
+    },
+    "care": {
+      "strategy": "top_up",
+      "foodThreshold": 7,
+      "restThreshold": 7,
+      "moodThreshold": 6,
+      "actionsPerVisit": "until_safe",
+      "targetFood": 7,
+      "targetRest": 7,
+      "targetMood": 6
+    },
+    "shopping": { "foodReserve": 12 },
+    "overlays": ["busy_retry"]
+  },
+  {
+    "id": "P67",
+    "label": "Worst-Stat-Only Player",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 4.8 },
+    "care": { "strategy": "worst_only", "actionsPerVisit": 1 },
+    "shopping": { "foodReserve": 6 },
+    "overlays": []
+  },
+  {
+    "id": "P68",
+    "label": "Everything at 3 Is Fine",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 4 },
+    "care": {
+      "strategy": "minimal",
+      "foodThreshold": 2,
+      "restThreshold": 2,
+      "moodThreshold": 2,
+      "targetFood": 3,
+      "targetRest": 3,
+      "targetMood": 3,
+      "actionsPerVisit": 2
+    },
+    "shopping": { "foodReserve": 5 },
+    "overlays": []
+  },
+  {
+    "id": "P69",
+    "label": "Rescue Learner",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 8 },
+    "care": { "strategy": "rescue_learner", "actionsPerVisit": 1 },
+    "shopping": { "foodReserve": 8 },
+    "autonomyAwareness": "relies_on_rescue",
+    "overlays": []
+  },
+  {
+    "id": "P70",
+    "label": "Rescue Exploiter",
+    "archetype": "edge",
+    "schedule": { "type": "fixed_interval", "intervalHours": 4 },
+    "care": {
+      "strategy": "rescue_exploit",
+      "foodThreshold": 2,
+      "restThreshold": 2,
+      "targetFood": 5,
+      "targetRest": 5,
+      "actionsPerVisit": "until_safe"
+    },
+    "career": { "strategy": "stream_when_possible" },
+    "autonomyAwareness": "tries_to_exploit_rescue",
+    "overlays": []
+  },
+  {
+    "id": "P71",
+    "label": "Empty Pantry Procrastinator",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "care": { "foodThreshold": 2 },
+    "shopping": { "foodReserve": 0, "waitForPreferred": true },
+    "overlays": ["busy_lost", "shop_rotation_bad_luck"]
+  },
+  {
+    "id": "P72",
+    "label": "Pantry Hoarder",
+    "archetype": "optimizer",
+    "target": 500000,
+    "schedule": { "type": "fixed_interval", "intervalHours": 6 },
+    "shopping": {
+      "foodReserve": 20,
+      "foodSelection": "varied",
+      "spendAggressiveness": "high",
+      "avoidTags": ["decoration", "room"]
+    },
+    "overlays": []
+  },
+  {
+    "id": "P73",
+    "label": "Favorite-Food Repeater",
+    "archetype": "common",
+    "schedule": {
+      "type": "fixed_interval",
+      "intervalHours": 5,
+      "retryAfterBusyHours": 1
+    },
+    "shopping": {
+      "foodSelection": "favorite_repeat",
+      "waitForPreferred": true,
+      "insurance": "after_incident"
+    },
+    "nutrition": { "strategy": "preference_first" },
+    "overlays": [
+      "busy_retry",
+      "shop_rotation_bad_luck",
+      "preference_stubborn",
+      "status_ignorance",
+      "medical_misunderstanding"
+    ]
+  },
+  {
+    "id": "P74",
+    "label": "Dr Pepper Main",
+    "archetype": "risky",
+    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "shopping": {
+      "preferredItemIds": ["dr-pepper"],
+      "foodSelection": "preferred_item",
+      "waitForPreferred": true
+    },
+    "nutrition": { "strategy": "preference_first" },
+    "behavior": { "learnAfterSugarCrash": true },
+    "overlays": ["shop_rotation_bad_luck", "preference_stubborn"]
+  },
+  {
+    "id": "P75",
+    "label": "Sugar-Blind Player",
+    "archetype": "common",
+    "schedule": { "type": "fixed_interval", "intervalHours": 4.8 },
+    "shopping": { "foodSelection": "food_gain" },
+    "nutrition": { "strategy": "ignore" },
+    "overlays": ["busy_lost", "preference_stubborn", "status_ignorance"]
+  }
+]
