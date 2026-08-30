@@ -3,6 +3,8 @@ import { resolveAudienceGrowth } from './audience-growth-rules';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { startRun } from './game-engine';
 import { resolveAutomaticEventHook } from './simulation/event-hook-resolution';
+import { eventCandidates } from './event-candidate-pool';
+import { localDate } from './shop-rules';
 
 const HOUR = 3_600_000;
 
@@ -14,6 +16,87 @@ function run(seed: string) {
 }
 
 describe('authored autonomy and audience soft cap', () => {
+  test('Drawing Tablet uses the pre-payout Balance for its shared side-gig cooldown', () => {
+    const initial = run('emote-cooldown');
+    const item = BUNDLED_GAME_DEFINITION.items.find(
+      (candidate) => candidate.id === 'drawing-tablet',
+    )!;
+    const hook = item.automaticEventHooks!.find(
+      (candidate) => candidate.id === 'small-emote-commission',
+    )!;
+    const solvent = resolveAutomaticEventHook({
+      state: initial,
+      commandId: 'emote-solvent',
+      itemId: item.id,
+      hook,
+    });
+    const inDebt = resolveAutomaticEventHook({
+      state: { ...initial, balance: -1 },
+      commandId: 'emote-debt',
+      itemId: item.id,
+      hook,
+    });
+
+    expect(solvent.cooldownAt).toBe(36 * HOUR);
+    expect(inDebt.balanceDelta).toBeGreaterThan(1);
+    expect(inDebt.cooldownAt).toBe(18 * HOUR);
+  });
+
+  test('the debt cooldown reopens the shared slot but later debt is not retroactive', () => {
+    const initial = run('shared-side-gig');
+    const eligible = {
+      ...initial,
+      now: 18 * HOUR,
+      balance: -1,
+      inventory: {
+        ...initial.inventory,
+        'drawing-tablet': 1,
+        'merch-sample': 1,
+      },
+      progression: {
+        ...initial.progression,
+        followers: 1_000,
+        peakFollowers: 1_000,
+        careerTier: 'sub_1k' as const,
+      },
+      history: {
+        ...initial.history,
+        eventCooldowns: { autonomous_side_gig: 18 * HOUR },
+      },
+    };
+    const causes = eventCandidates(
+      eligible,
+      BUNDLED_GAME_DEFINITION,
+      localDate(eligible.now, eligible.timezone),
+      0,
+    ).map(({ type, weight }) => ({ type, weight }));
+    expect(causes).toEqual(
+      expect.arrayContaining([
+        {
+          type: 'item_hook:drawing-tablet:small-emote-commission',
+          weight: 3,
+        },
+        { type: 'item_hook:merch-sample:merch-sample-sale', weight: 3 },
+      ]),
+    );
+
+    const retroactive = eventCandidates(
+      {
+        ...eligible,
+        history: {
+          ...eligible.history,
+          eventCooldowns: { autonomous_side_gig: 36 * HOUR },
+        },
+      },
+      BUNDLED_GAME_DEFINITION,
+      localDate(eligible.now, eligible.timezone),
+      0,
+    );
+    expect(
+      retroactive.filter(({ type }) => type.startsWith('item_hook:')),
+    ).toEqual([]);
+  });
+
   test('Can Opener outcomes are seeded and explicitly attribute injuries', () => {
     const initial = run('can-opener');
     const item = BUNDLED_GAME_DEFINITION.items.find(

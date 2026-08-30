@@ -1,4 +1,5 @@
 import { expect, signInAndChooseMode, test } from './fixtures';
+import rules from '../src/lib/data/simulation-rules.json';
 test('signs in and reaches the companion room', async ({ page }) => {
   await signInAndChooseMode(page, 'Realtime mode');
   await expect(page.getByRole('region', { name: /room/i })).toBeVisible();
@@ -36,7 +37,7 @@ test('keeps the generated key in memory and starts fresh on reload', async ({
   await settings.locator('summary').click();
   await expect(
     page.getByRole('region', { name: 'Time and balance' }),
-  ).toContainText('Balance: $20');
+  ).toContainText(`Balance: $${rules.startingCurrency}`);
 });
 
 test('opens shop and history from the room', async ({ page }) => {

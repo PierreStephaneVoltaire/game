@@ -98,7 +98,7 @@ export function createRunState(
       awardedMilestones: ['debut'],
       queuedEventStreams: [],
       permanentDonationBonus: false,
-      lastAutonomousStreamSelectedAt: input.now,
+      lastQualifyingOrdinaryStreamStartedAt: input.now,
       activeAudienceBoosts: [],
       agencyJoinedAt: null,
       discoveryBoosts: [],

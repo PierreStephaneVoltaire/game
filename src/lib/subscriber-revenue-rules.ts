@@ -13,9 +13,18 @@ export function processSubscriberRevenue(
   if ((at - state.history.runStartedAt) % interval !== 0)
     return { state, eventIds: [] };
   const revenueMultiplier = subscriberRevenueMultiplier(state);
-  const amount = Math.round(
+  const legacyRevenueAmount = Math.round(
     rules.progression.subscriberRevenue.baseAmount * revenueMultiplier,
   );
+  const progressionFollowers = Math.max(
+    state.progression.followers,
+    state.progression.peakFollowers,
+  );
+  const subscriberRevenueFloor =
+    rules.progression.subscriberRevenue.minimumAmountBands
+      .filter((band) => progressionFollowers >= band.minimumPeakSubscribers)
+      .at(-1)?.amount ?? 0;
+  const amount = Math.max(legacyRevenueAmount, subscriberRevenueFloor);
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'subscriber_revenue',
@@ -23,6 +32,8 @@ export function processSubscriberRevenue(
     message: `Subscriber Revenue paid $${amount}.`,
     amount,
     revenueMultiplier,
+    legacyRevenueAmount,
+    subscriberRevenueFloor,
   };
   const credited: GameState = {
     ...creditIncome(state, amount),

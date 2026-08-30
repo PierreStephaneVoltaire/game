@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
-import { completeStreamEconomy } from './economy-rules';
+import { completeStreamEconomy, streamRateFor } from './economy-rules';
 import { hospitalCost, purchaseQuantity } from './billing-rules';
 import { projectCompletionAtLocalMidnight } from './project-economy-rules';
 import { startRun } from './game-engine';
@@ -16,6 +16,29 @@ function state(): GameState {
 }
 
 describe('economy and progression rules', () => {
+  test.each([
+    [0, [8, 18]],
+    [999, [8, 18]],
+    [1_000, [12, 22]],
+    [9_999, [12, 22]],
+    [10_000, [15, 28]],
+  ])(
+    'uses the authored stream-rate band at %i peak Subscribers',
+    (peak, band) => {
+      const initial = state();
+      expect(
+        streamRateFor({
+          ...initial,
+          progression: {
+            ...initial.progression,
+            followers: peak,
+            peakFollowers: peak,
+          },
+        }),
+      ).toEqual(band);
+    },
+  );
+
   test('purchase quantity respects stock and authored ownership cap', () => {
     const item = { ...BUNDLED_GAME_DEFINITION.items[0], maximumOwned: 2 };
     const current = {

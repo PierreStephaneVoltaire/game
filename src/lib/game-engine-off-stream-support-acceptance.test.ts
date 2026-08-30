@@ -76,10 +76,10 @@ describe('off-stream support', () => {
       (candidate) => candidate.type === 'off_stream_support',
     );
     expect(event?.amount).toBeGreaterThanOrEqual(5);
-    expect(event?.amount).toBeLessThanOrEqual(15);
+    expect(event?.amount).toBeLessThanOrEqual(100);
     expect(supported?.balance).toBe(-100 + event!.amount!);
     expect(supported?.progression.followers).toBe(100);
-    expect(supported?.progression.lastAutonomousStreamSelectedAt).toBe(
+    expect(supported?.progression.lastQualifyingOrdinaryStreamStartedAt).toBe(
       NOW - 100 * HOUR,
     );
     expect(supported?.activity?.type).toBe('medical_care');
@@ -155,18 +155,22 @@ describe('off-stream support', () => {
     expect(selectedAtBoundary).toBe(true);
   });
 
-  test('samples every integer in the uniform $5 through $15 payout range', () => {
+  test('the seeded inclusive payout reaches both $5 and $100', () => {
     const amounts = new Set<number>();
-    for (let index = 0; index < 5_000 && amounts.size < 11; index += 1) {
+    for (
+      let index = 0;
+      index < 20_000 && (!amounts.has(5) || !amounts.has(100));
+      index += 1
+    ) {
       const event = blockedSupport(`support-range-${index}`).events.find(
         (candidate) => candidate.type === 'off_stream_support',
       );
       if (event?.amount !== undefined) amounts.add(event.amount);
     }
 
-    expect([...amounts].sort((left, right) => left - right)).toEqual([
-      5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-    ]);
+    expect(Math.min(...amounts)).toBe(5);
+    expect(Math.max(...amounts)).toBe(100);
+    expect([...amounts].every(Number.isInteger)).toBe(true);
   });
 
   test('replays the seeded selection and payout exactly', () => {
@@ -224,13 +228,14 @@ describe('off-stream support', () => {
     );
     expect({
       payoutInRange:
-        event?.amount !== undefined && event.amount >= 5 && event.amount <= 15,
+        event?.amount !== undefined && event.amount >= 5 && event.amount <= 100,
       donationTier: event?.donationTier,
       donationEvents: supported?.events.filter(
         (candidate) => candidate.type === 'donation_received',
       ).length,
       followers: supported?.progression.followers,
-      lastSelectedAt: supported?.progression.lastAutonomousStreamSelectedAt,
+      lastSelectedAt:
+        supported?.progression.lastQualifyingOrdinaryStreamStartedAt,
     }).toEqual({
       payoutInRange: true,
       donationTier: undefined,

@@ -54,7 +54,7 @@ export type ProgressionState = {
   awardedMilestones: CareerTier[];
   queuedEventStreams: QueuedEventStream[];
   permanentDonationBonus: boolean;
-  lastAutonomousStreamSelectedAt: number;
+  lastQualifyingOrdinaryStreamStartedAt: number;
   activeAudienceBoosts: Array<{
     streamId: string;
     startedAt: number;

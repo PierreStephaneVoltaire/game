@@ -1,7 +1,7 @@
 {
   "statRange": { "min": 0, "max": 10 },
   "healthMaximum": 40,
-  "startingCurrency": 20,
+  "startingCurrency": 60,
   "startingInventory": {
     "water": 1,
     "uncrustables": 1,
@@ -56,7 +56,7 @@
     "offStreamSupport": {
       "weight": 10,
       "cooldownHours": 12,
-      "payout": { "minimum": 5, "maximum": 15 }
+      "payout": { "minimum": 5, "maximum": 100 }
     },
     "weights": {
       "none": 100,
@@ -92,26 +92,23 @@
   },
   "stream": {
     "blockers": [
-      "hungry",
       "starving",
       "sleep_deprived",
       "sick",
       "kidney_stone",
-      "depressed",
-      "low_energy",
-      "overstimulated",
-      "dizzy_spell"
+      "depressed"
     ],
     "weight": {
       "base": 50,
+      "flatBonus": 20,
       "moodCoefficient": 25,
       "creativityCoefficient": 25,
       "metricCenter": 5,
       "metricScale": 5,
       "managedNutritionBonus": 5,
       "drought": {
-        "graceHours": 24,
-        "weightPerHour": 4,
+        "graceHours": 12,
+        "weightPerHour": 6,
         "maximumBonus": 300
       }
     },
@@ -129,7 +126,7 @@
     },
     "restCost": { "maximumRest": 10 },
     "income": {
-      "minimumRate": 5,
+      "minimumRate": 8,
       "rateSlots": 11,
       "baseMultiplier": 0.5,
       "creativityDivisor": 10
@@ -266,7 +263,14 @@
   },
   "progression": {
     "startingFollowers": 100,
-    "subscriberRevenue": { "intervalHours": 2, "baseAmount": 1 },
+    "subscriberRevenue": {
+      "intervalHours": 2,
+      "baseAmount": 1,
+      "minimumAmountBands": [
+        { "minimumPeakSubscribers": 0, "amount": 2 },
+        { "minimumPeakSubscribers": 30000, "amount": 3 }
+      ]
+    },
     "naturalAudience": {
       "intervalHours": 2,
       "streamBoostDays": 7,
@@ -299,9 +303,9 @@
     "milestones": [
       { "id": "debut", "followers": 100 },
       { "id": "first_model", "followers": 150, "unlockModelTier": 1 },
-      { "id": "sub_1k", "followers": 1000, "streamRate": [8, 18], "mood": 2 },
+      { "id": "sub_1k", "followers": 1000, "streamRate": [12, 22], "mood": 2 },
       { "id": "model_redesign", "followers": 5000, "unlockModelTier": 2 },
-      { "id": "twitch_partner", "followers": 10000, "streamRate": [10, 22] },
+      { "id": "twitch_partner", "followers": 10000, "streamRate": [15, 28] },
       {
         "id": "sub_30k",
         "followers": 30000,

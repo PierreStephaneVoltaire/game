@@ -44,7 +44,6 @@ export function resolveAttemptEvent(
       stateVersion: state.stateVersion + 1,
     };
   if (selected === 'stream') {
-    const ordinarySelection = state.progression.queuedEventStreams.length === 0;
     const started = startAutonomousStream(state, commandId);
     const generated = started.events
       .slice(state.events.length)
@@ -54,12 +53,6 @@ export function resolveAttemptEvent(
       }));
     return {
       ...started,
-      progression: ordinarySelection
-        ? {
-            ...started.progression,
-            lastAutonomousStreamSelectedAt: state.now,
-          }
-        : started.progression,
       events: [...state.events, opportunityEvent, ...generated],
       stateVersion: state.stateVersion + 2,
     };

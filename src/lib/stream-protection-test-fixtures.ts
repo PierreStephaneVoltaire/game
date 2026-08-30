@@ -47,7 +47,7 @@ export function eligibleRunAt(
     },
     progression: {
       ...BASE.progression,
-      lastAutonomousStreamSelectedAt: now - droughtHours * HOUR,
+      lastQualifyingOrdinaryStreamStartedAt: now - droughtHours * HOUR,
     },
   };
 }

@@ -22,6 +22,13 @@ function activityState(seed: string): GameState {
       bond: 4,
       creativity: 5,
     },
+    statuses: {
+      sick: {
+        since: 0,
+        source: 'test-stream-blocker',
+        naturalPassAt: Number.MAX_SAFE_INTEGER,
+      },
+    },
   };
 }
 

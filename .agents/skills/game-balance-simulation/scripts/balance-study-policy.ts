@@ -1,12 +1,12 @@
 import { BUNDLED_GAME_DEFINITION as definition } from '../../../../src/lib/game-definition';
 import {
   dispatchCommand,
-  reconcileTime,
   startRun,
 } from '../../../../src/lib/game-engine';
 import type { GameCommand, GameState } from '../../../../src/lib/game-types';
 import { HOUR_MS } from '../../../../src/lib/game-constants';
 import { type CanonicalRunSpec, type RunTrace } from './balance-study-contract';
+import { reconcileThrough } from './balance-reconcile-through';
 
 export { canonicalRunSpecs } from './balance-study-contract';
 export type { RunSpec, RunTrace } from './balance-study-contract';
@@ -42,7 +42,7 @@ export function runStudySpec(spec: CanonicalRunSpec): RunTrace {
       checks.busy += 1;
       continue;
     }
-    state = reconcileTime(state, scheduledAt, definition).state;
+    state = reconcileThrough(state, scheduledAt, definition);
     if (state.ending) break;
     checks.attended += 1;
     const result = attendSession(state, spec, index);
@@ -51,7 +51,7 @@ export function runStudySpec(spec: CanonicalRunSpec): RunTrace {
   }
   const horizonAt = STUDY_START + HORIZON_DAYS * DAY_MS;
   if (!state.ending && state.now < horizonAt)
-    state = reconcileTime(state, horizonAt, definition).state;
+    state = reconcileThrough(state, horizonAt, definition);
   return { state, spec, checks, rejectedPurchases };
 }
 

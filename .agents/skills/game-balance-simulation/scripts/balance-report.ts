@@ -27,6 +27,10 @@ import {
   financialPressureTable,
   lifeEventImpactTable,
 } from './balance-financial-report';
+import {
+  cadenceExceptions,
+  cadenceSummary,
+} from './balance-cadence-report';
 
 type Result = ReturnType<typeof buildStudyResult>;
 
@@ -41,6 +45,8 @@ export function renderStudyReport(result: Result) {
   return `# 60-Day Health, Career, Event, Nutrition, and Economy Diagnosis
 
 Policy contract: canonical 50-run balance study v${result.study.policyVersion}
+
+Engine revision: ${result.study.engineRevision}
 
 This report is generated from the real seeded engine. It contains 18 Casual,
 12 Focused, 10 Optimal, and 10 exact 50%-neglect runs, stopped at an ending or 60
@@ -97,6 +103,14 @@ discounted contributions; the largest active load was
 ${integer(Math.max(...runs.map((run) => run.audienceBoosts.maximumActiveLoad)))}.
 The follower table separates natural growth, Clippers, donations, model rewards,
 and any residual source; it does not infer growth from final totals.
+
+### Ordinary-stream cadence acceptance
+
+${cadenceSummary(runs)}
+
+#### Horizon runs below 45 ordinary starts
+
+${cadenceExceptions(runs)}
 
 ## Physical survival, completion, statuses, and damage
 

@@ -16,15 +16,11 @@ import {
   overstimulationMoodDelta,
 } from '../status-rules';
 import { resolveAttemptEvent } from '../event-rules';
-import { clampMetric, HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
-import {
-  completeStreamEconomy,
-  resolveCommissionWorkPayout,
-} from '../economy-rules';
+import { clampMetric, STAT_MAX, STAT_MIN } from '../game-constants';
+import { resolveCommissionWorkPayout } from '../economy-rules';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { localDate } from '../shop-rules';
 import { creditIncome } from '../income-rules';
-import { recordStreamEnd } from '../audience-growth-rules';
 import { resetPlayerCareRescueLocks } from '../autonomous-rescue-rules';
 import { completeMedicalCare } from './medical-care-completion';
 import {
@@ -32,6 +28,7 @@ import {
   settleActivityFinances,
 } from './activity-financial-settlement';
 import { activityCompletionNarration } from './activity-completion-message';
+import { settleStreamCompletion } from './stream-completion';
 
 export type ActivityCompletionInput = {
   state: GameState;
@@ -207,32 +204,15 @@ export function completeActivity({
   if (activity.type === 'medical_care' && !interrupted)
     next = completeMedicalCare(next, activity, completedAt);
   if (activity.type === 'stream') {
-    next = recordStreamEnd(next, elapsed, interrupted);
-    const economy = completeStreamEconomy(
-      { ...next, metrics: state.metrics },
-      activity.sourceActionId,
-      elapsed / HOUR_MS,
+    next = settleStreamCompletion({
+      state: next,
+      activity,
       completedAt,
-      Number(activity.payload?.hourlyRate ?? rules.stream.income.minimumRate),
-      Number(activity.payload?.donationMultiplier ?? 1),
-    );
-    next = {
-      ...next,
-      balance: economy.state.balance,
-      metrics: {
-        ...next.metrics,
-        mood: Math.max(
-          STAT_MIN,
-          Math.min(
-            STAT_MAX,
-            next.metrics.mood +
-              (economy.state.metrics.mood - state.metrics.mood),
-          ),
-        ),
-      },
-      progression: economy.state.progression,
-      events: [...next.events, ...economy.events],
-    };
+      elapsedMs: elapsed,
+      interrupted,
+      streamMetrics: state.metrics,
+      completionEventId: event.id,
+    });
   }
   if (activity.type === 'commission_work' && !interrupted)
     next = appendCommissionPayoutEvent(

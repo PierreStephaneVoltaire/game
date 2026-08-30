@@ -214,14 +214,14 @@ export function economy(state: GameState) {
   };
   income.stream =
     state.balance -
-    20 +
+    rules.startingCurrency +
     Object.values(expenses).reduce((sum, amount) => sum + amount, 0) -
     explicit;
   const debtEffects = events.flatMap((event) =>
     event.financialEffect ? [event.financialEffect] : [],
   );
   return {
-    startingBalance: 20,
+    startingBalance: rules.startingCurrency,
     endingBalance: state.balance,
     income,
     expenses,

@@ -26,6 +26,8 @@ ${first?.id ?? 'unknown'} through ${last?.id ?? 'unknown'} against the real
 engine. The combined report is generated only after all ${batchCount} batch
 result files validate.
 
+Engine revision: ${result.study.engineRevision}
+
 ## Profile summary
 
 ${batchSummaryTable(result.runs)}

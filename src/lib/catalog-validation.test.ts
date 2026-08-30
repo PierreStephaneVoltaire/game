@@ -194,6 +194,7 @@ describe('catalogue validation', () => {
       if (!hook) throw new Error('Catnip needs a hook.');
       hook.eligibility = 'placed';
       hook.weight = 0;
+      hook.cooldownHoursWhenBalanceNegative = -1;
       hook.effects = { mood: { min: 2, max: -1 } };
     });
 
@@ -201,6 +202,7 @@ describe('catalogue validation', () => {
       expect.arrayContaining([
         'automatic event hook catnip_event has invalid weight',
         'automatic event hook catnip_event cannot require placement',
+        'automatic event hook catnip_event has invalid negative-Balance cooldown',
         'invalid hook catnip_event effect range for mood',
       ]),
     );

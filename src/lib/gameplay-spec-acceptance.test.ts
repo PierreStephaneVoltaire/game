@@ -218,7 +218,7 @@ describe('nutrition and medical obligations', () => {
       { type: 'medical_care', commandId: 'insured-hospital', now: 0 },
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(started.balance).toBe(20);
+    expect(started.balance).toBe(BUNDLED_GAME_DEFINITION.startingCurrency);
     expect(started.medicalDebt).toEqual([]);
     expect(started.activity?.payload).toMatchObject({
       insuredAtStart: true,

@@ -71,6 +71,7 @@ export type ShoppingConfig = {
   waitForPreferred?: boolean;
   insurance: 'never' | 'asap' | 'after_incident';
   placeRoomItems?: boolean;
+  allowDebtSpending?: boolean;
 };
 
 export type NutritionStrategy =

@@ -77,6 +77,10 @@ export function resolveAutomaticEventHook(input: {
     : 0;
   const message =
     outcome?.message ?? selectMessage(state, commandId, itemId, hook);
+  const cooldownHours =
+    state.balance < 0
+      ? (hook.cooldownHoursWhenBalanceNegative ?? hook.cooldownHours)
+      : hook.cooldownHours;
   return {
     metrics,
     metricDeltas,
@@ -89,9 +93,7 @@ export function resolveAutomaticEventHook(input: {
     balanceDelta,
     message,
     selectedOutcomeId: outcome?.id,
-    cooldownAt: hook.cooldownHours
-      ? state.now + hook.cooldownHours * HOUR_MS
-      : undefined,
+    cooldownAt: cooldownHours ? state.now + cooldownHours * HOUR_MS : undefined,
     cooldownKey: hook.sharedCooldownKey ?? `item_hook:${itemId}:${hook.id}`,
   };
 }

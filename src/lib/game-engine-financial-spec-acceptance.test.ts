@@ -4,6 +4,7 @@ import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import { HOUR_MS } from './game-constants';
 import endingRules from './data/ending-rules.json';
+import rules from './data/simulation-rules.json';
 
 function run() {
   return startRun(
@@ -148,6 +149,8 @@ describe('economy specification through the engine seam', () => {
     const recovered = reconcileTime(
       {
         ...indebted,
+        balance:
+          -rules.progression.subscriberRevenue.minimumAmountBands[0].amount,
         history: {
           ...indebted.history,
           nextAutonomousAt: 4 * HOUR_MS,

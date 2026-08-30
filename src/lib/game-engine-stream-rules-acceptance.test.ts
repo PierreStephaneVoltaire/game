@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import type { GameMode, GameState } from './game-types';
+import rules from './data/simulation-rules.json';
 
 const HOUR = 3_600_000;
 const AUTO_TYPES = new Set([
@@ -227,14 +228,17 @@ describe('automatic stream snacks and income', () => {
     const second = streamAttempt(0, 'income-replay');
     expect(second.state).toEqual(first.state);
     expect(first.state.activity).toBeNull();
-    expect(first.state.balance).toBeGreaterThan(20);
+    expect(first.state.balance).toBeGreaterThan(
+      BUNDLED_GAME_DEFINITION.startingCurrency,
+    );
     const completion = first.state.events.find(
       (event) => event.type === 'activity_completed',
     )!;
     const duration = (completion.at - 0) / HOUR;
-    const income = first.state.balance - 20;
+    const income =
+      first.state.balance - BUNDLED_GAME_DEFINITION.startingCurrency;
     expect(
-      Array.from({ length: 11 }, (_, index) => index + 5).some(
+      Array.from({ length: 11 }, (_, index) => index + 8).some(
         (hourlyRate) =>
           Math.round(hourlyRate * duration * (0.5 + 8 / 10)) === income,
       ),
@@ -260,7 +264,15 @@ describe('automatic stream snacks and income', () => {
       2 * HOUR,
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(result.balance).toBe(-973);
+    const streamIncome = Math.round(
+      10 *
+        2 *
+        (rules.stream.income.baseMultiplier +
+          initial.metrics.creativity / rules.stream.income.creativityDivisor),
+    );
+    const subscriberRevenue =
+      rules.progression.subscriberRevenue.minimumAmountBands[0].amount;
+    expect(result.balance).toBe(-1_000 + streamIncome + subscriberRevenue);
     expect(result.activity).toBeNull();
   });
 });

@@ -29,6 +29,7 @@ import {
   audienceBoostDiagnostics,
   followerSources,
 } from './balance-audience-analysis';
+import { cadenceAnalysis } from './balance-cadence-analysis';
 const MILESTONES = [1_000, 10_000, 100_000, 250_000, 500_000, 1_000_000];
 
 export function buildStudyResult(traces: RunTrace[]) {
@@ -44,6 +45,7 @@ export function buildStudyResult(traces: RunTrace[]) {
       canonicalPolicyVersion: 2,
       extensionPolicyVersion: heterogeneous ? 1 : null,
       engine: 'real',
+      engineRevision: process.env.BALANCE_ENGINE_REVISION ?? 'unrecorded',
       horizonDays: HORIZON_DAYS,
       timezone: 'America/Toronto',
       question: heterogeneous
@@ -132,6 +134,7 @@ function summarizeRun(trace: RunTrace) {
       interrupted: state.progression.streamStats.interrupted,
       hours: round(state.progression.streamStats.elapsedMs / 3_600_000, 2),
     },
+    cadence: cadenceAnalysis(state),
     checks: trace.checks,
     careBehavior: careProfileAnalysis(trace),
     events: eventAnalysis(events),
