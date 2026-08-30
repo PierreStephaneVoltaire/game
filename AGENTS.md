@@ -1,5 +1,17 @@
 # Project agent rules
 
+## Git prohibition
+
+- Agents must not run Git commands or perform Git operations in this
+  repository. This prohibition includes read-only inspection as well as
+  staging, committing, amending, branching, switching branches, merging,
+  rebasing, pulling, fetching, pushing, resetting, restoring, tagging, or
+  changing remotes.
+- Do not use GitHub CLI, hosting APIs, deployment workflows, or other tools to
+  create or modify commits, branches, pull requests, releases, or remote
+  repository state.
+- Leave all version-control and repository deployment actions to the user.
+
 ## Simulation boundaries
 
 - Status alignment logic belongs in `src/lib/status-rules.ts`. Do not add new
