@@ -4,6 +4,8 @@ import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, startRun } from './game-engine';
 import type { GameEvent, GameState } from './game-types';
 import { projectJourney } from './ui/journey-events';
+import eventTexts from './data/event-texts.json';
+import { companionProfile } from './companion-profile';
 
 function activityState(seed: string): GameState {
   const state = startRun(
@@ -75,7 +77,16 @@ function repeatedCompletions(type: 'socialize' | 'play', seed: string) {
   };
 }
 
-describe('Socialize and Play activity vignettes', () => {
+function authoredCompletionMessages(
+  type: 'socialize' | 'play',
+  petName = companionProfile.displayName,
+): string[] {
+  return eventTexts.activityCompletions[type].map((message) =>
+    message.replaceAll('{pet}', petName),
+  );
+}
+
+describe('Socialize and Play outcomes and authored completion text', () => {
   test.each([['play', 'mood'] as const, ['socialize', 'creativity'] as const])(
     '%s awards Bond and its distinct primary stat',
     (type, primary) => {
@@ -84,20 +95,23 @@ describe('Socialize and Play activity vignettes', () => {
 
       expect(normal.event.metricDeltas).toEqual({ [primary]: 1, bond: 1 });
       expect(strong.event.metricDeltas).toEqual({ [primary]: 2, bond: 1 });
-      expect(normal.event.activityNarration).toBeTruthy();
-      expect(strong.event.activityNarration).toBeTruthy();
+      expect(authoredCompletionMessages(type)).toContain(normal.event.message);
+      expect(authoredCompletionMessages(type)).toContain(strong.event.message);
       expect(
         projectJourney(strong.state.events, 'Nova').some(
           (entry) =>
             entry.message ===
-            strong.event.activityNarration?.replace(/^Companion\b/, 'Nova'),
+            strong.event.message.replaceAll(
+              companionProfile.displayName,
+              'Nova',
+            ),
         ),
       ).toBe(true);
     },
   );
 
   test.each([['play', 'mood'] as const, ['socialize', 'creativity'] as const])(
-    'repeated %s keeps Bond and its selected vignette but suppresses its primary reward',
+    'repeated %s keeps Bond and authored completion text but suppresses its primary reward',
     (type, primary) => {
       let repeated: ReturnType<typeof repeatedCompletions> | undefined;
       for (let index = 0; index < 2_000 && !repeated; index += 1) {
@@ -109,12 +123,17 @@ describe('Socialize and Play activity vignettes', () => {
       }
 
       expect(repeated?.event.metricDeltas).toEqual({ [primary]: 0, bond: 1 });
-      expect(repeated?.event.activityNarration).toBeTruthy();
+      expect(authoredCompletionMessages(type)).toContain(
+        repeated?.event.message,
+      );
       expect(
         projectJourney(repeated!.state.events, 'Nova').some(
           (entry) =>
             entry.message ===
-            repeated!.event.activityNarration?.replace(/^Companion\b/, 'Nova'),
+            repeated!.event.message.replaceAll(
+              companionProfile.displayName,
+              'Nova',
+            ),
         ),
       ).toBe(true);
     },
@@ -155,7 +174,7 @@ describe('Socialize and Play activity vignettes', () => {
     expect(completion?.metricDeltas?.bond).toBe(1);
   });
 
-  test('the same accepted action replays the same strength and vignette', () => {
+  test('the same accepted action replays the same strength and completion text', () => {
     const first = completeActivity(
       'socialize',
       'seeded-vignette-replay',
@@ -168,30 +187,29 @@ describe('Socialize and Play activity vignettes', () => {
     ).event;
 
     expect(second.activityOutcome).toBe(first.activityOutcome);
-    expect(second.activityNarration).toBe(first.activityNarration);
+    expect(second.message).toBe(first.message);
     expect(second.metricDeltas).toEqual(first.metricDeltas);
   });
 
   test.each(['play', 'socialize'] as const)(
-    '%s selects from nine normal and three strong authored vignettes',
+    '%s selects every completion only from its event-texts array',
     (type) => {
-      const normal = new Set<string>();
-      const strong = new Set<string>();
+      const expected = new Set(authoredCompletionMessages(type));
+      const selected = new Set<string>();
       for (
         let index = 0;
-        index < 400 && (normal.size < 9 || strong.size < 3);
+        index < 400 && selected.size < expected.size;
         index += 1
       ) {
         const event = completeActivity(
           type,
-          `vignette-pool-${type}-${index}`,
+          `completion-copy-pool-${type}-${index}`,
         ).event;
-        const pool = event.activityOutcome === 'strong' ? strong : normal;
-        pool.add(event.activityNarration!);
+        expect(expected).toContain(event.message);
+        selected.add(event.message);
       }
 
-      expect(normal.size).toBe(9);
-      expect(strong.size).toBe(3);
+      expect(selected).toEqual(expected);
     },
   );
 });

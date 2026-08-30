@@ -148,6 +148,12 @@ h2 {
 .item-body strong {
   display: block;
 }
+.item-summary p {
+  margin: 5px 0 0;
+  color: #766d7f;
+  font-size: 0.68rem;
+  line-height: 1.4;
+}
 .cart-line small {
   display: block;
   color: #766d7f;

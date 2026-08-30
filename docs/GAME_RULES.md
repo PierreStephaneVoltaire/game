@@ -295,9 +295,9 @@ Rest 0–2 also enables a weight-10, once-per-Rest snoring narration.
 Socialize lasts 15, 30, 45, or 60 minutes with equal chances and gives Bond +1
 plus Creativity +1. Play lasts 1, 2, or 3 hours with equal chances and gives
 Bond +1 plus Mood +1. A seeded strong outcome, selected 25% of the time, raises
-the activity's primary reward from +1 to +2 while Bond remains +1. Each
-accepted activity selects a seeded authored vignette from its normal or strong
-pool when it starts.
+the activity's primary reward from +1 to +2 while Bond remains +1. Completed
+activities select their player-facing narration from the authored arrays in
+`event-texts.json`; outcome strength does not replace that text.
 
 Their refusal chance adds 20 percentage points at Mood 0–2, 20 at Rest 0–2,
 and 50 while Annoyed, capped at 90%. Consecutive repetition no longer raises
@@ -726,7 +726,7 @@ its fixed anchors and three-row layout.
 ## Journey and Endings
 
 Journey shows natural narration for meaningful care, authored activity
-vignettes, reactions, catch-up events, off-stream support, donations,
+completion text, reactions, catch-up events, off-stream support, donations,
 milestones, commissions, projects, medical recovery, bills and payments,
 emergency rescues, sugar warnings, reading, side gigs, injuries, craving
 expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
@@ -747,3 +747,141 @@ card with trigger evidence. Made It remains visible as an earned non-terminal
 unlock. The Markdown export records the exact terminal Ending, causal chain,
 and complete Journey; Death causes are never inferred by parsing narration
 text.
+
+## Modifier arithmetic reference
+
+`+` adds the stated amount, `−` subtracts it, and `×` multiplies the value to
+its left. Metric changes are applied to the current metric and then clamped:
+Health stays from 0 through 40, while Food, Mood, Rest, Bond, and Creativity
+stay from 0 through 10. Current Subscribers cannot fall below 0. Balance has no
+lower clamp.
+
+Unless a rule below explicitly says that a modifier affects another reward,
+it does not. In particular, Subscriber Revenue multipliers do not multiply
+stream income, donations, or Subscriber gains; discovery multipliers do not
+multiply Clippers, donations, model rewards, or other direct Subscriber
+awards; and donation-chance multipliers do not multiply donation cash or the
+Subscribers attached to a donation.
+
+### Subscriber arithmetic
+
+| Source                          | Exact change or formula                                                                                                    |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Natural two-hour tick           | `round((current tier rate + full stream contributions + discounted stream contributions) × active discovery multipliers)`  |
+| One stream contribution         | `tier rate at stream start × (1 + Creativity at stream start × 0.02)` for seven days                                       |
+| Full stream contributions       | The oldest four active stream contributions each count at `×1`                                                             |
+| Discounted stream contributions | Every later active stream contribution counts at `×0.25`                                                                   |
+| Algorithm Boost                 | Natural audience total `×1.5` for 24 hours                                                                                 |
+| Agency discovery                | Natural audience total `×1.5` for 168 hours                                                                                |
+| Both discovery boosts           | `×1.5 ×1.5 = ×2.25` natural audience growth                                                                                |
+| Clippers                        | `+50 × current career-tier ordinal × active stacks`, immediately for the first stack and then every 24 hours before expiry |
+| Kind supporter or Raid windfall | `+5` Subscribers                                                                                                           |
+| Major or Legendary donor        | `+5 +25 = +30` Subscribers                                                                                                 |
+| Model project completion        | `+50` Subscribers                                                                                                          |
+| Agency invitation               | `+100,000` Subscribers once                                                                                                |
+| Twitter cancellation            | `−1%`, `−2%`, or `−3%` of current Subscribers, rounded once, with a minimum loss of 1 and no result below 0                |
+
+The peak-Subscriber ladder supplies both the current natural-growth tier rate
+and the permanent Subscriber Revenue multiplier:
+
+| Peak Subscribers | Career tier           | Natural rate per two-hour tick | Subscriber Revenue |
+| ---------------: | --------------------- | -----------------------------: | -----------------: |
+|              100 | Debut                 |                             +1 |                 ×1 |
+|              150 | First Model           |                             +2 |                 ×1 |
+|            1,000 | 1K                    |                            +10 |                 ×1 |
+|            5,000 | Model Redesign        |                            +20 |                 ×1 |
+|           10,000 | Twitch Partner        |                            +60 |                 ×1 |
+|           30,000 | 30K                   |                            +80 |               ×1.5 |
+|           40,000 | Tournament Appearance |                           +100 |               ×1.5 |
+|           50,000 | 50K                   |                           +150 |                 ×2 |
+|           75,000 | Convention Guest      |                           +200 |                 ×2 |
+|          100,000 | 100K                  |                           +300 |                 ×3 |
+|          150,000 | 3D Ready              |                           +400 |                 ×3 |
+|          200,000 | 200K                  |                           +500 |                 ×4 |
+|          250,000 | 250K                  |                         +1,000 |                 ×5 |
+|          500,000 | 500K                  |                         +2,000 |                 ×7 |
+|        1,000,000 | 1M                    |                         +2,000 |                ×10 |
+
+Natural growth is rounded only after the tier baseline, all stream
+contributions, the `×0.25` discounts, and all active discovery multipliers have
+been combined. Direct Subscriber changes can unlock several milestones in one
+operation. Peak Subscribers becomes `max(old peak, current Subscribers)` and
+never decreases, so unlocked tiers, stream-rate bands, and Subscriber Revenue
+multipliers are never revoked by a later Subscriber loss.
+
+The career-tier ordinal used by Clippers is the tier's position in the full
+career ladder: Debut is 1, First Model is 2, 1K is 3, through 1M as 15. For
+example, two active stacks at the 1K tier award
+`50 × 3 × 2 = 300` Subscribers per publication.
+
+### Stream and donation arithmetic
+
+| Result                                       | Exact modifier order                                                                                                                        |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ordinary stream selection weight             | `max(0, 50 × seeded roll + 25 × ((Mood − 5) / 5) + 25 × ((Creativity − 5) / 5) + nutrition bonus + drought bonus) × daypart × special date` |
+| Daypart                                      | `×0.5` from 04:00–08:59, `×1.5` from 13:00–19:59, otherwise `×1`                                                                            |
+| June 29 or November 14 stream selection      | Final ordinary stream weight `×2`                                                                                                           |
+| Stream cash income                           | `round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`                                                                              |
+| Donation hit chance per completed whole hour | `min(100%, (2% + Creativity × 0.5% + final-model bonus) × special-date modifier × queued-stream modifier)`                                  |
+| Fourth-model donation bonus                  | `+1` percentage point inside the base donation chance                                                                                       |
+| June 29 or November 14 donation chance       | `×3` chance                                                                                                                                 |
+| Tournament donation chance                   | A separate `×3` chance, stacking with a special date                                                                                        |
+
+The hourly rate is one seeded whole-dollar value from the highest permanently
+unlocked band: $5–$15 initially, $8–$18 after 1K peak Subscribers, or $10–$22
+after 10K peak Subscribers. Creativity therefore changes stream income through
+the `(0.5 + Creativity / 10)` multiplier: `×0.5` at Creativity 0, `×1` at 5,
+and `×1.5` at 10. Interrupted streams use their actual elapsed time for income
+and still roll once for each completed whole hour.
+
+After a successful donation roll, its tier selects the cash and direct
+Subscriber award shown in the donation table above. The `×3` modifiers affect
+only whether a donation occurs. A Kind supporter remains $20–$60 and +5
+Subscribers, for example; its amount is not tripled.
+
+### Balance and economic arithmetic
+
+The general cash equation is:
+
+```text
+new Balance = old Balance + all income − all expenses
+```
+
+| Operation                         | Exact Balance change                                                                                                            |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Shop checkout                     | `− sum(item price × purchased quantity)`                                                                                        |
+| Open Line of Credit               | `−$50 + $10,000 = +$9,950` atomically                                                                                           |
+| Repay Line of Credit              | `−$600 × repayment units`                                                                                                       |
+| Close Line of Credit from opening | Twenty units cost `$600 × 20 = $12,000`; including the $50 opening price and $10,000 advance, the complete net cost is `$2,050` |
+| Subscriber Revenue                | `+round($1 × highest unlocked Subscriber Revenue multiplier)` every two hours                                                   |
+| Stream completion                 | `+round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`, plus each donation's actual amount                             |
+| Commission Work                   | `+$40 + ($15 × starting Creativity)`                                                                                            |
+| Full-body commission              | `+$400` through `+$800`, seeded uniformly in whole dollars                                                                      |
+| Off-stream support                | `+$5` through `+$15`, seeded uniformly in whole dollars                                                                         |
+| Sponsored-stream deal             | `+$250` through `+$2,000`, seeded uniformly in whole dollars                                                                    |
+| Convention milestone              | `+$500` once                                                                                                                    |
+| Personal purchase                 | `− real catalogue price` for the one selected affordable item                                                                   |
+| Tax bill                          | `−$100` through `−$1,000`, seeded uniformly in whole dollars                                                                    |
+| Equipment Failure                 | `−$30` through `−$500`, seeded uniformly in whole dollars, independently of the selected PC-related item                        |
+| Hospital daily payment            | `−min(scheduled payment, remaining principal, max(0, Balance))`                                                                 |
+| Pay all medical debt              | `−ceil(total remaining principal × 0.85)`                                                                                       |
+
+The permanent Subscriber Revenue multiplier uses the highest unlocked peak-
+Subscriber band and replaces the prior multiplier: `×1`, `×1.5`, `×2`, `×3`,
+`×4`, `×5`, `×7`, or `×10`. It does not stack across milestones. Because each
+two-hour payment is rounded separately, `$1 ×1.5` pays $2 per tick.
+
+Catalogue checkout can take Balance below $0. Tax and Equipment Failure can
+also cross from a nonnegative Balance into debt, but neither is eligible while
+Balance is already negative. A personal purchase is selected only when its
+real price is no greater than current Balance, so it cannot create debt.
+Hospital daily payments stop at $0, full medical payoff requires enough
+starting Balance, and LOC repayments require starting Balance to cover the LOC
+repayment portion. Opening the LOC is the exception: its $50 price and $10,000
+advance settle together even when starting Balance is below $50.
+
+Positive income always adds directly to Balance, reducing negative cash before
+making Balance positive. It does not automatically reduce Hospital principal
+or remaining LOC units. `In Debt` is determined only by `Balance < $0`, and
+Financial Ruin checks only an actual Balance crossing to `−$20,000` or below;
+unpaid principal and remaining LOC units are not added to that threshold.

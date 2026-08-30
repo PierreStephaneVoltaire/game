@@ -96,30 +96,18 @@ export function activityPrimaryMetric(
   return rules.completion[type].primaryMetric as 'mood' | 'creativity';
 }
 
-export function chooseActivityVignette(
+export function chooseActivityOutcome(
   type: 'socialize' | 'play',
   state: GameState,
   commandId: string,
-): { outcome: 'normal' | 'strong'; narration: string } {
-  const outcome =
-    actionRandom(
-      state.seed,
-      state.stateVersion,
-      commandId,
-      'activity_outcome',
-      type,
-    ) < rules.vignettes.strongOutcomeChance
-      ? 'strong'
-      : 'normal';
-  const lines = rules.vignettes[type][outcome];
-  const lineIndex = Math.floor(
-    actionRandom(
-      state.seed,
-      state.stateVersion,
-      commandId,
-      'activity_narration',
-      `${type}:${outcome}`,
-    ) * lines.length,
-  );
-  return { outcome, narration: lines[lineIndex] };
+): 'normal' | 'strong' {
+  return actionRandom(
+    state.seed,
+    state.stateVersion,
+    commandId,
+    'activity_outcome',
+    type,
+  ) < rules.outcomes.strongChance
+    ? 'strong'
+    : 'normal';
 }

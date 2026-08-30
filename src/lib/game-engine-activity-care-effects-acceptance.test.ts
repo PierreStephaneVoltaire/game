@@ -72,7 +72,7 @@ describe('Socialize and Play care effects', () => {
   });
 
   test.each(['play', 'socialize'] as const)(
-    'a refused %s attempt selects no vignette and grants no reward',
+    'a refused %s attempt selects no outcome and grants no reward',
     (type) => {
       let refused: ReturnType<typeof dispatchCommand> | undefined;
       for (let index = 0; index < 200 && !refused; index += 1) {
@@ -98,9 +98,7 @@ describe('Socialize and Play care effects', () => {
       expect(
         refused?.state.events.some(
           (event) =>
-            event.activityType === type &&
-            (event.activityOutcome !== undefined ||
-              event.activityNarration !== undefined),
+            event.activityType === type && event.activityOutcome !== undefined,
         ),
       ).toBe(false);
     },
@@ -148,7 +146,7 @@ describe('Socialize and Play care effects', () => {
     expect(completion?.metricDeltas).toEqual({ mood: 0, bond: 1 });
   });
 
-  test('an interrupted interaction grants no reward and keeps its selected vignette out of Journey', () => {
+  test('an interrupted interaction grants no reward and keeps completion copy out of Journey', () => {
     let started: GameState | undefined;
     for (let index = 0; index < 200 && !started; index += 1) {
       const result = dispatchCommand(
@@ -177,12 +175,9 @@ describe('Socialize and Play care effects', () => {
     );
 
     expect(event?.metricDeltas).toEqual({});
-    expect(event?.activityNarration).toBeTruthy();
     expect(
       projectJourney(interrupted.events, 'Nova').some(
-        (entry) =>
-          entry.message ===
-          event?.activityNarration?.replace(/^Companion\b/, 'Nova'),
+        (entry) => entry.message === event?.message,
       ),
     ).toBe(false);
   });

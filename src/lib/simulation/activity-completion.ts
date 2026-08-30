@@ -127,10 +127,6 @@ export function completeActivity({
     sourceActionId: activity.sourceActionId,
     metricDeltas: delta,
     activityType: activity.type,
-    activityNarration:
-      typeof activity.payload?.activityNarration === 'string'
-        ? activity.payload.activityNarration
-        : undefined,
     activityOutcome:
       activity.type === 'socialize' || activity.type === 'play'
         ? activity.payload?.activityOutcome === 'strong'

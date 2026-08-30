@@ -42,43 +42,5 @@
     },
     "rest": { "moodDivisor": 6 }
   },
-  "vignettes": {
-    "strongOutcomeChance": 0.25,
-    "play": {
-      "normal": [
-        "Companion challenged you to a racing game and celebrated every clean turn.",
-        "Companion set up a board game and guarded the good pieces with theatrical suspicion.",
-        "Companion dragged you outside to inspect a bug they had discovered.",
-        "Companion turned an inside joke into a bit that kept escalating.",
-        "Companion improvised an obstacle course and insisted on a dramatic finish line.",
-        "Companion tossed a ball back and forth with you until both of you lost count.",
-        "Companion built a blanket fort and declared it the headquarters for the afternoon.",
-        "Companion picked a co-op game and cheered whenever teamwork saved the run.",
-        "Companion invented new rules for a familiar game halfway through playing it."
-      ],
-      "strong": [
-        "Companion beat the high score and gloated about it all afternoon.",
-        "Companion flipped the Monopoly board after losing, then laughed until they cried.",
-        "Companion pulled off an impossible comeback and reenacted the winning move for you."
-      ]
-    },
-    "socialize": {
-      "normal": [
-        "Companion talked through their day and lingered on all the strange little details.",
-        "Companion pitched a stream idea that was actually pretty decent.",
-        "Companion told a joke so bad that it looped all the way back to funny.",
-        "Companion asked what you had been thinking about and followed every tangent.",
-        "Companion brainstormed a new channel segment with you over imaginary snacks.",
-        "Companion shared a half-formed idea and found the missing piece while explaining it.",
-        "Companion wanted to talk through what went wrong on yesterday's stream.",
-        "Companion traded ridiculous hypothetical questions with you for a while.",
-        "Companion sketched out a future project while you helped connect the ideas."
-      ],
-      "strong": [
-        "Companion found the perfect concept for the next stream while talking it through with you.",
-        "Companion turned a rambling conversation into an idea neither of you wanted to forget.",
-        "Companion finally untangled a stubborn creative problem after hearing your perspective."
-      ]
-    }
-  }
+  "outcomes": { "strongChance": 0.25 }
 }

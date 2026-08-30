@@ -2,7 +2,7 @@ import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Outcome } from '../game-types';
 import rules from '../data/simulation-rules.json';
 import {
-  chooseActivityVignette,
+  chooseActivityOutcome,
   chooseDuration,
   refusalProbability,
 } from '../activity-rules';
@@ -209,9 +209,9 @@ function companionActivity(
       rejected('refused', 'Companion refused that interaction.'),
     );
 
-  const vignette =
+  const activityOutcome =
     command.type === 'socialize' || command.type === 'play'
-      ? chooseActivityVignette(command.type, next, command.commandId)
+      ? chooseActivityOutcome(command.type, next, command.commandId)
       : undefined;
   const event: GameEvent = {
     id: `event-${next.events.length + 1}`,
@@ -230,12 +230,7 @@ function companionActivity(
       endsAt: next.now + duration,
       sourceActionId: command.commandId,
       payload: {
-        ...(vignette
-          ? {
-              activityOutcome: vignette.outcome,
-              activityNarration: vignette.narration,
-            }
-          : {}),
+        ...(activityOutcome ? { activityOutcome } : {}),
         startingRest: next.metrics.rest,
         startingMood: next.metrics.mood,
         startingCriticalMetrics: criticalMetrics(next.metrics).join(','),

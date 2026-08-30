@@ -1,0 +1,1868 @@
+# Bri's Graveyard Record
+
+- Outcome: Gone Offline (Forever)
+- Run started: August 30, 2026 at 12:23 AM
+- Run ended: September 27, 2026 at 9:23 AM
+- Duration: 28d 9h 0m
+- Mode: Streaming mode
+- Timezone: America/Toronto
+
+## Cause of death
+
+- Sickness
+
+## How it all went down
+
+1. September 27, 2026 at 9:23 AM — Bri gave Apple pie a cautious first bite.
+2. September 27, 2026 at 9:23 AM — Bri's sickness worsened after Apple pie.
+3. September 27, 2026 at 9:23 AM — The final stream has ended. Socks inherits everything.
+
+## The Journey
+
+- August 30, 2026 at 12:23 AM — Bri's journey began.
+- August 30, 2026 at 12:23 AM — You got Bri Fruit Smoothie ×2. Chat's money, hard at work.
+- August 30, 2026 at 12:23 AM — You got Bri Uncrustables ×3. Chat's money, hard at work.
+- August 30, 2026 at 12:23 AM — Bri started spending time together with you.
+- August 30, 2026 at 12:38 AM — Friend time is over. Bri already misses the noise.
+- August 30, 2026 at 12:38 AM — Bri started streaming.
+- August 30, 2026 at 1:38 AM — Stream ended! that was fun, let never do that again
+- August 30, 2026 at 1:38 AM — Bri started playing.
+- August 30, 2026 at 2:23 AM — The channel grew by 2. The algorithm is finally awake.
+- August 30, 2026 at 2:38 AM — Bri finished playing. The controller survived. This time.
+- August 30, 2026 at 2:38 AM — Bri started spending time together with you.
+- August 30, 2026 at 3:23 AM — Hangout complete. Bri talked over everyone, affectionately.
+- August 30, 2026 at 3:23 AM — A noise happened. Bri and Socks stared at the same empty corner.
+- August 30, 2026 at 3:23 AM — Bri started playing.
+- August 30, 2026 at 4:23 AM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 30, 2026 at 4:23 AM — Bri is hungry.
+- August 30, 2026 at 5:23 AM — Bri finished playing. The controller survived. This time.
+- August 30, 2026 at 5:23 AM — Bri is overstimulated.
+- August 30, 2026 at 5:23 AM — Bri started spending time together with you.
+- August 30, 2026 at 5:53 AM — Bri wants to talk about vore.
+- August 30, 2026 at 5:53 AM — Bri is craving Banana and will not shut up about it.
+- August 30, 2026 at 5:53 AM — Bri started playing.
+- August 30, 2026 at 6:23 AM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 30, 2026 at 6:23 AM — Bri is running low on energy.
+- August 30, 2026 at 6:23 AM — Bri is sleep deprived.
+- August 30, 2026 at 6:23 AM — Bri stopped playing early.
+- August 30, 2026 at 6:23 AM — Bri refused that interaction.
+- August 30, 2026 at 6:23 AM — Bri settled down to rest.
+- August 30, 2026 at 8:23 AM — The channel grew by 2. The algorithm is finally awake.
+- August 30, 2026 at 8:23 AM — Bri has settled down.
+- August 30, 2026 at 10:23 AM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 30, 2026 at 10:23 AM — Bri is starving.
+- August 30, 2026 at 10:23 AM — Bri stopped resting early.
+- August 30, 2026 at 10:23 AM — Bri is no longer sleep deprived.
+- August 30, 2026 at 10:23 AM — Bri's energy has recovered.
+- August 30, 2026 at 10:23 AM — Bri settled in with five plain tortillas, exactly as intended.
+- August 30, 2026 at 10:23 AM — Bri is still hungry, but no longer starving.
+- August 30, 2026 at 10:23 AM — Bri carefully tried Fruit Smoothie.
+- August 30, 2026 at 10:23 AM — Bri was unhappy with how Fruit Smoothie was prepared.
+- August 30, 2026 at 10:23 AM — Bri refused Fruit Smoothie, and it went to waste.
+- August 30, 2026 at 10:23 AM — Bri finished a serving of Pretzel.
+- August 30, 2026 at 12:23 PM — The channel grew by 2. The algorithm is finally awake.
+- August 30, 2026 at 2:23 PM — A new idea just possessed Bri. Pray for the schedule.
+- August 30, 2026 at 2:23 PM — The channel grew by 2. The algorithm is finally awake.
+- August 30, 2026 at 2:23 PM — Bri is hungry.
+- August 30, 2026 at 4:23 PM — The room did a thing. No witnesses. No evidence.
+- August 30, 2026 at 4:23 PM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 30, 2026 at 6:23 PM — Bri's health suffered from Starvation and Sleep deprivation.
+- August 30, 2026 at 6:23 PM — Bri happily ate Uncrustables.
+- August 30, 2026 at 6:23 PM — Bri is still hungry, but no longer starving.
+- August 30, 2026 at 6:23 PM — Bri finally grabbed Uncrustables after letting herself get way too hungry.
+- August 30, 2026 at 6:23 PM — Bri settled down to rest.
+- August 30, 2026 at 6:23 PM — The channel grew by 2. The algorithm is finally awake.
+- August 30, 2026 at 6:23 PM — Bri is running low on energy.
+- August 30, 2026 at 6:23 PM — Bri is sleep deprived.
+- August 30, 2026 at 8:23 PM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 30, 2026 at 8:23 PM — Bri is starving.
+- August 30, 2026 at 8:23 PM — Bri stopped resting early.
+- August 30, 2026 at 10:23 PM — Bri's health suffered from Starvation.
+- August 30, 2026 at 10:23 PM — The channel grew by 2. The algorithm is finally awake.
+- August 30, 2026 at 10:23 PM — Bri happily ate Uncrustables.
+- August 30, 2026 at 10:23 PM — Bri is still hungry, but no longer starving.
+- August 30, 2026 at 10:23 PM — Bri savored every bite of Uncrustables.
+- August 30, 2026 at 10:23 PM — Bri savored every bite of Uncrustables.
+- August 30, 2026 at 10:23 PM — A fan sent $11 of support while Bri was offline.
+- August 30, 2026 at 10:23 PM — Bri is no longer hungry.
+- August 30, 2026 at 10:23 PM — Bri's energy has recovered.
+- August 30, 2026 at 10:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 30, 2026 at 10:23 PM — Bri settled down to rest.
+- August 31, 2026 at 12:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- August 31, 2026 at 12:23 AM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 31, 2026 at 2:23 AM — 2 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 2:23 AM — Bri is hungry.
+- August 31, 2026 at 4:23 AM — The room did a thing. No witnesses. No evidence.
+- August 31, 2026 at 4:23 AM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 31, 2026 at 5:53 AM — Bri's craving faded before it could be fulfilled.
+- August 31, 2026 at 6:23 AM — A new idea just possessed Bri. Pray for the schedule.
+- August 31, 2026 at 6:23 AM — The channel grew by 2. The algorithm is finally awake.
+- August 31, 2026 at 6:23 AM — Bri is running low on energy.
+- August 31, 2026 at 6:23 AM — Bri is starving.
+- August 31, 2026 at 6:23 AM — Bri stopped resting early.
+- August 31, 2026 at 6:23 AM — Bri is no longer sleep deprived.
+- August 31, 2026 at 6:23 AM — Bri's energy has recovered.
+- August 31, 2026 at 6:23 AM — Gummies ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 6:23 AM — Water ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 6:23 AM — Strawberry ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 6:23 AM — Bri reluctantly ate Gummies.
+- August 31, 2026 at 6:23 AM — Bri is still hungry, but no longer starving.
+- August 31, 2026 at 6:23 AM — Bri managed to get through Gummies.
+- August 31, 2026 at 6:23 AM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- August 31, 2026 at 6:23 AM — Bri reluctantly ate Gummies.
+- August 31, 2026 at 6:23 AM — Bri started streaming.
+- August 31, 2026 at 8:23 AM — 3 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 8:23 AM — Bri hit a sugar crash.
+- August 31, 2026 at 8:23 AM — Raid sent, mic off. Bri is already planning tomorrow's chaos.
+- August 31, 2026 at 8:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- August 31, 2026 at 8:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 8:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 8:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 8:23 AM — Bri is too tired to stream.
+- August 31, 2026 at 8:23 AM — Bri is no longer starving.
+- August 31, 2026 at 8:23 AM — Bri is having a sugar crash.
+- August 31, 2026 at 10:23 AM — Bri needs Lettuce. This is now everyone's problem.
+- August 31, 2026 at 10:23 AM — 3 new subscribers. Bri is being normal about it. (She is not.)
+- August 31, 2026 at 10:23 AM — Bri is hungry.
+- August 31, 2026 at 12:23 PM — The channel grew by 3. The algorithm is finally awake.
+- August 31, 2026 at 2:23 PM — 3 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 4:23 PM — 3 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 6:23 PM — Bri's health suffered from Sleep deprivation.
+- August 31, 2026 at 6:23 PM — Bri settled down to rest.
+- August 31, 2026 at 6:23 PM — A fan sent $14 of support while Bri was offline.
+- August 31, 2026 at 6:23 PM — 3 new subscribers. Bri is being normal about it. (She is not.)
+- August 31, 2026 at 6:23 PM — Bri is running low on energy.
+- August 31, 2026 at 6:23 PM — Bri is sleep deprived.
+- August 31, 2026 at 6:23 PM — Bri is hungry.
+- August 31, 2026 at 8:23 PM — The channel grew by 3. The algorithm is finally awake.
+- August 31, 2026 at 8:23 PM — Bri's first new-model commission is now available.
+- August 31, 2026 at 10:23 PM — The room did a thing. No witnesses. No evidence.
+- August 31, 2026 at 10:23 PM — The channel grew by 4. The algorithm is finally awake.
+- August 31, 2026 at 10:23 PM — Bri is starving.
+- August 31, 2026 at 10:23 PM — Bri stopped resting early.
+- August 31, 2026 at 10:23 PM — Bri is no longer sleep deprived.
+- August 31, 2026 at 10:23 PM — Bri's energy has recovered.
+- August 31, 2026 at 10:23 PM — Bri has recovered from the sugar crash.
+- September 1, 2026 at 12:23 AM — 4 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 1:23 AM — Bri started spending time together with you.
+- September 1, 2026 at 2:08 AM — Friend time is over. Bri already misses the noise.
+- September 1, 2026 at 2:08 AM — Bri started spending time together with you.
+- September 1, 2026 at 2:23 AM — The channel grew by 4. The algorithm is finally awake.
+- September 1, 2026 at 2:23 AM — Bri is running low on energy.
+- September 1, 2026 at 2:38 AM — Hangout complete. Bri talked over everyone, affectionately.
+- September 1, 2026 at 2:38 AM — Bri started playing.
+- September 1, 2026 at 4:23 AM — 4 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 5:38 AM — Bri finished playing. The controller survived. This time.
+- September 1, 2026 at 5:38 AM — The room did a thing. No witnesses. No evidence.
+- September 1, 2026 at 5:38 AM — Bri carefully tried Strawberry.
+- September 1, 2026 at 5:38 AM — Bri was unhappy with how Strawberry was prepared.
+- September 1, 2026 at 5:38 AM — Bri gave Strawberry a cautious first bite.
+- September 1, 2026 at 5:38 AM — Bri's Strawberry arrived just the way they wanted it.
+- September 1, 2026 at 5:38 AM — Bri gave Strawberry a cautious first bite.
+- September 1, 2026 at 5:38 AM — Bri was unhappy with how Strawberry was prepared.
+- September 1, 2026 at 5:38 AM — Bri is still hungry, but no longer starving.
+- September 1, 2026 at 5:38 AM — Bri settled down to rest.
+- September 1, 2026 at 6:23 AM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 6:23 AM — Bri is starving.
+- September 1, 2026 at 6:23 AM — Bri stopped resting early.
+- September 1, 2026 at 6:23 AM — Bri started spending time together with you.
+- September 1, 2026 at 6:53 AM — Bri wants to talk about her next stream idea.
+- September 1, 2026 at 6:53 AM — Bri started spending time together with you.
+- September 1, 2026 at 7:53 AM — Bri wants to talk about vore.
+- September 1, 2026 at 7:53 AM — Bri started playing.
+- September 1, 2026 at 8:23 AM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 8:23 AM — Bri is sleep deprived.
+- September 1, 2026 at 8:23 AM — Bri stopped playing early.
+- September 1, 2026 at 8:23 AM — Bri started spending time together with you.
+- September 1, 2026 at 9:23 AM — Hangout complete. Bri talked over everyone, affectionately.
+- September 1, 2026 at 9:23 AM — Bri settled down to rest.
+- September 1, 2026 at 10:23 AM — Bri's craving faded before it could be fulfilled.
+- September 1, 2026 at 10:23 AM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 12:23 PM — It's Tater tots o'clock, according to Bri's entire personality.
+- September 1, 2026 at 12:23 PM — 4 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 2:23 PM — Bri snored contentedly through the room.
+- September 1, 2026 at 2:23 PM — The channel grew by 4. The algorithm is finally awake.
+- September 1, 2026 at 4:23 PM — A care package from Mom: Oatmeal and Mini Tacos, plus a note that just says 'DRINK WATER.' Bri's whole day turned around.
+- September 1, 2026 at 4:23 PM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 4:23 PM — Nap complete. Bri rebooted successfully.
+- September 1, 2026 at 4:23 PM — Bri is no longer sleep deprived.
+- September 1, 2026 at 4:23 PM — Bri's energy has recovered.
+- September 1, 2026 at 4:23 PM — Bri is pacing laps around the room. The idea must be huge.
+- September 1, 2026 at 4:23 PM — You got Bri Water ×2. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Chicken. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Tater tots ×4. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Tea ×3. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Clippers ×5. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Battle Axe. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Three-Month-Old Rotisserie Chicken. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — You got Bri Cheeseburger ×2. Chat's money, hard at work.
+- September 1, 2026 at 4:23 PM — Balance fell below $0.
+- September 1, 2026 at 4:23 PM — Bri gave Cheeseburger a cautious first bite.
+- September 1, 2026 at 4:23 PM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 1, 2026 at 4:23 PM — Bri briefly considered selling one of the swords. Briefly.
+- September 1, 2026 at 4:23 PM — Bri gave Cheeseburger a cautious first bite.
+- September 1, 2026 at 4:23 PM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 1, 2026 at 4:23 PM — Bri is still hungry, but no longer starving.
+- September 1, 2026 at 4:23 PM — Bri had oatmeal. Comfort level: canonical.
+- September 1, 2026 at 4:23 PM — Bri started streaming.
+- September 1, 2026 at 4:23 PM — Bri is no longer hungry.
+- September 1, 2026 at 5:23 PM — Raid sent, mic off. Bri is already planning tomorrow's chaos.
+- September 1, 2026 at 5:23 PM — Bri ate the three-month-old rotisserie chicken and somehow turned it into a funny story.
+- September 1, 2026 at 5:23 PM — Bri is full.
+- September 1, 2026 at 5:23 PM — Bri is no longer starving.
+- September 1, 2026 at 5:23 PM — Bri started spending time together with you.
+- September 1, 2026 at 6:08 PM — Bri wants to talk about vore.
+- September 1, 2026 at 6:23 PM — Bri is too tired to stream.
+- September 1, 2026 at 6:23 PM — 6 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 8:23 PM — A fan sent $5 of support while Bri was offline.
+- September 1, 2026 at 8:23 PM — The channel grew by 6. The algorithm is finally awake.
+- September 1, 2026 at 10:23 PM — 6 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 12:23 AM — The room did a thing. No witnesses. No evidence.
+- September 2, 2026 at 12:23 AM — The channel grew by 6. The algorithm is finally awake.
+- September 2, 2026 at 2:23 AM — 6 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 2:23 AM — Bri is no longer full.
+- September 2, 2026 at 4:23 AM — 6 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 4:23 AM — Bri is sleep deprived.
+- September 2, 2026 at 4:23 AM — Bri is no longer full.
+- September 2, 2026 at 4:23 AM — Bri settled down to rest.
+- September 2, 2026 at 6:23 AM — The room did a thing. No witnesses. No evidence.
+- September 2, 2026 at 6:23 AM — 6 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 8:23 AM — 6 new recruits joined the Bunny Brigade.
+- September 2, 2026 at 10:23 AM — 6 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 10:23 AM — Bri is hungry.
+- September 2, 2026 at 11:23 AM — Bri is awake. The mic survived the snoring. Barely.
+- September 2, 2026 at 11:23 AM — Bri is no longer sleep deprived.
+- September 2, 2026 at 11:23 AM — A fan sent $8 of support while Bri was offline.
+- September 2, 2026 at 11:23 AM — You got Bri Water. Chat's money, hard at work.
+- September 2, 2026 at 11:23 AM — You got Bri Steak ×3. Chat's money, hard at work.
+- September 2, 2026 at 11:23 AM — You got Bri New Model Commission. Chat's money, hard at work.
+- September 2, 2026 at 11:23 AM — You got Bri Soft Mattress. Chat's money, hard at work.
+- September 2, 2026 at 11:23 AM — You got Bri Cat Tree. Chat's money, hard at work.
+- September 2, 2026 at 11:23 AM — You got Bri Chicken ×4. Chat's money, hard at work.
+- September 2, 2026 at 11:23 AM — Placed Soft Mattress in the room.
+- September 2, 2026 at 11:23 AM — Removed Soft Mattress from the room.
+- September 2, 2026 at 11:23 AM — Placed Battle Axe in the room.
+- September 2, 2026 at 11:23 AM — Placed Soft Mattress in the room.
+- September 2, 2026 at 11:23 AM — Placed Cat Tree in the room.
+- September 2, 2026 at 11:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 2, 2026 at 11:23 AM — Clippers brought 100 new subscribers to Bri's channel.
+- September 2, 2026 at 11:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 2, 2026 at 11:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 2, 2026 at 11:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 2, 2026 at 11:23 AM — Bri set Clippers loose on the stream archive.
+- September 2, 2026 at 11:23 AM — Bri happily drank Tea.
+- September 2, 2026 at 11:23 AM — Bri is no longer hungry.
+- September 2, 2026 at 11:23 AM — Bri commissioned a new model, and the artists got to work.
+- September 2, 2026 at 11:23 AM — Bri is doing budget math out loud. The math is losing.
+- September 2, 2026 at 11:23 AM — Bri refused Steak.
+- September 2, 2026 at 11:23 AM — Bri started streaming.
+- September 2, 2026 at 12:23 PM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 2, 2026 at 12:23 PM — Bri's craving faded before it could be fulfilled.
+- September 2, 2026 at 12:23 PM — 9 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 2:23 PM — The cat surveyed the room from the top of the tree.
+- September 2, 2026 at 2:23 PM — 9 new subscribers. Bri is being normal about it. (She is not.)
+- September 2, 2026 at 4:23 PM — The channel grew by 9. The algorithm is finally awake.
+- September 2, 2026 at 6:23 PM — 9 new recruits joined the Bunny Brigade.
+- September 2, 2026 at 6:23 PM — Bri is hungry.
+- September 2, 2026 at 8:23 PM — The channel grew by 9. The algorithm is finally awake.
+- September 2, 2026 at 9:23 PM — Stream ended! that was fun, let never do that again
+- September 2, 2026 at 9:23 PM — Bri gave Steak a cautious first bite.
+- September 2, 2026 at 9:23 PM — Bri was unhappy with how Steak was prepared.
+- September 2, 2026 at 9:23 PM — Bri started streaming.
+- September 2, 2026 at 9:23 PM — Bri is no longer hungry.
+- September 2, 2026 at 10:23 PM — The channel grew by 9. The algorithm is finally awake.
+- September 2, 2026 at 10:23 PM — Bri is hungry.
+- September 2, 2026 at 10:23 PM — Bri is sleep deprived.
+- September 2, 2026 at 10:23 PM — Bri had to stop streaming early.
+- September 2, 2026 at 10:23 PM — Bri carefully tried Steak.
+- September 2, 2026 at 10:23 PM — Bri's Steak arrived just the way they wanted it.
+- September 2, 2026 at 10:23 PM — Bri is craving Lettuce and will not shut up about it.
+- September 2, 2026 at 10:23 PM — Bri is no longer hungry.
+- September 2, 2026 at 10:23 PM — Bri settled down to rest.
+- September 3, 2026 at 12:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 3, 2026 at 12:23 AM — The channel grew by 9. The algorithm is finally awake.
+- September 3, 2026 at 2:23 AM — Bri snored contentedly through the room.
+- September 3, 2026 at 2:23 AM — 9 new subscribers. Bri is being normal about it. (She is not.)
+- September 3, 2026 at 4:23 AM — 9 new recruits joined the Bunny Brigade.
+- September 3, 2026 at 6:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 3, 2026 at 6:23 AM — The channel grew by 9. The algorithm is finally awake.
+- September 3, 2026 at 6:23 AM — Bri is hungry.
+- September 3, 2026 at 6:23 AM — Bri woke up denying the snoring rumors. The rumors are confirmed.
+- September 3, 2026 at 6:23 AM — Bri is no longer sleep deprived.
+- September 3, 2026 at 6:23 AM — Bri refused Steak, and it went to waste.
+- September 3, 2026 at 6:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 3, 2026 at 6:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 3, 2026 at 6:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 3, 2026 at 6:23 AM — You bought Webcam for Bri. She's already scheming with it.
+- September 3, 2026 at 6:23 AM — You bought Painkillers for Bri. She's already scheming with it.
+- September 3, 2026 at 6:23 AM — You bought Insurance Card for Bri. She's already scheming with it.
+- September 3, 2026 at 6:23 AM — You bought Potato chips ×3 for Bri. She's already scheming with it.
+- September 3, 2026 at 6:23 AM — You bought BBQ ribs ×3 for Bri. She's already scheming with it.
+- September 3, 2026 at 6:23 AM — You bought Water ×5 for Bri. She's already scheming with it.
+- September 3, 2026 at 6:23 AM — Bri finished a serving of Chicken.
+- September 3, 2026 at 6:23 AM — Bri is no longer hungry.
+- September 3, 2026 at 6:23 AM — Bri ate Chicken.
+- September 3, 2026 at 6:23 AM — Bri is full.
+- September 3, 2026 at 6:23 AM — Bri finished a serving of Chicken.
+- September 3, 2026 at 6:23 AM — Bri was too full to get any Food from Chicken.
+- September 3, 2026 at 6:23 AM — Bri started streaming.
+- September 3, 2026 at 8:23 AM — Bri is doing budget math out loud. The math is losing.
+- September 3, 2026 at 8:23 AM — 10 new recruits joined the Bunny Brigade.
+- September 3, 2026 at 10:23 AM — 10 new recruits joined the Bunny Brigade.
+- September 3, 2026 at 11:23 AM — Clippers brought 500 new subscribers to Bri's channel.
+- September 3, 2026 at 12:23 PM — The cat surveyed the room from the top of the tree.
+- September 3, 2026 at 12:23 PM — The channel grew by 10. The algorithm is finally awake.
+- September 3, 2026 at 12:23 PM — Bri is no longer full.
+- September 3, 2026 at 2:23 PM — The channel grew by 10. The algorithm is finally awake.
+- September 3, 2026 at 4:23 PM — 10 new recruits joined the Bunny Brigade.
+- September 3, 2026 at 4:23 PM — Raid sent, mic off. Bri is already planning tomorrow's chaos.
+- September 3, 2026 at 4:23 PM — Bri ate Chicken.
+- September 3, 2026 at 4:23 PM — Bri is full.
+- September 3, 2026 at 4:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 3, 2026 at 4:23 PM — Bri was too full to get any Food from Water.
+- September 3, 2026 at 4:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 3, 2026 at 4:23 PM — Bri was too full to get any Food from Water.
+- September 3, 2026 at 4:23 PM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 3, 2026 at 4:23 PM — Bri is no longer hungry.
+- September 3, 2026 at 6:23 PM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 3, 2026 at 6:23 PM — 10 new subscribers. Bri is being normal about it. (She is not.)
+- September 3, 2026 at 8:23 PM — 10 new subscribers. Bri is being normal about it. (She is not.)
+- September 3, 2026 at 8:23 PM — Bri's channel reached 1,000 subscribers! Better stream rates are now available.
+- September 3, 2026 at 8:23 PM — Bri is sleep deprived.
+- September 3, 2026 at 8:23 PM — Bri settled down to rest.
+- September 3, 2026 at 10:23 PM — Bri's craving faded before it could be fulfilled.
+- September 3, 2026 at 10:23 PM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 12:23 AM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 2:23 AM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 4:23 AM — Bri is craving Tater tots and will not shut up about it.
+- September 4, 2026 at 4:23 AM — 18 new subscribers. Bri is being normal about it. (She is not.)
+- September 4, 2026 at 4:23 AM — Bri is no longer full.
+- September 4, 2026 at 4:23 AM — Bri woke up denying the snoring rumors. The rumors are confirmed.
+- September 4, 2026 at 4:23 AM — Bri is no longer sleep deprived.
+- September 4, 2026 at 4:23 AM — Bri is doing budget math out loud. The math is losing.
+- September 4, 2026 at 6:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 4, 2026 at 6:23 AM — The channel grew by 18. The algorithm is finally awake.
+- September 4, 2026 at 8:23 AM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 10:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 4, 2026 at 10:23 AM — The channel grew by 18. The algorithm is finally awake.
+- September 4, 2026 at 10:23 AM — Bri is hungry.
+- September 4, 2026 at 11:23 AM — Clippers brought 750 new subscribers to Bri's channel.
+- September 4, 2026 at 12:23 PM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 4, 2026 at 12:23 PM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 12:23 PM — Bri is hungry.
+- September 4, 2026 at 2:23 PM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 4:23 PM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 4, 2026 at 4:23 PM — 18 new recruits joined the Bunny Brigade.
+- September 4, 2026 at 6:23 PM — A fan sent $6 of support while Bri was offline.
+- September 4, 2026 at 6:23 PM — The channel grew by 18. The algorithm is finally awake.
+- September 4, 2026 at 8:23 PM — 18 new subscribers. Bri is being normal about it. (She is not.)
+- September 4, 2026 at 8:23 PM — Bri is running low on energy.
+- September 4, 2026 at 8:23 PM — Bri is sleep deprived.
+- September 4, 2026 at 8:23 PM — Bri settled down to rest.
+- September 4, 2026 at 10:23 PM — 18 new subscribers. Bri is being normal about it. (She is not.)
+- September 4, 2026 at 10:23 PM — Bri is starving.
+- September 4, 2026 at 10:23 PM — Bri stopped resting early.
+- September 4, 2026 at 10:23 PM — Bri is no longer sick.
+- September 4, 2026 at 10:23 PM — Bri started playing.
+- September 5, 2026 at 12:00 AM — Bri's new model is finished. Their fresh look is ready.
+- September 5, 2026 at 12:00 AM — Bri's model debut stream is lined up for the next clear afternoon slot.
+- September 5, 2026 at 12:23 AM — 18 new recruits joined the Bunny Brigade.
+- September 5, 2026 at 12:23 AM — GG. Bri claims she carried. There is no footage.
+- September 5, 2026 at 12:23 AM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 5, 2026 at 1:23 AM — Bri managed to get through BBQ ribs.
+- September 5, 2026 at 1:23 AM — Bri is still hungry, but no longer starving.
+- September 5, 2026 at 1:23 AM — Bri reluctantly ate BBQ ribs.
+- September 5, 2026 at 1:23 AM — Bri is no longer hungry.
+- September 5, 2026 at 1:23 AM — Bri's energy has recovered.
+- September 5, 2026 at 1:23 AM — Bri reluctantly ate BBQ ribs.
+- September 5, 2026 at 1:23 AM — Bri is full.
+- September 5, 2026 at 2:23 AM — 18 new subscribers. Bri is being normal about it. (She is not.)
+- September 5, 2026 at 3:08 AM — Bri settled down to rest.
+- September 5, 2026 at 4:23 AM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 5, 2026 at 4:23 AM — Bri's craving faded before it could be fulfilled.
+- September 5, 2026 at 4:23 AM — The channel grew by 18. The algorithm is finally awake.
+- September 5, 2026 at 6:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 5, 2026 at 6:23 AM — 18 new recruits joined the Bunny Brigade.
+- September 5, 2026 at 8:23 AM — Mom shipped Pancake and Cucumber. Mom Prime never misses a delivery. Bri's whole day turned around.
+- September 5, 2026 at 8:23 AM — The channel grew by 18. The algorithm is finally awake.
+- September 5, 2026 at 8:23 AM — Bri is no longer full.
+- September 5, 2026 at 10:23 AM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 5, 2026 at 10:23 AM — 18 new subscribers. Bri is being normal about it. (She is not.)
+- September 5, 2026 at 11:08 AM — Bri is awake. The mic survived the snoring. Barely.
+- September 5, 2026 at 11:08 AM — Bri is no longer sleep deprived.
+- September 5, 2026 at 12:23 PM — Bri briefly considered selling one of the swords. Briefly.
+- September 5, 2026 at 12:23 PM — 18 new subscribers. Bri is being normal about it. (She is not.)
+- September 5, 2026 at 2:23 PM — Bri went live to debut the new model.
+- September 5, 2026 at 2:23 PM — 21 new subscribers. Bri is being normal about it. (She is not.)
+- September 5, 2026 at 3:23 PM — A raid windfall donated $137 during Bri's stream.
+- September 5, 2026 at 4:23 PM — Bri needs Oatmeal. This is now everyone's problem.
+- September 5, 2026 at 4:23 PM — The channel grew by 21. The algorithm is finally awake.
+- September 5, 2026 at 6:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 5, 2026 at 6:23 PM — 21 new subscribers. Bri is being normal about it. (She is not.)
+- September 5, 2026 at 6:23 PM — Bri is hungry.
+- September 5, 2026 at 6:23 PM — Stream ended! that was fun, let never do that again
+- September 5, 2026 at 6:23 PM — Bri's stream brought 5 new followers to the channel.
+- September 5, 2026 at 7:08 PM — Bri is hungry.
+- September 5, 2026 at 8:23 PM — 21 new subscribers. Bri is being normal about it. (She is not.)
+- September 5, 2026 at 10:23 PM — 21 new subscribers. Bri is being normal about it. (She is not.)
+- September 6, 2026 at 12:23 AM — The battle axe made an ordinary room feel like a quest hub.
+- September 6, 2026 at 12:23 AM — The channel grew by 21. The algorithm is finally awake.
+- September 6, 2026 at 12:23 AM — Bri is running low on energy.
+- September 6, 2026 at 12:23 AM — Bri is starving.
+- September 6, 2026 at 12:23 AM — Bri is sleep deprived.
+- September 6, 2026 at 12:23 AM — Bri finished a serving of Chicken.
+- September 6, 2026 at 12:23 AM — Bri is still hungry, but no longer starving.
+- September 6, 2026 at 12:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 6, 2026 at 12:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 6, 2026 at 12:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 6, 2026 at 12:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 6, 2026 at 12:23 AM — Bri savored every bite of Cucumber.
+- September 6, 2026 at 12:23 AM — Bri savored every bite of Potato chips.
+- September 6, 2026 at 12:23 AM — Bri's energy has recovered.
+- September 6, 2026 at 12:23 AM — Bri savored every bite of Potato chips.
+- September 6, 2026 at 12:23 AM — Bri opened her bank app, made a noise, and closed it immediately.
+- September 6, 2026 at 12:23 AM — Bri happily ate Potato chips.
+- September 6, 2026 at 12:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 6, 2026 at 12:23 AM — Bri happily drank Tea.
+- September 6, 2026 at 12:23 AM — Bri is full.
+- September 6, 2026 at 12:23 AM — Bri happily drank Tea.
+- September 6, 2026 at 12:23 AM — Bri was too full to get any Food from Tea.
+- September 6, 2026 at 12:23 AM — Bri settled down to rest.
+- September 6, 2026 at 2:23 AM — 22 new recruits joined the Bunny Brigade.
+- September 6, 2026 at 4:23 AM — A fan sent $12 of support while Bri was offline.
+- September 6, 2026 at 4:23 AM — The channel grew by 22. The algorithm is finally awake.
+- September 6, 2026 at 6:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 6, 2026 at 6:23 AM — The channel grew by 22. The algorithm is finally awake.
+- September 6, 2026 at 6:23 AM — Bri is no longer full.
+- September 6, 2026 at 8:23 AM — 22 new recruits joined the Bunny Brigade.
+- September 6, 2026 at 9:23 AM — Nap complete. Bri rebooted successfully.
+- September 6, 2026 at 9:23 AM — Bri is no longer sleep deprived.
+- September 6, 2026 at 10:23 AM — 22 new recruits joined the Bunny Brigade.
+- September 6, 2026 at 12:23 PM — Bri started streaming.
+- September 6, 2026 at 12:23 PM — The channel grew by 25. The algorithm is finally awake.
+- September 6, 2026 at 2:23 PM — A new idea just possessed Bri. Pray for the schedule.
+- September 6, 2026 at 2:23 PM — 25 new subscribers. Bri is being normal about it. (She is not.)
+- September 6, 2026 at 2:23 PM — Bri is hungry.
+- September 6, 2026 at 3:23 PM — A kind supporter donated $38 during Bri's stream.
+- September 6, 2026 at 4:23 PM — Bri's craving faded before it could be fulfilled.
+- September 6, 2026 at 4:23 PM — 25 new subscribers. Bri is being normal about it. (She is not.)
+- September 6, 2026 at 6:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 6, 2026 at 6:23 PM — The channel grew by 25. The algorithm is finally awake.
+- September 6, 2026 at 8:23 PM — 25 new recruits joined the Bunny Brigade.
+- September 6, 2026 at 8:23 PM — Bri is hungry.
+- September 6, 2026 at 9:23 PM — Stream over! She said 'okay, ONE more thing' four times before actually ending.
+- September 6, 2026 at 9:23 PM — A kind supporter donated $53 during Bri's stream.
+- September 6, 2026 at 9:23 PM — Bri's stream brought 10 new followers to the channel.
+- September 6, 2026 at 9:23 PM — Bri is running low on energy.
+- September 6, 2026 at 9:23 PM — Bri is sleep deprived.
+- September 6, 2026 at 9:23 PM — Bri settled down to rest.
+- September 6, 2026 at 10:23 PM — 25 new recruits joined the Bunny Brigade.
+- September 6, 2026 at 10:23 PM — Bri is starving.
+- September 6, 2026 at 10:23 PM — Bri stopped resting early.
+- September 6, 2026 at 10:23 PM — Bri savored every bite of Tater tots.
+- September 6, 2026 at 10:23 PM — Bri is still hungry, but no longer starving.
+- September 6, 2026 at 10:23 PM — The cat surveyed the room from the top of the tree.
+- September 6, 2026 at 10:23 PM — Bri happily ate Tater tots.
+- September 6, 2026 at 10:23 PM — Bri's energy has recovered.
+- September 6, 2026 at 10:23 PM — Bri happily ate Tater tots.
+- September 6, 2026 at 10:23 PM — Bri savored every bite of Tater tots.
+- September 6, 2026 at 10:23 PM — Bri needs Lettuce. This is now everyone's problem.
+- September 7, 2026 at 12:23 AM — The channel grew by 25. The algorithm is finally awake.
+- September 7, 2026 at 12:23 AM — Bri settled down to rest.
+- September 7, 2026 at 2:23 AM — 25 new recruits joined the Bunny Brigade.
+- September 7, 2026 at 4:23 AM — Bri is doing budget math out loud. The math is losing.
+- September 7, 2026 at 4:23 AM — 25 new subscribers. Bri is being normal about it. (She is not.)
+- September 7, 2026 at 6:23 AM — 25 new subscribers. Bri is being normal about it. (She is not.)
+- September 7, 2026 at 6:23 AM — Bri is hungry.
+- September 7, 2026 at 8:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 7, 2026 at 8:23 AM — 25 new recruits joined the Bunny Brigade.
+- September 7, 2026 at 8:23 AM — Bri is running low on energy.
+- September 7, 2026 at 8:23 AM — Bri is awake. The mic survived the snoring. Barely.
+- September 7, 2026 at 8:23 AM — Bri is no longer sleep deprived.
+- September 7, 2026 at 8:23 AM — Bri's energy has recovered.
+- September 7, 2026 at 8:23 AM — Bri demolished the mini tacos with terrifying efficiency.
+- September 7, 2026 at 8:23 AM — Bri is no longer hungry.
+- September 7, 2026 at 8:23 AM — Bri happily ate Pancake.
+- September 7, 2026 at 8:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 7, 2026 at 8:23 AM — Ham ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Tuna delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Limited-Edition Dr Pepper delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Pretzel ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Automatic Feeder delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Board Game delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Mini Fridge delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — New Desk delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 7, 2026 at 8:23 AM — Placed New Desk in the room.
+- September 7, 2026 at 8:23 AM — Placed Mini Fridge in the room.
+- September 7, 2026 at 8:23 AM — Bri spent some time with Board Game.
+- September 7, 2026 at 8:23 AM — A new idea just possessed Bri. Pray for the schedule.
+- September 7, 2026 at 10:23 AM — Bri started streaming.
+- September 7, 2026 at 10:23 AM — 28 new recruits joined the Bunny Brigade.
+- September 7, 2026 at 12:23 PM — The channel grew by 28. The algorithm is finally awake.
+- September 7, 2026 at 2:23 PM — 28 new subscribers. Bri is being normal about it. (She is not.)
+- September 7, 2026 at 4:23 PM — 28 new recruits joined the Bunny Brigade.
+- September 7, 2026 at 4:23 PM — Raid sent, mic off. Bri is already planning tomorrow's chaos.
+- September 7, 2026 at 4:23 PM — Bri is overstimulated.
+- September 7, 2026 at 6:08 PM — Bri has settled down.
+- September 7, 2026 at 6:23 PM — Bri is too tired to stream.
+- September 7, 2026 at 6:23 PM — The channel grew by 28. The algorithm is finally awake.
+- September 7, 2026 at 8:23 PM — A new idea just possessed Bri. Pray for the schedule.
+- September 7, 2026 at 8:23 PM — The channel grew by 28. The algorithm is finally awake.
+- September 7, 2026 at 8:23 PM — Bri is hungry.
+- September 7, 2026 at 10:23 PM — Bri's craving faded before it could be fulfilled.
+- September 7, 2026 at 10:23 PM — The channel grew by 28. The algorithm is finally awake.
+- September 7, 2026 at 10:23 PM — Bri is running low on energy.
+- September 7, 2026 at 10:23 PM — Bri is sleep deprived.
+- September 7, 2026 at 10:23 PM — Bri is hungry.
+- September 7, 2026 at 10:23 PM — Bri has settled down.
+- September 7, 2026 at 10:23 PM — Bri settled down to rest.
+- September 8, 2026 at 12:23 AM — A fan sent $9 of support while Bri was offline.
+- September 8, 2026 at 12:23 AM — The channel grew by 28. The algorithm is finally awake.
+- September 8, 2026 at 12:23 AM — Bri is starving.
+- September 8, 2026 at 12:23 AM — Bri stopped resting early.
+- September 8, 2026 at 12:23 AM — Bri finished a serving of Pretzel.
+- September 8, 2026 at 12:23 AM — Bri is still hungry, but no longer starving.
+- September 8, 2026 at 12:23 AM — Bri is craving Five Plain Tortillas and will not shut up about it.
+- September 8, 2026 at 12:23 AM — Bri finished a serving of Pretzel.
+- September 8, 2026 at 12:23 AM — Bri's energy has recovered.
+- September 8, 2026 at 12:23 AM — Bri finished a serving of Pretzel.
+- September 8, 2026 at 12:23 AM — Bri ate Tuna.
+- September 8, 2026 at 12:23 AM — Her food has been pretty salty lately. Water might be a good idea.
+- September 8, 2026 at 2:23 AM — Bri opened her bank app, made a noise, and closed it immediately.
+- September 8, 2026 at 2:23 AM — The channel grew by 28. The algorithm is finally awake.
+- September 8, 2026 at 4:23 AM — The channel grew by 28. The algorithm is finally awake.
+- September 8, 2026 at 4:23 AM — Bri is hungry.
+- September 8, 2026 at 4:23 AM — Bri settled down to rest.
+- September 8, 2026 at 6:23 AM — 28 new subscribers. Bri is being normal about it. (She is not.)
+- September 8, 2026 at 6:23 AM — Bri is running low on energy.
+- September 8, 2026 at 8:23 AM — 28 new recruits joined the Bunny Brigade.
+- September 8, 2026 at 10:23 AM — 28 new recruits joined the Bunny Brigade.
+- September 8, 2026 at 10:23 AM — Bri is starving.
+- September 8, 2026 at 10:23 AM — Bri stopped resting early.
+- September 8, 2026 at 10:23 AM — Bri is no longer sleep deprived.
+- September 8, 2026 at 10:23 AM — Bri's energy has recovered.
+- September 8, 2026 at 10:23 AM — Bri refused Ham.
+- September 8, 2026 at 10:23 AM — Bri reluctantly ate Ham.
+- September 8, 2026 at 10:23 AM — Bri is still hungry, but no longer starving.
+- September 8, 2026 at 10:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 8, 2026 at 10:23 AM — Bri managed to get through Ham.
+- September 8, 2026 at 10:23 AM — Bri drank Limited-Edition Dr Pepper and locked into six hours of Hyperfocus.
+- September 8, 2026 at 10:23 AM — You bought Water ×4 for Bri. She's already scheming with it.
+- September 8, 2026 at 10:23 AM — You bought Red vs. Blue Box Set ×2 for Bri. She's already scheming with it.
+- September 8, 2026 at 10:23 AM — You bought Stream Deck ×2 for Bri. She's already scheming with it.
+- September 8, 2026 at 10:23 AM — You bought Toast ×2 for Bri. She's already scheming with it.
+- September 8, 2026 at 10:23 AM — You bought Hash Brown ×2 for Bri. She's already scheming with it.
+- September 8, 2026 at 10:23 AM — You bought Tea for Bri. She's already scheming with it.
+- September 8, 2026 at 12:23 PM — 28 new subscribers. Bri is being normal about it. (She is not.)
+- September 8, 2026 at 2:23 PM — A fan sent $13 of support while Bri was offline.
+- September 8, 2026 at 2:23 PM — The channel grew by 28. The algorithm is finally awake.
+- September 8, 2026 at 4:23 PM — Bri's Hyperfocus wore off, leaving them less creative and in need of rest.
+- September 8, 2026 at 4:23 PM — The battle axe made an ordinary room feel like a quest hub.
+- September 8, 2026 at 4:23 PM — 35 new recruits joined the Bunny Brigade.
+- September 8, 2026 at 4:23 PM — Bri is sleep deprived.
+- September 8, 2026 at 4:23 PM — Bri refused Ham, and it went to waste.
+- September 8, 2026 at 4:23 PM — Bri happily ate Hash Brown.
+- September 8, 2026 at 4:23 PM — Bri happily ate Hash Brown.
+- September 8, 2026 at 4:23 PM — Bri is full.
+- September 8, 2026 at 4:23 PM — Bri savored every bite of Toast.
+- September 8, 2026 at 4:23 PM — Bri was too full to get any Food from Toast.
+- September 8, 2026 at 4:23 PM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 8, 2026 at 4:23 PM — Bri savored every bite of Toast.
+- September 8, 2026 at 4:23 PM — Bri was too sick to get any Food from Toast.
+- September 8, 2026 at 4:23 PM — Bri's sickness worsened after Toast.
+- September 8, 2026 at 4:23 PM — Bri started playing.
+- September 8, 2026 at 6:23 PM — 35 new recruits joined the Bunny Brigade.
+- September 8, 2026 at 7:23 PM — GG. Bri claims she carried. There is no footage.
+- September 8, 2026 at 7:23 PM — Bri settled down to rest.
+- September 8, 2026 at 8:23 PM — 35 new recruits joined the Bunny Brigade.
+- September 8, 2026 at 10:23 PM — 35 new recruits joined the Bunny Brigade.
+- September 9, 2026 at 12:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 9, 2026 at 12:23 AM — Bri's craving faded before it could be fulfilled.
+- September 9, 2026 at 12:23 AM — 35 new subscribers. Bri is being normal about it. (She is not.)
+- September 9, 2026 at 2:23 AM — Bri snored contentedly through the room.
+- September 9, 2026 at 2:23 AM — The channel grew by 35. The algorithm is finally awake.
+- September 9, 2026 at 2:23 AM — Bri is no longer full.
+- September 9, 2026 at 3:23 AM — Bri is awake. The mic survived the snoring. Barely.
+- September 9, 2026 at 3:23 AM — Bri is no longer sleep deprived.
+- September 9, 2026 at 4:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 9, 2026 at 4:23 AM — 35 new subscribers. Bri is being normal about it. (She is not.)
+- September 9, 2026 at 6:23 AM — 35 new subscribers. Bri is being normal about it. (She is not.)
+- September 9, 2026 at 8:23 AM — 35 new recruits joined the Bunny Brigade.
+- September 9, 2026 at 10:23 AM — The channel grew by 35. The algorithm is finally awake.
+- September 9, 2026 at 10:23 AM — Bri is hungry.
+- September 9, 2026 at 12:23 PM — The cat surveyed the room from the top of the tree.
+- September 9, 2026 at 12:23 PM — The channel grew by 41. The algorithm is finally awake.
+- September 9, 2026 at 2:23 PM — The channel grew by 41. The algorithm is finally awake.
+- September 9, 2026 at 2:23 PM — Bri is running low on energy.
+- September 9, 2026 at 2:23 PM — Bri is starving.
+- September 9, 2026 at 3:08 PM — Bri's health suffered from Starvation.
+- September 9, 2026 at 3:23 PM — Bri savored every sip of Tea.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Tea.
+- September 9, 2026 at 3:23 PM — Bri is sleep deprived.
+- September 9, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Water.
+- September 9, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Water.
+- September 9, 2026 at 3:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Water.
+- September 9, 2026 at 3:23 PM — Bri is depressed.
+- September 9, 2026 at 3:23 PM — Bri briefly considered selling one of the swords. Briefly.
+- September 9, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Water.
+- September 9, 2026 at 3:23 PM — Bri is craving Tater tots and will not shut up about it.
+- September 9, 2026 at 3:23 PM — Bri went quiet. Not the fun kind of quiet.
+- September 9, 2026 at 3:23 PM — You got Bri Tater tots. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Uncrustables ×2. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Hot dog ×5. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Jar of Pickle Juice ×4. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Studio Mic. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Clippers ×5. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Live2D Model. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — You got Bri Traffic Cone. Chat's money, hard at work.
+- September 9, 2026 at 3:23 PM — Bri managed to get through Hot dog.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Hot dog.
+- September 9, 2026 at 3:23 PM — Socks has declared it attention o'clock. All work has ceased.
+- September 9, 2026 at 3:23 PM — She's back. Chat pretends they weren't refreshing the schedule every hour.
+- September 9, 2026 at 3:23 PM — Bri managed to get through Hot dog.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Hot dog.
+- September 9, 2026 at 3:23 PM — A fan sent $8 of support while Bri was offline.
+- September 9, 2026 at 3:23 PM — No swearing for a suspiciously long time. Someone check on her.
+- September 9, 2026 at 3:23 PM — Bri reluctantly ate Hot dog.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Hot dog.
+- September 9, 2026 at 3:23 PM — Bri opened OBS again. Nobody mention the last few days. Ever.
+- September 9, 2026 at 3:23 PM — Bri savored every bite of Tater tots.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Tater tots.
+- September 9, 2026 at 3:23 PM — Tater tots was exactly what Bri had been craving.
+- September 9, 2026 at 3:23 PM — Bri happily ate Uncrustables.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Uncrustables.
+- September 9, 2026 at 3:23 PM — Bri happily ate Uncrustables.
+- September 9, 2026 at 3:23 PM — Bri's sickness worsened after Uncrustables.
+- September 9, 2026 at 3:23 PM — It's Ketchup o'clock, according to Bri's entire personality.
+- September 9, 2026 at 3:23 PM — Bri settled down to rest.
+- September 9, 2026 at 4:23 PM — 41 new subscribers. Bri is being normal about it. (She is not.)
+- September 9, 2026 at 6:23 PM — 41 new subscribers. Bri is being normal about it. (She is not.)
+- September 9, 2026 at 8:23 PM — The channel grew by 41. The algorithm is finally awake.
+- September 9, 2026 at 10:23 PM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 9, 2026 at 10:23 PM — The channel grew by 48. The algorithm is finally awake.
+- September 9, 2026 at 11:23 PM — Nap complete. Bri rebooted successfully.
+- September 9, 2026 at 11:23 PM — Bri is no longer sleep deprived.
+- September 9, 2026 at 11:23 PM — Bri is no longer sick.
+- September 9, 2026 at 11:23 PM — Bri's energy has recovered.
+- September 9, 2026 at 11:23 PM — The battle axe made an ordinary room feel like a quest hub.
+- September 9, 2026 at 11:23 PM — Bri refused Hot dog, and it went to waste.
+- September 9, 2026 at 11:23 PM — Bri reluctantly ate Hot dog.
+- September 9, 2026 at 11:23 PM — Bri happily drank Jar of Pickle Juice.
+- September 9, 2026 at 11:23 PM — Bri is still hungry, but no longer starving.
+- September 9, 2026 at 11:23 PM — Bri savored every sip of Jar of Pickle Juice.
+- September 9, 2026 at 11:23 PM — Bri savored every sip of Jar of Pickle Juice.
+- September 9, 2026 at 11:23 PM — Bri started streaming.
+- September 9, 2026 at 11:23 PM — Bri is no longer hungry.
+- September 9, 2026 at 11:23 PM — Bri is no longer depressed.
+- September 10, 2026 at 12:00 AM — Stream over! She said 'okay, ONE more thing' four times before actually ending.
+- September 10, 2026 at 12:00 AM — Bri savored every sip of Jar of Pickle Juice.
+- September 10, 2026 at 12:00 AM — Bri is too tired to stream.
+- September 10, 2026 at 12:00 AM — Bri is no longer starving.
+- September 10, 2026 at 12:00 AM — Bri is no longer depressed.
+- September 10, 2026 at 12:23 AM — Bri is too tired to stream.
+- September 10, 2026 at 12:23 AM — The channel grew by 51. The algorithm is finally awake.
+- September 10, 2026 at 2:23 AM — 51 new recruits joined the Bunny Brigade.
+- September 10, 2026 at 3:00 AM — You bought Water ×5 for Bri. She's already scheming with it.
+- September 10, 2026 at 3:00 AM — You bought BBQ ribs ×5 for Bri. She's already scheming with it.
+- September 10, 2026 at 3:00 AM — You bought Strawberry ×2 for Bri. She's already scheming with it.
+- September 10, 2026 at 3:00 AM — You bought Lemonade for Bri. She's already scheming with it.
+- September 10, 2026 at 3:00 AM — You bought Açaí Bowl ×2 for Bri. She's already scheming with it.
+- September 10, 2026 at 3:00 AM — You bought LEGO Set for Bri. She's already scheming with it.
+- September 10, 2026 at 3:00 AM — Bri reluctantly ate Açaí Bowl.
+- September 10, 2026 at 3:00 AM — Bri is too tired to stream.
+- September 10, 2026 at 3:00 AM — Bri reluctantly ate Açaí Bowl.
+- September 10, 2026 at 3:00 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 10, 2026 at 3:00 AM — Bri refused BBQ ribs, and it went to waste.
+- September 10, 2026 at 3:00 AM — Bri managed to get through BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri is full.
+- September 10, 2026 at 3:00 AM — Bri reluctantly ate BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri was too full to get any Food from BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 10, 2026 at 3:00 AM — Bri is depressed.
+- September 10, 2026 at 3:00 AM — Bri went quiet. Not the fun kind of quiet.
+- September 10, 2026 at 3:00 AM — Bri reluctantly ate BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri reluctantly ate BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after BBQ ribs.
+- September 10, 2026 at 3:00 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 10, 2026 at 3:00 AM — Bri gave Strawberry a cautious first bite.
+- September 10, 2026 at 3:00 AM — Bri's Strawberry arrived just the way they wanted it.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Strawberry.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Strawberry.
+- September 10, 2026 at 3:00 AM — Mom shipped Garlic bread and Orange juice. Mom Prime never misses a delivery. Bri made a small happy noise about it.
+- September 10, 2026 at 3:00 AM — Bri opened OBS again. Nobody mention the last few days. Ever.
+- September 10, 2026 at 3:00 AM — Bri carefully tried Strawberry.
+- September 10, 2026 at 3:00 AM — Bri's Strawberry arrived just the way they wanted it.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Strawberry.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Strawberry.
+- September 10, 2026 at 3:00 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Water.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Water.
+- September 10, 2026 at 3:00 AM — The mic is off, the energy is gone, and the schedule just says '???'.
+- September 10, 2026 at 3:00 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Water.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Water.
+- September 10, 2026 at 3:00 AM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 10, 2026 at 3:00 AM — She's back. Chat pretends they weren't refreshing the schedule every hour.
+- September 10, 2026 at 3:00 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Water.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Water.
+- September 10, 2026 at 3:00 AM — The mic is off, the energy is gone, and the schedule just says '???'.
+- September 10, 2026 at 3:00 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Water.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Water.
+- September 10, 2026 at 3:00 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 10, 2026 at 3:00 AM — Bri was too sick to get any Food from Water.
+- September 10, 2026 at 3:00 AM — Bri's sickness worsened after Water.
+- September 10, 2026 at 3:00 AM — Bri started playing.
+- September 10, 2026 at 4:00 AM — Game session over. Bri swears she was 'about to win.'
+- September 10, 2026 at 4:00 AM — Bri opened OBS again. Nobody mention the last few days. Ever.
+- September 10, 2026 at 4:00 AM — Bri started playing.
+- September 10, 2026 at 4:23 AM — 51 new recruits joined the Bunny Brigade.
+- September 10, 2026 at 5:00 AM — GG. Bri claims she carried. There is no footage.
+- September 10, 2026 at 5:00 AM — Bri started playing.
+- September 10, 2026 at 6:23 AM — The channel grew by 57. The algorithm is finally awake.
+- September 10, 2026 at 8:00 AM — GG. Bri claims she carried. There is no footage.
+- September 10, 2026 at 8:00 AM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 10, 2026 at 8:00 AM — Bri refused that interaction.
+- September 10, 2026 at 8:00 AM — Bri started playing.
+- September 10, 2026 at 8:23 AM — 57 new subscribers. Bri is being normal about it. (She is not.)
+- September 10, 2026 at 9:00 AM — GG. Bri claims she carried. There is no footage.
+- September 10, 2026 at 10:23 AM — 57 new subscribers. Bri is being normal about it. (She is not.)
+- September 10, 2026 at 10:23 AM — Bri is sleep deprived.
+- September 10, 2026 at 11:45 AM — Bri settled down to rest.
+- September 10, 2026 at 12:23 PM — 57 new subscribers. Bri is being normal about it. (She is not.)
+- September 10, 2026 at 2:23 PM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 10, 2026 at 2:23 PM — The channel grew by 57. The algorithm is finally awake.
+- September 10, 2026 at 2:23 PM — Bri is no longer full.
+- September 10, 2026 at 3:23 PM — Bri's craving faded before it could be fulfilled.
+- September 10, 2026 at 4:23 PM — Bri briefly considered selling one of the swords. Briefly.
+- September 10, 2026 at 4:23 PM — The channel grew by 57. The algorithm is finally awake.
+- September 10, 2026 at 6:23 PM — 57 new recruits joined the Bunny Brigade.
+- September 10, 2026 at 6:45 PM — Bri is awake. The mic survived the snoring. Barely.
+- September 10, 2026 at 6:45 PM — Bri is no longer sleep deprived.
+- September 10, 2026 at 6:45 PM — Bri is no longer sick.
+- September 10, 2026 at 6:45 PM — The cat surveyed the room from the top of the tree.
+- September 10, 2026 at 8:23 PM — 57 new subscribers. Bri is being normal about it. (She is not.)
+- September 10, 2026 at 8:23 PM — Bri is hungry.
+- September 10, 2026 at 10:23 PM — A new idea just possessed Bri. Pray for the schedule.
+- September 10, 2026 at 10:23 PM — The channel grew by 57. The algorithm is finally awake.
+- September 10, 2026 at 10:45 PM — Bri is hungry.
+- September 11, 2026 at 12:23 AM — 57 new recruits joined the Bunny Brigade.
+- September 11, 2026 at 12:23 AM — Bri is starving.
+- September 11, 2026 at 12:45 AM — Bri's health suffered from Starvation.
+- September 11, 2026 at 12:45 AM — Bri happily drank Orange juice.
+- September 11, 2026 at 12:45 AM — Bri is still hungry, but no longer starving.
+- September 11, 2026 at 12:45 AM — Bri finally grabbed Orange juice after letting herself get way too hungry.
+- September 11, 2026 at 1:23 AM — Bri is still hungry, but no longer starving.
+- September 11, 2026 at 1:23 AM — Bri happily ate Garlic bread.
+- September 11, 2026 at 1:23 AM — Bri started streaming.
+- September 11, 2026 at 1:23 AM — Bri is no longer hungry.
+- September 11, 2026 at 2:23 AM — 60 new recruits joined the Bunny Brigade.
+- September 11, 2026 at 2:23 AM — Bri is hungry.
+- September 11, 2026 at 3:23 AM — Stream over! She said 'okay, ONE more thing' four times before actually ending.
+- September 11, 2026 at 3:23 AM — Bri reluctantly drank Lemonade.
+- September 11, 2026 at 3:23 AM — Bri is too tired to stream.
+- September 11, 2026 at 3:23 AM — Bri is no longer hungry.
+- September 11, 2026 at 3:23 AM — You bought Water ×2 for Bri. She's already scheming with it.
+- September 11, 2026 at 3:23 AM — You bought Chocolate milk ×2 for Bri. She's already scheming with it.
+- September 11, 2026 at 3:23 AM — You bought Model Outfit ×4 for Bri. She's already scheming with it.
+- September 11, 2026 at 3:23 AM — You bought Second Sword for Bri. She's already scheming with it.
+- September 11, 2026 at 3:23 AM — Bri used Webcam to take a test photo.
+- September 11, 2026 at 3:23 AM — Bri started streaming.
+- September 11, 2026 at 4:23 AM — 63 new recruits joined the Bunny Brigade.
+- September 11, 2026 at 4:23 AM — Bri is hungry.
+- September 11, 2026 at 4:23 AM — The stream ended. The clip channels are already hard at work.
+- September 11, 2026 at 4:23 AM — Bri is sleep deprived.
+- September 11, 2026 at 4:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 11, 2026 at 4:23 AM — Clippers brought 150 new subscribers to Bri's channel.
+- September 11, 2026 at 4:23 AM — Bri set Clippers loose on the stream archive.
+- September 11, 2026 at 4:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 11, 2026 at 4:23 AM — Bri queued a fresh batch of stream highlights with Clippers.
+- September 11, 2026 at 4:23 AM — Bri set Clippers loose on the stream archive.
+- September 11, 2026 at 4:23 AM — Bri used Stream Deck to practice shortcuts.
+- September 11, 2026 at 4:23 AM — Bri is craving Mashed potatoes and will not shut up about it.
+- September 11, 2026 at 4:23 AM — Bri used Stream Deck to practice shortcuts.
+- September 11, 2026 at 4:23 AM — Bri opened her bank app, made a noise, and closed it immediately.
+- September 11, 2026 at 4:23 AM — Bri spent some time with Studio Mic.
+- September 11, 2026 at 4:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 11, 2026 at 4:23 AM — Bri spent some time with Model Outfit.
+- September 11, 2026 at 4:23 AM — Bri spent some time with Model Outfit.
+- September 11, 2026 at 4:23 AM — Bri spent some time with Model Outfit.
+- September 11, 2026 at 4:23 AM — Bri used Model Outfit to preview the outfit.
+- September 11, 2026 at 4:23 AM — The room did a thing. No witnesses. No evidence.
+- September 11, 2026 at 4:23 AM — Bri used Live2D Model to rehearse with the model.
+- September 11, 2026 at 4:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 11, 2026 at 4:23 AM — Bri happily drank Chocolate milk.
+- September 11, 2026 at 4:23 AM — Bri is no longer hungry.
+- September 11, 2026 at 4:23 AM — Bri happily drank Chocolate milk.
+- September 11, 2026 at 4:23 AM — A fan sent $14 of support while Bri was offline.
+- September 11, 2026 at 5:45 AM — Bri's health suffered from Sleep deprivation.
+- September 11, 2026 at 6:23 AM — 63 new subscribers. Bri is being normal about it. (She is not.)
+- September 11, 2026 at 6:23 AM — Bri settled down to rest.
+- September 11, 2026 at 8:23 AM — 63 new recruits joined the Bunny Brigade.
+- September 11, 2026 at 10:23 AM — The channel grew by 63. The algorithm is finally awake.
+- September 11, 2026 at 12:23 PM — The room did a thing. No witnesses. No evidence.
+- September 11, 2026 at 12:23 PM — 63 new subscribers. Bri is being normal about it. (She is not.)
+- September 11, 2026 at 2:23 PM — 63 new subscribers. Bri is being normal about it. (She is not.)
+- September 11, 2026 at 2:23 PM — Bri's model-redesign commission is now available.
+- September 11, 2026 at 2:23 PM — Bri is running low on energy.
+- September 11, 2026 at 2:23 PM — Bri is hungry.
+- September 11, 2026 at 3:23 PM — Nap complete. Bri rebooted successfully.
+- September 11, 2026 at 3:23 PM — Bri is no longer sleep deprived.
+- September 11, 2026 at 3:23 PM — Bri's energy has recovered.
+- September 11, 2026 at 3:23 PM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 11, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 11, 2026 at 3:23 PM — The cat surveyed the room from the top of the tree.
+- September 11, 2026 at 3:23 PM — Açaí Bowl ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 11, 2026 at 3:23 PM — Waffle ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 11, 2026 at 3:23 PM — Cupcake delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 11, 2026 at 3:23 PM — Ice cream delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 11, 2026 at 3:23 PM — Hot dog ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 11, 2026 at 3:23 PM — Notebook delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 11, 2026 at 3:23 PM — Bri ate Cupcake.
+- September 11, 2026 at 3:23 PM — Bri started streaming.
+- September 11, 2026 at 3:23 PM — Bri is no longer hungry.
+- September 11, 2026 at 4:23 PM — 79 new recruits joined the Bunny Brigade.
+- September 11, 2026 at 4:23 PM — Bri is hungry.
+- September 11, 2026 at 6:23 PM — The battle axe made an ordinary room feel like a quest hub.
+- September 11, 2026 at 6:23 PM — The channel grew by 79. The algorithm is finally awake.
+- September 11, 2026 at 8:23 PM — The channel grew by 79. The algorithm is finally awake.
+- September 11, 2026 at 10:23 PM — The channel grew by 79. The algorithm is finally awake.
+- September 11, 2026 at 10:23 PM — A kind supporter donated $37 during Bri's stream.
+- September 12, 2026 at 12:00 AM — Stream ended! that was fun, let never do that again
+- September 12, 2026 at 12:00 AM — Bri's stream brought 5 new followers to the channel.
+- September 12, 2026 at 12:00 AM — Bri managed to get through Hot dog.
+- September 12, 2026 at 12:00 AM — A fan sent $14 of support while Bri was offline.
+- September 12, 2026 at 12:00 AM — Bri is no longer hungry.
+- September 12, 2026 at 12:00 AM — Bri refused Hot dog, and it went to waste.
+- September 12, 2026 at 12:00 AM — Bri is too tired to stream.
+- September 12, 2026 at 12:00 AM — Bri carefully tried Ice cream.
+- September 12, 2026 at 12:00 AM — Bri's Ice cream arrived just the way they wanted it.
+- September 12, 2026 at 12:00 AM — Bri started streaming.
+- September 12, 2026 at 12:23 AM — 85 new subscribers. Bri is being normal about it. (She is not.)
+- September 12, 2026 at 2:23 AM — Bri briefly considered selling one of the swords. Briefly.
+- September 12, 2026 at 2:23 AM — 85 new recruits joined the Bunny Brigade.
+- September 12, 2026 at 3:00 AM — Raid sent, mic off. Bri is already planning tomorrow's chaos.
+- September 12, 2026 at 3:00 AM — Bri is sleep deprived.
+- September 12, 2026 at 3:00 AM — Bri happily ate Waffle.
+- September 12, 2026 at 3:00 AM — Bri is full.
+- September 12, 2026 at 3:00 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 12, 2026 at 3:00 AM — Bri happily ate Waffle.
+- September 12, 2026 at 3:00 AM — Bri was too full to get any Food from Waffle.
+- September 12, 2026 at 3:00 AM — Bri happily ate Waffle.
+- September 12, 2026 at 3:00 AM — Bri was too full to get any Food from Waffle.
+- September 12, 2026 at 3:00 AM — Bri is no longer hungry.
+- September 12, 2026 at 4:21 AM — Bri settled down to rest.
+- September 12, 2026 at 4:23 AM — Bri's craving faded before it could be fulfilled.
+- September 12, 2026 at 4:23 AM — 85 new recruits joined the Bunny Brigade.
+- September 12, 2026 at 4:23 AM — Clippers brought 1,000 new subscribers to Bri's channel.
+- September 12, 2026 at 6:23 AM — 85 new subscribers. Bri is being normal about it. (She is not.)
+- September 12, 2026 at 6:23 AM — Bri is no longer full.
+- September 12, 2026 at 8:23 AM — 85 new recruits joined the Bunny Brigade.
+- September 12, 2026 at 10:23 AM — The room did a thing. No witnesses. No evidence.
+- September 12, 2026 at 10:23 AM — The channel grew by 85. The algorithm is finally awake.
+- September 12, 2026 at 11:21 AM — Bri is awake. The mic survived the snoring. Barely.
+- September 12, 2026 at 11:21 AM — Bri is no longer sleep deprived.
+- September 12, 2026 at 12:23 PM — Bri is too tired to stream.
+- September 12, 2026 at 12:23 PM — The channel grew by 85. The algorithm is finally awake.
+- September 12, 2026 at 2:23 PM — 82 new recruits joined the Bunny Brigade.
+- September 12, 2026 at 4:23 PM — A fan sent $8 of support while Bri was offline.
+- September 12, 2026 at 4:23 PM — 82 new subscribers. Bri is being normal about it. (She is not.)
+- September 12, 2026 at 6:21 PM — Bri started playing.
+- September 12, 2026 at 6:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 12, 2026 at 6:23 PM — The channel grew by 82. The algorithm is finally awake.
+- September 12, 2026 at 6:23 PM — Bri is hungry.
+- September 12, 2026 at 7:21 PM — GG. Bri claims she carried. There is no footage.
+- September 12, 2026 at 7:21 PM — Bri started spending time together with you.
+- September 12, 2026 at 7:51 PM — Bri survived socializing with actual humans. Achievement unlocked.
+- September 12, 2026 at 8:23 PM — Bri needs Uncrustables. This is now everyone's problem.
+- September 12, 2026 at 8:23 PM — 82 new recruits joined the Bunny Brigade.
+- September 12, 2026 at 10:23 PM — The cat surveyed the room from the top of the tree.
+- September 12, 2026 at 10:23 PM — 82 new subscribers. Bri is being normal about it. (She is not.)
+- September 13, 2026 at 12:23 AM — Bri is pacing laps around the room. The idea must be huge.
+- September 13, 2026 at 12:23 AM — 82 new subscribers. Bri is being normal about it. (She is not.)
+- September 13, 2026 at 12:23 AM — Bri is running low on energy.
+- September 13, 2026 at 12:23 AM — Bri is starving.
+- September 13, 2026 at 12:23 AM — Bri is sleep deprived.
+- September 13, 2026 at 12:23 AM — Bri settled down to rest.
+- September 13, 2026 at 2:23 AM — Bri snored contentedly through the room.
+- September 13, 2026 at 2:23 AM — The channel grew by 82. The algorithm is finally awake.
+- September 13, 2026 at 4:23 AM — The channel grew by 82. The algorithm is finally awake.
+- September 13, 2026 at 4:23 AM — Clippers brought 1,000 new subscribers to Bri's channel.
+- September 13, 2026 at 6:23 AM — Bri opened her bank app, made a noise, and closed it immediately.
+- September 13, 2026 at 6:23 AM — 82 new recruits joined the Bunny Brigade.
+- September 13, 2026 at 7:23 AM — Nap complete. Bri rebooted successfully.
+- September 13, 2026 at 7:23 AM — Bri is no longer sleep deprived.
+- September 13, 2026 at 7:23 AM — Bri's energy has recovered.
+- September 13, 2026 at 7:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 13, 2026 at 7:23 AM — Bri refused Açaí Bowl.
+- September 13, 2026 at 7:23 AM — Bri managed to get through Açaí Bowl.
+- September 13, 2026 at 7:23 AM — Bri managed to get through Hot dog.
+- September 13, 2026 at 7:23 AM — Bri is still hungry, but no longer starving.
+- September 13, 2026 at 7:23 AM — Bri refused Hot dog, and it went to waste.
+- September 13, 2026 at 7:23 AM — A fan sent $9 of support while Bri was offline.
+- September 13, 2026 at 7:23 AM — You got Bri Water. Chat's money, hard at work.
+- September 13, 2026 at 7:23 AM — You got Bri Cheez-Its ×2. Chat's money, hard at work.
+- September 13, 2026 at 7:23 AM — You got Bri Drawing Tablet ×2. Chat's money, hard at work.
+- September 13, 2026 at 7:23 AM — You got Bri Fog Machine. Chat's money, hard at work.
+- September 13, 2026 at 7:23 AM — You got Bri Console. Chat's money, hard at work.
+- September 13, 2026 at 7:23 AM — You got Bri Cheeseburger ×5. Chat's money, hard at work.
+- September 13, 2026 at 7:23 AM — Bri happily ate Cheez-Its.
+- September 13, 2026 at 7:23 AM — Bri savored every bite of Cheez-Its.
+- September 13, 2026 at 7:23 AM — Her food has been pretty salty lately. Water might be a good idea.
+- September 13, 2026 at 7:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 13, 2026 at 7:23 AM — Bri is no longer hungry.
+- September 13, 2026 at 7:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 13, 2026 at 8:23 AM — 82 new subscribers. Bri is being normal about it. (She is not.)
+- September 13, 2026 at 8:23 AM — Bri is hungry.
+- September 13, 2026 at 10:23 AM — The channel grew by 82. The algorithm is finally awake.
+- September 13, 2026 at 12:23 PM — 79 new subscribers. Bri is being normal about it. (She is not.)
+- September 13, 2026 at 12:23 PM — Bri is starving.
+- September 13, 2026 at 1:51 PM — Bri's health suffered from Starvation.
+- September 13, 2026 at 2:23 PM — 79 new recruits joined the Bunny Brigade.
+- September 13, 2026 at 4:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 13, 2026 at 4:23 PM — The channel grew by 79. The algorithm is finally awake.
+- September 13, 2026 at 4:23 PM — Bri is running low on energy.
+- September 13, 2026 at 5:23 PM — Bri is running low on energy.
+- September 13, 2026 at 5:23 PM — Bri reluctantly ate Açaí Bowl.
+- September 13, 2026 at 5:23 PM — Bri is still hungry, but no longer starving.
+- September 13, 2026 at 5:23 PM — Bri refused Cheeseburger, and it went to waste.
+- September 13, 2026 at 5:23 PM — Bri refused Cheeseburger.
+- September 13, 2026 at 5:23 PM — Bri gave Cheeseburger a cautious first bite.
+- September 13, 2026 at 5:23 PM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 13, 2026 at 5:23 PM — Bri is no longer hungry.
+- September 13, 2026 at 5:23 PM — Bri's energy has recovered.
+- September 13, 2026 at 5:23 PM — Bri refused Cheeseburger.
+- September 13, 2026 at 5:23 PM — Bri gave Cheeseburger a cautious first bite.
+- September 13, 2026 at 5:23 PM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 13, 2026 at 5:23 PM — Bri is full.
+- September 13, 2026 at 6:23 PM — 79 new subscribers. Bri is being normal about it. (She is not.)
+- September 13, 2026 at 8:23 PM — A fan sent $11 of support while Bri was offline.
+- September 13, 2026 at 8:23 PM — Bri's craving faded before it could be fulfilled.
+- September 13, 2026 at 8:23 PM — 79 new subscribers. Bri is being normal about it. (She is not.)
+- September 13, 2026 at 8:23 PM — Bri is sleep deprived.
+- September 13, 2026 at 8:23 PM — Bri is no longer full.
+- September 13, 2026 at 9:51 PM — Bri settled down to rest.
+- September 13, 2026 at 10:23 PM — The channel grew by 79. The algorithm is finally awake.
+- September 14, 2026 at 12:23 AM — Bri is pacing laps around the room. The idea must be huge.
+- September 14, 2026 at 12:23 AM — 79 new recruits joined the Bunny Brigade.
+- September 14, 2026 at 2:23 AM — 79 new recruits joined the Bunny Brigade.
+- September 14, 2026 at 4:23 AM — A trace of theatrical fog escaped at an inconvenient moment.
+- September 14, 2026 at 4:23 AM — The channel grew by 79. The algorithm is finally awake.
+- September 14, 2026 at 4:23 AM — Bri is hungry.
+- September 14, 2026 at 5:51 AM — Bri woke up denying the snoring rumors. The rumors are confirmed.
+- September 14, 2026 at 5:51 AM — Bri is no longer sleep deprived.
+- September 14, 2026 at 6:23 AM — 79 new recruits joined the Bunny Brigade.
+- September 14, 2026 at 8:23 AM — The channel grew by 79. The algorithm is finally awake.
+- September 14, 2026 at 8:23 AM — Bri is starving.
+- September 14, 2026 at 8:23 AM — You got Bri Sunflower seeds ×4. Chat's money, hard at work.
+- September 14, 2026 at 8:23 AM — You got Bri Water ×5. Chat's money, hard at work.
+- September 14, 2026 at 8:23 AM — You got Bri Whiteboard ×4. Chat's money, hard at work.
+- September 14, 2026 at 8:23 AM — Bri used Fog Machine to activate the fog machine.
+- September 14, 2026 at 8:23 AM — Bri is craving Waffle and will not shut up about it.
+- September 14, 2026 at 8:23 AM — Placed Traffic Cone in the room.
+- September 14, 2026 at 8:23 AM — Bri spent some time with LEGO Set.
+- September 14, 2026 at 8:23 AM — Bri used Red vs. Blue Box Set to rewatch red vs. blue.
+- September 14, 2026 at 8:23 AM — Bri spent some time with Drawing Tablet.
+- September 14, 2026 at 8:23 AM — Bri used Whiteboard to map out ideas.
+- September 14, 2026 at 8:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 14, 2026 at 8:23 AM — Bri carefully tried Cheeseburger.
+- September 14, 2026 at 8:23 AM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 14, 2026 at 8:23 AM — Bri is no longer starving.
+- September 14, 2026 at 8:23 AM — Bri carefully tried Cheeseburger.
+- September 14, 2026 at 8:23 AM — Bri was unhappy with how Cheeseburger was prepared.
+- September 14, 2026 at 8:23 AM — Bri picked up a small emote commission on her own.
+- September 14, 2026 at 8:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 14, 2026 at 8:23 AM — Bri is too tired to stream.
+- September 14, 2026 at 8:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 14, 2026 at 10:23 AM — 85 new subscribers. Bri is being normal about it. (She is not.)
+- September 14, 2026 at 12:23 PM — Bri is too tired to stream.
+- September 14, 2026 at 12:23 PM — 85 new recruits joined the Bunny Brigade.
+- September 14, 2026 at 2:23 PM — 85 new recruits joined the Bunny Brigade.
+- September 14, 2026 at 2:23 PM — Bri is sleep deprived.
+- September 14, 2026 at 3:51 PM — Bri's health suffered from Sleep deprivation.
+- September 14, 2026 at 4:23 PM — Bri is pacing laps around the room. The idea must be huge.
+- September 14, 2026 at 4:23 PM — The channel grew by 85. The algorithm is finally awake.
+- September 14, 2026 at 4:23 PM — Bri reached Twitch Partner! The best stream-rate band is now available.
+- September 14, 2026 at 4:23 PM — Bri settled down to rest.
+- September 14, 2026 at 6:23 PM — The cat surveyed the room from the top of the tree.
+- September 14, 2026 at 6:23 PM — The channel grew by 125. The algorithm is finally awake.
+- September 14, 2026 at 6:23 PM — Bri is running low on energy.
+- September 14, 2026 at 6:23 PM — Bri is hungry.
+- September 14, 2026 at 8:23 PM — 125 new recruits joined the Bunny Brigade.
+- September 14, 2026 at 10:23 PM — The channel grew by 125. The algorithm is finally awake.
+- September 14, 2026 at 10:23 PM — Bri is starving.
+- September 14, 2026 at 10:23 PM — Bri stopped resting early.
+- September 14, 2026 at 10:23 PM — Bri is no longer sleep deprived.
+- September 14, 2026 at 10:23 PM — Bri's energy has recovered.
+- September 14, 2026 at 10:23 PM — Bri reluctantly ate Sunflower seeds.
+- September 14, 2026 at 10:23 PM — Bri is still hungry, but no longer starving.
+- September 14, 2026 at 10:23 PM — Bri is doing budget math out loud. The math is losing.
+- September 14, 2026 at 10:23 PM — Bri managed to get through Sunflower seeds.
+- September 14, 2026 at 10:23 PM — Bri managed to get through Sunflower seeds.
+- September 14, 2026 at 10:23 PM — Bri managed to get through Sunflower seeds.
+- September 14, 2026 at 10:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 14, 2026 at 10:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 14, 2026 at 10:23 PM — A fan sent $6 of support while Bri was offline.
+- September 14, 2026 at 10:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 15, 2026 at 12:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 15, 2026 at 2:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 15, 2026 at 2:23 AM — Bri is hungry.
+- September 15, 2026 at 3:23 AM — Bri is hungry.
+- September 15, 2026 at 4:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 15, 2026 at 6:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 15, 2026 at 6:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 15, 2026 at 6:23 AM — Bri is running low on energy.
+- September 15, 2026 at 6:23 AM — Bri is starving.
+- September 15, 2026 at 7:51 AM — Bri's health suffered from Starvation.
+- September 15, 2026 at 8:23 AM — Bri's craving faded before it could be fulfilled.
+- September 15, 2026 at 8:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 15, 2026 at 8:23 AM — Bri is sleep deprived.
+- September 15, 2026 at 9:23 AM — Bri is sleep deprived.
+- September 15, 2026 at 9:51 AM — Bri's health suffered from Starvation and Sleep deprivation.
+- September 15, 2026 at 9:51 AM — Bri settled down to rest.
+- September 15, 2026 at 10:23 AM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 15, 2026 at 12:23 PM — It's Hash Brown o'clock, according to Bri's entire personality.
+- September 15, 2026 at 12:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 15, 2026 at 2:23 PM — Bri snored contentedly through the room.
+- September 15, 2026 at 2:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 15, 2026 at 4:23 PM — Bri is doing budget math out loud. The math is losing.
+- September 15, 2026 at 4:23 PM — 125 new recruits joined the Bunny Brigade.
+- September 15, 2026 at 6:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 15, 2026 at 6:51 PM — Bri is awake. The mic survived the snoring. Barely.
+- September 15, 2026 at 6:51 PM — Bri is no longer sleep deprived.
+- September 15, 2026 at 6:51 PM — Bri's energy has recovered.
+- September 15, 2026 at 6:51 PM — Water ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 15, 2026 at 6:51 PM — Milk ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 15, 2026 at 6:51 PM — PC Parts delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 15, 2026 at 6:51 PM — Caramel ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 15, 2026 at 6:51 PM — Mystery Box delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 15, 2026 at 6:51 PM — Bri used Mystery Box to open the mystery box.
+- September 15, 2026 at 6:51 PM — Bri used PC Parts to tune the computer.
+- September 15, 2026 at 6:51 PM — The cat surveyed the room from the top of the tree.
+- September 15, 2026 at 6:51 PM — Bri finished a serving of Caramel.
+- September 15, 2026 at 6:51 PM — The battle axe made an ordinary room feel like a quest hub.
+- September 15, 2026 at 6:51 PM — Bri ate Caramel.
+- September 15, 2026 at 6:51 PM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- September 15, 2026 at 6:51 PM — Socks has declared it attention o'clock. All work has ceased.
+- September 15, 2026 at 6:51 PM — Bri ate Caramel.
+- September 15, 2026 at 6:51 PM — Bri is still hungry, but no longer starving.
+- September 15, 2026 at 6:51 PM — The room did a thing. No witnesses. No evidence.
+- September 15, 2026 at 6:51 PM — Bri refused Milk.
+- September 15, 2026 at 6:51 PM — Bri refused Milk.
+- September 15, 2026 at 6:51 PM — Mom shipped Garlic bread and Tomato. Mom Prime never misses a delivery. Bri made a small happy noise about it.
+- September 15, 2026 at 6:51 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 15, 2026 at 6:51 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 15, 2026 at 6:51 PM — A fan sent $15 of support while Bri was offline.
+- September 15, 2026 at 8:23 PM — 125 new recruits joined the Bunny Brigade.
+- September 15, 2026 at 8:23 PM — Bri is starving.
+- September 15, 2026 at 8:51 PM — Bri savored every bite of Garlic bread.
+- September 15, 2026 at 8:51 PM — Bri is still hungry, but no longer starving.
+- September 15, 2026 at 8:51 PM — Bri finally grabbed Garlic bread after letting herself get way too hungry.
+- September 15, 2026 at 8:51 PM — Bri hit a sugar crash.
+- September 15, 2026 at 9:23 PM — Bri is still hungry, but no longer starving.
+- September 15, 2026 at 9:23 PM — Bri is having a sugar crash.
+- September 15, 2026 at 10:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 16, 2026 at 12:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 16, 2026 at 12:23 AM — Bri is starving.
+- September 16, 2026 at 2:23 AM — 125 new recruits joined the Bunny Brigade.
+- September 16, 2026 at 4:23 AM — Bri is doing budget math out loud. The math is losing.
+- September 16, 2026 at 4:23 AM — The channel grew by 125. The algorithm is finally awake.
+- September 16, 2026 at 4:23 AM — Bri is running low on energy.
+- September 16, 2026 at 4:23 AM — BBQ ribs ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 16, 2026 at 4:23 AM — French toast ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 16, 2026 at 4:23 AM — Carrot ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 16, 2026 at 4:23 AM — Gummies ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 16, 2026 at 4:23 AM — Live2D Model ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 16, 2026 at 4:23 AM — Rigging Tablet ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 16, 2026 at 4:23 AM — The Line of Credit opened and added $10,000 to Balance.
+- September 16, 2026 at 4:23 AM — Balance returned to $0 or above.
+- September 16, 2026 at 4:23 AM — Bri managed to get through BBQ ribs.
+- September 16, 2026 at 4:23 AM — The rolling nutrition balance improved and the sugar crash was averted.
+- September 16, 2026 at 4:23 AM — Bri is still hungry, but no longer starving.
+- September 16, 2026 at 4:23 AM — Bri has recovered from the sugar crash.
+- September 16, 2026 at 4:23 AM — Bri refused BBQ ribs, and it went to waste.
+- September 16, 2026 at 4:23 AM — Nobody could explain why the traffic cone belonged there.
+- September 16, 2026 at 4:23 AM — Bri managed to get through BBQ ribs.
+- September 16, 2026 at 4:23 AM — Bri is no longer hungry.
+- September 16, 2026 at 4:23 AM — Bri's energy has recovered.
+- September 16, 2026 at 4:23 AM — Bri ate Carrot.
+- September 16, 2026 at 4:23 AM — Bri picked up a small emote commission on her own.
+- September 16, 2026 at 4:23 AM — Bri ate Carrot.
+- September 16, 2026 at 4:23 AM — Bri managed to get through French toast.
+- September 16, 2026 at 4:23 AM — Bri is full.
+- September 16, 2026 at 4:23 AM — Bri is too tired to stream.
+- September 16, 2026 at 4:23 AM — Bri refused French toast.
+- September 16, 2026 at 4:23 AM — Bri refused French toast, and it went to waste.
+- September 16, 2026 at 4:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 16, 2026 at 4:23 AM — Bri managed to get through Gummies.
+- September 16, 2026 at 4:23 AM — Bri was too full to get any Food from Gummies.
+- September 16, 2026 at 4:23 AM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 16, 2026 at 4:23 AM — Bri is depressed.
+- September 16, 2026 at 4:23 AM — Bri refused Gummies, and it went to waste.
+- September 16, 2026 at 4:23 AM — Bri reluctantly ate Gummies.
+- September 16, 2026 at 4:23 AM — Bri was too sick to get any Food from Gummies.
+- September 16, 2026 at 4:23 AM — Bri's sickness worsened after Gummies.
+- September 16, 2026 at 4:23 AM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- September 16, 2026 at 4:23 AM — No swearing for a suspiciously long time. Someone check on her.
+- September 16, 2026 at 4:23 AM — Bri refused Milk, and it went to waste.
+- September 16, 2026 at 4:23 AM — Bri refused Milk.
+- September 16, 2026 at 4:23 AM — Bri savored every bite of Tomato.
+- September 16, 2026 at 4:23 AM — Bri was too sick to get any Food from Tomato.
+- September 16, 2026 at 4:23 AM — Bri's sickness worsened after Tomato.
+- September 16, 2026 at 4:23 AM — Bri started playing.
+- September 16, 2026 at 6:23 AM — 125 new recruits joined the Bunny Brigade.
+- September 16, 2026 at 6:23 AM — Bri is sleep deprived.
+- September 16, 2026 at 6:23 AM — Bri hit a sugar crash.
+- September 16, 2026 at 6:23 AM — Bri stopped playing early.
+- September 16, 2026 at 6:23 AM — Bri started spending time together with you.
+- September 16, 2026 at 6:38 AM — Bri wants to talk about vore.
+- September 16, 2026 at 6:38 AM — Bri landed a rare full-body commission. The work will carry on in the background.
+- September 16, 2026 at 7:06 AM — Bri's health suffered from Sleep deprivation and Depression.
+- September 16, 2026 at 8:23 AM — 125 new recruits joined the Bunny Brigade.
+- September 16, 2026 at 8:38 AM — Bri settled down to rest.
+- September 16, 2026 at 10:23 AM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 16, 2026 at 10:23 AM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 16, 2026 at 10:23 AM — The spark is back. The quitting arc got cancelled for ratings.
+- September 16, 2026 at 12:23 PM — Bri's craving faded before it could be fulfilled.
+- September 16, 2026 at 12:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 16, 2026 at 2:23 PM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 16, 2026 at 2:23 PM — The channel grew by 125. The algorithm is finally awake.
+- September 16, 2026 at 2:23 PM — Bri is no longer full.
+- September 16, 2026 at 4:23 PM — A fan sent $14 of support while Bri was offline.
+- September 16, 2026 at 4:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 16, 2026 at 5:38 PM — Nap complete. Bri rebooted successfully.
+- September 16, 2026 at 5:38 PM — Bri is no longer sleep deprived.
+- September 16, 2026 at 5:38 PM — Bri has recovered from the sugar crash.
+- September 16, 2026 at 5:38 PM — Bri refused that interaction.
+- September 16, 2026 at 5:38 PM — Bri started playing.
+- September 16, 2026 at 6:23 PM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 16, 2026 at 6:23 PM — 125 new subscribers. Bri is being normal about it. (She is not.)
+- September 16, 2026 at 7:38 PM — GG. Bri claims she carried. There is no footage.
+- September 16, 2026 at 7:38 PM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 16, 2026 at 7:38 PM — Bri used Red vs. Blue Box Set to rewatch red vs. blue.
+- September 16, 2026 at 7:38 PM — Bri is no longer depressed.
+- September 16, 2026 at 7:38 PM — Bri spent some time with Notebook.
+- September 16, 2026 at 7:38 PM — A new idea just possessed Bri. Pray for the schedule.
+- September 16, 2026 at 8:23 PM — The channel grew by 125. The algorithm is finally awake.
+- September 16, 2026 at 10:23 PM — 125 new recruits joined the Bunny Brigade.
+- September 17, 2026 at 12:23 AM — 131 new recruits joined the Bunny Brigade.
+- September 17, 2026 at 12:23 AM — Bri is hungry.
+- September 17, 2026 at 2:23 AM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 17, 2026 at 4:23 AM — 131 new recruits joined the Bunny Brigade.
+- September 17, 2026 at 4:23 AM — Bri is sleep deprived.
+- September 17, 2026 at 4:23 AM — Bri is hungry.
+- September 17, 2026 at 6:06 AM — Bri's health suffered from Sleep deprivation.
+- September 17, 2026 at 6:06 AM — Bri settled down to rest.
+- September 17, 2026 at 6:23 AM — The channel grew by 131. The algorithm is finally awake.
+- September 17, 2026 at 6:23 AM — Bri is running low on energy.
+- September 17, 2026 at 7:23 AM — Bri is running low on energy.
+- September 17, 2026 at 8:23 AM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 17, 2026 at 8:23 AM — Bri is starving.
+- September 17, 2026 at 8:23 AM — Bri stopped resting early.
+- September 17, 2026 at 8:23 AM — Bri is no longer sick.
+- September 17, 2026 at 8:23 AM — Bri reluctantly ate French toast.
+- September 17, 2026 at 8:23 AM — Bri is still hungry, but no longer starving.
+- September 17, 2026 at 8:23 AM — Bri refused Milk, and it went to waste.
+- September 17, 2026 at 8:23 AM — Water ×5 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 17, 2026 at 8:23 AM — Cat Treats ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 17, 2026 at 8:23 AM — New Model Commission ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 17, 2026 at 8:23 AM — Fries ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 17, 2026 at 8:23 AM — Bagel delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 17, 2026 at 10:23 AM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 17, 2026 at 12:23 PM — Bri's health suffered from Sleep deprivation.
+- September 17, 2026 at 12:23 PM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 17, 2026 at 12:23 PM — Bri commissioned a new model, and the artists got to work.
+- September 17, 2026 at 12:23 PM — A new idea just possessed Bri. Pray for the schedule.
+- September 17, 2026 at 2:23 PM — Bri's health suffered from Starvation and Sleep deprivation.
+- September 17, 2026 at 2:23 PM — Bri happily ate Fries.
+- September 17, 2026 at 2:23 PM — Bri is still hungry, but no longer starving.
+- September 17, 2026 at 2:23 PM — Bri finally grabbed Fries after letting herself get way too hungry.
+- September 17, 2026 at 2:23 PM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 17, 2026 at 2:23 PM — Bri settled down to rest.
+- September 17, 2026 at 4:23 PM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 17, 2026 at 4:23 PM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 17, 2026 at 4:23 PM — Bri is starving.
+- September 17, 2026 at 4:23 PM — Bri stopped resting early.
+- September 17, 2026 at 4:23 PM — Bri carefully tried Bagel.
+- September 17, 2026 at 4:23 PM — Bri's Bagel arrived just the way they wanted it.
+- September 17, 2026 at 4:23 PM — Bri is still hungry, but no longer starving.
+- September 17, 2026 at 4:23 PM — Bri happily ate Fries.
+- September 17, 2026 at 4:23 PM — Bri's energy has recovered.
+- September 17, 2026 at 4:23 PM — Bri happily ate Fries.
+- September 17, 2026 at 4:23 PM — Bri happily ate Fries.
+- September 17, 2026 at 4:23 PM — Her food has been pretty salty lately. Water might be a good idea.
+- September 17, 2026 at 4:23 PM — The cat surveyed the room from the top of the tree.
+- September 17, 2026 at 4:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 17, 2026 at 4:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 17, 2026 at 4:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 17, 2026 at 4:23 PM — Bri is craving Sour cream and will not shut up about it.
+- September 17, 2026 at 4:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 17, 2026 at 4:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 17, 2026 at 6:23 PM — 131 new recruits joined the Bunny Brigade.
+- September 17, 2026 at 8:23 PM — 131 new recruits joined the Bunny Brigade.
+- September 17, 2026 at 10:23 PM — The channel grew by 131. The algorithm is finally awake.
+- September 17, 2026 at 10:23 PM — Bri settled down to rest.
+- September 18, 2026 at 12:23 AM — Bri snored contentedly through the room.
+- September 18, 2026 at 12:23 AM — 131 new subscribers. Bri is being normal about it. (She is not.)
+- September 18, 2026 at 12:23 AM — Bri is running low on energy.
+- September 18, 2026 at 2:23 AM — 119 new subscribers. Bri is being normal about it. (She is not.)
+- September 18, 2026 at 4:23 AM — 107 new subscribers. Bri is being normal about it. (She is not.)
+- September 18, 2026 at 6:23 AM — The channel grew by 107. The algorithm is finally awake.
+- September 18, 2026 at 6:23 AM — Nap complete. Bri rebooted successfully.
+- September 18, 2026 at 6:23 AM — Bri is no longer sleep deprived.
+- September 18, 2026 at 6:23 AM — Bri's energy has recovered.
+- September 18, 2026 at 6:23 AM — A fan sent $12 of support while Bri was offline.
+- September 18, 2026 at 8:23 AM — 107 new subscribers. Bri is being normal about it. (She is not.)
+- September 18, 2026 at 10:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 18, 2026 at 10:23 AM — The channel grew by 107. The algorithm is finally awake.
+- September 18, 2026 at 10:23 AM — Bri is hungry.
+- September 18, 2026 at 12:23 PM — 107 new subscribers. Bri is being normal about it. (She is not.)
+- September 18, 2026 at 2:23 PM — 107 new recruits joined the Bunny Brigade.
+- September 18, 2026 at 4:23 PM — Bri's craving faded before it could be fulfilled.
+- September 18, 2026 at 4:23 PM — 83 new recruits joined the Bunny Brigade.
+- September 18, 2026 at 6:23 PM — Bri's health suffered from Starvation and Sleep deprivation.
+- September 18, 2026 at 6:23 PM — Bri settled down to rest.
+- September 18, 2026 at 6:23 PM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 18, 2026 at 6:23 PM — 83 new subscribers. Bri is being normal about it. (She is not.)
+- September 18, 2026 at 6:23 PM — Bri is running low on energy.
+- September 18, 2026 at 6:23 PM — Bri is starving.
+- September 18, 2026 at 6:23 PM — Bri is sleep deprived.
+- September 18, 2026 at 8:23 PM — 83 new recruits joined the Bunny Brigade.
+- September 18, 2026 at 10:23 PM — The battle axe made an ordinary room feel like a quest hub.
+- September 18, 2026 at 10:23 PM — 83 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 12:00 AM — Bri delivered the full-body commission and earned $754.
+- September 19, 2026 at 12:23 AM — 60 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 2:23 AM — Bri snored contentedly through the room.
+- September 19, 2026 at 2:23 AM — 60 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 3:23 AM — Nap complete. Bri rebooted successfully.
+- September 19, 2026 at 3:23 AM — Bri is no longer sleep deprived.
+- September 19, 2026 at 3:23 AM — Bri's energy has recovered.
+- September 19, 2026 at 3:23 AM — Water delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Cucumber delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Lettuce delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Waffle ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Pretzel ×5 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Blueberry ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Pineapple delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Toast ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Salad ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Tater tots delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Craft Supplies delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Pillow delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 19, 2026 at 3:23 AM — Bri reluctantly ate Blueberry.
+- September 19, 2026 at 3:23 AM — It's Toast o'clock, according to Bri's entire personality.
+- September 19, 2026 at 3:23 AM — Bri reluctantly ate Blueberry.
+- September 19, 2026 at 3:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 19, 2026 at 3:23 AM — Bri reluctantly ate Blueberry.
+- September 19, 2026 at 3:23 AM — Bri is still hungry, but no longer starving.
+- September 19, 2026 at 3:23 AM — Bri is depressed.
+- September 19, 2026 at 3:23 AM — Bri managed to get through Pineapple.
+- September 19, 2026 at 3:23 AM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- September 19, 2026 at 3:23 AM — Bri ate a salad. Somewhere, a $1,000 donor feels robbed.
+- September 19, 2026 at 3:23 AM — Bri's Salad arrived just the way they wanted it.
+- September 19, 2026 at 3:23 AM — Bri is no longer hungry.
+- September 19, 2026 at 3:23 AM — Bri confronted a salad and technically won.
+- September 19, 2026 at 3:23 AM — Bri's Salad arrived just the way they wanted it.
+- September 19, 2026 at 3:23 AM — Bri refused Salad.
+- September 19, 2026 at 3:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 19, 2026 at 4:23 AM — 60 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 5:23 AM — Bri hit a sugar crash.
+- September 19, 2026 at 5:23 AM — Bri went quiet. Not the fun kind of quiet.
+- September 19, 2026 at 5:23 AM — Bri is having a sugar crash.
+- September 19, 2026 at 5:23 AM — Bri started playing.
+- September 19, 2026 at 6:23 AM — 60 new subscribers. Bri is being normal about it. (She is not.)
+- September 19, 2026 at 7:23 AM — Bri finished playing. The controller survived. This time.
+- September 19, 2026 at 7:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 19, 2026 at 7:23 AM — She's back. Chat pretends they weren't refreshing the schedule every hour.
+- September 19, 2026 at 7:23 AM — Bri started playing.
+- September 19, 2026 at 8:23 AM — 60 new subscribers. Bri is being normal about it. (She is not.)
+- September 19, 2026 at 8:23 AM — Bri is hungry.
+- September 19, 2026 at 8:53 AM — The recommendation gods smiled. New faces everywhere.
+- September 19, 2026 at 10:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 19, 2026 at 10:23 AM — 90 new subscribers. Bri is being normal about it. (She is not.)
+- September 19, 2026 at 10:23 AM — GG. Bri claims she carried. There is no footage.
+- September 19, 2026 at 10:23 AM — A fan sent $15 of support while Bri was offline.
+- September 19, 2026 at 10:23 AM — Bri started playing.
+- September 19, 2026 at 11:23 AM — Bri finished playing. The controller survived. This time.
+- September 19, 2026 at 11:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 19, 2026 at 11:23 AM — No swearing for a suspiciously long time. Someone check on her.
+- September 19, 2026 at 11:23 AM — Bri started spending time together with you.
+- September 19, 2026 at 12:08 PM — Bri survived socializing with actual humans. Achievement unlocked.
+- September 19, 2026 at 12:08 PM — Bri refused that interaction.
+- September 19, 2026 at 12:08 PM — Bri settled down to rest.
+- September 19, 2026 at 12:23 PM — Nobody could explain why the traffic cone belonged there.
+- September 19, 2026 at 12:23 PM — 90 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 12:23 PM — The spark is back. The quitting arc got cancelled for ratings.
+- September 19, 2026 at 2:23 PM — 90 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 2:23 PM — Bri is starving.
+- September 19, 2026 at 2:23 PM — Bri stopped resting early.
+- September 19, 2026 at 2:23 PM — Bri has recovered from the sugar crash.
+- September 19, 2026 at 2:23 PM — Bri finished a serving of Pretzel.
+- September 19, 2026 at 2:23 PM — Bri is still hungry, but no longer starving.
+- September 19, 2026 at 2:23 PM — Bri ate Pretzel.
+- September 19, 2026 at 2:23 PM — Bri ate Pretzel.
+- September 19, 2026 at 2:23 PM — The room did a thing. No witnesses. No evidence.
+- September 19, 2026 at 2:23 PM — Bri ate Pretzel.
+- September 19, 2026 at 2:23 PM — Bri ate Pretzel.
+- September 19, 2026 at 2:23 PM — Bri confronted a salad and technically won.
+- September 19, 2026 at 2:23 PM — Bri was unhappy with how Salad was prepared.
+- September 19, 2026 at 2:23 PM — Bri savored every bite of Tater tots.
+- September 19, 2026 at 2:23 PM — Bri is full.
+- September 19, 2026 at 2:23 PM — Bri started playing.
+- September 19, 2026 at 3:23 PM — Bri finished playing. The controller survived. This time.
+- September 19, 2026 at 3:23 PM — Bri picked up a small emote commission on her own.
+- September 19, 2026 at 3:23 PM — Bri started playing.
+- September 19, 2026 at 4:23 PM — 90 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 6:23 PM — 90 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 6:23 PM — Game session over. Bri swears she was 'about to win.'
+- September 19, 2026 at 6:23 PM — Bri started spending time together with you.
+- September 19, 2026 at 6:38 PM — Bri survived socializing with actual humans. Achievement unlocked.
+- September 19, 2026 at 6:38 PM — Socks has declared it attention o'clock. All work has ceased.
+- September 19, 2026 at 6:38 PM — Bri started playing.
+- September 19, 2026 at 7:38 PM — Game session over. Bri swears she was 'about to win.'
+- September 19, 2026 at 8:23 PM — Bri is too tired to stream.
+- September 19, 2026 at 8:23 PM — 90 new subscribers. Bri is being normal about it. (She is not.)
+- September 19, 2026 at 8:23 PM — Bri is no longer full.
+- September 19, 2026 at 10:23 PM — 90 new recruits joined the Bunny Brigade.
+- September 19, 2026 at 10:23 PM — Bri is sleep deprived.
+- September 19, 2026 at 10:23 PM — Bri is no longer full.
+- September 19, 2026 at 10:23 PM — Bri started playing.
+- September 20, 2026 at 12:00 AM — Bri's new model is finished. Their fresh look is ready.
+- September 20, 2026 at 12:00 AM — Bri's model debut stream is lined up for the next clear afternoon slot.
+- September 20, 2026 at 12:23 AM — 90 new recruits joined the Bunny Brigade.
+- September 20, 2026 at 12:23 AM — GG. Bri claims she carried. There is no footage.
+- September 20, 2026 at 12:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 20, 2026 at 12:23 AM — Bri settled down to rest.
+- September 20, 2026 at 2:23 AM — The channel grew by 90. The algorithm is finally awake.
+- September 20, 2026 at 3:23 AM — Bri's craving faded before it could be fulfilled.
+- September 20, 2026 at 4:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 20, 2026 at 4:23 AM — 90 new recruits joined the Bunny Brigade.
+- September 20, 2026 at 4:23 AM — Bri is running low on energy.
+- September 20, 2026 at 4:23 AM — Bri is hungry.
+- September 20, 2026 at 6:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 20, 2026 at 6:23 AM — 90 new recruits joined the Bunny Brigade.
+- September 20, 2026 at 8:23 AM — The channel grew by 90. The algorithm is finally awake.
+- September 20, 2026 at 8:23 AM — Bri is starving.
+- September 20, 2026 at 8:23 AM — Bri stopped resting early.
+- September 20, 2026 at 8:23 AM — Bri is no longer sleep deprived.
+- September 20, 2026 at 8:23 AM — Bri's energy has recovered.
+- September 20, 2026 at 8:23 AM — Bri savored every bite of Cucumber.
+- September 20, 2026 at 8:23 AM — Bri is still hungry, but no longer starving.
+- September 20, 2026 at 8:23 AM — It's Waffle o'clock, according to Bri's entire personality.
+- September 20, 2026 at 8:23 AM — Bri happily ate Toast.
+- September 20, 2026 at 8:23 AM — Bri savored every bite of Toast.
+- September 20, 2026 at 8:23 AM — Bri savored every bite of Toast.
+- September 20, 2026 at 8:23 AM — Bri settled in for a focused stretch of Commission Work.
+- September 20, 2026 at 8:53 AM — algorithm boost discovery boost ended.
+- September 20, 2026 at 10:23 AM — Nobody could explain why the traffic cone belonged there.
+- September 20, 2026 at 10:23 AM — The channel grew by 60. The algorithm is finally awake.
+- September 20, 2026 at 12:23 PM — 60 new subscribers. Bri is being normal about it. (She is not.)
+- September 20, 2026 at 2:23 PM — 60 new subscribers. Bri is being normal about it. (She is not.)
+- September 20, 2026 at 2:23 PM — Bri wrapped up Commission Work and earned $175.
+- September 20, 2026 at 2:23 PM — Bri went live to debut the new model.
+- September 20, 2026 at 4:23 PM — Bri is pacing laps around the room. The idea must be huge.
+- September 20, 2026 at 4:23 PM — 130 new recruits joined the Bunny Brigade.
+- September 20, 2026 at 6:23 PM — 130 new subscribers. Bri is being normal about it. (She is not.)
+- September 20, 2026 at 6:23 PM — Bri is sleep deprived.
+- September 20, 2026 at 6:23 PM — Bri had to stop the model debut stream early.
+- September 20, 2026 at 6:23 PM — Bri settled down to rest.
+- September 20, 2026 at 8:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 20, 2026 at 8:23 PM — The channel grew by 130. The algorithm is finally awake.
+- September 20, 2026 at 10:23 PM — 130 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 12:23 AM — The cat surveyed the room from the top of the tree.
+- September 21, 2026 at 12:23 AM — 130 new subscribers. Bri is being normal about it. (She is not.)
+- September 21, 2026 at 12:23 AM — Bri is hungry.
+- September 21, 2026 at 2:23 AM — 130 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 2:23 AM — Bri is running low on energy.
+- September 21, 2026 at 2:23 AM — Nap complete. Bri rebooted successfully.
+- September 21, 2026 at 2:23 AM — Bri is no longer sleep deprived.
+- September 21, 2026 at 2:23 AM — Bri's energy has recovered.
+- September 21, 2026 at 2:23 AM — Bri savored every bite of Lettuce.
+- September 21, 2026 at 2:23 AM — Bri savored every bite of Waffle.
+- September 21, 2026 at 2:23 AM — Waffle was exactly what Bri had been craving.
+- September 21, 2026 at 2:23 AM — Bri started streaming.
+- September 21, 2026 at 2:23 AM — Bri is no longer hungry.
+- September 21, 2026 at 3:23 AM — Stream over! She said 'okay, ONE more thing' four times before actually ending.
+- September 21, 2026 at 3:23 AM — Bri happily ate Waffle.
+- September 21, 2026 at 3:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 21, 2026 at 3:23 AM — Bri is no longer hungry.
+- September 21, 2026 at 4:23 AM — The room did a thing. No witnesses. No evidence.
+- September 21, 2026 at 4:23 AM — 199 new subscribers. Bri is being normal about it. (She is not.)
+- September 21, 2026 at 6:23 AM — 199 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 6:23 AM — Bri is hungry.
+- September 21, 2026 at 8:23 AM — Bri is pacing laps around the room. The idea must be huge.
+- September 21, 2026 at 8:23 AM — The channel grew by 199. The algorithm is finally awake.
+- September 21, 2026 at 8:23 AM — Bri is hungry.
+- September 21, 2026 at 10:23 AM — It's Garlic bread o'clock, according to Bri's entire personality.
+- September 21, 2026 at 10:23 AM — 199 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 10:23 AM — Bri is starving.
+- September 21, 2026 at 10:38 AM — Bri's health suffered from Starvation.
+- September 21, 2026 at 12:23 PM — 199 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 2:23 PM — A fan sent $10 of support while Bri was offline.
+- September 21, 2026 at 2:23 PM — 199 new subscribers. Bri is being normal about it. (She is not.)
+- September 21, 2026 at 2:23 PM — Bri is running low on energy.
+- September 21, 2026 at 2:38 PM — Bri's health suffered from Starvation.
+- September 21, 2026 at 3:23 PM — Bri is running low on energy.
+- September 21, 2026 at 3:23 PM — Sausage ×5 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 21, 2026 at 3:23 PM — Water ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 21, 2026 at 3:23 PM — Orange juice ×5 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 21, 2026 at 3:23 PM — Coconut ×5 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 21, 2026 at 3:23 PM — Scratching Post delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 21, 2026 at 3:23 PM — Cantaloupe ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 21, 2026 at 3:23 PM — Paid $2,400 toward the Line of Credit.
+- September 21, 2026 at 3:23 PM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 21, 2026 at 4:23 PM — 199 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 4:23 PM — Bri is sleep deprived.
+- September 21, 2026 at 4:23 PM — Bri reluctantly ate Coconut.
+- September 21, 2026 at 4:23 PM — Bri refused Coconut.
+- September 21, 2026 at 4:23 PM — Bri refused Coconut, and it went to waste.
+- September 21, 2026 at 4:23 PM — Bri refused Coconut.
+- September 21, 2026 at 4:23 PM — Bri refused Coconut.
+- September 21, 2026 at 4:23 PM — Bri is getting frustrated. One more genuine refusal could leave them Annoyed.
+- September 21, 2026 at 4:23 PM — Bri savored every sip of Orange juice.
+- September 21, 2026 at 4:23 PM — Bri savored every sip of Orange juice.
+- September 21, 2026 at 4:23 PM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- September 21, 2026 at 4:23 PM — Bri is still hungry, but no longer starving.
+- September 21, 2026 at 4:23 PM — Bri happily drank Orange juice.
+- September 21, 2026 at 4:23 PM — Bri savored every sip of Orange juice.
+- September 21, 2026 at 4:23 PM — Bri is no longer hungry.
+- September 21, 2026 at 4:23 PM — Bri savored every sip of Orange juice.
+- September 21, 2026 at 4:23 PM — Bri's energy has recovered.
+- September 21, 2026 at 4:23 PM — Bri ate Sausage.
+- September 21, 2026 at 4:23 PM — Bri ate Sausage.
+- September 21, 2026 at 4:23 PM — Bri is full.
+- September 21, 2026 at 4:23 PM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 21, 2026 at 4:23 PM — Bri finished a serving of Sausage.
+- September 21, 2026 at 4:23 PM — Bri was too full to get any Food from Sausage.
+- September 21, 2026 at 4:23 PM — Bri ate Sausage.
+- September 21, 2026 at 4:23 PM — Bri was too full to get any Food from Sausage.
+- September 21, 2026 at 4:23 PM — Nobody could explain why the traffic cone belonged there.
+- September 21, 2026 at 4:23 PM — Bri settled down to rest.
+- September 21, 2026 at 6:23 PM — 199 new subscribers. Bri is being normal about it. (She is not.)
+- September 21, 2026 at 6:23 PM — Bri hit a sugar crash.
+- September 21, 2026 at 8:23 PM — 199 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 10:23 PM — Rain again. The window perch hosts one (1) melancholy cat.
+- September 21, 2026 at 10:23 PM — A new idea just possessed Bri. Pray for the schedule.
+- September 21, 2026 at 10:23 PM — 199 new recruits joined the Bunny Brigade.
+- September 21, 2026 at 10:23 PM — Bri is no longer full.
+- September 22, 2026 at 12:23 AM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 22, 2026 at 12:23 AM — 199 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 1:23 AM — Nap complete. Bri rebooted successfully.
+- September 22, 2026 at 1:23 AM — Bri is no longer sleep deprived.
+- September 22, 2026 at 1:23 AM — Bri has recovered from the sugar crash.
+- September 22, 2026 at 1:23 AM — Bri started streaming.
+- September 22, 2026 at 2:23 AM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 3:23 AM — A major donor donated $1,591 during Bri's stream.
+- September 22, 2026 at 4:23 AM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 6:23 AM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 7:23 AM — A kind supporter donated $58 during Bri's stream.
+- September 22, 2026 at 8:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 22, 2026 at 8:23 AM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 8:23 AM — Bri is hungry.
+- September 22, 2026 at 10:23 AM — Bri's craving faded before it could be fulfilled.
+- September 22, 2026 at 10:23 AM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 10:23 AM — The stream ended. The clip channels are already hard at work.
+- September 22, 2026 at 10:23 AM — Bri's stream brought 35 new followers to the channel.
+- September 22, 2026 at 12:23 PM — A fan sent $5 of support while Bri was offline.
+- September 22, 2026 at 12:23 PM — The channel grew by 269. The algorithm is finally awake.
+- September 22, 2026 at 2:23 PM — Bri needs Potato chips. This is now everyone's problem.
+- September 22, 2026 at 2:23 PM — 269 new recruits joined the Bunny Brigade.
+- September 22, 2026 at 2:23 PM — Bri is running low on energy.
+- September 22, 2026 at 2:23 PM — Bri is sleep deprived.
+- September 22, 2026 at 2:38 PM — Bri's health suffered from Sleep deprivation.
+- September 22, 2026 at 2:38 PM — Bri settled down to rest.
+- September 22, 2026 at 4:23 PM — The channel grew by 269. The algorithm is finally awake.
+- September 22, 2026 at 4:23 PM — Bri is starving.
+- September 22, 2026 at 4:23 PM — Bri stopped resting early.
+- September 22, 2026 at 6:23 PM — Bri's health suffered from Sleep deprivation.
+- September 22, 2026 at 6:23 PM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 22, 2026 at 8:23 PM — Bri's health suffered from Sleep deprivation.
+- September 22, 2026 at 8:23 PM — The channel grew by 269. The algorithm is finally awake.
+- September 22, 2026 at 10:23 PM — Bri's health suffered from Starvation and Sleep deprivation.
+- September 22, 2026 at 10:23 PM — Bri finished a serving of Sausage.
+- September 22, 2026 at 10:23 PM — Bri finally grabbed Sausage after letting herself get way too hungry.
+- September 22, 2026 at 10:23 PM — The channel grew by 269. The algorithm is finally awake.
+- September 22, 2026 at 10:23 PM — Bri settled down to rest.
+- September 23, 2026 at 12:23 AM — 269 new subscribers. Bri is being normal about it. (She is not.)
+- September 23, 2026 at 2:23 AM — The room did a thing. No witnesses. No evidence.
+- September 23, 2026 at 2:23 AM — The channel grew by 269. The algorithm is finally awake.
+- September 23, 2026 at 4:23 AM — The channel grew by 269. The algorithm is finally awake.
+- September 23, 2026 at 6:23 AM — A fan sent $5 of support while Bri was offline.
+- September 23, 2026 at 6:23 AM — 269 new recruits joined the Bunny Brigade.
+- September 23, 2026 at 7:23 AM — Nap complete. Bri rebooted successfully.
+- September 23, 2026 at 7:23 AM — Bri is no longer sleep deprived.
+- September 23, 2026 at 7:23 AM — Bri's energy has recovered.
+- September 23, 2026 at 7:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 23, 2026 at 7:23 AM — Bri reluctantly ate Cantaloupe.
+- September 23, 2026 at 7:23 AM — Bri refused Cantaloupe.
+- September 23, 2026 at 7:23 AM — Bri reluctantly ate Cantaloupe.
+- September 23, 2026 at 7:23 AM — Bri refused Coconut, and it went to waste.
+- September 23, 2026 at 7:23 AM — Bri refused Coconut.
+- September 23, 2026 at 7:23 AM — Bri reluctantly ate Coconut.
+- September 23, 2026 at 7:23 AM — Bri is still hungry, but no longer starving.
+- September 23, 2026 at 7:23 AM — Bri gasped, yelled 'WAIT—', and started scribbling.
+- September 23, 2026 at 7:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 23, 2026 at 7:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 23, 2026 at 7:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 23, 2026 at 7:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 23, 2026 at 7:23 AM — You got Bri Tuna. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — You got Bri Fruit Smoothie. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — You got Bri Water ×2. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — You got Bri Burrito ×2. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — You got Bri Coconut ×2. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — You got Bri Onion. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — You got Bri Glee Box Set ×2. Chat's money, hard at work.
+- September 23, 2026 at 7:23 AM — Bri savored every bite of Burrito.
+- September 23, 2026 at 7:23 AM — Bri is no longer hungry.
+- September 23, 2026 at 7:23 AM — Bri savored every bite of Burrito.
+- September 23, 2026 at 7:23 AM — Nobody could explain why the traffic cone belonged there.
+- September 23, 2026 at 7:23 AM — Bri managed to get through Cantaloupe.
+- September 23, 2026 at 7:23 AM — Bri started streaming.
+- September 23, 2026 at 8:23 AM — 337 new subscribers. Bri is being normal about it. (She is not.)
+- September 23, 2026 at 9:23 AM — Raid sent, mic off. Bri is already planning tomorrow's chaos.
+- September 23, 2026 at 9:23 AM — A raid windfall donated $395 during Bri's stream.
+- September 23, 2026 at 9:23 AM — Bri's stream brought 5 new followers to the channel.
+- September 23, 2026 at 9:23 AM — Bri finished a serving of Tuna.
+- September 23, 2026 at 9:23 AM — Bri is full.
+- September 23, 2026 at 9:23 AM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 23, 2026 at 9:23 AM — Bri was too full to get any Food from Water.
+- September 23, 2026 at 9:23 AM — Bri consumed one (1) glass of water. Alert the press.
+- September 23, 2026 at 9:23 AM — Bri was too full to get any Food from Water.
+- September 23, 2026 at 9:23 AM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 23, 2026 at 9:23 AM — Bri is no longer hungry.
+- September 23, 2026 at 10:23 AM — 337 new subscribers. Bri is being normal about it. (She is not.)
+- September 23, 2026 at 12:23 PM — The channel grew by 337. The algorithm is finally awake.
+- September 23, 2026 at 2:23 PM — Bri picked up a small emote commission on her own.
+- September 23, 2026 at 2:23 PM — Bri's craving faded before it could be fulfilled.
+- September 23, 2026 at 2:23 PM — The channel grew by 337. The algorithm is finally awake.
+- September 23, 2026 at 2:23 PM — Bri is no longer full.
+- September 23, 2026 at 4:23 PM — 337 new subscribers. Bri is being normal about it. (She is not.)
+- September 23, 2026 at 4:23 PM — Bri is sleep deprived.
+- September 23, 2026 at 4:23 PM — Bri is no longer full.
+- September 23, 2026 at 4:23 PM — Bri settled down to rest.
+- September 23, 2026 at 6:23 PM — The cat surveyed the room from the top of the tree.
+- September 23, 2026 at 6:23 PM — 337 new recruits joined the Bunny Brigade.
+- September 23, 2026 at 8:23 PM — The channel grew by 337. The algorithm is finally awake.
+- September 23, 2026 at 10:23 PM — The channel grew by 337. The algorithm is finally awake.
+- September 23, 2026 at 10:23 PM — Bri is hungry.
+- September 24, 2026 at 12:23 AM — 337 new subscribers. Bri is being normal about it. (She is not.)
+- September 24, 2026 at 12:23 AM — Bri is running low on energy.
+- September 24, 2026 at 12:23 AM — Bri woke up denying the snoring rumors. The rumors are confirmed.
+- September 24, 2026 at 12:23 AM — Bri is no longer sleep deprived.
+- September 24, 2026 at 12:23 AM — Bri is no longer sick.
+- September 24, 2026 at 12:23 AM — Bri's energy has recovered.
+- September 24, 2026 at 12:23 AM — Bri managed to get through Coconut.
+- September 24, 2026 at 12:23 AM — Bri refused Coconut, and it went to waste.
+- September 24, 2026 at 12:23 AM — Bri refused Coconut.
+- September 24, 2026 at 12:23 AM — Bri took a cautious sip of Fruit Smoothie.
+- September 24, 2026 at 12:23 AM — Bri's Fruit Smoothie arrived just the way they wanted it.
+- September 24, 2026 at 12:23 AM — Bri started streaming.
+- September 24, 2026 at 12:23 AM — Bri is no longer hungry.
+- September 24, 2026 at 2:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 24, 2026 at 2:23 AM — The channel grew by 353. The algorithm is finally awake.
+- September 24, 2026 at 4:23 AM — The channel grew by 353. The algorithm is finally awake.
+- September 24, 2026 at 4:23 AM — Bri is hungry.
+- September 24, 2026 at 6:23 AM — A new idea just possessed Bri. Pray for the schedule.
+- September 24, 2026 at 6:23 AM — 353 new subscribers. Bri is being normal about it. (She is not.)
+- September 24, 2026 at 8:23 AM — 353 new recruits joined the Bunny Brigade.
+- September 24, 2026 at 8:23 AM — Bri is starving.
+- September 24, 2026 at 8:23 AM — Bri had to stop streaming early.
+- September 24, 2026 at 8:23 AM — Bri refused Onion, and it went to waste.
+- September 24, 2026 at 8:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 24, 2026 at 9:23 AM — Bri's health suffered from Starvation.
+- September 24, 2026 at 10:23 AM — 353 new recruits joined the Bunny Brigade.
+- September 24, 2026 at 10:23 AM — Bri managed to get through Coconut.
+- September 24, 2026 at 10:23 AM — Bri is still hungry, but no longer starving.
+- September 24, 2026 at 10:23 AM — Bri needs Uncrustables. This is now everyone's problem.
+- September 24, 2026 at 12:23 PM — The cat surveyed the room from the top of the tree.
+- September 24, 2026 at 12:23 PM — 353 new recruits joined the Bunny Brigade.
+- September 24, 2026 at 12:23 PM — Bri's channel reached 30,000 subscribers! Subscriber Revenue now pays at 1.5x.
+- September 24, 2026 at 12:23 PM — Bri is starving.
+- September 24, 2026 at 1:23 PM — Bri's health suffered from Starvation.
+- September 24, 2026 at 2:23 PM — The channel grew by 373. The algorithm is finally awake.
+- September 24, 2026 at 2:23 PM — Bri is running low on energy.
+- September 24, 2026 at 3:23 PM — Bri's health suffered from Starvation.
+- September 24, 2026 at 3:23 PM — Bri is running low on energy.
+- September 24, 2026 at 3:23 PM — You bought Water ×4 for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Uncrustables for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought 3D Printer ×2 for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Rug for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Peanuts ×5 for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Salsa ×4 for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Tiny Cat Hat ×3 for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Stream Deck ×3 for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — You bought Bookshelf for Bri. She's already scheming with it.
+- September 24, 2026 at 3:23 PM — Paid $1,200 toward the Line of Credit.
+- September 24, 2026 at 3:23 PM — Bri ate Peanuts.
+- September 24, 2026 at 3:23 PM — Bri ate Peanuts.
+- September 24, 2026 at 3:23 PM — Bri is still hungry, but no longer starving.
+- September 24, 2026 at 3:23 PM — Bri finished a serving of Peanuts.
+- September 24, 2026 at 3:23 PM — Bri finished a serving of Peanuts.
+- September 24, 2026 at 3:23 PM — The tiny hat remained on the cat for almost four seconds.
+- September 24, 2026 at 3:23 PM — Bri is no longer hungry.
+- September 24, 2026 at 3:23 PM — Bri's energy has recovered.
+- September 24, 2026 at 3:23 PM — Bri happily ate Uncrustables.
+- September 24, 2026 at 3:23 PM — Uncrustables was exactly what Bri had been craving.
+- September 24, 2026 at 3:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 24, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 24, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 24, 2026 at 3:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 24, 2026 at 3:23 PM — Bri settled down to rest.
+- September 24, 2026 at 4:23 PM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 24, 2026 at 6:23 PM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 24, 2026 at 8:23 PM — 373 new recruits joined the Bunny Brigade.
+- September 24, 2026 at 8:23 PM — Bri is hungry.
+- September 24, 2026 at 9:23 PM — Nap complete. Bri rebooted successfully.
+- September 24, 2026 at 9:23 PM — Bri is craving BBQ chips and will not shut up about it.
+- September 24, 2026 at 10:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 24, 2026 at 10:23 PM — 373 new recruits joined the Bunny Brigade.
+- September 25, 2026 at 12:23 AM — The channel grew by 373. The algorithm is finally awake.
+- September 25, 2026 at 12:23 AM — Bri finished a serving of Peanuts.
+- September 25, 2026 at 12:23 AM — Bri refused Salsa, and it went to waste.
+- September 25, 2026 at 12:23 AM — Bri managed to get through Salsa.
+- September 25, 2026 at 12:23 AM — Bri is no longer hungry.
+- September 25, 2026 at 12:23 AM — Bri reluctantly ate Salsa.
+- September 25, 2026 at 12:23 AM — Bri is too tired to stream.
+- September 25, 2026 at 2:23 AM — 373 new recruits joined the Bunny Brigade.
+- September 25, 2026 at 4:23 AM — Socks has declared it attention o'clock. All work has ceased.
+- September 25, 2026 at 4:23 AM — The channel grew by 373. The algorithm is finally awake.
+- September 25, 2026 at 6:23 AM — A fan sent $10 of support while Bri was offline.
+- September 25, 2026 at 6:23 AM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 25, 2026 at 8:23 AM — 373 new recruits joined the Bunny Brigade.
+- September 25, 2026 at 8:23 AM — Bri is hungry.
+- September 25, 2026 at 9:23 AM — Bri acquired Tomato. No regrets. Yet.
+- September 25, 2026 at 10:23 AM — The channel grew by 373. The algorithm is finally awake.
+- September 25, 2026 at 10:23 AM — Bri is running low on energy.
+- September 25, 2026 at 10:23 AM — Bri is sleep deprived.
+- September 25, 2026 at 10:23 AM — Bri is hungry.
+- September 25, 2026 at 11:23 AM — Bri settled down to rest.
+- September 25, 2026 at 12:23 PM — The channel grew by 373. The algorithm is finally awake.
+- September 25, 2026 at 2:23 PM — 373 new recruits joined the Bunny Brigade.
+- September 25, 2026 at 2:23 PM — Bri is starving.
+- September 25, 2026 at 2:23 PM — Bri stopped resting early.
+- September 25, 2026 at 2:23 PM — Bri is no longer sleep deprived.
+- September 25, 2026 at 2:23 PM — Bri refused Salsa, and it went to waste.
+- September 25, 2026 at 2:23 PM — Bri savored every bite of Tomato.
+- September 25, 2026 at 2:23 PM — Bri is still hungry, but no longer starving.
+- September 25, 2026 at 2:23 PM — Bri's energy has recovered.
+- September 25, 2026 at 4:23 PM — Bri's health suffered from Starvation.
+- September 25, 2026 at 4:23 PM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 25, 2026 at 4:23 PM — Bri is starving.
+- September 25, 2026 at 6:23 PM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 25, 2026 at 6:23 PM — Bri is running low on energy.
+- September 25, 2026 at 6:23 PM — Bri feels creatively blocked.
+- September 25, 2026 at 6:23 PM — You got Bri Water ×3. Chat's money, hard at work.
+- September 25, 2026 at 6:23 PM — You got Bri Cheeseburger ×2. Chat's money, hard at work.
+- September 25, 2026 at 6:23 PM — You got Bri Sushi ×5. Chat's money, hard at work.
+- September 25, 2026 at 6:23 PM — You got Bri Desk Chair. Chat's money, hard at work.
+- September 25, 2026 at 6:23 PM — Bri carefully tried Cheeseburger.
+- September 25, 2026 at 6:23 PM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 25, 2026 at 6:23 PM — Bri is still hungry, but no longer starving.
+- September 25, 2026 at 6:23 PM — Bri carefully tried Cheeseburger.
+- September 25, 2026 at 6:23 PM — Bri's Cheeseburger arrived just the way they wanted it.
+- September 25, 2026 at 6:23 PM — Bri is too tired to stream.
+- September 25, 2026 at 6:23 PM — Bri is no longer hungry.
+- September 25, 2026 at 6:23 PM — Bri's energy has recovered.
+- September 25, 2026 at 6:23 PM — Bri carefully tried Sushi.
+- September 25, 2026 at 6:23 PM — Bri's Sushi arrived just the way they wanted it.
+- September 25, 2026 at 6:23 PM — Bri is full.
+- September 25, 2026 at 6:23 PM — The cat surveyed the room from the top of the tree.
+- September 25, 2026 at 6:23 PM — Bri gave Sushi a cautious first bite.
+- September 25, 2026 at 6:23 PM — Bri was unhappy with how Sushi was prepared.
+- September 25, 2026 at 6:23 PM — Bri was too full to get any Food from Sushi.
+- September 25, 2026 at 6:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 25, 2026 at 6:23 PM — Bri is depressed.
+- September 25, 2026 at 6:23 PM — Bri refused Sushi, and it went to waste.
+- September 25, 2026 at 6:23 PM — The room did a thing. No witnesses. No evidence.
+- September 25, 2026 at 6:23 PM — Bri gave Sushi a cautious first bite.
+- September 25, 2026 at 6:23 PM — Bri's Sushi arrived just the way they wanted it.
+- September 25, 2026 at 6:23 PM — Bri was too full to get any Food from Sushi.
+- September 25, 2026 at 6:23 PM — Nobody could explain why the traffic cone belonged there.
+- September 25, 2026 at 6:23 PM — Bri gave Sushi a cautious first bite.
+- September 25, 2026 at 6:23 PM — Bri's Sushi arrived just the way they wanted it.
+- September 25, 2026 at 6:23 PM — Bri was too full to get any Food from Sushi.
+- September 25, 2026 at 6:23 PM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 25, 2026 at 6:23 PM — The mic is off, the energy is gone, and the schedule just says '???'.
+- September 25, 2026 at 6:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 25, 2026 at 6:23 PM — Bri was too sick to get any Food from Water.
+- September 25, 2026 at 6:23 PM — Bri's sickness worsened after Water.
+- September 25, 2026 at 6:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 25, 2026 at 6:23 PM — Bri was too sick to get any Food from Water.
+- September 25, 2026 at 6:23 PM — Bri's sickness worsened after Water.
+- September 25, 2026 at 6:23 PM — Bri is pacing laps around the room. The idea must be huge.
+- September 25, 2026 at 6:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 25, 2026 at 6:23 PM — Bri was too sick to get any Food from Water.
+- September 25, 2026 at 6:23 PM — Bri's sickness worsened after Water.
+- September 25, 2026 at 6:23 PM — Bri started playing.
+- September 25, 2026 at 8:23 PM — A fan sent $8 of support while Bri was offline.
+- September 25, 2026 at 8:23 PM — The channel grew by 373. The algorithm is finally awake.
+- September 25, 2026 at 8:23 PM — Bri is sleep deprived.
+- September 25, 2026 at 8:23 PM — Bri stopped playing early.
+- September 25, 2026 at 9:23 PM — Bri's craving faded before it could be fulfilled.
+- September 25, 2026 at 10:23 PM — Bri's health suffered from Sleep deprivation and Depression.
+- September 25, 2026 at 10:23 PM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 25, 2026 at 10:23 PM — Bri is no longer full.
+- September 25, 2026 at 10:23 PM — Bri started playing.
+- September 26, 2026 at 12:23 AM — The room did a thing. No witnesses. No evidence.
+- September 26, 2026 at 12:23 AM — 373 new subscribers. Bri is being normal about it. (She is not.)
+- September 26, 2026 at 12:23 AM — Game session over. Bri swears she was 'about to win.'
+- September 26, 2026 at 12:23 AM — Bri settled down to rest.
+- September 26, 2026 at 2:23 AM — The tiny hat remained on the cat for almost four seconds.
+- September 26, 2026 at 2:23 AM — 373 new recruits joined the Bunny Brigade.
+- September 26, 2026 at 2:23 AM — She's back. Chat pretends they weren't refreshing the schedule every hour.
+- September 26, 2026 at 4:23 AM — The channel grew by 373. The algorithm is finally awake.
+- September 26, 2026 at 4:23 AM — Bri is running low on energy.
+- September 26, 2026 at 6:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 26, 2026 at 6:23 AM — The channel grew by 373. The algorithm is finally awake.
+- September 26, 2026 at 6:23 AM — Bri is hungry.
+- September 26, 2026 at 6:23 AM — No swearing for a suspiciously long time. Someone check on her.
+- September 26, 2026 at 8:23 AM — 373 new recruits joined the Bunny Brigade.
+- September 26, 2026 at 9:23 AM — Bri woke up denying the snoring rumors. The rumors are confirmed.
+- September 26, 2026 at 9:23 AM — Bri is no longer sleep deprived.
+- September 26, 2026 at 9:23 AM — Bri is no longer sick.
+- September 26, 2026 at 9:23 AM — Bri's energy has recovered.
+- September 26, 2026 at 9:23 AM — The battle axe made an ordinary room feel like a quest hub.
+- September 26, 2026 at 9:23 AM — Bri opened OBS again. Nobody mention the last few days. Ever.
+- September 26, 2026 at 9:23 AM — Bri started playing.
+- September 26, 2026 at 10:23 AM — The channel grew by 373. The algorithm is finally awake.
+- September 26, 2026 at 10:23 AM — Bri is starving.
+- September 26, 2026 at 10:23 AM — Bri stopped playing early.
+- September 26, 2026 at 10:23 AM — You bought Water ×5 for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought Dr Pepper ×4 for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought Cat Treats ×5 for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought Ice cream ×5 for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought Waffle for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought Kiwi for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought The Concoction ×4 for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — You bought Model Kit for Bri. She's already scheming with it.
+- September 26, 2026 at 10:23 AM — Bri used Stream Deck to practice shortcuts.
+- September 26, 2026 at 10:23 AM — Bri needs Dr Pepper. This is now everyone's problem.
+- September 26, 2026 at 10:23 AM — Bri chugged a Dr Pepper like it owed her money.
+- September 26, 2026 at 10:23 AM — Dr Pepper was exactly what Bri had been craving.
+- September 26, 2026 at 10:23 AM — Bri is still hungry, but no longer starving.
+- September 26, 2026 at 10:23 AM — Bri chugged a Dr Pepper like it owed her money.
+- September 26, 2026 at 10:23 AM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- September 26, 2026 at 10:23 AM — Bri spent some time with Drawing Tablet.
+- September 26, 2026 at 10:23 AM — Bri's creativity has returned.
+- September 26, 2026 at 10:23 AM — Bri spent some time with Stream Deck.
+- September 26, 2026 at 10:23 AM — It's Waffle o'clock, according to Bri's entire personality.
+- September 26, 2026 at 10:23 AM — Bri used Stream Deck to practice shortcuts.
+- September 26, 2026 at 10:23 AM — Bri spent some time with Live2D Model.
+- September 26, 2026 at 10:23 AM — A fan sent $6 of support while Bri was offline.
+- September 26, 2026 at 10:23 AM — Bri cracked open a Dr Pepper. All is right in the world.
+- September 26, 2026 at 10:23 AM — Bri is no longer depressed.
+- September 26, 2026 at 10:23 AM — Bri chugged a Dr Pepper like it owed her money.
+- September 26, 2026 at 10:23 AM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 26, 2026 at 10:23 AM — Bri recreated The Concoction. The ER has been notified, just in case.
+- September 26, 2026 at 10:23 AM — Bri started streaming.
+- September 26, 2026 at 12:23 PM — Socks has declared it attention o'clock. All work has ceased.
+- September 26, 2026 at 12:23 PM — 397 new subscribers. Bri is being normal about it. (She is not.)
+- September 26, 2026 at 12:23 PM — Bri hit a sugar crash.
+- September 26, 2026 at 2:23 PM — Nobody could explain why the traffic cone belonged there.
+- September 26, 2026 at 2:23 PM — 397 new recruits joined the Bunny Brigade.
+- September 26, 2026 at 2:23 PM — Bri is sleep deprived.
+- September 26, 2026 at 2:23 PM — Bri had to stop streaming early.
+- September 26, 2026 at 2:23 PM — Bri recreated The Concoction. The ER has been notified, just in case.
+- September 26, 2026 at 2:23 PM — Bri recreated The Concoction. The ER has been notified, just in case.
+- September 26, 2026 at 2:23 PM — Bri drank The Concoction. Fifteen-minute timer starts now.
+- September 26, 2026 at 2:23 PM — Bri savored every bite of Waffle.
+- September 26, 2026 at 2:23 PM — Waffle was exactly what Bri had been craving.
+- September 26, 2026 at 2:23 PM — Bri is full.
+- September 26, 2026 at 2:23 PM — Bri is no longer hungry.
+- September 26, 2026 at 2:23 PM — Bri is no longer depressed.
+- September 26, 2026 at 2:23 PM — Bri is having a sugar crash.
+- September 26, 2026 at 2:23 PM — Bri settled down to rest.
+- September 26, 2026 at 4:23 PM — Bri needs Tater tots. This is now everyone's problem.
+- September 26, 2026 at 4:23 PM — The channel grew by 397. The algorithm is finally awake.
+- September 26, 2026 at 6:23 PM — Socks is sitting on the tablet. The tablet is in use. Socks does not care.
+- September 26, 2026 at 6:23 PM — 397 new subscribers. Bri is being normal about it. (She is not.)
+- September 26, 2026 at 6:23 PM — Bri earned a tournament appearance! A special tournament stream is waiting for an open afternoon.
+- September 26, 2026 at 8:23 PM — The channel grew by 417. The algorithm is finally awake.
+- September 26, 2026 at 8:23 PM — Bri is no longer full.
+- September 26, 2026 at 10:23 PM — Bri's Drawing Tablet died mid-task. Replacement: $42. There goes the rigging money.
+- September 26, 2026 at 10:23 PM — 417 new subscribers. Bri is being normal about it. (She is not.)
+- September 26, 2026 at 11:23 PM — Nap complete. Bri rebooted successfully.
+- September 26, 2026 at 11:23 PM — Bri is no longer sleep deprived.
+- September 26, 2026 at 11:23 PM — Bri has recovered from the sugar crash.
+- September 26, 2026 at 11:23 PM — Bri gave Ice cream a cautious first bite.
+- September 26, 2026 at 11:23 PM — Bri was unhappy with how Ice cream was prepared.
+- September 26, 2026 at 11:23 PM — Bri carefully tried Ice cream.
+- September 26, 2026 at 11:23 PM — Bri's Ice cream arrived just the way they wanted it.
+- September 26, 2026 at 11:23 PM — That is a lot of sugar in a short period. A sugar crash may be coming.
+- September 26, 2026 at 11:23 PM — Bri is full.
+- September 26, 2026 at 11:23 PM — Bri is pacing laps around the room. The idea must be huge.
+- September 26, 2026 at 11:23 PM — Bri refused Ice cream, and it went to waste.
+- September 26, 2026 at 11:23 PM — Bri gave Ice cream a cautious first bite.
+- September 26, 2026 at 11:23 PM — Bri's Ice cream arrived just the way they wanted it.
+- September 26, 2026 at 11:23 PM — Bri was too full to get any Food from Ice cream.
+- September 26, 2026 at 11:23 PM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- September 26, 2026 at 11:23 PM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 26, 2026 at 11:23 PM — Bri refused Ice cream.
+- September 26, 2026 at 11:23 PM — Bri managed to get through Kiwi.
+- September 26, 2026 at 11:23 PM — Bri was too sick to get any Food from Kiwi.
+- September 26, 2026 at 11:23 PM — Bri's sickness worsened after Kiwi.
+- September 26, 2026 at 11:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 26, 2026 at 11:23 PM — Bri was too sick to get any Food from Water.
+- September 26, 2026 at 11:23 PM — Bri's sickness worsened after Water.
+- September 26, 2026 at 11:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 26, 2026 at 11:23 PM — Bri was too sick to get any Food from Water.
+- September 26, 2026 at 11:23 PM — Bri's sickness worsened after Water.
+- September 26, 2026 at 11:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 26, 2026 at 11:23 PM — Bri was too sick to get any Food from Water.
+- September 26, 2026 at 11:23 PM — Bri's sickness worsened after Water.
+- September 26, 2026 at 11:23 PM — Bri is depressed.
+- September 26, 2026 at 11:23 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 26, 2026 at 11:23 PM — Bri was too sick to get any Food from Water.
+- September 26, 2026 at 11:23 PM — Bri's sickness worsened after Water.
+- September 26, 2026 at 11:23 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- September 26, 2026 at 11:23 PM — Bri was too sick to get any Food from Water.
+- September 26, 2026 at 11:23 PM — Bri's sickness worsened after Water.
+- September 26, 2026 at 11:23 PM — Bri went quiet. Not the fun kind of quiet.
+- September 27, 2026 at 12:23 AM — Socks yelled until the problem (insufficient pets) was resolved.
+- September 27, 2026 at 12:23 AM — The channel grew by 417. The algorithm is finally awake.
+- September 27, 2026 at 12:23 AM — The spark is back. The quitting arc got cancelled for ratings.
+- September 27, 2026 at 1:23 AM — Bri hit a sugar crash.
+- September 27, 2026 at 1:23 AM — The mic is off, the energy is gone, and the schedule just says '???'.
+- September 27, 2026 at 1:23 AM — Bri is having a sugar crash.
+- September 27, 2026 at 1:23 AM — Bri carefully tried Ice cream.
+- September 27, 2026 at 1:23 AM — Bri's Ice cream arrived just the way they wanted it.
+- September 27, 2026 at 1:23 AM — Bri was too sick to get any Food from Ice cream.
+- September 27, 2026 at 1:23 AM — Bri's sickness worsened after Ice cream.
+- September 27, 2026 at 1:23 AM — A fan sent $6 of support while Bri was offline.
+- September 27, 2026 at 1:23 AM — Water ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Apple pie ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Bagel ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Meatballs ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Steak ×2 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Hummus ×5 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Goldfish ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- September 27, 2026 at 1:23 AM — Bri carefully tried Steak.
+- September 27, 2026 at 1:23 AM — Bri's Steak arrived just the way they wanted it.
+- September 27, 2026 at 1:23 AM — Bri was too sick to get any Food from Steak.
+- September 27, 2026 at 1:23 AM — Bri's sickness worsened after Steak.
+- September 27, 2026 at 1:23 AM — Bri gave Steak a cautious first bite.
+- September 27, 2026 at 1:23 AM — Bri's Steak arrived just the way they wanted it.
+- September 27, 2026 at 1:23 AM — Bri was too sick to get any Food from Steak.
+- September 27, 2026 at 1:23 AM — Bri's sickness worsened after Steak.
+- September 27, 2026 at 1:23 AM — The rolling nutrition balance improved and the sugar crash was averted.
+- September 27, 2026 at 1:23 AM — Bri has recovered from the sugar crash.
+- September 27, 2026 at 2:23 AM — The channel grew by 417. The algorithm is finally awake.
+- September 27, 2026 at 4:23 AM — The channel grew by 417. The algorithm is finally awake.
+- September 27, 2026 at 6:23 AM — 417 new recruits joined the Bunny Brigade.
+- September 27, 2026 at 6:23 AM — Bri is no longer full.
+- September 27, 2026 at 7:23 AM — Bri's health suffered from Depression.
+- September 27, 2026 at 8:23 AM — 417 new subscribers. Bri is being normal about it. (She is not.)
+- September 27, 2026 at 8:23 AM — The spark is back. The quitting arc got cancelled for ratings.
+- September 27, 2026 at 9:23 AM — Bri's health suffered from Depression.
+- September 27, 2026 at 9:23 AM — Bri gave Apple pie a cautious first bite.
+- September 27, 2026 at 9:23 AM — Bri's Apple pie arrived just the way they wanted it.
+- September 27, 2026 at 9:23 AM — Bri's sickness worsened after Apple pie.
+- September 27, 2026 at 9:23 AM — The final stream has ended. Socks inherits everything.

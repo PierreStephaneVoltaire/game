@@ -1,4 +1,6 @@
 import type { Activity, GameEvent } from '$lib/game-types';
+import { companionProfile } from '$lib/companion-profile';
+import eventTexts from '$lib/data/event-texts.json';
 
 export function activityJourneyMessage(
   events: GameEvent[],
@@ -51,23 +53,27 @@ function activityEnded(
   interrupted: boolean,
 ): string {
   const type = event.activityType;
+  if (
+    !interrupted &&
+    type &&
+    eventTexts.activityCompletions[type].some(
+      (template) =>
+        template.replaceAll('{pet}', companionProfile.displayName) ===
+        event.message,
+    )
+  )
+    return event.message.replaceAll(companionProfile.displayName, name);
   if (type === 'medical_care')
     return `${name} came home from the hospital rested and medically cleared.`;
   if (type === 'commission_work')
-    return interrupted
-      ? `${name} had to stop Commission Work early, so the job did not pay out.`
-      : `${name} finished Commission Work.`;
+    return `${name} had to stop Commission Work early, so the job did not pay out.`;
   if (type === 'stream') return streamEnded(events, event, name, interrupted);
-  if (!interrupted && event.activityNarration)
-    return event.activityNarration.replace(/^Companion\b/, name);
   const verbs: Partial<Record<Activity['type'], string>> = {
     rest: 'resting',
     socialize: 'socializing',
     play: 'playing',
   };
-  return interrupted
-    ? `${name} stopped ${verbs[type ?? 'play'] ?? 'the activity'} early.`
-    : `${name} finished ${verbs[type ?? 'play'] ?? 'the activity'}.`;
+  return `${name} stopped ${verbs[type ?? 'play'] ?? 'the activity'} early.`;
 }
 
 function streamEnded(

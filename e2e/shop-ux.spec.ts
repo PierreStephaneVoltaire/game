@@ -26,6 +26,10 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
 
   const catalogueCard = page.locator('.item-card').nth(1);
   const catalogueQuantity = catalogueCard.locator('.quantity-stepper output');
+  const catalogueDescription = catalogueCard.locator('.item-summary p');
+  await expect(catalogueDescription).toBeVisible();
+  await expect(catalogueDescription).not.toBeEmpty();
+  await expect(locCard.locator('.item-summary p')).toHaveCount(0);
   await expect(catalogueQuantity).toHaveText('0');
   await catalogueCard.locator('.item-body').click();
   await expect(catalogueQuantity).toHaveText('0');

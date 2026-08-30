@@ -9,8 +9,8 @@ gameplay rules.
 - `src/lib/data/simulation-rules.json` — bounds, initial state, decay cadence,
   Ending thresholds/warning stages, and configurable simulation values.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
-  completion rewards, strong-outcome chance, and authored Play/Socialize
-  vignette pools.
+  completion rewards, and strong-outcome chance. Player-facing activity copy
+  belongs to `event-texts.json`.
 - `src/lib/data/shop-items.json` — the 232 compiled canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and generated PNG paths.
@@ -166,7 +166,7 @@ gameplay rules.
 - `src/lib/event-resolution-finalizer.ts` — shared event result aggregation
   and atomic financial reconciliation after automatic events.
 - `src/lib/activity-rules.ts` — seeded activity distributions, refusals,
-  normal/strong authored-vignette selection, and completion effects.
+  normal/strong outcome selection, and completion effects.
 - `src/lib/event-rules.ts` — deterministic automatic event opportunity rules.
 - `src/lib/gameplay-spec-acceptance.test.ts` and
   `src/lib/gameplay-autonomy-acceptance.test.ts` — split survival/medical and
@@ -222,8 +222,8 @@ gameplay rules.
   presentation kept outside Svelte components and the general view model.
 - `src/lib/ui/shop-offer-view-model.ts` — normalized catalogue and permanent
   LOC offers used by the same cards, quantity controls, cart, and preview.
-- `src/lib/ui/journey-activity-messages.ts` — authored Play/Socialize vignette
-  projection and generic narration for other activities.
+- `src/lib/ui/journey-activity-messages.ts` — projects authored activity
+  completion copy from `event-texts.json` and interruption narration.
 - `src/lib/ui/run-archive-export.ts` — portable Markdown serialization for all
   Endings, using graveyard wording only for Death.
 - `src/lib/ui/graveyard-export.ts` — Death-only compatibility adapter over the

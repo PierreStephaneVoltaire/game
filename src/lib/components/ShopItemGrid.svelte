@@ -21,7 +21,12 @@
             width="88"
             height="88"
           />{:else}<span class="offer-symbol" aria-hidden="true">$</span>{/if}
-        <strong>{item.name}</strong>
+        <div class="item-summary">
+          <strong>{item.name}</strong>
+          {#if item.kind === 'catalogue_item'}
+            <p>{item.description}</p>
+          {/if}
+        </div>
       </div>
       <button
         class="item-info"

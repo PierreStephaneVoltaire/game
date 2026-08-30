@@ -94,7 +94,6 @@ export type GameEvent = {
   amount?: number;
   followerDelta?: number;
   projectId?: string;
-  activityNarration?: string;
   activityOutcome?: 'normal' | 'strong';
   revenueMultiplier?: number;
   selectedOutcomeId?: string;
