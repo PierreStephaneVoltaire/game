@@ -22,6 +22,8 @@ const outcomes = new Set([
 ]);
 if (document?.study?.engine !== 'real')
   errors.push('study.engine must be "real"');
+if (typeof document?.study?.engineRevision !== 'string' || !document.study.engineRevision)
+  errors.push('study.engineRevision must identify the tested engine');
 if (!(document?.study?.horizonDays > 0))
   errors.push('study.horizonDays must be positive');
 if (!Array.isArray(document?.runs) || document.runs.length === 0)
@@ -67,6 +69,27 @@ for (const [index, run] of (document.runs ?? []).entries()) {
     'interrupted',
     'hours',
   ]);
+  requireNumbers(errors, `${label}.cadence`, run.cadence, [
+    'autonomousBoundariesDue',
+    'autonomousBoundariesProcessed',
+    'attemptOwnedOpportunities',
+    'streamEligibleOpportunities',
+    'activityBlockedOpportunities',
+    'blockedHours',
+    'streamCandidates',
+    'tooTiredSelections',
+    'ordinaryStreamStarts',
+    'qualifyingDroughtResets',
+    'ordinaryInterruptions',
+    'ordinaryMidnightCaps',
+    'totalStreamHours',
+    'maximumActualStartGapHours',
+    'maximumQualifyingResetGapHours',
+    'startsPerDay',
+    'startsPerTwoDays',
+  ]);
+  if (!run.cadence?.blockedOpportunitiesByStatus)
+    errors.push(`${label}.cadence.blockedOpportunitiesByStatus is required`);
   requireNumbers(errors, `${label}.checks`, run.checks, [
     'scheduled',
     'attended',

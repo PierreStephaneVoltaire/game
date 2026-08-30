@@ -220,7 +220,7 @@ describe('single-run product boundary', () => {
     );
     expect(fresh).toMatchObject({
       mode: 'realtime',
-      balance: 20,
+      balance: BUNDLED_GAME_DEFINITION.startingCurrency,
       inventory: { water: 1, uncrustables: 1, pretzel: 1 },
       room: {},
       projects: [],

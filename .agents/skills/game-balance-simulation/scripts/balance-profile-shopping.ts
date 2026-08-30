@@ -80,9 +80,16 @@ export function purchaseProfilePriorities(runtime: SessionRuntime) {
         item?.tags.some((tag) => config.shopping.priorityTags.includes(tag)),
       ),
   ].filter((item): item is ItemDefinition => Boolean(item));
-  const limit = config.shopping.spendAggressiveness === 'high' ? 4 : 1;
+  const limit = config.shopping.allowDebtSpending
+    ? 12
+    : config.shopping.spendAggressiveness === 'high'
+      ? 4
+      : 1;
+  const candidates = uniqueItems(desired);
+  if (config.shopping.allowDebtSpending)
+    candidates.sort((left, right) => right.price - left.price);
   let bought = 0;
-  for (const item of uniqueItems(desired)) {
+  for (const item of candidates) {
     if (bought >= limit) break;
     if ((runtime.state.inventory[item.id] ?? 0) > 0 && !item.supportsQuantity)
       continue;
@@ -261,6 +268,7 @@ function effectiveFoodReserve(runtime: SessionRuntime) {
 }
 
 function spendableBalance(state: GameState, config: ExpandedProfile) {
+  if (config.shopping.allowDebtSpending) return Number.POSITIVE_INFINITY;
   return Math.max(0, state.balance - config.shopping.minimumCashReserve);
 }
 

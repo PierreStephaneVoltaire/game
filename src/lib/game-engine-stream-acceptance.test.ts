@@ -22,18 +22,22 @@ function streamRun() {
   );
 }
 
-const blockers: Array<{
+const hardBlockers: Array<{
   status: StatusName;
   metrics: Partial<GameState['metrics']>;
 }> = [
-  { status: 'hungry', metrics: { food: 3 } },
   { status: 'starving', metrics: { food: 2 } },
   { status: 'sleep_deprived', metrics: { rest: 2 } },
   { status: 'sick', metrics: {} },
   { status: 'kidney_stone', metrics: {} },
   { status: 'depressed', metrics: { mood: 2 } },
-  { status: 'low_energy', metrics: { food: 2, rest: 2 } },
-  { status: 'overstimulated', metrics: {} },
+];
+
+const softStatuses: StatusName[] = [
+  'hungry',
+  'low_energy',
+  'overstimulated',
+  'dizzy_spell',
 ];
 
 describe('autonomous streaming public seam', () => {
@@ -50,7 +54,7 @@ describe('autonomous streaming public seam', () => {
     ).toBeGreaterThan(0);
   });
 
-  test.each(blockers)(
+  test.each(hardBlockers)(
     '$status prevents a stream candidate under the same seed and command',
     ({ status, metrics }) => {
       const initial = streamRun();
@@ -74,6 +78,39 @@ describe('autonomous streaming public seam', () => {
       expect(
         result.events.some((event) => event.type === 'stream_candidate'),
       ).toBe(false);
+    },
+  );
+
+  test.each(softStatuses)(
+    '$status remains active without zeroing ordinary stream weight',
+    (status) => {
+      const initial = streamRun();
+      const state: GameState = {
+        ...initial,
+        metrics: {
+          ...initial.metrics,
+          food: 10,
+          rest: 10,
+          mood: 10,
+          creativity: 10,
+        },
+        statuses: { [status]: { since: STREAM_NOW, source: 'acceptance' } },
+      };
+
+      expect(streamWeight(state, 'soft-status')).toBeGreaterThan(0);
+      expect(state.statuses[status]).toBeDefined();
+      expect(
+        streamWeight(
+          {
+            ...state,
+            statuses: {
+              ...state.statuses,
+              sick: { since: STREAM_NOW, source: 'acceptance' },
+            },
+          },
+          'soft-status',
+        ),
+      ).toBe(0);
     },
   );
 });

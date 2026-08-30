@@ -4,6 +4,13 @@ import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import { debtBreakdown } from './financial-rules';
 import { DAY_MS, LINE_OF_CREDIT_OFFER_ID } from './game-constants';
+import financialRules from './data/financial-rules.json';
+
+const STARTING_BALANCE = BUNDLED_GAME_DEFINITION.startingCurrency;
+const OPENED_BALANCE =
+  STARTING_BALANCE -
+  financialRules.lineOfCredit.applicationPrice +
+  financialRules.lineOfCredit.cashAdvance;
 
 function run() {
   return startRun(
@@ -36,13 +43,13 @@ function checkoutLoc(
 }
 
 describe('Line of Credit exact economy rules', () => {
-  test('opens through checkout from the initial $20 without activating In Debt', () => {
+  test('opens through checkout from the configured initial Balance without activating In Debt', () => {
     const result = checkoutLoc(run(), 1, 'open-loc');
     expect(result.outcomes[0]).toMatchObject({
       accepted: true,
       kind: 'cart_checked_out',
     });
-    expect(result.state.balance).toBe(9_970);
+    expect(result.state.balance).toBe(OPENED_BALANCE);
     expect(result.state.lineOfCredit).toMatchObject({
       status: 'open',
       remainingUnits: 20,
@@ -93,14 +100,14 @@ describe('Line of Credit exact economy rules', () => {
       },
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(cart.balance).toBe(20);
+    expect(cart.balance).toBe(STARTING_BALANCE);
     expect(cart.inventory).toEqual(initial.inventory);
     const checkedOut = dispatchCommand(
       cart,
       { type: 'checkout_cart', commandId: 'mixed-checkout', now: 0 },
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(checkedOut.balance).toBe(9_970 - water.price);
+    expect(checkedOut.balance).toBe(OPENED_BALANCE - water.price);
     expect(checkedOut.inventory[water.id]).toBe(
       (initial.inventory[water.id] ?? 0) + 1,
     );

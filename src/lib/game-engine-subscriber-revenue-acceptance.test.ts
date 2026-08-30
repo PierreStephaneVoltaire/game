@@ -21,21 +21,23 @@ describe('Subscriber Revenue', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.balance).toBe(initial.balance + 1);
+    expect(result.balance).toBe(initial.balance + 2);
     expect(result.events).toContainEqual(
       expect.objectContaining({
         type: 'subscriber_revenue',
         at: initial.now + 2 * HOUR,
-        amount: 1,
+        amount: 2,
         revenueMultiplier: 1,
+        legacyRevenueAmount: 1,
+        subscriberRevenueFloor: 2,
       }),
     );
   });
 
   test.each([
-    [29_999, 1, 1],
-    [30_000, 1.5, 2],
-    [50_000, 2, 2],
+    [29_999, 1, 2],
+    [30_000, 1.5, 3],
+    [50_000, 2, 3],
     [100_000, 3, 3],
     [200_000, 4, 4],
     [250_000, 5, 5],
@@ -99,8 +101,8 @@ describe('Subscriber Revenue', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(hospitalized.balance).toBe(20);
-    expect(result.balance).toBe(hospitalized.balance + 1);
+    expect(hospitalized.balance).toBe(BUNDLED_GAME_DEFINITION.startingCurrency);
+    expect(result.balance).toBe(hospitalized.balance + 2);
     expect(result.activity?.type).toBe('medical_care');
     expect(result.statuses.sick).toBeDefined();
   });

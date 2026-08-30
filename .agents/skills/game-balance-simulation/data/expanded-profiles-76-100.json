@@ -171,10 +171,12 @@
     "id": "P91",
     "label": "Financial Ruin Validator",
     "archetype": "edge",
-    "schedule": { "type": "fixed_interval", "intervalHours": 5 },
+    "schedule": { "type": "fixed_interval", "intervalHours": 2 },
     "shopping": {
       "insurance": "after_incident",
-      "spendAggressiveness": "high"
+      "spendAggressiveness": "high",
+      "priorityTags": ["food", "upgrade", "reusable", "decoration", "care"],
+      "allowDebtSpending": true
     },
     "medical": { "strategy": "immediate_hospital" },
     "debt": { "strategy": "ignore" },

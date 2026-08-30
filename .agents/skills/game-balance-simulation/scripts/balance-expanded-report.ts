@@ -14,6 +14,10 @@ import {
   financialPressureTable,
   lifeEventImpactTable,
 } from './balance-financial-report';
+import {
+  cadenceExceptions,
+  cadenceSummary,
+} from './balance-cadence-report';
 
 type Result = ReturnType<typeof buildStudyResult>;
 type Run = Result['runs'][number];
@@ -36,6 +40,8 @@ the real seeded engine. It preserves the maintained controlled 50 and adds one
 deterministic run for each profile P51–P100. Complete per-run data is in
 [ECONOMY_EVENTS_BALANCE_RESULTS.json](./ECONOMY_EVENTS_BALANCE_RESULTS.json).
 
+Engine revision: ${result.study.engineRevision}
+
 ## Main result
 
 The heterogeneous extension remained physically alive in ${physicallyAlive.length}/50
@@ -54,6 +60,14 @@ ${profileSummaryTable(controlled)}
 ### Controlled outcomes by cohort
 
 ${runEndingCountTable(controlled)}
+
+### Ordinary-stream cadence acceptance
+
+${cadenceSummary(controlled)}
+
+#### Horizon runs below 45 ordinary starts
+
+${cadenceExceptions(controlled)}
 
 ## Heterogeneous archetypes
 

@@ -18,7 +18,7 @@ remain generic.
 - All chance is seeded. The same seed, state, action, and opportunity produce
   the same outcome.
 - A run starts with Food 6, Health 32, Mood 6, Rest 7, Bond 4, Creativity 3,
-  $20, 100 current and peak Subscribers, an available Line of Credit, one
+  $60, 100 current and peak Subscribers, an available Line of Credit, one
   Water, one Uncrustables, one Pretzel, and one Five
   Plain Tortillas.
 - It also starts with no statuses, timed effects, activity, project, room
@@ -217,7 +217,8 @@ consuming the item or advancing Annoyed.
 
 Dizzy Spell cannot begin during the first 24 game-hours. At each later
 unprotected Health check, rolling salt from 0 through 3 gives a seeded 35%
-onset chance. Onset applies Rest −1 and Mood −1 and blocks streaming.
+onset chance. Onset applies Rest −1 and Mood −1. Dizzy Spell remains active
+while streaming unless another retained blocker is present.
 
 It persists until rolling salt reaches at least 5 and rolling water reaches at
 least 4. That managed band also adds 5 to raw autonomous-stream weight before
@@ -413,7 +414,7 @@ unless their authored hook requires idle state; another stream cannot begin.
 | Mom's Care Package        | 5 below $0 Balance or at Food 0–2, 72-hour cooldown                                                      |
 | Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
 | Autonomous stream         | Dynamic                                                                                                  |
-| Off-stream support        | 10, 12-hour cooldown, $5–$15 uniformly                                                                   |
+| Random offline donation   | 10, 12-hour cooldown, $5–$100 uniformly                                                                  |
 
 Mom's Care Package clearly records two seeded Liked foods as gifts, distinct
 where possible, and adds Mood +1. The full-body commission is a nonblocking project that completes at
@@ -425,14 +426,17 @@ use seeded message pools and outcomes, shared cooldowns, idle/career/Follower
 requirements, metric effects, explicit injury attribution, and positive
 income. Book and Manga share a 12-hour reading cooldown; selected games and
 creative hobbies share 18-hour cooldowns. Drawing Tablet can pay $20–$60 on a
-36-hour side-gig cooldown, and Merch Sample can pay $15–$50 after the 1K tier
-on a 48-hour side-gig cooldown.
+36-hour side-gig cooldown, shortened to 18 hours when Balance is negative
+before the payout. That cooldown shares the `autonomous_side_gig` slot with
+Merch Sample, so either eligible hook can use the reopened slot. Entering debt
+later does not shorten a cooldown already recorded. Merch Sample can pay
+$15–$50 after the 1K tier on a 48-hour side-gig cooldown.
 
 The reusable $35 Can Opener has a weight-3 idle hook and a 48-hour kitchen-
 accident cooldown: 90% Mood +1, 9% Health −1 with Mood −1..0, and 1% Health −2
 with ER narration. Its event Health loss is outside the periodic need cap.
 
-Off-stream support ignores all nonterminal stream blockers and remains
+The random offline donation (`off_stream_support`) ignores all nonterminal stream blockers and remains
 eligible during any activity. It can be selected by either a time-owned or an
 attempt-owned opportunity, pays income immediately, grants no Subscribers, and
 does not use or modify ordinary stream donation rules. Its selection neither
@@ -442,32 +446,35 @@ starts a stream nor resets stream-drought protection.
 
 The player cannot start an ordinary stream. It is selected from the autonomous
 pool only when no activity or blocking status is active. Stream blockers are
-Hungry, Starving, Sleep Deprived, Sick, Kidney Stone, Depressed, Low Energy,
-Overstimulated, and Dizzy Spell.
+Starving, Sleep Deprived, Sick, Kidney Stone, and Depressed. Hungry, Low Energy,
+Overstimulated, and Dizzy Spell keep their other effects but are not hard
+stream blockers.
 
 Raw stream weight is:
 
 ```text
 max(0,
   50 × seeded roll
+  + 20
   + 25 × ((Mood - 5) / 5)
   + 25 × ((Creativity - 5) / 5)
   + managed-nutrition bonus
-  + clamp(0, (drought hours - 24) × 4, 300)
+  + clamp(0, (drought hours - 12) × 6, 300)
 )
 ```
 
 The drought clock starts with the run and tracks time since an ordinary
-autonomous stream candidate last won the weighted draw. Its bonus is zero for
-24 hours, then rises by 4 weight per hour to a cap of 300. The managed-nutrition
-and drought bonuses are added before the daypart multiplier. The ordinary
+autonomous stream last qualified. Its bonus is zero for 12 hours, then rises
+by 6 weight per hour to a cap of 300 at 62 drought hours. The flat 20,
+managed-nutrition, and drought bonuses are added before the daypart multiplier. The ordinary
 daypart multipliers are 0.5 from 04:00–08:59, 1.5 from 13:00–19:59, and 1
 otherwise. June 29 and November 14 double the final pity-inclusive weight.
 
-Drought time continues while streaming is blocked. Selecting an ordinary
-stream resets it even when the companion is too tired, the activity is later
-interrupted, or midnight caps its duration. Forced Tournament and model-debut
-streams do not reset it.
+Drought time continues while streaming is blocked. It resets to an ordinary
+stream's original start time only after that stream runs for at least one
+minute, completes without interruption, and was not shortened by local
+midnight. A lost or too-tired candidate, interrupted or midnight-capped stream,
+and forced Tournament or model-debut stream do not reset it.
 
 Base duration is 1, 2, or 3 hours at 15% each; the remaining 55% is divided
 equally across 4–12 hours. Ordinary effective duration is base duration minus
@@ -484,7 +491,7 @@ Stream income is:
 round(hourly rate × elapsed hours × (0.5 + Creativity / 10))
 ```
 
-The starting hourly-rate band is $5–$15 and career milestones can replace it.
+The starting hourly-rate band is $8–$18 and career milestones can replace it.
 Income is added immediately and reduces negative cash first; it does not repay
 Hospital principal or LOC units. A normal
 completion also applies Creativity −1, Rest −1, and an equal Mood −1/0/+1 roll.
@@ -508,7 +515,7 @@ capped at 100%. Every donation is narrated.
 ## Subscriber Revenue
 
 Every run earns a deterministic Subscriber Revenue payment on each two-hour
-boundary anchored to run start. It begins at `$1 × 1`, has no random roll, does
+boundary anchored to run start. It has no random roll, does
 not enter or consume the autonomous pool, and remains active through Sick,
 Hospital, Kidney Stone, streams, and every other activity or status. A terminal
 run earns no later payments. Like every positive income source, it reduces
@@ -516,14 +523,15 @@ negative cash before producing a positive balance but does not erase explicit
 obligations.
 
 The highest unlocked multiplier replaces the previous one; multipliers do not
-stack. Each tick uses `round($1 × multiplier)`. The yields below show twelve
-ticks over 24 game-hours and are not local-date caps:
+stack. Each tick is the larger of `round($1 × multiplier)` and the highest
+applicable minimum: $2 below 30K peak Subscribers and $3 from 30K onward. The
+yields below show twelve ticks over 24 game-hours and are not local-date caps:
 
 | Peak Subscribers | Multiplier | Per tick | 12-tick yield |
 | ---------------: | ---------: | -------: | ------------: |
-|            0–29K |         1× |       $1 |           $12 |
-|           30,000 |       1.5× |       $2 |           $24 |
-|           50,000 |         2× |       $2 |           $24 |
+|            0–29K |         1× |       $2 |           $24 |
+|           30,000 |       1.5× |       $3 |           $36 |
+|           50,000 |         2× |       $3 |           $36 |
 |          100,000 |         3× |       $3 |           $36 |
 |          200,000 |         4× |       $4 |           $48 |
 |          250,000 |         5× |       $5 |           $60 |
@@ -570,9 +578,9 @@ bands also remain unlocked after a loss.
 | ---------------: | ----------------------------------------------------------------------------------------- |
 |              100 | Debut; every run begins here                                                              |
 |              150 | First Model: first model tier unlocked                                                    |
-|            1,000 | 1K Subscribers: hourly stream rate $8–$18 and Mood +2                                     |
+|            1,000 | 1K Subscribers: hourly stream rate $12–$22 and Mood +2                                    |
 |            5,000 | Model Redesign: second model tier unlocked                                                |
-|           10,000 | Twitch Partner: hourly stream rate $10–$22                                                |
+|           10,000 | Twitch Partner: hourly stream rate $15–$28                                                |
 |           30,000 | 30K Subscribers: Subscriber Revenue 1.5×                                                  |
 |           40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
 |           50,000 | 50K Subscribers: Subscriber Revenue 2×                                                    |
@@ -816,19 +824,19 @@ example, two active stacks at the 1K tier award
 
 ### Stream and donation arithmetic
 
-| Result                                       | Exact modifier order                                                                                                                        |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ordinary stream selection weight             | `max(0, 50 × seeded roll + 25 × ((Mood − 5) / 5) + 25 × ((Creativity − 5) / 5) + nutrition bonus + drought bonus) × daypart × special date` |
-| Daypart                                      | `×0.5` from 04:00–08:59, `×1.5` from 13:00–19:59, otherwise `×1`                                                                            |
-| June 29 or November 14 stream selection      | Final ordinary stream weight `×2`                                                                                                           |
-| Stream cash income                           | `round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`                                                                              |
-| Donation hit chance per completed whole hour | `min(100%, (2% + Creativity × 0.5% + final-model bonus) × special-date modifier × queued-stream modifier)`                                  |
-| Fourth-model donation bonus                  | `+1` percentage point inside the base donation chance                                                                                       |
-| June 29 or November 14 donation chance       | `×3` chance                                                                                                                                 |
-| Tournament donation chance                   | A separate `×3` chance, stacking with a special date                                                                                        |
+| Result                                       | Exact modifier order                                                                                                                             |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Ordinary stream selection weight             | `max(0, 50 × seeded roll + 20 + 25 × ((Mood − 5) / 5) + 25 × ((Creativity − 5) / 5) + nutrition bonus + drought bonus) × daypart × special date` |
+| Daypart                                      | `×0.5` from 04:00–08:59, `×1.5` from 13:00–19:59, otherwise `×1`                                                                                 |
+| June 29 or November 14 stream selection      | Final ordinary stream weight `×2`                                                                                                                |
+| Stream cash income                           | `round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`                                                                                   |
+| Donation hit chance per completed whole hour | `min(100%, (2% + Creativity × 0.5% + final-model bonus) × special-date modifier × queued-stream modifier)`                                       |
+| Fourth-model donation bonus                  | `+1` percentage point inside the base donation chance                                                                                            |
+| June 29 or November 14 donation chance       | `×3` chance                                                                                                                                      |
+| Tournament donation chance                   | A separate `×3` chance, stacking with a special date                                                                                             |
 
 The hourly rate is one seeded whole-dollar value from the highest permanently
-unlocked band: $5–$15 initially, $8–$18 after 1K peak Subscribers, or $10–$22
+unlocked band: $8–$18 initially, $12–$22 after 1K peak Subscribers, or $15–$28
 after 10K peak Subscribers. Creativity therefore changes stream income through
 the `(0.5 + Creativity / 10)` multiplier: `×0.5` at Creativity 0, `×1` at 5,
 and `×1.5` at 10. Interrupted streams use their actual elapsed time for income
@@ -853,11 +861,11 @@ new Balance = old Balance + all income − all expenses
 | Open Line of Credit               | `−$50 + $10,000 = +$9,950` atomically                                                                                           |
 | Repay Line of Credit              | `−$600 × repayment units`                                                                                                       |
 | Close Line of Credit from opening | Twenty units cost `$600 × 20 = $12,000`; including the $50 opening price and $10,000 advance, the complete net cost is `$2,050` |
-| Subscriber Revenue                | `+round($1 × highest unlocked Subscriber Revenue multiplier)` every two hours                                                   |
+| Subscriber Revenue                | `+max(round($1 × highest unlocked multiplier), applicable $2/$3 floor)` every two hours                                         |
 | Stream completion                 | `+round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`, plus each donation's actual amount                             |
 | Commission Work                   | `+$40 + ($15 × starting Creativity)`                                                                                            |
 | Full-body commission              | `+$400` through `+$800`, seeded uniformly in whole dollars                                                                      |
-| Off-stream support                | `+$5` through `+$15`, seeded uniformly in whole dollars                                                                         |
+| Random offline donation           | `+$5` through `+$100`, seeded uniformly in whole dollars                                                                        |
 | Sponsored-stream deal             | `+$250` through `+$2,000`, seeded uniformly in whole dollars                                                                    |
 | Convention milestone              | `+$500` once                                                                                                                    |
 | Personal purchase                 | `− real catalogue price` for the one selected affordable item                                                                   |
@@ -868,8 +876,9 @@ new Balance = old Balance + all income − all expenses
 
 The permanent Subscriber Revenue multiplier uses the highest unlocked peak-
 Subscriber band and replaces the prior multiplier: `×1`, `×1.5`, `×2`, `×3`,
-`×4`, `×5`, `×7`, or `×10`. It does not stack across milestones. Because each
-two-hour payment is rounded separately, `$1 ×1.5` pays $2 per tick.
+`×4`, `×5`, `×7`, or `×10`. It does not stack across milestones. The minimum
+payment floor raises `$1 ×1.5` and `$1 ×2` to $3 per tick once 30K has been
+reached; the legacy calculation becomes larger again at the 200K tier.
 
 Catalogue checkout can take Balance below $0. Tax and Equipment Failure can
 also cross from a nonnegative Balance into debt, but neither is eligible while

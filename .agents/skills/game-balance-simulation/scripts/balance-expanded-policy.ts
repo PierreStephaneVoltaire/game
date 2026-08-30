@@ -1,4 +1,4 @@
-import { reconcileTime, startRun } from '../../../../src/lib/game-engine';
+import { startRun } from '../../../../src/lib/game-engine';
 import { reconcileRunEnding } from '../../../../src/lib/ending-rules';
 import { HOUR_MS } from '../../../../src/lib/game-constants';
 import type { GameState } from '../../../../src/lib/game-types';
@@ -31,6 +31,7 @@ import {
   pursueProgression,
   useNovelItem,
 } from './balance-profile-shopping';
+import { reconcileThrough } from './balance-reconcile-through';
 
 const DAY_MS = 24 * HOUR_MS;
 
@@ -97,7 +98,7 @@ export function runExpandedSpec(spec: ExpandedRunSpec): RunTrace {
       checks.retries += 1;
     }
     const beforeEvents = state.events.length;
-    state = reconcileTime(state, visitAt, studyDefinition).state;
+    state = reconcileThrough(state, visitAt, studyDefinition);
     captureEvents(state.events.slice(beforeEvents), memory);
     sampleState(behavior, state);
     if (state.ending) break;
@@ -110,7 +111,7 @@ export function runExpandedSpec(spec: ExpandedRunSpec): RunTrace {
   }
   if (!state.ending && state.now < horizon) {
     const beforeEvents = state.events.length;
-    state = reconcileTime(state, horizon, studyDefinition).state;
+    state = reconcileThrough(state, horizon, studyDefinition);
     captureEvents(state.events.slice(beforeEvents), memory);
     sampleState(behavior, state);
   }

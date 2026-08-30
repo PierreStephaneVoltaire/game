@@ -68,7 +68,14 @@ describe('Subscriber Revenue chronology', () => {
     );
     expect(
       result.events.find((event) => event.type === 'subscriber_revenue'),
-    ).toEqual(expect.objectContaining({ amount: 2, revenueMultiplier: 1.5 }));
+    ).toEqual(
+      expect.objectContaining({
+        amount: 3,
+        revenueMultiplier: 1.5,
+        legacyRevenueAmount: 2,
+        subscriberRevenueFloor: 3,
+      }),
+    );
   });
 
   test('catches up every two-hour payment independently of autonomous scheduling', () => {
@@ -137,7 +144,12 @@ describe('Subscriber Revenue chronology', () => {
     );
 
     expect(result.events[revenueIndex]).toEqual(
-      expect.objectContaining({ amount: 1, revenueMultiplier: 1 }),
+      expect.objectContaining({
+        amount: 2,
+        revenueMultiplier: 1,
+        legacyRevenueAmount: 1,
+        subscriberRevenueFloor: 2,
+      }),
     );
     expect(revenueIndex).toBeLessThan(milestoneIndex);
     expect(result.events[milestoneIndex]).toEqual(

@@ -1,4 +1,7 @@
-import { HOUR_MS } from '../../../../src/lib/game-constants';
+import {
+  HOUR_MS,
+  LINE_OF_CREDIT_OFFER_ID,
+} from '../../../../src/lib/game-constants';
 import type { MetricName } from '../../../../src/lib/game-types';
 import { SessionRuntime, increment, itemById } from './balance-profile-runtime';
 import type { ExpandedProfile } from './balance-profile-schema';
@@ -117,7 +120,7 @@ function manageLineOfCredit(
     (strategy !== 'loc_clipper_gambler' ||
       runtime.state.progression.followers >= 1_000)
   ) {
-    runtime.invoke({ type: 'open_line_of_credit' });
+    checkoutLineOfCredit(runtime, 1);
   }
   const opened = runtime.state.lineOfCredit;
   if (opened.status !== 'open') return;
@@ -138,7 +141,19 @@ function manageLineOfCredit(
               )
             : 0;
   if (quantity > 0 && runtime.state.balance >= quantity * unitPrice)
-    runtime.invoke({ type: 'repay_line_of_credit', quantity });
+    checkoutLineOfCredit(runtime, quantity);
+}
+
+function checkoutLineOfCredit(runtime: SessionRuntime, quantity: number) {
+  if (
+    !runtime.invoke({
+      type: 'set_cart_quantity',
+      itemId: LINE_OF_CREDIT_OFFER_ID,
+      quantity,
+    })
+  )
+    return false;
+  return runtime.invoke({ type: 'checkout_cart' });
 }
 
 export function performCare(runtime: SessionRuntime) {

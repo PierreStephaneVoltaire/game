@@ -23,6 +23,8 @@ export function mergeStudyResults(partials: Result[]): Result {
       throw new Error('Balance study batches use different engines.');
     if (partial.study.horizonDays !== template.study.horizonDays)
       throw new Error('Balance study batches use different horizons.');
+    if (partial.study.engineRevision !== template.study.engineRevision)
+      throw new Error('Balance study batches use different engine revisions.');
   }
   return {
     ...template,

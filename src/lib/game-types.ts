@@ -113,6 +113,28 @@ export type GameEvent = {
   itemId?: string;
   itemUseMode?: 'manual' | 'automatic_stream_snack';
   shopItemIds?: string[];
+  /** Internal stream diagnostics; never projected as player-facing copy. */
+  streamEligible?: boolean;
+  streamBlockers?: StatusName[];
+  streamBlockedByActivity?: boolean;
+  streamRawWeight?: number;
+  streamFinalWeight?: number;
+  streamDroughtHours?: number;
+  streamFlatBonus?: number;
+  streamDroughtBonus?: number;
+  streamPostRecoveryMultiplier?: number;
+  streamCandidateSelected?: boolean;
+  ordinaryStream?: boolean;
+  queuedStreamType?: 'tournament' | 'model_debut';
+  streamActivityStarted?: boolean;
+  intendedDurationMs?: number;
+  actualDurationMs?: number;
+  midnightCapped?: boolean;
+  interrupted?: boolean;
+  droughtResetQualified?: boolean;
+  droughtResetAnchorAt?: number;
+  legacyRevenueAmount?: number;
+  subscriberRevenueFloor?: number;
 };
 
 export type HealthDamageSource = {

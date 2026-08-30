@@ -38,6 +38,7 @@ export type AutomaticEventHookDefinition = {
   effects?: Partial<Record<keyof Metrics, EffectRange>>;
   balanceEffect?: EffectRange;
   cooldownHours?: number;
+  cooldownHoursWhenBalanceNegative?: number;
   sharedCooldownKey?: string;
   requiresIdle?: boolean;
   requiredCareerTier?: CareerTier;

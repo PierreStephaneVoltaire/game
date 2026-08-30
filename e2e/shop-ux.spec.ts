@@ -1,4 +1,5 @@
 import { expect, test } from './fixtures';
+import rules from '../src/lib/data/simulation-rules.json';
 
 test('keeps cards inert and settles the permanent LOC offer through the cart', async ({
   page,
@@ -63,7 +64,9 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
     await repeatCard.getByRole('button', { name: /^Remove one / }).click();
   await locCard.getByRole('button', { name: 'Add one Line of Credit' }).click();
   await expect(locQuantity).toHaveText('1');
-  await expect(page.locator('.balance')).toHaveText('Cash: $20');
+  await expect(page.locator('.balance')).toHaveText(
+    `Cash: $${rules.startingCurrency}`,
+  );
   await page.getByRole('tab', { name: /Inventory/ }).click();
   await expect(page.getByText('4 kinds owned')).toBeVisible();
   await page.getByRole('tab', { name: /Cart/ }).click();

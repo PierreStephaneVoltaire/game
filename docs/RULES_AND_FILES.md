@@ -6,8 +6,9 @@ gameplay rules.
 
 ## Source data
 
-- `src/lib/data/simulation-rules.json` — bounds, initial state, decay cadence,
-  Ending thresholds/warning stages, and configurable simulation values.
+- `src/lib/data/simulation-rules.json` — bounds, initial state (including the
+  starting Balance shared by the app and tests), decay cadence, Ending
+  thresholds/warning stages, and configurable simulation values.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, and strong-outcome chance. Player-facing activity copy
   belongs to `event-texts.json`.
@@ -56,7 +57,7 @@ gameplay rules.
   Ending-risk clock state.
 - `src/lib/progression-types.ts` — current/peak Subscribers, career tiers,
   projects, queued
-  event streams, appearances, donations, autonomous-stream selection history,
+  event streams, appearances, donations, qualifying ordinary-stream history,
   and scheduled-effect state.
 - `src/lib/game-definition.ts` — versioned bundled definition and repository
   seam used by the pure engine and tests.
@@ -125,6 +126,8 @@ gameplay rules.
   collection and causal event-chain construction for the Death Ending.
 - `src/lib/simulation/activity-completion.ts` — completion of Rest,
   Socialize, Play, Hospital, Commission Work, and stream activities.
+- `src/lib/simulation/stream-completion.ts` — stream settlement diagnostics and
+  qualifying ordinary-stream drought-reset decisions.
 - `src/lib/simulation/activity-completion-message.ts` — seeded selection of
   JSON-authored completion text, including interrupted-activity wording.
 - `src/lib/simulation/activity-financial-settlement.ts` — Commission payout
@@ -178,8 +181,8 @@ gameplay rules.
 - `src/lib/simulation/event-hook-resolution.ts` — seeded, data-authored
   automatic item-hook effects and their damage attribution.
 - `src/lib/event-messages.ts` — user-facing copy for built-in event types.
-- `src/lib/stream-rules.ts` — stream eligibility, drought-adjusted event
-  weight, daypart adjustment, duration, and autonomous-stream activity
+- `src/lib/stream-rules.ts` — stream eligibility, internal blocker/weight/drought
+  diagnostics, daypart adjustment, duration, and autonomous-stream activity
   creation.
 - `src/lib/billing-rules.ts` and `src/lib/medical-debt-rules.ts` — Hospital
   coverage, explicit payment-plan bills, local-day payments, and ownership
@@ -248,6 +251,12 @@ gameplay rules.
   the permanent skill contains the unchanged canonical regression and
   configuration-driven extension without retaining every simulation history in
   one process.
+- `.agents/skills/game-balance-simulation/scripts/balance-cadence-analysis.ts`
+  and `balance-cadence-report.ts` — internal opportunity/stream-gap accounting
+  and report tables for fixed-seed ordinary-stream cadence acceptance.
+- `.agents/skills/game-balance-simulation/scripts/balance-reconcile-through.ts`
+  — study-only continuation through streaming-mode interruption boundaries so
+  horizon observations land at the requested timestamp.
 - `scripts/run-life-event-frequency-study.mjs`,
   `scripts/life-event-frequency-study.ts`, and
   `scripts/validate-life-event-frequency.mjs`

@@ -212,6 +212,14 @@ export function validateItemStructure(
         (!Number.isFinite(hook.cooldownHours) || hook.cooldownHours <= 0)
       )
         issues.push(`automatic event hook ${hook.id} has invalid cooldown`);
+      if (
+        hook.cooldownHoursWhenBalanceNegative !== undefined &&
+        (!Number.isFinite(hook.cooldownHoursWhenBalanceNegative) ||
+          hook.cooldownHoursWhenBalanceNegative <= 0)
+      )
+        issues.push(
+          `automatic event hook ${hook.id} has invalid negative-Balance cooldown`,
+        );
       if (hook.effects)
         issues.push(...validateEffects(hook.effects, `hook ${hook.id} effect`));
       for (const outcome of hook.outcomes ?? []) {

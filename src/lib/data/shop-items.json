@@ -9893,6 +9893,7 @@
           "max": 60
         },
         "cooldownHours": 36,
+        "cooldownHoursWhenBalanceNegative": 18,
         "sharedCooldownKey": "autonomous_side_gig",
         "requiresIdle": true
       }

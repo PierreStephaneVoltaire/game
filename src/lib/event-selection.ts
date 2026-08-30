@@ -3,7 +3,7 @@ import type { GameEvent, GameState } from './game-types';
 import { eventCandidates, type Candidate } from './event-candidate-pool';
 import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
-import { streamWeight } from './stream-rules';
+import { streamWeightDiagnostics } from './stream-rules';
 import { eventTemplate } from './event-messages';
 import { stateTextContext } from './seeded-text';
 
@@ -13,7 +13,8 @@ export function selectAttemptEvent(
   commandId: string,
   definition: GameDefinition,
 ): { selected: Candidate; opportunityEvent: GameEvent } {
-  const resolvedStreamWeight = streamWeight(state, commandId);
+  const streamDiagnostics = streamWeightDiagnostics(state, commandId);
+  const resolvedStreamWeight = streamDiagnostics.streamFinalWeight;
   const candidates = eventCandidates(
     state,
     definition,
@@ -52,6 +53,8 @@ export function selectAttemptEvent(
       ),
       sourceActionId: commandId,
       cause: selected,
+      ...streamDiagnostics,
+      streamCandidateSelected: selected === 'stream',
     },
   };
 }

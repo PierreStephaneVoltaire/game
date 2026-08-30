@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
+const engineRevision = currentEngineRevision();
 const resultsPath = resolve(
   root,
   process.env.BALANCE_RESULTS_PATH ?? 'docs/ECONOMY_EVENTS_BALANCE_RESULTS.json',
@@ -48,6 +49,7 @@ const batches = Array.from({ length: 4 }, (_, index) => {
 for (const batch of batches) {
   runVitest(testPath, {
     ...process.env,
+    BALANCE_ENGINE_REVISION: engineRevision,
     RUN_EXPANDED_BALANCE_STUDY: '1',
     BALANCE_STUDY_BATCH: String(batch.number),
     BALANCE_RESULTS_PATH: batch.resultsPath,
@@ -106,4 +108,25 @@ function run(command, args, env) {
   });
   if (result.error) throw result.error;
   if (result.status !== 0) process.exit(result.status ?? 1);
+}
+
+function currentEngineRevision() {
+  const revision = spawnSync('git', ['rev-parse', 'HEAD'], {
+    cwd: root,
+    encoding: 'utf8',
+  });
+  if (revision.status !== 0) return 'unknown';
+  const status = spawnSync(
+    'git',
+    [
+      'status',
+      '--porcelain',
+      '--untracked-files=normal',
+      '--',
+      'src',
+      '.agents/skills/game-balance-simulation',
+    ],
+    { cwd: root, encoding: 'utf8' },
+  );
+  return `${revision.stdout.trim()}${status.stdout.trim() ? '+dirty' : ''}`;
 }

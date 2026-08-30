@@ -1,5 +1,5 @@
 import { actionRandom } from './seeded-rng';
-import type { GameEvent, GameState } from './game-types';
+import type { GameEvent, GameState, StatusName } from './game-types';
 import { localDate, nextLocalMidnight } from './shop-rules';
 import rules from './data/simulation-rules.json';
 import { HOUR_MS } from './game-constants';
@@ -7,14 +7,51 @@ import { criticalMetrics } from './simulation/health-resolution';
 import { streamRateFor } from './economy-rules';
 import { registerStreamStart } from './audience-growth-rules';
 
-export function streamWeight(state: GameState, commandId: string): number {
-  if (
-    state.activity ||
-    rules.stream.blockers.some(
-      (status) => state.statuses[status as keyof GameState['statuses']],
-    )
-  )
-    return 0;
+export type StreamWeightDiagnostics = {
+  streamEligible: boolean;
+  streamBlockers: StatusName[];
+  streamBlockedByActivity: boolean;
+  streamRawWeight: number;
+  streamFinalWeight: number;
+  streamDroughtHours: number;
+  streamFlatBonus: number;
+  streamDroughtBonus: number;
+  streamPostRecoveryMultiplier: number;
+};
+
+export function streamWeightDiagnostics(
+  state: GameState,
+  commandId: string,
+): StreamWeightDiagnostics {
+  const streamBlockers = rules.stream.blockers.filter(
+    (status) => state.statuses[status as StatusName],
+  ) as StatusName[];
+  const streamBlockedByActivity = Boolean(state.activity);
+  const droughtHours = Math.max(
+    0,
+    (state.now - state.progression.lastQualifyingOrdinaryStreamStartedAt) /
+      HOUR_MS,
+  );
+  const droughtBonus = Math.min(
+    rules.stream.weight.drought.maximumBonus,
+    Math.max(0, droughtHours - rules.stream.weight.drought.graceHours) *
+      rules.stream.weight.drought.weightPerHour,
+  );
+  const shared = {
+    streamBlockers,
+    streamBlockedByActivity,
+    streamDroughtHours: droughtHours,
+    streamFlatBonus: rules.stream.weight.flatBonus,
+    streamDroughtBonus: droughtBonus,
+    streamPostRecoveryMultiplier: 1,
+  };
+  if (streamBlockedByActivity || streamBlockers.length)
+    return {
+      ...shared,
+      streamEligible: false,
+      streamRawWeight: 0,
+      streamFinalWeight: 0,
+    };
   if (state.progression.queuedEventStreams.length) {
     const hour = Number(
       new Intl.DateTimeFormat('en-CA', {
@@ -25,7 +62,13 @@ export function streamWeight(state: GameState, commandId: string): number {
         .formatToParts(new Date(state.now))
         .find((part) => part.type === 'hour')?.value ?? 0,
     );
-    return hour >= 13 && hour < 19 ? 1_000_000 : 0;
+    const weight = hour >= 13 && hour < 19 ? 1_000_000 : 0;
+    return {
+      ...shared,
+      streamEligible: weight > 0,
+      streamRawWeight: weight,
+      streamFinalWeight: weight,
+    };
   }
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: state.timezone,
@@ -60,15 +103,6 @@ export function streamWeight(state: GameState, commandId: string): number {
     0,
   );
   const managedNutrition = salt >= 5 && water >= 4;
-  const droughtHours = Math.max(
-    0,
-    (state.now - state.progression.lastAutonomousStreamSelectedAt) / HOUR_MS,
-  );
-  const droughtBonus = Math.min(
-    rules.stream.weight.drought.maximumBonus,
-    Math.max(0, droughtHours - rules.stream.weight.drought.graceHours) *
-      rules.stream.weight.drought.weightPerHour,
-  );
   const roll = actionRandom(
     state.seed,
     state.stateVersion,
@@ -76,20 +110,30 @@ export function streamWeight(state: GameState, commandId: string): number {
     'autonomous_event',
     'stream',
   );
-  return Math.max(
-    0,
-    (rules.stream.weight.base * roll +
-      rules.stream.weight.moodCoefficient *
-        ((state.metrics.mood - rules.stream.weight.metricCenter) /
-          rules.stream.weight.metricScale) +
-      rules.stream.weight.creativityCoefficient *
-        ((state.metrics.creativity - rules.stream.weight.metricCenter) /
-          rules.stream.weight.metricScale) +
-      (managedNutrition ? rules.stream.weight.managedNutritionBonus : 0) +
-      droughtBonus) *
+  const rawWeight =
+    rules.stream.weight.base * roll +
+    rules.stream.weight.flatBonus +
+    rules.stream.weight.moodCoefficient *
+      ((state.metrics.mood - rules.stream.weight.metricCenter) /
+        rules.stream.weight.metricScale) +
+    rules.stream.weight.creativityCoefficient *
+      ((state.metrics.creativity - rules.stream.weight.metricCenter) /
+        rules.stream.weight.metricScale) +
+    (managedNutrition ? rules.stream.weight.managedNutritionBonus : 0) +
+    droughtBonus;
+  return {
+    ...shared,
+    streamEligible: true,
+    streamRawWeight: rawWeight,
+    streamFinalWeight:
+      Math.max(0, rawWeight) *
       multiplier *
       (specialDate?.streamWeightMultiplier ?? 1),
-  );
+  };
+}
+
+export function streamWeight(state: GameState, commandId: string): number {
+  return streamWeightDiagnostics(state, commandId).streamFinalWeight;
 }
 
 /** Starts a stream after the event pool selected the autonomous candidate. */
@@ -121,6 +165,8 @@ export function startAutonomousStream(
     Math.min(rules.stream.duration.maximumHours, base) -
     (rules.stream.restCost.maximumRest - state.metrics.rest);
   const hours = Math.min(intendedHours, hoursUntilLocalMidnight(state));
+  const intendedDurationMs = intendedHours * HOUR_MS;
+  const midnightCapped = hours > 0 && hours < intendedHours;
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'stream_candidate',
@@ -130,6 +176,11 @@ export function startAutonomousStream(
         ? 'Companion is too tired to stream.'
         : 'Companion started streaming.',
     activityType: 'stream',
+    ordinaryStream: true,
+    streamActivityStarted: hours > 0,
+    intendedDurationMs,
+    actualDurationMs: Math.max(0, hours) * HOUR_MS,
+    midnightCapped,
   };
   if (hours <= 0)
     return {
@@ -160,6 +211,9 @@ export function startAutonomousStream(
         endsAt: state.now + hours * HOUR_MS,
         sourceActionId: commandId,
         payload: {
+          ordinaryStream: true,
+          intendedDurationMs,
+          midnightCapped,
           hourlyRate: rate,
           startingCriticalMetrics: criticalMetrics(state.metrics).join(','),
         },
@@ -177,6 +231,8 @@ function startQueuedStream(
   queued: GameState['progression']['queuedEventStreams'][number],
 ): GameState {
   const hours = Math.min(queued.durationHours, hoursUntilLocalMidnight(state));
+  const intendedDurationMs = queued.durationHours * HOUR_MS;
+  const midnightCapped = hours > 0 && hours < queued.durationHours;
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type:
@@ -188,6 +244,11 @@ function startQueuedStream(
         : 'Model debut stream started.',
     sourceActionId: commandId,
     activityType: 'stream',
+    queuedStreamType: queued.type,
+    streamActivityStarted: hours > 0,
+    intendedDurationMs,
+    actualDurationMs: Math.max(0, hours) * HOUR_MS,
+    midnightCapped,
   };
   const remaining = state.progression.queuedEventStreams.slice(1);
   if (hours <= 0)
@@ -221,6 +282,9 @@ function startQueuedStream(
         endsAt: state.now + hours * HOUR_MS,
         sourceActionId: commandId,
         payload: {
+          ordinaryStream: false,
+          intendedDurationMs,
+          midnightCapped,
           hourlyRate: rate,
           donationMultiplier: queued.donationMultiplier,
           queuedStreamType: queued.type,
