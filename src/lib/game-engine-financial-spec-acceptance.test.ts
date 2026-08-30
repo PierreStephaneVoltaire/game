@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import { HOUR_MS } from './game-constants';
+import endingRules from './data/ending-rules.json';
 
 function run() {
   return startRun(
@@ -71,10 +72,14 @@ describe('economy specification through the engine seam', () => {
 
     expect(result.state.ending).toMatchObject({
       kind: 'financial_ruin',
-      cause: 'Insolvency',
       endingBalance: -19_950 - item.price,
       triggerEventId: expect.any(String),
     });
+    expect(endingRules.texts.events.financialRuinCause).toContain(
+      result.state.ending?.kind === 'financial_ruin'
+        ? result.state.ending.cause
+        : '',
+    );
     expect(
       result.state.events.find((event) => event.type === 'run_ended'),
     ).toMatchObject({

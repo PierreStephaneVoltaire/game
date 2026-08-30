@@ -3,12 +3,12 @@
     "id": "dr-pepper",
     "name": "Dr Pepper",
     "narration": [
-      "happily drank Dr Pepper.",
-      "savored every sip of Dr Pepper."
+      "cracked open a Dr Pepper. All is right in the world.",
+      "chugged a Dr Pepper like it owed her money."
     ],
     "category": "food",
     "price": 2,
-    "description": "Liquid serotonin, obviously.",
+    "description": "The lifeblood. Non-negotiable.",
     "qualitativeNutritionHint": "A sweet, caffeinated pick-me-up with little hydration value.",
     "edible": true,
     "usable": true,
@@ -103,7 +103,7 @@
     ],
     "category": "food",
     "price": 3,
-    "description": "Crust removed, problem solved.",
+    "description": "Crust removed. Problem solved. Science.",
     "qualitativeNutritionHint": "A portable sandwich with useful protein and a sweet filling.",
     "edible": true,
     "usable": true,
@@ -192,7 +192,7 @@
     ],
     "category": "medicine",
     "price": 7,
-    "description": "All the salt. None of the snack.",
+    "description": "All the salt, none of the snack. The heart rate is supposed to do that.",
     "qualitativeNutritionHint": "A deliberate salt dose; it does not treat kidney stones.",
     "edible": false,
     "usable": true,
@@ -698,7 +698,7 @@
     ],
     "category": "food",
     "price": 4,
-    "description": "A bowl of dependable carbs.",
+    "description": "Certified comfort food. The bowl understands her.",
     "qualitativeNutritionHint": "Filling, low-drama energy that benefits from a balanced side.",
     "edible": true,
     "usable": true,
@@ -2614,12 +2614,12 @@
     "id": "mini-tacos",
     "name": "Mini Tacos",
     "narration": [
-      "happily ate Mini Tacos.",
-      "savored every bite of Mini Tacos."
+      "inhaled the mini tacos. A balanced diet, allegedly.",
+      "demolished the mini tacos with terrifying efficiency."
     ],
     "category": "food",
     "price": 5,
-    "description": "Small tacos, big feelings, structurally sound enough.",
+    "description": "One half of the official food pyramid. The other half is soda.",
     "qualitativeNutritionHint": "A favorite little meal with protein, starch, and a salty edge.",
     "edible": true,
     "usable": true,
@@ -2956,12 +2956,12 @@
     "id": "water",
     "name": "Water",
     "narration": [
-      "begrudgingly drank some water because it was healthy.",
-      "reluctantly drank some water, knowing it was good for them."
+      "drank water under protest. Clip it, it'll never happen again.",
+      "consumed one (1) glass of water. Alert the press."
     ],
     "category": "food",
     "price": 1,
-    "description": "Literally just water.",
+    "description": "A $100 donation reward, available at home for free.",
     "qualitativeNutritionHint": "The cleanest hydration choice, without energy or caffeine.",
     "edible": true,
     "usable": true,
@@ -3455,7 +3455,7 @@
     ],
     "category": "food",
     "price": 5,
-    "description": "Lean, boring, high-protein.",
+    "description": "Famously not her thing. Protein is protein, though.",
     "qualitativeNutritionHint": "A strong protein choice with little sugar.",
     "edible": true,
     "usable": true,
@@ -3540,7 +3540,7 @@
     ],
     "category": "food",
     "price": 8,
-    "description": "A complete rotisserie chicken that has been sitting around for three months.",
+    "description": "She doesn't even like chicken. That's what makes it content.",
     "qualitativeNutritionHint": "The joke lands harder than any nutritional benefit.",
     "edible": true,
     "usable": true,
@@ -3638,7 +3638,7 @@
     ],
     "category": "food",
     "price": 4,
-    "description": "Frosting, flour, and a sugar spike.",
+    "description": "Caketown's finest. The childhood dream, frosted.",
     "qualitativeNutritionHint": "Celebration food built around sweetness, not balance.",
     "edible": true,
     "usable": true,
@@ -4790,7 +4790,7 @@
     ],
     "category": "food",
     "price": 2,
-    "description": "Protein in a shell. See eggcup incident.",
+    "description": "Protein in a shell. She and eggs have history.",
     "qualitativeNutritionHint": "Straightforward protein with almost no sugar.",
     "edible": true,
     "usable": true,
@@ -8858,12 +8858,12 @@
     "id": "salad",
     "name": "Salad",
     "narration": [
-      "carefully tried Salad.",
-      "gave Salad a cautious first bite."
+      "confronted a salad and technically won.",
+      "ate a salad. Somewhere, a $1,000 donor feels robbed."
     ],
     "category": "food",
     "price": 5,
-    "description": "A responsible pile of uncontrolled variables.",
+    "description": "A $1,000 value, according to the tipping menu.",
     "qualitativeNutritionHint": "Potentially hydrating produce with highly variable toppings and texture.",
     "edible": true,
     "usable": true,
@@ -9126,7 +9126,7 @@
     ],
     "category": "food",
     "price": 5,
-    "description": "The safe order: crust, sauce, and no surprises.",
+    "description": "The correct order: crust, sauce, nothing else. No questions.",
     "qualitativeNutritionHint": "A favorite comfort meal with a specific plain preparation and a salty edge.",
     "edible": true,
     "usable": true,
@@ -9390,12 +9390,12 @@
     "id": "the-concoction",
     "name": "The Concoction",
     "narration": [
-      "bravely drank The Concoction.",
-      "finished The Concoction without asking what was in it."
+      "recreated The Concoction. The ER has been notified, just in case.",
+      "drank The Concoction. Fifteen-minute timer starts now."
     ],
     "category": "food",
     "price": 4,
-    "description": "Jello, soda, peanut butter cookies, taco seasoning, and three cups of pickle juice.",
+    "description": "Jello, soda, PB cookies, taco seasoning, three cups of pickle juice — wrapped in a tortilla.",
     "qualitativeNutritionHint": "A seeded fictional mystery meal whose nutrition is intentionally unpredictable.",
     "edible": true,
     "usable": true,
@@ -9527,7 +9527,7 @@
     ],
     "category": "reusable",
     "price": 145,
-    "description": "Chat can hear everything now. Everything.",
+    "description": "Captures every unhinged noise in lossless quality.",
     "qualitativeNutritionHint": "Record a quick voice clip when an idea is easier spoken than typed.",
     "edible": false,
     "usable": true,
@@ -9687,7 +9687,7 @@
     ],
     "category": "upgrade",
     "price": 25,
-    "description": "Turns stream highlights into a temporary passive subscriber boost.",
+    "description": "The clip channels never sleep. Now they answer to you.",
     "qualitativeNutritionHint": "Publishes clips daily for three days; extra copies stack and renew the shared timer.",
     "edible": false,
     "usable": true,
@@ -10114,7 +10114,7 @@
     ],
     "category": "reusable",
     "price": 95,
-    "description": "Say hi to the camera.",
+    "description": "Say hi to the camera. Fix the posture first — that's a $50 value.",
     "qualitativeNutritionHint": "A test photo offers a low-stakes excuse to adjust the setup.",
     "edible": false,
     "usable": true,
@@ -10196,7 +10196,7 @@
     ],
     "category": "reusable",
     "price": 175,
-    "description": "Sitting equipment, but expensive.",
+    "description": "Sitting equipment. Posture sold separately.",
     "qualitativeNutritionHint": "Place this at the chair anchor for a more restorative workspace.",
     "edible": false,
     "usable": false,
@@ -10263,7 +10263,7 @@
     ],
     "category": "reusable",
     "price": 225,
-    "description": "Just one more model. Promise.",
+    "description": "'Just one more model.' — her, before every single model.",
     "qualitativeNutritionHint": "Rehearsal makes the model feel expressive before it goes public.",
     "edible": false,
     "usable": true,
@@ -10427,7 +10427,7 @@
     ],
     "category": "reusable",
     "price": 150,
-    "description": "More parameters. More jiggle.",
+    "description": "More parameters. More jiggle. 2,000 layers of ambition.",
     "qualitativeNutritionHint": "Practice the controls to explore more expressive movement.",
     "edible": false,
     "usable": true,
@@ -10509,7 +10509,7 @@
     ],
     "category": "reusable",
     "price": 120,
-    "description": "Supporting artists is financially responsible.",
+    "description": "Supporting artists is a business expense. Legally, probably.",
     "qualitativeNutritionHint": "Hang it on the wall to make the room feel more personal.",
     "edible": false,
     "usable": false,
@@ -10671,7 +10671,7 @@
     ],
     "category": "reusable",
     "price": 45,
-    "description": "Quality control requires keeping one.",
+    "description": "One of everything from the merch drop, for 'quality control.'",
     "qualitativeNutritionHint": "Inspect the sample closely before trusting the design.",
     "edible": false,
     "usable": true,
@@ -10773,7 +10773,7 @@
     ],
     "category": "reusable",
     "price": 55,
-    "description": "Surely chat recommended something normal.",
+    "description": "Chat recommended it. Chat is never normal about recommendations.",
     "qualitativeNutritionHint": "A fresh game offers novelty without choosing a stream topic.",
     "edible": false,
     "usable": true,
@@ -10961,7 +10961,7 @@
     ],
     "category": "reusable",
     "price": 40,
-    "description": "Better with friends. Worse for everyone else.",
+    "description": "Tournament-grade friendslop. Team MILF needs the practice.",
     "qualitativeNutritionHint": "Best used for a noisy shared session with friends.",
     "edible": false,
     "usable": true,
@@ -11056,7 +11056,7 @@
     ],
     "category": "reusable",
     "price": 50,
-    "description": "How hard could it possibly be?",
+    "description": "'This game is so easy smh.' (This is ragebait. Don't fall for it.)",
     "qualitativeNutritionHint": "Attempt a difficult run when frustration feels worth the challenge.",
     "edible": false,
     "usable": true,
@@ -11338,7 +11338,7 @@
     ],
     "category": "reusable",
     "price": 35,
-    "description": "Low stakes. Allegedly.",
+    "description": "It's farming. ALL FARMING. She LOVES farming!!",
     "qualitativeNutritionHint": "Choose this for gentle play with a calmer pace.",
     "edible": false,
     "usable": true,
@@ -11966,7 +11966,7 @@
     ],
     "category": "reusable",
     "price": 65,
-    "description": "Now the backseating can be local.",
+    "description": "Local backseating is still backseating. Rule 2 applies.",
     "qualitativeNutritionHint": "Pair it with the console for a genuinely shared game night.",
     "edible": false,
     "usable": true,
@@ -12064,7 +12064,7 @@
     ],
     "category": "care",
     "price": 8,
-    "description": "The actual currency of the household.",
+    "description": "The actual currency of this household.",
     "qualitativeNutritionHint": "A single-use peace offering for the household cat.",
     "edible": false,
     "usable": true,
@@ -12524,7 +12524,7 @@
     ],
     "category": "reusable",
     "price": 25,
-    "description": "Better than the expensive toy beside it.",
+    "description": "Preferred over the expensive tree beside it. Every time.",
     "qualitativeNutritionHint": "Place it in the cat corner for cheap, dependable enrichment.",
     "edible": false,
     "usable": false,
@@ -12672,7 +12672,7 @@
     ],
     "category": "reusable",
     "price": 140,
-    "description": "Vertical cat infrastructure.",
+    "description": "Vertical infrastructure for Socks' surveillance state.",
     "qualitativeNutritionHint": "Vertical cat-corner space supports play, rest, and curiosity.",
     "edible": false,
     "usable": false,
@@ -12928,7 +12928,7 @@
     ],
     "category": "reusable",
     "price": 85,
-    "description": "Premium access to bird television.",
+    "description": "Premium bird television. Socks-approved.",
     "qualitativeNutritionHint": "Place it at the window to unlock premium bird-watching.",
     "edible": false,
     "usable": false,
@@ -13094,7 +13094,7 @@
     ],
     "category": "reusable",
     "price": 45,
-    "description": "The cat did not approve this purchase.",
+    "description": "Socks did not approve this purchase and will remember it.",
     "qualitativeNutritionHint": "Trying the outfit is funny, risky, and entirely optional.",
     "edible": false,
     "usable": true,
@@ -13292,7 +13292,7 @@
     ],
     "category": "reusable",
     "price": 100,
-    "description": "Cat surveillance system online.",
+    "description": "Socks surveillance, from anywhere. She watches back.",
     "qualitativeNutritionHint": "Check in remotely for reassurance and occasional cat drama.",
     "edible": false,
     "usable": true,
@@ -13525,7 +13525,7 @@
     ],
     "category": "reusable",
     "price": 45,
-    "description": "A plush copy of the household cat.",
+    "description": "A plush Socks. Softer, and accepts apologies.",
     "qualitativeNutritionHint": "Offer the shelf-sized tribute as a sincere, non-consuming apology.",
     "edible": false,
     "usable": true,
@@ -14054,7 +14054,7 @@
     ],
     "category": "reusable",
     "price": 75,
-    "description": "This can only end emotionally.",
+    "description": "Gleekathon prep. It tastes like PINK.",
     "qualitativeNutritionHint": "Rewatch when musical drama sounds emotionally worthwhile.",
     "edible": false,
     "usable": true,
@@ -14603,7 +14603,7 @@
     ],
     "category": "reusable",
     "price": 130,
-    "description": "The neighbors have been warned.",
+    "description": "Karaoke relay training arc. The neighbors have been warned.",
     "qualitativeNutritionHint": "Sing together when volume and confidence are both available.",
     "edible": false,
     "usable": true,
@@ -18773,7 +18773,7 @@
     ],
     "category": "food",
     "price": 2,
-    "description": "Five plain tortillas. A reliable comfort food.",
+    "description": "Five plain tortillas: dinner, or emergency Concoction wrappers.",
     "qualitativeNutritionHint": "A familiar, filling comfort food with neutral risk scores.",
     "edible": true,
     "usable": true,
@@ -18866,7 +18866,7 @@
     ],
     "category": "food",
     "price": 3,
-    "description": "A briny beverage and a questionable coping strategy.",
+    "description": "Three cups is the canonical serving.",
     "qualitativeNutritionHint": "A salty, hydrating favorite with an unmistakably pickled personality.",
     "edible": true,
     "usable": true,
@@ -18957,7 +18957,7 @@
     ],
     "category": "food",
     "price": 12,
-    "description": "The forbidden flavor for a very productive afternoon.",
+    "description": "The forbidden flavor. Six hours of terrifying productivity per can.",
     "qualitativeNutritionHint": "A rare, extra-sugary caffeinated drink with a dramatic energy spike.",
     "edible": true,
     "usable": true,
@@ -19059,7 +19059,7 @@
     ],
     "category": "medicine",
     "price": 7,
-    "description": "Twelve hours of less stone-related misery; the stone remains.",
+    "description": "Twelve hours of pretending the Pebble isn't there.",
     "qualitativeNutritionHint": "A short comfort window for a painful episode, without pretending to cure it.",
     "edible": false,
     "usable": true,
@@ -19137,7 +19137,7 @@
     ],
     "category": "care",
     "price": 9,
-    "description": "Salt and water in a packet for the medically sensible plot twist.",
+    "description": "Salt and water in one packet. Medically sensible, deeply out of character.",
     "qualitativeNutritionHint": "A care supply designed to pair hydration with a deliberate electrolyte boost.",
     "edible": false,
     "usable": true,
@@ -19215,7 +19215,7 @@
     ],
     "category": "care",
     "price": 150,
-    "description": "A tiny rectangle that makes the hospital bill less theatrical.",
+    "description": "For the next 'entirely unrelated injury.' There will be one.",
     "qualitativeNutritionHint": "A one-claim care safeguard for an expensive medical emergency.",
     "edible": false,
     "usable": true,
@@ -19293,7 +19293,7 @@
     ],
     "category": "upgrade",
     "price": 200,
-    "description": "The portable workstation for turning commissions into rent money.",
+    "description": "350+ models rigged on one of these. The rent-money machine.",
     "qualitativeNutritionHint": "A professional creative tool that opens a focused commission-work activity.",
     "edible": false,
     "usable": true,
@@ -19396,7 +19396,7 @@
     ],
     "category": "upgrade",
     "price": 300,
-    "description": "Three local dates of rigging for one more model debut.",
+    "description": "Another debut. She'll rig it herself. She always does.",
     "qualitativeNutritionHint": "A long-term creative upgrade reserved for an unlocked career tier.",
     "edible": false,
     "usable": true,
@@ -19473,12 +19473,12 @@
     "id": "sheet-of-cute-stickers",
     "name": "Sheet of Cute Stickers",
     "narration": [
-      "begrudgingly confronted the Sheet of Cute Stickers.",
-      "stared down the Sheet of Cute Stickers and immediately regretted it."
+      "stared down the sticker sheet. The stickers stared back.",
+      "faced the stickers. This is not what exposure therapy means."
     ],
     "category": "decoration",
     "price": 25,
-    "description": "Cute, colorful, and absolutely not welcome here.",
+    "description": "A diagnosed phobia, sold by the sheet.",
     "qualitativeNutritionHint": "A cursed decorative sheet whose tiny adhesive shapes are a known hazard.",
     "edible": false,
     "usable": true,
@@ -19559,7 +19559,7 @@
     ],
     "category": "decoration",
     "price": 120,
-    "description": "A convention backdrop, badge display, and guest-signing setup.",
+    "description": "Guest badge, backdrop, and a flight to the correct Birmingham. Hopefully.",
     "qualitativeNutritionHint": "A milestone display that turns convention memories into room energy.",
     "edible": false,
     "usable": false,
@@ -19629,7 +19629,7 @@
     ],
     "category": "reusable",
     "price": 35,
-    "description": "A practical kitchen tool with a statistically concerning user.",
+    "description": "A kitchen tool. Origin of at least one 'entirely unrelated' ER visit.",
     "qualitativeNutritionHint": "Open a can manually, preferably without turning it into an emergency.",
     "edible": false,
     "usable": true,
@@ -19738,6 +19738,361 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Can Opener is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "jaffa-cakes",
+    "name": "Jaffa Cakes",
+    "narration": [
+      "happily demolished a sleeve of Jaffa Cakes.",
+      "ate Jaffa Cakes and started the cake-or-biscuit debate again."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Cake or biscuit? Doesn't matter. It's comfort.",
+    "qualitativeNutritionHint": "A sweet British comfort snack with a sugar-forward profile.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "stream-snack",
+      "favorite",
+      "comfort-food",
+      "sugar"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 2,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 2,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed {pet}",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/jaffa-cakes.png",
+    "nutrition": {
+      "serving": "1 pouch/regular size (45 g)",
+      "calories": 240.8,
+      "sodiumMg": 35.6,
+      "sugarG": 23.18,
+      "proteinG": 3.44,
+      "waterG": 0.68,
+      "caffeineMg": 9,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710327/nutrients",
+      "sourceReference": "FDC ID 2710327 / food code 91705005 — Chocolate candy, other, NFS",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "oatmeal",
+    "name": "Oatmeal",
+    "narration": [
+      "ate a warm bowl of oatmeal. Beige and thriving.",
+      "had oatmeal. Comfort level: canonical."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Beige, warm, and canonically comforting.",
+    "qualitativeNutritionHint": "Warm, gentle comfort carbs that ask nothing of anyone.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "favorite",
+      "comfort-food"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 1,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 1,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed {pet}",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/oatmeal.png",
+    "nutrition": {
+      "serving": "1 RACC (170 g)",
+      "calories": 132.6,
+      "sodiumMg": 71.1,
+      "sugarG": 6.95,
+      "proteinG": 6.49,
+      "waterG": 145.01,
+      "caffeineMg": null,
+      "sourceType": "usda_foundation",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2259793/nutrients",
+      "sourceReference": "FDC ID 2259793 — Yogurt, plain, whole milk",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2026-04-30",
+      "nullReasons": {
+        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      }
+    }
+  },
+  {
+    "id": "homegrown-cookies",
+    "name": "Homegrown Chocolate Chip Cookies",
+    "narration": [
+      "ate a homegrown chocolate chip cookie and got briefly homesick.",
+      "savored a cookie from the village. Mom's recipe never misses."
+    ],
+    "category": "food",
+    "price": 4,
+    "description": "Chocolate chip, straight from the village. Mom's recipe.",
+    "qualitativeNutritionHint": "A sweet taste of home with more feelings than fiber.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "stream-snack",
+      "favorite",
+      "comfort-food",
+      "sugar"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 3,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 3,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed {pet}",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/homegrown-cookies.png",
+    "nutrition": {
+      "serving": "1 cupcake, any size (90 g)",
+      "calories": 316.8,
+      "sodiumMg": 273.6,
+      "sugarG": 35.55,
+      "proteinG": 2.56,
+      "waterG": 24.39,
+      "caffeineMg": 2.7,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707853/nutrients",
+      "sourceReference": "FDC ID 2707853 / food code 53100100 — Cake or cupcake, NFS",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "ring-fit-game",
+    "name": "Ring Fit",
+    "narration": [
+      "did a Ring Fit session. DW, the heart rate is supposed to do that.",
+      "exercised via Ring Fit. Five pushups were attempted. Attempted."
+    ],
+    "category": "reusable",
+    "price": 60,
+    "description": "A $500 donation made this canon. The heart rate is supposed to do that.",
+    "qualitativeNutritionHint": "Actual movement disguised as a video game.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "game"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "play_ring_fit",
+        "label": "Suffer through Ring Fit",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 2
+          },
+          "rest": {
+            "min": -2,
+            "max": -1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "requirements": {
+          "ownedItemTagsAny": [
+            "game-control"
+          ]
+        },
+        "tags": [
+          "play"
+        ],
+        "consumes": true
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/ring-fit-game.png",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Ring Fit is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",

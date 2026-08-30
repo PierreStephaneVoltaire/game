@@ -12,6 +12,7 @@ import {
   endingWarningMessage,
   runEndingMessage,
 } from './ending-rules/messages';
+import { stateTextContext } from './seeded-text';
 
 const config = rules.endings.quitStreaming;
 
@@ -71,7 +72,10 @@ function syncQuitStreamingRisk(state: GameState): GameState {
       id: `event-${state.events.length + 1}`,
       type: 'ending_risk_recovered',
       at: state.now,
-      message: endingRiskRecoveryMessage('quit_streaming'),
+      message: endingRiskRecoveryMessage(
+        'quit_streaming',
+        stateTextContext(state, `ending-risk-recovered:${state.now}`),
+      ),
       causedBy: clock.warningEventIds,
       endingKind: 'quit_streaming',
     };
@@ -99,7 +103,14 @@ function appendWarning(state: GameState, stage: number): GameState {
     id: `event-${state.events.length + 1}`,
     type: 'ending_risk_warning',
     at: (clock.triggerStartedAt ?? state.now) + stage * HOUR_MS,
-    message: endingWarningMessage('quit_streaming', stage),
+    message: endingWarningMessage(
+      'quit_streaming',
+      stage,
+      stateTextContext(
+        state,
+        `ending-risk-warning:${stage}:${(clock.triggerStartedAt ?? state.now) + stage * HOUR_MS}`,
+      ),
+    ),
     endingKind: 'quit_streaming',
     endingStage: stage,
   };
@@ -126,7 +137,10 @@ function recordQuitStreaming(
     id: `event-${state.events.length + 1}`,
     type: 'run_ended',
     at: state.now,
-    message: runEndingMessage('quit_streaming'),
+    message: runEndingMessage(
+      'quit_streaming',
+      stateTextContext(state, `run-ended:quit-streaming:${state.now}`),
+    ),
     causedBy: clock.warningEventIds,
     endingKind: 'quit_streaming',
   };

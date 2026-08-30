@@ -1,72 +1,141 @@
 {
-  "version": 2,
+  "version": 3,
   "madeIt": {
     "followers": 3000000
   },
   "texts": {
     "events": {
-      "death": "Companion died.",
-      "financialRuinCause": "Insolvency",
-      "financialRuinRecovered": "Balance recovered.",
-      "financialRuinWarning": "Balance is approaching Financial Ruin.",
-      "madeItUnlocked": "Made It unlocked at {followers} Subscribers.",
-      "quitStreamingRecovered": "Mood recovered; the Quit Streaming countdown cleared.",
-      "quitStreamingWarningContinued": "Mood has remained at 0 for {hours} hours.",
-      "quitStreamingWarningStarted": "Mood reached 0. The Quit Streaming countdown began.",
-      "runEndedFinancialRuin": "The run ended: Financial Ruin.",
-      "runEndedQuitStreaming": "The run ended: Quit Streaming.",
-      "runOver": "This run is over."
+      "death": [
+        "{pet} has permanently logged off. Turns out 'probably immortal' was a theory, not a diagnosis.",
+        "The final stream has ended. Socks inherits everything.",
+        "{pet} is gone. The room is silent. No snoring. That's how you know it's real."
+      ],
+      "financialRuinCause": [
+        "Aggressive snack-based budgeting",
+        "Every purchase was 'basically a business expense'",
+        "The economy (her version of it)"
+      ],
+      "financialRuinRecovered": [
+        "The bank app is safe to open again. {pet} is acting like she planned this.",
+        "The numbers went green. The Dr Pepper fund is restored.",
+        "Solvency achieved. Nobody tell her the shop restocked."
+      ],
+      "financialRuinWarning": [
+        "{pet}'s bank app notifications have turned hostile.",
+        "The wallet is making sounds a wallet should not make.",
+        "Mom just asked if she's 'doing okay with money.' That's never a good sign."
+      ],
+      "madeItUnlocked": [
+        "{followers} subscribers. {pet} MADE IT. Mom is already bragging to the neighbors.",
+        "{followers} subs. From a cookie village to this. Caketown could never.",
+        "{followers} subscribers?! 'Improv comedy stand-up with video games' really was a career."
+      ],
+      "quitStreamingRecovered": [
+        "{pet} opened OBS again. Nobody mention the last few days. Ever.",
+        "The spark is back. The quitting arc got cancelled for ratings.",
+        "She's back. Chat pretends they weren't refreshing the schedule every hour."
+      ],
+      "quitStreamingWarningContinued": [
+        "{hours} hours of silence and counting. Even Socks looks worried.",
+        "It's been {hours} hours without a single unhinged noise. This is not a bit.",
+        "{hours} hours dark. The stream deck is gathering dust."
+      ],
+      "quitStreamingWarningStarted": [
+        "{pet} went quiet. Not the fun kind of quiet.",
+        "No swearing for a suspiciously long time. Someone check on her.",
+        "The mic is off, the energy is gone, and the schedule just says '???'."
+      ],
+      "runEndedFinancialRuin": [
+        "It ended the way the bank always said it would.",
+        "Financial Ruin. The shopping cart won.",
+        "It's over. The wallet has filed for divorce."
+      ],
+      "runEndedQuitStreaming": [
+        "The run is over. {pet} closed OBS one last time.",
+        "Quit Streaming. The void finally out-stared her.",
+        "It's over. She went to touch grass. Permanently."
+      ],
+      "runOver": [
+        "This run is over. Pour one out — Dr Pepper, obviously.",
+        "That's the end of this timeline. The archive remembers everything.",
+        "This run is done. Thank you for coming to the funeral / retirement party."
+      ]
     },
     "history": {
-      "terminalRunEyebrow": "TERMINAL RUN",
-      "causeOfDeath": "Cause of death",
-      "causalChain": "Causal chain",
-      "graveyard": "Graveyard",
-      "graveyardSummary": "This run is complete. Its grave remains available for review.",
-      "archivedRun": "Archived run",
-      "archivedRunSummary": "This run is complete. Its record remains available for review.",
-      "started": "Started",
-      "ended": "Ended",
-      "duration": "Duration",
-      "exportGrave": "Export journey and grave",
-      "exportArchive": "Export archived run"
+      "terminalRunEyebrow": ["THE FINAL VOD"],
+      "causeOfDeath": ["Cause of death"],
+      "causalChain": ["How it all went down"],
+      "graveyard": ["The Graveyard"],
+      "graveyardSummary": [
+        "This run rests here. The VODs are eternal and visiting hours are always.",
+        "It's over, but the clips live forever."
+      ],
+      "archivedRun": ["Archived run"],
+      "archivedRunSummary": [
+        "Run complete. Preserved for the lore scholars.",
+        "This run is a wrap. The full recap lives here."
+      ],
+      "started": ["Started"],
+      "ended": ["Ended"],
+      "duration": ["Duration"],
+      "exportGrave": ["Export the eulogy and full story"],
+      "exportArchive": ["Export the archived run"]
     },
     "archive": {
-      "graveyardRecord": "Graveyard Record",
-      "archivedRun": "Archived Run",
-      "outcome": "Outcome",
-      "runStarted": "Run started",
-      "runEnded": "Run ended",
-      "duration": "Duration",
-      "mode": "Mode",
-      "timezone": "Timezone",
-      "causeOfDeath": "Cause of death",
-      "ending": "Ending",
-      "causalChain": "Causal chain",
-      "journey": "Journey"
+      "graveyardRecord": ["Graveyard Record"],
+      "archivedRun": ["Archived Run"],
+      "outcome": ["Outcome"],
+      "runStarted": ["Run started"],
+      "runEnded": ["Run ended"],
+      "duration": ["Duration"],
+      "mode": ["Mode"],
+      "timezone": ["Timezone"],
+      "causeOfDeath": ["Cause of death"],
+      "ending": ["Ending"],
+      "causalChain": ["How it all went down"],
+      "journey": ["The Journey"]
     },
     "presentation": {
       "death": {
-        "title": "Death",
-        "explanation": "Health reached 0."
+        "title": ["Gone Offline (Forever)"],
+        "explanation": [
+          "Her body finally cashed every check the diet wrote.",
+          "The immortality rumors have been formally disproven.",
+          "She ran out of health, luck, and Dr Pepper — in that order."
+        ]
       },
       "quitStreaming": {
-        "title": "Quit Streaming",
-        "explanation": "Mood remained at 0 continuously for {durationHours} game-hours.",
-        "evidence": "The countdown began {durationHours} hours before the ending.",
-        "riskLabel": "Quit Streaming risk"
+        "title": ["Quit Streaming"],
+        "explanation": [
+          "After {durationHours} hours with nothing left to give, {pet} closed OBS for the last time.",
+          "{durationHours} hours in the void. The void won. She uninstalled."
+        ],
+        "evidence": [
+          "The silence started {durationHours} hours before the end. Everyone assumed it was a break.",
+          "For the last {durationHours} hours, the loudest thing in the room was Socks."
+        ],
+        "riskLabel": ["Quit-Streaming Watch"]
       },
       "financialRuin": {
-        "title": "Financial Ruin",
-        "explanation": "Balance crossed −${threshold}.",
-        "causeEvidence": "Cause: {cause}.",
-        "balanceEvidence": "Ending cash balance: ${balance}."
+        "title": ["Financial Ruin"],
+        "explanation": [
+          "The balance blew past −${threshold} and kept digging.",
+          "−${threshold}. The bank called. Then the bank stopped calling."
+        ],
+        "causeEvidence": [
+          "Official cause: {cause}.",
+          "The wallet's autopsy report says: {cause}."
+        ],
+        "balanceEvidence": [
+          "Final damage: ${balance}.",
+          "The account closed at ${balance}. Ouch."
+        ]
       }
     },
     "deathCauses": {
-      "sickness": "Sickness",
-      "kidneyStoneComplications": "Kidney stone complications",
-      "unknown": "Unknown cause"
+      "sickness": ["The Sickness (it was real this time)"],
+      "kidneyStoneComplications": ["The Pebble (it won)"],
+      "unknown": ["Mysterious circumstances (she'd have wanted it this way)"]
     }
   }
 }

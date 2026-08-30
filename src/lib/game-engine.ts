@@ -21,6 +21,7 @@ import { payMedicalDebtInFull } from './commands/medical-debt-commands';
 import { reconcileRunEnding } from './ending-rules';
 import { runOverMessage } from './ending-rules/messages';
 import { resolveBatchFeeding } from './commands/batch-feeding';
+import { stateTextContext } from './seeded-text';
 
 export const startRun = createRunState;
 export { reconcileTime };
@@ -33,7 +34,12 @@ export function dispatchCommand(
   if (state.ending)
     return {
       state,
-      outcomes: [rejected('run_over', runOverMessage())],
+      outcomes: [
+        rejected(
+          'run_over',
+          runOverMessage(stateTextContext(state, command.commandId)),
+        ),
+      ],
     };
   const prior = state.processedCommands[command.commandId];
   if (prior) return { state, outcomes: [prior.outcome] };
@@ -42,7 +48,12 @@ export function dispatchCommand(
   if (timed.ending)
     return {
       state: timed,
-      outcomes: [rejected('run_over', runOverMessage())],
+      outcomes: [
+        rejected(
+          'run_over',
+          runOverMessage(stateTextContext(timed, command.commandId)),
+        ),
+      ],
     };
   const companionAttempt = isCompanionAttempt(command.type);
   if (

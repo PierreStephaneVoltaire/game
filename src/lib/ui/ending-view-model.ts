@@ -3,9 +3,12 @@ import { HOUR_MS } from '$lib/game-constants';
 import rules from '$lib/data/simulation-rules.json';
 import financialRules from '$lib/data/financial-rules.json';
 import {
-  endingPresentationTexts,
-  formatEndingMessage,
+  deathPresentationCopy,
+  endingRiskLabel,
+  financialRuinPresentationCopy,
+  quitStreamingPresentationCopy,
 } from '$lib/ending-rules/messages';
+import { stateTextContext } from '$lib/seeded-text';
 
 export type EndingViewModel = {
   kind: RunEndingKind;
@@ -26,53 +29,48 @@ export type EndingRiskViewModel = {
 export function endingPresentation(state: GameState): EndingViewModel | null {
   const ending = state.ending;
   if (!ending) return null;
-  if (ending.kind === 'death')
+  const textContext = stateTextContext(
+    state,
+    `ending-presentation:${ending.kind}:${ending.at}`,
+  );
+  if (ending.kind === 'death') {
+    const copy = deathPresentationCopy(textContext);
     return {
       kind: ending.kind,
       at: ending.at,
-      title: endingPresentationTexts.death.title,
-      explanation: endingPresentationTexts.death.explanation,
+      title: copy.title,
+      explanation: copy.explanation,
       evidence: [],
       causes: ending.causes?.map((cause) => ({ name: cause.name })) ?? [
         { name: ending.cause },
       ],
     };
-  if (ending.kind === 'quit_streaming')
+  }
+  if (ending.kind === 'quit_streaming') {
+    const copy = quitStreamingPresentationCopy(
+      textContext,
+      ending.durationHours,
+    );
     return {
       kind: ending.kind,
       at: ending.at,
-      title: endingPresentationTexts.quitStreaming.title,
-      explanation: formatEndingMessage(
-        endingPresentationTexts.quitStreaming.explanation,
-        { durationHours: ending.durationHours },
-      ),
-      evidence: [
-        formatEndingMessage(endingPresentationTexts.quitStreaming.evidence, {
-          durationHours: ending.durationHours,
-        }),
-      ],
+      title: copy.title,
+      explanation: copy.explanation,
+      evidence: [copy.evidence],
       causes: [],
     };
+  }
+  const financialCopy = financialRuinPresentationCopy(textContext, {
+    threshold: financialRules.debt.financialRuinBalance.toLocaleString('en-US'),
+    cause: ending.cause,
+    balance: ending.endingBalance.toLocaleString('en-US'),
+  });
   return {
     kind: ending.kind,
     at: ending.at,
-    title: endingPresentationTexts.financialRuin.title,
-    explanation: formatEndingMessage(
-      endingPresentationTexts.financialRuin.explanation,
-      {
-        threshold:
-          financialRules.debt.financialRuinBalance.toLocaleString('en-US'),
-      },
-    ),
-    evidence: [
-      formatEndingMessage(endingPresentationTexts.financialRuin.causeEvidence, {
-        cause: ending.cause,
-      }),
-      formatEndingMessage(
-        endingPresentationTexts.financialRuin.balanceEvidence,
-        { balance: ending.endingBalance.toLocaleString('en-US') },
-      ),
-    ],
+    title: financialCopy.title,
+    explanation: financialCopy.explanation,
+    evidence: [financialCopy.cause, financialCopy.balance],
     causes: [],
   };
 }
@@ -86,7 +84,13 @@ export function endingRiskPresentation(
     result,
     state,
     'quit_streaming',
-    endingPresentationTexts.quitStreaming.riskLabel,
+    endingRiskLabel(
+      'quit_streaming',
+      stateTextContext(
+        state,
+        `ending-risk-label:${state.endingRisks.quit_streaming.triggerStartedAt}`,
+      ),
+    ),
   );
   return result;
 }

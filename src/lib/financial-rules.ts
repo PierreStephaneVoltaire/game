@@ -3,6 +3,7 @@ import type { DebtBreakdown, FinancialEffect } from './financial-types';
 import type { GameEvent, GameState } from './game-types';
 import { alignFinancialStatus } from './status-rules';
 import { financialRuinCause, runEndingMessage } from './ending-rules/messages';
+import { stateTextContext } from './seeded-text';
 
 export function debtBreakdown(state: GameState): DebtBreakdown {
   const negativeCash = Math.max(0, -state.balance);
@@ -94,14 +95,22 @@ export function finalizeFinancialOperation(input: {
       )
       .map((event) => event.id),
   ];
+  const sourceActionId = next.events.find(
+    (candidate) => candidate.id === input.triggerEventId,
+  )?.sourceActionId;
+  const textContext = stateTextContext(
+    input.before,
+    sourceActionId ?? input.triggerEventId,
+  );
+  const cause = financialRuinCause(textContext);
   const event: GameEvent = {
     id: `event-${next.events.length + 1}`,
     type: 'run_ended',
     at: next.now,
-    message: runEndingMessage('financial_ruin'),
+    message: runEndingMessage('financial_ruin', textContext),
     causedBy,
     endingKind: 'financial_ruin',
-    cause: financialRuinCause(),
+    cause,
     financialEffect: effect,
   };
   return {
@@ -109,7 +118,7 @@ export function finalizeFinancialOperation(input: {
     ending: {
       kind: 'financial_ruin',
       at: next.now,
-      cause: financialRuinCause(),
+      cause,
       endingBalance: next.balance,
       triggerEventId: input.triggerEventId,
       eventIds: [...causedBy, event.id],

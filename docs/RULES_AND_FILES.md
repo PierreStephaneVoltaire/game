@@ -11,7 +11,7 @@ gameplay rules.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, strong-outcome chance, and authored Play/Socialize
   vignette pools.
-- `src/lib/data/shop-items.json` — the 228 canonical item definitions:
+- `src/lib/data/shop-items.json` — the 232 compiled canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and generated PNG paths.
 - `src/lib/data/catalogue/food-items.jsonl`,
@@ -19,20 +19,26 @@ gameplay rules.
   individually authored catalogue inputs. Nutrition facts stay separate from
   gameplay values so the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  228-item allowlist. The compiler and validator reject missing, unexpected,
+  232-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
+- `src/lib/data/merge-item.json` — shallow description/narration overrides
+  for existing catalogue IDs plus four fully authored additions. The catalogue
+  compiler applies this patch after loading the maintained JSONL sources;
+  `cloneNutritionFrom` reuses an explicitly named nutrition record without
+  deriving gameplay scores.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   generic avatar path. Runtime code does not hardcode a companion name; the
   name-isolation validator keeps that display-only value out of structural
   identifiers, paths, assets, and infrastructure examples.
 - `src/lib/data/financial-rules.json`, `ending-rules.json`, and
   `life-events.json` — versioned Balance/LOC terms, Ending thresholds and
-  authored Ending/History/export copy, plus life-event eligibility,
+  authored Ending/History/export copy pools, plus life-event eligibility,
   catalogue-purchase behavior, and seeded VTuber-life event outcomes and
   effects. Life-event definitions reference prose in
   `src/lib/data/event-texts.json`, which also owns built-in autonomous-event,
   status-transition, activity-completion, purchase, gift, and audience-growth
-  text.
+  text pools. Copy-pool selection is seeded and stable for its originating
+  action or presentation event.
 - `src/lib/companion-profile.ts` — typed, environment-neutral access to the
   configured identity and tier-ordered appearance IDs.
 - `scripts/generate-canonical-catalogue.mjs` — deterministic compiler from
@@ -56,12 +62,14 @@ gameplay rules.
   seam used by the pure engine and tests.
 - `src/lib/game-constants.ts` — structural time units, stat bounds, and
   simulation limits shared by runtime modules.
+- `src/lib/seeded-text.ts` — shared seeded selection and interpolation for
+  JSON-authored event, Ending, History, and archive text pools.
 - `src/lib/game-engine.ts` — pure `startRun`, `dispatchCommand`, and
   `reconcileTime` public seam.
 - `src/lib/ending-rules.ts` — pure terminal reconciliation for Death and the
   persistent Quit Streaming Mood-risk clock. Financial Ruin is finalized by
   the financial operation seam; Made It is a non-terminal audience unlock.
-- `src/lib/ending-rules/messages.ts` — typed template selection and
+- `src/lib/ending-rules/messages.ts` — typed seeded template selection and
   interpolation for Ending copy loaded from `ending-rules.json`; Ending prose
   is not authored in TypeScript.
 - `src/lib/commands/activity-commands.ts` — start, wait, and timed-activity
@@ -117,6 +125,8 @@ gameplay rules.
   collection and causal event-chain construction for the Death Ending.
 - `src/lib/simulation/activity-completion.ts` — completion of Rest,
   Socialize, Play, Hospital, Commission Work, and stream activities.
+- `src/lib/simulation/activity-completion-message.ts` — seeded selection of
+  JSON-authored completion text, including interrupted-activity wording.
 - `src/lib/simulation/activity-financial-settlement.ts` — Commission payout
   narration and atomic post-activity debt/Ending reconciliation.
 - `src/lib/simulation/medical-care-completion.ts` — Hospital exposure clearing

@@ -1,5 +1,6 @@
 import type { GameEvent } from '$lib/game-types';
 import { eventTemplate } from '$lib/event-messages';
+import type { SeededTextContext } from '$lib/seeded-text';
 
 export const PROGRESSION_EVENT_TYPES = new Set([
   'donation_received',
@@ -20,12 +21,17 @@ export const PROGRESSION_EVENT_TYPES = new Set([
 export function progressionJourneyMessage(
   event: GameEvent,
   petName: string,
+  textContext?: SeededTextContext,
 ): string | undefined {
   if (event.type === 'donation_received')
     return donationMessage(event, petName);
   if (event.type === 'followers_gained') return followerMessage(event, petName);
   if (event.type === 'natural_audience_growth')
-    return subscriberGrowthMessage(petName, event.followerDelta ?? 0);
+    return subscriberGrowthMessage(
+      petName,
+      event.followerDelta ?? 0,
+      textContext,
+    );
   if (event.type === 'clipper_audience_growth')
     return `Clippers brought ${(event.followerDelta ?? 0).toLocaleString('en-US')} new subscribers to ${petName}'s channel.`;
   if (event.type === 'career_milestone')
@@ -50,20 +56,29 @@ export function progressionJourneyMessage(
   if (event.type === 'model_debut_stream')
     return `${petName} went live to debut the new model.`;
   if (event.type === 'moms_care_package')
-    return eventTemplate('journey_care_package', {
-      message: event.message,
-      pet: petName,
-    });
+    return eventTemplate(
+      'journey_care_package',
+      {
+        message: event.message,
+        pet: petName,
+      },
+      textContext,
+    );
   return undefined;
 }
 
-function subscriberGrowthMessage(petName: string, count: number): string {
+function subscriberGrowthMessage(
+  petName: string,
+  count: number,
+  textContext?: SeededTextContext,
+): string {
   const formatted = count.toLocaleString('en-US');
   return eventTemplate(
     count === 1
       ? 'journey_subscriber_growth_one'
       : 'journey_subscriber_growth_many',
     { pet: petName, count: formatted },
+    textContext,
   );
 }
 

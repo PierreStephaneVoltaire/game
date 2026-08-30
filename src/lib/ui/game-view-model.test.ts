@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from '$lib/game-definition';
 import { HOUR_MS } from '$lib/game-constants';
+import endingRules from '$lib/data/ending-rules.json';
 import { startRun } from '$lib/game-engine';
 import type { GameState } from '$lib/game-types';
 import { companion } from './companion';
@@ -203,71 +204,73 @@ describe('game view model', () => {
     );
 
     expect(model.statuses).toEqual([]);
-    expect(model.endingRisks).toEqual([
-      {
-        kind: 'quit_streaming',
-        label: 'Quit Streaming risk',
-        remaining: 48,
-        unit: 'hours',
-      },
-    ]);
+    expect(model.endingRisks).toHaveLength(1);
+    expect(model.endingRisks[0]).toMatchObject({
+      kind: 'quit_streaming',
+      remaining: 48,
+      unit: 'hours',
+    });
+    expect(endingRules.texts.presentation.quitStreaming.riskLabel).toContain(
+      model.endingRisks[0].label,
+    );
   });
 
-  it.each([
-    ['death', 'Death', 'Health reached 0.'],
-    [
-      'quit_streaming',
-      'Quit Streaming',
-      'Mood remained at 0 continuously for 72 game-hours.',
-    ],
-    ['financial_ruin', 'Financial Ruin', 'Balance crossed −$20,000.'],
-  ] as const)('presents the %s ending card', (kind, title, explanation) => {
-    const initial = startedState();
-    const common = {
-      at: startedAt + HOUR_MS,
-      triggerStartedAt: startedAt,
-      eventIds: [],
-    };
-    const ending: GameState['ending'] =
-      kind === 'death'
-        ? {
-            kind,
-            at: common.at,
-            cause: 'Starvation',
-            causes: [
-              {
-                kind: 'status',
-                id: 'starving',
-                name: 'Starvation',
-                eventIds: [],
-              },
-            ],
-            eventIds: [],
-          }
-        : kind === 'financial_ruin'
+  it.each(['death', 'quit_streaming', 'financial_ruin'] as const)(
+    'presents the %s ending card',
+    (kind) => {
+      const initial = startedState();
+      const common = {
+        at: startedAt + HOUR_MS,
+        triggerStartedAt: startedAt,
+        eventIds: [],
+      };
+      const ending: GameState['ending'] =
+        kind === 'death'
           ? {
-              ...common,
               kind,
-              cause: 'Insolvency',
-              endingBalance: -20_001,
-              triggerEventId: 'trigger',
+              at: common.at,
+              cause: 'Starvation',
+              causes: [
+                {
+                  kind: 'status',
+                  id: 'starving',
+                  name: 'Starvation',
+                  eventIds: [],
+                },
+              ],
+              eventIds: [],
             }
-          : {
-              ...common,
-              kind,
-              durationHours: 72,
-              endingMetricValue: 0,
-            };
-    const model = createGameViewModel(
-      { ...initial, ending },
-      BUNDLED_GAME_DEFINITION,
-    );
-    expect(model.ending).toMatchObject({ kind, title, explanation });
-    expect(model.endingRisks).toEqual([]);
-    expect(model.commandsDisabled).toBe(true);
-    if (kind === 'death')
-      expect(model.ending?.causes).toEqual([{ name: 'Starvation' }]);
-  });
+          : kind === 'financial_ruin'
+            ? {
+                ...common,
+                kind,
+                cause: 'Insolvency',
+                endingBalance: -20_001,
+                triggerEventId: 'trigger',
+              }
+            : {
+                ...common,
+                kind,
+                durationHours: 72,
+                endingMetricValue: 0,
+              };
+      const model = createGameViewModel(
+        { ...initial, ending },
+        BUNDLED_GAME_DEFINITION,
+      );
+      expect(model.ending).toMatchObject({
+        kind,
+        title: expect.any(String),
+        explanation: expect.any(String),
+      });
+      expect(model.ending?.title).not.toContain('{');
+      expect(model.ending?.explanation).not.toContain('{');
+      expect(model.endingRisks).toEqual([]);
+      expect(model.commandsDisabled).toBe(true);
+      if (kind === 'death')
+        expect(model.ending?.causes).toEqual([{ name: 'Starvation' }]);
+    },
+  );
 
   it('keeps commands enabled for an active run', () => {
     expect(

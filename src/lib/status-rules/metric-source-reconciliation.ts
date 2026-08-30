@@ -1,6 +1,7 @@
 import type { GameEvent, GameState, StatusName } from '../game-types';
 import { alignGameStatuses, applyStatusOnsetEffects } from '../status-rules';
 import { resolveStatusFixedPoint } from './fixed-point';
+import { stateTextContext } from '../seeded-text';
 
 const METRIC_STATUSES = new Set<StatusName>([
   'starving',
@@ -44,6 +45,7 @@ export function reconcileMetricSource(
     now: state.now,
     align: alignGameStatuses,
     applyOnset: applyStatusOnsetEffects,
+    textContext: stateTextContext(before, sourceActionId),
   });
   const events: GameEvent[] = normalized.events.map((effect, index) => ({
     id: `event-${state.events.length + index + 1}`,

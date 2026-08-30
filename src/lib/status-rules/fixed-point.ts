@@ -2,6 +2,7 @@ import type { Metrics, StatusName, StatusRecord } from '../game-types';
 import type { StatusEffectEvent } from '../status-rules';
 import { STATUS_FIXED_POINT_PASS_LIMIT } from '../game-constants';
 import { statusTransitionMessage } from '../event-messages';
+import type { SeededTextContext } from '../seeded-text';
 
 type Statuses = Partial<Record<StatusName, StatusRecord>>;
 type Align = (metrics: Metrics, previous: Statuses, now: number) => Statuses;
@@ -17,6 +18,7 @@ export function resolveStatusFixedPoint(input: {
   now: number;
   align: Align;
   applyOnset: ApplyOnset;
+  textContext?: SeededTextContext;
 }): { metrics: Metrics; statuses: Statuses; events: StatusEffectEvent[] } {
   let metrics = input.metrics;
   let statuses = input.align(metrics, input.previous, input.now);
@@ -34,7 +36,7 @@ export function resolveStatusFixedPoint(input: {
         events.push({
           status,
           metricDeltas: {},
-          message: statusTransitionMessage(status, true),
+          message: statusTransitionMessage(status, true, input.textContext),
         });
     }
     const aligned = input.align(metrics, onsetBaseline, input.now);

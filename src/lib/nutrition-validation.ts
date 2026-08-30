@@ -24,10 +24,10 @@ const GENERIC_SOURCE_URLS = new Set([
 const QUALIFIERS = new Set(['less_than', 'approximately']);
 const COMPLETE_SOURCE_TYPE_COUNTS = {
   manufacturer_label: 7,
-  usda_foundation: 37,
-  usda_fndds: 66,
+  usda_foundation: 38,
+  usda_fndds: 68,
   fictional_seeded_profile: 1,
-  not_applicable: 117,
+  not_applicable: 118,
 } as const;
 
 function validateScores(

@@ -1,6 +1,7 @@
 import type { GameEvent, GameState } from '../game-types';
 import { statusTransitionMessage } from '../event-messages';
 import { STATUS_NAMES } from '../status-rules';
+import { stateTextContext } from '../seeded-text';
 
 export function appendStatusTransitionEvents(
   state: GameState,
@@ -26,7 +27,11 @@ export function appendStatusTransitionEvents(
       id: `event-${state.events.length + changes.length + 1}`,
       type: isActive ? 'status_added' : 'status_cleared',
       at: state.now,
-      message: statusTransitionMessage(status, isActive),
+      message: statusTransitionMessage(
+        status,
+        isActive,
+        stateTextContext(state, sourceActionId),
+      ),
       sourceActionId,
       status,
       cause: isActive ? state.statuses[status]?.source : 'explicit_action',

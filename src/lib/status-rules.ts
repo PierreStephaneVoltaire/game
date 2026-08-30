@@ -18,6 +18,7 @@ import {
   applyLowStatusRecurrences,
   type StatusEffectEvent,
 } from './status-rules/low-status-recurrences';
+import { stateTextContext } from './seeded-text';
 export { applyStatusOnsetEffects };
 export {
   applyLowStatusRecurrences,
@@ -163,6 +164,7 @@ export function reconcileStatusRules(input: {
   now: number;
 }): StatusReconciliation {
   const { state, now } = input;
+  const textContext = stateTextContext(state, `status-boundary:${now}`);
   let metrics = input.metrics;
   let statuses = alignGameStatuses(metrics, state.statuses, now);
   const natural = resolveNaturalStatusPassage(
@@ -195,6 +197,7 @@ export function reconcileStatusRules(input: {
     now,
     align: alignGameStatuses,
     applyOnset: applyStatusOnsetEffects,
+    textContext,
   });
   statuses = onset.statuses;
   const recurrence = applyLowStatusRecurrences(
@@ -236,6 +239,7 @@ export function reconcileStatusRules(input: {
     now,
     align: alignGameStatuses,
     applyOnset: applyStatusOnsetEffects,
+    textContext,
   });
   nextMetrics = finalOnset.metrics;
   statuses = finalOnset.statuses;
@@ -250,7 +254,7 @@ export function reconcileStatusRules(input: {
   ).map((status) => ({
     status,
     metricDeltas: {},
-    message: statusTransitionMessage(status, false),
+    message: statusTransitionMessage(status, false, textContext),
     at: now,
   }));
   clearEffects.push(...natural.effects);

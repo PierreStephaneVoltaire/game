@@ -1,5 +1,5 @@
 import type { GameViewModel } from './game-view-model';
-import { endingArchiveTexts } from '$lib/ending-rules/messages';
+import { endingArchiveCopy } from '$lib/ending-rules/messages';
 
 function formatTimestamp(at: number, timezone: string): string {
   return new Intl.DateTimeFormat('en-US', {
@@ -24,6 +24,12 @@ function formatDuration(start: number, end: number): string {
 export function runArchiveExportMarkdown(model: GameViewModel): string {
   if (!model.ending) throw new Error('An active run has no archive to export.');
   const ending = model.ending;
+  const endingArchiveTexts = endingArchiveCopy({
+    seed: model.seed,
+    stateVersion: model.stateVersion ?? 0,
+    actionId: `ending-archive:${ending.kind}:${ending.at}`,
+    petName: model.companion.name,
+  });
   const timestamp = (at: number) => formatTimestamp(at, model.timezone);
   const death = ending.kind === 'death';
   const lines = [

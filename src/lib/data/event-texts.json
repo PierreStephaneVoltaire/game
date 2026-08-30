@@ -1,68 +1,227 @@
 {
-  "version": 1,
+  "version": 2,
   "builtInEvents": {
-    "low_money_stress": "Companion is stressed about money.",
-    "food_craving": "Companion developed a food craving.",
-    "creative_inspiration": "Companion had a creative inspiration.",
-    "socks": "Socks wants attention.",
-    "benign_room_event": "Something benign happened in the room.",
-    "self_entertainment": "Companion found something dumb online and laughed harder than expected.",
-    "stood_up_too_fast": "Companion stood up too fast and had to reconsider the whole idea.",
-    "tiny_walk": "Companion actually went for a tiny walk. Historic event.",
-    "barely_moved_today": "Companion realized she has barely moved today and feels gross about it.",
-    "moms_care_package": "Mom sent a Care Package gift.",
-    "rest_snoring": "The companion snored through the rest of the room."
+    "low_money_stress": [
+      "{pet} opened her bank app, made a noise, and closed it immediately.",
+      "{pet} is doing budget math out loud. The math is losing.",
+      "{pet} briefly considered selling one of the swords. Briefly."
+    ],
+    "food_craving": [
+      "{pet} has been describing a snack in vivid detail for ten minutes.",
+      "{pet} is thinking about food so loudly the neighbors can hear it.",
+      "A craving has entered the chat. It is not leaving."
+    ],
+    "creative_inspiration": [
+      "{pet} gasped, yelled 'WAIT—', and started scribbling.",
+      "A new idea just possessed {pet}. Pray for the schedule.",
+      "{pet} is pacing laps around the room. The idea must be huge."
+    ],
+    "socks": [
+      "Socks has declared it attention o'clock. All work has ceased.",
+      "Socks yelled until the problem (insufficient pets) was resolved.",
+      "Socks is sitting on the tablet. The tablet is in use. Socks does not care."
+    ],
+    "benign_room_event": [
+      "Something fell over in the other room. Investigation: it was nothing. Probably.",
+      "A noise happened. {pet} and Socks stared at the same empty corner.",
+      "The room did a thing. No witnesses. No evidence."
+    ],
+    "self_entertainment": [
+      "{pet} found something dumb online and laughed way harder than it deserved.",
+      "{pet} has been giggling at the same meme for twenty minutes.",
+      "{pet} sent the same cursed video to every group chat she has."
+    ],
+    "stood_up_too_fast": [
+      "{pet} stood up too fast and had to reboot.",
+      "{pet} stood up, saw static, and sat back down to reconsider the whole idea.",
+      "Gravity check failed. {pet} is re-evaluating verticality as a concept."
+    ],
+    "tiny_walk": [
+      "{pet} went on a tiny walk. Grass: touched. Witnesses: stunned.",
+      "Historic event: {pet} voluntarily went outside.",
+      "A tiny walk occurred. Future lore scholars will study this day."
+    ],
+    "barely_moved_today": [
+      "{pet} realized today's step count is a rounding error, and she feels gross about it.",
+      "Today's total movement: chair to fridge. {pet} is not proud.",
+      "{pet}'s watch just asked if she's still alive. Rude, but fair."
+    ],
+    "moms_care_package": [
+      "A care package from Mom arrived. She's already bragging to the neighbors about sending it.",
+      "Mom sent supplies. Mom always knows.",
+      "A care package from Mom. It smells like home and mild concern."
+    ],
+    "rest_snoring": [
+      "{pet} is snoring loud enough to trip the noise gate.",
+      "The snoring can be heard from the thumbnail.",
+      "{pet} is asleep and still, somehow, the loudest thing in the building."
+    ]
   },
   "eventTemplates": {
-    "food_craving_item": "Companion is craving {item}.",
-    "equipment_failure": "Companion's {item} failed and cost ${amount} to replace.",
-    "item_hook_fallback": "Companion used an owned item.",
-    "journey_care_package": "{message} It lifted {pet}'s spirits.",
-    "journey_companion_purchase": "{pet} bought {item}.",
-    "journey_player_purchase": "You bought {item} for {pet}.",
-    "journey_subscriber_growth_many": "{pet}'s channel gained {count} subscribers.",
-    "journey_subscriber_growth_one": "{pet}'s channel gained a subscriber.",
-    "moms_care_package_with_items": "Mom sent a Care Package gift with {items}.",
-    "personal_purchase": "Companion bought {item}.",
-    "random_event_opportunity": "A random event opportunity occurred.",
-    "sponsored_stream_deal": "A sponsored-stream deal paid ${amount}.",
-    "status_activated": "{status} became active.",
-    "status_cleared": "{status} cleared.",
-    "tax_bill": "A tax bill arrived for ${amount}.",
-    "stood_up_too_fast_damage_cause": "Stumble after standing too fast",
-    "stood_up_too_fast_stumble": "Companion stood up too fast, got lightheaded, and stumbled."
+    "food_craving_item": [
+      "{pet} is craving {item} and will not shut up about it.",
+      "{pet} needs {item}. This is now everyone's problem.",
+      "It's {item} o'clock, according to {pet}'s entire personality."
+    ],
+    "equipment_failure": [
+      "{pet}'s {item} died mid-task. Replacement: ${amount}. There goes the rigging money.",
+      "The {item} gave up on life. ${amount} later, the show goes on.",
+      "{pet}'s {item} exploded (emotionally). ${amount} to make it stop."
+    ],
+    "item_hook_fallback": [
+      "{pet} interacted with her possessions. Riveting content.",
+      "{pet} used a thing she owns. Groundbreaking."
+    ],
+    "journey_care_package": [
+      "{message} {pet}'s whole day turned around.",
+      "{message} {pet} made a small happy noise about it."
+    ],
+    "journey_companion_purchase": [
+      "{pet} bought {item}. Impulse control was not consulted.",
+      "{pet} bought {item} and called it a business expense.",
+      "{pet} acquired {item}. No regrets. Yet."
+    ],
+    "journey_player_purchase": [
+      "You bought {item} for {pet}. She's already scheming with it.",
+      "{item} delivered. {pet} said thanks — it sounded like a threat, but it was sincere.",
+      "You got {pet} {item}. Chat's money, hard at work."
+    ],
+    "journey_subscriber_growth_many": [
+      "{count} new recruits joined the Bunny Brigade.",
+      "The channel grew by {count}. The algorithm is finally awake.",
+      "{count} new subscribers. {pet} is being normal about it. (She is not.)"
+    ],
+    "journey_subscriber_growth_one": [
+      "One brave new subscriber joined. They'll learn.",
+      "+1 subscriber. {pet} noticed instantly. She always notices.",
+      "A single new subscriber appeared. Welcome to the noise."
+    ],
+    "moms_care_package_with_items": [
+      "Mom sent a care package with {items}. She's bragging to the neighbors as we speak.",
+      "A care package from Mom: {items}, plus a note that just says 'DRINK WATER.'",
+      "Mom shipped {items}. Mom Prime never misses a delivery."
+    ],
+    "personal_purchase": [
+      "{pet} bought {item}. It was 'on sale.' It was not on sale.",
+      "{pet} treated herself to {item}. Financial responsibility can wait.",
+      "{pet} bought {item} at 3 AM. 3 AM decisions are canon now."
+    ],
+    "random_event_opportunity": [
+      "Something is about to happen. Could be great. Could be a Birmingham, Alabama situation.",
+      "The dice are rolling. {pet} remains blissfully unaware.",
+      "An opportunity approaches. Everyone act natural."
+    ],
+    "sponsored_stream_deal": [
+      "A sponsor paid ${amount}. She read the brief. Twice, even.",
+      "Sponsored stream: ${amount}. Suspiciously legitimate income.",
+      "${amount} of sponsor money just landed. The NDA jokes write themselves."
+    ],
+    "status_activated": [
+      "{status} just kicked in.",
+      "New condition: {status}. Adjust accordingly.",
+      "{status} has entered the room."
+    ],
+    "status_cleared": [
+      "{status} wore off. We move.",
+      "{status} is gone. Nature is healing.",
+      "No more {status}. Back to the regularly scheduled chaos."
+    ],
+    "tax_bill": [
+      "A tax bill for ${amount} arrived. Turns out streaming money is 'real income.'",
+      "Taxes: ${amount}. The government does not accept channel points.",
+      "${amount} in taxes. The corpo era did not prepare her for this."
+    ],
+    "stood_up_too_fast_damage_cause": ["Lost a 1v1 against gravity"],
+    "stood_up_too_fast_stumble": [
+      "{pet} stood up too fast, saw the void, and the void tripped her.",
+      "{pet} went vertical too quickly and paid the toll.",
+      "{pet} speedran standing up and crashed on launch."
+    ]
   },
   "lifeEvents": {
-    "agency_invitation": "An agency debut added 100,000 Subscribers and brought more viewers for seven days.",
-    "algorithm_boost": "The algorithm picked up the channel, bringing more viewers for one day.",
-    "rain": "A day of rain lowered Mood.",
-    "twitter_cancellation_major": "A Twitter cancellation cost 3% of current Subscribers.",
-    "twitter_cancellation_minor": "A Twitter cancellation cost 1% of current Subscribers.",
-    "twitter_cancellation_moderate": "A Twitter cancellation cost 2% of current Subscribers."
+    "agency_invitation": [
+      "The corpo arc begins: an agency debut brought {count} new subscribers and a wave of fresh viewers.",
+      "An agency came knocking. {count} subscribers followed them in. NDA jokes are now scheduled content.",
+      "Agency debut! {count} new subscribers, one contract, and a folder of things she legally cannot say."
+    ],
+    "algorithm_boost": [
+      "The algorithm woke up and chose {pet} today.",
+      "The clips are traveling. Do not question the algorithm.",
+      "The recommendation gods smiled. New faces everywhere."
+    ],
+    "rain": [
+      "It rained all day. Mood: soggy.",
+      "Gray sky, gray mood. Even Socks looks damp about it.",
+      "Rain again. The window perch hosts one (1) melancholy cat."
+    ],
+    "twitter_cancellation_minor": [
+      "Twitter got mad about something small. {percent}% of subs rage-quit to tell everyone about it.",
+      "A mild Twitter incident cost {percent}% of the subscribers. They'll be back.",
+      "Cancelled (lightly). {percent}% of subs left, dramatically."
+    ],
+    "twitter_cancellation_moderate": [
+      "Twitter dug up an old take. {percent}% of subscribers dipped.",
+      "A discourse happened. {percent}% of subs did not survive the quote tweets.",
+      "Semi-cancelled. {percent}% of subs gone, three apology drafts written, zero posted."
+    ],
+    "twitter_cancellation_major": [
+      "Main-character-on-Twitter day. {percent}% of subscribers evaporated.",
+      "Full cancellation. {percent}% of subs gone and the group chats are ON FIRE.",
+      "Trending for the wrong reasons. {percent}% of subs bailed before the clarification thread."
+    ]
   },
   "statusNames": {
-    "starving": "Starving",
-    "hungry": "Hungry",
-    "sleep_deprived": "Sleep Deprived",
-    "depressed": "Depressed",
-    "lonely": "Lonely",
-    "creative_block": "Creative Block",
-    "annoyed": "Annoyed",
-    "sick": "Sick",
-    "overstimulated": "Overstimulated",
-    "kidney_stone": "Kidney Stone",
-    "full": "Full",
-    "low_energy": "Low Energy",
-    "sugar_crash": "Sugar Crash",
-    "dizzy_spell": "Dizzy Spell",
-    "in_debt": "In Debt"
+    "starving": "Running on Fumes",
+    "hungry": "Snackless",
+    "sleep_deprived": "Awake Out of Spite",
+    "depressed": "In the Trenches",
+    "lonely": "Missing the Homies",
+    "creative_block": "Art Block",
+    "annoyed": "Do Not Perceive",
+    "sick": "Actually Sick",
+    "overstimulated": "Too Much Everything",
+    "kidney_stone": "The Pebble",
+    "full": "Critically Stuffed",
+    "low_energy": "Low Battery",
+    "sugar_crash": "Dr Pepper's Revenge",
+    "dizzy_spell": "The Spins",
+    "in_debt": "Financially Creative"
   },
   "activityCompletions": {
-    "rest": "Rest finished.",
-    "socialize": "Socializing finished.",
-    "play": "Play finished.",
-    "stream": "The stream finished.",
-    "commission_work": "Commission work finished.",
-    "medical_care": "The hospital visit finished."
+    "rest": [
+      "{pet} is awake. The mic survived the snoring. Barely.",
+      "Nap complete. {pet} rebooted successfully.",
+      "{pet} woke up denying the snoring rumors. The rumors are confirmed."
+    ],
+    "socialize": [
+      "Hangout complete. {pet} talked over everyone, affectionately.",
+      "{pet} survived socializing with actual humans. Achievement unlocked.",
+      "Friend time is over. {pet} already misses the noise.",
+      "{pet} wants to talk about vore.",
+      "{pet} wants to talk about her next stream idea."
+    ],
+    "play": [
+      "Game session over. {pet} swears she was 'about to win.'",
+      "GG. {pet} claims she carried. There is no footage.",
+      "{pet} finished playing. The controller survived. This time."
+    ],
+    "stream": [
+      "Stream over! She said 'okay, ONE more thing' four times before actually ending.",
+      "Raid sent, mic off. {pet} is already planning tomorrow's chaos.",
+      "The stream ended. The clip channels are already hard at work.",
+      "Stream ended! that was fun, let never do that again"
+    ],
+    "commission_work": [
+      "Rigging done. Another model can blink now. You're welcome.",
+      "Rigging done. Next we'll draw her pregnant.",
+      "Rigging done. {pet} hid all her mistakes with jiggle physics.",
+      "Commission shipped. Two thousand layers, only mild screaming.",
+      "Another rig delivered. The client cried. Good tears."
+    ],
+    "medical_care": [
+      "{pet} is back from the hospital with a story she is way too excited to tell.",
+      "Discharged. The doctors are going to need therapy after that.",
+      "Hospital arc complete. New lore acquired."
+    ]
   }
 }

@@ -25,10 +25,7 @@ import {
   type TimedEffectViewModel,
 } from './progression-view-model';
 import type { CompanionAppearance } from './companion';
-import {
-  LINE_OF_CREDIT_OFFER_ID,
-  metricMaximum,
-} from '$lib/game-constants';
+import { LINE_OF_CREDIT_OFFER_ID, metricMaximum } from '$lib/game-constants';
 import {
   endingPresentation,
   endingRiskPresentation,
@@ -80,6 +77,7 @@ export type GameViewModel = {
   formattedTime: string;
   timezone: string;
   seed: string;
+  stateVersion?: number;
   balance: number;
   medicalDebt: FinancialViewModel['medicalDebt'];
   followers: number;
@@ -169,10 +167,15 @@ export function createGameViewModel(
   const cart = Object.keys(state.shop.cart)
     .map((id) => shop.find((offer) => offer.id === id))
     .filter((offer): offer is ShopOfferViewModel => Boolean(offer));
-  const events = projectJourney(state.events, companion.name);
+  const events = projectJourney(state.events, companion.name, state.seed);
   const finances = financialPresentation(state);
   const causalEventViews = state.ending
-    ? projectCausalJourney(state.events, state.ending.eventIds, companion.name)
+    ? projectCausalJourney(
+        state.events,
+        state.ending.eventIds,
+        companion.name,
+        state.seed,
+      )
     : [];
   const cartTotal = cart.reduce(
     (sum, item) => sum + item.price * item.inCart,
@@ -192,6 +195,7 @@ export function createGameViewModel(
     formattedTime: formatTime(state.now, state.timezone, locale),
     timezone: state.timezone,
     seed: state.seed,
+    stateVersion: state.stateVersion,
     balance: state.balance,
     ...finances,
     madeItUnlocked: state.endingUnlocks.made_it !== null,

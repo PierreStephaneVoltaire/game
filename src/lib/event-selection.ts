@@ -5,6 +5,7 @@ import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
 import { streamWeight } from './stream-rules';
 import { eventTemplate } from './event-messages';
+import { stateTextContext } from './seeded-text';
 
 /** Select one seeded candidate and author its shared opportunity evidence. */
 export function selectAttemptEvent(
@@ -44,7 +45,11 @@ export function selectAttemptEvent(
       id: `event-${state.events.length + 1}`,
       type: 'random_event_opportunity',
       at: state.now,
-      message: eventTemplate('random_event_opportunity'),
+      message: eventTemplate(
+        'random_event_opportunity',
+        {},
+        stateTextContext(state, commandId),
+      ),
       sourceActionId: commandId,
       cause: selected,
     },

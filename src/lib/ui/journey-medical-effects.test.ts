@@ -1,4 +1,6 @@
 import { describe, expect, test } from 'vitest';
+import eventTexts from '$lib/data/event-texts.json';
+import { interpolateText } from '$lib/seeded-text';
 
 import type { GameEvent } from '$lib/game-types';
 import { projectCausalJourney, projectJourney } from './journey-events';
@@ -154,15 +156,26 @@ describe('Journey status and timed-effect narration', () => {
       },
     ];
 
-    expect(
-      projectJourney(events, 'Nova').map((entry) => entry.message),
-    ).toEqual([
+    const messages = projectJourney(events, 'Nova').map(
+      (entry) => entry.message,
+    );
+    expect(messages.slice(0, 3)).toEqual([
       'Nova cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.',
       'Nova took Painkillers, easing the kidney stone symptoms for a while.',
       "Nova's craving faded before it could be fulfilled.",
-      'You bought Soup ×2 for Nova.',
-      'You bought Medicine for Nova.',
-      "Nova's Hyperfocus wore off, leaving them less creative and in need of rest.",
     ]);
+    expect(
+      eventTexts.eventTemplates.journey_player_purchase.map((template) =>
+        interpolateText(template, { pet: 'Nova', item: 'Soup ×2' }),
+      ),
+    ).toContain(messages[3]);
+    expect(
+      eventTexts.eventTemplates.journey_player_purchase.map((template) =>
+        interpolateText(template, { pet: 'Nova', item: 'Medicine' }),
+      ),
+    ).toContain(messages[4]);
+    expect(messages[5]).toBe(
+      "Nova's Hyperfocus wore off, leaving them less creative and in need of rest.",
+    );
   });
 });
