@@ -268,7 +268,7 @@
       "savored every bite of Waffle."
     ],
     "category": "food",
-    "price": 4,
+    "price": 2,
     "description": "Crispy grid of buttery carbs.",
     "qualitativeNutritionHint": "Comforting breakfast carbs with room for richer toppings.",
     "edible": true,
@@ -351,7 +351,7 @@
       "savored every bite of Pancake."
     ],
     "category": "food",
-    "price": 4,
+    "price": 2,
     "description": "Soft stack of syrup-ready carbs.",
     "qualitativeNutritionHint": "Soft breakfast fuel whose toppings can quickly make it sweeter.",
     "edible": true,
@@ -520,7 +520,7 @@
       "savored every sip of Tea."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Warm mug, gentle caffeine.",
     "qualitativeNutritionHint": "A light drink with gentle caffeine and dependable hydration.",
     "edible": true,
@@ -697,7 +697,7 @@
       "savored every bite of Pasta."
     ],
     "category": "food",
-    "price": 4,
+    "price": 3,
     "description": "Certified comfort food. The bowl understands her.",
     "qualitativeNutritionHint": "Filling, low-drama energy that benefits from a balanced side.",
     "edible": true,
@@ -784,7 +784,7 @@
       "savored every bite of Butter."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Concentrated fat; fixes many problems.",
     "qualitativeNutritionHint": "Rich and concentrated; best treated as an accent, not a meal.",
     "edible": true,
@@ -868,7 +868,7 @@
       "savored every bite of BBQ chips."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Smoky crunch with a heavy salt coat.",
     "qualitativeNutritionHint": "A salty, smoky snack that calls for water afterward.",
     "edible": true,
@@ -956,7 +956,7 @@
       "savored every bite of Sour cream."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Cool, creamy, and calorie-dense.",
     "qualitativeNutritionHint": "Creamy richness with modest protein and little hydration.",
     "edible": true,
@@ -1044,7 +1044,7 @@
       "savored every bite of Lettuce."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Crisp leaves, mostly water.",
     "qualitativeNutritionHint": "A crisp, water-heavy choice that is light on staying power.",
     "edible": true,
@@ -1134,7 +1134,7 @@
       "savored every bite of Tomato."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Juicy, acidic, technically fruit.",
     "qualitativeNutritionHint": "Juicy produce with more hydration than fuel.",
     "edible": true,
@@ -1224,7 +1224,7 @@
       "savored every bite of Toast."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "A butter-ready rectangle of stability.",
     "qualitativeNutritionHint": "Simple carbohydrate fuel that depends on what goes on top.",
     "edible": true,
@@ -1307,7 +1307,7 @@
       "savored every bite of Ketchup."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Sweet tomato sauce in disguise.",
     "qualitativeNutritionHint": "A sweet-and-salty condiment rather than a filling bite.",
     "edible": true,
@@ -1391,7 +1391,7 @@
       "savored every bite of Mustard."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Sharp, tangy, and sneakily salty.",
     "qualitativeNutritionHint": "Punchy condiment flavor with more salt than substance.",
     "edible": true,
@@ -1478,7 +1478,7 @@
       "savored every bite of Broccoli."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Tiny trees packed with fiber.",
     "qualitativeNutritionHint": "A sturdy vegetable choice with fiber and a little protein.",
     "edible": true,
@@ -1566,7 +1566,7 @@
       "savored every bite of Corn."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Sweet little kernels of starch.",
     "qualitativeNutritionHint": "Sweet, starchy kernels that sit between vegetable and comfort food.",
     "edible": true,
@@ -1832,7 +1832,7 @@
       "savored every bite of Doritos."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Neon dust and aggressive seasoning.",
     "qualitativeNutritionHint": "Intense seasoning and salt make this a water-nearby snack.",
     "edible": true,
@@ -1926,7 +1926,7 @@
       "savored every bite of Cheez-Its."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Tiny cheese squares with plenty of salt.",
     "qualitativeNutritionHint": "A compact cheesy snack with noticeable salt and some protein.",
     "edible": true,
@@ -2108,7 +2108,7 @@
       "savored every bite of Garlic bread."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Buttery carbs with irresponsible garlic.",
     "qualitativeNutritionHint": "Rich comfort carbs with enough salt to notice.",
     "edible": true,
@@ -2191,7 +2191,7 @@
       "savored every bite of Rice."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Plain, filling, dependable carbs.",
     "qualitativeNutritionHint": "Plain, flexible fuel that is gentle but not especially hydrating.",
     "edible": true,
@@ -2364,7 +2364,7 @@
       "savored every bite of Tater tots."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Tiny potato cylinders with crunch.",
     "qualitativeNutritionHint": "Snackable potato bites that lean salty rather than balanced.",
     "edible": true,
@@ -2533,7 +2533,7 @@
       "savored every sip of Milkshake."
     ],
     "category": "food",
-    "price": 4,
+    "price": 2,
     "description": "Dessert, dairy, and sugar through a straw.",
     "qualitativeNutritionHint": "A sugary dairy dessert that offers a little protein.",
     "edible": true,
@@ -2618,7 +2618,7 @@
       "demolished the mini tacos with terrifying efficiency."
     ],
     "category": "food",
-    "price": 5,
+    "price": 6,
     "description": "One half of the official food pyramid. The other half is soda.",
     "qualitativeNutritionHint": "A favorite little meal with protein, starch, and a salty edge.",
     "edible": true,
@@ -2705,7 +2705,7 @@
       "savored every bite of Burrito."
     ],
     "category": "food",
-    "price": 6,
+    "price": 5,
     "description": "An entire meal under tortilla containment.",
     "qualitativeNutritionHint": "Substantial all-in-one fuel with a salty, filling profile.",
     "edible": true,
@@ -2792,7 +2792,7 @@
       "savored every bite of Fries."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Crispy potatoes carrying a lot of salt.",
     "qualitativeNutritionHint": "A salty potato side that pairs better with a drink.",
     "edible": true,
@@ -2879,7 +2879,7 @@
       "finished a serving of Sausage."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Salty, fatty, protein-packed mystery.",
     "qualitativeNutritionHint": "Dense protein and salt in a small serving.",
     "edible": true,
@@ -3045,7 +3045,7 @@
       "finished a serving of Watermelon."
     ],
     "category": "food",
-    "price": 3,
+    "price": 4,
     "description": "Sweet, crisp, mostly water.",
     "qualitativeNutritionHint": "Sweet fruit with excellent hydration and little protein.",
     "edible": true,
@@ -3127,7 +3127,7 @@
       "finished a serving of Grape."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Tiny juice packets with skin attached.",
     "qualitativeNutritionHint": "Juicy bite-sized fruit with natural sweetness.",
     "edible": true,
@@ -3212,7 +3212,7 @@
       "finished a serving of Yogurt."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Tangy protein with texture variance.",
     "qualitativeNutritionHint": "Tangy dairy with useful protein and moderate sweetness.",
     "edible": true,
@@ -3295,7 +3295,7 @@
       "finished a serving of Granola."
     ],
     "category": "food",
-    "price": 3,
+    "price": 4,
     "description": "Crunchy sugar wearing a health-food badge.",
     "qualitativeNutritionHint": "Energy-dense crunch that can be sweeter than it looks.",
     "edible": true,
@@ -3375,7 +3375,7 @@
       "finished a serving of Cheese."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Dense fat, protein, and strong opinions.",
     "qualitativeNutritionHint": "Compact protein and richness, usually with a salty side.",
     "edible": true,
@@ -3458,7 +3458,7 @@
       "finished a serving of Chicken."
     ],
     "category": "food",
-    "price": 5,
+    "price": 8,
     "description": "Famously not her thing. Protein is protein, though.",
     "qualitativeNutritionHint": "A strong protein choice with little sugar.",
     "edible": true,
@@ -3543,7 +3543,7 @@
       "found and ate the three-month-old rotisserie chicken during the stream."
     ],
     "category": "food",
-    "price": 8,
+    "price": 5,
     "description": "She doesn't even like chicken. That's what makes it content.",
     "qualitativeNutritionHint": "The joke lands harder than any nutritional benefit.",
     "edible": true,
@@ -3641,7 +3641,7 @@
       "finished a serving of Cake."
     ],
     "category": "food",
-    "price": 4,
+    "price": 6,
     "description": "Caketown's finest. The childhood dream, frosted.",
     "qualitativeNutritionHint": "Celebration food built around sweetness, not balance.",
     "edible": true,
@@ -3725,7 +3725,7 @@
       "finished a serving of Popcorn."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Light crunch until a kernel fights back.",
     "qualitativeNutritionHint": "A light snack whose salt depends heavily on the seasoning.",
     "edible": true,
@@ -3805,7 +3805,7 @@
       "finished a serving of Carrot."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Sweet root with a serious crunch.",
     "qualitativeNutritionHint": "Crunchy produce with mild sweetness and useful moisture.",
     "edible": true,
@@ -3971,7 +3971,7 @@
       "finished a serving of Raisins."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Grapes with the water removed.",
     "qualitativeNutritionHint": "Concentrated fruit sweetness after most of the water is gone.",
     "edible": true,
@@ -4133,7 +4133,7 @@
       "finished a serving of Chocolate."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Sugar, fat, instant gratification.",
     "qualitativeNutritionHint": "A rich sweet treat with very little hydration.",
     "edible": true,
@@ -4215,7 +4215,7 @@
       "finished a serving of Caramel."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Sugar, but stickier.",
     "qualitativeNutritionHint": "Sticky concentrated sugar best kept to treat territory.",
     "edible": true,
@@ -4297,7 +4297,7 @@
       "finished a serving of Peanuts."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Crunchy protein and fat in tiny form.",
     "qualitativeNutritionHint": "Small but filling, with solid protein and fat.",
     "edible": true,
@@ -4381,7 +4381,7 @@
       "finished a serving of Tuna."
     ],
     "category": "food",
-    "price": 4,
+    "price": 1,
     "description": "A suspicious amount of lean protein.",
     "qualitativeNutritionHint": "Lean, protein-heavy food that may also bring noticeable salt.",
     "edible": true,
@@ -4462,7 +4462,7 @@
       "finished a serving of Pepperoni."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Greasy little circles loaded with salt.",
     "qualitativeNutritionHint": "A compact cured snack high in both protein and salt.",
     "edible": true,
@@ -4544,7 +4544,7 @@
       "finished a serving of Pretzel."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Dry crunch with a salt coating.",
     "qualitativeNutritionHint": "Dry, salty crunch that benefits from a drink alongside it.",
     "edible": true,
@@ -4709,7 +4709,7 @@
       "managed to get through French toast."
     ],
     "category": "food",
-    "price": 4,
+    "price": 10,
     "description": "Soft bread soaked in egg and sugar.",
     "qualitativeNutritionHint": "Sweetened eggy bread with more richness than hydration.",
     "edible": true,
@@ -4793,7 +4793,7 @@
       "managed to get through Egg."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Protein in a shell. She and eggs have history.",
     "qualitativeNutritionHint": "Straightforward protein with almost no sugar.",
     "edible": true,
@@ -4969,7 +4969,7 @@
       "managed to get through Ham."
     ],
     "category": "food",
-    "price": 4,
+    "price": 3,
     "description": "Cured protein with plenty of sodium.",
     "qualitativeNutritionHint": "Cured protein that trades convenience for substantial sodium.",
     "edible": true,
@@ -5061,7 +5061,7 @@
       "managed to get through Apple juice."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Sweet apple-flavored hydration.",
     "qualitativeNutritionHint": "Sweet fruit drink with hydration but little fiber or protein.",
     "edible": true,
@@ -5148,7 +5148,7 @@
       "managed to get through Lemonade."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Sugar, water, aggressive citrus.",
     "qualitativeNutritionHint": "Refreshing water and citrus carried by plenty of sugar.",
     "edible": true,
@@ -5235,7 +5235,7 @@
       "managed to get through Coffee."
     ],
     "category": "food",
-    "price": 2,
+    "price": 14,
     "description": "Bitter caffeine delivery system.",
     "qualitativeNutritionHint": "A concentrated caffeine option with little food value.",
     "edible": true,
@@ -5416,7 +5416,7 @@
       "managed to get through Pear."
     ],
     "category": "food",
-    "price": 2,
+    "price": 6,
     "description": "Sweet fruit with a grainy texture.",
     "qualitativeNutritionHint": "Juicy sweet fruit with a distinctive grainy texture.",
     "edible": true,
@@ -5505,7 +5505,7 @@
       "managed to get through Orange."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Juicy citrus with built-in pulp.",
     "qualitativeNutritionHint": "Hydrating citrus with pulp, sweetness, and acidity.",
     "edible": true,
@@ -5594,7 +5594,7 @@
       "managed to get through Cantaloupe."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Soft melon with a very specific texture.",
     "qualitativeNutritionHint": "A water-rich melon with gentle sweetness.",
     "edible": true,
@@ -5683,7 +5683,7 @@
       "managed to get through Blueberry."
     ],
     "category": "food",
-    "price": 3,
+    "price": 5,
     "description": "Tiny berries with a sudden pop.",
     "qualitativeNutritionHint": "Small sweet-tart berries with modest hydration.",
     "edible": true,
@@ -5772,7 +5772,7 @@
       "managed to get through Raspberry."
     ],
     "category": "food",
-    "price": 3,
+    "price": 6,
     "description": "Sweet-tart fruit full of seeds.",
     "qualitativeNutritionHint": "Seedy, tart fruit with less sweetness than many berries.",
     "edible": true,
@@ -5861,7 +5861,7 @@
       "managed to get through Kiwi."
     ],
     "category": "food",
-    "price": 3,
+    "price": 4,
     "description": "Fuzzy outside, soft and seedy inside.",
     "qualitativeNutritionHint": "Tangy, juicy fruit with an assertive seed-filled texture.",
     "edible": true,
@@ -5950,7 +5950,7 @@
       "managed to get through Hot dog."
     ],
     "category": "food",
-    "price": 4,
+    "price": 5,
     "description": "Processed protein, bun, and lots of salt.",
     "qualitativeNutritionHint": "Processed protein with a bun and a substantial salt hit.",
     "edible": true,
@@ -6038,7 +6038,7 @@
       "managed to get through Chicken Finger."
     ],
     "category": "food",
-    "price": 5,
+    "price": 7,
     "description": "Protein wearing crispy armor.",
     "qualitativeNutritionHint": "Breaded protein that is richer and saltier than plain chicken.",
     "edible": true,
@@ -6126,7 +6126,7 @@
       "managed to get through Onion."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Crunchy raw; slippery when cooked.",
     "qualitativeNutritionHint": "A low-energy vegetable whose texture changes dramatically when cooked.",
     "edible": true,
@@ -6215,7 +6215,7 @@
       "managed to get through Pineapple."
     ],
     "category": "food",
-    "price": 3,
+    "price": 1,
     "description": "Sweet, acidic, and mildly hostile.",
     "qualitativeNutritionHint": "Very juicy fruit with bright sweetness and sharp acidity.",
     "edible": true,
@@ -6392,7 +6392,7 @@
       "managed to get through Açaí Bowl."
     ],
     "category": "food",
-    "price": 6,
+    "price": 3,
     "description": "Cold fruit under a pile of textures.",
     "qualitativeNutritionHint": "Nutrition varies by recipe; no exact primary-source profile is claimed.",
     "edible": true,
@@ -6576,7 +6576,7 @@
       "managed to get through Cherry."
     ],
     "category": "food",
-    "price": 3,
+    "price": 15,
     "description": "Sweet fruit built around a pit.",
     "qualitativeNutritionHint": "Sweet juicy fruit in a small, pit-centered package.",
     "edible": true,
@@ -6666,7 +6666,7 @@
       "managed to get through Peas."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Tiny green bursts of fiber and protein.",
     "qualitativeNutritionHint": "A green side with more protein and starch than most vegetables.",
     "edible": true,
@@ -6756,7 +6756,7 @@
       "managed to get through Almond."
     ],
     "category": "food",
-    "price": 3,
+    "price": 10,
     "description": "Dry crunch packed with fat and protein.",
     "qualitativeNutritionHint": "Dense plant protein and fat with almost no water.",
     "edible": true,
@@ -6846,7 +6846,7 @@
       "managed to get through Sunflower seeds."
     ],
     "category": "food",
-    "price": 2,
+    "price": 7,
     "description": "Tiny nutrition behind manual labor.",
     "qualitativeNutritionHint": "Tiny, energy-dense seeds with protein and a salty reputation.",
     "edible": true,
@@ -6936,7 +6936,7 @@
       "managed to get through Salsa."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Tomato, acid, chunks, and surprise heat.",
     "qualitativeNutritionHint": "A light tomato condiment whose salt and heat can vary.",
     "edible": true,
@@ -7114,7 +7114,7 @@
       "managed to get through Coconut."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Sweet fat with stubborn shreds.",
     "qualitativeNutritionHint": "Rich tropical flesh with fat, sweetness, and stubborn texture.",
     "edible": true,
@@ -7201,7 +7201,7 @@
       "managed to get through Turkey."
     ],
     "category": "food",
-    "price": 5,
+    "price": 3,
     "description": "Lean protein with dry potential.",
     "qualitativeNutritionHint": "Lean, filling protein that can run dry or salty.",
     "edible": true,
@@ -7289,7 +7289,7 @@
       "managed to get through Cranberry sauce."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Tart fruit buried under sugar.",
     "qualitativeNutritionHint": "Tart fruit transformed into a distinctly sugary side.",
     "edible": true,
@@ -7375,7 +7375,7 @@
       "managed to get through Sweet Potato."
     ],
     "category": "food",
-    "price": 3,
+    "price": 4,
     "description": "Sweet, starchy, vitamin-heavy.",
     "qualitativeNutritionHint": "Moist, starchy comfort with natural sweetness.",
     "edible": true,
@@ -7460,7 +7460,7 @@
       "managed to get through Goldfish."
     ],
     "category": "food",
-    "price": 2,
+    "price": 9,
     "description": "Tiny cheese crackers. Not actual fish.",
     "qualitativeNutritionHint": "Cheesy crackers with a clear salt tilt and a little protein.",
     "edible": true,
@@ -7552,7 +7552,7 @@
       "managed to get through Meatballs."
     ],
     "category": "food",
-    "price": 5,
+    "price": 8,
     "description": "Dense spheres of seasoned protein.",
     "qualitativeNutritionHint": "Dense seasoned protein that can carry a fair amount of salt.",
     "edible": true,
@@ -7640,7 +7640,7 @@
       "managed to get through Nachos."
     ],
     "category": "food",
-    "price": 4,
+    "price": 1,
     "description": "Chips, cheese, salt, structural chaos.",
     "qualitativeNutritionHint": "A rich salty mix where chips and cheese do most of the work.",
     "edible": true,
@@ -7727,7 +7727,7 @@
       "managed to get through BBQ ribs."
     ],
     "category": "food",
-    "price": 7,
+    "price": 9,
     "description": "Fatty protein, sweet sauce, bone logistics.",
     "qualitativeNutritionHint": "Heavy protein, fat, salt, and a sweet sauce finish.",
     "edible": true,
@@ -7815,7 +7815,7 @@
       "managed to get through Meat loaf."
     ],
     "category": "food",
-    "price": 6,
+    "price": 9,
     "description": "Dense baked protein in loaf form.",
     "qualitativeNutritionHint": "A filling baked protein with recipe-dependent salt and moisture.",
     "edible": true,
@@ -7903,7 +7903,7 @@
       "managed to get through Roast beef."
     ],
     "category": "food",
-    "price": 6,
+    "price": 5,
     "description": "Roasted protein, usually served gray.",
     "qualitativeNutritionHint": "Protein-forward slices with little sugar and variable salt.",
     "edible": true,
@@ -7988,7 +7988,7 @@
       "managed to get through Chicken pot pie."
     ],
     "category": "food",
-    "price": 7,
+    "price": 1,
     "description": "Protein and vegetables under soft pastry.",
     "qualitativeNutritionHint": "A full comfort meal under pastry, rich and moderately salty.",
     "edible": true,
@@ -8076,7 +8076,7 @@
       "gave Bagel a cautious first bite."
     ],
     "category": "food",
-    "price": 3,
+    "price": 4,
     "description": "Dense, chewy carbs; preparation matters.",
     "qualitativeNutritionHint": "Dense bread whose preparation and toppings make the difference.",
     "edible": true,
@@ -8163,7 +8163,7 @@
       "gave Apple a cautious first bite."
     ],
     "category": "food",
-    "price": 2,
+    "price": 3,
     "description": "Sweet, crisp, fibrous, skin included.",
     "qualitativeNutritionHint": "Crisp fruit; the accepted preparation matters as much as the sweetness.",
     "edible": true,
@@ -8255,7 +8255,7 @@
       "gave Lemon a cautious first bite."
     ],
     "category": "food",
-    "price": 1,
+    "price": 3,
     "description": "An extremely sour vitamin-C grenade.",
     "qualitativeNutritionHint": "Extremely tart and juicy, so preparation is everything.",
     "edible": true,
@@ -8340,7 +8340,7 @@
       "gave Strawberry a cautious first bite."
     ],
     "category": "food",
-    "price": 3,
+    "price": 2,
     "description": "Sweet fruit with seeds everywhere.",
     "qualitativeNutritionHint": "Juicy sweet fruit whose seed-filled texture may need adjustment.",
     "edible": true,
@@ -8431,7 +8431,7 @@
       "gave Bread a cautious first bite."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Basic carbs with endless configuration options.",
     "qualitativeNutritionHint": "Neutral carbohydrate fuel with many possible preparations.",
     "edible": true,
@@ -8516,7 +8516,7 @@
       "gave Cheeseburger a cautious first bite."
     ],
     "category": "food",
-    "price": 6,
+    "price": 5,
     "description": "Protein, fat, carbs, several variables.",
     "qualitativeNutritionHint": "A filling protein-and-bread meal where assembly matters.",
     "edible": true,
@@ -8604,7 +8604,7 @@
       "gave Steak a cautious first bite."
     ],
     "category": "food",
-    "price": 8,
+    "price": 13,
     "description": "Dense protein with adjustable doneness.",
     "qualitativeNutritionHint": "Dense protein whose doneness can decide the whole experience.",
     "edible": true,
@@ -8692,7 +8692,7 @@
       "gave Ice cream a cautious first bite."
     ],
     "category": "food",
-    "price": 4,
+    "price": 2,
     "description": "Cold dairy, fat, and plenty of sugar.",
     "qualitativeNutritionHint": "Sweet cold dairy where flavor and texture matter.",
     "edible": true,
@@ -8778,7 +8778,7 @@
       "gave Brownie a cautious first bite."
     ],
     "category": "food",
-    "price": 3,
+    "price": 4,
     "description": "Dense chocolate with serious sugar potential.",
     "qualitativeNutritionHint": "Dense chocolate sweetness; serving style can change the verdict.",
     "edible": true,
@@ -8866,7 +8866,7 @@
       "ate a salad. Somewhere, a $1,000 donor feels robbed."
     ],
     "category": "food",
-    "price": 5,
+    "price": 2,
     "description": "A $1,000 value, according to the tipping menu.",
     "qualitativeNutritionHint": "Potentially hydrating produce with highly variable toppings and texture.",
     "edible": true,
@@ -8953,7 +8953,7 @@
       "gave Sushi a cautious first bite."
     ],
     "category": "food",
-    "price": 7,
+    "price": 4,
     "description": "Rice, protein, and texture roulette.",
     "qualitativeNutritionHint": "Rice and protein with preparation-sensitive texture and salt.",
     "edible": true,
@@ -9129,7 +9129,7 @@
       "gave Cheeseless Toppingless Pizza a cautious first bite."
     ],
     "category": "food",
-    "price": 5,
+    "price": 9,
     "description": "The correct order: crust, sauce, nothing else. No questions.",
     "qualitativeNutritionHint": "A favorite comfort meal with a specific plain preparation and a salty edge.",
     "edible": true,
@@ -9224,7 +9224,7 @@
       "gave Apple pie a cautious first bite."
     ],
     "category": "food",
-    "price": 4,
+    "price": 5,
     "description": "Fruit surrounded by butter and sugar.",
     "qualitativeNutritionHint": "Sweet fruit and pastry whose serving details matter.",
     "edible": true,
@@ -9310,7 +9310,7 @@
       "took a cautious sip of Fruit Smoothie."
     ],
     "category": "food",
-    "price": 5,
+    "price": 2,
     "description": "Several fruits compressed past texture.",
     "qualitativeNutritionHint": "Hydrating fruit sweetness with a texture that depends on the blend.",
     "edible": true,
@@ -9398,7 +9398,7 @@
       "drank The Concoction. Fifteen-minute timer starts now."
     ],
     "category": "food",
-    "price": 4,
+    "price": 13,
     "description": "Jello, soda, PB cookies, taco seasoning, three cups of pickle juice — wrapped in a tortilla.",
     "qualitativeNutritionHint": "A seeded fictional mystery meal whose nutrition is intentionally unpredictable.",
     "edible": true,
@@ -9530,7 +9530,7 @@
       "spent some time with Studio Mic."
     ],
     "category": "reusable",
-    "price": 145,
+    "price": 299,
     "description": "Captures every unhinged noise in lossless quality.",
     "qualitativeNutritionHint": "Record a quick voice clip when an idea is easier spoken than typed.",
     "edible": false,
@@ -9612,7 +9612,7 @@
       "spent some time with Stream Deck."
     ],
     "category": "reusable",
-    "price": 110,
+    "price": 139,
     "description": "More buttons means more professional.",
     "qualitativeNutritionHint": "Practice shortcuts to turn a crowded setup into muscle memory.",
     "edible": false,
@@ -9690,7 +9690,7 @@
       "queued a fresh batch of stream highlights with Clippers."
     ],
     "category": "upgrade",
-    "price": 25,
+    "price": 29,
     "description": "The clip channels never sleep. Now they answer to you.",
     "qualitativeNutritionHint": "Publishes clips daily for three days; extra copies stack and renew the shared timer.",
     "edible": false,
@@ -9769,7 +9769,7 @@
       "spent some time with New Keyboard."
     ],
     "category": "reusable",
-    "price": 85,
+    "price": 159,
     "description": "Click clack, productivity allegedly.",
     "qualitativeNutritionHint": "Use the fresh keys to capture an idea before it disappears.",
     "edible": false,
@@ -9847,7 +9847,7 @@
       "spent some time with Drawing Tablet."
     ],
     "category": "reusable",
-    "price": 180,
+    "price": 149,
     "description": "For productive creative endeavors. Obviously.",
     "qualitativeNutritionHint": "A direct route from restless hands to a finished sketch.",
     "edible": false,
@@ -9954,7 +9954,7 @@
       "spent some time with Monitor."
     ],
     "category": "reusable",
-    "price": 160,
+    "price": 199,
     "description": "More screen for more problems.",
     "qualitativeNutritionHint": "Tidy the workspace and make visual projects easier to juggle.",
     "edible": false,
@@ -10036,7 +10036,7 @@
       "spent some time with PC Parts."
     ],
     "category": "reusable",
-    "price": 200,
+    "price": 639,
     "description": "Tiny upgrades for a mighty setup.",
     "qualitativeNutritionHint": "Tuning the computer can inspire progress or test patience.",
     "edible": false,
@@ -10118,7 +10118,7 @@
       "spent some time with Webcam."
     ],
     "category": "reusable",
-    "price": 95,
+    "price": 199,
     "description": "Say hi to the camera. Fix the posture first — that's a $50 value.",
     "qualitativeNutritionHint": "A test photo offers a low-stakes excuse to adjust the setup.",
     "edible": false,
@@ -10200,7 +10200,7 @@
       "took another look at Desk Chair."
     ],
     "category": "reusable",
-    "price": 175,
+    "price": 159,
     "description": "Sitting equipment. Posture sold separately.",
     "qualitativeNutritionHint": "Place this at the chair anchor for a more restorative workspace.",
     "edible": false,
@@ -10267,7 +10267,7 @@
       "spent some time with Live2D Model."
     ],
     "category": "reusable",
-    "price": 225,
+    "price": 850,
     "description": "'Just one more model.' — her, before every single model.",
     "qualitativeNutritionHint": "Rehearsal makes the model feel expressive before it goes public.",
     "edible": false,
@@ -10349,7 +10349,7 @@
       "spent some time with Model Outfit."
     ],
     "category": "reusable",
-    "price": 90,
+    "price": 220,
     "description": "The model needed clothes too.",
     "qualitativeNutritionHint": "Preview a new look for a small burst of creative play.",
     "edible": false,
@@ -10431,7 +10431,7 @@
       "spent some time with Rigging Software Upgrade."
     ],
     "category": "reusable",
-    "price": 150,
+    "price": 229,
     "description": "More parameters. More jiggle. 2,000 layers of ambition.",
     "qualitativeNutritionHint": "Practice the controls to explore more expressive movement.",
     "edible": false,
@@ -10513,7 +10513,7 @@
       "took another look at Commissioned Art."
     ],
     "category": "reusable",
-    "price": 120,
+    "price": 200,
     "description": "Supporting artists is a business expense. Legally, probably.",
     "qualitativeNutritionHint": "Hang it on the wall to make the room feel more personal.",
     "edible": false,
@@ -10594,7 +10594,7 @@
       "took another look at Stream Decorations."
     ],
     "category": "reusable",
-    "price": 70,
+    "price": 250,
     "description": "Chat will definitely notice these.",
     "qualitativeNutritionHint": "Wall placement adds atmosphere without changing stream rules.",
     "edible": false,
@@ -10675,7 +10675,7 @@
       "spent some time with Merch Sample."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 99,
     "description": "One of everything from the merch drop, for 'quality control.'",
     "qualitativeNutritionHint": "Inspect the sample closely before trusting the design.",
     "edible": false,
@@ -10777,7 +10777,7 @@
       "spent some time with New Game."
     ],
     "category": "reusable",
-    "price": 55,
+    "price": 69,
     "description": "Chat recommended it. Chat is never normal about recommendations.",
     "qualitativeNutritionHint": "A fresh game offers novelty without choosing a stream topic.",
     "edible": false,
@@ -10871,7 +10871,7 @@
       "spent some time with Horror Game."
     ],
     "category": "reusable",
-    "price": 35,
+    "price": 19,
     "description": "This seemed wise at checkout.",
     "qualitativeNutritionHint": "Play when a tense surprise sounds more fun than restful.",
     "edible": false,
@@ -10965,7 +10965,7 @@
       "spent some time with Friendslop Game."
     ],
     "category": "reusable",
-    "price": 40,
+    "price": 39,
     "description": "Tournament-grade friendslop. Team MILF needs the practice.",
     "qualitativeNutritionHint": "Best used for a noisy shared session with friends.",
     "edible": false,
@@ -11060,7 +11060,7 @@
       "spent some time with Soulslike."
     ],
     "category": "reusable",
-    "price": 50,
+    "price": 59,
     "description": "'This game is so easy smh.' (This is ragebait. Don't fall for it.)",
     "qualitativeNutritionHint": "Attempt a difficult run when frustration feels worth the challenge.",
     "edible": false,
@@ -11154,7 +11154,7 @@
       "spent some time with Indie Game."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 12,
     "description": "$12 and suspiciously good reviews.",
     "qualitativeNutritionHint": "Try the odd little game and see whether its ideas land.",
     "edible": false,
@@ -11248,7 +11248,7 @@
       "spent some time with Cursed Steam Game."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 9,
     "description": "The reviews said 'Overwhelmingly Positive.'",
     "qualitativeNutritionHint": "Open the suspicious purchase for unpredictable entertainment.",
     "edible": false,
@@ -11342,7 +11342,7 @@
       "spent some time with Cozy Game."
     ],
     "category": "reusable",
-    "price": 35,
+    "price": 29,
     "description": "It's farming. ALL FARMING. She LOVES farming!!",
     "qualitativeNutritionHint": "Choose this for gentle play with a calmer pace.",
     "edible": false,
@@ -11474,7 +11474,7 @@
       "spent some time with Party Game."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 39,
     "description": "A friendship stress test with menus.",
     "qualitativeNutritionHint": "A social game night brings energy and a little chaos.",
     "edible": false,
@@ -11569,7 +11569,7 @@
       "spent some time with Rhythm Game."
     ],
     "category": "reusable",
-    "price": 50,
+    "price": 24,
     "description": "Timing, music, immediate regret.",
     "qualitativeNutritionHint": "Good timing turns music into an active creative break.",
     "edible": false,
@@ -11663,7 +11663,7 @@
       "spent some time with Visual Novel."
     ],
     "category": "reusable",
-    "price": 40,
+    "price": 14,
     "description": "Reading with branching consequences.",
     "qualitativeNutritionHint": "Read through a branching story for quieter entertainment.",
     "edible": false,
@@ -11782,7 +11782,7 @@
       "spent some time with Console."
     ],
     "category": "reusable",
-    "price": 240,
+    "price": 449,
     "description": "A little extra fun for the room.",
     "qualitativeNutritionHint": "A console night makes the room feel built for play.",
     "edible": false,
@@ -11876,7 +11876,7 @@
       "spent some time with Controller."
     ],
     "category": "reusable",
-    "price": 65,
+    "price": 89,
     "description": "Buttons, clicks, and cozy games.",
     "qualitativeNutritionHint": "Use it with an owned game; the controller alone is not the activity.",
     "edible": false,
@@ -11970,7 +11970,7 @@
       "spent some time with Second Controller."
     ],
     "category": "reusable",
-    "price": 65,
+    "price": 89,
     "description": "Local backseating is still backseating. Rule 2 applies.",
     "qualitativeNutritionHint": "Pair it with the console for a genuinely shared game night.",
     "edible": false,
@@ -12068,7 +12068,7 @@
       "spent some time with Cat Treats."
     ],
     "category": "care",
-    "price": 8,
+    "price": 7,
     "description": "The actual currency of this household.",
     "qualitativeNutritionHint": "A single-use peace offering for the household cat.",
     "edible": false,
@@ -12153,7 +12153,7 @@
       "spent some time with Catnip."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 9,
     "description": "What could possibly go wrong?",
     "qualitativeNutritionHint": "Share it when a burst of feline chaos sounds welcome.",
     "edible": false,
@@ -12252,7 +12252,7 @@
       "spent some time with Cat Toy."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 5,
     "description": "It moves. Someone must destroy it.",
     "qualitativeNutritionHint": "A simple excuse to stop working and play with the cat.",
     "edible": false,
@@ -12352,7 +12352,7 @@
       "spent some time with Feather Wand."
     ],
     "category": "reusable",
-    "price": 35,
+    "price": 5,
     "description": "Exercise for a cat. And a person.",
     "qualitativeNutritionHint": "Interactive cat play that strengthens the household bond.",
     "edible": false,
@@ -12442,7 +12442,7 @@
       "spent some time with Laser Pointer."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 6,
     "description": "Tiny red enemy detected.",
     "qualitativeNutritionHint": "A lively chase game with a chance of overstimulation.",
     "edible": false,
@@ -12528,7 +12528,7 @@
       "took another look at Cardboard Box."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 2,
     "description": "Preferred over the expensive tree beside it. Every time.",
     "qualitativeNutritionHint": "Place it in the cat corner for cheap, dependable enrichment.",
     "edible": false,
@@ -12609,7 +12609,7 @@
       "took another look at Cat Bed."
     ],
     "category": "reusable",
-    "price": 55,
+    "price": 20,
     "description": "A dedicated place to sleep.",
     "qualitativeNutritionHint": "A dedicated cat-corner bed creates a calmer resting spot.",
     "edible": false,
@@ -12676,7 +12676,7 @@
       "took another look at Cat Tree."
     ],
     "category": "reusable",
-    "price": 140,
+    "price": 86,
     "description": "Vertical infrastructure for Socks' surveillance state.",
     "qualitativeNutritionHint": "Vertical cat-corner space supports play, rest, and curiosity.",
     "edible": false,
@@ -12765,7 +12765,7 @@
       "took another look at Scratching Post."
     ],
     "category": "reusable",
-    "price": 65,
+    "price": 25,
     "description": "An optimistic attempt to save the furniture.",
     "qualitativeNutritionHint": "Cat-corner placement redirects claws toward approved furniture.",
     "edible": false,
@@ -12846,7 +12846,7 @@
       "spent some time with Cat Tunnel."
     ],
     "category": "reusable",
-    "price": 50,
+    "price": 14,
     "description": "Someone has entered the tube.",
     "qualitativeNutritionHint": "Play beside the tunnel for an energetic shared diversion.",
     "edible": false,
@@ -12932,7 +12932,7 @@
       "took another look at Window Perch."
     ],
     "category": "reusable",
-    "price": 85,
+    "price": 29,
     "description": "Premium bird television. Socks-approved.",
     "qualitativeNutritionHint": "Place it at the window to unlock premium bird-watching.",
     "edible": false,
@@ -13013,7 +13013,7 @@
       "spent some time with Cat Brush."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 6,
     "description": "Removes fur; relocates it elsewhere.",
     "qualitativeNutritionHint": "A grooming session can be soothing when cooperation holds.",
     "edible": false,
@@ -13098,7 +13098,7 @@
       "spent some time with Cat Costume."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 15,
     "description": "Socks did not approve this purchase and will remember it.",
     "qualitativeNutritionHint": "Trying the outfit is funny, risky, and entirely optional.",
     "edible": false,
@@ -13197,7 +13197,7 @@
       "spent some time with Tiny Cat Hat."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 9,
     "description": "Excellent for approximately four seconds.",
     "qualitativeNutritionHint": "A very brief costume experiment with unpredictable approval.",
     "edible": false,
@@ -13296,7 +13296,7 @@
       "spent some time with Cat Camera."
     ],
     "category": "reusable",
-    "price": 100,
+    "price": 39,
     "description": "Socks surveillance, from anywhere. She watches back.",
     "qualitativeNutritionHint": "Check in remotely for reassurance and occasional cat drama.",
     "edible": false,
@@ -13395,7 +13395,7 @@
       "took another look at Automatic Feeder."
     ],
     "category": "reusable",
-    "price": 125,
+    "price": 39,
     "description": "Removes one opportunity for human error.",
     "qualitativeNutritionHint": "Cat-corner placement makes the daily setup feel more reliable.",
     "edible": false,
@@ -13462,7 +13462,7 @@
       "took another look at Fancy Cat Fountain."
     ],
     "category": "reusable",
-    "price": 115,
+    "price": 36,
     "description": "Maybe someone in this house will drink water.",
     "qualitativeNutritionHint": "Place it in the cat corner to encourage better household hydration.",
     "edible": false,
@@ -13529,7 +13529,7 @@
       "spent some time with Socks Plushie."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 247,
     "description": "A plush Socks. Softer, and accepts apologies.",
     "qualitativeNutritionHint": "Offer the shelf-sized tribute as a sincere, non-consuming apology.",
     "edible": false,
@@ -13620,7 +13620,7 @@
       "spent some time with Book."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 18,
     "description": "A few hundred pages of disappearing for a while.",
     "qualitativeNutritionHint": "Settle in with a manageable read for a quiet mental break.",
     "edible": false,
@@ -13729,7 +13729,7 @@
       "spent some time with Really Long Book."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 29,
     "description": "Unavailable for several business days.",
     "qualitativeNutritionHint": "A deeper reading session rewards patience and available energy.",
     "edible": false,
@@ -13860,7 +13860,7 @@
       "spent some time with Manga."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 12,
     "description": "Reading, but with pictures.",
     "qualitativeNutritionHint": "A visual reading break that is easy to pick up and enjoy.",
     "edible": false,
@@ -13968,7 +13968,7 @@
       "spent some time with Red vs. Blue Box Set."
     ],
     "category": "reusable",
-    "price": 80,
+    "price": 200,
     "description": "Time for another completely necessary rewatch.",
     "qualitativeNutritionHint": "A familiar rewatch makes for dependable comfort viewing.",
     "edible": false,
@@ -14058,7 +14058,7 @@
       "spent some time with Glee Box Set."
     ],
     "category": "reusable",
-    "price": 75,
+    "price": 79,
     "description": "Gleekathon prep. It tastes like PINK.",
     "qualitativeNutritionHint": "Rewatch when musical drama sounds emotionally worthwhile.",
     "edible": false,
@@ -14148,7 +14148,7 @@
       "spent some time with Movie Rental."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 5,
     "description": "Two hours of mandatory not-working.",
     "qualitativeNutritionHint": "Put on a rented movie for one dedicated night away from work.",
     "edible": false,
@@ -14238,7 +14238,7 @@
       "spent some time with Board Game."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 29,
     "description": "Requires locating other humans.",
     "qualitativeNutritionHint": "Bring people together for a social, mildly competitive evening.",
     "edible": false,
@@ -14324,7 +14324,7 @@
       "spent some time with Puzzle."
     ],
     "category": "reusable",
-    "price": 35,
+    "price": 19,
     "description": "One thousand tiny problems in one box.",
     "qualitativeNutritionHint": "Work piece by piece for focused creativity with uncertain patience.",
     "edible": false,
@@ -14413,7 +14413,7 @@
       "spent some time with Coloring Book."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 16,
     "description": "Productive procrastination.",
     "qualitativeNutritionHint": "Color a page when structured creativity feels easier than a blank canvas.",
     "edible": false,
@@ -14518,7 +14518,7 @@
       "spent some time with LEGO Set."
     ],
     "category": "reusable",
-    "price": 85,
+    "price": 79,
     "description": "Expensive plastic meditation.",
     "qualitativeNutritionHint": "Build slowly for hands-on focus and a satisfying result.",
     "edible": false,
@@ -14607,7 +14607,7 @@
       "spent some time with Karaoke Machine."
     ],
     "category": "reusable",
-    "price": 130,
+    "price": 99,
     "description": "Karaoke relay training arc. The neighbors have been warned.",
     "qualitativeNutritionHint": "Sing together when volume and confidence are both available.",
     "edible": false,
@@ -14701,7 +14701,7 @@
       "spent some time with Headphones."
     ],
     "category": "reusable",
-    "price": 95,
+    "price": 129,
     "description": "Everything else has been muted.",
     "qualitativeNutritionHint": "Listen privately for a focused mood reset.",
     "edible": false,
@@ -14788,7 +14788,7 @@
       "took another look at Blanket."
     ],
     "category": "reusable",
-    "price": 45,
+    "price": 19,
     "description": "Entertainment may now occur horizontally.",
     "qualitativeNutritionHint": "Place it on the bed to make downtime more restorative.",
     "edible": false,
@@ -14855,7 +14855,7 @@
       "spent some time with Photo Album."
     ],
     "category": "reusable",
-    "price": 55,
+    "price": 24,
     "description": "Evidence that any of this happened.",
     "qualitativeNutritionHint": "Look back through shared memories for a gentle social moment.",
     "edible": false,
@@ -14940,7 +14940,7 @@
       "spent some time with Book Club Pick."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 18,
     "description": "Homework, but emotionally approved.",
     "qualitativeNutritionHint": "Read together when conversation and concentration overlap.",
     "edible": false,
@@ -15031,7 +15031,7 @@
       "spent some time with Blanket Fort Supplies."
     ],
     "category": "reusable",
-    "price": 50,
+    "price": 49,
     "description": "A structurally questionable retreat.",
     "qualitativeNutritionHint": "Build a temporary retreat for playful shared downtime.",
     "edible": false,
@@ -15121,7 +15121,7 @@
       "spent some time with Cooking Supplies."
     ],
     "category": "reusable",
-    "price": 70,
+    "price": 37,
     "description": "This could become food.",
     "qualitativeNutritionHint": "Cook together for creative connection, not an inventory meal.",
     "edible": false,
@@ -15215,7 +15215,7 @@
       "took another look at New Bed."
     ],
     "category": "upgrade",
-    "price": 225,
+    "price": 249,
     "description": "A compelling argument for going to sleep.",
     "qualitativeNutritionHint": "A bed-anchor upgrade that permanently improves the rest space.",
     "edible": false,
@@ -15282,7 +15282,7 @@
       "took another look at Soft Mattress."
     ],
     "category": "upgrade",
-    "price": 200,
+    "price": 299,
     "description": "Dangerously comfortable.",
     "qualitativeNutritionHint": "Place it on the bed for deeper, more comfortable downtime.",
     "edible": false,
@@ -15350,7 +15350,7 @@
       "spent some time with Fresh Bedsheets."
     ],
     "category": "upgrade",
-    "price": 60,
+    "price": 29,
     "description": "The bed has been reset.",
     "qualitativeNutritionHint": "Change into a fresh set for a small, restorative reset.",
     "edible": false,
@@ -15435,7 +15435,7 @@
       "took another look at Weighted Blanket."
     ],
     "category": "upgrade",
-    "price": 95,
+    "price": 49,
     "description": "Maximum cozy achieved.",
     "qualitativeNutritionHint": "Bed placement adds steady comfort and calmer downtime.",
     "edible": false,
@@ -15503,7 +15503,7 @@
       "took another look at Pillow."
     ],
     "category": "upgrade",
-    "price": 40,
+    "price": 19,
     "description": "One more could not hurt.",
     "qualitativeNutritionHint": "Add it to the bed for a modest comfort improvement.",
     "edible": false,
@@ -15570,7 +15570,7 @@
       "took another look at Body Pillow."
     ],
     "category": "upgrade",
-    "price": 55,
+    "price": 39,
     "description": "Technically furniture.",
     "qualitativeNutritionHint": "Bed placement adds support with an extra touch of coziness.",
     "edible": false,
@@ -15637,7 +15637,7 @@
       "took another look at Sofa."
     ],
     "category": "upgrade",
-    "price": 210,
+    "price": 799,
     "description": "Sitting without being at the computer.",
     "qualitativeNutritionHint": "A floor seat that makes social downtime feel more inviting.",
     "edible": false,
@@ -15705,7 +15705,7 @@
       "took another look at Beanbag Chair."
     ],
     "category": "upgrade",
-    "price": 90,
+    "price": 99,
     "description": "Productivity drops dramatically nearby.",
     "qualitativeNutritionHint": "Place it at the chair anchor for relaxed, low-formality rest.",
     "edible": false,
@@ -15774,7 +15774,7 @@
       "took another look at New Desk."
     ],
     "category": "upgrade",
-    "price": 190,
+    "price": 209,
     "description": "More surface area to cover in stuff.",
     "qualitativeNutritionHint": "A desk-anchor upgrade that gives creative work a better home.",
     "edible": false,
@@ -15841,7 +15841,7 @@
       "took another look at Bookshelf."
     ],
     "category": "upgrade",
-    "price": 145,
+    "price": 79,
     "description": "Storage for the inevitable book problem.",
     "qualitativeNutritionHint": "Place it on the shelf anchor to support a reading-friendly room.",
     "edible": false,
@@ -15908,7 +15908,7 @@
       "took another look at Bedside Lamp."
     ],
     "category": "upgrade",
-    "price": 55,
+    "price": 29,
     "description": "The big light is no longer required.",
     "qualitativeNutritionHint": "Desk placement offers softer light for winding down.",
     "edible": false,
@@ -15975,7 +15975,7 @@
       "took another look at Fairy Lights."
     ],
     "category": "upgrade",
-    "price": 45,
+    "price": 12,
     "description": "Tiny lights make everything better.",
     "qualitativeNutritionHint": "Hang them on the wall for a warmer, more playful atmosphere.",
     "edible": false,
@@ -16056,7 +16056,7 @@
       "took another look at Blackout Curtains."
     ],
     "category": "upgrade",
-    "price": 80,
+    "price": 34,
     "description": "Outside privileges revoked.",
     "qualitativeNutritionHint": "Window placement turns outside light down at rest time.",
     "edible": false,
@@ -16137,7 +16137,7 @@
       "took another look at Rug."
     ],
     "category": "upgrade",
-    "price": 75,
+    "price": 149,
     "description": "The floor has been upgraded.",
     "qualitativeNutritionHint": "A floor anchor upgrade that makes the whole room feel softer.",
     "edible": false,
@@ -16204,7 +16204,7 @@
       "took another look at Plants."
     ],
     "category": "upgrade",
-    "price": 45,
+    "price": 22,
     "description": "Responsibility, but decorative.",
     "qualitativeNutritionHint": "Window placement adds living color and a small responsibility.",
     "edible": false,
@@ -16286,7 +16286,7 @@
       "took another look at Fake Plants."
     ],
     "category": "upgrade",
-    "price": 35,
+    "price": 29,
     "description": "Responsibility removed.",
     "qualitativeNutritionHint": "Shelf greenery provides atmosphere without the upkeep.",
     "edible": false,
@@ -16367,7 +16367,7 @@
       "took another look at Wall Art."
     ],
     "category": "upgrade",
-    "price": 65,
+    "price": 49,
     "description": "The wall looked suspiciously empty.",
     "qualitativeNutritionHint": "Use the wall anchor to give the room a stronger identity.",
     "edible": false,
@@ -16434,7 +16434,7 @@
       "took another look at Mini Fridge."
     ],
     "category": "upgrade",
-    "price": 170,
+    "price": 119,
     "description": "Dr Pepper logistics optimized.",
     "qualitativeNutritionHint": "Shelf placement keeps refreshments close and the room convenient.",
     "edible": false,
@@ -16501,7 +16501,7 @@
       "took another look at Snack Shelf."
     ],
     "category": "upgrade",
-    "price": 85,
+    "price": 49,
     "description": "Emergency provisions within arm’s reach.",
     "qualitativeNutritionHint": "A dedicated shelf makes food storage feel intentional.",
     "edible": false,
@@ -16568,7 +16568,7 @@
       "took another look at Cat Corner."
     ],
     "category": "upgrade",
-    "price": 125,
+    "price": 131,
     "description": "A cat owns part of the room now.",
     "qualitativeNutritionHint": "Claim the cat-corner anchor as a cozy household zone.",
     "edible": false,
@@ -16636,7 +16636,7 @@
       "spent some time with Sketchbook."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 11,
     "description": "Blank pages waiting for terrible ideas.",
     "qualitativeNutritionHint": "Sketch an imperfect idea before it has time to become intimidating.",
     "edible": false,
@@ -16741,7 +16741,7 @@
       "spent some time with Fancy Pens."
     ],
     "category": "reusable",
-    "price": 30,
+    "price": 14,
     "description": "Buying supplies counts as creating.",
     "qualitativeNutritionHint": "Put the satisfying stationery to work on a small creative task.",
     "edible": false,
@@ -16826,7 +16826,7 @@
       "spent some time with Paint Set."
     ],
     "category": "reusable",
-    "price": 55,
+    "price": 12,
     "description": "The desk is in danger.",
     "qualitativeNutritionHint": "Make something colorful, accepting that the desk may suffer.",
     "edible": false,
@@ -16911,7 +16911,7 @@
       "spent some time with Craft Supplies."
     ],
     "category": "reusable",
-    "price": 50,
+    "price": 19,
     "description": "Future mess, neatly packaged.",
     "qualitativeNutritionHint": "A shared making session trades tidiness for connection.",
     "edible": false,
@@ -17001,7 +17001,7 @@
       "spent some time with Sewing Kit."
     ],
     "category": "reusable",
-    "price": 60,
+    "price": 19,
     "description": "This could become something.",
     "qualitativeNutritionHint": "Turn patience and fabric into a practical creative project.",
     "edible": false,
@@ -17086,7 +17086,7 @@
       "spent some time with 3D Printer."
     ],
     "category": "reusable",
-    "price": 230,
+    "price": 219,
     "description": "Every stupid idea can become physical.",
     "qualitativeNutritionHint": "Print a physical idea when experimentation sounds exciting.",
     "edible": false,
@@ -17171,7 +17171,7 @@
       "spent some time with Model Kit."
     ],
     "category": "reusable",
-    "price": 65,
+    "price": 39,
     "description": "Assembly and patience sold separately.",
     "qualitativeNutritionHint": "Assembly offers focused creativity with a possible frustration tax.",
     "edible": false,
@@ -17260,7 +17260,7 @@
       "spent some time with Camera."
     ],
     "category": "reusable",
-    "price": 185,
+    "price": 799,
     "description": "Bad decisions, now in higher resolution.",
     "qualitativeNutritionHint": "Take deliberate photos to turn a walk into a creative exercise.",
     "edible": false,
@@ -17345,7 +17345,7 @@
       "spent some time with Polaroid Camera."
     ],
     "category": "reusable",
-    "price": 120,
+    "price": 79,
     "description": "Memories with a material cost.",
     "qualitativeNutritionHint": "Create a physical memory during a shared photo moment.",
     "edible": false,
@@ -17435,7 +17435,7 @@
       "spent some time with Notebook."
     ],
     "category": "reusable",
-    "price": 25,
+    "price": 7,
     "description": "For ideas that might get written down.",
     "qualitativeNutritionHint": "Write down loose ideas before they crowd the rest of the day.",
     "edible": false,
@@ -17516,7 +17516,7 @@
       "spent some time with Whiteboard."
     ],
     "category": "reusable",
-    "price": 70,
+    "price": 39,
     "description": "The plan is real once there are arrows.",
     "qualitativeNutritionHint": "Map the mess into arrows, clusters, and a workable next thought.",
     "edible": false,
@@ -17597,7 +17597,7 @@
       "spent some time with Music Software."
     ],
     "category": "reusable",
-    "price": 160,
+    "price": 179,
     "description": "New creative rabbit hole unlocked.",
     "qualitativeNutritionHint": "Make a track when a demanding creative rabbit hole feels welcome.",
     "edible": false,
@@ -17687,7 +17687,7 @@
       "took another look at Sword."
     ],
     "category": "decoration",
-    "price": 120,
+    "price": 50,
     "description": "A sword is now part of the room. Sure.",
     "qualitativeNutritionHint": "Wall placement adds dramatic fantasy energy to the room.",
     "edible": false,
@@ -17768,7 +17768,7 @@
       "took another look at Battle Axe."
     ],
     "category": "decoration",
-    "price": 145,
+    "price": 58,
     "description": "Apparently the sword was not enough.",
     "qualitativeNutritionHint": "Hang it on the wall for heavier quest-hub atmosphere.",
     "edible": false,
@@ -17849,7 +17849,7 @@
       "took another look at Second Sword."
     ],
     "category": "decoration",
-    "price": 110,
+    "price": 50,
     "description": "Dual wielding has entered the budget.",
     "qualitativeNutritionHint": "A second wall blade completes the unnecessary dual-wielding theme.",
     "edible": false,
@@ -17931,7 +17931,7 @@
       "took another look at Dagger."
     ],
     "category": "decoration",
-    "price": 75,
+    "price": 13,
     "description": "For when the sword is inconvenient.",
     "qualitativeNutritionHint": "Shelf placement adds compact menace without occupying the wall.",
     "edible": false,
@@ -17998,7 +17998,7 @@
       "spent some time with Knight Helmet."
     ],
     "category": "decoration",
-    "price": 95,
+    "price": 38,
     "description": "Provides no meaningful protection indoors.",
     "qualitativeNutritionHint": "Wear it briefly for costume-driven silliness, not protection.",
     "edible": false,
@@ -18083,7 +18083,7 @@
       "took another look at Traffic Cone."
     ],
     "category": "decoration",
-    "price": 35,
+    "price": 19,
     "description": "Do not ask.",
     "qualitativeNutritionHint": "Floor placement makes the room stranger in a very specific way.",
     "edible": false,
@@ -18164,7 +18164,7 @@
       "took another look at Life-Size Cardboard Cutout."
     ],
     "category": "decoration",
-    "price": 85,
+    "price": 79,
     "description": "This will be funny exactly once.",
     "qualitativeNutritionHint": "A wall-adjacent figure supplies surprise and dubious ambience.",
     "edible": false,
@@ -18245,7 +18245,7 @@
       "spent some time with Fog Machine."
     ],
     "category": "decoration",
-    "price": 150,
+    "price": 89,
     "description": "Every room can be a boss arena.",
     "qualitativeNutritionHint": "Activate it for theatrical chaos and unpredictable mood.",
     "edible": false,
@@ -18344,7 +18344,7 @@
       "spent some time with Disco Ball."
     ],
     "category": "decoration",
-    "price": 125,
+    "price": 14,
     "description": "Absolutely essential infrastructure.",
     "qualitativeNutritionHint": "Dance under it for an energetic creative break.",
     "edible": false,
@@ -18448,7 +18448,7 @@
       "took another look at Giant Plushie."
     ],
     "category": "decoration",
-    "price": 100,
+    "price": 79,
     "description": "Furniture with a face.",
     "qualitativeNutritionHint": "Floor placement doubles as comfort and oversized company.",
     "edible": false,
@@ -18530,7 +18530,7 @@
       "took another look at Tiny Shopping Cart."
     ],
     "category": "decoration",
-    "price": 45,
+    "price": 14,
     "description": "Storage for tiny groceries.",
     "qualitativeNutritionHint": "A shelf oddity sized for objects nobody needed to organize.",
     "edible": false,
@@ -18597,7 +18597,7 @@
       "took another look at Rubber Duck."
     ],
     "category": "decoration",
-    "price": 25,
+    "price": 1,
     "description": "It knows what it did.",
     "qualitativeNutritionHint": "Place one on the shelf for cheerful, judgmental ambience.",
     "edible": false,
@@ -18678,7 +18678,7 @@
       "spent some time with Mystery Box."
     ],
     "category": "decoration",
-    "price": 60,
+    "price": 49,
     "description": "Financial decision pending.",
     "qualitativeNutritionHint": "Opening it consumes the box and invites a seeded surprise.",
     "edible": false,
@@ -18777,7 +18777,7 @@
       "settled in with five plain tortillas, exactly as intended."
     ],
     "category": "food",
-    "price": 2,
+    "price": 1,
     "description": "Five plain tortillas: dinner, or emergency Concoction wrappers.",
     "qualitativeNutritionHint": "A familiar, filling comfort food with neutral risk scores.",
     "edible": true,
@@ -18961,7 +18961,7 @@
       "drank Limited-Edition Dr Pepper and locked into six hours of Hyperfocus."
     ],
     "category": "food",
-    "price": 12,
+    "price": 2,
     "description": "The forbidden flavor. Six hours of terrifying productivity per can.",
     "qualitativeNutritionHint": "A rare, extra-sugary caffeinated drink with a dramatic energy spike.",
     "edible": true,
@@ -19141,7 +19141,7 @@
       "drank an Electrolyte Sachet to bring salt and hydration back into balance."
     ],
     "category": "care",
-    "price": 9,
+    "price": 1,
     "description": "Salt and water in one packet. Medically sensible, deeply out of character.",
     "qualitativeNutritionHint": "A care supply designed to pair hydration with a deliberate electrolyte boost.",
     "edible": false,
@@ -19219,7 +19219,7 @@
       "checked what the Insurance Card would cover at the hospital."
     ],
     "category": "care",
-    "price": 150,
+    "price": 625,
     "description": "For the next 'entirely unrelated injury.' There will be one.",
     "qualitativeNutritionHint": "A one-claim care safeguard for an expensive medical emergency.",
     "edible": false,
@@ -19297,7 +19297,7 @@
       "spent some time with Rigging Tablet."
     ],
     "category": "upgrade",
-    "price": 200,
+    "price": 699,
     "description": "350+ models rigged on one of these. The rent-money machine.",
     "qualitativeNutritionHint": "A professional creative tool that opens a focused commission-work activity.",
     "edible": false,
@@ -19400,7 +19400,7 @@
       "spent some time with New Model Commission."
     ],
     "category": "upgrade",
-    "price": 300,
+    "price": 250,
     "description": "Another debut. She'll rig it herself. She always does.",
     "qualitativeNutritionHint": "A long-term creative upgrade reserved for an unlocked career tier.",
     "edible": false,
@@ -19482,7 +19482,7 @@
       "faced the stickers. This is not what exposure therapy means."
     ],
     "category": "decoration",
-    "price": 25,
+    "price": 3,
     "description": "A diagnosed phobia, sold by the sheet.",
     "qualitativeNutritionHint": "A cursed decorative sheet whose tiny adhesive shapes are a known hazard.",
     "edible": false,
@@ -19563,7 +19563,7 @@
       "took another look at Convention Guest Set."
     ],
     "category": "decoration",
-    "price": 120,
+    "price": 528,
     "description": "Guest badge, backdrop, and a flight to the correct Birmingham. Hopefully.",
     "qualitativeNutritionHint": "A milestone display that turns convention memories into room energy.",
     "edible": false,
@@ -19633,7 +19633,7 @@
       "used the Can Opener with intense and unnecessary focus."
     ],
     "category": "reusable",
-    "price": 35,
+    "price": 11,
     "description": "A kitchen tool. Origin of at least one 'entirely unrelated' ER visit.",
     "qualitativeNutritionHint": "Open a can manually, preferably without turning it into an emergency.",
     "edible": false,
@@ -19762,7 +19762,7 @@
       "ate Jaffa Cakes and started the cake-or-biscuit debate again."
     ],
     "category": "food",
-    "price": 3,
+    "price": 6,
     "description": "Cake or biscuit? Doesn't matter. It's comfort.",
     "qualitativeNutritionHint": "A sweet British comfort snack with a sugar-forward profile.",
     "edible": true,
@@ -19936,7 +19936,7 @@
       "savored a cookie from the village. Mom's recipe never misses."
     ],
     "category": "food",
-    "price": 4,
+    "price": 3,
     "description": "Chocolate chip, straight from the village. Mom's recipe.",
     "qualitativeNutritionHint": "A sweet taste of home with more feelings than fiber.",
     "edible": true,
@@ -20023,7 +20023,7 @@
       "exercised via Ring Fit. Five pushups were attempted. Attempted."
     ],
     "category": "reusable",
-    "price": 60,
+    "price": 69,
     "description": "A $500 donation made this canon. The heart rate is supposed to do that.",
     "qualitativeNutritionHint": "Actual movement disguised as a video game.",
     "edible": false,
