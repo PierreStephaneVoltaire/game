@@ -69,7 +69,8 @@ gameplay rules.
   `reconcileTime` public seam.
 - `src/lib/ending-rules.ts` — pure terminal reconciliation for Death and the
   persistent Quit Streaming Mood-risk clock. Financial Ruin is finalized by
-  the financial operation seam; Made It is a non-terminal audience unlock.
+  the financial operation seam; Made It is finalized by audience progression,
+  including normalization of previously saved Made It records.
 - `src/lib/ending-rules/messages.ts` — typed seeded template selection and
   interpolation for Ending copy loaded from `ending-rules.json`; Ending prose
   is not authored in TypeScript.
@@ -198,7 +199,7 @@ gameplay rules.
   donation/model career rewards.
 - `src/lib/donation-rules.ts` and `src/lib/follower-rules.ts` — independent
   hourly stream-donation tiers, signed current-Subscriber settlement, peak
-  milestone ordering, Made It unlocks, Subscriber Revenue multipliers, and
+  milestone ordering, the Made It Ending, Subscriber Revenue multipliers, and
   career stream-rate bands.
 - `src/lib/life-event-rules.ts`, `src/lib/life-event-types.ts`,
   `src/lib/life-event-random-resolution.ts`, and
@@ -271,13 +272,22 @@ gameplay rules.
 
 ## UI modules
 
-- `src/routes/login/+page.svelte` — username and eight-character key inputs,
-  with a separate new-session key generator, followed by the
-  Realtime/Streaming mode choice and navigation to the game. The current key is
-  session-only and must not be treated as persisted account data.
+- `src/lib/accounts/` — browser-only account API client and account menu. It
+  restores the HttpOnly-cookie session without local storage and does not own
+  or persist simulation state.
+- `src/routes/login/+page.svelte` and
+  `src/lib/components/LoginWidget.svelte` — password-account registration and
+  sign-in only. Successful authentication continues to the separate game-key
+  page.
+- `src/routes/key/+page.svelte`, `src/routes/mode/+page.svelte`,
+  `src/lib/components/GameKeyWidget.svelte`, and
+  `src/lib/components/TimeModeWidget.svelte` — eight-digit game-key entry and
+  the on-demand retrieval control. New keys remain visible for confirmation
+  before continuing to the separate Realtime/Streaming mode page; existing
+  sessions open the game directly.
 - `src/routes/game/+layout.svelte` — shared game shell, game-entry and
-  visibility-return Realtime reconciliation, Settings access, and the four
-  destinations.
+  visibility-return Realtime reconciliation, account gate and logout access,
+  Settings access, and the four destinations.
 - `src/routes/game/+page.svelte` and `src/lib/components/GameRoom.svelte` —
   the centered three-row game page. Its first row is exactly two columns: one
   borderless vertical flex layout for stats, status, and time/money beside the
@@ -286,8 +296,8 @@ gameplay rules.
   controls. The companion event area renders only the actual event text. Feed
   and item-specific choices open dialogs; they are not persistent dropdowns.
   The room has eight anchors and uses the landing page's purple/orange visual
-  system; the Settings details/summary dropdown only displays the current mode
-  and simulation seed.
+  system; the Settings details/summary dropdown displays the current mode,
+  simulation seed, and sign-out action.
 - `src/lib/components/room.css` — overview, care-row, event-caption, and Feed
   dialog presentation.
 - `src/lib/components/shop.css` and `shop-dialog.css` — stable Shop/card/cart
@@ -309,6 +319,18 @@ gameplay rules.
 - `src/routes/game/history/+page.svelte` — narrated Journey, Ending-specific
   evidence and causal Journey, Death-only graveyard presentation, neutral Run
   archives, and local Markdown export.
+
+## Backend and infrastructure modules
+
+- `api/src/user-accounts/` — Azure Functions password-account handlers,
+  scrypt hashing, HttpOnly sessions, validation, and Azure Table repositories.
+- `api/src/global-data/` — deterministic `ShopItems` and `GlobalRules` record
+  construction plus exact replace/delete synchronization used only by CI.
+- `infra/modules/user-accounts/`, `game-data/`, and `global-data/` — protected
+  Azure tables for accounts, the future game-state boundary, compiled shop
+  records, and runtime JSON records. No runtime counter table is provisioned.
+- `.github/workflows/global-data-sync.yml` — main-branch OIDC workflow that
+  validates canonical data before synchronizing the two global tables.
 
 Keep status behavior behind `status-rules.ts`, all configurable values in
 data, and all simulation uncertainty in `seeded-rng.ts`. Realtime has no

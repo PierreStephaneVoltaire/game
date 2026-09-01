@@ -31,6 +31,7 @@
     "intervalHours": 2,
     "foodPerInterval": 1,
     "foodDecayProbability": 0.65,
+    "restingFoodDecayProbabilityMultiplier": 0.5,
     "restPerInterval": 1,
     "bondLossHours": 48,
     "criticalNeed": { "lowMaximum": 2, "zeroLoss": 1, "lowLoss": 1 },
@@ -196,8 +197,6 @@
     "lowEnergyCreativity": -1,
     "lowStatusRecurrenceMood": -1,
     "annoyedMood": -2,
-    "sickHealth": -1,
-    "sickMood": -1,
     "fullHealth": -1,
     "fullMood": -2,
     "overstimulatedMood": -4,
@@ -237,7 +236,7 @@
     "clearWaterMinimum": 4,
     "onset": { "rest": -1, "mood": -1 }
   },
-  "sick": { "naturalPassHours": 48 },
+  "sick": { "naturalPassHours": 48, "refusalProbabilityBonus": 0.25 },
   "craving": { "expiryHours": 24, "refreshLimit": 2 },
   "caffeine": { "minimumScore": 2, "deferHours": 2 },
   "hyperfocus": {

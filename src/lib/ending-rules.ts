@@ -26,6 +26,12 @@ export function emptyEndingRiskClocks(): EndingRiskClocks {
   };
 }
 
+export function normalizeLoadedRunEnding(state: GameState): GameState {
+  if (state.ending) return state;
+  const madeIt = state.endingUnlocks.made_it;
+  return madeIt ? { ...state, ending: madeIt } : state;
+}
+
 export function nextEndingBoundary(state: GameState): number | undefined {
   if (state.ending) return undefined;
   const clock = state.endingRisks.quit_streaming;

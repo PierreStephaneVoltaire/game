@@ -28,8 +28,7 @@ export type NutritionResolution = {
   nutritionProfileId?: string;
   preparationRejected: boolean;
   fullFeedSuppressed: boolean;
-  sickFeedingHarm: boolean;
-  sickFeedingDeltas: Partial<GameState['metrics']>;
+  sicknessOnsetDeltas: Partial<GameState['metrics']>;
   sickFromFull: boolean;
   kidneyStone: boolean;
   kidneyStoneDeltas: Partial<GameState['metrics']>;
@@ -136,7 +135,7 @@ export function resolveNutritionConsumption(
   const metrics = { ...state.metrics };
   const wasSick = item.edible && Boolean(state.statuses.sick);
   const wasFull = item.edible && Boolean(state.statuses.full);
-  if (wasSick || wasFull) delete metricDeltas.food;
+  if (wasFull) delete metricDeltas.food;
   const fulfilledCraving = state.history.cravingItemId === item.id;
   if (fulfilledCraving) metricDeltas.bond = (metricDeltas.bond ?? 0) + 1;
   for (const [metric, delta] of Object.entries(metricDeltas)) {
@@ -272,8 +271,7 @@ export function resolveNutritionConsumption(
     nutritionProfileId: profile?.id,
     preparationRejected,
     fullFeedSuppressed: wasFull,
-    sickFeedingHarm: nutritionResolution.sickFeedingHarm,
-    sickFeedingDeltas: nutritionResolution.sickFeedingDeltas,
+    sicknessOnsetDeltas: nutritionResolution.sicknessOnsetDeltas,
     sickFromFull: nutritionResolution.sickFromFull,
     kidneyStone: nutritionResolution.kidneyStone,
     kidneyStoneDeltas: nutritionResolution.kidneyStoneDeltas,

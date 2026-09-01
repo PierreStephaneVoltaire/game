@@ -207,7 +207,12 @@ export function dispatchCommand(
   }
   if (companionAttempt)
     next = recordAttempt(next, outcome, timed, command.commandId, command.type);
-  next = appendStatusTransitionEvents(next, timed.statuses, command.commandId);
+  if (command.type !== 'feed_items')
+    next = appendStatusTransitionEvents(
+      next,
+      timed.statuses,
+      command.commandId,
+    );
   next = reconcileRunEnding(next);
   return rememberAndCompleteStreaming(
     next,

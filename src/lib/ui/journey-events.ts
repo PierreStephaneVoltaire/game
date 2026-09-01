@@ -204,7 +204,7 @@ function naturalNarrativeMessage(
   petName: string,
 ): string | undefined {
   if (event.type === 'annoyance_warning')
-    return `${petName} is getting frustrated. One more genuine refusal could leave them Annoyed.`;
+    return `${petName} is getting frustrated.`;
   if (event.type === 'critical_health_mood_penalty')
     return `${petName}'s critical health made everything feel worse.`;
   if (event.type === 'autonomous_food_rescue')

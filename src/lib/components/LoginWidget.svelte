@@ -1,34 +1,66 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
   import { resolve } from '$app/paths';
   import { goto } from '$app/navigation';
-  import { beginGameSession } from '$lib/game-session';
+  import {
+    credentialsAreValid,
+    loginAccount,
+    registerAccount,
+    restoreAccount,
+  } from '$lib/accounts/account-client';
   import { copy } from '$lib/i18n';
 
-  const keyAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let username = '';
-  let sessionKey = '';
-  let signedIn = false;
-  let starting = false;
+  let password = '';
+  let busy = true;
+  let authQueued = false;
+  let authTimer: ReturnType<typeof setTimeout> | null = null;
+  let errorMessage = '';
 
-  function createGeneratedKey(): string {
-    const values = new Uint32Array(8);
-    crypto.getRandomValues(values);
-    return Array.from(
-      values,
-      (value) => keyAlphabet[value % keyAlphabet.length],
-    ).join('');
+  $: validCredentials = credentialsAreValid(username, password);
+
+  onDestroy(() => {
+    if (authTimer) clearTimeout(authTimer);
+  });
+
+  onMount(() => {
+    void restoreAccount()
+      .then((account) => {
+        if (account) return goto(resolve('/key'));
+      })
+      .catch(() => {
+        errorMessage = copy.login.serviceError;
+      })
+      .finally(() => {
+        busy = false;
+      });
+  });
+
+  async function authenticate(action: 'login' | 'register'): Promise<void> {
+    if (busy || !validCredentials) return;
+    busy = true;
+    errorMessage = '';
+    try {
+      const run = action === 'login' ? loginAccount : registerAccount;
+      await run(username, password);
+      password = '';
+      await goto(resolve('/key'));
+    } catch (error) {
+      errorMessage =
+        error instanceof Error ? error.message : copy.login.serviceError;
+    } finally {
+      busy = false;
+    }
   }
 
-  function signIn(): void {
-    if (username.trim() && /^[A-Za-z0-9]{8}$/.test(sessionKey.trim()))
-      signedIn = true;
-  }
-
-  async function startGame(mode: 'realtime' | 'streaming'): Promise<void> {
-    if (starting) return;
-    starting = true;
-    await beginGameSession(mode);
-    await goto(resolve('/game'));
+  function queueAuthentication(action: 'login' | 'register'): void {
+    if (busy || authQueued || !validCredentials) return;
+    authQueued = true;
+    authTimer = setTimeout(() => {
+      authTimer = null;
+      authQueued = false;
+      void authenticate(action);
+    }, 250);
   }
 </script>
 
@@ -38,65 +70,53 @@
   <h1 id="login-title">{copy.login.title}</h1>
   <p class="login-intro">{copy.login.intro}</p>
 
-  {#if !signedIn}
-    <form novalidate on:submit|preventDefault={signIn}>
-      <label for="username">{copy.login.usernameLabel}</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        placeholder={copy.login.usernamePlaceholder}
-        autocomplete="username"
-        required
-        bind:value={username}
-      />
+  <form on:submit|preventDefault={() => queueAuthentication('login')}>
+    <label for="username">{copy.login.usernameLabel}</label>
+    <input
+      id="username"
+      name="username"
+      type="text"
+      placeholder={copy.login.usernamePlaceholder}
+      autocomplete="username"
+      minlength="3"
+      maxlength="24"
+      pattern="[A-Za-z0-9_]+"
+      required
+      bind:value={username}
+    />
 
-      <label for="session-key">{copy.login.generatedKeyLabel}</label>
-      <input
-        id="session-key"
-        name="key"
-        type="text"
-        placeholder={copy.login.keyPlaceholder}
-        bind:value={sessionKey}
-        maxlength="8"
-        minlength="8"
-        pattern="[A-Za-z0-9]{8}"
-        required
-        autocapitalize="characters"
-        autocomplete="off"
-      />
+    <label for="password">{copy.login.passwordLabel}</label>
+    <input
+      id="password"
+      name="password"
+      type="password"
+      placeholder={copy.login.passwordPlaceholder}
+      aria-describedby="password-hint"
+      bind:value={password}
+      maxlength="128"
+      minlength="12"
+      required
+      autocomplete="current-password"
+    />
+    <p id="password-hint" class="form-hint">{copy.login.passwordHint}</p>
 
-      <button
-        class="generate-key"
-        type="button"
-        on:click={() => (sessionKey = createGeneratedKey())}
-        >{copy.login.generateKey}</button
-      >
+    {#if errorMessage}<p class="form-error" role="alert">
+        {errorMessage}
+      </p>{/if}
 
-      <button type="submit">
+    <div class="form-actions">
+      <button type="submit" disabled={busy || authQueued || !validCredentials}>
         {copy.login.submit}<span aria-hidden="true">→</span>
       </button>
-    </form>
-  {:else}
-    <div class="mode-choice" role="group" aria-labelledby="mode-title">
-      <h2 id="mode-title">{copy.login.modeTitle}</h2>
-      <p>{copy.login.modeIntro}</p>
-      <div class="mode-buttons">
-        <button
-          type="button"
-          disabled={starting}
-          on:click={() => startGame('realtime')}
-          >{copy.login.realtimeMode}</button
-        >
-        <button
-          type="button"
-          disabled={starting}
-          on:click={() => startGame('streaming')}
-          >{copy.login.streamingMode}</button
-        >
-      </div>
+      <button
+        class="secondary-action"
+        type="button"
+        disabled={busy || authQueued || !validCredentials}
+        on:click={() => queueAuthentication('register')}
+        >{copy.login.createAccount}</button
+      >
     </div>
-  {/if}
+  </form>
 
   <a class="login-back" href={resolve('/')}>← {copy.login.back}</a>
 </section>

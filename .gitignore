@@ -5,10 +5,10 @@ dist/
 .env
 .env.*
 !.env.example
+api/local.settings.json
 coverage/
 playwright-report/
 test-results/
 .DS_Store
 .tmp-*.json
 infra/.terraform/
-

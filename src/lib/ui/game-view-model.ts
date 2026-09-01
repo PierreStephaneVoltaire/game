@@ -41,11 +41,9 @@ import {
   lineOfCreditShopOffer,
   type ShopOfferViewModel,
 } from './shop-offer-view-model';
-
 export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
 export type { ShopOfferViewModel } from './shop-offer-view-model';
 export type { EndingRiskViewModel, EndingViewModel } from './ending-view-model';
-
 export type MetricViewModel = {
   key: MetricName;
   label: string;
@@ -111,8 +109,8 @@ export type GameViewModel = {
 };
 
 const metricKeys: MetricName[] = [
-  'food',
   'health',
+  'food',
   'mood',
   'rest',
   'bond',
@@ -202,11 +200,15 @@ export function createGameViewModel(
     ...progressionPresentation(state, definition),
     metrics: metricKeys.map((key) => {
       const maximum = metricMaximum(key);
+      const displayMaximum = key === 'health' ? 10 : maximum;
       return {
         key,
         label: gameCopy.metrics[key],
-        value: state.metrics[key],
-        maximum,
+        value:
+          key === 'health'
+            ? Math.round((state.metrics[key] / maximum) * displayMaximum)
+            : state.metrics[key],
+        maximum: displayMaximum,
         percentage: (state.metrics[key] / maximum) * 100,
       };
     }),
@@ -244,6 +246,7 @@ export function createGameViewModel(
         : 0),
     cartCheckoutAllowed:
       cartCheckoutAllowed &&
+      (state.balance < 0 || cartTotal <= state.balance) &&
       !(
         state.lineOfCredit.status === 'open' &&
         state.balance <

@@ -1,10 +1,12 @@
 import type { HealthDamageSource } from './game-types';
 
-export type RunEndingKind = 'death' | 'quit_streaming' | 'financial_ruin';
+export type RunEndingKind =
+  'death' | 'quit_streaming' | 'financial_ruin' | 'made_it';
 
-export type EndingKind = RunEndingKind | 'made_it';
+export type EndingKind = RunEndingKind;
 
 export type NonDeathEndingKind = Exclude<RunEndingKind, 'death'>;
+export type AdverseEndingKind = Exclude<RunEndingKind, 'death' | 'made_it'>;
 
 export type DeathCause = Pick<HealthDamageSource, 'kind' | 'id' | 'name'> & {
   eventIds: string[];
@@ -42,16 +44,21 @@ export type FinancialRuinEnding = {
   causes?: never;
 };
 
-export type RunEnding = DeathEnding | MetricRunEnding | FinancialRuinEnding;
-
-export type MadeItEndingUnlock = {
+export type MadeItEnding = {
   kind: 'made_it';
   at: number;
   followers: number;
   peakFollowers: number;
   triggerEventId: string;
   eventIds: string[];
+  cause?: never;
+  causes?: never;
 };
+
+export type RunEnding =
+  DeathEnding | MetricRunEnding | FinancialRuinEnding | MadeItEnding;
+
+export type MadeItEndingUnlock = MadeItEnding;
 
 export type EndingUnlocks = { made_it: MadeItEndingUnlock | null };
 

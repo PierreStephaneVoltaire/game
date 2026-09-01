@@ -1,5 +1,12 @@
 {
+  "platform": {
+    "apiRuntime": "node:22"
+  },
   "routes": [
+    {
+      "route": "/api/*",
+      "allowedRoles": ["anonymous"]
+    },
     {
       "route": "/_app/immutable/*",
       "headers": {
@@ -21,7 +28,7 @@
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/_app/*", "/items/*", "/companions/*"]
+    "exclude": ["/api/*", "/_app/*", "/items/*", "/companions/*"]
   },
   "globalHeaders": {
     "x-content-type-options": "nosniff",

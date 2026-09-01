@@ -71,14 +71,6 @@
   outline-offset: 2px;
 }
 
-.login-card input[readonly] {
-  color: #512b9a;
-  background: #f1e8ff;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  text-align: center;
-}
-
 .login-card button {
   display: flex;
   align-items: center;
@@ -99,22 +91,36 @@
   box-shadow: 3px 3px 0 #f3a15f;
 }
 
-.login-card .generate-key {
-  justify-content: center;
-  margin-top: 3px;
-  padding: 6px 8px;
-  border: 0;
-  color: #512b9a;
-  background: transparent;
-  box-shadow: none;
-  font-size: 0.72rem;
-  text-decoration: underline;
+.form-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
-.login-card .generate-key:hover {
-  transform: none;
-  box-shadow: none;
-  color: #8d386e;
+.login-card .secondary-action {
+  justify-content: center;
+  border-color: #512b9a;
+  color: #512b9a;
+  background: #ffdaea;
+}
+
+.login-card .secondary-action:hover:not(:disabled) {
+  color: #fff;
+  background: #512b9a;
+}
+
+.form-error {
+  margin: 10px 0 0;
+  color: #9d194f;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.form-hint {
+  margin: 0;
+  color: #56466b;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .mode-choice {
@@ -178,6 +184,10 @@
   }
 
   .mode-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
     grid-template-columns: 1fr;
   }
 }

@@ -3,6 +3,7 @@ import type {
   GameDefinitionRepository,
 } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
+import { normalizeLoadedRunEnding } from './ending-rules';
 import type {
   GameCommand,
   GameState,
@@ -19,6 +20,12 @@ export class GameController {
   async start(input: StartRunInput): Promise<GameState> {
     this.definition = await this.definitions.load();
     this.state = startRun(input, this.definition);
+    return this.state;
+  }
+
+  async load(state: GameState): Promise<GameState> {
+    this.definition = await this.definitions.load();
+    this.state = normalizeLoadedRunEnding(state);
     return this.state;
   }
 

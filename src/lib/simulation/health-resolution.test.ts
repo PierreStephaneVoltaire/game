@@ -155,6 +155,10 @@ describe('protected activities and Streaming fairness', () => {
     const vulnerable = {
       ...initial,
       metrics: metrics({ food: 3, rest: 3, mood: 3, health: 3 }),
+      history: {
+        ...initial.history,
+        autonomousRescue: { foodLocked: true, restLocked: true },
+      },
     };
     const result = dispatchCommand(
       vulnerable,

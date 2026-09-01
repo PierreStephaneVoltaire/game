@@ -1,10 +1,19 @@
-import { purchaseAllowed, purchaseQuantity, recordLifetimePurchases } from '../billing-rules';
+import {
+  purchaseAllowed,
+  purchaseQuantity,
+  recordLifetimePurchases,
+  shopPurchaseAffordable,
+} from '../billing-rules';
 import financialRules from '../data/financial-rules.json';
 import { finalizeFinancialOperation } from '../financial-rules';
 import { LINE_OF_CREDIT_OFFER_ID } from '../game-constants';
 import type { GameDefinition } from '../game-definition';
 import type { GameCommand, GameEvent, GameState, Outcome } from '../game-types';
-import { accepted, rejected, supportsQuantity } from '../simulation/engine-state';
+import {
+  accepted,
+  rejected,
+  supportsQuantity,
+} from '../simulation/engine-state';
 
 type CartCommand = Extract<
   GameCommand,
@@ -81,7 +90,9 @@ function checkoutCart(
       quantity,
     }))
     .filter(
-      (line): line is {
+      (
+        line,
+      ): line is {
         item: GameDefinition['items'][number];
         quantity: number;
       } => Boolean(line.item && line.quantity > 0),
@@ -91,10 +102,14 @@ function checkoutCart(
   const invalid = validateCatalogueLines(state, lines);
   if (invalid) return result(state, invalid);
   if (locQuantity > lineOfCreditMaximum(state))
-    return result(state, rejected('unavailable', 'The cart is no longer available.'));
+    return result(
+      state,
+      rejected('unavailable', 'The cart is no longer available.'),
+    );
 
   const terms = financialRules.lineOfCredit;
-  const opening = state.lineOfCredit.status === 'available' && locQuantity === 1;
+  const opening =
+    state.lineOfCredit.status === 'available' && locQuantity === 1;
   const repayment = state.lineOfCredit.status === 'open' ? locQuantity : 0;
   const repaymentCost = repayment * terms.repaymentUnitPrice;
   if (repayment > 0 && repaymentCost > state.balance)
@@ -108,6 +123,11 @@ function checkoutCart(
     0,
   );
   const locCost = opening ? terms.applicationPrice : repaymentCost;
+  if (!shopPurchaseAffordable(state.balance, itemTotal + locCost))
+    return result(
+      state,
+      rejected('insufficient_funds', 'Balance is too low for that payment.'),
+    );
   const inventory = { ...state.inventory };
   const stock = { ...state.shop.stock };
   for (const line of lines) {
@@ -176,8 +196,7 @@ function checkoutCart(
           : {
               ...state.lineOfCredit,
               remainingUnits,
-              remainingClosureCost:
-                remainingUnits * terms.repaymentUnitPrice,
+              remainingClosureCost: remainingUnits * terms.repaymentUnitPrice,
             }
         : state.lineOfCredit,
     shop: { ...state.shop, stock, cart: {} },

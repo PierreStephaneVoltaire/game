@@ -38,6 +38,10 @@ If the two documents conflict, use this rule:
 
 The statement in the gameplay spec that no server migration is required describes the current session-memory baseline. Implementing this document intentionally replaces that baseline with persisted cloud state.
 
+### Current implementation slice
+
+The current backend pass implements password-only accounts and provisions `Users`, `AuthRecords`, `GameData`, `ShopItems`, and `GlobalRules`. `GameData` is provisioned but unused while gameplay remains session-only. Shop and global rule records are synchronized by CI and are not consumed by the frontend. Email recovery, OAuth, persisted games, graves, AI generation, and operational counters are not part of this pass.
+
 ---
 
 ## 2. Non-negotiable architecture decisions
@@ -345,14 +349,15 @@ The hash has low entropy and can be enumerated. That is accepted because it is a
 
 ## 7. Azure Table Storage model
 
-Create these four tables:
+Create these five tables:
 
-| Table             | Purpose                                                                                       |
-| ----------------- | --------------------------------------------------------------------------------------------- |
-| `Users`           | Account profile, password hash, recovery information, and owned game hashes                   |
-| `AuthRecords`     | OAuth identity mappings, login sessions, password-reset tokens, and email-verification tokens |
-| `GameData`        | Canonical current state, immutable event segments, and canonical grave records                |
-| `RuntimeCounters` | Low-cost global counters such as the daily AI call budget                                     |
+| Table         | Purpose                                                                                       |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| `Users`       | Account profile, password hash, recovery information, and owned game hashes                   |
+| `AuthRecords` | OAuth identity mappings, login sessions, password-reset tokens, and email-verification tokens |
+| `GameData`    | Canonical current state, immutable event segments, canonical graves, and operational rows     |
+| `ShopItems`   | One canonical compiled catalogue row per stable item ID                                       |
+| `GlobalRules` | Versioned runtime JSON documents synchronized from the repository                             |
 
 Do not create one table per player or one table per game.
 
@@ -492,16 +497,20 @@ On game creation:
 
 Death does not require updating the user entity because the owned hash is already present. Grave listing loads the user's small hash array and reads the matching `GRAVE`/`STATE` rows.
 
-### 7.4 `RuntimeCounters`
+### 7.4 Shared global data
 
-Use this only for cheap operational limits.
+`ShopItems` uses `PartitionKey = "SHOP_ITEM"` and the stable item ID as `RowKey`. `GlobalRules` uses `PartitionKey = "GLOBAL_RULE"` and the runtime JSON filename without its extension as `RowKey`. CI replace-upserts the current canonical payloads and deletes stale rows. The frontend continues using bundled repository JSON until an explicit migration changes that boundary.
 
-Daily grave-AI counter:
+Each row stores the compact JSON payload, its SHA-256 content hash, source path, and envelope schema version. Authoring-only JSONL, merge, nutrition-source, and canonical-ID files are not published as runtime rows.
+
+### 7.5 Operational counters
+
+If grave AI is implemented later, keep its daily counter in `GameData` rather than creating another table:
 
 | Property       | Value                                   |
 | -------------- | --------------------------------------- |
-| `PartitionKey` | UTC date as `YYYY-MM-DD`                |
-| `RowKey`       | `GRAVE_AI`                              |
+| `PartitionKey` | `SYSTEM#COUNTERS`                       |
+| `RowKey`       | `GRAVE_AI#` plus UTC `YYYY-MM-DD`       |
 | `count`        | Number of AI attempts reserved that day |
 | `updatedAt`    | UTC timestamp                           |
 
@@ -1183,7 +1192,7 @@ The production module must provision:
 1. `azurerm_resource_group`
 2. `azurerm_static_web_app`
 3. `azurerm_storage_account`
-4. four `azurerm_storage_table` resources
+4. five `azurerm_storage_table` resources
 5. optional resource-group budget alerts when notification addresses are supplied
 6. optional Application Insights/Log Analytics only when explicitly enabled
 
@@ -1264,7 +1273,8 @@ Create exactly:
 Users
 AuthRecords
 GameData
-RuntimeCounters
+ShopItems
+GlobalRules
 ```
 
 Terraform owns only the table resources. Runtime entities are created and updated by Functions, never by Terraform.
@@ -1278,7 +1288,6 @@ AZURE_STORAGE_CONNECTION_STRING
 USERS_TABLE=Users
 AUTH_RECORDS_TABLE=AuthRecords
 GAME_DATA_TABLE=GameData
-RUNTIME_COUNTERS_TABLE=RuntimeCounters
 API_SCHEMA_VERSION=1
 MAX_STATE_BYTES=49152
 MAX_EVENT_SEGMENT_BYTES=49152
@@ -1696,7 +1705,7 @@ Add these only when a measured problem or product requirement justifies them.
 ### Phase 2 — local persistence
 
 1. Add Table Storage clients and repositories.
-2. Implement `Users`, `AuthRecords`, `GameData`, and `RuntimeCounters` repositories.
+2. Implement `Users`, `AuthRecords`, and `GameData` repositories.
 3. Implement game creation with ETag-safe `gameHashesJson` append.
 4. Implement game load and ETag state update.
 5. Add immutable event segments in the same transaction.
@@ -1772,7 +1781,7 @@ This backend/infrastructure pass is complete when:
 20. A grave never triggers more than one successful model generation.
 21. Quotes and ordinary item text remain static authored content, not runtime AI.
 22. Static Web Apps serves optimized assets without a separate CDN.
-23. Terraform provisions the Free Static Web App, Standard LRS storage, four tables, settings, and safeguards.
+23. Terraform provisions the Free Static Web App, Standard LRS storage, five tables, settings, and safeguards.
 24. Terraform does not generate or deploy application source.
 25. No APIM, Front Door, standalone Function App, Cosmos DB, Azure DocumentDB, or managed identity platform is introduced.
 26. Application, authentication, concurrency, persistence, Terraform, and smoke tests pass.

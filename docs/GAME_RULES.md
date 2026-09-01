@@ -2,8 +2,8 @@
 
 The companion's identity is configurable, so this reference calls them “the
 companion.” Every run is a single memory-only life. A terminal Ending closes it
-permanently; `Made It` is a non-terminal Ending unlock. There is no save
-recovery, restart, reset, inherited keepsake, or separate offline-recap screen.
+permanently. There is no save recovery, restart, reset, inherited keepsake, or
+separate offline-recap screen.
 The configured display name and authored player-facing copy may use the chosen
 name; runtime identifiers, IDs, paths, assets, seeds, and infrastructure names
 remain generic.
@@ -88,6 +88,7 @@ A Run closes permanently with exactly one terminal outcome:
 | Death          | Health reaches 0                                         |
 | Quit Streaming | Mood remains at 0 continuously for 72 game-hours         |
 | Financial Ruin | Balance crosses from above −$20,000 to −$20,000 or below |
+| Made It        | Current Subscribers first reach 3,000,000                |
 
 The Mood countdown starts immediately at 0, clears as soon as Mood rises above
 0, and warns at 0, 24, and 48 hours. Financial Ruin has no countdown, grace
@@ -105,16 +106,17 @@ Ending-card titles and explanations are authored as text pools in
 `ending-rules.json`. A seeded option is selected from each applicable pool and
 then its placeholders are filled by the simulation or presentation layer.
 
-When current Subscribers first reach 3,000,000, `Made It` unlocks once with
-its exact time and causal audience event. It does not close the Run. Agency
-invitation is a career event, not an Ending. `She Cut You Off` remains
-unimplemented because no trigger has been approved.
+When current Subscribers first reach 3,000,000, `Made It` closes the Run with
+its exact time and causal audience event. Agency invitation is a career event,
+not an Ending. `She Cut You Off` remains unimplemented because no trigger has
+been approved.
 
 ## Needs and Health
 
 ### Food, Rest, and Bond
 
-- Every two game-hours, Food has a 65% chance to lose 1.
+- Every two game-hours, Food has a 65% chance to lose 1 while awake and a
+  32.5% chance while Rest is active.
 - Rest loses 1 every two game-hours while awake. It continues during
   Socialize, Play, streams, Hospital, and Commission Work.
 - Bond loses 1 after each 48 game-hours without a genuine Bond gain. A Bond
@@ -183,8 +185,9 @@ their source metric remains 0–2.
 
 Successfully consuming an edible while Full consumes it, suppresses its Food
 gain, keeps its other effects, and has a 35% chance to add Sick with Health −1
-and Mood −2. While already Sick, every successful edible consumption instead
-suppresses Food and applies Health −1 and Mood −1.
+and Mood −2. Sick adds 25 percentage points to each edible unit's ordinary
+refusal chance, capped at 100%. An accepted edible while Sick keeps all of its
+normal effects.
 
 Sick clears when Rest ends with Food at most 5 and Health at least 5, when
 Hospital completes, or naturally after 48 game-hours. Natural recovery gives no
@@ -358,7 +361,7 @@ Every catalogue item owns an array of possible Journey lines. An accepted use
 selects one line with seeded randomness and prefixes the configured companion
 name. Items are familiar possessions and foods, so item use never produces a
 discovery event. Water, for example, uses authored reluctant-drinking lines
-instead of generic "tried" copy.
+instead of generic "tried" copy and applies Food +1 and Health +1.
 
 Liked foods apply at least Mood +1. Variable foods are mechanically neutral
 but still use their item-authored narration. Disliked foods use their authored
@@ -620,7 +623,10 @@ Balance and causal transaction.
 
 The one-time Line of Credit is a permanent ordinary Shop offer. While
 available, one $50 opening unit may be added to the cart; checkout charges the
-$50 and advances $10,000 atomically even when starting Balance is below $50.
+$50 and then advances $10,000 atomically. When Balance is nonnegative, the
+opening price and every other cart line must be affordable from the current
+Balance without counting that advance. An already-negative Balance may open it
+under the ordinary debt-shopping rule.
 Once open, the same card sells twenty total $600 repayment units, limited by
 the remaining count. A repayment checkout requires starting Balance to cover
 the repayment portion. Once closed, the card remains in place but cannot be
@@ -712,11 +718,13 @@ and one hydration-support item. Ordinary stock is seeded from 1 through 5; an it
 overrides that. Milestone-gated items join the candidate pool only after their
 unlock.
 
-Every ordinary Food, Medicine, Care, Reusable, Upgrade, or Decoration purchase
-may cross Balance below zero. The Shop previews the real Balance after checkout,
-including the LOC opening advance. Stock, ownership, quantity, rotation, and
-progression rules still apply. Shopping while below $0 has no separate Mood or
-recovery penalty. Mixed catalogue/LOC carts settle atomically.
+When Balance is $0 or above, an ordinary purchase or complete cart must cost no
+more than the current Balance; spending exactly to $0 is allowed. When Balance
+is already below $0, ordinary purchases may deepen the deficit. The Shop
+previews the real Balance after checkout, including any LOC opening advance.
+Stock, ownership, quantity, rotation, and progression rules still apply.
+Shopping while below $0 has no separate Mood or recovery penalty. Mixed
+catalogue/LOC carts settle atomically.
 
 Non-quantity durables reject quantity above one in both direct purchases and
 carts. Ownership caps and stock limits still apply.
@@ -750,11 +758,10 @@ recap.
 
 Every terminal Ending keeps its causal Journey and full narrated Journey
 available. Death alone uses graveyard language and lists every structured
-Health-loss cause. Quit Streaming and Financial Ruin use a neutral archived-run
-card with trigger evidence. Made It remains visible as an earned non-terminal
-unlock. The Markdown export records the exact terminal Ending, causal chain,
-and complete Journey; Death causes are never inferred by parsing narration
-text.
+Health-loss cause. Quit Streaming, Financial Ruin, and Made It use a neutral
+archived-run card. The Markdown export records the exact terminal Ending,
+causal chain, and complete Journey; Death causes are never inferred by parsing
+narration text.
 
 ## Modifier arithmetic reference
 
@@ -880,14 +887,15 @@ Subscriber band and replaces the prior multiplier: `×1`, `×1.5`, `×2`, `×3`,
 payment floor raises `$1 ×1.5` and `$1 ×2` to $3 per tick once 30K has been
 reached; the legacy calculation becomes larger again at the 200K tier.
 
-Catalogue checkout can take Balance below $0. Tax and Equipment Failure can
-also cross from a nonnegative Balance into debt, but neither is eligible while
-Balance is already negative. A personal purchase is selected only when its
-real price is no greater than current Balance, so it cannot create debt.
+Catalogue checkout cannot take a nonnegative Balance below $0, but can deepen
+an already-negative Balance. Tax and Equipment Failure can cross from a
+nonnegative Balance into debt, but neither is eligible while Balance is already
+negative. A personal purchase is selected only when its real price is no
+greater than current Balance, so it cannot create debt.
 Hospital daily payments stop at $0, full medical payoff requires enough
 starting Balance, and LOC repayments require starting Balance to cover the LOC
-repayment portion. Opening the LOC is the exception: its $50 price and $10,000
-advance settle together even when starting Balance is below $50.
+repayment portion. The LOC opening advance is applied only after its $50 price
+and the rest of that cart pass the ordinary affordability check.
 
 Positive income always adds directly to Balance, reducing negative cash before
 making Balance positive. It does not automatically reduce Hospital principal

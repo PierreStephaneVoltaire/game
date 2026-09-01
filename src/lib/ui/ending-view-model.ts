@@ -1,4 +1,8 @@
-import type { GameState, RunEndingKind } from '$lib/game-types';
+import type {
+  AdverseEndingKind,
+  GameState,
+  RunEndingKind,
+} from '$lib/game-types';
 import { HOUR_MS } from '$lib/game-constants';
 import rules from '$lib/data/simulation-rules.json';
 import financialRules from '$lib/data/financial-rules.json';
@@ -6,6 +10,8 @@ import {
   deathPresentationCopy,
   endingRiskLabel,
   financialRuinPresentationCopy,
+  madeItPresentationTitle,
+  madeItUnlockedMessage,
   quitStreamingPresentationCopy,
 } from '$lib/ending-rules/messages';
 import { stateTextContext } from '$lib/seeded-text';
@@ -20,7 +26,7 @@ export type EndingViewModel = {
 };
 
 export type EndingRiskViewModel = {
-  kind: Exclude<RunEndingKind, 'death'>;
+  kind: AdverseEndingKind;
   label: string;
   remaining: number;
   unit: 'hours' | 'complete local days';
@@ -57,6 +63,21 @@ export function endingPresentation(state: GameState): EndingViewModel | null {
       title: copy.title,
       explanation: copy.explanation,
       evidence: [copy.evidence],
+      causes: [],
+    };
+  }
+  if (ending.kind === 'made_it') {
+    const endingEvent = state.events.find(
+      (event) => event.id === ending.eventIds.at(-1),
+    );
+    return {
+      kind: ending.kind,
+      at: ending.at,
+      title: madeItPresentationTitle(textContext),
+      explanation:
+        endingEvent?.message ??
+        madeItUnlockedMessage(ending.followers, textContext),
+      evidence: [],
       causes: [],
     };
   }

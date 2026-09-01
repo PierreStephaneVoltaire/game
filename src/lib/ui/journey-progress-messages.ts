@@ -114,7 +114,7 @@ function milestoneMessage(event: GameEvent, petName: string): string {
     sub_1k: `${petName}'s channel reached 1,000 subscribers! Better stream rates are now available.`,
     model_redesign: `${petName}'s model-redesign commission is now available.`,
     twitch_partner: `${petName} reached Twitch Partner! The best stream-rate band is now available.`,
-    sub_30k: `${petName}'s channel reached 30,000 subscribers! Subscriber Revenue now pays at 1.5x.`,
+    sub_30k: `${petName}'s channel reached 30,000 subscribers!`,
     tournament_appearance: `${petName} earned a tournament appearance! A special tournament stream is waiting for an open afternoon.`,
     sub_50k: `${petName}'s channel reached 50,000 subscribers! Subscriber Revenue now pays at 2x.`,
     convention_guest: `${petName} became a Convention Guest! An appearance fee arrived, along with new set and model opportunities.`,

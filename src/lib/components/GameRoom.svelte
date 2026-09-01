@@ -12,7 +12,7 @@
   $: daypart = model ? daypartFor(model.now, model.timezone) : 'day';
   $: edibleItems = model?.inventory.filter((item) => item.edible) ?? [];
   $: careBlocked = Boolean(model?.activity || model?.commandsDisabled);
-  $: latestEvent = model?.events[model.events.length - 1]?.message ?? '';
+  $: recentEvents = model?.events.slice(-10) ?? [];
 
   async function act(intent: GameIntent) {
     if (careBlocked) return;
@@ -120,10 +120,15 @@
             height="176"
           />
         </div>
-        <div class="companion-caption" aria-live="polite">
-          <span>{latestEvent}</span>
-        </div>
       </section>
+
+      <aside class="event-panel" aria-label="Recent events" aria-live="polite">
+        <ol>
+          {#each recentEvents as event (event.id)}<li>
+              {event.message}
+            </li>{/each}
+        </ol>
+      </aside>
     </section>
 
     <section
@@ -194,7 +199,8 @@
                   type="button"
                   aria-label={`Add ${item.name} to feed selection`}
                   on:click={() => changeSelectedFood(item.id, 1, item.owned)}
-                  disabled={(selectedFood[item.id] ?? 0) >= item.owned}>+</button
+                  disabled={(selectedFood[item.id] ?? 0) >= item.owned}
+                  >+</button
                 >
               </div>
             </section>

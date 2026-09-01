@@ -62,9 +62,7 @@ describe('Journey progression narration', () => {
 
     expect(
       projectJourney(events, 'Nova').map((entry) => entry.message),
-    ).toEqual([
-      "Nova's channel reached 30,000 subscribers! Subscriber Revenue now pays at 1.5x.",
-    ]);
+    ).toEqual(["Nova's channel reached 30,000 subscribers!"]);
   });
 
   test('narrates background projects and queued special streams', () => {

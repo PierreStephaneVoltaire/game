@@ -4,7 +4,7 @@ import { extname, join } from 'node:path';
 import { findNameIsolationIssues } from './validate-name-isolation.mjs';
 
 const root = new URL('../', import.meta.url);
-const maintainedRoots = ['src', 'e2e', 'scripts'];
+const maintainedRoots = ['src', 'api/src', 'e2e', 'scripts'];
 const sourceExtensions = new Set(['.ts', '.svelte', '.css', '.mjs']);
 const issues = [];
 async function filesBelow(path) {
@@ -55,7 +55,10 @@ for (const path of files.filter(
 issues.push(...(await findNameIsolationIssues()));
 
 const gameplayFiles = files.filter(
-  (path) => path.startsWith('src/lib/') && sourceExtensions.has(extname(path)),
+  (path) =>
+    path.startsWith('src/lib/') &&
+    !path.startsWith('src/lib/accounts/') &&
+    sourceExtensions.has(extname(path)),
 );
 for (const path of gameplayFiles) {
   const source = await readFile(new URL(path, root), 'utf8');

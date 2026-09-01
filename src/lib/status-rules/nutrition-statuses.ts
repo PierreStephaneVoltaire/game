@@ -7,8 +7,7 @@ export type NutritionStatusResolution = {
   metrics: Metrics;
   statuses: GameState['statuses'];
   metricDeltas: Partial<Metrics>;
-  sickFeedingHarm: boolean;
-  sickFeedingDeltas: Partial<Metrics>;
+  sicknessOnsetDeltas: Partial<Metrics>;
   sickFromFull: boolean;
   kidneyStone: boolean;
   kidneyStoneDeltas: Partial<Metrics>;
@@ -37,10 +36,6 @@ export function resolveNutritionStatuses(input: {
     result[metric] = clampMetric(metric, result[metric] + delta);
     metricDeltas[metric] = (metricDeltas[metric] ?? 0) + delta;
   };
-  if (input.wasSick) {
-    addMetric('health', rules.statusMetricDeltas.sickHealth);
-    addMetric('mood', rules.statusMetricDeltas.sickMood);
-  }
   const sickFromFull =
     input.wasFull &&
     !input.wasSick &&
@@ -101,18 +96,12 @@ export function resolveNutritionStatuses(input: {
     metrics: result,
     statuses,
     metricDeltas,
-    sickFeedingHarm: input.wasSick,
-    sickFeedingDeltas: input.wasSick
+    sicknessOnsetDeltas: sickFromFull
       ? {
-          health: rules.statusMetricDeltas.sickHealth,
-          mood: rules.statusMetricDeltas.sickMood,
+          health: rules.statusMetricDeltas.fullHealth,
+          mood: rules.statusMetricDeltas.fullMood,
         }
-      : sickFromFull
-        ? {
-            health: rules.statusMetricDeltas.fullHealth,
-            mood: rules.statusMetricDeltas.fullMood,
-          }
-        : {},
+      : {},
     sickFromFull,
     kidneyStone,
     kidneyStoneDeltas: kidneyStone

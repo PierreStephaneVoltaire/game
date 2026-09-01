@@ -22,10 +22,13 @@ test('observes a deterministic autonomous stream in Realtime mode', async ({
     });
   }, startedAt);
 
+  await page.context().clearCookies();
   await page.goto('/login');
   await page.getByLabel('Username').fill('playtester');
-  await page.getByRole('button', { name: /generate a key/i }).click();
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByLabel('Password').fill('correct horse battery staple');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.getByRole('button', { name: 'Generate new game' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Realtime mode' }).click();
   await page.getByRole('button', { name: 'Socialize' }).click();
   await expect(page.getByText(/is socializing until/i)).toBeVisible();

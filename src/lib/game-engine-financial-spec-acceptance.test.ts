@@ -14,7 +14,7 @@ function run() {
 }
 
 describe('economy specification through the engine seam', () => {
-  test('any ordinary catalogue item may be bought on credit', () => {
+  test('a nonnegative Balance cannot buy an unaffordable catalogue item', () => {
     const initial = run();
     const item = BUNDLED_GAME_DEFINITION.items.find(
       (candidate) => candidate.category === 'decoration',
@@ -41,10 +41,11 @@ describe('economy specification through the engine seam', () => {
     );
 
     expect(result.outcomes[0]).toMatchObject({
-      accepted: true,
-      kind: 'item_purchased',
+      accepted: false,
+      kind: 'insufficient_funds',
     });
-    expect(result.state.balance).toBe(1 - item.price);
+    expect(result.state.balance).toBe(1);
+    expect(result.state.inventory[item.id] ?? 0).toBe(0);
   });
 
   test('the operation crossing −$20,000 Balance ends immediately', () => {
@@ -121,7 +122,7 @@ describe('economy specification through the engine seam', () => {
     ).toBe(20_000);
   });
 
-  test('−$1 activates In Debt and $0 clears it', () => {
+  test('negative shopping activates In Debt and $0 clears it', () => {
     const initial = run();
     const water = BUNDLED_GAME_DEFINITION.items.find(
       ({ id }) => id === 'water',
@@ -129,7 +130,7 @@ describe('economy specification through the engine seam', () => {
     const indebted = dispatchCommand(
       {
         ...initial,
-        balance: 0,
+        balance: -1,
         shop: {
           ...initial.shop,
           itemIds: [water.id],
@@ -144,7 +145,7 @@ describe('economy specification through the engine seam', () => {
       },
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(indebted.balance).toBe(-1);
+    expect(indebted.balance).toBe(-2);
     expect(indebted.statuses.in_debt).toBeDefined();
     const recovered = reconcileTime(
       {

@@ -113,3 +113,72 @@ describe('shopping while Balance is negative through the engine seam', () => {
     }
   });
 });
+
+describe('shopping while Balance is nonnegative', () => {
+  test('direct purchases may spend to zero but cannot create debt', () => {
+    const item = BUNDLED_GAME_DEFINITION.items.find(
+      (candidate) => candidate.id === 'water',
+    )!;
+    const initial = { ...debtRun(), balance: item.price };
+    const exact = dispatchCommand(
+      initial,
+      {
+        type: 'buy_item',
+        commandId: 'exact-cash',
+        itemId: item.id,
+        now: 0,
+      },
+      BUNDLED_GAME_DEFINITION,
+    );
+    const insufficient = dispatchCommand(
+      { ...initial, balance: item.price - 1 },
+      {
+        type: 'buy_item',
+        commandId: 'insufficient-cash',
+        itemId: item.id,
+        now: 0,
+      },
+      BUNDLED_GAME_DEFINITION,
+    );
+
+    expect(exact.outcomes[0].accepted).toBe(true);
+    expect(exact.state.balance).toBe(0);
+    expect(insufficient.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'insufficient_funds',
+    });
+    expect(insufficient.state.balance).toBe(item.price - 1);
+    expect(insufficient.state.inventory).toEqual(initial.inventory);
+  });
+
+  test('cart checkout checks the complete cost against current cash', () => {
+    const item = BUNDLED_GAME_DEFINITION.items.find(
+      (candidate) => candidate.id === 'water',
+    )!;
+    const cart = { [item.id]: 2 };
+    const initial = { ...debtRun(), balance: item.price * 2 };
+    const exact = dispatchCommand(
+      { ...initial, shop: { ...initial.shop, cart } },
+      { type: 'checkout_cart', commandId: 'exact-cart', now: 0 },
+      BUNDLED_GAME_DEFINITION,
+    );
+    const insufficient = dispatchCommand(
+      {
+        ...initial,
+        balance: item.price * 2 - 1,
+        shop: { ...initial.shop, cart },
+      },
+      { type: 'checkout_cart', commandId: 'insufficient-cart', now: 0 },
+      BUNDLED_GAME_DEFINITION,
+    );
+
+    expect(exact.outcomes[0].accepted).toBe(true);
+    expect(exact.state.balance).toBe(0);
+    expect(insufficient.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'insufficient_funds',
+    });
+    expect(insufficient.state.balance).toBe(item.price * 2 - 1);
+    expect(insufficient.state.inventory).toEqual(initial.inventory);
+  });
+});

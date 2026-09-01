@@ -2,6 +2,9 @@
   import { onMount } from 'svelte';
   import { resolve } from '$app/paths';
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import { restoreAccount } from '$lib/accounts/account-client';
+  import AccountMenu from '$lib/accounts/AccountMenu.svelte';
   import {
     ensureGameSession,
     gameViewModel,
@@ -10,13 +13,32 @@
   import RunSettings from '$lib/components/RunSettings.svelte';
   import { gameCopy } from '$lib/ui/game-copy';
 
+  let authorized = false;
+
   onMount(() => {
-    void ensureGameSession();
+    let mounted = true;
+    void restoreAccount()
+      .then(async (account) => {
+        if (!account) {
+          await goto(resolve('/login'));
+          return;
+        }
+        if (!mounted) return;
+        const sessionReady = await ensureGameSession();
+        if (!sessionReady) {
+          await goto(resolve('/key'));
+          return;
+        }
+        if (mounted) authorized = true;
+      })
+      .catch(() => goto(resolve('/login')));
     const reconcile = () => {
-      if (document.visibilityState === 'visible') void reconcileGameClock();
+      if (authorized && document.visibilityState === 'visible')
+        void reconcileGameClock();
     };
     document.addEventListener('visibilitychange', reconcile);
     return () => {
+      mounted = false;
       document.removeEventListener('visibilitychange', reconcile);
     };
   });
@@ -29,32 +51,35 @@
   /></svelte:head
 >
 
-<div class="game-shell">
-  <header class="game-nav">
-    <div class="header-tools">
-      {#if $gameViewModel}
-        <RunSettings
-          mode={$gameViewModel.mode}
-          seed={$gameViewModel.seed}
-          ended={Boolean($gameViewModel.ending)}
-        />
-      {/if}
-    </div>
-  </header>
-  <slot />
-  {#if !$page.url.pathname.startsWith('/game/shop')}
-    <nav
-      class="game-navigation"
-      aria-label="Game navigation"
-      data-game-row="navigation"
-    >
-      <a href={resolve('/game')}>{gameCopy.room}</a>
-      <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
-      <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
-      <a href={resolve('/game/history')}>{gameCopy.history}</a>
-    </nav>
-  {/if}
-</div>
+{#if authorized}
+  <div class="game-shell">
+    <header class="game-nav">
+      <div class="header-tools">
+        <AccountMenu />
+        {#if $gameViewModel}
+          <RunSettings
+            mode={$gameViewModel.mode}
+            seed={$gameViewModel.seed}
+            ended={Boolean($gameViewModel.ending)}
+          />
+        {/if}
+      </div>
+    </header>
+    <slot />
+    {#if !$page.url.pathname.startsWith('/game/shop')}
+      <nav
+        class="game-navigation"
+        aria-label="Game navigation"
+        data-game-row="navigation"
+      >
+        <a href={resolve('/game')}>{gameCopy.room}</a>
+        <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
+        <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
+        <a href={resolve('/game/history')}>{gameCopy.history}</a>
+      </nav>
+    {/if}
+  </div>
+{/if}
 
 <style>
   .game-shell {
@@ -75,6 +100,7 @@
   .header-tools {
     display: flex;
     align-items: center;
+    gap: 14px;
     margin-left: auto;
   }
 

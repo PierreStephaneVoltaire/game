@@ -13,5 +13,5 @@ provider "azurerm" {
   features {}
 
   resource_provider_registrations = "none"
-  resource_providers_to_register  = ["Microsoft.Web"]
+  resource_providers_to_register  = ["Microsoft.Storage", "Microsoft.Web"]
 }

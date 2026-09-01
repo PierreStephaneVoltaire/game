@@ -63,8 +63,9 @@
     <span>{model.formattedTime}</span>
     <strong>Balance: ${numbers.format(model.balance)}</strong>
     <span>Subscribers: {numbers.format(model.followers)}</span>
-    <span>Peak Subscribers: {numbers.format(model.peakFollowers)}</span>
-    {#if model.madeItUnlocked}<strong>Ending unlocked: Made It</strong>{/if}
+    {#if model.madeItUnlocked && !model.ending}<strong
+        >Ending unlocked: Made It</strong
+      >{/if}
     <span>Career: {model.career.label}</span>
     <span
       >Streams: {numbers.format(model.streamStats.started)} started · {numbers.format(

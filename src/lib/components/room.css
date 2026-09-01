@@ -4,7 +4,10 @@
 }
 .overview-row {
   display: grid;
-  grid-template-columns: minmax(250px, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(250px, 0.42fr) minmax(0, 1fr) minmax(
+      250px,
+      0.42fr
+    );
   gap: clamp(18px, 2vw, 24px);
   align-items: stretch;
 }
@@ -91,13 +94,20 @@
   display: grid;
   min-width: 0;
   overflow: hidden;
-  grid-template-rows: 1fr auto;
 }
-.companion-caption {
-  min-height: 60px;
+.event-panel {
+  min-width: 0;
   padding: 16px 20px;
   color: #766d7f;
   background: #fff;
+}
+.event-panel ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.event-panel li + li {
+  margin-top: 12px;
 }
 .care-actions {
   display: flex;

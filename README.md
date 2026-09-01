@@ -6,10 +6,12 @@ autonomous events, a 226-item shop and inventory, room placement, persistent
 statuses, streaming income and career progression, background projects,
 complete in-memory history, and terminal graveyard presentation.
 
-The app deliberately has no account recovery, persistence, backend, telemetry,
-or runtime network API. Refreshing starts a fresh Realtime run. The clock mode
-is chosen during sign-in and there is no in-app reset, restart, recovery, or
-mode switch. Runs do not inherit keepsakes, debt, Followers, or unlocks.
+The app uses password accounts while game runs remain browser-session-only.
+After authentication, the player reaches a separate game-key page. Existing
+eight-digit keys open their sessions directly; generating a new key leads to a
+visible confirmation of that key before the player continues to a separate
+clock-mode page. There is no in-app reset, restart, recovery, or mode switch.
+Runs do not inherit keepsakes, debt, Followers, or unlocks.
 
 ## Requirements
 
