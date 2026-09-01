@@ -29,9 +29,10 @@ describe('catalogue validation', () => {
     expect(validateCatalog(BUNDLED_GAME_DEFINITION, true)).toEqual([]);
   });
 
-  test('rejects generic copy, unknown categories, and duplicate tags', () => {
+  test('rejects invalid prices, generic copy, unknown categories, and duplicate tags', () => {
     const definition = definitionWithItem('water', (item) => {
       item.category = 'placeholder';
+      item.price = 0;
       item.qualitativeNutritionHint = 'A varied everyday choice.';
       item.tags = ['food', 'food'];
     });
@@ -39,6 +40,7 @@ describe('catalogue validation', () => {
     expect(messages(definition, 'water')).toEqual(
       expect.arrayContaining([
         'unknown item category',
+        'price must be a positive integer',
         'qualitative nutrition hint is missing or generic',
         'duplicate tags',
         'category tag missing',

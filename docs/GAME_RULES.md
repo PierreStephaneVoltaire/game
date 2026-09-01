@@ -417,7 +417,7 @@ unless their authored hook requires idle state; another stream cannot begin.
 | Mom's Care Package        | 5 below $0 Balance or at Food 0–2, 72-hour cooldown                                                      |
 | Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
 | Autonomous stream         | Dynamic                                                                                                  |
-| Random offline donation   | 10, 12-hour cooldown, $5–$100 uniformly                                                                  |
+| Random offline donation   | 10, 24-hour cooldown, $5–$40 uniformly                                                                   |
 
 Mom's Care Package clearly records two seeded Liked foods as gifts, distinct
 where possible, and adds Mood +1. The full-body commission is a nonblocking project that completes at
@@ -435,7 +435,7 @@ Merch Sample, so either eligible hook can use the reopened slot. Entering debt
 later does not shorten a cooldown already recorded. Merch Sample can pay
 $15–$50 after the 1K tier on a 48-hour side-gig cooldown.
 
-The reusable $35 Can Opener has a weight-3 idle hook and a 48-hour kitchen-
+The reusable $11 Can Opener has a weight-3 idle hook and a 48-hour kitchen-
 accident cooldown: 90% Mood +1, 9% Health −1 with Mood −1..0, and 1% Health −2
 with ER narration. Its event Health loss is outside the periodic need cap.
 
@@ -494,7 +494,7 @@ Stream income is:
 round(hourly rate × elapsed hours × (0.5 + Creativity / 10))
 ```
 
-The starting hourly-rate band is $8–$18 and career milestones can replace it.
+The starting hourly-rate band is $6–$12 and career milestones can replace it.
 Income is added immediately and reduces negative cash first; it does not repay
 Hospital principal or LOC units. A normal
 completion also applies Creativity −1, Rest −1, and an equal Mood −1/0/+1 roll.
@@ -505,10 +505,10 @@ The fourth model adds one permanent percentage point before multipliers.
 
 | Donation        | Weight |                  Amount | Subscribers |
 | --------------- | -----: | ----------------------: | ----------: |
-| Kind supporter  |     55 |       $20–$60 uniformly |          +5 |
-| Raid windfall   |     27 |     $100–$400 uniformly |          +5 |
-| Major donor     |     14 | $1,000–$3,000 uniformly |         +30 |
-| Legendary donor |      4 |         exactly $10,000 |         +30 |
+| Kind supporter  |     58 |       $10–$40 uniformly |          +5 |
+| Raid windfall   |     30 |      $60–$200 uniformly |          +5 |
+| Major donor     |     10 |   $400–$1,000 uniformly |         +30 |
+| Legendary donor |      2 | $2,000–$5,000 uniformly |         +30 |
 
 Legendary is eligible only at Creativity 10. Below 10, the other tier weights
 are normalized rather than doubled. June 29 and November 14 triple donation
@@ -581,9 +581,9 @@ bands also remain unlocked after a loss.
 | ---------------: | ----------------------------------------------------------------------------------------- |
 |              100 | Debut; every run begins here                                                              |
 |              150 | First Model: first model tier unlocked                                                    |
-|            1,000 | 1K Subscribers: hourly stream rate $12–$22 and Mood +2                                    |
+|            1,000 | 1K Subscribers: hourly stream rate $9–$16 and Mood +2                                     |
 |            5,000 | Model Redesign: second model tier unlocked                                                |
-|           10,000 | Twitch Partner: hourly stream rate $15–$28                                                |
+|           10,000 | Twitch Partner: hourly stream rate $12–$20                                                |
 |           30,000 | 30K Subscribers: Subscriber Revenue 1.5×                                                  |
 |           40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
 |           50,000 | 50K Subscribers: Subscriber Revenue 2×                                                    |
@@ -595,7 +595,7 @@ bands also remain unlocked after a loss.
 |          500,000 | 500K Subscribers: Subscriber Revenue 7×                                                   |
 |        1,000,000 | 1M Subscribers: Subscriber Revenue 10×                                                    |
 
-New Model Commission costs $300 and appears once the required career tier is
+New Model Commission costs $1,000 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
 project ends at the third local midnight and grants Mood +3, Creativity +2,
 Subscribers +50, a new active appearance, and a queued fixed four-hour debut
@@ -654,7 +654,7 @@ Ending:
   current Balance, adds the item and purchase record, deducts that price, and
   adds Mood +1. With no eligible affordable item, it cannot occur.
 - Sponsored-stream deals immediately credit a seeded, uniformly selected
-  whole-dollar amount from $250 through $2,000.
+  whole-dollar amount from $250 through $1,500.
 - The one-time Agency debut adds 100,000 Subscribers and applies 1.5× natural
   discovery for seven days.
 - Algorithm boost applies 1.5× natural discovery for one day. Agency and
@@ -679,24 +679,23 @@ The renamed items are Mini Tacos, Cheeseless Toppingless Pizza, and The
 Concoction. Cheeseless Toppingless Pizza has an 85% acceptable-preparation
 chance.
 
-The lore-text merge patch adds Jaffa Cakes ($3), Oatmeal ($2), Homegrown
-Chocolate Chip Cookies ($4), and Ring Fit ($60). The three Foods are Liked and
+The catalogue includes Jaffa Cakes ($6), Oatmeal ($2), Homegrown
+Chocolate Chip Cookies ($3), and Ring Fit ($69). The three Foods are Liked and
 use their authored nutrition scores/effects; their provenance records clone
 the explicitly named comparable catalogue nutrition source. Ring Fit is a
 single-use interaction that requires owned game-control equipment and applies
-its authored seeded Mood, Rest, and Creativity effects. The same patch replaces
-listed descriptions and item-use narration by canonical ID without altering
-unlisted gameplay fields.
+its authored seeded Mood, Rest, and Creativity effects. Final descriptions and
+item-use narration are authored directly on their canonical catalogue records.
 
-The catalogue additions include Insurance Card ($150, at most one owned),
-Painkillers ($7), Electrolyte Sachet ($9; salt 2/water 2), Jar of Pickle Juice
-($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($25;
-single-use Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Pepper
-($12; stock 1–2; high effective sugar), Convention Guest Set ($120), New Model
-Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
+The catalogue additions include Insurance Card ($625, at most one owned),
+Painkillers ($7), Electrolyte Sachet ($1; salt 2/water 2), Jar of Pickle Juice
+($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($3;
+single-use Mood −2 interaction), Rigging Tablet ($699), Limited-Edition Dr Pepper
+($2; stock 1–2; high effective sugar), Convention Guest Set ($528), New Model
+Commission ($1,000), and Clippers ($29). Five Plain Tortillas is a $1 essential
 Food and starter comfort item with Food +2 and Mood +2.
-The Can Opener is a single-use item priced at $35. Three-Month-Old Rotisserie Chicken
-is an $8 Variable Food with stock, ownership, and lifetime-purchase limit 1;
+The Can Opener is a single-use item priced at $11. Three-Month-Old Rotisserie Chicken
+is a $5 Variable Food with stock, ownership, and lifetime-purchase limit 1;
 it participates in ordinary shop rotation and automatic stream snacks.
 Consuming the complete item once applies Food +5, Health −8, and Creativity
 +2, creates no persistent status or recurrence, and attributes lethal damage
@@ -843,7 +842,7 @@ example, two active stacks at the 1K tier award
 | Tournament donation chance                   | A separate `×3` chance, stacking with a special date                                                                                             |
 
 The hourly rate is one seeded whole-dollar value from the highest permanently
-unlocked band: $8–$18 initially, $12–$22 after 1K peak Subscribers, or $15–$28
+unlocked band: $6–$12 initially, $9–$16 after 1K peak Subscribers, or $12–$20
 after 10K peak Subscribers. Creativity therefore changes stream income through
 the `(0.5 + Creativity / 10)` multiplier: `×0.5` at Creativity 0, `×1` at 5,
 and `×1.5` at 10. Interrupted streams use their actual elapsed time for income
@@ -851,7 +850,7 @@ and still roll once for each completed whole hour.
 
 After a successful donation roll, its tier selects the cash and direct
 Subscriber award shown in the donation table above. The `×3` modifiers affect
-only whether a donation occurs. A Kind supporter remains $20–$60 and +5
+only whether a donation occurs. A Kind supporter remains $10–$40 and +5
 Subscribers, for example; its amount is not tripled.
 
 ### Balance and economic arithmetic
@@ -872,8 +871,8 @@ new Balance = old Balance + all income − all expenses
 | Stream completion                 | `+round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`, plus each donation's actual amount                             |
 | Commission Work                   | `+$40 + ($15 × starting Creativity)`                                                                                            |
 | Full-body commission              | `+$400` through `+$800`, seeded uniformly in whole dollars                                                                      |
-| Random offline donation           | `+$5` through `+$100`, seeded uniformly in whole dollars                                                                        |
-| Sponsored-stream deal             | `+$250` through `+$2,000`, seeded uniformly in whole dollars                                                                    |
+| Random offline donation           | `+$5` through `+$40`, seeded uniformly in whole dollars                                                                         |
+| Sponsored-stream deal             | `+$250` through `+$1,500`, seeded uniformly in whole dollars                                                                    |
 | Convention milestone              | `+$500` once                                                                                                                    |
 | Personal purchase                 | `− real catalogue price` for the one selected affordable item                                                                   |
 | Tax bill                          | `−$100` through `−$1,000`, seeded uniformly in whole dollars                                                                    |

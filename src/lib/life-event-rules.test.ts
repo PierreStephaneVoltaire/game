@@ -90,7 +90,7 @@ describe('authored life events', () => {
     expect(sponsorAmounts.size).toBeGreaterThan(1);
     for (const amount of sponsorAmounts) {
       expect(amount).toBeGreaterThanOrEqual(250);
-      expect(amount).toBeLessThanOrEqual(2000);
+      expect(amount).toBeLessThanOrEqual(1500);
     }
   });
 

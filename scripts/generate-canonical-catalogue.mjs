@@ -8,7 +8,6 @@ const SOURCE_FILES = [
 ];
 const NUTRITION_FILE = 'src/lib/data/catalogue/food-nutrition.jsonl';
 const CANONICAL_IDS_FILE = 'src/lib/data/catalogue/canonical-item-ids.json';
-const MERGE_FILE = 'src/lib/data/merge-item.json';
 const OUTPUT_FILE = 'src/lib/data/shop-items.json';
 const NUTRIENT_FIELDS = [
   'calories',
@@ -59,38 +58,16 @@ function notApplicableNutrition(item) {
 }
 
 const canonicalIds = readJson(CANONICAL_IDS_FILE);
-const mergePatch = readJson(MERGE_FILE);
 const baseItemSources = SOURCE_FILES.flatMap(readJsonLines);
 const nutritionSources = readJsonLines(NUTRITION_FILE);
 assertUniqueIds(baseItemSources, 'Catalogue source');
-assertUniqueIds(mergePatch.overrides, 'Catalogue merge override');
-assertUniqueIds(mergePatch.newItems, 'Catalogue merge new item');
 assertUniqueIds(nutritionSources, 'Nutrition source');
 
 if (new Set(canonicalIds).size !== canonicalIds.length)
   throw new Error('Canonical item ID allowlist must contain unique IDs');
-const baseIds = new Set(baseItemSources.map((item) => item.id));
-const unknownOverrides = mergePatch.overrides.filter(
-  (override) => !baseIds.has(override.id),
-);
-if (unknownOverrides.length)
+if (baseItemSources.length !== canonicalIds.length)
   throw new Error(
-    `Catalogue merge overrides unknown IDs: ${unknownOverrides.map(({ id }) => id).join(', ')}`,
-  );
-const overrideById = new Map(
-  mergePatch.overrides.map((override) => [override.id, override]),
-);
-const unorderedItemSources = [
-  ...baseItemSources.map((source) => ({
-    ...source,
-    ...(overrideById.get(source.id) ?? {}),
-  })),
-  ...mergePatch.newItems,
-];
-assertUniqueIds(unorderedItemSources, 'Merged catalogue source');
-if (unorderedItemSources.length !== canonicalIds.length)
-  throw new Error(
-    `Expected ${canonicalIds.length} catalogue source records, found ${unorderedItemSources.length}`,
+    `Expected ${canonicalIds.length} catalogue source records, found ${baseItemSources.length}`,
   );
 if (nutritionSources.length !== 112)
   throw new Error(
@@ -102,7 +79,7 @@ const nutritionById = new Map(
 );
 const nutritionTemplates = new Map(nutritionById);
 const sourceById = new Map(
-  unorderedItemSources.map((source) => [source.id, source]),
+  baseItemSources.map((source) => [source.id, source]),
 );
 const unexpectedIds = [...sourceById.keys()].filter(
   (id) => !canonicalIds.includes(id),
@@ -158,6 +135,6 @@ if (process.argv.includes('--check')) {
 } else {
   writeFileSync(outputUrl, output);
   console.log(
-    `Generated ${items.length} canonical catalogue items from maintained sources and merge patch.`,
+    `Generated ${items.length} canonical catalogue items from maintained sources.`,
   );
 }

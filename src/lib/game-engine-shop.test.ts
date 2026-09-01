@@ -45,9 +45,12 @@ describe('shop command seam', () => {
       BUNDLED_GAME_DEFINITION,
     );
     expect(started.shop.itemIds).toContain('clippers');
+    const clippers = BUNDLED_GAME_DEFINITION.items.find(
+      ({ id }) => id === 'clippers',
+    )!;
 
     const purchased = dispatchCommand(
-      { ...started, balance: 25 },
+      { ...started, balance: clippers.price },
       {
         type: 'buy_item',
         commandId: 'buy-clippers',

@@ -17,16 +17,12 @@ gameplay rules.
   status/event hooks, actions, room placement, and generated PNG paths.
 - `src/lib/data/catalogue/food-items.jsonl`,
   `food-nutrition.jsonl`, and `non-food-items.jsonl` — maintained,
-  individually authored catalogue inputs. Nutrition facts stay separate from
-  gameplay values so the compiler only joins records; it never derives scores.
+  individually authored catalogue inputs containing every item and its final
+  copy/gameplay fields. Nutrition facts stay separate from gameplay values so
+  the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
   232-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
-- `src/lib/data/merge-item.json` — shallow description/narration overrides
-  for existing catalogue IDs plus four fully authored additions. The catalogue
-  compiler applies this patch after loading the maintained JSONL sources;
-  `cloneNutritionFrom` reuses an explicitly named nutrition record without
-  deriving gameplay scores.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   generic avatar path. Runtime code does not hardcode a companion name; the
   name-isolation validator keeps that display-only value out of structural

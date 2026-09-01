@@ -18,7 +18,7 @@
       "id": "sponsored_stream_deal",
       "rollDenominator": 2400,
       "messageTemplateId": "sponsored_stream_deal",
-      "cashRange": { "minimum": 250, "maximum": 2000 }
+      "cashRange": { "minimum": 250, "maximum": 1500 }
     },
     {
       "id": "algorithm_boost",

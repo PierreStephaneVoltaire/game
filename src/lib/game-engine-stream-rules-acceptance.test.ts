@@ -238,7 +238,10 @@ describe('automatic stream snacks and income', () => {
     const income =
       first.state.balance - BUNDLED_GAME_DEFINITION.startingCurrency;
     expect(
-      Array.from({ length: 11 }, (_, index) => index + 8).some(
+      Array.from(
+        { length: rules.stream.income.rateSlots },
+        (_, index) => index + rules.stream.income.minimumRate,
+      ).some(
         (hourlyRate) =>
           Math.round(hourlyRate * duration * (0.5 + 8 / 10)) === income,
       ),
