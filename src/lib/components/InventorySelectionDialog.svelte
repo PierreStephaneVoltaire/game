@@ -66,7 +66,13 @@
             ? `${choice.name}, ${choice.detail}`
             : `${choice.name}, ${choice.owned} available`}
         >
-          <img src={choice.image} alt="" width="72" height="72" />
+          <img
+            src={choice.image}
+            alt=""
+            width="72"
+            height="72"
+            decoding="async"
+          />
           <strong>{choice.name}</strong>
           <span>{choice.detail ?? `×${choice.owned}`}</span>
           <div

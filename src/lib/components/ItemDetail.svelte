@@ -33,7 +33,13 @@
       aria-label="Close item details"
       on:click={onClose}>×</button
     >
-    <img src={item.image} alt={item.name} width="144" height="144" />
+    <img
+      src={item.image}
+      alt={item.name}
+      width="144"
+      height="144"
+      decoding="async"
+    />
     <p class="eyebrow">ITEM DETAIL</p>
     <h2 id="item-detail-title">{item.name}</h2>
     <p>{item.description}</p>

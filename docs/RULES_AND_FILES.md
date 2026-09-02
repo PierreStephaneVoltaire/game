@@ -14,7 +14,8 @@ gameplay rules.
   belongs to `event-texts.json`.
 - `src/lib/data/shop-items.json` — the 232 compiled canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
-  status/event hooks, actions, room placement, and generated PNG paths.
+  status/event hooks, actions, room placement, and content-versioned generated
+  PNG paths.
 - `src/lib/data/catalogue/food-items.jsonl`,
   `food-nutrition.jsonl`, and `non-food-items.jsonl` — maintained,
   individually authored catalogue inputs containing every item and its final

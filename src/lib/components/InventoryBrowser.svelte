@@ -75,7 +75,13 @@
             on:click={() => onOpen(item.id)}
             aria-label={`View ${item.name}, ${item.owned} owned`}
           >
-            <img src={item.image} alt="" width="56" height="56" />
+            <img
+              src={item.image}
+              alt=""
+              width="56"
+              height="56"
+              decoding="async"
+            />
             <span class="inventory-card-copy">
               <strong>{item.name}</strong>
               <small>{item.category}</small>

@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { createHash } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const ROOT = new URL('../', import.meta.url);
@@ -35,6 +36,12 @@ function assertUniqueIds(records, label) {
       throw new Error(`${label} contains duplicate id ${record.id}`);
     ids.add(record.id);
   }
+}
+
+function versionedItemImage(id) {
+  const bytes = readFileSync(new URL(`static/items/generated/${id}.png`, ROOT));
+  const version = createHash('sha256').update(bytes).digest('hex').slice(0, 12);
+  return `/items/generated/${id}.png?v=${version}`;
 }
 
 function notApplicableNutrition(item) {
@@ -108,7 +115,7 @@ const items = itemSources.map((source) => {
   if (nutrition && !cloneNutritionFrom) nutritionById.delete(source.id);
   return {
     ...item,
-    image: `/items/generated/${source.id}.png`,
+    image: versionedItemImage(source.id),
     nutrition: nutrition
       ? Object.fromEntries(
           Object.entries(nutrition).filter(([key]) => key !== 'id'),

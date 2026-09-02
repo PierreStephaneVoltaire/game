@@ -34,6 +34,7 @@
             alt=""
             width="52"
             height="52"
+            decoding="async"
           />{:else}<span class="offer-symbol" aria-hidden="true">$</span
           >{/if}<span
           ><strong>{line.item.name}</strong><small

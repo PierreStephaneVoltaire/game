@@ -97,8 +97,14 @@ function validateItem(
     issues.push('unknown item category');
   if (!Number.isInteger(item.price) || item.price <= 0)
     issues.push('price must be a positive integer');
-  if (item.image !== `/items/generated/${item.id}.png`)
-    issues.push('catalogue item must reference its stable generated PNG asset');
+  const [imagePath, imageQuery] = item.image.split('?');
+  if (
+    imagePath !== `/items/generated/${item.id}.png` ||
+    !/^v=[a-f0-9]{12}$/.test(imageQuery ?? '')
+  )
+    issues.push(
+      'catalogue item must reference its content-versioned generated PNG asset',
+    );
   if (
     !item.qualitativeNutritionHint?.trim() ||
     GENERIC_COPY.has(item.qualitativeNutritionHint) ||

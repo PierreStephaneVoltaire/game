@@ -182,6 +182,7 @@
                   alt={anchor.item.name}
                   width="64"
                   height="64"
+                  decoding="async"
                 />
                 <button
                   type="button"
@@ -211,6 +212,7 @@
             data-appearance-id={model.activeAvatar.id}
             width="176"
             height="176"
+            decoding="async"
           />
         </div>
       </section>
