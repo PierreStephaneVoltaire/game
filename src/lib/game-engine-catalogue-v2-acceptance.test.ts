@@ -65,7 +65,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('insurance-card')).toMatchObject({
       category: 'care',
-      price: 625,
+      price: 250,
       supportsQuantity: false,
       maximumOwned: 1,
     });

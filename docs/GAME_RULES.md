@@ -10,14 +10,14 @@ remain generic.
 
 ## Core rules
 
-- Health is a whole number from 0 through 40. Food, Mood, Rest, Bond, and
+- Health is a whole number from 0 through 30. Food, Mood, Rest, Bond, and
   Creativity are whole numbers from 0 through 10. Values clamp at those limits.
 - Health at 1–8 or Food, Rest, or Mood at 0–2 is a critical condition. Health
   0 causes Death. Bond and Creativity are not critical conditions. Mood held
   continuously at 0 can cause Quit Streaming.
 - All chance is seeded. The same seed, state, action, and opportunity produce
   the same outcome.
-- A run starts with Food 6, Health 32, Mood 6, Rest 7, Bond 4, Creativity 3,
+- A run starts with Food 6, Health 24, Mood 6, Rest 7, Bond 4, Creativity 3,
   $60, 100 current and peak Subscribers, an available Line of Credit, one
   Water, one Uncrustables, one Pretzel, and one Five
   Plain Tortillas.
@@ -309,6 +309,12 @@ refusal chance. The first consecutive completion grants its primary reward;
 repeats keep Bond but suppress Mood for Play or Creativity for Socialize.
 Switching to another companion action ends the repetition streak. Refusals and
 interruptions do not grant completion rewards.
+
+When owned, currently applicable item actions affect Mood or Creativity, the
+Socialize or Play button opens the same inventory-card picker used by Feed.
+The Default card runs the ordinary Socialize or Play activity without an item.
+If no applicable item exists, the button runs that default activity immediately
+without opening a dialog.
 
 Rest, Socialize, Play, streams, and Commission Work end if a condition that was
 not critical at their start becomes critical. Interrupted Socialize, Play, and
@@ -687,7 +693,7 @@ single-use interaction that requires owned game-control equipment and applies
 its authored seeded Mood, Rest, and Creativity effects. Final descriptions and
 item-use narration are authored directly on their canonical catalogue records.
 
-The catalogue additions include Insurance Card ($625, at most one owned),
+The catalogue additions include Insurance Card ($250, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($1; salt 2/water 2), Jar of Pickle Juice
 ($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($3;
 single-use Mood −2 interaction), Rigging Tablet ($699), Limited-Edition Dr Pepper
@@ -736,7 +742,9 @@ and appears as a searchable, filterable grid with 24 items per page.
 
 Placed room effects are removed by the exact amount that was originally
 applied, so clamping never makes placement changes irreversible. The room keeps
-its fixed anchors and three-row layout.
+its fixed anchors and three-row layout. Clicking an empty anchor lists only
+owned items that fit it. On the room page, the active Room navigation control
+lists all owned placeable items whose destination anchor is empty.
 
 ## Journey and Endings
 
@@ -747,8 +755,8 @@ emergency rescues, sugar warnings, reading, side gigs, injuries, craving
 expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
 room changes, Balance debt crossings and recovery, LOC operations, life
 events and expiring discovery boosts, Made It, ending warnings and recoveries,
-and terminal Endings. The room displays only the latest projected Journey
-entry.
+and terminal Endings. The room displays the latest ten projected Journey
+entries with their localized day and time in a fixed-height scrolling panel.
 
 It hides reconciliation, decay, Subscriber Revenue ticks, opportunity
 bookkeeping, shop refreshes, nutrition counters, command receipts, and other
@@ -766,7 +774,7 @@ narration text.
 
 `+` adds the stated amount, `−` subtracts it, and `×` multiplies the value to
 its left. Metric changes are applied to the current metric and then clamped:
-Health stays from 0 through 40, while Food, Mood, Rest, Bond, and Creativity
+Health stays from 0 through 30, while Food, Mood, Rest, Bond, and Creativity
 stay from 0 through 10. Current Subscribers cannot fall below 0. Balance has no
 lower clamp.
 

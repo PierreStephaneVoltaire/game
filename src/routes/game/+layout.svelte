@@ -12,8 +12,13 @@
   } from '$lib/game-session';
   import RunSettings from '$lib/components/RunSettings.svelte';
   import { gameCopy } from '$lib/ui/game-copy';
+  import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
 
   let authorized = false;
+
+  function openRoomInventoryPicker() {
+    window.dispatchEvent(new CustomEvent(OPEN_ROOM_INVENTORY_PICKER_EVENT));
+  }
 
   onMount(() => {
     let mounted = true;
@@ -72,10 +77,21 @@
         aria-label="Game navigation"
         data-game-row="navigation"
       >
-        <a href={resolve('/game')}>{gameCopy.room}</a>
+        {#if $page.route.id === '/game'}
+          <button
+            type="button"
+            on:click={openRoomInventoryPicker}
+            disabled={Boolean(
+              $gameViewModel?.activity || $gameViewModel?.commandsDisabled,
+            )}>{gameCopy.room}</button
+          >
+        {:else}
+          <a href={resolve('/game')}>{gameCopy.room}</a>
+        {/if}
         <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
         <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
         <a href={resolve('/game/history')}>{gameCopy.history}</a>
+        <a href={resolve('/about')}>About</a>
       </nav>
     {/if}
   </div>
@@ -113,7 +129,8 @@
     margin: 38px auto 0;
     padding: 0 0 20px;
   }
-  .game-navigation a {
+  .game-navigation a,
+  .game-navigation button {
     display: grid;
     flex: 1 1 0;
     min-height: 48px;
@@ -124,15 +141,23 @@
     box-shadow: 5px 5px 0 #f3a15f;
     font-size: 0.78rem;
     font-weight: 900;
+    font-family: inherit;
     text-decoration: none;
+    cursor: pointer;
   }
-  .game-navigation a:hover {
+  .game-navigation a:hover,
+  .game-navigation button:hover:not(:disabled) {
     color: #fff;
     background: #512b9a;
   }
-  .game-navigation a:active {
+  .game-navigation a:active,
+  .game-navigation button:active:not(:disabled) {
     box-shadow: 2px 2px 0 #f3a15f;
     transform: translate(3px, 3px);
+  }
+  .game-navigation button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
   }
   :global(button:focus-visible),
   :global(a:focus-visible),
@@ -162,7 +187,8 @@
     .game-navigation {
       gap: 9px;
     }
-    .game-navigation a {
+    .game-navigation a,
+    .game-navigation button {
       min-height: 44px;
       font-size: 0.7rem;
     }

@@ -82,6 +82,7 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
       },
     ],
     causalEvents: [],
+    careChoices: { socialize: [], play: [] },
     anchors: [],
     inventory: [],
     shop: [],

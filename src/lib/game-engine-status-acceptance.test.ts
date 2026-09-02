@@ -129,7 +129,7 @@ describe('context status behavior through commands', () => {
     expect(result.inventory.uncrustables).toBe(0);
     expect(result.metrics.food).toBe(9);
     expect(result.statuses.sick).toBeDefined();
-    expect(result.metrics).toMatchObject({ health: 31, mood: 5 });
+    expect(result.metrics).toMatchObject({ health: 23, mood: 5 });
   });
 
   test('a Mood-raising Play at Mood 9 can add Overstimulated', () => {
@@ -273,6 +273,6 @@ describe('context status behavior through commands', () => {
     }
     expect(result).toBeDefined();
     expect(result!.statuses.kidney_stone).toBeDefined();
-    expect(result!.metrics).toMatchObject({ health: 31, rest: 5, mood: 5 });
+    expect(result!.metrics).toMatchObject({ health: 23, rest: 5, mood: 5 });
   });
 });

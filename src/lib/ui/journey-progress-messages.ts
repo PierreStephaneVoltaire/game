@@ -104,22 +104,25 @@ function followerMessage(
   return `${petName}'s stream brought ${followers.toLocaleString('en-US')} new ${followers === 1 ? 'follower' : 'followers'} to the channel.`;
 }
 
-function milestoneMessage(event: GameEvent, petName: string): string {
+function milestoneMessage(
+  event: GameEvent,
+  petName: string,
+): string | undefined {
   const milestone =
     event.cause ??
     event.message.split(' milestone')[0]?.trim().replaceAll(' ', '_');
+  if (milestone === 'first_model' || milestone === 'model_redesign')
+    return undefined;
   const messages: Record<string, string> = {
     debut: `${petName}'s channel made its debut.`,
-    first_model: `${petName}'s first new-model commission is now available.`,
     sub_1k: `${petName}'s channel reached 1,000 subscribers! Better stream rates are now available.`,
-    model_redesign: `${petName}'s model-redesign commission is now available.`,
     twitch_partner: `${petName} reached Twitch Partner! The best stream-rate band is now available.`,
     sub_30k: `${petName}'s channel reached 30,000 subscribers!`,
     tournament_appearance: `${petName} earned a tournament appearance! A special tournament stream is waiting for an open afternoon.`,
     sub_50k: `${petName}'s channel reached 50,000 subscribers! Subscriber Revenue now pays at 2x.`,
     convention_guest: `${petName} became a Convention Guest! An appearance fee arrived, along with new set and model opportunities.`,
     sub_100k: `${petName}'s channel reached 100,000 subscribers! Subscriber Revenue now pays at 3x.`,
-    three_d_ready: `${petName}'s channel reached 3D Ready! The final model commission is now available.`,
+    three_d_ready: `${petName}'s channel reached 3D Ready!`,
     sub_200k: `${petName}'s channel reached 200,000 subscribers! Subscriber Revenue now pays at 4x.`,
     sub_250k: `${petName}'s channel reached 250,000 subscribers! Subscriber Revenue now pays at 5x.`,
     sub_500k: `${petName}'s channel reached 500,000 subscribers! Subscriber Revenue now pays at 7x.`,

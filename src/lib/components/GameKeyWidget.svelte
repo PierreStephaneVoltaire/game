@@ -14,6 +14,7 @@
   let busy = true;
 
   $: validGameKey = gameKeyIsValid(gameKey);
+  $: generatedKeyIsCurrent = generatedKey !== '' && gameKey === generatedKey;
 
   onMount(() => {
     void restoreAccount().then(async (account) => {
@@ -35,11 +36,12 @@
   function generateKey(): void {
     if (busy) return;
     generatedKey = createGameKey();
+    gameKey = generatedKey;
   }
 
   async function continueWithNewKey(): Promise<void> {
     if (busy || !generatedKey) return;
-    await goto(`${resolve('/mode')}?key=${generatedKey}`);
+    await goto(resolve(`/mode?key=${generatedKey}`));
   }
 </script>
 
@@ -68,14 +70,10 @@
     >Retrieve game keys</button
   >
 
-  {#if generatedKey}
-    <div class="generated-key">
-      <label for="new-game-key">New game key</label>
-      <input id="new-game-key" type="text" readonly value={generatedKey} />
-      <button type="button" disabled={busy} on:click={continueWithNewKey}
-        >Continue</button
-      >
-    </div>
+  {#if generatedKeyIsCurrent}
+    <button type="button" disabled={busy} on:click={continueWithNewKey}
+      >Continue</button
+    >
   {:else}
     <button
       class="secondary-action"
@@ -89,11 +87,6 @@
 <style>
   @import './login-widget.css';
 
-  .generated-key {
-    display: grid;
-    gap: 9px;
-    margin-top: 28px;
-  }
   .secondary-action {
     width: 100%;
     justify-content: center;

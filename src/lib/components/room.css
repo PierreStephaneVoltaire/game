@@ -9,10 +9,9 @@
       0.42fr
     );
   gap: clamp(18px, 2vw, 24px);
-  align-items: stretch;
+  align-items: start;
 }
-.room-card,
-.feed-dialog {
+.room-card {
   border: 4px solid #512b9a;
   background: #fffdf9;
   box-shadow: 8px 8px 0 #f3a15f;
@@ -97,9 +96,16 @@
 }
 .event-panel {
   min-width: 0;
+  max-height: 570px;
+  overflow-y: auto;
   padding: 16px 20px;
   color: #766d7f;
   background: #fff;
+}
+.event-panel h2 {
+  margin: 0 0 14px;
+  color: #512b9a;
+  font-size: 0.95rem;
 }
 .event-panel ol {
   margin: 0;
@@ -109,6 +115,16 @@
 .event-panel li + li {
   margin-top: 12px;
 }
+.event-panel time {
+  display: block;
+  margin-bottom: 3px;
+  color: #8d386e;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+.event-panel li span {
+  display: block;
+}
 .care-actions {
   display: flex;
   justify-content: space-between;
@@ -116,8 +132,7 @@
   width: 100%;
   margin: 38px 0 0;
 }
-.care-actions button,
-.feed-quantity button {
+.care-actions button {
   border: 3px solid #512b9a;
   color: #512b9a;
   background: #fff;
@@ -190,73 +205,6 @@ button:disabled {
   padding: 10px;
   color: #8b1739;
   background: #ffe0e8;
-}
-.feed-dialog {
-  width: min(720px, calc(100% - 32px));
-  max-height: calc(100vh - 48px);
-  padding: clamp(18px, 4vw, 30px);
-  color: #32254b;
-}
-.feed-dialog::backdrop {
-  background: #27163db3;
-}
-.dialog-heading {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-}
-.dialog-heading h2 {
-  margin: 0 0 22px;
-  color: #512b9a;
-}
-.dialog-close {
-  border: 0;
-  color: #512b9a;
-  background: transparent;
-  font-size: 1.8rem;
-  cursor: pointer;
-}
-.food-choices {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-  gap: 16px;
-}
-.food-choice {
-  display: grid;
-  gap: 5px;
-  place-items: center;
-  min-height: 54px;
-  padding: 11px;
-  border: 3px solid #512b9a;
-  background: #fff;
-  box-shadow: 5px 5px 0 #f3a15f;
-}
-.food-choices img {
-  image-rendering: pixelated;
-}
-.food-choices span {
-  color: #766d7f;
-}
-.feed-quantity {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.feed-quantity button {
-  display: grid;
-  width: 34px;
-  min-height: 34px;
-  padding: 0;
-  place-items: center;
-}
-.feed-quantity output {
-  min-width: 1.5rem;
-  text-align: center;
-  font-weight: 800;
-}
-.feed-confirmation {
-  margin-top: 24px;
 }
 button:focus-visible,
 a:focus-visible {

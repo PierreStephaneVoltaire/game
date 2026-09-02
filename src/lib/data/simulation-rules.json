@@ -1,6 +1,6 @@
 {
   "statRange": { "min": 0, "max": 10 },
-  "healthMaximum": 40,
+  "healthMaximum": 30,
   "startingCurrency": 60,
   "startingInventory": {
     "water": 1,
@@ -14,7 +14,7 @@
   "maxCartQuantity": 20,
   "startingMetrics": {
     "food": 6,
-    "health": 32,
+    "health": 24,
     "mood": 6,
     "rest": 7,
     "bond": 4,

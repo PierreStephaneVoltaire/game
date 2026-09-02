@@ -65,6 +65,36 @@ describe('Journey progression narration', () => {
     ).toEqual(["Nova's channel reached 30,000 subscribers!"]);
   });
 
+  test('does not announce shop inventory unlocked by career milestones', () => {
+    const events: GameEvent[] = [
+      {
+        id: 'first-model',
+        type: 'career_milestone',
+        at: 1,
+        message: 'first model milestone reached.',
+        cause: 'first_model',
+      },
+      {
+        id: 'model-redesign',
+        type: 'career_milestone',
+        at: 2,
+        message: 'model redesign milestone reached.',
+        cause: 'model_redesign',
+      },
+      {
+        id: 'three-d-ready',
+        type: 'career_milestone',
+        at: 3,
+        message: 'three d ready milestone reached.',
+        cause: 'three_d_ready',
+      },
+    ];
+
+    expect(
+      projectJourney(events, 'Nova').map((entry) => entry.message),
+    ).toEqual(["Nova's channel reached 3D Ready!"]);
+  });
+
   test('narrates background projects and queued special streams', () => {
     const events: GameEvent[] = [
       {

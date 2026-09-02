@@ -16,7 +16,7 @@ function prepared(seed: string): GameState {
     ...initial,
     metrics: {
       food: 10,
-      health: 40,
+      health: 30,
       mood: 10,
       rest: 10,
       bond: 10,

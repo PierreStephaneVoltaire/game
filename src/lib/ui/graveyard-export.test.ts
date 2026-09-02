@@ -88,6 +88,7 @@ function record(): GameViewModel {
         sourceEventIds: ['damage'],
       },
     ],
+    careChoices: { socialize: [], play: [] },
     anchors: [],
     inventory: [],
     shop: [],

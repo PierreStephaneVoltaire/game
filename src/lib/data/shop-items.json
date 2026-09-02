@@ -19219,7 +19219,7 @@
       "checked what the Insurance Card would cover at the hospital."
     ],
     "category": "care",
-    "price": 625,
+    "price": 250,
     "description": "For the next 'entirely unrelated injury.' There will be one.",
     "qualitativeNutritionHint": "A one-claim care safeguard for an expensive medical emergency.",
     "edible": false,

@@ -66,14 +66,10 @@
     {#if model.madeItUnlocked && !model.ending}<strong
         >Ending unlocked: Made It</strong
       >{/if}
-    <span>Career: {model.career.label}</span>
+    <span><strong>Career:</strong> {model.career.label}</span>
     <span
-      >Streams: {numbers.format(model.streamStats.started)} started · {numbers.format(
-        model.streamStats.completed,
-      )} completed · {numbers.format(model.streamStats.interrupted)} interrupted</span
-    >
-    <span
-      >Stream time: {(model.streamStats.elapsedMs / 3_600_000).toFixed(1)} hours</span
+      ><strong>Streams:</strong>
+      {numbers.format(model.streamStats.completed)}</span
     >
     {#if model.career.nextMilestone}
       <span
