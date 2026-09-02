@@ -1,10 +1,5 @@
 import type { GameDefinition } from '$lib/game-definition';
-import type {
-  GameCommand,
-  GameState,
-  MetricName,
-  StatusName,
-} from '$lib/game-types';
+import type { GameCommand, GameState, StatusName } from '$lib/game-types';
 import { companion } from './companion';
 import { gameCopy, statusLabel } from './game-copy';
 import {
@@ -25,7 +20,7 @@ import {
   type TimedEffectViewModel,
 } from './progression-view-model';
 import type { CompanionAppearance } from './companion';
-import { LINE_OF_CREDIT_OFFER_ID, metricMaximum } from '$lib/game-constants';
+import { LINE_OF_CREDIT_OFFER_ID } from '$lib/game-constants';
 import {
   endingPresentation,
   endingRiskPresentation,
@@ -41,18 +36,16 @@ import {
   lineOfCreditShopOffer,
   type ShopOfferViewModel,
 } from './shop-offer-view-model';
-
+import {
+  careActionChoices,
+  roomPlacementChoices,
+  type InventoryActionChoice,
+} from './room-action-view-model';
+import { metricPresentation, type MetricViewModel } from './metric-view-model';
 export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
 export type { ShopOfferViewModel } from './shop-offer-view-model';
 export type { EndingRiskViewModel, EndingViewModel } from './ending-view-model';
-
-export type MetricViewModel = {
-  key: MetricName;
-  label: string;
-  value: number;
-  maximum: number;
-  percentage: number;
-};
+export type { MetricViewModel } from './metric-view-model';
 export type EventViewModel = JourneyEntryViewModel;
 export type ActivityViewModel = {
   label: string;
@@ -99,7 +92,16 @@ export type GameViewModel = {
   commandsDisabled: boolean;
   events: EventViewModel[];
   causalEvents: EventViewModel[];
-  anchors: Array<{ key: string; label: string; item: ItemViewModel | null }>;
+  careChoices: {
+    socialize: InventoryActionChoice[];
+    play: InventoryActionChoice[];
+  };
+  anchors: Array<{
+    key: string;
+    label: string;
+    item: ItemViewModel | null;
+    placementChoices: InventoryActionChoice[];
+  }>;
   inventory: ItemViewModel[];
   shop: ShopOfferViewModel[];
   catalogue: ItemViewModel[];
@@ -110,14 +112,6 @@ export type GameViewModel = {
   categories: string[];
 };
 
-const metricKeys: MetricName[] = [
-  'food',
-  'health',
-  'mood',
-  'rest',
-  'bond',
-  'creativity',
-];
 const anchorKeys = Object.keys(gameCopy.anchors);
 
 function formatTime(value: number, timezone: string, locale: string): string {
@@ -200,16 +194,7 @@ export function createGameViewModel(
     ...finances,
     madeItUnlocked: state.endingUnlocks.made_it !== null,
     ...progressionPresentation(state, definition),
-    metrics: metricKeys.map((key) => {
-      const maximum = metricMaximum(key);
-      return {
-        key,
-        label: gameCopy.metrics[key],
-        value: state.metrics[key],
-        maximum,
-        percentage: (state.metrics[key] / maximum) * 100,
-      };
-    }),
+    metrics: metricPresentation(state),
     endingRisks: endingRiskPresentation(state),
     statuses: (Object.keys(state.statuses) as StatusName[]).map((key) => ({
       key,
@@ -225,10 +210,15 @@ export function createGameViewModel(
     commandsDisabled: state.ending !== null,
     events,
     causalEvents: causalEventViews,
+    careChoices: {
+      socialize: careActionChoices(state, definition, ownership, 'mood'),
+      play: careActionChoices(state, definition, ownership, 'creativity'),
+    },
     anchors: anchorKeys.map((key) => ({
       key,
       label: gameCopy.anchors[key as keyof typeof gameCopy.anchors],
       item: itemFor(state, definition, state.room[key], ownership),
+      placementChoices: roomPlacementChoices(state, definition, key),
     })),
     inventory,
     shop,
@@ -244,6 +234,7 @@ export function createGameViewModel(
         : 0),
     cartCheckoutAllowed:
       cartCheckoutAllowed &&
+      (state.balance < 0 || cartTotal <= state.balance) &&
       !(
         state.lineOfCredit.status === 'open' &&
         state.balance <

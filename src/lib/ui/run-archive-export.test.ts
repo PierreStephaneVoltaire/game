@@ -14,7 +14,9 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
         ? 'Death'
         : kind === 'quit_streaming'
           ? 'Quit Streaming'
-          : 'Financial Ruin',
+          : kind === 'financial_ruin'
+            ? 'Financial Ruin'
+            : 'Made It',
     explanation:
       kind === 'death'
         ? 'Health reached 0.'
@@ -80,6 +82,7 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
       },
     ],
     causalEvents: [],
+    careChoices: { socialize: [], play: [] },
     anchors: [],
     inventory: [],
     shop: [],
@@ -97,6 +100,7 @@ describe('run archive export', () => {
     ['death', 'Death'],
     ['quit_streaming', 'Quit Streaming'],
     ['financial_ruin', 'Financial Ruin'],
+    ['made_it', 'Made It'],
   ] as const)('exports the %s outcome', (kind, title) => {
     const model = record(kind);
     const markdown = runArchiveExportMarkdown(model);

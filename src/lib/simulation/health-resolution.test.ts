@@ -39,15 +39,15 @@ describe('periodic Health resolution', () => {
     expect(criticalMetrics(metrics({ health: 9 }))).not.toContain('health');
   });
 
-  test('caps Health at 40 while leaving recovery amounts unchanged', () => {
+  test('caps Health at 30 while leaving recovery amounts unchanged', () => {
     const result = resolveHealthWindow({
-      health: 39,
-      metricsAfterDecay: metrics({ food: 10, rest: 10, mood: 10, health: 39 }),
-      recoveryMetrics: metrics({ food: 10, rest: 10, mood: 10, health: 39 }),
+      health: 29,
+      metricsAfterDecay: metrics({ food: 10, rest: 10, mood: 10, health: 29 }),
+      recoveryMetrics: metrics({ food: 10, rest: 10, mood: 10, health: 29 }),
       foodDecayHit: false,
     });
 
-    expect(result).toMatchObject({ recovery: 2, health: 40 });
+    expect(result).toMatchObject({ recovery: 2, health: 30 });
   });
 
   test('uses the configured recovery buckets', () => {
@@ -155,6 +155,10 @@ describe('protected activities and Streaming fairness', () => {
     const vulnerable = {
       ...initial,
       metrics: metrics({ food: 3, rest: 3, mood: 3, health: 3 }),
+      history: {
+        ...initial.history,
+        autonomousRescue: { foodLocked: true, restLocked: true },
+      },
     };
     const result = dispatchCommand(
       vulnerable,

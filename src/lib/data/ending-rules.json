@@ -96,6 +96,9 @@
       "journey": ["The Journey"]
     },
     "presentation": {
+      "madeIt": {
+        "title": ["Made It"]
+      },
       "death": {
         "title": ["Gone Offline (Forever)"],
         "explanation": [

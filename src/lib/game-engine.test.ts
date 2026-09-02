@@ -96,6 +96,35 @@ describe('reconcileTime', () => {
     expect(afterFourHours.lastResolvedAt).toBe(startedAt + 4 * 60 * 60 * 1_000);
   });
 
+  test('halves Food decay probability while Rest is active', () => {
+    const initial = startRun(
+      { mode: 'realtime', now: 0, seed: 'rest-half-3', timezone: 'UTC' },
+      BUNDLED_GAME_DEFINITION,
+    );
+    const awake = reconcileTime(
+      initial,
+      2 * 60 * 60 * 1_000,
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+    const resting = reconcileTime(
+      {
+        ...initial,
+        activity: {
+          id: 'activity-rest',
+          type: 'rest',
+          startedAt: 0,
+          endsAt: 4 * 60 * 60 * 1_000,
+          sourceActionId: 'rest',
+        },
+      },
+      2 * 60 * 60 * 1_000,
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+
+    expect(awake.metrics.food).toBe(5);
+    expect(resting.metrics.food).toBe(6);
+  });
+
   test('applies critical-need Health loss at each two-hour boundary', () => {
     const started = startRun(
       { mode: 'streaming', now: 0, seed: 'critical-cadence', timezone: 'UTC' },
@@ -113,7 +142,7 @@ describe('reconcileTime', () => {
     ).state;
 
     // This seed misses both Food decay opportunities at the reduced 65% rate.
-    expect(afterFourHours.metrics).toMatchObject({ food: 2, health: 32 });
+    expect(afterFourHours.metrics).toMatchObject({ food: 2, health: 24 });
   });
 
   test('records the terminal Health-loss event as the causal death chain', () => {
@@ -222,7 +251,7 @@ describe('dispatchCommand', () => {
     expect(result.state.inventory.uncrustables).toBe(0);
     expect(result.state.metrics.food).toBe(9);
     expect(result.state.statuses.sick).toMatchObject({ source: 'feeding' });
-    expect(result.state.metrics).toMatchObject({ health: 31, mood: 5 });
+    expect(result.state.metrics).toMatchObject({ health: 23, mood: 5 });
   });
 
   test('uses an owned care consumable through the same item command seam', () => {

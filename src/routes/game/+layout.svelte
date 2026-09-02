@@ -2,6 +2,9 @@
   import { onMount } from 'svelte';
   import { resolve } from '$app/paths';
   import { page } from '$app/stores';
+  import { goto } from '$app/navigation';
+  import { restoreAccount } from '$lib/accounts/account-client';
+  import AccountMenu from '$lib/accounts/AccountMenu.svelte';
   import {
     ensureGameSession,
     gameViewModel,
@@ -9,14 +12,38 @@
   } from '$lib/game-session';
   import RunSettings from '$lib/components/RunSettings.svelte';
   import { gameCopy } from '$lib/ui/game-copy';
+  import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
+
+  let authorized = false;
+
+  function openRoomInventoryPicker() {
+    window.dispatchEvent(new CustomEvent(OPEN_ROOM_INVENTORY_PICKER_EVENT));
+  }
 
   onMount(() => {
-    void ensureGameSession();
+    let mounted = true;
+    void restoreAccount()
+      .then(async (account) => {
+        if (!account) {
+          await goto(resolve('/login'));
+          return;
+        }
+        if (!mounted) return;
+        const sessionReady = await ensureGameSession();
+        if (!sessionReady) {
+          await goto(resolve('/key'));
+          return;
+        }
+        if (mounted) authorized = true;
+      })
+      .catch(() => goto(resolve('/login')));
     const reconcile = () => {
-      if (document.visibilityState === 'visible') void reconcileGameClock();
+      if (authorized && document.visibilityState === 'visible')
+        void reconcileGameClock();
     };
     document.addEventListener('visibilitychange', reconcile);
     return () => {
+      mounted = false;
       document.removeEventListener('visibilitychange', reconcile);
     };
   });
@@ -29,32 +56,46 @@
   /></svelte:head
 >
 
-<div class="game-shell">
-  <header class="game-nav">
-    <div class="header-tools">
-      {#if $gameViewModel}
-        <RunSettings
-          mode={$gameViewModel.mode}
-          seed={$gameViewModel.seed}
-          ended={Boolean($gameViewModel.ending)}
-        />
-      {/if}
-    </div>
-  </header>
-  <slot />
-  {#if !$page.url.pathname.startsWith('/game/shop')}
-    <nav
-      class="game-navigation"
-      aria-label="Game navigation"
-      data-game-row="navigation"
-    >
-      <a href={resolve('/game')}>{gameCopy.room}</a>
-      <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
-      <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
-      <a href={resolve('/game/history')}>{gameCopy.history}</a>
-    </nav>
-  {/if}
-</div>
+{#if authorized}
+  <div class="game-shell">
+    <header class="game-nav">
+      <div class="header-tools">
+        <AccountMenu />
+        {#if $gameViewModel}
+          <RunSettings
+            mode={$gameViewModel.mode}
+            seed={$gameViewModel.seed}
+            ended={Boolean($gameViewModel.ending)}
+          />
+        {/if}
+      </div>
+    </header>
+    <slot />
+    {#if !$page.url.pathname.startsWith('/game/shop')}
+      <nav
+        class="game-navigation"
+        aria-label="Game navigation"
+        data-game-row="navigation"
+      >
+        {#if $page.route.id === '/game'}
+          <button
+            type="button"
+            on:click={openRoomInventoryPicker}
+            disabled={Boolean(
+              $gameViewModel?.activity || $gameViewModel?.commandsDisabled,
+            )}>{gameCopy.room}</button
+          >
+        {:else}
+          <a href={resolve('/game')}>{gameCopy.room}</a>
+        {/if}
+        <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
+        <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
+        <a href={resolve('/game/history')}>{gameCopy.history}</a>
+        <a href={resolve('/about')}>About</a>
+      </nav>
+    {/if}
+  </div>
+{/if}
 
 <style>
   .game-shell {
@@ -75,6 +116,7 @@
   .header-tools {
     display: flex;
     align-items: center;
+    gap: 14px;
     margin-left: auto;
   }
 
@@ -87,7 +129,8 @@
     margin: 38px auto 0;
     padding: 0 0 20px;
   }
-  .game-navigation a {
+  .game-navigation a,
+  .game-navigation button {
     display: grid;
     flex: 1 1 0;
     min-height: 48px;
@@ -98,15 +141,23 @@
     box-shadow: 5px 5px 0 #f3a15f;
     font-size: 0.78rem;
     font-weight: 900;
+    font-family: inherit;
     text-decoration: none;
+    cursor: pointer;
   }
-  .game-navigation a:hover {
+  .game-navigation a:hover,
+  .game-navigation button:hover:not(:disabled) {
     color: #fff;
     background: #512b9a;
   }
-  .game-navigation a:active {
+  .game-navigation a:active,
+  .game-navigation button:active:not(:disabled) {
     box-shadow: 2px 2px 0 #f3a15f;
     transform: translate(3px, 3px);
+  }
+  .game-navigation button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
   }
   :global(button:focus-visible),
   :global(a:focus-visible),
@@ -136,7 +187,8 @@
     .game-navigation {
       gap: 9px;
     }
-    .game-navigation a {
+    .game-navigation a,
+    .game-navigation button {
       min-height: 44px;
       font-size: 0.7rem;
     }

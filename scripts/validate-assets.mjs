@@ -121,11 +121,6 @@ if (new Set(paths).size !== catalogue.length)
   issues.push('catalogue references must use unique PNG paths');
 
 for (const item of catalogue) {
-  const expected = `/items/generated/${item.id}.png`;
-  if (item.image !== expected) {
-    issues.push(`${item.id}: expected image ${expected}`);
-    continue;
-  }
   const filename = `${item.id}.png`;
   if (!files.has(filename)) {
     issues.push(`${item.id}: missing generated PNG`);
@@ -134,6 +129,9 @@ for (const item of catalogue) {
   const bytes = await readFile(new URL(filename, assetDirectory));
   issues.push(...validatePng(bytes, filename));
   const hash = createHash('sha256').update(bytes).digest('hex');
+  const expected = `/items/generated/${filename}?v=${hash.slice(0, 12)}`;
+  if (item.image !== expected)
+    issues.push(`${item.id}: expected image ${expected}`);
   const duplicate = hashes.get(hash);
   if (duplicate)
     issues.push(`${filename}: duplicates the bytes of ${duplicate}`);
@@ -141,7 +139,11 @@ for (const item of catalogue) {
 }
 
 for (const file of files) {
-  if (!catalogue.some((item) => item.image === `/items/generated/${file}`))
+  if (
+    !catalogue.some((item) =>
+      item.image.startsWith(`/items/generated/${file}?v=`),
+    )
+  )
     issues.push(`${file}: not referenced by the canonical catalogue`);
 }
 

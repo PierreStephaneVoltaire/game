@@ -1,4 +1,4 @@
-import type { NonDeathEndingKind } from '../game-types';
+import type { AdverseEndingKind } from '../game-types';
 import endingRules from '../data/ending-rules.json';
 import {
   interpolateText,
@@ -132,8 +132,16 @@ export function financialRuinPresentationCopy(
   };
 }
 
+export function madeItPresentationTitle(context: SeededTextContext): string {
+  return selectSeededText(
+    endingRules.texts.presentation.madeIt.title,
+    context,
+    'ending.presentation.madeIt.title',
+  );
+}
+
 export function endingRiskLabel(
-  kind: NonDeathEndingKind,
+  kind: AdverseEndingKind,
   context: SeededTextContext,
 ): string {
   if (kind === 'quit_streaming')
@@ -150,7 +158,7 @@ export function endingRiskLabel(
 }
 
 export function endingWarningMessage(
-  kind: NonDeathEndingKind,
+  kind: AdverseEndingKind,
   stage: number,
   context?: SeededTextContext,
 ): string {
@@ -162,7 +170,7 @@ export function endingWarningMessage(
 }
 
 export function endingRiskRecoveryMessage(
-  kind: NonDeathEndingKind,
+  kind: AdverseEndingKind,
   context?: SeededTextContext,
 ): string {
   return kind === 'quit_streaming'
@@ -171,7 +179,7 @@ export function endingRiskRecoveryMessage(
 }
 
 export function runEndingMessage(
-  kind: NonDeathEndingKind,
+  kind: AdverseEndingKind,
   context?: SeededTextContext,
 ): string {
   return kind === 'quit_streaming'

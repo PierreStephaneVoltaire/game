@@ -76,7 +76,7 @@ describe('off-stream support', () => {
       (candidate) => candidate.type === 'off_stream_support',
     );
     expect(event?.amount).toBeGreaterThanOrEqual(5);
-    expect(event?.amount).toBeLessThanOrEqual(100);
+    expect(event?.amount).toBeLessThanOrEqual(40);
     expect(supported?.balance).toBe(-100 + event!.amount!);
     expect(supported?.progression.followers).toBe(100);
     expect(supported?.progression.lastQualifyingOrdinaryStreamStartedAt).toBe(
@@ -116,8 +116,8 @@ describe('off-stream support', () => {
     ).toBe(`autonomous:${at}`);
   });
 
-  test('becomes eligible exactly at its 12-hour game-time cooldown', () => {
-    const availableAt = NOW + 12 * HOUR;
+  test('becomes eligible exactly at its 24-hour game-time cooldown', () => {
+    const availableAt = NOW + 24 * HOUR;
     let selectedAtBoundary = false;
     for (let index = 0; index < 1_000; index += 1) {
       const seed = `support-cooldown-${index}`;
@@ -155,11 +155,11 @@ describe('off-stream support', () => {
     expect(selectedAtBoundary).toBe(true);
   });
 
-  test('the seeded inclusive payout reaches both $5 and $100', () => {
+  test('the seeded inclusive payout reaches both $5 and $40', () => {
     const amounts = new Set<number>();
     for (
       let index = 0;
-      index < 20_000 && (!amounts.has(5) || !amounts.has(100));
+      index < 20_000 && (!amounts.has(5) || !amounts.has(40));
       index += 1
     ) {
       const event = blockedSupport(`support-range-${index}`).events.find(
@@ -169,7 +169,7 @@ describe('off-stream support', () => {
     }
 
     expect(Math.min(...amounts)).toBe(5);
-    expect(Math.max(...amounts)).toBe(100);
+    expect(Math.max(...amounts)).toBe(40);
     expect([...amounts].every(Number.isInteger)).toBe(true);
   });
 
@@ -228,7 +228,7 @@ describe('off-stream support', () => {
     );
     expect({
       payoutInRange:
-        event?.amount !== undefined && event.amount >= 5 && event.amount <= 100,
+        event?.amount !== undefined && event.amount >= 5 && event.amount <= 40,
       donationTier: event?.donationTier,
       donationEvents: supported?.events.filter(
         (candidate) => candidate.type === 'donation_received',

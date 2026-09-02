@@ -1,6 +1,6 @@
 {
   "statRange": { "min": 0, "max": 10 },
-  "healthMaximum": 40,
+  "healthMaximum": 30,
   "startingCurrency": 60,
   "startingInventory": {
     "water": 1,
@@ -14,7 +14,7 @@
   "maxCartQuantity": 20,
   "startingMetrics": {
     "food": 6,
-    "health": 32,
+    "health": 24,
     "mood": 6,
     "rest": 7,
     "bond": 4,
@@ -31,6 +31,7 @@
     "intervalHours": 2,
     "foodPerInterval": 1,
     "foodDecayProbability": 0.65,
+    "restingFoodDecayProbabilityMultiplier": 0.5,
     "restPerInterval": 1,
     "bondLossHours": 48,
     "criticalNeed": { "lowMaximum": 2, "zeroLoss": 1, "lowLoss": 1 },
@@ -55,8 +56,8 @@
     "autonomous": { "intervalHours": 2 },
     "offStreamSupport": {
       "weight": 10,
-      "cooldownHours": 12,
-      "payout": { "minimum": 5, "maximum": 100 }
+      "cooldownHours": 24,
+      "payout": { "minimum": 5, "maximum": 40 }
     },
     "weights": {
       "none": 100,
@@ -126,8 +127,8 @@
     },
     "restCost": { "maximumRest": 10 },
     "income": {
-      "minimumRate": 8,
-      "rateSlots": 11,
+      "minimumRate": 6,
+      "rateSlots": 7,
       "baseMultiplier": 0.5,
       "creativityDivisor": 10
     },
@@ -140,14 +141,14 @@
       "specialDateMultiplier": 3,
       "tournamentMultiplier": 3,
       "tiers": [
-        { "id": "kind_supporter", "weight": 55, "minimum": 20, "maximum": 60 },
-        { "id": "raid_windfall", "weight": 27, "minimum": 100, "maximum": 400 },
-        { "id": "whale", "weight": 14, "minimum": 1000, "maximum": 3000 },
+        { "id": "kind_supporter", "weight": 58, "minimum": 10, "maximum": 40 },
+        { "id": "raid_windfall", "weight": 30, "minimum": 60, "maximum": 200 },
+        { "id": "whale", "weight": 10, "minimum": 400, "maximum": 1000 },
         {
           "id": "legendary_whale",
-          "weight": 4,
-          "minimum": 10000,
-          "maximum": 10000,
+          "weight": 2,
+          "minimum": 2000,
+          "maximum": 5000,
           "requiredCreativity": 10
         }
       ]
@@ -196,8 +197,6 @@
     "lowEnergyCreativity": -1,
     "lowStatusRecurrenceMood": -1,
     "annoyedMood": -2,
-    "sickHealth": -1,
-    "sickMood": -1,
     "fullHealth": -1,
     "fullMood": -2,
     "overstimulatedMood": -4,
@@ -237,7 +236,7 @@
     "clearWaterMinimum": 4,
     "onset": { "rest": -1, "mood": -1 }
   },
-  "sick": { "naturalPassHours": 48 },
+  "sick": { "naturalPassHours": 48, "refusalProbabilityBonus": 0.25 },
   "craving": { "expiryHours": 24, "refreshLimit": 2 },
   "caffeine": { "minimumScore": 2, "deferHours": 2 },
   "hyperfocus": {
@@ -303,9 +302,9 @@
     "milestones": [
       { "id": "debut", "followers": 100 },
       { "id": "first_model", "followers": 150, "unlockModelTier": 1 },
-      { "id": "sub_1k", "followers": 1000, "streamRate": [12, 22], "mood": 2 },
+      { "id": "sub_1k", "followers": 1000, "streamRate": [9, 16], "mood": 2 },
       { "id": "model_redesign", "followers": 5000, "unlockModelTier": 2 },
-      { "id": "twitch_partner", "followers": 10000, "streamRate": [15, 28] },
+      { "id": "twitch_partner", "followers": 10000, "streamRate": [12, 20] },
       {
         "id": "sub_30k",
         "followers": 30000,

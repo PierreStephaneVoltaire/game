@@ -65,6 +65,13 @@ describe('batch feeding', () => {
     });
     expect(withoutBatchReceipt(batch.state, commandId)).toEqual(sequential);
     expect(batch.state.inventory).toMatchObject({ water: 0, pretzel: 0 });
+    expect(
+      [
+        'feed-a-selection:feed:pretzel:1',
+        'feed-a-selection:feed:water:1',
+        'feed-a-selection:feed:water:2',
+      ].every((id) => batch.state.processedCommands[id]),
+    ).toBe(true);
   });
 
   test('applies available units before reporting an exhausted selection', () => {

@@ -33,7 +33,9 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
         creativity: { min: 2, max: 2 },
       },
       statusHooks: [],
-      image: `/items/generated/${ITEM_ID}.png`,
+      image: expect.stringMatching(
+        new RegExp(`^/items/generated/${ITEM_ID}\\.png\\?v=[a-f0-9]{12}$`),
+      ),
     });
   });
 

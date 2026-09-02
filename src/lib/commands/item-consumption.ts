@@ -100,15 +100,22 @@ export function resolveItemConsumption(
   const disliked =
     item.edible &&
     (item.preferences?.includes('disliked') || preparationRejected);
+  const refusalProbability = item.edible
+    ? Math.min(
+        1,
+        (disliked ? (item.context?.refusalProbability ?? 0) : 0) +
+          (state.statuses.sick ? rules.sick.refusalProbabilityBonus : 0),
+      )
+    : 0;
   const refused =
-    disliked &&
+    item.edible &&
     actionRandom(
       state.seed,
       state.stateVersion,
       command.commandId,
       'item_refusal',
       'attempt',
-    ) < (item.context?.refusalProbability ?? 0);
+    ) < refusalProbability;
   if (refused) {
     const wasted =
       actionRandom(

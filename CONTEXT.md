@@ -12,13 +12,12 @@ reload starts a separate Run with no inherited state.
 _Avoid_: Save, account
 
 **Terminal Ending**:
-The permanent outcome that closes a Run: Death, Quit Streaming, or Financial
-Ruin. `Made It` is an Ending unlock, not a terminal guard.
+The permanent outcome that closes a Run: Death, Quit Streaming, Financial
+Ruin, or `Made It`.
 _Avoid_: Horizon, game over state, She Cut You Off
 
-**Ending unlock**:
-A recorded conclusion earned without closing the Run. `Made It` unlocks once
-when current Subscribers first reach 3,000,000.
+**Made It**:
+The Ending reached when current Subscribers first reach 3,000,000.
 
 **Death**:
 The Ending in which the companion's Health reaches 0. It is the only Ending

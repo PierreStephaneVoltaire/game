@@ -41,6 +41,11 @@ export function resolveDecay(
   options: { preventLethal?: boolean } = {},
 ): DecayResolution {
   const intervalHours = rules.timeDecay.intervalHours;
+  const foodDecayProbability =
+    rules.timeDecay.foodDecayProbability *
+    (state.activity?.type === 'rest'
+      ? rules.timeDecay.restingFoodDecayProbabilityMultiplier
+      : 1);
   const elapsedHours = (now - state.lastResolvedAt) / HOUR_MS;
   const accumulatedHours = state.history.decayRemainderHours + elapsedHours;
   const intervals = Math.floor(accumulatedHours / intervalHours);
@@ -83,7 +88,7 @@ export function resolveDecay(
         `food-decay:${boundaryAt}`,
         'food_decay',
         'opportunity',
-      ) < rules.timeDecay.foodDecayProbability;
+      ) < foodDecayProbability;
     if (foodDecayHit) {
       const foodBefore = metrics.food;
       const decayedFood = foodBefore - rules.timeDecay.foodPerInterval;

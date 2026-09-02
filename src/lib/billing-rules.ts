@@ -77,6 +77,11 @@ export function purchaseAllowed(
   );
 }
 
+/** Ordinary shop credit is available only after cash Balance is negative. */
+export function shopPurchaseAffordable(balance: number, cost: number): boolean {
+  return balance < 0 || cost <= balance;
+}
+
 export function recordLifetimePurchases(
   state: GameState,
   purchases: Array<{ itemId: string; quantity: number }>,

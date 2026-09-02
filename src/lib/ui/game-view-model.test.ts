@@ -104,11 +104,19 @@ describe('game view model', () => {
       insured: true,
       consumedItemName: 'Insurance Card',
     });
+    expect(model.metrics.map((metric) => metric.key)).toEqual([
+      'health',
+      'food',
+      'mood',
+      'rest',
+      'bond',
+      'creativity',
+    ]);
     expect(model.metrics.find((metric) => metric.key === 'health')).toEqual({
       key: 'health',
       label: 'Health',
-      value: 32,
-      maximum: 40,
+      value: 8,
+      maximum: 10,
       percentage: 80,
     });
     expect(model.metrics.find((metric) => metric.key === 'food')).toEqual({
@@ -145,6 +153,12 @@ describe('game view model', () => {
     expect(byId.get('rigging-tablet')?.purchaseAllowed).toBe(true);
     expect(byId.get('rigging-tablet')?.maximumCartQuantity).toBe(3);
     expect(model.cartCheckoutAllowed).toBe(true);
+
+    const cashLimited = createGameViewModel(
+      { ...state, balance: 0 },
+      BUNDLED_GAME_DEFINITION,
+    );
+    expect(cashLimited.cartCheckoutAllowed).toBe(false);
 
     const mixed = createGameViewModel(
       {
@@ -215,7 +229,7 @@ describe('game view model', () => {
     );
   });
 
-  it.each(['death', 'quit_streaming', 'financial_ruin'] as const)(
+  it.each(['death', 'quit_streaming', 'financial_ruin', 'made_it'] as const)(
     'presents the %s ending card',
     (kind) => {
       const initial = startedState();
@@ -248,12 +262,20 @@ describe('game view model', () => {
                 endingBalance: -20_001,
                 triggerEventId: 'trigger',
               }
-            : {
-                ...common,
-                kind,
-                durationHours: 72,
-                endingMetricValue: 0,
-              };
+            : kind === 'quit_streaming'
+              ? {
+                  ...common,
+                  kind,
+                  durationHours: 72,
+                  endingMetricValue: 0,
+                }
+              : {
+                  ...common,
+                  kind,
+                  followers: 3_000_000,
+                  peakFollowers: 3_000_000,
+                  triggerEventId: 'trigger',
+                };
       const model = createGameViewModel(
         { ...initial, ending },
         BUNDLED_GAME_DEFINITION,

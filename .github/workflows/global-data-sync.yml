@@ -1,0 +1,67 @@
+name: Global data sync
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - src/lib/data/**
+      - scripts/generate-canonical-catalogue.mjs
+      - api/src/global-data/**
+      - api/package.json
+      - api/pnpm-lock.yaml
+      - .github/workflows/global-data-sync.yml
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: global-data-production
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.22.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install publisher dependencies
+        run: pnpm --dir api install --frozen-lockfile
+
+      - name: Validate catalogue data
+        run: pnpm validate:data
+
+      - name: Test publisher
+        run: pnpm --dir api test
+
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Synchronize global tables
+        env:
+          AZURE_STORAGE_ACCOUNT_NAME: ${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}
+        run: |
+          test -n "$AZURE_STORAGE_ACCOUNT_NAME"
+          connection_string=$(az storage account show-connection-string --name "$AZURE_STORAGE_ACCOUNT_NAME" --query connectionString --output tsv)
+          echo "::add-mask::$connection_string"
+          AZURE_STORAGE_CONNECTION_STRING="$connection_string" pnpm --dir api sync:global-data

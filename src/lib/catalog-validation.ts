@@ -11,15 +11,6 @@ import {
 } from './nutrition-validation';
 import { isStatusName } from './status-rules';
 
-const CATEGORY_BANDS: Record<string, [number, number]> = {
-  food: [1, 15],
-  medicine: [5, 15],
-  care: [5, 250],
-  accessory: [25, 250],
-  reusable: [25, 250],
-  upgrade: [25, 350],
-  decoration: [25, 250],
-};
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
   food: 114,
   medicine: 2,
@@ -102,12 +93,18 @@ function validateItem(
   }
   if (FORBIDDEN_ALIASES.has(item.id))
     issues.push('catalogue contains a non-canonical alias');
-  if (!(item.category in CATEGORY_BANDS)) issues.push('unknown item category');
-  const band = CATEGORY_BANDS[item.category];
-  if (band && (item.price < band[0] || item.price > band[1]))
-    issues.push(`price outside ${item.category} band`);
-  if (item.image !== `/items/generated/${item.id}.png`)
-    issues.push('catalogue item must reference its stable generated PNG asset');
+  if (!(item.category in COMPLETE_CATEGORY_COUNTS))
+    issues.push('unknown item category');
+  if (!Number.isInteger(item.price) || item.price <= 0)
+    issues.push('price must be a positive integer');
+  const [imagePath, imageQuery] = item.image.split('?');
+  if (
+    imagePath !== `/items/generated/${item.id}.png` ||
+    !/^v=[a-f0-9]{12}$/.test(imageQuery ?? '')
+  )
+    issues.push(
+      'catalogue item must reference its content-versioned generated PNG asset',
+    );
   if (
     !item.qualitativeNutritionHint?.trim() ||
     GENERIC_COPY.has(item.qualitativeNutritionHint) ||

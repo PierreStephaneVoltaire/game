@@ -20,6 +20,7 @@
             alt=""
             width="88"
             height="88"
+            decoding="async"
           />{:else}<span class="offer-symbol" aria-hidden="true">$</span>{/if}
         <div class="item-summary">
           <strong>{item.name}</strong>

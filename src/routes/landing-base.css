@@ -46,6 +46,12 @@ a {
   padding: 26px 0 14px;
 }
 
+.header-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .wordmark {
   display: inline-flex;
   align-items: center;

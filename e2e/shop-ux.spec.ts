@@ -1,9 +1,19 @@
-import { expect, test } from './fixtures';
-import rules from '../src/lib/data/simulation-rules.json';
+import { expect, signInAndChooseMode, test } from './fixtures';
+import rules from '../src/lib/data/simulation-rules.json' with { type: 'json' };
+import financialRules from '../src/lib/data/financial-rules.json' with { type: 'json' };
+
+const openedBalance =
+  rules.startingCurrency -
+  financialRules.lineOfCredit.applicationPrice +
+  financialRules.lineOfCredit.cashAdvance;
+const firstRepaymentBalance =
+  openedBalance - financialRules.lineOfCredit.repaymentUnitPrice;
+const currency = (value: number) => `$${value.toLocaleString('en-CA')}`;
 
 test('keeps cards inert and settles the permanent LOC offer through the cart', async ({
   page,
 }) => {
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.goto('/game/shop?tab=shop');
   const grid = page.locator('.item-grid');
   const locCard = page.locator('.item-card').filter({
@@ -72,9 +82,11 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
   await page.getByRole('tab', { name: /Cart/ }).click();
   await expect(
     page.getByText('Cash after checkout').locator('..'),
-  ).toContainText('$9,970');
+  ).toContainText(currency(openedBalance));
   await page.getByRole('button', { name: 'Checkout' }).click();
-  await expect(page.locator('.balance')).toHaveText('Cash: $9,970');
+  await expect(page.locator('.balance')).toHaveText(
+    `Cash: ${currency(openedBalance)}`,
+  );
   await expect(page.getByText('4 kinds owned')).toBeVisible();
 
   await page.getByRole('tab', { name: 'Shop' }).click();
@@ -88,7 +100,9 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
   await page.getByRole('tab', { name: /Cart/ }).click();
   await expect(
     page.getByText('Cash after checkout').locator('..'),
-  ).toContainText('$9,370');
+  ).toContainText(currency(firstRepaymentBalance));
   await page.getByRole('button', { name: 'Checkout' }).click();
-  await expect(page.locator('.balance')).toHaveText('Cash: $9,370');
+  await expect(page.locator('.balance')).toHaveText(
+    `Cash: ${currency(firstRepaymentBalance)}`,
+  );
 });

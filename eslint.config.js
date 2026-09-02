@@ -21,6 +21,12 @@ export default [
     },
   },
   {
-    ignores: ['build/', '.svelte-kit/', 'node_modules/'],
+    files: ['api/**/*.ts'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  {
+    ignores: ['api/dist/', 'build/', '.svelte-kit/', 'node_modules/'],
   },
 ];

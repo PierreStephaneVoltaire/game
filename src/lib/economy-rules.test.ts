@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import rules from './data/simulation-rules.json';
 import { completeStreamEconomy, streamRateFor } from './economy-rules';
 import { hospitalCost, purchaseQuantity } from './billing-rules';
 import { projectCompletionAtLocalMidnight } from './project-economy-rules';
@@ -17,11 +18,11 @@ function state(): GameState {
 
 describe('economy and progression rules', () => {
   test.each([
-    [0, [8, 18]],
-    [999, [8, 18]],
-    [1_000, [12, 22]],
-    [9_999, [12, 22]],
-    [10_000, [15, 28]],
+    [0, [6, 12]],
+    [999, [6, 12]],
+    [1_000, [9, 16]],
+    [9_999, [9, 16]],
+    [10_000, [12, 20]],
   ])(
     'uses the authored stream-rate band at %i peak Subscribers',
     (peak, band) => {
@@ -38,6 +39,21 @@ describe('economy and progression rules', () => {
       ).toEqual(band);
     },
   );
+
+  test('loads the reduced authored donation tiers', () => {
+    expect(rules.stream.donations.tiers).toEqual([
+      { id: 'kind_supporter', weight: 58, minimum: 10, maximum: 40 },
+      { id: 'raid_windfall', weight: 30, minimum: 60, maximum: 200 },
+      { id: 'whale', weight: 10, minimum: 400, maximum: 1000 },
+      {
+        id: 'legendary_whale',
+        weight: 2,
+        minimum: 2000,
+        maximum: 5000,
+        requiredCreativity: 10,
+      },
+    ]);
+  });
 
   test('purchase quantity respects stock and authored ownership cap', () => {
     const item = { ...BUNDLED_GAME_DEFINITION.items[0], maximumOwned: 2 };

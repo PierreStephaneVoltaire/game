@@ -1,9 +1,9 @@
-import { expect, test } from './fixtures';
+import { expect, signInAndChooseMode, test } from './fixtures';
 
 test('keeps every displayed Feed quantity synchronized with the submitted batch', async ({
   page,
 }) => {
-  await page.goto('/game');
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.getByRole('button', { name: 'Feed' }).click();
   const dialog = page.getByRole('dialog', { name: 'Choose something to feed' });
   const water = dialog.getByLabel('Water selected');

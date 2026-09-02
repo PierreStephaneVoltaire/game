@@ -22,39 +22,28 @@ export function consumptionRuleEvents(input: {
       id: id(),
       type: 'full_feed_suppressed',
       at: state.now,
-      message: nutrition.sickFeedingHarm
-        ? `${item.name} did not increase Food because the companion was sick.`
-        : `${item.name} did not increase Food because the companion was full.`,
+      message: `${item.name} did not increase Food because the companion was full.`,
       sourceActionId,
       causedBy: [event.id],
       status: 'full',
       metricDeltas: { food: 0 },
     });
-  if (nutrition.sickFromFull || nutrition.sickFeedingHarm) {
-    const sicknessEvent = nutrition.sickFromFull
-      ? {
-          type: 'sickness_onset' as const,
-          message: `${item.name} caused sickness from overfeeding.`,
-        }
-      : {
-          type: 'sick_feeding_harm' as const,
-          message: `${item.name} harmed the sick companion.`,
-        };
+  if (nutrition.sickFromFull) {
     events.push({
       id: id(),
-      type: sicknessEvent.type,
+      type: 'sickness_onset',
       at: state.now,
-      message: sicknessEvent.message,
+      message: `${item.name} caused sickness from overfeeding.`,
       sourceActionId,
       causedBy: [event.id],
       status: 'sick',
-      metricDeltas: nutrition.sickFeedingDeltas,
+      metricDeltas: nutrition.sicknessOnsetDeltas,
       healthDamageSources: [
         healthDamageSource(
           'status',
           'sick',
           'Sickness',
-          nutrition.sickFeedingDeltas.health ?? 0,
+          nutrition.sicknessOnsetDeltas.health ?? 0,
           [event.id],
         ),
       ],

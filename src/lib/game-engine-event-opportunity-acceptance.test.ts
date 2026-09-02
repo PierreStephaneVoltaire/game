@@ -3,6 +3,7 @@ import { describe, expect, test } from 'vitest';
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import type { GameState } from './game-types';
+import { eventCandidates } from './event-candidate-pool';
 
 const HOUR = 3_600_000;
 const AUTONOMOUS_TYPES = new Set([
@@ -220,39 +221,22 @@ describe('commands without companion attempts', () => {
 
 describe('automatic event candidate availability', () => {
   test('does not create a craving for a sold-out shop item', () => {
-    let selectedSoldOutCraving = false;
-    for (let index = 0; index < 2_000; index += 1) {
-      const seed = `sold-out-craving-${index}`;
-      const base = run('streaming', seed);
-      const state: GameState = {
-        ...base,
-        inventory: {},
-        shop: {
-          ...base.shop,
-          itemIds: ['uncrustables'],
-          stock: { uncrustables: 0 },
-        },
-      };
-      const resolved = dispatchCommand(
-        state,
-        {
-          type: 'use_item',
-          commandId: `sold-out-${index}`,
-          itemId: 'missing',
-          now: state.now,
-        },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
-      if (
-        opportunityEvents(resolved).some(
-          (event) => event.cause === 'food_craving',
-        )
-      ) {
-        selectedSoldOutCraving = true;
-        break;
-      }
-    }
-    expect(selectedSoldOutCraving).toBe(false);
+    const base = run('streaming', 'sold-out-craving');
+    const state: GameState = {
+      ...base,
+      inventory: {},
+      shop: {
+        ...base.shop,
+        itemIds: ['uncrustables'],
+        stock: { uncrustables: 0 },
+      },
+    };
+
+    expect(
+      eventCandidates(state, BUNDLED_GAME_DEFINITION, '1970-01-01', 0).find(
+        ({ type }) => type === 'food_craving',
+      )?.weight,
+    ).toBe(0);
   });
 
   test('keeps owned-item hooks eligible while that durable is placed', () => {
@@ -262,34 +246,17 @@ describe('automatic event candidate availability', () => {
         item.id === 'catnip' ? { ...item, roomSlot: 'shelf' } : item,
       ),
     };
-    let selectedPlacedHook = false;
-    for (let index = 0; index < 2_000; index += 1) {
-      const seed = `placed-owned-hook-${index}`;
-      const base = run('streaming', seed);
-      const state: GameState = {
-        ...base,
-        inventory: {},
-        room: { shelf: 'catnip' },
-      };
-      const resolved = dispatchCommand(
-        state,
-        {
-          type: 'use_item',
-          commandId: `placed-owned-${index}`,
-          itemId: 'missing',
-          now: state.now,
-        },
-        definition,
-      ).state;
-      if (
-        autoEvents(resolved).some(
-          (event) => event.type === 'item_automatic_hook',
-        )
-      ) {
-        selectedPlacedHook = true;
-        break;
-      }
-    }
-    expect(selectedPlacedHook).toBe(true);
+    const base = run('streaming', 'placed-owned-hook');
+    const state: GameState = {
+      ...base,
+      inventory: {},
+      room: { shelf: 'catnip' },
+    };
+
+    expect(
+      eventCandidates(state, definition, '1970-01-01', 0).find(
+        ({ type }) => type === 'item_hook:catnip:catnip_event',
+      )?.weight,
+    ).toBe(7);
   });
 });

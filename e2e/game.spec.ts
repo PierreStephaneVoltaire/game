@@ -1,5 +1,5 @@
 import { expect, signInAndChooseMode, test } from './fixtures';
-import rules from '../src/lib/data/simulation-rules.json';
+import rules from '../src/lib/data/simulation-rules.json' with { type: 'json' };
 test('signs in and reaches the companion room', async ({ page }) => {
   await signInAndChooseMode(page, 'Realtime mode');
   await expect(page.getByRole('region', { name: /room/i })).toBeVisible();
@@ -14,34 +14,42 @@ test('signs in and reaches the companion room', async ({ page }) => {
   await expect(
     page.getByRole('meter', { name: /Food: \d+ out of 10/ }),
   ).toBeVisible();
+  await expect(
+    page.getByRole('meter', { name: /Health: \d+ out of 10/ }),
+  ).toBeVisible();
 });
 
-test('keeps the generated key in memory and starts fresh on reload', async ({
+test('restores the account session and opens an existing key without mode selection', async ({
   page,
 }) => {
+  await page.context().clearCookies();
   await page.goto('/login');
   await page.waitForLoadState('networkidle');
-  await expect(page.getByLabel('Session key')).toHaveValue('');
-  await page.getByRole('button', { name: /generate a key/i }).click();
-  await expect(page.getByLabel('Session key')).toHaveValue(/^[A-Z0-9]{8}$/);
+  await expect(page.getByLabel('Password')).toHaveValue('');
   await page.getByLabel('Username').fill('playtester');
-  await page.getByRole('button', { name: /generate a key/i }).click();
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByLabel('Password').fill('correct horse battery staple');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.getByRole('button', { name: 'Generate new game' }).click();
+  const gameKey = await page
+    .getByRole('textbox', { name: 'New game key' })
+    .inputValue();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Realtime mode' }).click();
   await expect(page).toHaveURL(/\/game$/);
   await page.reload();
-  const settings = page.locator('details.settings');
-  await settings.locator('summary').click();
-  await expect(settings).toContainText('Realtime mode');
-  await expect(settings.getByRole('button', { name: /mode/i })).toHaveCount(0);
-  await settings.locator('summary').click();
-  await expect(
-    page.getByRole('region', { name: 'Time and balance' }),
-  ).toContainText(`Balance: $${rules.startingCurrency}`);
+  await expect(page).toHaveURL(/\/key$/);
+  await expect(page.getByRole('textbox', { name: 'Game key' })).toBeVisible();
+  await expect(page.getByLabel('Password')).toHaveCount(0);
+  await page.getByRole('textbox', { name: 'Game key' }).fill(gameKey);
+  await page.getByRole('button', { name: 'Open game' }).click();
+  await expect(page).toHaveURL(/\/game$/);
+  await expect(page.getByRole('button', { name: 'Realtime mode' })).toHaveCount(
+    0,
+  );
 });
 
 test('opens shop and history from the room', async ({ page }) => {
-  await page.goto('/game');
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.getByRole('link', { name: 'Shop' }).click();
   await expect(page.getByRole('heading', { name: 'Shop' })).toBeVisible();
   await expect(page.locator('[data-game-row="navigation"]')).toHaveCount(0);
@@ -53,6 +61,7 @@ test('keeps the shared game layout within a 320px viewport', async ({
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 720 });
+  await signInAndChooseMode(page, 'Realtime mode');
   for (const path of ['/game', '/game/shop?tab=shop', '/game/history']) {
     await page.goto(path);
     await expect(page.locator('main')).toBeVisible();
@@ -65,6 +74,7 @@ test('keeps the shared game layout within a 320px viewport', async ({
     ).toBe(true);
   }
   await page.goto('/game');
+  await expect(page.locator('[data-game-row="care"]')).toBeVisible();
   for (const row of ['care', 'navigation']) {
     const tops = await page
       .locator(`[data-game-row="${row}"]`)
@@ -80,6 +90,7 @@ test('keeps the shared game layout within a 320px viewport', async ({
 test('normalizes invalid shop queries and exposes item detail', async ({
   page,
 }) => {
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.goto('/game/shop?tab=unknown&category=unknown&item=missing');
   await expect(page).toHaveURL(/\/game\/shop\?tab=shop$/);
   await page
@@ -94,6 +105,7 @@ test('normalizes invalid shop queries and exposes item detail', async ({
 test('renders the selected feed outcome and advances streaming time', async ({
   page,
 }) => {
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.goto('/game/shop?tab=inventory');
   await page.getByRole('button', { name: /Water/ }).click();
   await page.getByRole('button', { name: 'Feed companion' }).click();
@@ -101,7 +113,7 @@ test('renders the selected feed outcome and advances streaming time', async ({
 
   await signInAndChooseMode(page, 'Streaming mode');
   await page.getByRole('button', { name: 'Advance time' }).click();
-  await expect(page.locator('.companion-caption span')).not.toContainText(
+  await expect(page.locator('.event-panel li:last-child')).not.toContainText(
     /Time advanced|decay interval/,
   );
 });
@@ -109,7 +121,7 @@ test('renders the selected feed outcome and advances streaming time', async ({
 test('blocks care during Realtime activity while navigation remains available', async ({
   page,
 }) => {
-  await page.goto('/game');
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.getByRole('button', { name: 'Rest' }).click();
   await expect(page.getByText(/is resting until/i)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Feed' })).toBeDisabled();
@@ -131,7 +143,7 @@ test('blocks care during Realtime activity while navigation remains available', 
   await settings.locator('summary').click();
   await expect(page.getByRole('button', { name: 'Feed' })).toBeDisabled();
   await expect(page.locator('.activity')).toContainText(/resting until/i);
-  await expect(page.locator('.companion-caption span')).toContainText(
+  await expect(page.locator('.event-panel li:last-child')).toContainText(
     /settled down to rest|went to rest/i,
   );
 });
@@ -144,12 +156,15 @@ test('renders a refusal outcome and keeps status feedback visible', async ({
     await page.getByRole('button', { name: 'Rest' }).click();
     if (
       /refus/i.test(
-        (await page.locator('.companion-caption span').textContent()) ?? '',
+        (await page.locator('.event-panel li:last-child').textContent()) ?? '',
       )
     )
       break;
   }
-  await expect(page.locator('.companion-caption span')).toContainText(/refus/i);
+  await expect(page.locator('.event-panel li:last-child')).toContainText(
+    /refus/i,
+  );
+  expect(await page.locator('.event-panel li').count()).toBeLessThanOrEqual(10);
   await expect(page.getByRole('region', { name: 'Status' })).toBeVisible();
   for (let attempt = 0; attempt < 8; attempt += 1) {
     const status = page.locator('.status-name').filter({
@@ -167,6 +182,7 @@ test('keeps cart flow in session and preserves keyboard/reduced-motion affordanc
   page,
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
+  await signInAndChooseMode(page, 'Realtime mode');
   await page.goto('/game/shop?tab=shop');
   const add = page.locator(
     '.quantity-stepper button[aria-label^="Add one"]:not([disabled])',
@@ -235,15 +251,18 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
       },
     });
   });
+  await page.context().clearCookies();
   await page.goto('/login');
   await page.getByLabel('Username').fill('playtester');
-  await page.getByRole('button', { name: /generate a key/i }).click();
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByLabel('Password').fill('correct horse battery staple');
+  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.getByRole('button', { name: 'Generate new game' }).click();
+  await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Streaming mode' }).click();
   await page.getByRole('button', { name: 'Socialize' }).click();
   await expect(
     page.getByRole('region', { name: 'Time and balance' }),
-  ).toContainText('Balance: $100');
+  ).toContainText(`Balance: $${rules.startingCurrency}`);
   await page.getByRole('link', { name: 'Shop' }).click();
   await page.getByRole('button', { name: 'reusable' }).click();
   await page
@@ -273,7 +292,7 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
     page.getByRole('button', { name: 'Unplace Socks Plushie' }),
   ).toBeVisible();
   await page.getByRole('button', { name: 'Unplace Socks Plushie' }).click();
-  await expect(page.locator('.companion-caption span')).toContainText(
+  await expect(page.locator('.event-panel li:last-child')).toContainText(
     /removed/i,
   );
 });

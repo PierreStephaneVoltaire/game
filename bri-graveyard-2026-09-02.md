@@ -1,0 +1,249 @@
+# Bri's Graveyard Record
+
+- Outcome: Gone Offline (Forever)
+- Run started: August 30, 2026 at 6:28 PM
+- Run ended: September 1, 2026 at 10:43 PM
+- Duration: 2d 4h 15m
+- Mode: Streaming mode
+- Timezone: America/Toronto
+
+## Cause of death
+
+- Sickness
+
+## How it all went down
+
+1. September 1, 2026 at 10:43 PM — Bri savored every bite of Cucumber.
+2. September 1, 2026 at 10:43 PM — Bri's sickness worsened after Cucumber.
+3. September 1, 2026 at 10:43 PM — Bri is gone. The room is silent. No snoring. That's how you know it's real.
+
+## The Journey
+
+- August 30, 2026 at 6:28 PM — Bri's journey began.
+- August 30, 2026 at 6:28 PM — You got Bri Cheeseless Toppingless Pizza ×5. Chat's money, hard at work.
+- August 30, 2026 at 6:28 PM — You got Bri Water ×5. Chat's money, hard at work.
+- August 30, 2026 at 6:28 PM — You got Bri Meat loaf ×3. Chat's money, hard at work.
+- August 30, 2026 at 6:28 PM — You got Bri Goldfish ×4. Chat's money, hard at work.
+- August 30, 2026 at 6:28 PM — Bri started playing.
+- August 30, 2026 at 8:28 PM — Bri opened her bank app, made a noise, and closed it immediately.
+- August 30, 2026 at 8:28 PM — A single new subscriber appeared. Welcome to the noise.
+- August 30, 2026 at 9:28 PM — GG. Bri claims she carried. There is no footage.
+- August 30, 2026 at 9:28 PM — Bri needs Orange juice. This is now everyone's problem.
+- August 30, 2026 at 9:28 PM — Bri started spending time together with you.
+- August 30, 2026 at 10:13 PM — Friend time is over. Bri already misses the noise.
+- August 30, 2026 at 10:13 PM — Bri started spending time together with you.
+- August 30, 2026 at 10:28 PM — One brave new subscriber joined. They'll learn.
+- August 30, 2026 at 10:28 PM — Bri wants to talk about her next stream idea.
+- August 30, 2026 at 10:28 PM — Bri started spending time together with you.
+- August 30, 2026 at 10:43 PM — Bri wants to talk about vore.
+- August 30, 2026 at 10:43 PM — Bri is too tired to stream.
+- August 30, 2026 at 10:43 PM — Bri started playing.
+- August 30, 2026 at 11:43 PM — Bri finished playing. The controller survived. This time.
+- August 30, 2026 at 11:43 PM — Bri started spending time together with you.
+- August 31, 2026 at 12:28 AM — A single new subscriber appeared. Welcome to the noise.
+- August 31, 2026 at 12:28 AM — Bri is hungry.
+- August 31, 2026 at 12:28 AM — Bri wants to talk about vore.
+- August 31, 2026 at 12:28 AM — Bri is too tired to stream.
+- August 31, 2026 at 12:28 AM — Bri settled down to rest.
+- August 31, 2026 at 2:28 AM — A new idea just possessed Bri. Pray for the schedule.
+- August 31, 2026 at 2:28 AM — A single new subscriber appeared. Welcome to the noise.
+- August 31, 2026 at 4:28 AM — A single new subscriber appeared. Welcome to the noise.
+- August 31, 2026 at 6:28 AM — The room did a thing. No witnesses. No evidence.
+- August 31, 2026 at 6:28 AM — One brave new subscriber joined. They'll learn.
+- August 31, 2026 at 6:28 AM — Bri is starving.
+- August 31, 2026 at 6:28 AM — Bri stopped resting early.
+- August 31, 2026 at 6:28 AM — Bri refused Meat loaf, and it went to waste.
+- August 31, 2026 at 6:28 AM — A fan sent $79 of support while Bri was offline.
+- August 31, 2026 at 6:28 AM — Bri refused Meat loaf, and it went to waste.
+- August 31, 2026 at 6:28 AM — Bri managed to get through Meat loaf.
+- August 31, 2026 at 6:28 AM — Bri is still hungry, but no longer starving.
+- August 31, 2026 at 6:28 AM — Bri managed to get through Goldfish.
+- August 31, 2026 at 6:28 AM — Bri reluctantly ate Goldfish.
+- August 31, 2026 at 6:28 AM — Her food has been pretty salty lately. Water might be a good idea.
+- August 31, 2026 at 6:28 AM — Bri refused Goldfish.
+- August 31, 2026 at 6:28 AM — Bri started streaming.
+- August 31, 2026 at 8:28 AM — 2 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 8:28 AM — A kind supporter donated $57 during Bri's stream.
+- August 31, 2026 at 10:28 AM — The channel grew by 2. The algorithm is finally awake.
+- August 31, 2026 at 10:28 AM — Bri is hungry.
+- August 31, 2026 at 12:28 PM — 2 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 2:28 PM — Bri is pacing laps around the room. The idea must be huge.
+- August 31, 2026 at 2:28 PM — 2 new subscribers. Bri is being normal about it. (She is not.)
+- August 31, 2026 at 2:28 PM — Bri is starving.
+- August 31, 2026 at 2:28 PM — Bri had to stop streaming early.
+- August 31, 2026 at 2:28 PM — Bri's stream brought 5 new followers to the channel.
+- August 31, 2026 at 2:28 PM — Bri refused Goldfish.
+- August 31, 2026 at 2:28 PM — Bri happily ate five plain tortillas.
+- August 31, 2026 at 2:28 PM — Bri is still hungry, but no longer starving.
+- August 31, 2026 at 2:28 PM — Bri started streaming.
+- August 31, 2026 at 4:28 PM — The channel grew by 3. The algorithm is finally awake.
+- August 31, 2026 at 6:28 PM — 3 new recruits joined the Bunny Brigade.
+- August 31, 2026 at 6:28 PM — Bri is starving.
+- August 31, 2026 at 6:28 PM — Bri had to stop streaming early.
+- August 31, 2026 at 6:28 PM — Bri managed to get through Goldfish.
+- August 31, 2026 at 6:28 PM — Bri is still hungry, but no longer starving.
+- August 31, 2026 at 6:28 PM — Bri is too tired to stream.
+- August 31, 2026 at 6:28 PM — Bri reluctantly ate Goldfish.
+- August 31, 2026 at 6:28 PM — Bri ate Pretzel.
+- August 31, 2026 at 6:28 PM — Bri consumed one (1) glass of water. Alert the press.
+- August 31, 2026 at 6:28 PM — Bri consumed one (1) glass of water. Alert the press.
+- August 31, 2026 at 6:28 PM — Bri is too tired to stream.
+- August 31, 2026 at 6:28 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 6:28 PM — Bri is too tired to stream.
+- August 31, 2026 at 6:28 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 6:28 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 6:28 PM — Bri is too tired to stream.
+- August 31, 2026 at 6:28 PM — Bri drank water under protest. Clip it, it'll never happen again.
+- August 31, 2026 at 8:28 PM — Bri started streaming.
+- August 31, 2026 at 8:28 PM — The channel grew by 4. The algorithm is finally awake.
+- August 31, 2026 at 9:28 PM — Bri's craving faded before it could be fulfilled.
+- August 31, 2026 at 10:28 PM — The room did a thing. No witnesses. No evidence.
+- August 31, 2026 at 10:28 PM — 4 new subscribers. Bri is being normal about it. (She is not.)
+- August 31, 2026 at 10:28 PM — Bri is hungry.
+- August 31, 2026 at 10:28 PM — Bri is sleep deprived.
+- August 31, 2026 at 10:28 PM — Bri had to stop streaming early.
+- August 31, 2026 at 11:28 PM — Bri gave Cheeseless Toppingless Pizza a cautious first bite.
+- August 31, 2026 at 11:28 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- August 31, 2026 at 11:28 PM — Bri is no longer hungry.
+- August 31, 2026 at 11:28 PM — Bri gave Cheeseless Toppingless Pizza a cautious first bite.
+- August 31, 2026 at 11:28 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- August 31, 2026 at 11:28 PM — Bri is full.
+- August 31, 2026 at 11:28 PM — Bri gave Cheeseless Toppingless Pizza a cautious first bite.
+- August 31, 2026 at 11:28 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- August 31, 2026 at 11:28 PM — Bri was too full to get any Food from Cheeseless Toppingless Pizza.
+- August 31, 2026 at 11:28 PM — Bri got sick after eating past Full. A less-full stomach and proper Rest will help.
+- August 31, 2026 at 11:28 PM — Bri carefully tried Cheeseless Toppingless Pizza.
+- August 31, 2026 at 11:28 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- August 31, 2026 at 11:28 PM — Bri was too sick to get any Food from Cheeseless Toppingless Pizza.
+- August 31, 2026 at 11:28 PM — Bri's sickness worsened after Cheeseless Toppingless Pizza.
+- August 31, 2026 at 11:28 PM — Bri gave Cheeseless Toppingless Pizza a cautious first bite.
+- August 31, 2026 at 11:28 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- August 31, 2026 at 11:28 PM — Bri was too sick to get any Food from Cheeseless Toppingless Pizza.
+- August 31, 2026 at 11:28 PM — Bri's sickness worsened after Cheeseless Toppingless Pizza.
+- August 31, 2026 at 11:28 PM — Bri happily ate Uncrustables.
+- August 31, 2026 at 11:28 PM — Bri was too sick to get any Food from Uncrustables.
+- August 31, 2026 at 11:28 PM — Bri's sickness worsened after Uncrustables.
+- August 31, 2026 at 11:28 PM — Water ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Granola delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Dr Pepper ×3 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Cheeseless Toppingless Pizza ×4 delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Bacon delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Insurance Card delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Body Pillow delivered. Bri said thanks — it sounded like a threat, but it was sincere.
+- August 31, 2026 at 11:28 PM — Bri settled down to rest.
+- September 1, 2026 at 12:28 AM — The channel grew by 4. The algorithm is finally awake.
+- September 1, 2026 at 2:28 AM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 2:28 AM — Bri is no longer full.
+- September 1, 2026 at 4:28 AM — Bri is craving Cheez-Its and will not shut up about it.
+- September 1, 2026 at 4:28 AM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 6:28 AM — 4 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 6:28 AM — Nap complete. Bri rebooted successfully.
+- September 1, 2026 at 6:28 AM — Bri is no longer sleep deprived.
+- September 1, 2026 at 6:28 AM — Bri started playing.
+- September 1, 2026 at 7:28 AM — Bri finished playing. The controller survived. This time.
+- September 1, 2026 at 7:28 AM — A new idea just possessed Bri. Pray for the schedule.
+- September 1, 2026 at 7:28 AM — Bri started playing.
+- September 1, 2026 at 8:28 AM — A noise happened. Bri and Socks stared at the same empty corner.
+- September 1, 2026 at 8:28 AM — The channel grew by 4. The algorithm is finally awake.
+- September 1, 2026 at 8:28 AM — Bri's first new-model commission is now available.
+- September 1, 2026 at 8:28 AM — GG. Bri claims she carried. There is no footage.
+- September 1, 2026 at 8:28 AM — Bri started playing.
+- September 1, 2026 at 10:28 AM — A fan sent $45 of support while Bri was offline.
+- September 1, 2026 at 10:28 AM — The channel grew by 5. The algorithm is finally awake.
+- September 1, 2026 at 10:28 AM — Bri is hungry.
+- September 1, 2026 at 10:28 AM — Game session over. Bri swears she was 'about to win.'
+- September 1, 2026 at 10:28 AM — Bri started spending time together with you.
+- September 1, 2026 at 11:13 AM — Hangout complete. Bri talked over everyone, affectionately.
+- September 1, 2026 at 11:13 AM — Bri started playing.
+- September 1, 2026 at 12:28 PM — 5 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 2:13 PM — Bri finished playing. The controller survived. This time.
+- September 1, 2026 at 2:13 PM — Bri refused Cheeseless Toppingless Pizza, and it went to waste.
+- September 1, 2026 at 2:13 PM — The room did a thing. No witnesses. No evidence.
+- September 1, 2026 at 2:13 PM — Bri carefully tried Cheeseless Toppingless Pizza.
+- September 1, 2026 at 2:13 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Cheeseless Toppingless Pizza.
+- September 1, 2026 at 2:13 PM — Bri carefully tried Cheeseless Toppingless Pizza.
+- September 1, 2026 at 2:13 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Cheeseless Toppingless Pizza.
+- September 1, 2026 at 2:13 PM — Bri carefully tried Cheeseless Toppingless Pizza.
+- September 1, 2026 at 2:13 PM — Bri's Cheeseless Toppingless Pizza arrived just the way they wanted it.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Cheeseless Toppingless Pizza.
+- September 1, 2026 at 2:13 PM — Bri finished a serving of Granola.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Granola.
+- September 1, 2026 at 2:13 PM — Her food has been pretty salty lately. Water might be a good idea.
+- September 1, 2026 at 2:13 PM — Bri is depressed.
+- September 1, 2026 at 2:13 PM — You bought Limited-Edition Dr Pepper for Bri. She's already scheming with it.
+- September 1, 2026 at 2:13 PM — You bought Popcorn ×3 for Bri. She's already scheming with it.
+- September 1, 2026 at 2:13 PM — You bought Roast beef ×2 for Bri. She's already scheming with it.
+- September 1, 2026 at 2:13 PM — You bought Mashed potatoes ×5 for Bri. She's already scheming with it.
+- September 1, 2026 at 2:13 PM — You bought Water ×2 for Bri. She's already scheming with it.
+- September 1, 2026 at 2:13 PM — Bri happily ate Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri savored every bite of Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri savored every bite of Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri savored every bite of Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri savored every bite of Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Mashed potatoes.
+- September 1, 2026 at 2:13 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 1, 2026 at 2:13 PM — Bri's sickness worsened after Water.
+- September 1, 2026 at 2:13 PM — Bri started playing.
+- September 1, 2026 at 2:28 PM — 5 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 2:28 PM — Bri is starving.
+- September 1, 2026 at 2:28 PM — Bri stopped playing early.
+- September 1, 2026 at 2:28 PM — Bri started spending time together with you.
+- September 1, 2026 at 2:43 PM — Hangout complete. Bri talked over everyone, affectionately.
+- September 1, 2026 at 2:43 PM — A care package from Mom: Cucumber and Five Plain Tortillas, plus a note that just says 'DRINK WATER.' Bri made a small happy noise about it.
+- September 1, 2026 at 2:43 PM — Bri chugged a Dr Pepper like it owed her money.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Dr Pepper.
+- September 1, 2026 at 2:43 PM — Bri chugged a Dr Pepper like it owed her money.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Dr Pepper.
+- September 1, 2026 at 2:43 PM — Bri is running low on energy.
+- September 1, 2026 at 2:43 PM — Bri chugged a Dr Pepper like it owed her money.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Dr Pepper.
+- September 1, 2026 at 2:43 PM — Bri is sleep deprived.
+- September 1, 2026 at 2:43 PM — Bri cracked open Limited-Edition Dr Pepper and snapped into Hyperfocus.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Limited-Edition Dr Pepper.
+- September 1, 2026 at 2:43 PM — Bri finished a serving of Popcorn.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Popcorn.
+- September 1, 2026 at 2:43 PM — Bri ate Popcorn.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Popcorn.
+- September 1, 2026 at 2:43 PM — No swearing for a suspiciously long time. Someone check on her.
+- September 1, 2026 at 2:43 PM — Bri finished a serving of Popcorn.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Popcorn.
+- September 1, 2026 at 2:43 PM — Bri reluctantly ate Roast beef.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Roast beef.
+- September 1, 2026 at 2:43 PM — Bri reluctantly ate Roast beef.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Roast beef.
+- September 1, 2026 at 2:43 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Water.
+- September 1, 2026 at 2:43 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Water.
+- September 1, 2026 at 2:43 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Water.
+- September 1, 2026 at 2:43 PM — Bri happily ate five plain tortillas.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Five Plain Tortillas.
+- September 1, 2026 at 2:43 PM — Bri opened OBS again. Nobody mention the last few days. Ever.
+- September 1, 2026 at 2:43 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Water.
+- September 1, 2026 at 2:43 PM — The mic is off, the energy is gone, and the schedule just says '???'.
+- September 1, 2026 at 2:43 PM — Bri consumed one (1) glass of water. Alert the press.
+- September 1, 2026 at 2:43 PM — Bri's sickness worsened after Water.
+- September 1, 2026 at 3:43 PM — Bri's health suffered from Sleep deprivation and Depression.
+- September 1, 2026 at 3:43 PM — Bri settled down to rest.
+- September 1, 2026 at 4:28 PM — Bri snored contentedly through the room.
+- September 1, 2026 at 4:28 PM — 5 new recruits joined the Bunny Brigade.
+- September 1, 2026 at 6:28 PM — 5 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 7:58 PM — $910 of sponsor money just landed. The NDA jokes write themselves.
+- September 1, 2026 at 8:28 PM — 5 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 10:28 PM — 5 new subscribers. Bri is being normal about it. (She is not.)
+- September 1, 2026 at 10:43 PM — Bri is awake. The mic survived the snoring. Barely.
+- September 1, 2026 at 10:43 PM — Bri is no longer sleep deprived.
+- September 1, 2026 at 10:43 PM — Bri's critical health made everything feel worse.
+- September 1, 2026 at 10:43 PM — Something fell over in the other room. Investigation: it was nothing. Probably.
+- September 1, 2026 at 10:43 PM — Bri refused Bacon, and it went to waste.
+- September 1, 2026 at 10:43 PM — Bri savored every bite of Cucumber.
+- September 1, 2026 at 10:43 PM — Bri's sickness worsened after Cucumber.
+- September 1, 2026 at 10:43 PM — Bri is gone. The room is silent. No snoring. That's how you know it's real.

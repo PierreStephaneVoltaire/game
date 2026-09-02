@@ -129,20 +129,22 @@ export function applyFollowerMilestones(
       causedBy: events[0] ? [events[0].id] : undefined,
     };
     events.push(event);
+    const madeItEnding = {
+      kind: 'made_it' as const,
+      at,
+      followers: progression.followers,
+      peakFollowers: progression.peakFollowers,
+      triggerEventId,
+      eventIds: [triggerEventId, event.id],
+    };
     return {
       ...state,
       metrics,
       progression,
+      ending: madeItEnding,
       endingUnlocks: {
         ...state.endingUnlocks,
-        made_it: {
-          kind: 'made_it',
-          at,
-          followers: progression.followers,
-          peakFollowers: progression.peakFollowers,
-          triggerEventId,
-          eventIds: [triggerEventId, event.id],
-        },
+        made_it: madeItEnding,
       },
     };
   }

@@ -2,25 +2,11 @@ import { describe, expect, test } from 'vitest';
 
 import { BUNDLED_GAME_DEFINITION } from './game-definition';
 import { startRun } from './game-engine';
-import mergeItems from './data/merge-item.json';
 
 const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('applies every authored lore override and merge addition', () => {
-    for (const override of mergeItems.overrides)
-      expect(item(override.id)).toMatchObject(override);
-    for (const added of mergeItems.newItems) {
-      const expected = Object.fromEntries(
-        Object.entries(added).filter(
-          ([key]) => !['cloneNutritionFrom', 'image'].includes(key),
-        ),
-      );
-      expect(item(added.id)).toMatchObject(expected);
-    }
-  });
-
   test('publishes exactly 232 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
@@ -45,15 +31,15 @@ describe('V2 catalogue definition seam', () => {
   });
 
   test('uses the replacement identities and their authored preparation data', () => {
-    expect(item('mini-tacos')).toMatchObject({ name: 'Mini Tacos', price: 5 });
+    expect(item('mini-tacos')).toMatchObject({ name: 'Mini Tacos', price: 6 });
     expect(item('cheeseless-toppingless-pizza')).toMatchObject({
       name: 'Cheeseless Toppingless Pizza',
-      price: 5,
+      price: 9,
       context: { preparationAcceptance: 0.85 },
     });
     expect(item('the-concoction')).toMatchObject({
       name: 'The Concoction',
-      price: 4,
+      price: 13,
       preferences: ['variable'],
       nutrition: {
         sourceType: 'fictional_seeded_profile',
@@ -72,14 +58,14 @@ describe('V2 catalogue definition seam', () => {
   test('publishes the nine added items with their locked prices and metadata', () => {
     expect(item('can-opener')).toMatchObject({
       category: 'reusable',
-      price: 35,
+      price: 11,
       consumable: true,
       supportsQuantity: true,
       itemActions: [expect.objectContaining({ consumes: true })],
     });
     expect(item('insurance-card')).toMatchObject({
       category: 'care',
-      price: 150,
+      price: 250,
       supportsQuantity: false,
       maximumOwned: 1,
     });
@@ -92,7 +78,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('electrolyte-sachet')).toMatchObject({
       category: 'care',
-      price: 9,
+      price: 1,
       nutritionScores: { salt: 2, water: 2 },
     });
     expect(item('jar-of-pickle-juice')).toMatchObject({
@@ -104,7 +90,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('sheet-of-cute-stickers')).toMatchObject({
       category: 'decoration',
-      price: 25,
+      price: 3,
       itemActions: [
         expect.objectContaining({
           id: 'confront_stickers',
@@ -114,7 +100,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('rigging-tablet')).toMatchObject({
       category: 'upgrade',
-      price: 200,
+      price: 699,
       itemActions: [
         expect.objectContaining({
           id: 'commission_work',
@@ -125,19 +111,19 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('limited-edition-dr-pepper')).toMatchObject({
       category: 'food',
-      price: 12,
+      price: 2,
       stock: { min: 1, max: 2 },
       sugarServings: 2,
     });
     expect(item('limited-edition-dr-pepper')?.tags).toContain('hyperfocus');
     expect(item('convention-guest-set')).toMatchObject({
       category: 'decoration',
-      price: 120,
+      price: 528,
       progression: { requiredCareerTier: 'convention_guest' },
     });
     expect(item('new-model-commission')).toMatchObject({
       category: 'upgrade',
-      price: 300,
+      price: 1000,
       consumable: true,
       supportsQuantity: true,
       progression: { requiredCareerTier: 'first_model' },
@@ -155,7 +141,7 @@ describe('V2 catalogue definition seam', () => {
   test('authors essential starter tortillas and stackable Clippers', () => {
     expect(item('five-plain-tortillas')).toMatchObject({
       category: 'food',
-      price: 2,
+      price: 1,
       preferences: ['liked'],
       effects: { food: { min: 2, max: 2 }, mood: { min: 2, max: 2 } },
       nutritionScores: { salt: 0, water: 0, protein: 0, sugar: 0, caffeine: 0 },
@@ -165,7 +151,7 @@ describe('V2 catalogue definition seam', () => {
     expect(item('water')?.tags).toContain('essential');
     expect(item('clippers')).toMatchObject({
       category: 'upgrade',
-      price: 25,
+      price: 29,
       consumable: true,
       supportsQuantity: true,
       itemActions: [

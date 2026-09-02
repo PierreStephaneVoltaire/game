@@ -2,22 +2,22 @@
 
 The companion's identity is configurable, so this reference calls them “the
 companion.” Every run is a single memory-only life. A terminal Ending closes it
-permanently; `Made It` is a non-terminal Ending unlock. There is no save
-recovery, restart, reset, inherited keepsake, or separate offline-recap screen.
+permanently. There is no save recovery, restart, reset, inherited keepsake, or
+separate offline-recap screen.
 The configured display name and authored player-facing copy may use the chosen
 name; runtime identifiers, IDs, paths, assets, seeds, and infrastructure names
 remain generic.
 
 ## Core rules
 
-- Health is a whole number from 0 through 40. Food, Mood, Rest, Bond, and
+- Health is a whole number from 0 through 30. Food, Mood, Rest, Bond, and
   Creativity are whole numbers from 0 through 10. Values clamp at those limits.
 - Health at 1–8 or Food, Rest, or Mood at 0–2 is a critical condition. Health
   0 causes Death. Bond and Creativity are not critical conditions. Mood held
   continuously at 0 can cause Quit Streaming.
 - All chance is seeded. The same seed, state, action, and opportunity produce
   the same outcome.
-- A run starts with Food 6, Health 32, Mood 6, Rest 7, Bond 4, Creativity 3,
+- A run starts with Food 6, Health 24, Mood 6, Rest 7, Bond 4, Creativity 3,
   $60, 100 current and peak Subscribers, an available Line of Credit, one
   Water, one Uncrustables, one Pretzel, and one Five
   Plain Tortillas.
@@ -88,6 +88,7 @@ A Run closes permanently with exactly one terminal outcome:
 | Death          | Health reaches 0                                         |
 | Quit Streaming | Mood remains at 0 continuously for 72 game-hours         |
 | Financial Ruin | Balance crosses from above −$20,000 to −$20,000 or below |
+| Made It        | Current Subscribers first reach 3,000,000                |
 
 The Mood countdown starts immediately at 0, clears as soon as Mood rises above
 0, and warns at 0, 24, and 48 hours. Financial Ruin has no countdown, grace
@@ -105,16 +106,17 @@ Ending-card titles and explanations are authored as text pools in
 `ending-rules.json`. A seeded option is selected from each applicable pool and
 then its placeholders are filled by the simulation or presentation layer.
 
-When current Subscribers first reach 3,000,000, `Made It` unlocks once with
-its exact time and causal audience event. It does not close the Run. Agency
-invitation is a career event, not an Ending. `She Cut You Off` remains
-unimplemented because no trigger has been approved.
+When current Subscribers first reach 3,000,000, `Made It` closes the Run with
+its exact time and causal audience event. Agency invitation is a career event,
+not an Ending. `She Cut You Off` remains unimplemented because no trigger has
+been approved.
 
 ## Needs and Health
 
 ### Food, Rest, and Bond
 
-- Every two game-hours, Food has a 65% chance to lose 1.
+- Every two game-hours, Food has a 65% chance to lose 1 while awake and a
+  32.5% chance while Rest is active.
 - Rest loses 1 every two game-hours while awake. It continues during
   Socialize, Play, streams, Hospital, and Commission Work.
 - Bond loses 1 after each 48 game-hours without a genuine Bond gain. A Bond
@@ -183,8 +185,9 @@ their source metric remains 0–2.
 
 Successfully consuming an edible while Full consumes it, suppresses its Food
 gain, keeps its other effects, and has a 35% chance to add Sick with Health −1
-and Mood −2. While already Sick, every successful edible consumption instead
-suppresses Food and applies Health −1 and Mood −1.
+and Mood −2. Sick adds 25 percentage points to each edible unit's ordinary
+refusal chance, capped at 100%. An accepted edible while Sick keeps all of its
+normal effects.
 
 Sick clears when Rest ends with Food at most 5 and Health at least 5, when
 Hospital completes, or naturally after 48 game-hours. Natural recovery gives no
@@ -307,6 +310,12 @@ repeats keep Bond but suppress Mood for Play or Creativity for Socialize.
 Switching to another companion action ends the repetition streak. Refusals and
 interruptions do not grant completion rewards.
 
+When owned, currently applicable item actions affect Mood or Creativity, the
+Socialize or Play button opens the same inventory-card picker used by Feed.
+The Default card runs the ordinary Socialize or Play activity without an item.
+If no applicable item exists, the button runs that default activity immediately
+without opening a dialog.
+
 Rest, Socialize, Play, streams, and Commission Work end if a condition that was
 not critical at their start becomes critical. Interrupted Socialize, Play, and
 Commission Work grant no completion reward. Streams retain elapsed-hour income
@@ -358,7 +367,7 @@ Every catalogue item owns an array of possible Journey lines. An accepted use
 selects one line with seeded randomness and prefixes the configured companion
 name. Items are familiar possessions and foods, so item use never produces a
 discovery event. Water, for example, uses authored reluctant-drinking lines
-instead of generic "tried" copy.
+instead of generic "tried" copy and applies Food +1 and Health +1.
 
 Liked foods apply at least Mood +1. Variable foods are mechanically neutral
 but still use their item-authored narration. Disliked foods use their authored
@@ -414,7 +423,7 @@ unless their authored hook requires idle state; another stream cannot begin.
 | Mom's Care Package        | 5 below $0 Balance or at Food 0–2, 72-hour cooldown                                                      |
 | Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
 | Autonomous stream         | Dynamic                                                                                                  |
-| Random offline donation   | 10, 12-hour cooldown, $5–$100 uniformly                                                                  |
+| Random offline donation   | 10, 24-hour cooldown, $5–$40 uniformly                                                                   |
 
 Mom's Care Package clearly records two seeded Liked foods as gifts, distinct
 where possible, and adds Mood +1. The full-body commission is a nonblocking project that completes at
@@ -432,7 +441,7 @@ Merch Sample, so either eligible hook can use the reopened slot. Entering debt
 later does not shorten a cooldown already recorded. Merch Sample can pay
 $15–$50 after the 1K tier on a 48-hour side-gig cooldown.
 
-The reusable $35 Can Opener has a weight-3 idle hook and a 48-hour kitchen-
+The reusable $11 Can Opener has a weight-3 idle hook and a 48-hour kitchen-
 accident cooldown: 90% Mood +1, 9% Health −1 with Mood −1..0, and 1% Health −2
 with ER narration. Its event Health loss is outside the periodic need cap.
 
@@ -491,7 +500,7 @@ Stream income is:
 round(hourly rate × elapsed hours × (0.5 + Creativity / 10))
 ```
 
-The starting hourly-rate band is $8–$18 and career milestones can replace it.
+The starting hourly-rate band is $6–$12 and career milestones can replace it.
 Income is added immediately and reduces negative cash first; it does not repay
 Hospital principal or LOC units. A normal
 completion also applies Creativity −1, Rest −1, and an equal Mood −1/0/+1 roll.
@@ -502,10 +511,10 @@ The fourth model adds one permanent percentage point before multipliers.
 
 | Donation        | Weight |                  Amount | Subscribers |
 | --------------- | -----: | ----------------------: | ----------: |
-| Kind supporter  |     55 |       $20–$60 uniformly |          +5 |
-| Raid windfall   |     27 |     $100–$400 uniformly |          +5 |
-| Major donor     |     14 | $1,000–$3,000 uniformly |         +30 |
-| Legendary donor |      4 |         exactly $10,000 |         +30 |
+| Kind supporter  |     58 |       $10–$40 uniformly |          +5 |
+| Raid windfall   |     30 |      $60–$200 uniformly |          +5 |
+| Major donor     |     10 |   $400–$1,000 uniformly |         +30 |
+| Legendary donor |      2 | $2,000–$5,000 uniformly |         +30 |
 
 Legendary is eligible only at Creativity 10. Below 10, the other tier weights
 are normalized rather than doubled. June 29 and November 14 triple donation
@@ -578,9 +587,9 @@ bands also remain unlocked after a loss.
 | ---------------: | ----------------------------------------------------------------------------------------- |
 |              100 | Debut; every run begins here                                                              |
 |              150 | First Model: first model tier unlocked                                                    |
-|            1,000 | 1K Subscribers: hourly stream rate $12–$22 and Mood +2                                    |
+|            1,000 | 1K Subscribers: hourly stream rate $9–$16 and Mood +2                                     |
 |            5,000 | Model Redesign: second model tier unlocked                                                |
-|           10,000 | Twitch Partner: hourly stream rate $15–$28                                                |
+|           10,000 | Twitch Partner: hourly stream rate $12–$20                                                |
 |           30,000 | 30K Subscribers: Subscriber Revenue 1.5×                                                  |
 |           40,000 | Tournament Appearance: third model tier and one fixed eight-hour stream with ×3 donations |
 |           50,000 | 50K Subscribers: Subscriber Revenue 2×                                                    |
@@ -592,7 +601,7 @@ bands also remain unlocked after a loss.
 |          500,000 | 500K Subscribers: Subscriber Revenue 7×                                                   |
 |        1,000,000 | 1M Subscribers: Subscriber Revenue 10×                                                    |
 
-New Model Commission costs $300 and appears once the required career tier is
+New Model Commission costs $1,000 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
 project ends at the third local midnight and grants Mood +3, Creativity +2,
 Subscribers +50, a new active appearance, and a queued fixed four-hour debut
@@ -620,7 +629,10 @@ Balance and causal transaction.
 
 The one-time Line of Credit is a permanent ordinary Shop offer. While
 available, one $50 opening unit may be added to the cart; checkout charges the
-$50 and advances $10,000 atomically even when starting Balance is below $50.
+$50 and then advances $10,000 atomically. When Balance is nonnegative, the
+opening price and every other cart line must be affordable from the current
+Balance without counting that advance. An already-negative Balance may open it
+under the ordinary debt-shopping rule.
 Once open, the same card sells twenty total $600 repayment units, limited by
 the remaining count. A repayment checkout requires starting Balance to cover
 the repayment portion. Once closed, the card remains in place but cannot be
@@ -648,7 +660,7 @@ Ending:
   current Balance, adds the item and purchase record, deducts that price, and
   adds Mood +1. With no eligible affordable item, it cannot occur.
 - Sponsored-stream deals immediately credit a seeded, uniformly selected
-  whole-dollar amount from $250 through $2,000.
+  whole-dollar amount from $250 through $1,500.
 - The one-time Agency debut adds 100,000 Subscribers and applies 1.5× natural
   discovery for seven days.
 - Algorithm boost applies 1.5× natural discovery for one day. Agency and
@@ -673,24 +685,23 @@ The renamed items are Mini Tacos, Cheeseless Toppingless Pizza, and The
 Concoction. Cheeseless Toppingless Pizza has an 85% acceptable-preparation
 chance.
 
-The lore-text merge patch adds Jaffa Cakes ($3), Oatmeal ($2), Homegrown
-Chocolate Chip Cookies ($4), and Ring Fit ($60). The three Foods are Liked and
+The catalogue includes Jaffa Cakes ($6), Oatmeal ($2), Homegrown
+Chocolate Chip Cookies ($3), and Ring Fit ($69). The three Foods are Liked and
 use their authored nutrition scores/effects; their provenance records clone
 the explicitly named comparable catalogue nutrition source. Ring Fit is a
 single-use interaction that requires owned game-control equipment and applies
-its authored seeded Mood, Rest, and Creativity effects. The same patch replaces
-listed descriptions and item-use narration by canonical ID without altering
-unlisted gameplay fields.
+its authored seeded Mood, Rest, and Creativity effects. Final descriptions and
+item-use narration are authored directly on their canonical catalogue records.
 
-The catalogue additions include Insurance Card ($150, at most one owned),
-Painkillers ($7), Electrolyte Sachet ($9; salt 2/water 2), Jar of Pickle Juice
-($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($25;
-single-use Mood −2 interaction), Rigging Tablet ($200), Limited-Edition Dr Pepper
-($12; stock 1–2; high effective sugar), Convention Guest Set ($120), New Model
-Commission ($300), and Clippers ($25). Five Plain Tortillas is a $2 essential
+The catalogue additions include Insurance Card ($250, at most one owned),
+Painkillers ($7), Electrolyte Sachet ($1; salt 2/water 2), Jar of Pickle Juice
+($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($3;
+single-use Mood −2 interaction), Rigging Tablet ($699), Limited-Edition Dr Pepper
+($2; stock 1–2; high effective sugar), Convention Guest Set ($528), New Model
+Commission ($1,000), and Clippers ($29). Five Plain Tortillas is a $1 essential
 Food and starter comfort item with Food +2 and Mood +2.
-The Can Opener is a single-use item priced at $35. Three-Month-Old Rotisserie Chicken
-is an $8 Variable Food with stock, ownership, and lifetime-purchase limit 1;
+The Can Opener is a single-use item priced at $11. Three-Month-Old Rotisserie Chicken
+is a $5 Variable Food with stock, ownership, and lifetime-purchase limit 1;
 it participates in ordinary shop rotation and automatic stream snacks.
 Consuming the complete item once applies Food +5, Health −8, and Creativity
 +2, creates no persistent status or recurrence, and attributes lethal damage
@@ -712,11 +723,13 @@ and one hydration-support item. Ordinary stock is seeded from 1 through 5; an it
 overrides that. Milestone-gated items join the candidate pool only after their
 unlock.
 
-Every ordinary Food, Medicine, Care, Reusable, Upgrade, or Decoration purchase
-may cross Balance below zero. The Shop previews the real Balance after checkout,
-including the LOC opening advance. Stock, ownership, quantity, rotation, and
-progression rules still apply. Shopping while below $0 has no separate Mood or
-recovery penalty. Mixed catalogue/LOC carts settle atomically.
+When Balance is $0 or above, an ordinary purchase or complete cart must cost no
+more than the current Balance; spending exactly to $0 is allowed. When Balance
+is already below $0, ordinary purchases may deepen the deficit. The Shop
+previews the real Balance after checkout, including any LOC opening advance.
+Stock, ownership, quantity, rotation, and progression rules still apply.
+Shopping while below $0 has no separate Mood or recovery penalty. Mixed
+catalogue/LOC carts settle atomically.
 
 Non-quantity durables reject quantity above one in both direct purchases and
 carts. Ownership caps and stock limits still apply.
@@ -729,7 +742,9 @@ and appears as a searchable, filterable grid with 24 items per page.
 
 Placed room effects are removed by the exact amount that was originally
 applied, so clamping never makes placement changes irreversible. The room keeps
-its fixed anchors and three-row layout.
+its fixed anchors and three-row layout. Clicking an empty anchor lists only
+owned items that fit it. On the room page, the active Room navigation control
+lists all owned placeable items whose destination anchor is empty.
 
 ## Journey and Endings
 
@@ -740,8 +755,8 @@ emergency rescues, sugar warnings, reading, side gigs, injuries, craving
 expiry, Hyperfocus, Dizzy Spell, care packages, model debuts,
 room changes, Balance debt crossings and recovery, LOC operations, life
 events and expiring discovery boosts, Made It, ending warnings and recoveries,
-and terminal Endings. The room displays only the latest projected Journey
-entry.
+and terminal Endings. The room displays the latest ten projected Journey
+entries with their localized day and time in a fixed-height scrolling panel.
 
 It hides reconciliation, decay, Subscriber Revenue ticks, opportunity
 bookkeeping, shop refreshes, nutrition counters, command receipts, and other
@@ -750,17 +765,16 @@ recap.
 
 Every terminal Ending keeps its causal Journey and full narrated Journey
 available. Death alone uses graveyard language and lists every structured
-Health-loss cause. Quit Streaming and Financial Ruin use a neutral archived-run
-card with trigger evidence. Made It remains visible as an earned non-terminal
-unlock. The Markdown export records the exact terminal Ending, causal chain,
-and complete Journey; Death causes are never inferred by parsing narration
-text.
+Health-loss cause. Quit Streaming, Financial Ruin, and Made It use a neutral
+archived-run card. The Markdown export records the exact terminal Ending,
+causal chain, and complete Journey; Death causes are never inferred by parsing
+narration text.
 
 ## Modifier arithmetic reference
 
 `+` adds the stated amount, `−` subtracts it, and `×` multiplies the value to
 its left. Metric changes are applied to the current metric and then clamped:
-Health stays from 0 through 40, while Food, Mood, Rest, Bond, and Creativity
+Health stays from 0 through 30, while Food, Mood, Rest, Bond, and Creativity
 stay from 0 through 10. Current Subscribers cannot fall below 0. Balance has no
 lower clamp.
 
@@ -836,7 +850,7 @@ example, two active stacks at the 1K tier award
 | Tournament donation chance                   | A separate `×3` chance, stacking with a special date                                                                                             |
 
 The hourly rate is one seeded whole-dollar value from the highest permanently
-unlocked band: $8–$18 initially, $12–$22 after 1K peak Subscribers, or $15–$28
+unlocked band: $6–$12 initially, $9–$16 after 1K peak Subscribers, or $12–$20
 after 10K peak Subscribers. Creativity therefore changes stream income through
 the `(0.5 + Creativity / 10)` multiplier: `×0.5` at Creativity 0, `×1` at 5,
 and `×1.5` at 10. Interrupted streams use their actual elapsed time for income
@@ -844,7 +858,7 @@ and still roll once for each completed whole hour.
 
 After a successful donation roll, its tier selects the cash and direct
 Subscriber award shown in the donation table above. The `×3` modifiers affect
-only whether a donation occurs. A Kind supporter remains $20–$60 and +5
+only whether a donation occurs. A Kind supporter remains $10–$40 and +5
 Subscribers, for example; its amount is not tripled.
 
 ### Balance and economic arithmetic
@@ -865,8 +879,8 @@ new Balance = old Balance + all income − all expenses
 | Stream completion                 | `+round(hourly rate × elapsed hours × (0.5 + Creativity / 10))`, plus each donation's actual amount                             |
 | Commission Work                   | `+$40 + ($15 × starting Creativity)`                                                                                            |
 | Full-body commission              | `+$400` through `+$800`, seeded uniformly in whole dollars                                                                      |
-| Random offline donation           | `+$5` through `+$100`, seeded uniformly in whole dollars                                                                        |
-| Sponsored-stream deal             | `+$250` through `+$2,000`, seeded uniformly in whole dollars                                                                    |
+| Random offline donation           | `+$5` through `+$40`, seeded uniformly in whole dollars                                                                         |
+| Sponsored-stream deal             | `+$250` through `+$1,500`, seeded uniformly in whole dollars                                                                    |
 | Convention milestone              | `+$500` once                                                                                                                    |
 | Personal purchase                 | `− real catalogue price` for the one selected affordable item                                                                   |
 | Tax bill                          | `−$100` through `−$1,000`, seeded uniformly in whole dollars                                                                    |
@@ -880,14 +894,15 @@ Subscriber band and replaces the prior multiplier: `×1`, `×1.5`, `×2`, `×3`,
 payment floor raises `$1 ×1.5` and `$1 ×2` to $3 per tick once 30K has been
 reached; the legacy calculation becomes larger again at the 200K tier.
 
-Catalogue checkout can take Balance below $0. Tax and Equipment Failure can
-also cross from a nonnegative Balance into debt, but neither is eligible while
-Balance is already negative. A personal purchase is selected only when its
-real price is no greater than current Balance, so it cannot create debt.
+Catalogue checkout cannot take a nonnegative Balance below $0, but can deepen
+an already-negative Balance. Tax and Equipment Failure can cross from a
+nonnegative Balance into debt, but neither is eligible while Balance is already
+negative. A personal purchase is selected only when its real price is no
+greater than current Balance, so it cannot create debt.
 Hospital daily payments stop at $0, full medical payoff requires enough
 starting Balance, and LOC repayments require starting Balance to cover the LOC
-repayment portion. Opening the LOC is the exception: its $50 price and $10,000
-advance settle together even when starting Balance is below $50.
+repayment portion. The LOC opening advance is applied only after its $50 price
+and the rest of that cart pass the ordinary affordability check.
 
 Positive income always adds directly to Balance, reducing negative cash before
 making Balance positive. It does not automatically reduce Hospital principal

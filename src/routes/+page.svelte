@@ -17,7 +17,10 @@
       <span class="wordmark-spark" aria-hidden="true">✦</span>
       {text(copy.wordmark).toUpperCase()}
     </span>
-    <a class="build-label" href={resolve('/login')}>{copy.login.submit}</a>
+    <div class="header-links">
+      <a class="build-label" href={resolve('/about')}>About</a>
+      <a class="build-label" href={resolve('/login')}>{copy.login.submit}</a>
+    </div>
   </header>
 
   <section class="hero" aria-labelledby="page-title">

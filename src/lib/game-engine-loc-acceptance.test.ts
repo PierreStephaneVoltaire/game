@@ -65,6 +65,58 @@ describe('Line of Credit exact economy rules', () => {
     expect(result.state.statuses.in_debt).toBeUndefined();
   });
 
+  test('requires the opening price in current cash unless Balance is negative', () => {
+    const short = checkoutLoc(
+      { ...run(), balance: financialRules.lineOfCredit.applicationPrice - 1 },
+      1,
+      'short-loc',
+    );
+    const indebted = checkoutLoc({ ...run(), balance: -1 }, 1, 'debt-loc');
+
+    expect(short.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'insufficient_funds',
+    });
+    expect(short.state.lineOfCredit.status).toBe('available');
+    expect(indebted.outcomes[0].accepted).toBe(true);
+    expect(indebted.state.balance).toBe(
+      -1 -
+        financialRules.lineOfCredit.applicationPrice +
+        financialRules.lineOfCredit.cashAdvance,
+    );
+  });
+
+  test('does not use the opening advance to afford ordinary items in that cart', () => {
+    const initial = run();
+    const water = BUNDLED_GAME_DEFINITION.items.find(
+      ({ id }) => id === 'water',
+    )!;
+    const stocked = {
+      ...initial,
+      balance: financialRules.lineOfCredit.applicationPrice,
+      shop: {
+        ...initial.shop,
+        itemIds: [water.id],
+        stock: { [water.id]: 1 },
+        cart: { [LINE_OF_CREDIT_OFFER_ID]: 1, [water.id]: 1 },
+      },
+    };
+    const result = dispatchCommand(
+      stocked,
+      { type: 'checkout_cart', commandId: 'unfunded-mixed-cart', now: 0 },
+      BUNDLED_GAME_DEFINITION,
+    );
+
+    expect(result.outcomes[0]).toMatchObject({
+      accepted: false,
+      kind: 'insufficient_funds',
+    });
+    expect(result.state.balance).toBe(
+      financialRules.lineOfCredit.applicationPrice,
+    );
+    expect(result.state.lineOfCredit.status).toBe('available');
+  });
+
   test('settles a mixed opening cart atomically with its real resulting Balance', () => {
     const initial = run();
     const water = BUNDLED_GAME_DEFINITION.items.find(

@@ -9,6 +9,7 @@ import {
   purchaseAllowed,
   purchaseQuantity,
   recordLifetimePurchases,
+  shopPurchaseAffordable,
 } from '../billing-rules';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { finalizeFinancialOperation } from '../financial-rules';
@@ -83,6 +84,12 @@ function buyItem(
       state,
       rejected('quantity_cap', 'That quantity exceeds the item ownership cap.'),
     );
+  const purchaseCost = item.price * quantity;
+  if (!shopPurchaseAffordable(state.balance, purchaseCost))
+    return result(
+      state,
+      rejected('insufficient_funds', 'Balance is too low for that payment.'),
+    );
   const event: GameEvent = {
     id: `event-${state.events.length + 1}`,
     type: 'item_purchased',
@@ -94,7 +101,7 @@ function buyItem(
   };
   const next: GameState = {
     ...state,
-    balance: state.balance - item.price * quantity,
+    balance: state.balance - purchaseCost,
     inventory: {
       ...state.inventory,
       [item.id]: (state.inventory[item.id] ?? 0) + quantity,
