@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"/home/sirsimpalot/Downloads/vpetclone/.codex/hooks/aitmpl-codex--automation--agents-md-loader\" && ./.codex/hooks/automation-agents-md-loader-sessionstart-sessionstart-1-1.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
