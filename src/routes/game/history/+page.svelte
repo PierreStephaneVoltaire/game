@@ -144,26 +144,26 @@
   }
   .eyebrow {
     margin: 0;
-    color: #8d386e;
+    color: var(--theme-ink);
     font-size: 0.65rem;
     font-weight: 900;
     letter-spacing: 0.12em;
   }
   .history-heading h1 {
     margin: 5px 0 0;
-    color: #512b9a;
+    color: var(--theme-ink);
     font-size: clamp(2.4rem, 6vw, 4.3rem);
     letter-spacing: -0.07em;
   }
   .ending-card {
     margin-bottom: 24px;
     padding: clamp(20px, 4vw, 34px);
-    border: 3px solid #512b9a;
-    background: #ffe0e8;
+    border: 3px solid var(--theme-ink);
+    background: var(--theme-warm-white);
   }
   .ending-card h2 {
     margin: 4px 0 7px;
-    color: #512b9a;
+    color: var(--theme-ink);
     font-size: 2rem;
   }
   .ending-card h3 {
@@ -186,7 +186,7 @@
     gap: 5px 12px;
     margin-top: 25px;
     padding: 16px;
-    background: #eadff0;
+    background: var(--theme-coral-light);
   }
   .graveyard span {
     grid-row: span 2;
@@ -195,7 +195,7 @@
   .graveyard p {
     grid-column: 2;
     margin: 0;
-    color: #766d7f;
+    color: var(--theme-ink);
     font-size: 0.8rem;
   }
   .graveyard dl {
@@ -219,25 +219,25 @@
     justify-self: start;
     margin-top: 9px;
     padding: 9px 13px;
-    border: 2px solid #512b9a;
-    color: #512b9a;
-    background: #fff;
-    box-shadow: 3px 3px 0 #f3a15f;
+    border: 2px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-cream);
+    box-shadow: 3px 3px 0 var(--theme-ink);
     font: inherit;
     font-size: 0.75rem;
     font-weight: 900;
     cursor: pointer;
   }
   .graveyard button:hover {
-    color: #fff;
-    background: #512b9a;
+    color: var(--theme-ink);
+    background: var(--theme-pink);
   }
   .event-log {
-    border-top: 3px solid #512b9a;
+    border-top: 3px solid var(--theme-ink);
   }
   .event-log summary {
     padding: 17px 0;
-    color: #512b9a;
+    color: var(--theme-ink);
     font-weight: 900;
     cursor: pointer;
   }
@@ -253,10 +253,10 @@
     grid-template-columns: 190px 1fr;
     gap: 18px;
     padding: 12px 0;
-    border-bottom: 1px solid #eadff0;
+    border-bottom: 1px solid var(--theme-ink);
   }
   .event-log time {
-    color: #766d7f;
+    color: var(--theme-ink);
     font-size: 0.75rem;
   }
   .event-log span {
@@ -265,7 +265,7 @@
   .empty {
     padding: 42px;
     text-align: center;
-    color: #766d7f;
+    color: var(--theme-ink);
   }
   @media (max-width: 600px) {
     .history-heading {

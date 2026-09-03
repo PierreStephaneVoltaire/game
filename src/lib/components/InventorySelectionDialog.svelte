@@ -155,14 +155,14 @@
     width: min(720px, calc(100% - 32px));
     max-height: calc(100vh - 48px);
     margin: auto;
-    border: 4px solid #512b9a;
+    border: 4px solid var(--theme-ink);
     padding: clamp(18px, 4vw, 30px);
-    color: #32254b;
-    background: #fffdf9;
-    box-shadow: 8px 8px 0 #f3a15f;
+    color: var(--theme-ink);
+    background: var(--theme-white);
+    box-shadow: 8px 8px 0 var(--theme-pink);
   }
   .selection-dialog::backdrop {
-    background: #27163db3;
+    background: color-mix(in srgb, var(--theme-ink) 70%, transparent);
   }
   .dialog-heading {
     display: flex;
@@ -172,11 +172,11 @@
   }
   .dialog-heading h2 {
     margin: 0 0 22px;
-    color: #512b9a;
+    color: var(--theme-ink);
   }
   .dialog-close {
     border: 0;
-    color: #512b9a;
+    color: var(--theme-ink);
     background: transparent;
     font-size: 1.8rem;
     cursor: pointer;
@@ -191,9 +191,9 @@
     gap: 5px;
     min-height: 54px;
     padding: 11px;
-    border: 3px solid #512b9a;
-    background: #fff;
-    box-shadow: 5px 5px 0 #f3a15f;
+    border: 3px solid var(--theme-ink);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-pink);
     place-items: center;
   }
   button.item-choice {
@@ -205,7 +205,7 @@
     image-rendering: pixelated;
   }
   .item-choice span {
-    color: #766d7f;
+    color: var(--theme-ink);
   }
   .selection-quantity {
     display: flex;
@@ -217,10 +217,10 @@
     width: 34px;
     min-height: 34px;
     padding: 0;
-    border: 3px solid #512b9a;
-    color: #512b9a;
-    background: #fff;
-    box-shadow: 5px 5px 0 #f3a15f;
+    border: 3px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-pink);
     font: inherit;
     font-weight: 900;
     cursor: pointer;
@@ -241,23 +241,23 @@
   .dialog-actions button {
     min-height: 40px;
     padding: 8px 12px;
-    border: 2px solid #512b9a;
-    color: #fff;
-    background: #512b9a;
+    border: 2px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-teal);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
   }
   .dialog-actions button.secondary {
-    color: #512b9a;
-    background: #fff;
+    color: var(--theme-ink);
+    background: var(--theme-gold);
   }
   button:disabled {
     cursor: not-allowed;
     opacity: 0.45;
   }
   button:focus-visible {
-    outline: 3px solid #f3a15f;
+    outline: 3px solid var(--theme-ink);
     outline-offset: 3px;
   }
 </style>

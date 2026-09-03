@@ -26,7 +26,7 @@
     text-transform: capitalize;
   }
   .quiet {
-    color: #766d7f;
+    color: var(--theme-ink);
     font-size: 0.78rem;
   }
 </style>

@@ -123,26 +123,26 @@
   }
   h2 {
     margin: 0;
-    color: #512b9a;
+    color: var(--theme-ink);
   }
   .inventory-heading p {
     margin: 5px 0 0;
-    color: #766d7f;
+    color: var(--theme-ink);
     font-size: 0.75rem;
   }
   .inventory-search {
     display: grid;
     gap: 4px;
-    color: #512b9a;
+    color: var(--theme-ink);
     font-size: 0.7rem;
     font-weight: 800;
   }
   .inventory-search input {
     min-width: min(240px, 45vw);
     padding: 8px 10px;
-    border: 2px solid #512b9a;
+    border: 2px solid var(--theme-ink);
     border-radius: 0;
-    color: #27163d;
+    color: var(--theme-ink);
     font: inherit;
   }
   .inventory-categories,
@@ -156,17 +156,17 @@
   .inventory-categories button,
   .inventory-pagination button {
     padding: 7px 10px;
-    border: 2px solid #512b9a;
-    color: #512b9a;
-    background: #fff;
+    border: 2px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-white);
     font: inherit;
     font-size: 0.72rem;
     font-weight: 800;
     cursor: pointer;
   }
   .inventory-categories button.active {
-    background: #ffdaea;
-    box-shadow: inset 0 -3px #512b9a;
+    background: var(--theme-gold);
+    box-shadow: inset 0 -3px var(--theme-ink);
   }
   .inventory-grid {
     display: grid;
@@ -180,16 +180,16 @@
     align-items: center;
     min-width: 0;
     padding: 8px;
-    border: 2px solid #c6b9d2;
-    color: #512b9a;
-    background: #fff;
+    border: 2px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-white);
     font: inherit;
     text-align: left;
     cursor: pointer;
   }
   .inventory-card:hover {
-    border-color: #512b9a;
-    box-shadow: 3px 3px #f3a15f;
+    border-color: var(--theme-ink);
+    box-shadow: 3px 3px var(--theme-pink);
   }
   .inventory-card img {
     image-rendering: pixelated;
@@ -209,7 +209,7 @@
   }
   .inventory-card small {
     margin-top: 3px;
-    color: #766d7f;
+    color: var(--theme-ink);
     font-size: 0.65rem;
   }
   .inventory-card b {
@@ -219,13 +219,13 @@
     justify-content: center;
   }
   .inventory-pagination span {
-    color: #766d7f;
+    color: var(--theme-ink);
     font-size: 0.75rem;
     font-weight: 800;
   }
   .empty {
     padding: 42px;
-    color: #766d7f;
+    color: var(--theme-ink);
     text-align: center;
   }
   button:disabled {
@@ -234,7 +234,7 @@
   }
   button:focus-visible,
   input:focus-visible {
-    outline: 3px solid #f3a15f;
+    outline: 3px solid var(--theme-ink);
     outline-offset: 3px;
   }
   @media (max-width: 650px) {

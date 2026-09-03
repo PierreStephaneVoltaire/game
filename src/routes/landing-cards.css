@@ -4,12 +4,12 @@
   gap: clamp(28px, 6vw, 76px);
   align-items: start;
   padding: 44px 0 58px;
-  border-top: 3px dashed #bf9bdf;
+  border-top: 3px dashed var(--theme-ink);
 }
 
 h2 {
   margin-bottom: 0;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: clamp(2rem, 4.5vw, 3.6rem);
   letter-spacing: -0.06em;
   line-height: 0.98;
@@ -17,31 +17,33 @@ h2 {
 
 .care-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
 .care-card {
   min-height: 152px;
   padding: 19px;
-  border: 3px solid #512b9a;
-  box-shadow: 5px 5px 0 #512b9a;
+  border: 3px solid var(--theme-ink);
+  background: var(--theme-gold);
+  box-shadow: 5px 5px 0 var(--theme-pink);
 }
 
-.food-card {
-  background: #ffd5ab;
+.care-card:nth-child(2),
+.care-card:nth-child(4),
+.care-card:nth-child(6) {
+  background: var(--theme-pink);
+  color: var(--theme-on-pink);
+  box-shadow: 5px 5px 0 var(--theme-gold);
 }
 
-.sleep-card {
-  background: #cde9ff;
+.care-card:nth-child(3),
+.care-card:nth-child(4) {
+  background: var(--theme-teal);
 }
 
-.heart-card {
-  background: #ffc8df;
-}
-
-.cheer-card {
-  background: #fff2a8;
+.care-card:nth-child(6) {
+  box-shadow: 5px 5px 0 var(--theme-teal);
 }
 
 .card-icon {
@@ -50,8 +52,8 @@ h2 {
   height: 29px;
   place-items: center;
   margin-bottom: 19px;
-  color: #fff;
-  background: #512b9a;
+  color: var(--theme-ink);
+  background: var(--theme-white);
   font-size: 1rem;
 }
 
@@ -62,15 +64,15 @@ h3 {
 
 .care-card p {
   margin-bottom: 0;
-  color: #574768;
+  color: inherit;
   font-size: 0.76rem;
   line-height: 1.45;
 }
 
 footer {
   padding: 20px 0 30px;
-  border-top: 3px solid #512b9a;
-  color: #7655bb;
+  border-top: 3px solid var(--theme-ink);
+  color: var(--theme-ink);
   font-size: 0.59rem;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -92,7 +94,7 @@ footer p {
   }
 
   .device-wrap {
-    width: min(90%, 410px);
+    width: min(90%, 440px);
   }
 
   .care-section {
@@ -117,12 +119,11 @@ footer p {
     padding: 17px 18px 23px;
     border-width: 3px;
     box-shadow:
-      7px 7px 0 #512b9a,
-      12px 12px 0 #f3a15f;
+      7px 7px 0 var(--theme-gold),
+      12px 12px 0 var(--theme-pink);
   }
 
   .screen {
-    min-height: 201px;
     border-width: 3px;
   }
 

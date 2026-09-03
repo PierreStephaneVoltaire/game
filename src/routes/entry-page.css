@@ -10,7 +10,7 @@
 }
 
 .auth-wordmark {
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.13em;

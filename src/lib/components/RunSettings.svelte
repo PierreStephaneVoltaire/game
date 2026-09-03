@@ -42,10 +42,10 @@
   summary {
     min-height: 42px;
     padding: 10px 16px;
-    border: 3px solid #512b9a;
-    color: #512b9a;
-    background: #fff;
-    box-shadow: 4px 4px 0 #f3a15f;
+    border: 3px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-gold);
+    box-shadow: 4px 4px 0 var(--theme-pink);
     font-size: 0.78rem;
     font-weight: 900;
     cursor: pointer;
@@ -55,8 +55,8 @@
     display: none;
   }
   summary:hover {
-    color: #fff;
-    background: #512b9a;
+    color: var(--theme-ink);
+    background: var(--theme-teal);
   }
   .settings-menu {
     position: absolute;
@@ -64,11 +64,11 @@
     top: calc(100% + 10px);
     right: 0;
     width: min(320px, calc(100vw - 32px));
-    border: 3px solid #512b9a;
+    border: 3px solid var(--theme-ink);
     padding: 18px;
-    color: #766d7f;
-    background: #fff8f2;
-    box-shadow: 6px 6px 0 #f3a15f;
+    color: var(--theme-ink);
+    background: var(--theme-white);
+    box-shadow: 6px 6px 0 var(--theme-pink);
     font-size: 0.8rem;
     line-height: 1.45;
   }
@@ -82,16 +82,16 @@
     width: 100%;
     min-height: 42px;
     padding: 10px 16px;
-    border: 3px solid #512b9a;
-    color: #512b9a;
-    background: #fff;
+    border: 3px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-white);
     cursor: pointer;
     font: inherit;
     font-weight: 900;
   }
   button:hover:not(:disabled) {
-    color: #fff;
-    background: #512b9a;
+    color: var(--theme-ink);
+    background: var(--theme-teal);
   }
   button:disabled {
     cursor: wait;
@@ -99,7 +99,7 @@
   }
   strong,
   code {
-    color: #512b9a;
+    color: var(--theme-ink);
   }
   code {
     overflow-wrap: anywhere;

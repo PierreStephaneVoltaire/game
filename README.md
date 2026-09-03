@@ -13,6 +13,30 @@ visible confirmation of that key before the player continues to a separate
 clock-mode page. There is no in-app reset, restart, recovery, or mode switch.
 Runs do not inherit keepsakes, debt, Followers, or unlocks.
 
+## Azure infrastructure
+
+The diagram shows the Azure infrastructure defined in this repository.
+
+```mermaid
+flowchart TB
+  subgraph Azure
+    subgraph SWA["Azure Static Web Apps"]
+      Frontend["Static SvelteKit frontend"]
+      API["Managed Azure Functions API — Python"]
+    end
+    Entra["Microsoft Entra ID"]
+    Database["Azure Database for PostgreSQL Flexible Server"]
+    Insights["Application Insights"]
+    Logs["Log Analytics workspace"]
+
+    Frontend -->|"Browser requests: /api/*"| API
+    API -->|"Acquire database access token"| Entra
+    API -->|"SQL over TLS with Entra authentication"| Database
+    API -->|"API telemetry"| Insights
+    Insights -->|"Telemetry storage"| Logs
+  end
+```
+
 ## Requirements
 
 - Node.js 24.14.0

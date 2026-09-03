@@ -19,9 +19,9 @@ test('keeps the terminal record and exports the grave with its Journey', async (
   await expect(settings.getByRole('button', { name: /mode/i })).toHaveCount(0);
   await settings.locator('summary').click();
   await expect(page.getByRole('button', { name: /reset/i })).toHaveCount(0);
-  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
   await expect(page.locator('.item-footer button').first()).toBeDisabled();
-  await page.getByRole('link', { name: /back to room/i }).click();
+  await page.getByRole('button', { name: 'Close Shop' }).click();
   await page.getByRole('link', { name: 'History', exact: true }).click();
   await expect(
     page.getByRole('heading', { name: 'Cause of death' }),

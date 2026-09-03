@@ -37,6 +37,9 @@ test('moves from login through separate key and new-game mode screens', async ({
   );
   await page.getByRole('textbox', { name: 'Game key' }).press('Enter');
   await expect(page).toHaveURL(/\/mode$/);
+  await expect(
+    page.getByText('How should time move in this session?'),
+  ).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveCount(0);
   await expect(
     page.getByRole('button', { name: 'Streaming mode' }),
@@ -146,9 +149,11 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   const navigation = page.locator('[data-game-row="navigation"]');
   await expect(navigation.locator('a, button')).toHaveCount(4);
   await expect(navigation.getByRole('button', { name: 'Room' })).toBeVisible();
-  await expect(navigation.getByRole('link', { name: 'Shop' })).toBeVisible();
   await expect(
-    navigation.getByRole('link', { name: 'Inventory' }),
+    navigation.getByRole('button', { name: 'Shop', exact: true }),
+  ).toBeVisible();
+  await expect(
+    navigation.getByRole('button', { name: 'Inventory', exact: true }),
   ).toBeVisible();
   await expect(navigation.getByRole('link', { name: 'History' })).toBeVisible();
   const controlBoxes = async (
@@ -174,10 +179,16 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
     );
   }
 
-  await page.getByRole('link', { name: 'Shop' }).click();
-  await expect(page.locator('[data-game-row="navigation"]')).toHaveCount(0);
-  await expect(page.getByRole('link', { name: /back to room/i })).toBeVisible();
-  await page.getByRole('link', { name: /back to room/i }).click();
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
+  await expect(page.locator('.shop-dialog')).toHaveJSProperty('open', true);
+  await expect(page.locator('.shop-dialog')).toHaveJSProperty(
+    'clientWidth',
+    1280,
+  );
+  await expect(
+    page.getByRole('button', { name: /^Close (Shop|Inventory)$/ }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: /^Close (Shop|Inventory)$/ }).click();
 
   await expect(eventPanel.locator('li:last-child')).toHaveText(
     /journey began/i,

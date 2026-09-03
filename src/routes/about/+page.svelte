@@ -48,14 +48,14 @@
   }
   .about-card section {
     padding: clamp(24px, 5vw, 48px);
-    border: 4px solid #512b9a;
-    background: #fffdf9;
-    box-shadow: 8px 8px 0 #f3a15f;
+    border: 4px solid var(--theme-ink);
+    background: var(--theme-cream);
+    box-shadow: 8px 8px 0 var(--theme-ink);
   }
   h1,
   h2 {
     margin: 0;
-    color: #512b9a;
+    color: var(--theme-ink);
   }
   h1 {
     font-size: clamp(2.4rem, 7vw, 4.8rem);
@@ -66,7 +66,7 @@
   .section-copy {
     min-height: 8rem;
     margin: 20px 0 0;
-    color: #56466b;
+    color: var(--theme-ink);
     line-height: 1.7;
   }
 </style>

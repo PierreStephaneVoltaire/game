@@ -44,9 +44,13 @@ test('restores the account session and opens an existing key without mode select
 
 test('opens shop and history from the room', async ({ page }) => {
   await signInAndChooseMode(page, 'Realtime mode');
-  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Shop' })).toBeVisible();
-  await expect(page.locator('[data-game-row="navigation"]')).toHaveCount(0);
+  await expect(page.locator('.shop-dialog')).toHaveJSProperty('open', true);
+  await expect(page.locator('.shop-dialog')).toHaveJSProperty(
+    'clientWidth',
+    1280,
+  );
   await page.goto('/game/history');
   await expect(page.getByRole('heading', { name: /history/i })).toBeVisible();
 });
@@ -56,7 +60,7 @@ test('keeps the shared game layout within a 320px viewport', async ({
 }) => {
   await page.setViewportSize({ width: 320, height: 720 });
   await signInAndChooseMode(page, 'Realtime mode');
-  for (const path of ['/game', '/game/shop?tab=shop', '/game/history']) {
+  for (const path of ['/game', '/game/history']) {
     await page.goto(path);
     await expect(page.locator('main')).toBeVisible();
     expect(
@@ -72,7 +76,7 @@ test('keeps the shared game layout within a 320px viewport', async ({
   for (const row of ['care', 'navigation']) {
     const tops = await page
       .locator(`[data-game-row="${row}"]`)
-      .getByRole(row === 'care' ? 'button' : 'link')
+      .locator(row === 'care' ? 'button' : 'a, button')
       .evaluateAll((elements) =>
         elements.map((element) => element.getBoundingClientRect().top),
       );
@@ -81,26 +85,11 @@ test('keeps the shared game layout within a 320px viewport', async ({
   }
 });
 
-test('normalizes invalid shop queries and exposes item detail', async ({
-  page,
-}) => {
-  await signInAndChooseMode(page, 'Realtime mode');
-  await page.goto('/game/shop?tab=unknown&category=unknown&item=missing');
-  await expect(page).toHaveURL(/\/game\/shop\?tab=shop$/);
-  await page
-    .getByRole('button', { name: /^View details for / })
-    .nth(1)
-    .click();
-  await expect(page).toHaveURL(/tab=detail&item=/);
-  await expect(page.getByText('ITEM DETAIL', { exact: true })).toBeVisible();
-  await expect(page.getByRole('list', { name: 'Item tags' })).toBeVisible();
-});
-
 test('renders the selected feed outcome and advances streaming time', async ({
   page,
 }) => {
   await signInAndChooseMode(page, 'Realtime mode');
-  await page.goto('/game/shop?tab=inventory');
+  await page.getByRole('button', { name: 'Inventory', exact: true }).click();
   await page.getByRole('button', { name: /Water/ }).click();
   await page.getByRole('button', { name: 'Feed companion' }).click();
   await expect(page.locator('.outcome')).toContainText('Water was used.');
@@ -119,15 +108,15 @@ test('blocks care during Realtime activity while navigation remains available', 
   await page.getByRole('button', { name: 'Rest' }).click();
   await expect(page.getByText(/is resting until/i)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Feed' })).toBeDisabled();
-  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Shop' })).toBeVisible();
-  await page.getByRole('tab', { name: /Inventory/ }).click();
-  await expect(page).toHaveURL(/\/game\/shop\?tab=inventory$/);
-  await expect(page.getByRole('heading', { name: 'Inventory' })).toBeVisible();
+  await page.getByRole('button', { name: 'Close Shop' }).click();
+  await page.getByRole('button', { name: 'Inventory', exact: true }).click();
+  await expect(page).toHaveURL(/\/game$/);
   await expect(
-    page.locator('details.settings').locator('summary'),
+    page.getByRole('dialog', { name: 'Inventory', exact: true }),
   ).toBeVisible();
-  await page.getByRole('link', { name: /back to room/i }).click();
+  await page.getByRole('button', { name: /^Close (Shop|Inventory)$/ }).click();
   await page.getByRole('link', { name: 'History', exact: true }).click();
   await expect(page.getByRole('heading', { name: /history/i })).toBeVisible();
   await page.getByRole('link', { name: 'Room', exact: true }).click();
@@ -177,7 +166,7 @@ test('keeps cart flow in session and preserves keyboard/reduced-motion affordanc
 }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await signInAndChooseMode(page, 'Realtime mode');
-  await page.goto('/game/shop?tab=shop');
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
   const add = page.locator(
     '.quantity-stepper button[aria-label^="Add one"]:not([disabled])',
   );
@@ -187,12 +176,15 @@ test('keeps cart flow in session and preserves keyboard/reduced-motion affordanc
     '1',
   );
   await page.getByRole('tab', { name: /Cart/ }).click();
-  await expect(page).toHaveURL(/\/game\/shop\?tab=cart$/);
+  await expect(page).toHaveURL(/\/game$/);
   await expect(page.getByRole('heading', { name: 'Cart' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Checkout' })).toBeVisible();
   await page.getByRole('button', { name: 'Checkout' }).click();
-  await expect(page).toHaveURL(/\/game\/shop\?tab=inventory$/);
-  await expect(page.getByRole('heading', { name: 'Inventory' })).toBeVisible();
+  await expect(page.getByText('Your cart is empty.')).toBeVisible();
+  await expect(page.getByRole('tab', { name: /Cart/ })).toHaveAttribute(
+    'aria-selected',
+    'true',
+  );
   await page.keyboard.press('Tab');
   await expect(page.locator(':focus')).toBeVisible();
   expect(
@@ -257,7 +249,7 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
   await expect(
     page.getByRole('region', { name: 'Time and balance' }),
   ).toContainText(`Balance: $${rules.startingCurrency}`);
-  await page.getByRole('link', { name: 'Shop' }).click();
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
   await page.getByRole('button', { name: 'reusable' }).click();
   await page
     .locator('.item-card')
@@ -266,6 +258,9 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
     .click();
   await page.getByRole('tab', { name: /Cart/ }).click();
   await page.getByRole('button', { name: 'Checkout' }).click();
+  await expect(page.getByText('Your cart is empty.')).toBeVisible();
+  await page.getByRole('button', { name: 'Close Shop' }).click();
+  await page.getByRole('button', { name: 'Inventory', exact: true }).click();
   await page.getByRole('button', { name: /Socks Plushie/ }).click();
   await page.getByRole('button', { name: 'Offer a plushie apology' }).click();
   await expect(page.locator('.outcome')).toContainText(
@@ -277,11 +272,10 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
   await page.getByRole('button', { name: 'Unplace' }).click();
   await expect(page.locator('.outcome')).toContainText('Removed');
   await page.getByRole('button', { name: 'Close item details' }).click();
-  await page.getByRole('tab', { name: /Inventory/ }).click();
   await page.getByRole('button', { name: /Socks Plushie/ }).click();
   await page.getByRole('button', { name: 'Place item' }).click();
   await page.getByRole('button', { name: 'Close item details' }).click();
-  await page.getByRole('link', { name: /back to room/i }).click();
+  await page.getByRole('button', { name: /^Close (Shop|Inventory)$/ }).click();
   await expect(
     page.getByRole('button', { name: 'Unplace Socks Plushie' }),
   ).toBeVisible();

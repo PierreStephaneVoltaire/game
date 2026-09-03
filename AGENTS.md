@@ -84,15 +84,15 @@
 
   Everyday family (default across most screens):
 
-  | Role            | Anchor    | Notes                                                            |
-  | --------------- | --------- | ---------------------------------------------------------------- |
-  | Primary pink    | `#E86C93` | Main brand/accent pink, pastel-to-bold range `#F6BFD0`–`#FF4F8B` |
-  | Secondary coral | `#E39581` | Hair/skin warm tone, ranges toward light blonde `#F3D4BD`        |
-  | Mint accent     | `#7FE0C4` | Sparing pop accent, not a primary surface color                  |
-  | Sage accent     | `#7C9473` | Minor secondary accent                                           |
-  | Warm brown      | `#7C4E39` | Ears, shoes, small warm details                                  |
-  | Cream base      | `#FDF3E7` | Off-white background, not pure white                             |
-  | Ink             | `#1A1A1A` | Borders, text, outlines                                          |
+  | Role            | Anchor     | Notes                                                            |
+  | --------------- | ---------- | ---------------------------------------------------------------- |
+  | Primary pink    | `#F6BCD0`  | Main brand/accent pink, pastel-to-bold range `#F6BFD0`–`#E58AA1` |
+  | Secondary coral | `##FFE7D3` | Hair/skin warm tone, ranges toward light blonde `#F3D4BD`        |
+  | Mint accent     | `#BAF5E6`  | Sparing pop accent, not a primary surface color                  |
+  | Sage accent     | `#7C9473`  | Minor secondary accent                                           |
+  | Warm brown      | `#9D7470`  | Ears, shoes, small warm details                                  |
+  | Cream base      | `#FDF3E7`  | Off-white background, not pure white                             |
+  | Ink             | `#1A1A1A`  | Borders, text, outlines                                          |
 
   Formal/milestone family (reserved for special or high-tier moments, used
   sparingly, not as the default palette):

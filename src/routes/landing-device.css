@@ -1,46 +1,35 @@
 .device-wrap {
   position: relative;
   justify-self: center;
-  width: min(100%, 430px);
+  width: min(100%, 460px);
 }
 
 .pet-device {
   position: relative;
   padding: 24px 25px 30px;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  aspect-ratio: 1 / 1.1;
+  min-height: 330px;
   overflow: hidden;
-  background: #ff7ab5;
-  border: 4px solid #512b9a;
-  border-radius: 25% 25% 22% 22% / 18% 18% 20% 20%;
+  background: var(--theme-pink);
+  border: 4px solid var(--theme-ink);
+  border-radius: 10px;
   box-shadow:
-    10px 10px 0 #512b9a,
-    17px 17px 0 #f3a15f;
+    10px 10px 0 var(--theme-gold),
+    17px 17px 0 var(--theme-pink);
   transform: rotate(2deg);
-}
-
-.device-topline {
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  padding: 0 8px 15px;
-  white-space: nowrap;
-  color: #512b9a;
-  font-size: 0.54rem;
-  font-weight: 900;
-  letter-spacing: 0.11em;
 }
 
 .screen {
   position: relative;
   display: grid;
-  min-height: 224px;
+  min-height: 0;
   place-items: center;
   overflow: hidden;
-  background:
-    linear-gradient(90deg, rgb(116 84 197 / 11%) 50%, transparent 50%),
-    linear-gradient(rgb(116 84 197 / 11%) 50%, transparent 50%), #c9f4ee;
-  background-size: 12px 12px;
-  border: 4px solid #512b9a;
-  box-shadow: inset 4px 4px 0 rgb(255 255 255 / 70%);
+  background: var(--theme-white);
+  border: 4px solid var(--theme-ink);
+  box-shadow: inset 4px 4px 0 var(--theme-coral-light);
 }
 
 .screen-stars {
@@ -48,7 +37,7 @@
   inset: 16px 20px auto;
   display: flex;
   justify-content: space-between;
-  color: #8061c5;
+  color: var(--theme-ink);
   font-size: 1.2rem;
 }
 
@@ -175,7 +164,7 @@
   right: 14px;
   bottom: 13px;
   margin: 0;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: 0.58rem;
   font-weight: 900;
 }
@@ -189,13 +178,14 @@
 
 .care-readout span {
   display: grid;
-  grid-template-columns: 37px 1fr;
+  grid-template-columns: calc(10ch + 0.4em) minmax(0, 1fr);
   align-items: center;
-  gap: 7px;
+  gap: 3ch;
+  font-size: 0.49rem;
 }
 
 .care-readout b {
-  color: #512b9a;
+  color: var(--theme-on-pink);
   font-size: 0.49rem;
   letter-spacing: 0.04em;
 }
@@ -203,8 +193,8 @@
 .meter {
   display: block;
   height: 8px;
-  border: 2px solid #512b9a;
-  background: #fff7e7;
+  border: 2px solid var(--theme-ink);
+  background: var(--theme-white);
 }
 
 .meter::after {
@@ -215,22 +205,22 @@
 
 .food-meter::after {
   width: 75%;
-  background: #f3a15f;
+  background: var(--theme-gold);
 }
 
 .rest-meter::after {
   width: 90%;
-  background: #86c6ed;
+  background: var(--theme-sage);
 }
 
 .heart-meter::after {
   width: 66%;
-  background: #e45c8d;
+  background: var(--theme-pink-bold);
 }
 
 .cheer-meter::after {
   width: 81%;
-  background: #f5d558;
+  background: var(--theme-teal);
 }
 
 .device-controls {
@@ -242,10 +232,10 @@
 .device-controls span {
   width: 30px;
   height: 30px;
-  background: #fff7e7;
-  border: 3px solid #512b9a;
-  border-radius: 50%;
-  box-shadow: 2px 3px 0 #512b9a;
+  background: var(--theme-white);
+  border: 3px solid var(--theme-ink);
+  border-radius: 0;
+  box-shadow: 2px 3px 0 var(--theme-ink);
 }
 
 .sticker {
@@ -254,7 +244,7 @@
   width: 37px;
   height: 37px;
   place-items: center;
-  color: #fff;
+  color: var(--theme-ink);
   font-size: 1.1rem;
   font-weight: 900;
   transform: rotate(-12deg);
@@ -263,13 +253,13 @@
 .sticker-one {
   top: -18px;
   right: -17px;
-  background: #f3a15f;
-  box-shadow: 4px 4px 0 #512b9a;
+  background: var(--theme-teal);
+  box-shadow: 4px 4px 0 var(--theme-pink);
 }
 
 .sticker-two {
   right: -24px;
   bottom: 40px;
-  background: #7655bb;
-  box-shadow: 4px 4px 0 #512b9a;
+  background: var(--theme-teal);
+  box-shadow: 4px 4px 0 var(--theme-pink);
 }

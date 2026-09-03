@@ -17,21 +17,29 @@
       .replaceAll(/[-_]+/g, ' ')
       .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
-  onMount(() => dialog.showModal());
+  function close() {
+    dialog.close();
+    onClose();
+  }
+
+  onMount(() => {
+    dialog.showModal();
+    return () => dialog.close();
+  });
 </script>
 
 <dialog
   bind:this={dialog}
   class="detail-dialog"
   aria-labelledby="item-detail-title"
-  on:cancel|preventDefault={onClose}
+  on:cancel|preventDefault={close}
 >
   <article class="detail">
     <button
       class="close"
       type="button"
       aria-label="Close item details"
-      on:click={onClose}>×</button
+      on:click={close}>×</button
     >
     <img
       src={item.image}
@@ -86,18 +94,18 @@
     width: min(560px, calc(100% - 32px));
     max-height: calc(100vh - 40px);
     margin: auto;
-    border: 4px solid #512b9a;
+    border: 4px solid var(--theme-ink);
     padding: 0;
-    background: #c9f4ee;
-    box-shadow: 8px 8px 0 #f3a15f;
+    background: var(--theme-white);
+    box-shadow: 8px 8px 0 var(--theme-pink);
   }
   .detail-dialog::backdrop {
-    background: #27163db3;
+    background: color-mix(in srgb, var(--theme-ink) 70%, transparent);
   }
   .detail {
     position: relative;
     padding: 22px;
-    background: #c9f4ee;
+    background: var(--theme-white);
     text-align: center;
   }
   .detail img {
@@ -105,21 +113,21 @@
   }
   .eyebrow {
     margin: 8px 0 0;
-    color: #8d386e;
+    color: var(--theme-ink);
     font-size: 0.65rem;
     font-weight: 900;
     letter-spacing: 0.1em;
   }
   h2 {
     margin: 4px 0 8px;
-    color: #512b9a;
+    color: var(--theme-ink);
   }
   h3 {
     margin: 16px 0 6px;
     font-size: 0.9rem;
   }
   .detail p {
-    color: #56466b;
+    color: var(--theme-ink);
     font-size: 0.8rem;
     line-height: 1.5;
   }
@@ -137,10 +145,10 @@
   }
   .tags li {
     padding: 4px 8px;
-    border: 1px solid #8d386e;
-    border-radius: 999px;
-    color: #8d386e;
-    background: #fff;
+    border: 1px solid var(--theme-ink);
+    border-radius: 0;
+    color: var(--theme-ink);
+    background: var(--theme-white);
     font-size: 0.68rem;
     font-weight: 800;
   }
@@ -153,9 +161,9 @@
   button {
     min-height: 40px;
     padding: 9px 13px;
-    border: 2px solid #512b9a;
-    background: #512b9a;
-    color: #fff;
+    border: 2px solid var(--theme-ink);
+    background: var(--theme-teal);
+    color: var(--theme-ink);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
@@ -165,8 +173,8 @@
     opacity: 0.45;
   }
   button.secondary {
-    background: #fff;
-    color: #512b9a;
+    background: var(--theme-gold);
+    color: var(--theme-ink);
   }
   button.close {
     position: absolute;
@@ -174,22 +182,22 @@
     right: 12px;
     min-width: 38px;
     padding: 4px;
-    color: #512b9a;
-    background: #fff;
-    box-shadow: 3px 3px 0 #f3a15f;
+    color: var(--theme-ink);
+    background: var(--theme-white);
+    box-shadow: 3px 3px 0 var(--theme-pink);
     font-size: 1.4rem;
   }
   .outcome {
     padding: 9px;
-    color: #512b9a;
-    background: #fff;
+    color: var(--theme-ink);
+    background: var(--theme-white);
   }
   small {
-    color: #56466b;
+    color: var(--theme-ink);
     font-size: 0.7rem;
   }
   button:focus-visible {
-    outline: 3px solid #f3a15f;
+    outline: 3px solid var(--theme-ink);
     outline-offset: 3px;
   }
 </style>

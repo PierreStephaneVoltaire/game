@@ -10,11 +10,20 @@
     gameViewModel,
     reconcileGameClock,
   } from '$lib/game-session';
+  import GameShop from '$lib/components/GameShop.svelte';
   import RunSettings from '$lib/components/RunSettings.svelte';
   import { gameCopy } from '$lib/ui/game-copy';
   import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
 
   let authorized = false;
+  let openDialog: 'shop' | 'inventory' | null = null;
+
+  async function openShop(mode: 'shop' | 'inventory', event: MouseEvent) {
+    const opener = event.currentTarget as HTMLButtonElement;
+    if ($page.route.id !== '/game') await goto(resolve('/game'));
+    opener.focus();
+    openDialog = mode;
+  }
 
   function openRoomInventoryPicker() {
     window.dispatchEvent(new CustomEvent(OPEN_ROOM_INVENTORY_PICKER_EVENT));
@@ -52,7 +61,7 @@
 <svelte:head
   ><meta
     name="description"
-    content="A session-only companion care room."
+    content="A session-only companion game."
   /></svelte:head
 >
 
@@ -71,27 +80,32 @@
       </div>
     </header>
     <slot />
-    {#if !$page.url.pathname.startsWith('/game/shop')}
-      <nav
-        class="game-navigation"
-        aria-label="Game navigation"
-        data-game-row="navigation"
+    <nav
+      class="game-navigation"
+      aria-label="Game navigation"
+      data-game-row="navigation"
+    >
+      {#if $page.route.id === '/game'}
+        <button
+          type="button"
+          on:click={openRoomInventoryPicker}
+          disabled={Boolean(
+            $gameViewModel?.activity || $gameViewModel?.commandsDisabled,
+          )}>{gameCopy.room}</button
+        >
+      {:else}
+        <a href={resolve('/game')}>{gameCopy.room}</a>
+      {/if}
+      <button type="button" on:click={(event) => openShop('shop', event)}
+        >{gameCopy.shop}</button
       >
-        {#if $page.route.id === '/game'}
-          <button
-            type="button"
-            on:click={openRoomInventoryPicker}
-            disabled={Boolean(
-              $gameViewModel?.activity || $gameViewModel?.commandsDisabled,
-            )}>{gameCopy.room}</button
-          >
-        {:else}
-          <a href={resolve('/game')}>{gameCopy.room}</a>
-        {/if}
-        <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
-        <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
-        <a href={resolve('/game/history')}>{gameCopy.history}</a>
-      </nav>
+      <button type="button" on:click={(event) => openShop('inventory', event)}
+        >{gameCopy.inventory}</button
+      >
+      <a href={resolve('/game/history')}>{gameCopy.history}</a>
+    </nav>
+    {#if openDialog}
+      <GameShop mode={openDialog} onClose={() => (openDialog = null)} />
     {/if}
   </div>
 {/if}
@@ -100,8 +114,8 @@
   .game-shell {
     min-height: 100vh;
     padding: 0 clamp(16px, 4vw, 64px) 64px;
-    color: #32254b;
-    background: #fff8f2;
+    color: var(--theme-ink);
+    background: var(--theme-cream);
   }
   .game-nav {
     display: flex;
@@ -133,11 +147,12 @@
     display: grid;
     flex: 1 1 0;
     min-height: 48px;
+    padding: 0;
     place-items: center;
-    border: 3px solid #512b9a;
-    color: #512b9a;
-    background: #fff;
-    box-shadow: 5px 5px 0 #f3a15f;
+    border: 3px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-teal);
     font-size: 0.78rem;
     font-weight: 900;
     font-family: inherit;
@@ -146,12 +161,12 @@
   }
   .game-navigation a:hover,
   .game-navigation button:hover:not(:disabled) {
-    color: #fff;
-    background: #512b9a;
+    color: var(--theme-ink);
+    background: var(--theme-gold);
   }
   .game-navigation a:active,
   .game-navigation button:active:not(:disabled) {
-    box-shadow: 2px 2px 0 #f3a15f;
+    box-shadow: 2px 2px 0 var(--theme-teal);
     transform: translate(3px, 3px);
   }
   .game-navigation button:disabled {
@@ -163,7 +178,7 @@
   :global(summary:focus-visible),
   :global(select:focus-visible),
   :global(input:focus-visible) {
-    outline: 3px solid #f3a15f;
+    outline: 3px solid var(--theme-ink);
     outline-offset: 3px;
   }
   :global(*) {

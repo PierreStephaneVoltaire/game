@@ -26,7 +26,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #512b9a;
+    color: var(--theme-ink);
     font-size: 0.76rem;
     font-weight: 900;
   }

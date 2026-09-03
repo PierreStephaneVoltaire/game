@@ -2,19 +2,26 @@
   position: relative;
   min-height: 570px;
   overflow: hidden;
-  background: linear-gradient(var(--sky) 0 68%, #c99468 68%);
+  background: var(--sky);
+}
+.room-scene::before {
+  position: absolute;
+  inset: auto 0 0;
+  height: 32%;
+  background: var(--theme-gold);
+  content: '';
 }
 .daypart-morning {
-  --sky: #ccefe8;
+  --sky: var(--theme-blonde);
 }
 .daypart-day {
-  --sky: #bfe7f4;
+  --sky: var(--theme-pink-light);
 }
 .daypart-evening {
-  --sky: #f1cad0;
+  --sky: var(--theme-pink);
 }
 .daypart-night {
-  --sky: #8d8cb8;
+  --sky: var(--theme-maroon);
 }
 .room-scene::after {
   position: absolute;
@@ -22,7 +29,7 @@
   bottom: 0;
   left: 0;
   height: 18%;
-  background: #d19e72;
+  background: var(--theme-blonde);
   content: '';
 }
 .companion {
@@ -42,9 +49,9 @@
   min-width: 75px;
   min-height: 62px;
   place-items: center;
-  border: 3px solid #fff1df;
-  color: #fff;
-  background: #7d4a36cc;
+  border: 3px solid var(--theme-ink);
+  color: var(--theme-ink);
+  background: var(--theme-gold);
   font-size: 0.7rem;
   text-align: center;
 }
@@ -62,9 +69,9 @@
 .anchor-unplace {
   z-index: 3;
   padding: 3px 6px;
-  border: 1px solid #fff;
-  color: #512b9a;
-  background: #fff;
+  border: 1px solid var(--theme-ink);
+  color: var(--theme-ink);
+  background: var(--theme-white);
   font: inherit;
   font-size: 0.58rem;
   font-weight: 800;
@@ -91,7 +98,8 @@
   left: 7%;
   width: 30%;
   height: 95px;
-  background: #eaa7b8;
+  background: var(--theme-pink);
+  color: var(--theme-on-pink);
 }
 .anchor-desk {
   right: 7%;
@@ -120,7 +128,7 @@
   right: 9%;
   width: 112px;
   height: 84px;
-  background: #aee2ef;
+  background: var(--theme-white);
 }
 .anchor-cat-corner {
   bottom: 7%;

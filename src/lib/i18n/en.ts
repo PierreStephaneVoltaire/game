@@ -1,18 +1,16 @@
 export const en = {
   metaTitle: 'Legally Distinct Virtual Pet',
   metaDescription:
-    'A tiny virtual-pet adventure for looking after your little star.',
-  wordmark: 'Legally Distinc Virtual Pet',
+    'A tiny virtual-pet adventure for keeping your little gremlin fed, rested, and mostly out of trouble.',
+  wordmark: 'Legally Distinct Virtual Pet',
   buildLabel: 'START A RUN',
-  eyebrow: 'A TINY CARE ADVENTURE',
-  heroTitle: 'Keep your Legally Distinc Virtual Pet feeling bright.',
+  eyebrow: 'CHAT, YOU HAVE ONE JOB',
+  heroTitle: 'Keep your little gremlin alive. No pressure, chat.',
   intro:
-    'Feed, rest, cheer, and look after your little star—one small moment at a time.',
-  status: 'CARE ROOM',
+    'Feed her, let her rest, and keep her company. She can handle the questionable decisions herself.',
+  status: 'SESSION',
   previewLabel: 'Decorative virtual pet preview',
-  deviceId: 'PET-01',
-  careMode: 'CARE MODE',
-  screenMessage: 'HI, FRIEND!',
+  screenMessage: 'HI, CHAT!',
   statsLabel: 'Example care statistics',
   stats: {
     food: 'FOOD',
@@ -27,25 +25,33 @@ export const en = {
   cards: {
     food: {
       title: 'Food',
-      body: 'Learn what makes your Legally Distinc Virtual Pet’s day.',
+      body: 'Keep her fed before she makes it everyone\'s problem',
     },
     rest: {
       title: 'Rest',
-      body: 'Give your Legally Distinc Virtual Pet a cozy pause.',
+      body: 'Try to salvage her sleep schedule.',
     },
     heart: {
       title: 'Health',
-      body: 'Keep your Legally Distinc Virtual Pet feeling well.',
+      body: 'Keep her healthy. Vibes alone are not a care plan.',
     },
     cheer: {
       title: 'Bond',
-      body: 'Build a lasting little friendship.',
+      body: 'Stick around for the yapping.',
+    },
+    mood: {
+      title: 'Mood',
+      body: 'Keep her laughing. With you or at you. Either counts.',
+    },
+    creativity: {
+      title: 'Creativity',
+      body: 'Fuel her next questionable idea',
     },
   },
-  footer: 'VIRTUAL Legally Distinc Virtual Pet',
+  footer: 'Legally Distinct Virtual Pet',
   login: {
-    eyebrow: 'WELCOME TO THE CARE CLUB',
-    title: 'Meet your little companion.',
+    eyebrow: 'HI, CHAT',
+    title: 'Meet your little gremlin.',
     intro: 'Sign in or create an account with a username and password.',
     usernameLabel: 'Username',
     usernamePlaceholder: 'Your username',
@@ -56,7 +62,7 @@ export const en = {
     signOut: 'Sign out',
     serviceError: 'The account service could not complete the request.',
     modeTitle: 'Choose your time mode.',
-    modeIntro: 'How should time move in this care room?',
+    modeIntro: 'How should time move in this session?',
     realtimeMode: 'Realtime mode',
     streamingMode: 'Streaming mode',
     back: 'Back to the welcome page',

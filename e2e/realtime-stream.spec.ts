@@ -46,5 +46,7 @@ test('observes a deterministic autonomous stream in Realtime mode', async ({
 
   await expect(page.getByText(/is streaming until/i)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Feed' })).toBeDisabled();
-  await expect(page.getByRole('link', { name: 'Shop' })).toBeEnabled();
+  await expect(
+    page.getByRole('button', { name: 'Shop', exact: true }),
+  ).toBeEnabled();
 });

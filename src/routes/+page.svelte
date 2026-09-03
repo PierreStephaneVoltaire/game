@@ -36,10 +36,6 @@
 
     <div class="device-wrap">
       <article class="pet-device" aria-label={copy.previewLabel}>
-        <div class="device-topline">
-          <span>{copy.deviceId}</span>
-          <span>{copy.careMode}</span>
-        </div>
         <div class="screen">
           <div class="screen-stars" aria-hidden="true">
             <span>✦</span>
@@ -108,6 +104,16 @@
         <span class="card-icon" aria-hidden="true">✦</span>
         <h3>{copy.cards.cheer.title}</h3>
         <p>{text(copy.cards.cheer.body)}</p>
+      </article>
+      <article class="care-card heart-card">
+        <span class="card-icon" aria-hidden="true">♥</span>
+        <h3>{copy.cards.mood.title}</h3>
+        <p>{text(copy.cards.mood.body)}</p>
+      </article>
+      <article class="care-card cheer-card">
+        <span class="card-icon" aria-hidden="true">✦</span>
+        <h3>{copy.cards.creativity.title}</h3>
+        <p>{text(copy.cards.creativity.body)}</p>
       </article>
     </div>
   </section>

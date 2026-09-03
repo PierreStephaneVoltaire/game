@@ -14,7 +14,7 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
   page,
 }) => {
   await signInAndChooseMode(page, 'Realtime mode');
-  await page.goto('/game/shop?tab=shop');
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
   const grid = page.locator('.item-grid');
   const locCard = page.locator('.item-card').filter({
     hasText: 'Line of Credit',
@@ -47,7 +47,8 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
   await catalogueCard
     .getByRole('button', { name: /^View details for / })
     .click();
-  await expect(page).toHaveURL(/tab=detail&item=/);
+  await expect(page).toHaveURL(/\/game$/);
+  await expect(page.locator('.detail-dialog')).toBeVisible();
   await page.getByRole('button', { name: 'Close item details' }).click();
 
   const repeatCard = page
@@ -77,8 +78,7 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
   await expect(page.locator('.balance')).toHaveText(
     `Cash: $${rules.startingCurrency}`,
   );
-  await page.getByRole('tab', { name: /Inventory/ }).click();
-  await expect(page.getByText('4 kinds owned')).toBeVisible();
+
   await page.getByRole('tab', { name: /Cart/ }).click();
   await expect(
     page.getByText('Cash after checkout').locator('..'),
@@ -87,7 +87,7 @@ test('keeps cards inert and settles the permanent LOC offer through the cart', a
   await expect(page.locator('.balance')).toHaveText(
     `Cash: ${currency(openedBalance)}`,
   );
-  await expect(page.getByText('4 kinds owned')).toBeVisible();
+  await expect(page.getByText('Your cart is empty.')).toBeVisible();
 
   await page.getByRole('tab', { name: 'Shop' }).click();
   const repaymentCard = page.locator('.item-card').filter({

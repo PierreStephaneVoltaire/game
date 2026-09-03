@@ -2,10 +2,10 @@
   position: relative;
   width: min(100%, 520px);
   padding: 42px;
-  color: #24183d;
-  background: #fff8ed;
-  border: 4px solid #512b9a;
-  box-shadow: 9px 9px 0 #ff7ab5;
+  color: var(--theme-ink);
+  background: var(--theme-white);
+  border: 4px solid var(--theme-ink);
+  box-shadow: 9px 9px 0 var(--theme-pink);
 }
 
 .login-card-mark {
@@ -14,15 +14,15 @@
   height: 42px;
   margin-bottom: 28px;
   place-items: center;
-  color: #fff;
-  background: #512b9a;
-  box-shadow: 4px 4px 0 #f3a15f;
+  color: var(--theme-ink);
+  background: var(--theme-gold);
+  box-shadow: 4px 4px 0 var(--theme-pink);
   font-size: 1.3rem;
 }
 
 .login-eyebrow {
   margin: 0 0 12px;
-  color: #8d386e;
+  color: var(--theme-ink);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -30,7 +30,7 @@
 
 .login-card h1 {
   margin: 0 0 16px;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: clamp(2.4rem, 7vw, 4.6rem);
   letter-spacing: -0.07em;
   line-height: 0.92;
@@ -38,7 +38,7 @@
 
 .login-intro {
   margin: 0 0 30px;
-  color: #56466b;
+  color: var(--theme-ink);
   line-height: 1.6;
 }
 
@@ -49,7 +49,7 @@
 
 .login-card label {
   margin-top: 9px;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 0.06em;
@@ -59,15 +59,15 @@
 .login-card input {
   width: 100%;
   padding: 14px 15px;
-  color: #24183d;
-  background: #fff;
-  border: 3px solid #7655bb;
+  color: var(--theme-ink);
+  background: var(--theme-white);
+  border: 3px solid var(--theme-ink);
   border-radius: 0;
   font: inherit;
 }
 
 .login-card input:focus {
-  outline: 3px solid #ff7ab5;
+  outline: 3px solid var(--theme-ink);
   outline-offset: 2px;
 }
 
@@ -77,10 +77,10 @@
   justify-content: space-between;
   margin-top: 19px;
   padding: 15px 17px;
-  color: #fff;
-  background: #512b9a;
-  border: 3px solid #512b9a;
-  box-shadow: 5px 5px 0 #f3a15f;
+  color: var(--theme-ink);
+  background: var(--theme-teal);
+  border: 3px solid var(--theme-ink);
+  box-shadow: 5px 5px 0 var(--theme-pink);
   cursor: pointer;
   font: inherit;
   font-weight: 900;
@@ -88,7 +88,7 @@
 
 .login-card button:hover {
   transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0 #f3a15f;
+  box-shadow: 3px 3px 0 var(--theme-pink);
 }
 
 .form-actions {
@@ -99,36 +99,36 @@
 
 .login-card .secondary-action {
   justify-content: center;
-  border-color: #512b9a;
-  color: #512b9a;
-  background: #ffdaea;
+  border-color: var(--theme-ink);
+  color: var(--theme-ink);
+  background: var(--theme-gold);
 }
 
 .login-card .discord-action {
   width: 100%;
   justify-content: center;
   margin-top: 18px;
-  color: #fff;
-  background: #5865f2;
-  border-color: #5865f2;
-  box-shadow: 5px 5px 0 #24183d;
+  color: var(--theme-ink);
+  background: var(--theme-teal);
+  border-color: var(--theme-ink);
+  box-shadow: 5px 5px 0 var(--theme-pink);
 }
 
 .login-card .secondary-action:hover:not(:disabled) {
-  color: #fff;
-  background: #512b9a;
+  color: var(--theme-ink);
+  background: var(--theme-teal);
 }
 
 .form-error {
   margin: 10px 0 0;
-  color: #9d194f;
+  color: var(--theme-ink);
   font-size: 0.78rem;
   font-weight: 800;
 }
 
 .form-hint {
   margin: 0;
-  color: #56466b;
+  color: var(--theme-ink);
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -139,13 +139,13 @@
 
 .mode-choice h2 {
   margin: 0 0 8px;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: 1.35rem;
 }
 
 .mode-choice p {
   margin: 0;
-  color: #56466b;
+  color: var(--theme-ink);
   font-size: 0.82rem;
   line-height: 1.5;
 }
@@ -163,15 +163,15 @@
   min-height: 66px;
   margin: 0;
   padding: 12px;
-  color: #512b9a;
-  background: #ffdaea;
-  border: 3px solid #512b9a;
-  box-shadow: 5px 5px 0 #f3a15f;
+  color: var(--theme-ink);
+  background: var(--theme-gold);
+  border: 3px solid var(--theme-ink);
+  box-shadow: 5px 5px 0 var(--theme-pink);
   text-align: center;
 }
 
 .mode-buttons button:hover:not(:disabled) {
-  box-shadow: 3px 3px 0 #f3a15f;
+  box-shadow: 3px 3px 0 var(--theme-pink);
 }
 
 .login-card button:disabled {
@@ -182,7 +182,7 @@
 .login-back {
   display: inline-block;
   margin-top: 27px;
-  color: #8d386e;
+  color: var(--theme-ink);
   font-size: 0.76rem;
   font-weight: 900;
   text-decoration: none;

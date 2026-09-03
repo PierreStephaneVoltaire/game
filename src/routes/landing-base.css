@@ -1,7 +1,7 @@
 :root {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  color: #24183d;
-  background: #f8f0ff;
+  color: var(--theme-ink);
+  background: var(--theme-cream);
   font-synthesis: none;
 }
 
@@ -12,22 +12,7 @@
 body {
   margin: 0;
   min-width: 320px;
-  background:
-    radial-gradient(
-      circle at 15% 8%,
-      rgb(255 255 255 / 80%) 0 1px,
-      transparent 1.5px
-    ),
-    radial-gradient(
-      circle at 87% 23%,
-      rgb(255 255 255 / 70%) 0 2px,
-      transparent 2.5px
-    ),
-    linear-gradient(135deg, #f9f1ff 0%, #e8efff 48%, #fff0e5 100%);
-  background-size:
-    20px 20px,
-    31px 31px,
-    auto;
+  background: var(--theme-cream);
 }
 
 a {
@@ -56,7 +41,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: 0.8rem;
   font-weight: 900;
   letter-spacing: 0.13em;
@@ -68,9 +53,9 @@ a {
   width: 27px;
   height: 27px;
   place-items: center;
-  color: #fff;
-  background: #512b9a;
-  box-shadow: 3px 3px 0 #f3a15f;
+  color: var(--theme-ink);
+  background: var(--theme-gold);
+  box-shadow: 3px 3px 0 var(--theme-pink);
 }
 
 .build-label,
@@ -83,15 +68,15 @@ a {
 
 .build-label {
   padding: 7px 9px;
-  color: #8d386e;
-  background: #ffdaea;
-  box-shadow: 3px 3px 0 #8d386e;
+  color: var(--theme-ink);
+  background: var(--theme-teal);
+  box-shadow: 3px 3px 0 var(--theme-pink);
   text-decoration: none;
 }
 
 .build-label:hover {
   transform: translate(2px, 2px);
-  box-shadow: 1px 1px 0 #8d386e;
+  box-shadow: 1px 1px 0 var(--theme-pink);
 }
 
 .hero {
@@ -108,7 +93,7 @@ a {
 
 .eyebrow {
   margin: 0 0 14px;
-  color: #8d386e;
+  color: var(--theme-ink);
 }
 
 h1,
@@ -127,7 +112,7 @@ h3 {
 h1 {
   max-width: 550px;
   margin-bottom: 21px;
-  color: #512b9a;
+  color: var(--theme-ink);
   font-size: clamp(2.9rem, 7vw, 5.5rem);
   letter-spacing: -0.075em;
   line-height: 0.91;
@@ -136,7 +121,7 @@ h1 {
 .intro {
   max-width: 470px;
   margin-bottom: 25px;
-  color: #56466b;
+  color: var(--theme-brown);
   font-size: clamp(1rem, 2vw, 1.13rem);
   line-height: 1.7;
 }
@@ -146,10 +131,10 @@ h1 {
   align-items: center;
   gap: 10px;
   padding: 11px 13px;
-  color: #26496a;
-  background: #dff5ff;
-  border: 2px solid #26496a;
-  box-shadow: 5px 5px 0 #26496a;
+  color: var(--theme-ink);
+  background: var(--theme-gold);
+  border: 2px solid var(--theme-ink);
+  box-shadow: 5px 5px 0 var(--theme-pink);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.04em;
@@ -162,6 +147,6 @@ h1 {
 .status-light {
   width: 9px;
   height: 9px;
-  background: #4dbd81;
-  box-shadow: 0 0 0 3px #b5efd0;
+  background: var(--theme-teal);
+  box-shadow: 0 0 0 3px var(--theme-ink);
 }
