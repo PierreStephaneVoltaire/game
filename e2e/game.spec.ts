@@ -30,19 +30,13 @@ test('restores the account session and opens an existing key without mode select
   await page.getByLabel('Password').fill('correct horse battery staple');
   await page.getByRole('button', { name: 'Create account' }).click();
   await page.getByRole('button', { name: 'Generate new game' }).click();
-  const gameKey = await page
-    .getByRole('textbox', { name: 'New game key' })
-    .inputValue();
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Realtime mode' }).click();
   await expect(page).toHaveURL(/\/game$/);
   await page.reload();
-  await expect(page).toHaveURL(/\/key$/);
-  await expect(page.getByRole('textbox', { name: 'Game key' })).toBeVisible();
-  await expect(page.getByLabel('Password')).toHaveCount(0);
-  await page.getByRole('textbox', { name: 'Game key' }).fill(gameKey);
-  await page.getByRole('button', { name: 'Open game' }).click();
   await expect(page).toHaveURL(/\/game$/);
+  await expect(page.getByLabel('Password')).toHaveCount(0);
+  await expect(page.locator('[data-game-row="care"]')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Realtime mode' })).toHaveCount(
     0,
   );

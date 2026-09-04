@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
   pull-requests: write
 
 concurrency:
@@ -44,8 +45,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: api/requirements-dev.txt
+
       - name: Install API dependencies
-        run: pnpm --dir api install --frozen-lockfile
+        run: python -m pip install -r api/requirements-dev.txt
 
       - name: Generate SvelteKit files
         run: pnpm exec svelte-kit sync
@@ -54,16 +62,48 @@ jobs:
         run: pnpm test
 
       - name: Run API tests
-        run: pnpm --dir api test
+        env:
+          PYTHONPATH: api
+          DATABASE_URL: sqlite+pysqlite://
+          ENVIRONMENT: test
+        run: python -m pytest api/tests
 
-      - name: Build API
-        run: pnpm --dir api build
+      - name: Check Python API imports
+        env:
+          PYTHONPATH: api
+          DATABASE_URL: sqlite+pysqlite://
+          ENVIRONMENT: test
+        run: python -c "import function_app"
 
       - name: Build static frontend
         run: pnpm build
 
       - name: Add Azure Static Web Apps configuration
         run: cp staticwebapp.config.json build/staticwebapp.config.json
+
+      - name: Sign in to Azure
+        if: github.event_name == 'push'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Configure API secrets
+        if: github.event_name == 'push'
+        env:
+          STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
+          RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+        run: >-
+          az staticwebapp appsettings set
+          --name "$STATIC_WEB_APP_NAME"
+          --resource-group "$RESOURCE_GROUP_NAME"
+          --setting-names
+          "DISCORD_CLIENT_SECRET=$DISCORD_CLIENT_SECRET"
+          "SIGNING_SECRET=$SIGNING_SECRET"
+          --output none
 
       - name: Deploy prebuilt frontend
         uses: Azure/static-web-apps-deploy@v1
@@ -75,7 +115,7 @@ jobs:
           api_location: api
           output_location: ''
           skip_app_build: true
-          skip_api_build: true
+          skip_api_build: false
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

@@ -1,21 +1,36 @@
-import simulationRules from './data/simulation-rules.json';
-import petProfile from './data/pet-profile.json';
+import type { GameDefinition } from './game-definition';
 import type { MetricName } from './game-types';
 
-export const SIMULATION_RULES = simulationRules;
-export const PET_PROFILE = petProfile;
+export let SIMULATION_RULES = {} as GameDefinition['simulationRules'];
+export let PET_PROFILE = {} as GameDefinition['petProfile'];
+export let STAT_MIN = Number.NaN;
+export let STAT_MAX = Number.NaN;
+export let HEALTH_MAX = Number.NaN;
+export let STARTING_CURRENCY = Number.NaN;
+export let MAX_CART_QUANTITY = Number.NaN;
+export let LIFE_EVENT_INTERVAL_MS = Number.NaN;
 
-export const STAT_MIN = simulationRules.statRange.min;
-export const STAT_MAX = simulationRules.statRange.max;
-export const HEALTH_MAX = simulationRules.healthMaximum;
+export function configureGameConstants(definition: GameDefinition): void {
+  const rules = definition.simulationRules;
+  SIMULATION_RULES = rules;
+  PET_PROFILE = definition.petProfile;
+  STAT_MIN = rules.statRange.min;
+  STAT_MAX = rules.statRange.max;
+  HEALTH_MAX = rules.healthMaximum;
+  STARTING_CURRENCY = rules.startingCurrency;
+  MAX_CART_QUANTITY = rules.maxCartQuantity;
+  LIFE_EVENT_INTERVAL_MS =
+    definition.lifeEvents.intervalMinutes * MINUTE_MS;
+}
+
 export function metricMaximum(metric: MetricName): number {
   return metric === 'health' ? HEALTH_MAX : STAT_MAX;
 }
+
 export function clampMetric(metric: MetricName, value: number): number {
   return Math.max(STAT_MIN, Math.min(metricMaximum(metric), value));
 }
-export const STARTING_CURRENCY = simulationRules.startingCurrency;
-export const MAX_CART_QUANTITY = simulationRules.maxCartQuantity;
+
 export const LINE_OF_CREDIT_OFFER_ID = 'line-of-credit';
 export const HOUR_MS = 3_600_000;
 export const MINUTE_MS = 60_000;

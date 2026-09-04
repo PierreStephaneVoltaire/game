@@ -1,6 +1,6 @@
 import lifeEventData from './data/life-events.json';
 import { startRun } from './game-engine';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import {
   LIFE_EVENT_INTERVAL_MS,
   rollLifeEventIds,

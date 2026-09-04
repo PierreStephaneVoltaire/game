@@ -7,9 +7,9 @@ on:
     paths:
       - src/lib/data/**
       - scripts/generate-canonical-catalogue.mjs
-      - api/src/global-data/**
-      - api/package.json
-      - api/pnpm-lock.yaml
+      - tools/global_content_publisher/**
+      - api/backend/content/**
+      - api/requirements.txt
       - .github/workflows/global-data-sync.yml
 
 permissions:
@@ -27,6 +27,13 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -41,27 +48,38 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: api/requirements-dev.txt
+
       - name: Install publisher dependencies
-        run: pnpm --dir api install --frozen-lockfile
+        run: python -m pip install -r api/requirements-dev.txt
 
       - name: Validate catalogue data
         run: pnpm validate:data
 
       - name: Test publisher
-        run: pnpm --dir api test
-
-      - name: Sign in to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Synchronize global tables
         env:
-          AZURE_STORAGE_ACCOUNT_NAME: ${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}
+          PYTHONPATH: api:.
+          DATABASE_URL: sqlite+pysqlite://
+          ENVIRONMENT: test
+        run: python -m pytest api/tests/content
+
+      - name: Read Terraform-managed database URL
+        id: database
+        env:
+          STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
+          RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
         run: |
-          test -n "$AZURE_STORAGE_ACCOUNT_NAME"
-          connection_string=$(az storage account show-connection-string --name "$AZURE_STORAGE_ACCOUNT_NAME" --query connectionString --output tsv)
-          echo "::add-mask::$connection_string"
-          AZURE_STORAGE_CONNECTION_STRING="$connection_string" pnpm --dir api sync:global-data
+          database_url="$(az staticwebapp appsettings list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.DATABASE_URL --output tsv)"
+          test -n "$database_url"
+          echo "url=$database_url" >> "$GITHUB_OUTPUT"
+
+      - name: Publish runtime content
+        env:
+          PYTHONPATH: api:.
+          DATABASE_URL: ${{ steps.database.outputs.url }}
+        run: python -m tools.global_content_publisher.cli

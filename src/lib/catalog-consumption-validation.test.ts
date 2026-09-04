@@ -4,7 +4,7 @@ import { validateCatalog } from './catalog-validation';
 import {
   BUNDLED_GAME_DEFINITION,
   type GameDefinition,
-} from './game-definition';
+} from './test-game-definition';
 
 function definitionWithItem(
   itemId: string,

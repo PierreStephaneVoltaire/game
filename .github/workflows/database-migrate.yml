@@ -1,0 +1,50 @@
+name: Database migration
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  migrate:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Read Terraform-managed database URL
+        id: database
+        env:
+          STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
+          RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
+        run: |
+          database_url="$(az staticwebapp appsettings list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.DATABASE_URL --output tsv)"
+          test -n "$database_url"
+          echo "url=$database_url" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: api/requirements.txt
+
+      - name: Install API dependencies
+        run: python -m pip install -r api/requirements.txt
+
+      - name: Apply Alembic migrations
+        working-directory: api
+        env:
+          DATABASE_URL: ${{ steps.database.outputs.url }}
+          ENVIRONMENT: production
+        run: python -m alembic upgrade head

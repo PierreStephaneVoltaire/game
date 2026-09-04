@@ -1,6 +1,6 @@
 import type { ItemActionDefinition, ItemDefinition } from '../game-definition';
 import type { GameCommand, GameState } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { actionRandom, resolveRange } from '../seeded-rng';
 import { clearActionStatuses } from '../status-rules';
 import {

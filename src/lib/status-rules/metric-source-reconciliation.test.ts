@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { BUNDLED_GAME_DEFINITION } from '../game-definition';
+import { BUNDLED_GAME_DEFINITION } from '../test-game-definition';
 import { startRun } from '../game-engine';
 import { reconcileMetricSource } from './metric-source-reconciliation';
 

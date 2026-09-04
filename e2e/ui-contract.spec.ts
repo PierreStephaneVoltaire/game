@@ -20,16 +20,13 @@ test('moves from login through separate key and new-game mode screens', async ({
   await expect(
     page.getByRole('button', { name: 'Generate new game' }),
   ).toBeVisible();
-  await expect(
-    page.getByRole('button', { name: 'Retrieve game keys' }),
-  ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Realtime mode' })).toHaveCount(
     0,
   );
 
   await page.getByRole('button', { name: 'Generate new game' }).click();
   await expect(page).toHaveURL(/\/key$/);
-  await expect(page.getByRole('textbox', { name: 'New game key' })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveValue(
     /^\d{8}$/,
   );
   await page.getByRole('button', { name: 'Continue' }).click();

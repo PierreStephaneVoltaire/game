@@ -1,4 +1,4 @@
-import financialRules from '$lib/data/financial-rules.json';
+import { financialRules } from '$lib/runtime-definition';
 import { debtBreakdown } from '$lib/financial-rules';
 import type { GameState } from '$lib/game-types';
 import {

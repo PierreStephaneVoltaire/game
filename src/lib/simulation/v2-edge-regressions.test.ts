@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { purchaseAllowed } from '../billing-rules';
-import { BUNDLED_GAME_DEFINITION } from '../game-definition';
+import { BUNDLED_GAME_DEFINITION } from '../test-game-definition';
 import { dispatchCommand, reconcileTime, startRun } from '../game-engine';
 import type { GameState } from '../game-types';
 import { completeStreamEconomy } from '../economy-rules';

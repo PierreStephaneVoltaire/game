@@ -4,8 +4,10 @@ import type {
   RunEndingKind,
 } from '$lib/game-types';
 import { HOUR_MS } from '$lib/game-constants';
-import rules from '$lib/data/simulation-rules.json';
-import financialRules from '$lib/data/financial-rules.json';
+import {
+  financialRules,
+  simulationRules as rules,
+} from '$lib/runtime-definition';
 import {
   deathPresentationCopy,
   endingRiskLabel,

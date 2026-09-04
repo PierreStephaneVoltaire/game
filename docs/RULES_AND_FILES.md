@@ -37,6 +37,10 @@ gameplay rules.
   status-transition, activity-completion, purchase, gift, and audience-growth
   text pools. Copy-pool selection is seeded and stable for its originating
   action or presentation event.
+- `tools/global_content_publisher/bundle.py` — reads those eight runtime JSON
+  documents, canonicalizes one complete immutable bundle, and derives its
+  SHA-256 content version. The SQL publisher stores one row per bundle, never
+  a row per item.
 - `src/lib/companion-profile.ts` — typed, environment-neutral access to the
   configured identity and tier-ordered appearance IDs.
 - `scripts/generate-canonical-catalogue.mjs` — deterministic compiler from
@@ -56,8 +60,16 @@ gameplay rules.
   projects, queued
   event streams, appearances, donations, qualifying ordinary-stream history,
   and scheduled-effect state.
-- `src/lib/game-definition.ts` — versioned bundled definition and repository
-  seam used by the pure engine and tests.
+- `src/lib/game-definition.ts` — complete runtime definition shape and the
+  SQL/API bundle adapter used by the pure engine.
+- `src/lib/test-game-definition.ts` — explicit test/balance fixture built from
+  the JSON authoring files. Production modules do not import it.
+- `src/lib/runtime-definition.ts` — active, versioned rule-document bindings;
+  the game controller activates the cached SQL/API definition before engine
+  code runs.
+- `src/lib/content/runtime-content.ts` — IndexedDB-backed runtime bundle cache:
+  it opens cached content without a network request, conditionally checks the
+  manifest before writes, and atomically changes the bundle and active pointer.
 - `src/lib/game-constants.ts` — structural time units, stat bounds, and
   simulation limits shared by runtime modules.
 - `src/lib/seeded-text.ts` — shared seeded selection and interpolation for
@@ -148,8 +160,7 @@ gameplay rules.
 - `src/lib/status-rules/fixed-point.ts` and
   `src/lib/status-rules/boundaries.ts` and
   `src/lib/status-rules/names.ts` and
-  `src/lib/status-rules/nutrition-statuses.ts` and
-  `src/lib/status-rules/low-metric-rules.ts` — fixed-point status cascades,
+  `src/lib/status-rules/nutrition-statuses.ts` — fixed-point status cascades,
   chronological deadlines, and the canonical status vocabulary.
 - `src/lib/status-rules/metric-source-reconciliation.ts` — uniform
   post-source status normalization and once-only onset effects.
@@ -319,15 +330,22 @@ gameplay rules.
 
 ## Backend and infrastructure modules
 
-- `api/src/user-accounts/` — Azure Functions password-account handlers,
-  scrypt hashing, HttpOnly sessions, validation, and Azure Table repositories.
-- `api/src/global-data/` — deterministic `ShopItems` and `GlobalRules` record
-  construction plus exact replace/delete synchronization used only by CI.
-- `infra/modules/user-accounts/`, `game-data/`, and `global-data/` — protected
-  Azure tables for accounts, the future game-state boundary, compiled shop
-  records, and runtime JSON records. No runtime counter table is provisioned.
-- `.github/workflows/global-data-sync.yml` — main-branch OIDC workflow that
-  validates canonical data before synchronizing the two global tables.
+- `api/backend/auth/` — SQLAlchemy users/sessions/reset/OAuth models, Argon2,
+  Authlib Discord OAuth, native Azure Function routes, and the manual reset
+  CLI.
+- `api/backend/games/` — transactional SQL game state, append-only events,
+  idempotent batches, structural validation, graves, and paginated reads.
+- `api/backend/content/` and `tools/global_content_publisher/` — immutable
+  SQL runtime bundles, current-pointer reads, version enforcement, and the
+  validated publisher.
+- `src/lib/persistence/` — IndexedDB games, events, outbox, and single-game
+  sync/replay.
+- `infra/modules/database`, `static-app`, `auth`, `game-data`, and
+  `global-data` — one logical concern per module; the root reads the existing
+  resource group and manages the Static Web App without reading its secret app
+  settings.
+- `.github/workflows/global-data-sync.yml` — main-branch workflow that
+  validates and publishes the current immutable SQL content bundle.
 
 Keep status behavior behind `status-rules.ts`, all configurable values in
 data, and all simulation uncertainty in `seeded-rng.ts`. Realtime has no

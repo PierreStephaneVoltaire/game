@@ -1,6 +1,6 @@
 import type { GameDefinition } from '$lib/game-definition';
 import type { GameCommand, GameState, StatusName } from '$lib/game-types';
-import { companion } from './companion';
+import { companionFromDefinition, type CompanionProfile } from './companion';
 import { gameCopy, statusLabel } from './game-copy';
 import {
   projectCausalJourney,
@@ -62,7 +62,7 @@ export type GameIntent =
   | { type: 'pay_medical_debt' }
   | { type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'wait' };
 export type GameViewModel = {
-  companion: typeof companion;
+  companion: CompanionProfile;
   mode: GameState['mode'];
   modeLabel: string;
   now: number;
@@ -146,6 +146,7 @@ export function createGameViewModel(
   definition: GameDefinition,
   locale = 'en-US',
 ): GameViewModel {
+  const companion = companionFromDefinition(definition);
   const ownership = createActionOwnership(state, definition);
   const catalogue = definition.items
     .map((item) => itemFor(state, definition, item.id, ownership))

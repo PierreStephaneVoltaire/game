@@ -1,7 +1,6 @@
 import type { Activity, GameEvent, GameState, Metrics } from '../game-types';
 import type { GameDefinition } from '../game-definition';
-import rules from '../data/simulation-rules.json';
-import activityRules from '../data/activity-rules.json';
+import { activityRules, simulationRules as rules } from '../runtime-definition';
 import { actionRandom } from '../seeded-rng';
 import { activityPrimaryMetric, completionDelta } from '../activity-rules';
 import { alignGameStatuses, triggersOverstimulation } from '../status-rules';

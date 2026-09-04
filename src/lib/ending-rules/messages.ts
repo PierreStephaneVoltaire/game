@@ -1,5 +1,5 @@
 import type { AdverseEndingKind } from '../game-types';
-import endingRules from '../data/ending-rules.json';
+import { endingRules } from '../runtime-definition';
 import {
   interpolateText,
   selectSeededText,
@@ -18,7 +18,7 @@ export function formatEndingMessage(
 }
 
 function eventText(
-  key: keyof typeof endingRules.texts.events,
+  key: string,
   context?: SeededTextContext,
   values: Record<string, string | number> = {},
 ): string {
@@ -205,7 +205,7 @@ export function financialRuinCause(context?: SeededTextContext): string {
 }
 
 export function deathCauseText(
-  cause: keyof typeof endingRules.texts.deathCauses,
+  cause: string,
   context?: SeededTextContext,
 ): string {
   return selectSeededText(

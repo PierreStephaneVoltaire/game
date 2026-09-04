@@ -8,6 +8,17 @@ The configured display name and authored player-facing copy may use the chosen
 name; runtime identifiers, IDs, paths, assets, seeds, and infrastructure names
 remain generic.
 
+## Runtime content versions
+
+Items, activity rules, financial rules, ending rules, life events, event text,
+the companion profile, and simulation rules are published together as one
+immutable, SHA-256-versioned bundle. A game records the bundle version it was
+played with. Cached content can be used offline after it has been downloaded;
+a first visit without cached content needs a connection. Before a game write,
+the client conditionally checks the manifest. If the version changed, it
+atomically stores the new bundle, replays pending commands with their stable
+IDs, and submits against the new version.
+
 ## Core rules
 
 - Health is a whole number from 0 through 30. Food, Mood, Rest, Bond, and

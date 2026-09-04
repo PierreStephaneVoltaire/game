@@ -8,10 +8,12 @@
     gameKeyIsValid,
     openGameSession,
   } from '$lib/game-session';
+  import { listLocalGames } from '$lib/persistence/games';
 
   let gameKey = '';
   let generatedKey = '';
   let busy = true;
+  let savedKeys: string[] = [];
 
   $: validGameKey = gameKeyIsValid(gameKey);
   $: generatedKeyIsCurrent = generatedKey !== '' && gameKey === generatedKey;
@@ -22,6 +24,7 @@
         await goto(resolve('/login'));
         return;
       }
+      savedKeys = (await listLocalGames()).map((game) => game.gameHash);
       busy = false;
     });
   });
@@ -66,9 +69,16 @@
     <button type="submit" disabled={busy || !validGameKey}>Open game</button>
   </form>
 
-  <button class="secondary-action" type="button" disabled
-    >Retrieve game keys</button
-  >
+  {#if savedKeys.length}
+    <section class="saved-games" aria-label="Saved games">
+      <p>Saved on this device</p>
+      {#each savedKeys as key (key)}
+        <button class="secondary-action" type="button" disabled={busy} on:click={() => openKey(key)}
+          >Open {key}</button
+        >
+      {/each}
+    </section>
+  {/if}
 
   {#if generatedKeyIsCurrent}
     <button type="button" disabled={busy} on:click={continueWithNewKey}
@@ -90,5 +100,14 @@
   .secondary-action {
     width: 100%;
     justify-content: center;
+  }
+  .saved-games p {
+    margin: 20px 0 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .saved-games .secondary-action + .secondary-action {
+    margin-top: 8px;
   }
 </style>

@@ -1,7 +1,7 @@
 import type { GameState, HealthDamageSource } from '../game-types';
 import type { StatusReconciliation } from '../status-rules';
 import { reconcileStatusRules, sugarCrashMetricDeltas } from '../status-rules';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { HOUR_MS, STAT_MIN } from '../game-constants';
 import { actionRandom } from '../seeded-rng';
 import {

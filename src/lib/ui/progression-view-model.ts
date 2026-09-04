@@ -1,8 +1,8 @@
 import { hospitalCost, hospitalInsuranceItemId } from '$lib/billing-rules';
 import type { GameDefinition } from '$lib/game-definition';
 import type { CareerTier, GameState, Project } from '$lib/game-types';
-import rules from '$lib/data/simulation-rules.json';
-import { companion, type CompanionAppearance } from './companion';
+import { simulationRules as rules } from '$lib/runtime-definition';
+import { companionFromDefinition, type CompanionAppearance } from './companion';
 
 export type CareerViewModel = {
   key: CareerTier;
@@ -65,7 +65,7 @@ function careerFor(state: GameState): CareerViewModel {
     state.progression.peakFollowers,
   );
   const next = rules.progression.milestones.find(
-    (milestone) => milestone.followers > peakFollowers,
+    (milestone: { followers: number }) => milestone.followers > peakFollowers,
   );
   const key = state.progression.careerTier;
   return {
@@ -153,7 +153,11 @@ function effectsFor(state: GameState): TimedEffectViewModel[] {
   return effects;
 }
 
-function avatarFor(state: GameState): CompanionAppearance {
+function avatarFor(
+  state: GameState,
+  definition: GameDefinition,
+): CompanionAppearance {
+  const companion = companionFromDefinition(definition);
   return (
     companion.appearances.find(
       (appearance) => appearance.id === state.progression.activeAppearanceId,
@@ -188,7 +192,7 @@ export function progressionPresentation(
     career: careerFor(state),
     effects: effectsFor(state),
     projects: projectsFor(state),
-    activeAvatar: avatarFor(state),
+    activeAvatar: avatarFor(state, definition),
     hospital: hospitalFor(state, definition),
     streamStats: state.progression.streamStats,
   };

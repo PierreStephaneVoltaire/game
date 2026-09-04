@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { resolveNutritionConsumption } from './commands/nutrition-resolution';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { reconcileTime, startRun } from './game-engine';
 import type { ConsumptionRecord, GameState } from './game-types';
 

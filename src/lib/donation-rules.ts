@@ -1,4 +1,4 @@
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { actionRandom } from './seeded-rng';
 import type { DonationTier, GameState } from './game-types';
 
