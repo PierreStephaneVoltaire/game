@@ -17,7 +17,10 @@ provider "azurerm" {
   features {}
 
   resource_provider_registrations = "none"
-  resource_providers_to_register = [
-    "Microsoft.DBforPostgreSQL"
-  ]
+}
+
+resource "azurerm_resource_provider_registration" "postgresql" {
+  name = "Microsoft.DBforPostgreSQL"
+
+  lifecycle { prevent_destroy = true }
 }

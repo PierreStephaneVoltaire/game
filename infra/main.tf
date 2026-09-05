@@ -26,7 +26,8 @@ module "static_app" {
 }
 
 module "database" {
-  source = "./modules/database"
+  source     = "./modules/database"
+  depends_on = [azurerm_resource_provider_registration.postgresql]
 
   name                = var.name
   location            = data.azurerm_resource_group.existing.location

@@ -16,6 +16,11 @@ resource "azapi_resource" "this" {
   name      = "${var.name}-web"
   location  = var.location
   parent_id = var.resource_group_id
+  tags = {
+    application = var.name
+    environment = var.app_settings["ENVIRONMENT"]
+    managed_by  = "terraform"
+  }
 
   body = {
     properties = {
