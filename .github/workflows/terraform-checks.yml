@@ -28,12 +28,6 @@ jobs:
       - name: Validate Terraform
         run: terraform -chdir=infra validate
 
-      - name: Initialize CI-access Terraform
-        run: terraform -chdir=infra/ci-access init -backend=false -input=false
-
-      - name: Validate CI-access Terraform
-        run: terraform -chdir=infra/ci-access validate
-
   apply:
     needs: validate
     if: >-

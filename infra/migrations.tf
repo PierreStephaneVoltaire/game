@@ -9,8 +9,3 @@ removed {
   from = module.web.azurerm_static_web_app.this
   lifecycle { destroy = false }
 }
-
-import {
-  to = module.static_app.azapi_resource.this
-  id = "${data.azurerm_resource_group.existing.id}/providers/Microsoft.Web/staticSites/${var.name}-web"
-}
