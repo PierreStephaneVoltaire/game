@@ -25,7 +25,7 @@ def main() -> None:
     }
     with psycopg.connect(**connection, dbname="postgres") as db:
         existing = db.execute(
-            "SELECT * FROM pg_catalog.pgaadauth_list_principals(false) WHERE rolename = %s",
+            "SELECT * FROM pg_catalog.pgaadauth_list_principals(false) WHERE rolname = %s",
             (role,),
         ).fetchone()
         if existing is None:
