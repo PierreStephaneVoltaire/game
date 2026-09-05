@@ -1,6 +1,6 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, HealthDamageSource } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { actionRandom } from '../seeded-rng';
 import { resolveItemConsumption } from '../commands/item-consumption';
 import { appendStatusTransitionEvents } from './engine-state';

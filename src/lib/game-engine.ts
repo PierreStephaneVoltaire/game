@@ -14,7 +14,8 @@ import { handleShopCommand } from './commands/shop-commands';
 import { handleActivityCommand } from './commands/activity-commands';
 import { handleItemActionCommand } from './commands/item-action-commands';
 import { resolveItemConsumption } from './commands/item-consumption';
-import { reconcileTime } from './simulation/reconcile-time';
+import { reconcileTime as reconcileTimeInternal } from './simulation/reconcile-time';
+import type { ReconcileOptions } from './simulation/reconcile-time';
 import { createRunState } from './simulation/run-state';
 import { resetPlayerCareRescueLocks } from './autonomous-rescue-rules';
 import { payMedicalDebtInFull } from './commands/medical-debt-commands';
@@ -22,15 +23,32 @@ import { reconcileRunEnding } from './ending-rules';
 import { runOverMessage } from './ending-rules/messages';
 import { resolveBatchFeeding } from './commands/batch-feeding';
 import { stateTextContext } from './seeded-text';
+import { activateGameDefinition } from './runtime-definition';
 
-export const startRun = createRunState;
-export { reconcileTime };
+export function startRun(
+  input: import('./game-types').StartRunInput,
+  definition: GameDefinition,
+): GameState {
+  activateGameDefinition(definition);
+  return createRunState(input, definition);
+}
+
+export function reconcileTime(
+  state: GameState,
+  now: number,
+  definition: GameDefinition,
+  options: ReconcileOptions = {},
+) {
+  activateGameDefinition(definition);
+  return reconcileTimeInternal(state, now, definition, options);
+}
 
 export function dispatchCommand(
   state: GameState,
   command: GameCommand,
   definition: GameDefinition,
 ): Transition {
+  activateGameDefinition(definition);
   if (state.ending)
     return {
       state,

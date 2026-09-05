@@ -4,7 +4,7 @@ import { alignGameStatuses } from '../status-rules';
 import { resolveNutritionStatuses } from '../status-rules/context-statuses';
 import { recoveryForMetrics } from './health-resolution';
 import type { Metrics } from '../game-types';
-import { BUNDLED_GAME_DEFINITION } from '../game-definition';
+import { BUNDLED_GAME_DEFINITION } from '../test-game-definition';
 import { dispatchCommand, reconcileTime, startRun } from '../game-engine';
 import { HOUR_MS } from '../game-constants';
 import { resolveDecay } from './decay-resolution';

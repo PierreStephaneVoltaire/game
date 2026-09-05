@@ -1,4 +1,4 @@
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { HOUR_MS } from './game-constants';
 import type { GameEvent, GameState } from './game-types';
 import { creditIncome } from './income-rules';

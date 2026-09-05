@@ -1,10 +1,10 @@
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { weightedDonation } from './donation-rules';
 import { applyFollowerMilestones } from './follower-rules';
 import { HOUR_MS } from './game-constants';
 import type { GameEvent, GameState } from './game-types';
 import { localDate } from './shop-rules';
-import activityRules from './data/activity-rules.json';
+import { activityRules } from './runtime-definition';
 import { creditIncome } from './income-rules';
 
 export { applyFollowerMilestones, streamRateFor } from './follower-rules';
@@ -36,7 +36,8 @@ export function completeStreamEconomy(
       .split('-')
       .map(Number);
     const special = rules.specialDates.find(
-      (item) => item.month === dateParts[0] && item.day === dateParts[1],
+      (item: { month: number; day: number }) =>
+        item.month === dateParts[0] && item.day === dateParts[1],
     );
     return {
       hourIndex,

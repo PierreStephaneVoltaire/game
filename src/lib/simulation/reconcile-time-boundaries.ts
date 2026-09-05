@@ -1,6 +1,6 @@
 import type { GameState } from '../game-types';
 import type { GameDefinition } from '../game-definition';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { nextStatusBoundary } from '../status-rules';
 import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';

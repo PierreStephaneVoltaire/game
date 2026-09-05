@@ -1,6 +1,5 @@
 import type { GameDefinition, ItemDefinition } from './game-definition';
 import type { GameState } from './game-types';
-import rules from './data/simulation-rules.json';
 
 export function hospitalInsuranceItemId(
   state: GameState,
@@ -23,6 +22,7 @@ export function hospitalCost(
   state: GameState,
   definition: GameDefinition,
 ): number {
+  const rules = definition.simulationRules;
   return hasHospitalInsurance(state, definition)
     ? rules.medicalCare.insuredCost
     : rules.medicalCare.cost;

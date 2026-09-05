@@ -1,0 +1,2 @@
+"""Virtual pet HTTP backend."""
+

@@ -1,4 +1,4 @@
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { HEALTH_MAX, STAT_MIN } from '../game-constants';
 import type { GameState, HealthDamageSource, MetricName } from '../game-types';
 

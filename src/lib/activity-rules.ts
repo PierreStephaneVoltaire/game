@@ -1,6 +1,6 @@
 import { actionRandom } from './seeded-rng';
 import type { GameState, Metrics } from './game-types';
-import rules from './data/activity-rules.json';
+import { activityRules as rules } from './runtime-definition';
 import { HOUR_MS, MINUTE_MS } from './game-constants';
 import { STAT_MAX, STAT_MIN } from './game-constants';
 

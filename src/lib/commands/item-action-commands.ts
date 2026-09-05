@@ -23,7 +23,6 @@ import {
 import { resolveAttemptEvent } from '../event-rules';
 import { clampMetric, HOUR_MS, STAT_MAX, STAT_MIN } from '../game-constants';
 import { healthDamageSource } from '../simulation/health-resolution';
-import rules from '../data/simulation-rules.json';
 import {
   actionRequirementFailure,
   startCommissionWork,
@@ -47,6 +46,7 @@ export function handleItemActionCommand(
   command: Extract<GameCommand, { type: 'perform_item_action' }>,
   definition: GameDefinition,
 ): ItemActionCommandResult {
+  const rules = definition.simulationRules;
   const item = definition.items.find(
     (candidate) => candidate.id === command.itemId,
   );

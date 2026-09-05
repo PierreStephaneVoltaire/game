@@ -1,10 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { BUNDLED_GAME_DEFINITION } from '$lib/game-definition';
+import { BUNDLED_GAME_DEFINITION } from '$lib/test-game-definition';
 import { HOUR_MS } from '$lib/game-constants';
 import endingRules from '$lib/data/ending-rules.json';
 import { startRun } from '$lib/game-engine';
 import type { GameState } from '$lib/game-types';
-import { companion } from './companion';
 import { createGameViewModel } from './game-view-model';
 
 const startedAt = Date.UTC(2026, 7, 22, 14);
@@ -96,7 +95,9 @@ describe('game view model', () => {
       },
     ]);
     expect(model.activeAvatar).toEqual(
-      companion.appearances.find((appearance) => appearance.id === 'model_3_0'),
+      model.companion.appearances.find(
+        (appearance) => appearance.id === 'model_3_0',
+      ),
     );
     expect(model.hospital).toEqual({
       durationHours: 12,

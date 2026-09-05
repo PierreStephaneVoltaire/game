@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { reconcileTime, startRun } from './game-engine';
 
 const HOUR = 60 * 60 * 1000;

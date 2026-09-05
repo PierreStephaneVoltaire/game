@@ -1,10 +1,10 @@
 import type { Activity, StatusName } from './game-types';
-import eventTexts from './data/event-texts.json';
+import { eventTexts } from './runtime-definition';
 import { selectSeededText, type SeededTextContext } from './seeded-text';
 
-export type BuiltInEventType = keyof typeof eventTexts.builtInEvents;
-export type EventTemplateId = keyof typeof eventTexts.eventTemplates;
-export type LifeEventTextId = keyof typeof eventTexts.lifeEvents;
+export type BuiltInEventType = string;
+export type EventTemplateId = string;
+export type LifeEventTextId = string;
 
 export function messageFor(
   type: BuiltInEventType,

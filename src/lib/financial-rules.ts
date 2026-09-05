@@ -1,4 +1,4 @@
-import financialRules from './data/financial-rules.json';
+import { financialRules } from './runtime-definition';
 import type { DebtBreakdown, FinancialEffect } from './financial-types';
 import type { GameEvent, GameState } from './game-types';
 import { alignFinancialStatus } from './status-rules';

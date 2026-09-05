@@ -1,6 +1,28 @@
-import rules from './data/simulation-rules.json';
-import items from './data/shop-items.json';
 import type { CareerTier, Metrics, StatusName } from './game-types';
+import type activityRulesDocument from './data/activity-rules.json';
+import type endingRulesDocument from './data/ending-rules.json';
+import type eventTextsDocument from './data/event-texts.json';
+import type financialRulesDocument from './data/financial-rules.json';
+import type lifeEventsDocument from './data/life-events.json';
+import type petProfileDocument from './data/pet-profile.json';
+import type simulationRulesDocument from './data/simulation-rules.json';
+
+type ActivityRules = typeof activityRulesDocument;
+type EndingRules = typeof endingRulesDocument & {
+  texts: {
+    events: Record<string, string[]>;
+    deathCauses: Record<string, string[]>;
+  };
+};
+type EventTexts = typeof eventTextsDocument & {
+  builtInEvents: Record<string, string[]>;
+  eventTemplates: Record<string, string[]>;
+  lifeEvents: Record<string, string[]>;
+};
+type FinancialRules = typeof financialRulesDocument;
+type LifeEvents = typeof lifeEventsDocument;
+type PetProfile = typeof petProfileDocument;
+type SimulationRules = typeof simulationRulesDocument;
 
 export type EffectRange = { min: number; max: number };
 
@@ -152,34 +174,60 @@ export type ItemDefinition = {
 
 export type GameDefinition = {
   version: string;
+  schemaVersion: number;
   metricMin: number;
   metricMax: number;
   startingMetrics: Metrics;
   startingCurrency: number;
   startingInventory: Record<string, number>;
   items: ItemDefinition[];
+  activityRules: ActivityRules;
+  endingRules: EndingRules;
+  eventTexts: EventTexts;
+  financialRules: FinancialRules;
+  lifeEvents: LifeEvents;
+  petProfile: PetProfile;
+  simulationRules: SimulationRules;
 };
 
-const bundledRules = rules as typeof rules;
-
-export const BUNDLED_GAME_DEFINITION: GameDefinition = {
-  version: 'main-app-1',
-  metricMin: bundledRules.statRange.min,
-  metricMax: bundledRules.statRange.max,
-  startingMetrics: bundledRules.startingMetrics,
-  startingCurrency: bundledRules.startingCurrency,
-  startingInventory: bundledRules.startingInventory,
-  items: items as ItemDefinition[],
+/** JSON shape served by the versioned runtime-content endpoint. */
+export type RuntimeContentBundle = {
+  version: string;
+  schema_version: number;
+  shop_items: ItemDefinition[];
+  activity_rules: ActivityRules;
+  ending_rules: EndingRules;
+  event_texts: EventTexts;
+  financial_rules: FinancialRules;
+  life_events: LifeEvents;
+  pet_profile: PetProfile;
+  simulation_rules: SimulationRules;
 };
+
+export function gameDefinitionFromBundle(
+  bundle: RuntimeContentBundle,
+): GameDefinition {
+  return {
+    version: bundle.version,
+    schemaVersion: bundle.schema_version,
+    metricMin: bundle.simulation_rules.statRange.min,
+    metricMax: bundle.simulation_rules.statRange.max,
+    startingMetrics: bundle.simulation_rules.startingMetrics,
+    startingCurrency: bundle.simulation_rules.startingCurrency,
+    startingInventory: bundle.simulation_rules.startingInventory,
+    items: bundle.shop_items,
+    activityRules: bundle.activity_rules,
+    endingRules: bundle.ending_rules,
+    eventTexts: bundle.event_texts,
+    financialRules: bundle.financial_rules,
+    lifeEvents: bundle.life_events,
+    petProfile: bundle.pet_profile,
+    simulationRules: bundle.simulation_rules,
+  };
+}
 
 export interface GameDefinitionRepository {
   load(): Promise<GameDefinition>;
-}
-
-export class BundledGameDefinitionRepository implements GameDefinitionRepository {
-  async load(): Promise<GameDefinition> {
-    return BUNDLED_GAME_DEFINITION;
-  }
 }
 
 export class InMemoryGameDefinitionRepository implements GameDefinitionRepository {

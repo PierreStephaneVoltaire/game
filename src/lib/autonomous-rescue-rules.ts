@@ -1,5 +1,5 @@
 import type { GameState } from './game-types';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 
 export function resetPlayerCareRescueLocks(
   before: GameState,

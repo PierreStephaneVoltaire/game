@@ -1,5 +1,5 @@
 import type { GameEvent, GameState, Project } from './game-types';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { queueEventStream } from './event-stream-rules';
 import { reconcileMetricSource } from './status-rules/metric-source-reconciliation';
 import { applyFollowerMilestones } from './economy-rules';

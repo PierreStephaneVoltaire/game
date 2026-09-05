@@ -4,7 +4,7 @@ import {
   validateItemStructure,
 } from './catalog-structure-validation';
 import canonicalItemIds from './data/catalogue/canonical-item-ids.json';
-import petProfile from './data/pet-profile.json';
+import { petProfile } from './runtime-definition';
 import {
   validateItemNutrition,
   validateNutritionSourceMix,

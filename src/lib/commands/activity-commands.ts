@@ -1,6 +1,6 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Outcome } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import {
   chooseActivityOutcome,
   chooseDuration,

@@ -1,4 +1,4 @@
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { STAT_MIN } from '../game-constants';
 import type { GameState, Metrics } from '../game-types';
 import type { StatusReconciliation } from '../status-rules';

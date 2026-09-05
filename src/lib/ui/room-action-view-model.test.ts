@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { BUNDLED_GAME_DEFINITION } from '$lib/game-definition';
+import { BUNDLED_GAME_DEFINITION } from '$lib/test-game-definition';
 import { startRun } from '$lib/game-engine';
 import { createGameViewModel } from './game-view-model';
 

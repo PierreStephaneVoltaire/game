@@ -1,4 +1,4 @@
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { finalizeFinancialOperation } from './financial-rules';
 import { subscriberRevenueMultiplier } from './follower-rules';
 import { HOUR_MS } from './game-constants';
@@ -22,7 +22,10 @@ export function processSubscriberRevenue(
   );
   const subscriberRevenueFloor =
     rules.progression.subscriberRevenue.minimumAmountBands
-      .filter((band) => progressionFollowers >= band.minimumPeakSubscribers)
+      .filter(
+        (band: { minimumPeakSubscribers: number; amount: number }) =>
+          progressionFollowers >= band.minimumPeakSubscribers,
+      )
       .at(-1)?.amount ?? 0;
   const amount = Math.max(legacyRevenueAmount, subscriberRevenueFloor);
   const event: GameEvent = {
