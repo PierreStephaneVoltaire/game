@@ -35,12 +35,22 @@ resource "azapi_resource" "this" {
   response_export_values = ["properties.defaultHostname"]
 }
 
-resource "azapi_update_resource" "app_settings" {
+data "azapi_resource_action" "app_settings" {
+  type        = "Microsoft.Web/staticSites@2023-12-01"
+  resource_id = azapi_resource.this.id
+  action      = "listAppSettings"
+  method      = "POST"
+
+  sensitive_response_export_values = ["properties"]
+}
+
+resource "azapi_resource_action" "app_settings" {
   type        = "Microsoft.Web/staticSites/config@2023-12-01"
   resource_id = "${azapi_resource.this.id}/config/appsettings"
+  method      = "PUT"
 
   body = {
-    properties = var.app_settings
+    properties = merge(data.azapi_resource_action.app_settings.sensitive_output.properties, var.app_settings)
   }
 }
 
