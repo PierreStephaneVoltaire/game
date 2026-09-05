@@ -1,16 +1,7 @@
-name: Terraform checks
+name: Terraform infrastructure
 
 on:
-  push:
-    paths:
-      - infra/**
-      - .github/workflows/terraform-checks.yml
-  pull_request:
-    branches:
-      - main
-    paths:
-      - infra/**
-      - .github/workflows/terraform-checks.yml
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -43,19 +34,21 @@ jobs:
       - name: Validate CI-access Terraform
         run: terraform -chdir=infra/ci-access validate
 
-  plan:
+  apply:
     needs: validate
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
+    concurrency:
+      group: terraform-application-state
+      cancel-in-progress: false
     permissions:
       contents: read
       id-token: write
     env:
       TF_IN_AUTOMATION: 'true'
-      TF_DATA_DIR: ${{ runner.temp }}/terraform-data
       ARM_USE_OIDC: 'true'
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
@@ -76,6 +69,7 @@ jobs:
           test -n "$TF_BACKEND_CONFIG" || { echo '::error::TF_BACKEND_CONFIG is missing.'; exit 1; }
           umask 077
           printf '%s' "$TF_BACKEND_CONFIG" > "$RUNNER_TEMP/backend.tfbackend"
+          printf 'TF_DATA_DIR=%s/terraform-data\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
 
       - name: Sign in to Azure
         uses: azure/login@v2
@@ -88,4 +82,7 @@ jobs:
         run: terraform -chdir=infra init -input=false -backend-config="$RUNNER_TEMP/backend.tfbackend"
 
       - name: Plan infrastructure changes
-        run: terraform -chdir=infra plan -input=false -no-color -lock-timeout=60s -var-file=deployment.tfvars -out="$RUNNER_TEMP/deployment.tfplan"
+        run: terraform -chdir=infra plan -input=false -no-color -lock-timeout=5m -var-file=deployment.tfvars -out="$RUNNER_TEMP/deployment.tfplan"
+
+      - name: Apply planned infrastructure changes
+        run: terraform -chdir=infra apply -input=false -no-color -lock-timeout=5m "$RUNNER_TEMP/deployment.tfplan"

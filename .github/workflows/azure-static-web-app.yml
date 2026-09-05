@@ -20,11 +20,19 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: azure-static-web-app-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: azure-static-web-app
+  cancel-in-progress: false
 
 jobs:
+  infrastructure:
+    if: >-
+      github.event_name == 'push' ||
+      (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
+    uses: ./.github/workflows/terraform-checks.yml
+    secrets: inherit
+
   build_test_and_deploy:
+    needs: infrastructure
     if: github.event_name == 'push' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
