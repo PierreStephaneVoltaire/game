@@ -10,16 +10,17 @@ test('moves from login through separate key and new-game mode screens', async ({
 
   await expect(page.getByLabel('Username')).toBeVisible();
   await expect(page.getByLabel('Password')).toHaveValue('');
+  await expect(page.getByLabel(/Recovery contact/)).toHaveCount(0);
   await expect(
     page.getByRole('button', { name: 'Sign in with Discord' }),
   ).toBeVisible();
   await expect(page.locator('body')).not.toContainText(
-    'Password must be 12–128 characters.',
+    'Password must be',
   );
   await expect(page.locator('body')).not.toContainText('{pet}');
 
   await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('correct horse battery staple');
+  await page.getByLabel('Password').fill('abcdefgh');
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/key$/);
   await expect(page.getByRole('textbox', { name: 'Game key' })).toBeVisible();

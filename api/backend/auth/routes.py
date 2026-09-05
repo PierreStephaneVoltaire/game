@@ -74,7 +74,6 @@ def register(request: func.HttpRequest) -> func.HttpResponse:
             user, token = AuthService(session).register(
                 data.username,
                 data.password,
-                data.contact_handle,
                 source(request),
             )
         except AuthProblem as problem:

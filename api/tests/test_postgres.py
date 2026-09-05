@@ -30,7 +30,7 @@ def test_postgres_auth_content_and_game_round_trip():
                 assert current_content(session).version == bundle.version
                 session.commit()
                 auth = AuthService(session)
-                user, cookie = auth.register("postgres_player", "correct horse battery staple", None, "test")
+                user, cookie = auth.register("postgres_player", "correct horse battery staple", "test")
                 session.expire_all()
                 assert current(session, cookie) is not None
                 reset = auth.issue_reset(user.username, "test")

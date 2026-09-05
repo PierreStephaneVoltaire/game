@@ -8,6 +8,7 @@ import {
   logoutAccount,
   registerAccount,
   restoreAccount,
+  resetPassword,
 } from './account-client';
 
 function jsonResponse(body: unknown, status = 200): Response {
@@ -69,7 +70,7 @@ describe('account client', () => {
     await expect(registerAccount('player_1', 'short')).rejects.toEqual(
       new AccountRequestError(
         'INVALID_REQUEST',
-        'Use at least 12 characters for a new password.',
+        'Use at least 8 characters for a new password.',
       ),
     );
     await expect(loginAccount('', '')).rejects.toEqual(
@@ -99,6 +100,28 @@ describe('account client', () => {
     );
     await expect(restoreAccount()).resolves.toBeNull();
     expect(get(currentAccount)).toBeNull();
+  });
+
+  it('accepts eight-character passwords for registration and reset', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockImplementation(() =>
+        jsonResponse({ user: { userId: 'user-1', username: 'player_1' } }),
+      );
+    vi.stubGlobal('fetch', fetchMock);
+    await registerAccount('Player_1', 'abcdefgh');
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual({
+      username: 'player_1',
+      password: 'abcdefgh',
+    });
+    await resetPassword('reset-token', 'abcdefgh');
+    await expect(registerAccount('player_1', 'abcdefg')).rejects.toThrow(
+      'at least 8',
+    );
+    await expect(resetPassword('reset-token', 'abcdefg')).rejects.toThrow(
+      '8–128',
+    );
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('surfaces stable API errors and clears state on logout', async () => {

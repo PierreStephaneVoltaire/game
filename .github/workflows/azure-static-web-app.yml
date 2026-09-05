@@ -35,6 +35,9 @@ jobs:
     needs: infrastructure
     if: github.event_name == 'push' || github.event.action != 'closed'
     runs-on: ubuntu-latest
+    env:
+      STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
+      RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -90,34 +93,29 @@ jobs:
         run: cp staticwebapp.config.json build/staticwebapp.config.json
 
       - name: Sign in to Azure
-        if: github.event_name == 'push'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Configure API secrets
-        if: github.event_name == 'push'
+      - name: Check API credentials
         env:
-          STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
-          RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
-          AZURE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_DATABASE_CLIENT_SECRET }}
-        run: >-
-          az staticwebapp appsettings set
-          --name "$STATIC_WEB_APP_NAME"
-          --resource-group "$RESOURCE_GROUP_NAME"
-          --setting-names
-          "DISCORD_CLIENT_SECRET=$DISCORD_CLIENT_SECRET"
-          "SIGNING_SECRET=$SIGNING_SECRET"
-          "AZURE_CLIENT_ID=$AZURE_CLIENT_ID"
-          "AZURE_TENANT_ID=$AZURE_TENANT_ID"
-          "AZURE_CLIENT_SECRET=$AZURE_CLIENT_SECRET"
-          --output none
+          AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
+          AZURE_DATABASE_CLIENT_SECRET: ${{ secrets.AZURE_DATABASE_CLIENT_SECRET }}
+          AZURE_DATABASE_OBJECT_ID: ${{ secrets.AZURE_DATABASE_OBJECT_ID }}
+        run: |
+          for key in DISCORD_CLIENT_SECRET SIGNING_SECRET AZURE_DATABASE_CLIENT_ID AZURE_DATABASE_CLIENT_SECRET AZURE_DATABASE_OBJECT_ID; do
+            test -n "${!key}" || { echo "::error::$key is missing."; exit 1; }
+          done
+
+      - name: Prepare API database
+        env:
+          PYTHONPATH: .:api
+          AZURE_DATABASE_OBJECT_ID: ${{ secrets.AZURE_DATABASE_OBJECT_ID }}
+        run: python -m tools.setup_api_database
 
       - name: Deploy prebuilt frontend
         id: deploy
@@ -130,7 +128,6 @@ jobs:
           api_location: api
           output_location: ''
           skip_app_build: true
-          skip_api_build: false
 
       - name: Verify deployment and report app URL
         env:
@@ -141,6 +138,22 @@ jobs:
             exit 1
           fi
           printf 'App deployed: [%s](%s)\n' "$APP_URL" "$APP_URL" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Configure deployed API environment
+        env:
+          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
+          API_ENVIRONMENT: ${{ github.event.pull_request.number || 'default' }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+          AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
+          AZURE_DATABASE_CLIENT_SECRET: ${{ secrets.AZURE_DATABASE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: python -m tools.configure_api
+
+      - name: Verify deployed authentication API
+        env:
+          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
+        run: python -m tools.check_api
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

@@ -94,26 +94,22 @@ async function authenticate(
   action: 'login' | 'register',
   username: string,
   password: string,
-  contactHandle?: string,
 ): Promise<Account> {
   if (!credentialsAreValid(username, password))
     throw new AccountRequestError(
       'INVALID_REQUEST',
       'Enter a valid username and password.',
     );
-  if (action === 'register' && password.length < 12)
+  if (action === 'register' && password.length < 8)
     throw new AccountRequestError(
       'INVALID_REQUEST',
-      'Use at least 12 characters for a new password.',
+      'Use at least 8 characters for a new password.',
     );
   const result = await accountRequest(`/api/auth/${action}`, {
     method: 'POST',
     body: JSON.stringify({
       username: username.trim().toLowerCase(),
       password,
-      ...(action === 'register' && contactHandle?.trim()
-        ? { contactHandle: contactHandle.trim() }
-        : {}),
     }),
   });
   currentAccount.set(result.user);
@@ -123,9 +119,8 @@ async function authenticate(
 export function registerAccount(
   username: string,
   password: string,
-  contactHandle?: string,
 ): Promise<Account> {
-  return authenticate('register', username, password, contactHandle);
+  return authenticate('register', username, password);
 }
 
 export function beginDiscordLogin(): void {
@@ -153,10 +148,10 @@ export async function resetPassword(
   token: string,
   newPassword: string,
 ): Promise<void> {
-  if (newPassword.length < 12 || newPassword.length > 128)
+  if (newPassword.length < 8 || newPassword.length > 128)
     throw new AccountRequestError(
       'INVALID_REQUEST',
-      'Password must be 12–128 characters.',
+      'Password must be 8–128 characters.',
     );
   await accountRequest('/api/auth/password/reset', {
     method: 'POST',

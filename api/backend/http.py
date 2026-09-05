@@ -4,7 +4,6 @@ import inspect
 import json
 import logging
 from datetime import date, datetime
-from functools import wraps
 from http.cookies import SimpleCookie
 from typing import Any, Awaitable, Callable, TypeVar
 from urllib.parse import urlsplit
@@ -50,11 +49,10 @@ def redirect(location: str, cookie: str | None = None) -> func.HttpResponse:
 
 
 def endpoint(handler: Handler) -> Handler:
-    @wraps(handler)
-    async def wrapped(request: func.HttpRequest) -> func.HttpResponse:
-        request_id = request.headers.get("x-request-id", str(uuid4()))
+    async def wrapped(req: func.HttpRequest) -> func.HttpResponse:
+        request_id = req.headers.get("x-request-id", str(uuid4()))
         try:
-            result = handler(request)
+            result = handler(req)
             if inspect.isawaitable(result):
                 result = await result
             response = result if isinstance(result, func.HttpResponse) else json_response(result)
@@ -74,6 +72,8 @@ def endpoint(handler: Handler) -> Handler:
         response.headers["x-request-id"] = request_id
         return response
 
+    # Azure indexes the wrapper's binding signature and uses its name as the route name.
+    wrapped.__name__ = handler.__name__
     return wrapped
 
 

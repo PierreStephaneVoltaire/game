@@ -22,8 +22,7 @@ def normalized_username(value: str) -> str:
 class RegisterRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True, alias_generator=camel, populate_by_name=True)
     username: str = Field(max_length=24)
-    password: str = Field(min_length=12, max_length=128)
-    contact_handle: str | None = Field(default=None, max_length=200)
+    password: str = Field(min_length=8, max_length=128)
 
     _username = field_validator("username")(normalized_username)
 
@@ -39,13 +38,13 @@ class LoginRequest(BaseModel):
 class PasswordRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
     current_password: str | None = Field(default=None, max_length=128)
-    new_password: str = Field(min_length=12, max_length=128)
+    new_password: str = Field(min_length=8, max_length=128)
 
 
 class ResetRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
     token: str = Field(min_length=20, max_length=200)
-    new_password: str = Field(min_length=12, max_length=128)
+    new_password: str = Field(min_length=8, max_length=128)
 
 
 class DiscordCompleteRequest(BaseModel):

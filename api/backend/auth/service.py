@@ -63,9 +63,9 @@ class AuthService:
         if row.attempt_count > limit:
             raise AuthProblem("RATE_LIMITED", 429, "Too many attempts. Try again later.")
 
-    def register(self, username: str, password: str, contact_handle: str | None, source: str) -> tuple[SafeUser, str]:
+    def register(self, username: str, password: str, source: str) -> tuple[SafeUser, str]:
         self.throttle("register-source", source, 5, timedelta(hours=1))
-        user = User(username=username, password_hash=self.passwords.hash(password), contact_handle=contact_handle or None)
+        user = User(username=username, password_hash=self.passwords.hash(password))
         self.db.add(user)
         try:
             self.db.flush()

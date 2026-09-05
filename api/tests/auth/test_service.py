@@ -22,7 +22,7 @@ def service() -> tuple[Session, AuthService]:
 
 def test_password_account_stores_only_a_hashed_session_secret() -> None:
     db, auth = service()
-    user, cookie = auth.register("player_1", "correct horse battery staple", None, "127.0.0.1")
+    user, cookie = auth.register("player_1", "correct horse battery staple", "127.0.0.1")
     assert user.username == "player_1"
     assert "correct horse battery staple" not in db.get(User, user.user_id).password_hash
     assert current(db, cookie) is not None
@@ -47,7 +47,7 @@ def test_discord_authorization_uses_authlib_and_signed_state() -> None:
 
 def test_login_explains_missing_username_wrong_password_and_discord_account() -> None:
     db, auth = service()
-    auth.register("player_1", "correct horse battery staple", None, "register")
+    auth.register("player_1", "correct horse battery staple", "register")
     db.add(User(username="discord_player"))
     db.commit()
     failures = []
@@ -65,7 +65,7 @@ def test_login_explains_missing_username_wrong_password_and_discord_account() ->
 
 def test_reset_is_single_use_and_revokes_all_sessions() -> None:
     db, auth = service()
-    user, old_cookie = auth.register("player_1", "correct horse battery staple", "discord:123", "127.0.0.1")
+    user, old_cookie = auth.register("player_1", "correct horse battery staple", "127.0.0.1")
     token = auth.issue_reset("player_1", "admin")
     auth.consume_reset(token, "another correct horse battery staple")
     assert current(db, old_cookie) is None

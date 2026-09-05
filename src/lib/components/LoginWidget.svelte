@@ -15,7 +15,6 @@
 
   let username = '';
   let password = '';
-  let contactHandle = '';
   let onboardingToken = '';
   let resetToken = '';
   let busy = true;
@@ -57,7 +56,7 @@
     errorMessage = '';
     try {
       if (action === 'login') await loginAccount(username, password);
-      else await registerAccount(username, password, contactHandle);
+      else await registerAccount(username, password);
       password = '';
       await goto(resolve('/key'));
     } catch (error) {
@@ -125,7 +124,7 @@
         name="password"
         type="password"
         autocomplete="new-password"
-        minlength="12"
+        minlength="8"
         maxlength="128"
         required
         bind:value={password}
@@ -134,7 +133,7 @@
           {errorMessage}
         </p>{/if}
       <div class="form-actions">
-        <button type="submit" disabled={busy || password.length < 12}
+        <button type="submit" disabled={busy || password.length < 8}
           >Reset password<span aria-hidden="true">→</span></button
         >
       </div>
@@ -195,20 +194,6 @@
         required
         autocomplete="current-password"
       />
-
-      <label for="contact-handle">Recovery contact (optional)</label>
-      <input
-        id="contact-handle"
-        name="contactHandle"
-        type="text"
-        maxlength="200"
-        autocomplete="off"
-        bind:value={contactHandle}
-      />
-      <p class="form-hint">
-        Without a linked Discord or this contact, a password account cannot be
-        recovered.
-      </p>
 
       {#if errorMessage}<p class="form-error" role="alert">
           {errorMessage}
