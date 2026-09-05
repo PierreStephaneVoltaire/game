@@ -34,7 +34,10 @@ resource "azurerm_postgresql_flexible_server" "this" {
     managed_by  = "terraform"
   }
 
-  lifecycle { prevent_destroy = true }
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [zone]
+  }
 }
 
 resource "azurerm_postgresql_flexible_server_active_directory_administrator" "this" {
