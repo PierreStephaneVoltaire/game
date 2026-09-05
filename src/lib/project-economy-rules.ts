@@ -1,6 +1,6 @@
 import { actionRandom, resolveRange } from './seeded-rng';
 import { nextLocalMidnight } from './shop-rules';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import type { ItemDefinition } from './game-definition';
 import type { GameState, Project } from './game-types';
 import { DAY_MS } from './game-constants';

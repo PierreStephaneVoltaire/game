@@ -3,6 +3,8 @@ import { writable } from 'svelte/store';
 export type Account = {
   userId: string;
   username: string;
+  providers?: string[];
+  hasPassword?: boolean;
 };
 
 type AccountResponse = {
@@ -36,7 +38,7 @@ export function credentialsAreValid(
 ): boolean {
   return (
     USERNAME_PATTERN.test(username.trim().toLowerCase()) &&
-    password.length >= 12 &&
+    password.length >= 1 &&
     password.length <= 128
   );
 }
@@ -79,7 +81,8 @@ export async function restoreAccount(): Promise<Account | null> {
     currentAccount.set(null);
     if (
       error instanceof AccountRequestError &&
-      error.code === 'AUTHENTICATION_REQUIRED'
+      (error.code === 'AUTHENTICATION_REQUIRED' ||
+        error.code === 'UNAUTHORIZED')
     ) {
       return null;
     }
@@ -91,15 +94,27 @@ async function authenticate(
   action: 'login' | 'register',
   username: string,
   password: string,
+  contactHandle?: string,
 ): Promise<Account> {
   if (!credentialsAreValid(username, password))
     throw new AccountRequestError(
       'INVALID_REQUEST',
       'Enter a valid username and password.',
     );
+  if (action === 'register' && password.length < 12)
+    throw new AccountRequestError(
+      'INVALID_REQUEST',
+      'Use at least 12 characters for a new password.',
+    );
   const result = await accountRequest(`/api/auth/${action}`, {
     method: 'POST',
-    body: JSON.stringify({ username: username.trim().toLowerCase(), password }),
+    body: JSON.stringify({
+      username: username.trim().toLowerCase(),
+      password,
+      ...(action === 'register' && contactHandle?.trim()
+        ? { contactHandle: contactHandle.trim() }
+        : {}),
+    }),
   });
   currentAccount.set(result.user);
   return result.user;
@@ -108,8 +123,45 @@ async function authenticate(
 export function registerAccount(
   username: string,
   password: string,
+  contactHandle?: string,
 ): Promise<Account> {
-  return authenticate('register', username, password);
+  return authenticate('register', username, password, contactHandle);
+}
+
+export function beginDiscordLogin(): void {
+  window.location.assign('/api/auth/discord');
+}
+
+export async function completeDiscordOnboarding(
+  onboardingToken: string,
+  username: string,
+): Promise<Account> {
+  if (!/^[a-z0-9_]{3,24}$/.test(username.trim().toLowerCase()))
+    throw new AccountRequestError('INVALID_REQUEST', 'Enter a valid username.');
+  const result = await accountRequest('/api/auth/discord/complete', {
+    method: 'POST',
+    body: JSON.stringify({
+      onboardingToken,
+      username: username.trim().toLowerCase(),
+    }),
+  });
+  currentAccount.set(result.user);
+  return result.user;
+}
+
+export async function resetPassword(
+  token: string,
+  newPassword: string,
+): Promise<void> {
+  if (newPassword.length < 12 || newPassword.length > 128)
+    throw new AccountRequestError(
+      'INVALID_REQUEST',
+      'Password must be 12–128 characters.',
+    );
+  await accountRequest('/api/auth/password/reset', {
+    method: 'POST',
+    body: JSON.stringify({ token, newPassword }),
+  });
 }
 
 export function loginAccount(
@@ -125,7 +177,8 @@ export async function logoutAccount(): Promise<void> {
   } catch (error) {
     if (
       !(error instanceof AccountRequestError) ||
-      error.code !== 'AUTHENTICATION_REQUIRED'
+      (error.code !== 'AUTHENTICATION_REQUIRED' &&
+        error.code !== 'UNAUTHORIZED')
     )
       throw error;
   } finally {

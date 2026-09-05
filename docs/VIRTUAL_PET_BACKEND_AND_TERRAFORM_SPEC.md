@@ -677,7 +677,8 @@ Required behavior:
 
 Authenticates a username and account password. On success, create an `AuthRecords` session and set the opaque session cookie.
 
-Use one generic failure response for an unknown username or incorrect password.
+Sign-in reports an unknown username, an incorrect password, or an account that
+requires Discord separately. Registration reports when a username is already in use.
 
 ### 10.4 `POST /api/auth/logout`
 

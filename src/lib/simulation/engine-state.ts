@@ -12,7 +12,7 @@ import {
   resolveAttemptStatus,
 } from '../status-rules';
 import { HEALTH_MAX, HOUR_MS, STAT_MIN } from '../game-constants';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 export { appendStatusTransitionEvents } from './status-transition-events';
 

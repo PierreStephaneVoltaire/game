@@ -9,6 +9,20 @@ permissions:
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: vpet
+          POSTGRES_PASSWORD: vpet
+          POSTGRES_DB: vpet_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U vpet -d vpet_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
 
     steps:
       - name: Check out repository
@@ -28,8 +42,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: api/requirements-dev.txt
+
       - name: Install API dependencies
-        run: pnpm --dir api install --frozen-lockfile
+        run: python -m pip install -r api/requirements-dev.txt
 
       - name: Generate SvelteKit config
         run: pnpm exec svelte-kit sync
@@ -38,7 +59,31 @@ jobs:
         run: pnpm test
 
       - name: Run API tests
-        run: pnpm --dir api test
+        env:
+          PYTHONPATH: api
+          DATABASE_URL: sqlite+pysqlite://
+          ENVIRONMENT: test
+        run: python -m pytest api/tests
 
-      - name: Build API
-        run: pnpm --dir api build
+      - name: Create PostgreSQL test tables
+        working-directory: api
+        env:
+          PYTHONPATH: .
+          DATABASE_URL: postgresql+psycopg://vpet:vpet@localhost:5432/vpet_test
+          ENVIRONMENT: test
+        run: python -c "from backend.database import create_schema; create_schema()"
+
+      - name: Check PostgreSQL backend flows
+        env:
+          PYTHONPATH: api:.
+          DATABASE_URL: postgresql+psycopg://vpet:vpet@localhost:5432/vpet_test
+          TEST_POSTGRES_URL: postgresql+psycopg://vpet:vpet@localhost:5432/vpet_test
+          ENVIRONMENT: test
+        run: python -m pytest api/tests/test_postgres.py
+
+      - name: Check Python API imports
+        env:
+          PYTHONPATH: api
+          DATABASE_URL: sqlite+pysqlite://
+          ENVIRONMENT: test
+        run: python -c "import function_app"

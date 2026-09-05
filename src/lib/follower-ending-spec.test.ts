@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { GameController } from './game-controller';
 import { dispatchCommand, startRun } from './game-engine';
 import { settleFollowerChange } from './follower-rules';

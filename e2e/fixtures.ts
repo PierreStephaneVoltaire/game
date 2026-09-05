@@ -1,4 +1,18 @@
 import { expect, test as base, type Page } from '@playwright/test';
+import { BUNDLED_GAME_DEFINITION as definition } from '../src/lib/test-game-definition';
+
+const runtimeBundle = {
+  version: definition.version,
+  schema_version: definition.schemaVersion,
+  shop_items: definition.items,
+  activity_rules: definition.activityRules,
+  ending_rules: definition.endingRules,
+  event_texts: definition.eventTexts,
+  financial_rules: definition.financialRules,
+  life_events: definition.lifeEvents,
+  pet_profile: definition.petProfile,
+  simulation_rules: definition.simulationRules,
+};
 
 export const test = base.extend<{ requestViolations: string[] }>({
   requestViolations: [
@@ -28,6 +42,20 @@ export const test = base.extend<{ requestViolations: string[] }>({
             headers: cookie ? { 'set-cookie': cookie } : undefined,
             body: JSON.stringify(body),
           });
+        if (path === '/api/content/manifest') {
+          if (
+            request.headers()['if-none-match'] === `"${definition.version}"`
+          ) {
+            await route.fulfill({ status: 304 });
+            return;
+          }
+          await json({ version: definition.version, schemaVersion: 1 });
+          return;
+        }
+        if (path === `/api/content/${definition.version}`) {
+          await json(runtimeBundle);
+          return;
+        }
         if (path === '/api/me') {
           await json(
             authenticated
@@ -84,7 +112,7 @@ export async function signInAndChooseMode(
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/key$/);
   await page.getByRole('button', { name: 'Generate new game' }).click();
-  await expect(page.getByRole('textbox', { name: 'New game key' })).toHaveValue(
+  await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveValue(
     /^\d{8}$/,
   );
   await page.getByRole('button', { name: 'Continue' }).click();

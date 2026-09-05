@@ -8,39 +8,55 @@
     gameKeyIsValid,
     openGameSession,
   } from '$lib/game-session';
+  import { listLocalGames } from '$lib/persistence/games';
 
   let gameKey = '';
   let generatedKey = '';
   let busy = true;
+  let savedKeys: string[] = [];
+  let errorMessage = '';
 
   $: validGameKey = gameKeyIsValid(gameKey);
   $: generatedKeyIsCurrent = generatedKey !== '' && gameKey === generatedKey;
 
   onMount(() => {
-    void restoreAccount().then(async (account) => {
-      if (!account) {
-        await goto(resolve('/login'));
-        return;
-      }
-      busy = false;
-    });
+    void restoreAccount()
+      .then(async (account) => {
+        if (!account) {
+          await goto(resolve('/login'));
+          return;
+        }
+        savedKeys = (await listLocalGames()).map((game) => game.gameHash);
+        busy = false;
+      })
+      .catch(() => {
+        errorMessage = 'Could not load your games. Refresh to try again.';
+      });
   });
 
   async function openKey(key = gameKey): Promise<void> {
     if (busy || !gameKeyIsValid(key)) return;
     busy = true;
-    if (await openGameSession(key)) await goto(resolve('/game'));
-    else busy = false;
+    errorMessage = '';
+    try {
+      if (await openGameSession(key)) await goto(resolve('/game'));
+      else errorMessage = 'No saved game was found for that key.';
+    } catch {
+      errorMessage = 'Could not open that game. Try again.';
+    } finally {
+      busy = false;
+    }
   }
 
   function generateKey(): void {
     if (busy) return;
+    errorMessage = '';
     generatedKey = createGameKey();
     gameKey = generatedKey;
   }
 
   async function continueWithNewKey(): Promise<void> {
-    if (busy || !generatedKey) return;
+    if (busy || !generatedKeyIsCurrent) return;
     await goto(resolve(`/mode?key=${generatedKey}`));
   }
 </script>
@@ -50,7 +66,10 @@
   <p class="login-eyebrow">GAME SESSION</p>
   <h1 id="key-title">Choose a game key.</h1>
 
-  <form on:submit|preventDefault={() => openKey()}>
+  <form
+    on:submit|preventDefault={() =>
+      generatedKeyIsCurrent ? continueWithNewKey() : openKey()}
+  >
     <label for="game-key">Game key</label>
     <input
       id="game-key"
@@ -63,18 +82,27 @@
       required
       bind:value={gameKey}
     />
-    <button type="submit" disabled={busy || !validGameKey}>Open game</button>
-  </form>
-
-  <button class="secondary-action" type="button" disabled
-    >Retrieve game keys</button
-  >
-
-  {#if generatedKeyIsCurrent}
-    <button type="button" disabled={busy} on:click={continueWithNewKey}
-      >Continue</button
+    <button type="submit" disabled={busy || !validGameKey}
+      >{generatedKeyIsCurrent ? 'Continue' : 'Open game'}</button
     >
-  {:else}
+  </form>
+  {#if errorMessage}<p class="form-error" role="alert">{errorMessage}</p>{/if}
+
+  {#if savedKeys.length}
+    <section class="saved-games" aria-label="Saved games">
+      <p>Saved on this device</p>
+      {#each savedKeys as key (key)}
+        <button
+          class="secondary-action"
+          type="button"
+          disabled={busy}
+          on:click={() => openKey(key)}>Open {key}</button
+        >
+      {/each}
+    </section>
+  {/if}
+
+  {#if !generatedKeyIsCurrent}
     <button
       class="secondary-action"
       type="button"
@@ -90,5 +118,14 @@
   .secondary-action {
     width: 100%;
     justify-content: center;
+  }
+  .saved-games p {
+    margin: 20px 0 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .saved-games .secondary-action + .secondary-action {
+    margin-top: 8px;
   }
 </style>

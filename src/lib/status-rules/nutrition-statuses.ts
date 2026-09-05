@@ -1,6 +1,6 @@
 import type { GameState, Metrics } from '../game-types';
 import { addStatus, alignGameStatuses } from '../status-rules';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { clampMetric, HOUR_MS } from '../game-constants';
 
 export type NutritionStatusResolution = {

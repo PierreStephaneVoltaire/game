@@ -1,4 +1,4 @@
-import rules from '$lib/data/simulation-rules.json';
+import { simulationRules as rules } from '$lib/runtime-definition';
 import { HOUR_MS } from '$lib/game-constants';
 import type { GameEvent } from '$lib/game-types';
 

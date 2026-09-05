@@ -1,15 +1,12 @@
-import lifeEventData from './data/life-events.json';
 import type { GameState } from './game-types';
 import { lifeEventDefinitions, resolveLifeEvent } from './life-event-rules';
 import { isLifeEventEligible } from './life-event-rules';
-import {
-  BUNDLED_GAME_DEFINITION,
-  type GameDefinition,
-} from './game-definition';
-import { MINUTE_MS } from './game-constants';
+import type { GameDefinition } from './game-definition';
+import { LIFE_EVENT_INTERVAL_MS } from './game-constants';
+import { currentGameDefinition } from './runtime-definition';
 import { actionRandom } from './seeded-rng';
 
-export const LIFE_EVENT_INTERVAL_MS = lifeEventData.intervalMinutes * MINUTE_MS;
+export { LIFE_EVENT_INTERVAL_MS } from './game-constants';
 
 export function nextLifeEventBoundary(state: GameState): number {
   return (
@@ -22,11 +19,11 @@ export function nextLifeEventBoundary(state: GameState): number {
 export function rollLifeEventIds(
   state: GameState,
   at: number,
-  gameDefinition: GameDefinition = BUNDLED_GAME_DEFINITION,
+  gameDefinition: GameDefinition = currentGameDefinition(),
 ): string[] {
   const stateVersion = state.stateVersion;
   const actionId = `life-events:${at}`;
-  return lifeEventDefinitions
+  return lifeEventDefinitions()
     .filter(
       (definition) =>
         isLifeEventEligible(state, definition, gameDefinition) &&
@@ -47,7 +44,7 @@ export function processLifeEventBoundary(
   state: GameState,
   at: number,
   successfulEventIds: string[] | undefined = undefined,
-  gameDefinition: GameDefinition = BUNDLED_GAME_DEFINITION,
+  gameDefinition: GameDefinition = currentGameDefinition(),
 ): { state: GameState; eventIds: string[] } {
   if (state.ending || at !== nextLifeEventBoundary(state))
     return { state, eventIds: [] };
@@ -57,7 +54,7 @@ export function processLifeEventBoundary(
   const successfulEventSet = new Set(
     successfulEventIds ?? rollLifeEventIds(state, at, gameDefinition),
   );
-  const orderedSuccessfulEventIds = lifeEventDefinitions
+  const orderedSuccessfulEventIds = lifeEventDefinitions()
     .filter((definition) => successfulEventSet.has(definition.id))
     .map((definition) => definition.id);
   const successfulRolls = {
@@ -100,11 +97,8 @@ export function processLifeEventBoundary(
       };
       continue;
     }
-    const definition = lifeEventDefinitions.find(({ id }) => id === eventId);
-    if (
-      !definition ||
-      !isLifeEventEligible(next, definition, gameDefinition)
-    )
+    const definition = lifeEventDefinitions().find(({ id }) => id === eventId);
+    if (!definition || !isLifeEventEligible(next, definition, gameDefinition))
       continue;
     next = resolveLifeEvent(
       next,

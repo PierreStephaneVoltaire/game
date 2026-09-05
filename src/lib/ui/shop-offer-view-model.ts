@@ -1,4 +1,4 @@
-import financialRules from '$lib/data/financial-rules.json';
+import { financialRules } from '$lib/runtime-definition';
 import { LINE_OF_CREDIT_OFFER_ID } from '$lib/game-constants';
 import type { GameState } from '$lib/game-types';
 import type { ItemViewModel } from './item-view-model';
@@ -37,18 +37,12 @@ export function catalogueShopOffer(item: ItemViewModel): ShopOfferViewModel {
   };
 }
 
-export function lineOfCreditShopOffer(
-  state: GameState,
-): ShopOfferViewModel {
+export function lineOfCreditShopOffer(state: GameState): ShopOfferViewModel {
   const terms = financialRules.lineOfCredit;
   const lineOfCredit = state.lineOfCredit;
   const open = lineOfCredit.status === 'open';
   const available = lineOfCredit.status === 'available';
-  const maximum = available
-    ? 1
-    : open
-      ? lineOfCredit.remainingUnits
-      : 0;
+  const maximum = available ? 1 : open ? lineOfCredit.remainingUnits : 0;
   const price = available ? terms.applicationPrice : terms.repaymentUnitPrice;
   return {
     kind: 'line_of_credit',

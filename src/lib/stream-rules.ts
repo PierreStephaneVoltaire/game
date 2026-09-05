@@ -1,7 +1,7 @@
 import { actionRandom } from './seeded-rng';
 import type { GameEvent, GameState, StatusName } from './game-types';
 import { localDate, nextLocalMidnight } from './shop-rules';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { HOUR_MS } from './game-constants';
 import { criticalMetrics } from './simulation/health-resolution';
 import { streamRateFor } from './economy-rules';
@@ -24,7 +24,7 @@ export function streamWeightDiagnostics(
   commandId: string,
 ): StreamWeightDiagnostics {
   const streamBlockers = rules.stream.blockers.filter(
-    (status) => state.statuses[status as StatusName],
+    (status: string) => state.statuses[status as StatusName],
   ) as StatusName[];
   const streamBlockedByActivity = Boolean(state.activity);
   const droughtHours = Math.max(
@@ -80,14 +80,16 @@ export function streamWeightDiagnostics(
   const hourOfDay = hour;
   const multiplier =
     rules.stream.dayparts.find(
-      (part) => hourOfDay >= part.fromHour && hourOfDay <= part.toHour,
+      (part: { fromHour: number; toHour: number; multiplier: number }) =>
+        hourOfDay >= part.fromHour && hourOfDay <= part.toHour,
     )?.multiplier ?? 1;
   const [month, day] = localDate(state.now, state.timezone)
     .slice(5)
     .split('-')
     .map(Number);
   const specialDate = rules.specialDates.find(
-    (special) => special.month === month && special.day === day,
+    (special: { month: number; day: number; streamWeightMultiplier?: number }) =>
+      special.month === month && special.day === day,
   );
   const nutritionCutoff =
     state.now - rules.nutrition.rollingWindowHours * HOUR_MS;

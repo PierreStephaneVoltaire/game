@@ -6,6 +6,7 @@ import {
   currentAccount,
   loginAccount,
   logoutAccount,
+  registerAccount,
   restoreAccount,
 } from './account-client';
 
@@ -47,12 +48,12 @@ describe('account client', () => {
       }),
     );
     vi.stubGlobal('fetch', fetchMock);
-    await loginAccount('Player_1', 'correct horse battery staple');
+    await loginAccount('Player_1', 'short');
     expect(fetchMock).toHaveBeenCalledWith('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify({
         username: 'player_1',
-        password: 'correct horse battery staple',
+        password: 'short',
       }),
       credentials: 'same-origin',
       headers: { 'content-type': 'application/json' },
@@ -63,7 +64,14 @@ describe('account client', () => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
     expect(credentialsAreValid('', '')).toBe(false);
-    expect(credentialsAreValid('player_1', 'short')).toBe(false);
+    expect(credentialsAreValid('player_1', 'short')).toBe(true);
+    expect(credentialsAreValid('player_1', 'x'.repeat(129))).toBe(false);
+    await expect(registerAccount('player_1', 'short')).rejects.toEqual(
+      new AccountRequestError(
+        'INVALID_REQUEST',
+        'Use at least 12 characters for a new password.',
+      ),
+    );
     await expect(loginAccount('', '')).rejects.toEqual(
       new AccountRequestError(
         'INVALID_REQUEST',

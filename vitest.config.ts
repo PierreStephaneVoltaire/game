@@ -10,5 +10,6 @@ export default defineConfig({
   test: {
     include: ['src/**/*.test.ts'],
     exclude: ['e2e/**'],
+    setupFiles: ['./src/lib/test-game-definition.ts'],
   },
 });

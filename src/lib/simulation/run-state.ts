@@ -2,7 +2,7 @@ import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, StartRunInput } from '../game-types';
 import { actionRandom } from '../seeded-rng';
 import { localDate, rotateShop } from '../shop-rules';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { startingAppearanceId } from '../companion-profile';
 import { HOUR_MS } from '../game-constants';
 import { emptyEndingRiskClocks, reconcileRunEnding } from '../ending-rules';

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import type { GameMode, GameState } from './game-types';
 import rules from './data/simulation-rules.json';

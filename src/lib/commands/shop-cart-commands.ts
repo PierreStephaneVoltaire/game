@@ -4,7 +4,6 @@ import {
   recordLifetimePurchases,
   shopPurchaseAffordable,
 } from '../billing-rules';
-import financialRules from '../data/financial-rules.json';
 import { finalizeFinancialOperation } from '../financial-rules';
 import { LINE_OF_CREDIT_OFFER_ID } from '../game-constants';
 import type { GameDefinition } from '../game-definition';
@@ -82,6 +81,7 @@ function checkoutCart(
   command: Extract<CartCommand, { type: 'checkout_cart' }>,
   definition: GameDefinition,
 ) {
+  const financialRules = definition.financialRules;
   const locQuantity = state.shop.cart[LINE_OF_CREDIT_OFFER_ID] ?? 0;
   const lines = Object.entries(state.shop.cart)
     .filter(([itemId]) => itemId !== LINE_OF_CREDIT_OFFER_ID)
