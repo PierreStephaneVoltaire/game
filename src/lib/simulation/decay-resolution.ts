@@ -4,6 +4,7 @@ import { reconcileStatusRules, sugarCrashMetricDeltas } from '../status-rules';
 import { simulationRules as rules } from '../runtime-definition';
 import { HOUR_MS, STAT_MIN } from '../game-constants';
 import { actionRandom } from '../seeded-rng';
+import { activityPausesDecay } from '../activity-rules';
 import {
   isHealthProtectedActivity,
   resolveHealthWindow,
@@ -47,7 +48,9 @@ export function resolveDecay(
       ? rules.timeDecay.restingFoodDecayProbabilityMultiplier
       : 1);
   const elapsedHours = (now - state.lastResolvedAt) / HOUR_MS;
-  const accumulatedHours = state.history.decayRemainderHours + elapsedHours;
+  const paused = activityPausesDecay(state);
+  const accumulatedHours =
+    state.history.decayRemainderHours + (paused ? 0 : elapsedHours);
   const intervals = Math.floor(accumulatedHours / intervalHours);
   const decayRemainderHours = accumulatedHours - intervals * intervalHours;
   const protectedActivity = isHealthProtectedActivity(state);
@@ -168,9 +171,11 @@ export function resolveDecay(
   const reconciliationNow = deathAt ?? now;
   const resolvedElapsedHours =
     (reconciliationNow - state.lastResolvedAt) / HOUR_MS;
+  const bondClock =
+    state.history.lastBondGainAt +
+    (paused ? resolvedElapsedHours * HOUR_MS : 0);
   const bondIntervals = Math.floor(
-    (reconciliationNow - state.history.lastBondGainAt) /
-      (rules.timeDecay.bondLossHours * HOUR_MS),
+    (reconciliationNow - bondClock) / (rules.timeDecay.bondLossHours * HOUR_MS),
   );
   if (bondIntervals > 0) {
     const before = metrics.bond;
@@ -248,9 +253,8 @@ export function resolveDecay(
     pendingFoodDecayHit,
     lastBondGainAt:
       bondIntervals > 0
-        ? state.history.lastBondGainAt +
-          bondIntervals * rules.timeDecay.bondLossHours * HOUR_MS
-        : state.history.lastBondGainAt,
+        ? bondClock + bondIntervals * rules.timeDecay.bondLossHours * HOUR_MS
+        : bondClock,
     healthDamageSources,
     rawNeedDamageSources,
     healthRecovery,

@@ -115,7 +115,8 @@ gameplay rules.
 - `src/lib/simulation/reconcile-time.ts` — chronological reconciliation and
   the terminal-state guard.
 - `src/lib/simulation/decay-resolution.ts` and
-  `src/lib/simulation/timeline-effects.ts` — interval decay plus ordered
+  `src/lib/simulation/timeline-effects.ts` — interval decay with paused care
+  clocks, plus ordered
   project, autonomous-opportunity, Subscriber Revenue, status, and recurrence
   effects.
 - `src/lib/subscriber-revenue-rules.ts` — interval eligibility, payout, and
@@ -177,8 +178,8 @@ gameplay rules.
   `event-rules.ts`.
 - `src/lib/event-resolution-finalizer.ts` — shared event result aggregation
   and atomic financial reconciliation after automatic events.
-- `src/lib/activity-rules.ts` — seeded activity distributions, refusals,
-  normal/strong outcome selection, and completion effects.
+- `src/lib/activity-rules.ts` — care decay-pause policy, seeded activity
+  distributions, refusals, normal/strong outcome selection, and completion effects.
 - `src/lib/event-rules.ts` — deterministic automatic event opportunity rules.
 - `src/lib/gameplay-spec-acceptance.test.ts` and
   `src/lib/gameplay-autonomy-acceptance.test.ts` — split survival/medical and
@@ -302,7 +303,8 @@ gameplay rules.
   established-size game display. Its second and third rows contain four
   aligned, identically sized care and Room/Shop/Inventory/History navigation
   controls. The companion event area renders only the actual event text. Feed
-  and item-specific choices open dialogs; they are not persistent dropdowns.
+  and item-specific choices open dialogs; single-item cards execute directly.
+  Room includes furniture and usable actions outside Socialize and Play.
   The room has eight anchors and uses the landing page's purple/orange visual
   system; the Settings details/summary dropdown displays the current mode,
   simulation seed, and sign-out action.

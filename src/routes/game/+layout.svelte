@@ -91,7 +91,6 @@
         <a href={resolve('/game/shop?tab=shop')}>{gameCopy.shop}</a>
         <a href={resolve('/game/shop?tab=inventory')}>{gameCopy.inventory}</a>
         <a href={resolve('/game/history')}>{gameCopy.history}</a>
-        <a href={resolve('/about')}>About</a>
       </nav>
     {/if}
   </div>

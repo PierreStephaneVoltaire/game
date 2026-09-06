@@ -144,8 +144,8 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await expect(careRow.getByRole('button', { name: 'Play' })).toBeVisible();
 
   const navigation = page.locator('[data-game-row="navigation"]');
-  await expect(navigation.getByRole('link')).toHaveCount(4);
-  await expect(navigation.getByRole('link', { name: 'Room' })).toBeVisible();
+  await expect(navigation.locator('a, button')).toHaveCount(4);
+  await expect(navigation.getByRole('button', { name: 'Room' })).toBeVisible();
   await expect(navigation.getByRole('link', { name: 'Shop' })).toBeVisible();
   await expect(
     navigation.getByRole('link', { name: 'Inventory' }),
@@ -153,7 +153,7 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await expect(navigation.getByRole('link', { name: 'History' })).toBeVisible();
   const controlBoxes = async (
     locator: ReturnType<typeof page.locator>,
-    selector: 'button' | 'a',
+    selector: 'button' | 'a, button',
   ) =>
     locator.locator(selector).evaluateAll((elements) =>
       elements.map((element) => {
@@ -162,7 +162,7 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
       }),
     );
   const careBoxes = await controlBoxes(careRow, 'button');
-  const navigationBoxes = await controlBoxes(navigation, 'a');
+  const navigationBoxes = await controlBoxes(navigation, 'a, button');
   expect(careBoxes).toHaveLength(4);
   expect(navigationBoxes).toHaveLength(4);
   for (let index = 0; index < 4; index += 1) {

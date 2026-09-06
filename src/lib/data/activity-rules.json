@@ -6,6 +6,7 @@
     "creativityPayout": 15,
     "completion": { "rest": -2, "creativity": -1, "mood": [-1, 0] }
   },
+  "pausedDecayActivities": ["socialize", "play"],
   "socializeMinutes": [15, 30, 45, 60],
   "playHours": [1, 2, 3],
   "restBands": {

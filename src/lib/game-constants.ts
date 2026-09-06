@@ -19,8 +19,7 @@ export function configureGameConstants(definition: GameDefinition): void {
   HEALTH_MAX = rules.healthMaximum;
   STARTING_CURRENCY = rules.startingCurrency;
   MAX_CART_QUANTITY = rules.maxCartQuantity;
-  LIFE_EVENT_INTERVAL_MS =
-    definition.lifeEvents.intervalMinutes * MINUTE_MS;
+  LIFE_EVENT_INTERVAL_MS = definition.lifeEvents.intervalMinutes * MINUTE_MS;
 }
 
 export function metricMaximum(metric: MetricName): number {
@@ -30,6 +29,8 @@ export function metricMaximum(metric: MetricName): number {
 export function clampMetric(metric: MetricName, value: number): number {
   return Math.max(STAT_MIN, Math.min(metricMaximum(metric), value));
 }
+
+export const DEFAULT_PAUSED_DECAY_ACTIVITIES = ['socialize', 'play'];
 
 export const LINE_OF_CREDIT_OFFER_ID = 'line-of-credit';
 export const HOUR_MS = 3_600_000;

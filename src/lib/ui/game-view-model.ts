@@ -39,6 +39,7 @@ import {
 import {
   careActionChoices,
   roomPlacementChoices,
+  roomActionChoices,
   type InventoryActionChoice,
 } from './room-action-view-model';
 import { metricPresentation, type MetricViewModel } from './metric-view-model';
@@ -96,6 +97,7 @@ export type GameViewModel = {
     socialize: InventoryActionChoice[];
     play: InventoryActionChoice[];
   };
+  roomChoices: InventoryActionChoice[];
   anchors: Array<{
     key: string;
     label: string;
@@ -215,6 +217,7 @@ export function createGameViewModel(
       socialize: careActionChoices(state, definition, ownership, 'mood'),
       play: careActionChoices(state, definition, ownership, 'creativity'),
     },
+    roomChoices: roomActionChoices(state, definition, ownership),
     anchors: anchorKeys.map((key) => ({
       key,
       label: gameCopy.anchors[key as keyof typeof gameCopy.anchors],

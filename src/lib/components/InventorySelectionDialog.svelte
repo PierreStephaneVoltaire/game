@@ -34,11 +34,23 @@
     };
   }
 
-  async function confirm() {
-    if (!selectedCount || disabled || submitting) return;
+  async function choose(choice: InventoryActionChoice) {
+    await confirm({ [choice.id]: 1 });
+  }
+
+  async function confirm(selection = selected) {
+    if (
+      !Object.values(selection).some((quantity) => quantity > 0) ||
+      disabled ||
+      submitting
+    )
+      return;
     submitting = true;
-    await onConfirm(selected);
-    submitting = false;
+    try {
+      await onConfirm(selection);
+    } finally {
+      submitting = false;
+    }
   }
 </script>
 
@@ -60,56 +72,78 @@
   {#if choices.length}
     <div class="item-choices">
       {#each choices as choice (choice.id)}
-        <section
-          class="item-choice"
-          aria-label={choice.detail
-            ? `${choice.name}, ${choice.detail}`
-            : `${choice.name}, ${choice.owned} available`}
-        >
-          <img
-            src={choice.image}
-            alt=""
-            width="72"
-            height="72"
-            decoding="async"
-          />
-          <strong>{choice.name}</strong>
-          <span>{choice.detail ?? `×${choice.owned}`}</span>
-          <div
-            class="selection-quantity"
-            aria-label={`Quantity of ${choice.name}`}
+        {#if selectionLimit === 1}
+          <button
+            class="item-choice"
+            type="button"
+            disabled={disabled || submitting}
+            on:click={() => choose(choice)}
           >
-            <button
-              type="button"
-              aria-label={`Remove ${choice.name} from selection`}
-              on:click={() => changeSelection(choice, -1)}
-              disabled={(selected[choice.id] ?? 0) === 0}>−</button
+            <img
+              src={choice.image}
+              alt=""
+              width="72"
+              height="72"
+              decoding="async"
+            />
+            <strong>{choice.name}</strong>
+          </button>
+        {:else}
+          <section
+            class="item-choice"
+            aria-label={choice.detail
+              ? `${choice.name}, ${choice.detail}`
+              : `${choice.name}, ${choice.owned} available`}
+          >
+            <img
+              src={choice.image}
+              alt=""
+              width="72"
+              height="72"
+              decoding="async"
+            />
+            <strong>{choice.name}</strong>
+            <span>{choice.detail ?? `×${choice.owned}`}</span>
+            <div
+              class="selection-quantity"
+              aria-label={`Quantity of ${choice.name}`}
             >
-            <output aria-label={`${choice.name} selected`}
-              >{selected[choice.id] ?? 0}</output
-            >
-            <button
-              type="button"
-              aria-label={`Add ${choice.name} to selection`}
-              on:click={() => changeSelection(choice, 1)}
-              disabled={selectedCount >= selectionLimit ||
-                (selected[choice.id] ?? 0) >= choice.owned}>+</button
-            >
-          </div>
-        </section>
+              <button
+                type="button"
+                aria-label={`Remove ${choice.name} from selection`}
+                on:click={() => changeSelection(choice, -1)}
+                disabled={(selected[choice.id] ?? 0) === 0}>−</button
+              >
+              <output aria-label={`${choice.name} selected`}
+                >{selected[choice.id] ?? 0}</output
+              >
+              <button
+                type="button"
+                aria-label={`Add ${choice.name} to selection`}
+                on:click={() => changeSelection(choice, 1)}
+                disabled={selectedCount >= selectionLimit ||
+                  (selected[choice.id] ?? 0) >= choice.owned}>+</button
+              >
+            </div>
+          </section>
+        {/if}
       {/each}
     </div>
-    <div class="dialog-actions">
-      <button type="button" class="secondary" on:click={onClose}>Cancel</button>
-      <button
-        type="button"
-        on:click={confirm}
-        disabled={selectedCount === 0 || disabled || submitting}
-        >{confirmLabel} ({selectedCount})</button
-      >
-    </div>
+    {#if selectionLimit !== 1}
+      <div class="dialog-actions">
+        <button type="button" class="secondary" on:click={onClose}
+          >Cancel</button
+        >
+        <button
+          type="button"
+          on:click={() => confirm()}
+          disabled={selectedCount === 0 || disabled || submitting}
+          >{confirmLabel} ({selectedCount})</button
+        >
+      </div>
+    {/if}
   {:else}
-    <p>{emptyMessage}</p>
+    {#if emptyMessage}<p>{emptyMessage}</p>{/if}
     <div class="dialog-actions">
       <button type="button" class="secondary" on:click={onClose}>Close</button>
     </div>
@@ -161,6 +195,11 @@
     background: #fff;
     box-shadow: 5px 5px 0 #f3a15f;
     place-items: center;
+  }
+  button.item-choice {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
   }
   .item-choice img {
     image-rendering: pixelated;

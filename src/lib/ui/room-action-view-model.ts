@@ -1,4 +1,7 @@
-import type { GameDefinition } from '$lib/game-definition';
+import type {
+  GameDefinition,
+  ItemActionDefinition,
+} from '$lib/game-definition';
 import type { GameState } from '$lib/game-types';
 import {
   itemActionAvailable,
@@ -17,6 +20,49 @@ export type InventoryActionChoice = {
   detail?: string;
 };
 
+function isCareAction(
+  action: ItemActionDefinition,
+  metric: 'mood' | 'creativity',
+): boolean {
+  return action.kind === 'interaction' && Boolean(action.effects?.[metric]);
+}
+
+export function roomActionChoices(
+  state: GameState,
+  definition: GameDefinition,
+  ownership: ActionOwnership,
+): InventoryActionChoice[] {
+  return definition.items.flatMap((item) => {
+    const owned = state.inventory[item.id] ?? 0;
+    const base = { itemId: item.id, name: item.name, image: item.image, owned };
+    const placements =
+      item.roomSlot && !state.room[item.roomSlot] && owned > 0
+        ? [{ ...base, id: item.id, slot: item.roomSlot }]
+        : [];
+    const actions = item.edible
+      ? []
+      : (item.itemActions ?? [])
+          .filter(
+            (action) =>
+              !isCareAction(action, 'mood') &&
+              !isCareAction(action, 'creativity') &&
+              itemActionAvailable(item.id, action, ownership),
+          )
+          .map((action) => ({
+            ...base,
+            id: `${item.id}:${action.id}`,
+            actionId: action.id,
+            owned:
+              owned + (Object.values(state.room).includes(item.id) ? 1 : 0),
+            name:
+              (item.itemActions?.length ?? 0) > 1
+                ? `${item.name}: ${action.label}`
+                : item.name,
+          }));
+    return [...placements, ...actions];
+  });
+}
+
 export function careActionChoices(
   state: GameState,
   definition: GameDefinition,
@@ -29,8 +75,7 @@ export function careActionChoices(
     return (item.itemActions ?? [])
       .filter(
         (action) =>
-          action.kind === 'interaction' &&
-          Boolean(action.effects?.[metric]) &&
+          isCareAction(action, metric) &&
           itemActionAvailable(item.id, action, ownership),
       )
       .map((action) => ({

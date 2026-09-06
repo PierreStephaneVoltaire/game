@@ -89,6 +89,7 @@ function record(): GameViewModel {
       },
     ],
     careChoices: { socialize: [], play: [] },
+    roomChoices: [],
     anchors: [],
     inventory: [],
     shop: [],
