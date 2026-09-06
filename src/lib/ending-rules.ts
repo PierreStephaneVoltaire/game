@@ -4,7 +4,7 @@ import type {
   GameEvent,
   GameState,
 } from './game-types';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { HOUR_MS } from './game-constants';
 import { recordDeath } from './simulation/death-resolution';
 import {
@@ -14,7 +14,7 @@ import {
 } from './ending-rules/messages';
 import { stateTextContext } from './seeded-text';
 
-const config = rules.endings.quitStreaming;
+const config = () => rules.endings.quitStreaming;
 
 export function emptyEndingRiskClocks(): EndingRiskClocks {
   return {
@@ -37,11 +37,11 @@ export function nextEndingBoundary(state: GameState): number | undefined {
   const clock = state.endingRisks.quit_streaming;
   if (clock.triggerStartedAt === null) return undefined;
   const boundaries = [
-    clock.triggerStartedAt + config.durationHours * HOUR_MS,
-    ...config.warningHours
-      .filter((stage) => !clock.warningStages.includes(stage))
-      .map((stage) => clock.triggerStartedAt! + stage * HOUR_MS),
-  ].filter((boundary) => boundary > state.now);
+    clock.triggerStartedAt + config().durationHours * HOUR_MS,
+    ...config().warningHours
+      .filter((stage: number) => !clock.warningStages.includes(stage))
+      .map((stage: number) => clock.triggerStartedAt! + stage * HOUR_MS),
+  ].filter((boundary: number) => boundary > state.now);
   return boundaries.length ? Math.min(...boundaries) : undefined;
 }
 
@@ -52,7 +52,7 @@ export function reconcileRunEnding(state: GameState): GameState {
   const clock = next.endingRisks.quit_streaming;
   if (
     clock.triggerStartedAt !== null &&
-    next.now >= clock.triggerStartedAt + config.durationHours * HOUR_MS
+    next.now >= clock.triggerStartedAt + config().durationHours * HOUR_MS
   )
     return recordQuitStreaming(next, clock);
   return next;
@@ -94,7 +94,7 @@ function syncQuitStreamingRisk(state: GameState): GameState {
   }
   const activeClock = next.endingRisks.quit_streaming;
   if (!active || activeClock.triggerStartedAt === null) return next;
-  for (const stage of config.warningHours)
+  for (const stage of config().warningHours)
     if (
       !next.endingRisks.quit_streaming.warningStages.includes(stage) &&
       next.now >= activeClock.triggerStartedAt + stage * HOUR_MS
@@ -156,7 +156,7 @@ function recordQuitStreaming(
       kind: 'quit_streaming',
       at: state.now,
       triggerStartedAt: clock.triggerStartedAt,
-      durationHours: config.durationHours,
+      durationHours: config().durationHours,
       endingMetricValue: state.metrics.mood,
       eventIds: [...clock.warningEventIds, event.id],
     },

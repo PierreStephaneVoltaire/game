@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { validateCatalog } from './catalog-validation';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 
 function waterNarrationIssues(narration: string[]): string[] {
   const definition = structuredClone(BUNDLED_GAME_DEFINITION);

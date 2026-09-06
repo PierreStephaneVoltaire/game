@@ -2,7 +2,7 @@ import { recordStreamEnd } from '../audience-growth-rules';
 import { completeStreamEconomy } from '../economy-rules';
 import { HOUR_MS, MINUTE_MS, STAT_MAX, STAT_MIN } from '../game-constants';
 import type { Activity, GameState, Metrics } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 
 /** Settle one stream end and record the evidence used by drought protection. */
 export function settleStreamCompletion(input: {

@@ -1,6 +1,5 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState } from '../game-types';
-import rules from '../data/simulation-rules.json';
 import { HOUR_MS } from '../game-constants';
 import { localDate, rotateShop } from '../shop-rules';
 import { resolveAttemptEvent } from '../event-rules';
@@ -11,6 +10,7 @@ export function resolveTimelineOpportunities(input: {
   at: number;
   autonomous: boolean;
 }): { state: GameState; eventIds: string[] } {
+  const rules = input.definition.simulationRules;
   let next = input.state;
   const eventIds: string[] = [];
   if (input.autonomous) {

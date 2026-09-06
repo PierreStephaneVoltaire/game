@@ -1,28 +1,16 @@
-variable "storage_account_id" {
-  type = string
+variable "content_schema_version" {
+  type    = number
+  default = 1
 }
 
-resource "azurerm_storage_table" "shop_items" {
-  name               = "ShopItems"
-  storage_account_id = var.storage_account_id
+variable "content_bundle_max_bytes" {
+  type    = number
+  default = 2097152
+}
 
-  lifecycle {
-    prevent_destroy = true
+output "app_settings" {
+  value = {
+    CONTENT_SCHEMA_VERSION   = tostring(var.content_schema_version)
+    CONTENT_BUNDLE_MAX_BYTES = tostring(var.content_bundle_max_bytes)
   }
-}
-
-resource "azurerm_storage_table" "global_rules" {
-  name               = "GlobalRules"
-  storage_account_id = var.storage_account_id
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-output "table_names" {
-  value = [
-    azurerm_storage_table.shop_items.name,
-    azurerm_storage_table.global_rules.name
-  ]
 }

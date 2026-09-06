@@ -4,7 +4,6 @@ import type {
   ItemDefinition,
 } from '../game-definition';
 import type { GameCommand, GameEvent, GameState, Outcome } from '../game-types';
-import activityRules from '../data/activity-rules.json';
 import { accepted, recordAttempt, rejected } from '../simulation/engine-state';
 import { resolveAttemptEvent } from '../event-rules';
 import { localDate } from '../shop-rules';
@@ -65,6 +64,7 @@ export function startCommissionWork(
   action: ItemActionDefinition,
   definition: GameDefinition,
 ): ProgressionActionResult {
+  const activityRules = definition.activityRules;
   if (state.activity)
     return unavailable(
       state,

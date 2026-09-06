@@ -1,5 +1,5 @@
 import type { Activity, GameEvent, GameState } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { createMedicalDebtBill } from '../medical-debt-rules';
 import { finalizeFinancialOperation } from '../financial-rules';
 

@@ -6,7 +6,7 @@ import {
   registerStreamStart,
   resolveAudienceGrowth,
 } from './audience-growth-rules';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { dispatchCommand, startRun } from './game-engine';
 
 const HOUR = 3_600_000;

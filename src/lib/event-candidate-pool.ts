@@ -1,6 +1,5 @@
 import type { GameDefinition } from './game-definition';
 import type { GameState } from './game-types';
-import rules from './data/simulation-rules.json';
 import { CAREER_TIERS } from './progression-types';
 
 export type Candidate =
@@ -27,6 +26,7 @@ export function eventCandidates(
   date: string,
   streamWeight: number,
 ): Array<{ type: Candidate; weight: number }> {
+  const rules = definition.simulationRules;
   const cravingEligible = definition.items.some(
     (item) =>
       item.edible &&

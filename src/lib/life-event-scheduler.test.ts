@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { HOUR_MS, MINUTE_MS } from './game-constants';
 import {
   LIFE_EVENT_INTERVAL_MS,

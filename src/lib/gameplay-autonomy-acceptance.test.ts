@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { resolveAudienceGrowth } from './audience-growth-rules';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { startRun } from './game-engine';
 import { resolveAutomaticEventHook } from './simulation/event-hook-resolution';
 import { eventCandidates } from './event-candidate-pool';

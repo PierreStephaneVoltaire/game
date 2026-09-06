@@ -10,18 +10,20 @@ test('moves from login through separate key and new-game mode screens', async ({
 
   await expect(page.getByLabel('Username')).toBeVisible();
   await expect(page.getByLabel('Password')).toHaveValue('');
+  await expect(page.getByLabel(/Recovery contact/)).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Sign in with Discord' }),
+  ).toBeVisible();
+  await expect(page.locator('body')).not.toContainText('Password must be');
   await expect(page.locator('body')).not.toContainText('{pet}');
 
   await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('correct horse battery staple');
+  await page.getByLabel('Password').fill('abcdefgh');
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(/\/key$/);
   await expect(page.getByRole('textbox', { name: 'Game key' })).toBeVisible();
   await expect(
     page.getByRole('button', { name: 'Generate new game' }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole('button', { name: 'Retrieve game keys' }),
   ).toBeVisible();
   await expect(page.getByRole('button', { name: 'Realtime mode' })).toHaveCount(
     0,
@@ -29,11 +31,12 @@ test('moves from login through separate key and new-game mode screens', async ({
 
   await page.getByRole('button', { name: 'Generate new game' }).click();
   await expect(page).toHaveURL(/\/key$/);
-  await expect(page.getByRole('textbox', { name: 'New game key' })).toHaveValue(
+  await expect(page.locator('input')).toHaveCount(1);
+  await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveValue(
     /^\d{8}$/,
   );
-  await page.getByRole('button', { name: 'Continue' }).click();
-  await expect(page).toHaveURL(/\/mode\?key=\d{8}$/);
+  await page.getByRole('textbox', { name: 'Game key' }).press('Enter');
+  await expect(page).toHaveURL(/\/mode$/);
   await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveCount(0);
   await expect(
     page.getByRole('button', { name: 'Streaming mode' }),
@@ -41,9 +44,38 @@ test('moves from login through separate key and new-game mode screens', async ({
   await page.getByRole('button', { name: 'Streaming mode' }).click();
   await expect(page).toHaveURL(/\/game$/);
   await page.getByText('Settings', { exact: true }).click();
-  await page.getByRole('button', { name: 'Sign out' }).click();
+  await page
+    .locator('details.settings')
+    .getByRole('button', { name: 'Sign out' })
+    .click();
   await expect(page).toHaveURL(/\/login$/);
   await expect(page.getByLabel('Username')).toBeVisible();
+});
+
+test('shows username feedback even when a sign-in password is short', async ({
+  page,
+}) => {
+  await page.context().clearCookies();
+  await page.route('**/api/auth/login', (route) =>
+    route.fulfill({
+      status: 401,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        error: {
+          code: 'USERNAME_NOT_FOUND',
+          message:
+            'That username does not exist. Create an account to continue.',
+        },
+      }),
+    }),
+  );
+  await page.goto('/login');
+  await page.getByLabel('Username').fill('missing');
+  await page.getByLabel('Password').fill('short');
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText(
+    'That username does not exist.',
+  );
 });
 
 test('uses the exact three-column overview, uniform control rows, and item dialogs', async ({
@@ -112,8 +144,8 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await expect(careRow.getByRole('button', { name: 'Play' })).toBeVisible();
 
   const navigation = page.locator('[data-game-row="navigation"]');
-  await expect(navigation.getByRole('link')).toHaveCount(4);
-  await expect(navigation.getByRole('link', { name: 'Room' })).toBeVisible();
+  await expect(navigation.locator('a, button')).toHaveCount(4);
+  await expect(navigation.getByRole('button', { name: 'Room' })).toBeVisible();
   await expect(navigation.getByRole('link', { name: 'Shop' })).toBeVisible();
   await expect(
     navigation.getByRole('link', { name: 'Inventory' }),
@@ -121,7 +153,7 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await expect(navigation.getByRole('link', { name: 'History' })).toBeVisible();
   const controlBoxes = async (
     locator: ReturnType<typeof page.locator>,
-    selector: 'button' | 'a',
+    selector: 'button' | 'a, button',
   ) =>
     locator.locator(selector).evaluateAll((elements) =>
       elements.map((element) => {
@@ -130,7 +162,7 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
       }),
     );
   const careBoxes = await controlBoxes(careRow, 'button');
-  const navigationBoxes = await controlBoxes(navigation, 'a');
+  const navigationBoxes = await controlBoxes(navigation, 'a, button');
   expect(careBoxes).toHaveLength(4);
   expect(navigationBoxes).toHaveLength(4);
   for (let index = 0; index < 4; index += 1) {

@@ -1,4 +1,4 @@
-import profile from './data/pet-profile.json';
+import { petProfile as profile } from './runtime-definition';
 import type { AppearanceId } from './game-types';
 
 export type ConfiguredAppearance = {

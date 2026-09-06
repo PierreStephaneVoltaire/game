@@ -1,14 +1,8 @@
-name: Terraform checks
+name: Terraform infrastructure
 
 on:
-  push:
-    paths:
-      - infra/**
-      - .github/workflows/terraform-checks.yml
-  pull_request:
-    paths:
-      - infra/**
-      - .github/workflows/terraform-checks.yml
+  workflow_call:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -33,3 +27,56 @@ jobs:
 
       - name: Validate Terraform
         run: terraform -chdir=infra validate
+
+  apply:
+    needs: validate
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    concurrency:
+      group: terraform-application-state
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TF_IN_AUTOMATION: 'true'
+      ARM_USE_OIDC: 'true'
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.16.0
+
+      - name: Load remote backend configuration
+        env:
+          TF_BACKEND_CONFIG: ${{ secrets.TF_BACKEND_CONFIG }}
+        run: |
+          test -n "$TF_BACKEND_CONFIG" || { echo '::error::TF_BACKEND_CONFIG is missing.'; exit 1; }
+          umask 077
+          printf '%s' "$TF_BACKEND_CONFIG" > "$RUNNER_TEMP/backend.tfbackend"
+          printf 'TF_DATA_DIR=%s/terraform-data\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Initialize existing remote state
+        run: terraform -chdir=infra init -input=false -backend-config="$RUNNER_TEMP/backend.tfbackend"
+
+      - name: Plan infrastructure changes
+        run: terraform -chdir=infra plan -input=false -no-color -lock-timeout=5m -var-file=deployment.tfvars -out="$RUNNER_TEMP/deployment.tfplan"
+
+      - name: Apply planned infrastructure changes
+        run: terraform -chdir=infra apply -input=false -no-color -lock-timeout=5m "$RUNNER_TEMP/deployment.tfplan"

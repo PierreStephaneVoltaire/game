@@ -8,6 +8,17 @@ The configured display name and authored player-facing copy may use the chosen
 name; runtime identifiers, IDs, paths, assets, seeds, and infrastructure names
 remain generic.
 
+## Runtime content versions
+
+Items, activity rules, financial rules, ending rules, life events, event text,
+the companion profile, and simulation rules are published together as one
+immutable, SHA-256-versioned bundle. A game records the bundle version it was
+played with. Cached content can be used offline after it has been downloaded;
+a first visit without cached content needs a connection. Before a game write,
+the client conditionally checks the manifest. If the version changed, it
+atomically stores the new bundle, replays pending commands with their stable
+IDs, and submits against the new version.
+
 ## Core rules
 
 - Health is a whole number from 0 through 30. Food, Mood, Rest, Bond, and
@@ -117,8 +128,11 @@ been approved.
 
 - Every two game-hours, Food has a 65% chance to lose 1 while awake and a
   32.5% chance while Rest is active.
-- Rest loses 1 every two game-hours while awake. It continues during
-  Socialize, Play, streams, Hospital, and Commission Work.
+- Rest loses 1 every two game-hours while awake, including streams, Hospital,
+  and Commission Work. Socialize and Play pause passive Food, Rest, and Bond
+  decay. Partial decay clocks are preserved and resume afterward without
+  charging the activity duration. The paused activities are authored in
+  `activity-rules.json`.
 - Bond loses 1 after each 48 game-hours without a genuine Bond gain. A Bond
   gain resets the full clock.
 - Placing a room item that grants Bond may also reset that clock, but each
@@ -311,8 +325,9 @@ Switching to another companion action ends the repetition streak. Refusals and
 interruptions do not grant completion rewards.
 
 When owned, currently applicable item actions affect Mood or Creativity, the
-Socialize or Play button opens the same inventory-card picker used by Feed.
-The Default card runs the ordinary Socialize or Play activity without an item.
+Socialize or Play button opens an inventory-card picker. Clicking a card
+uses it immediately, without quantity controls or a confirmation step. The
+Default card runs the ordinary Socialize or Play activity without an item.
 If no applicable item exists, the button runs that default activity immediately
 without opening a dialog.
 
@@ -344,6 +359,10 @@ Shop always offers Pay Medical Debt in Full for
 clears every bill, creates no inventory, and is hidden when no bill remains.
 
 ### Commission Work
+
+The Room dialog includes furniture for empty slots and owned usable actions
+that do not belong to Socialize or Play, including the Rigging Tablet. Clicking
+a card places the furniture or uses the item.
 
 Commission Work is an action on the owned Rigging Tablet, leaving the four care
 buttons unchanged. It requires Creativity at least 4, no Sleep Deprived or

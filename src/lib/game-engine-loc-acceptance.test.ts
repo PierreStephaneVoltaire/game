@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import { debtBreakdown } from './financial-rules';
 import { DAY_MS, LINE_OF_CREDIT_OFFER_ID } from './game-constants';

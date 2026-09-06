@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import rules from './data/simulation-rules.json';
 import { completeStreamEconomy, streamRateFor } from './economy-rules';
 import { hospitalCost, purchaseQuantity } from './billing-rules';

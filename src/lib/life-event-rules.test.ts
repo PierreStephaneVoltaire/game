@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { startRun } from './game-engine';
 import { eventTemplate, lifeEventMessage } from './event-messages';
 import { lifeEventDefinitions, resolveLifeEvent } from './life-event-rules';
@@ -14,7 +14,7 @@ function run() {
 
 describe('authored life events', () => {
   test('loads every authored message reference from event text data', () => {
-    const messageIds = lifeEventDefinitions.flatMap((definition) => [
+    const messageIds = lifeEventDefinitions().flatMap((definition) => [
       ...(definition.messageId ? [definition.messageId] : []),
       ...(definition.outcomes ?? []).map((outcome) => outcome.messageId),
     ]);
@@ -23,7 +23,7 @@ describe('authored life events', () => {
     for (const messageId of messageIds)
       expect(lifeEventMessage(messageId).trim()).not.toBe('');
 
-    const templateIds = lifeEventDefinitions.flatMap((definition) =>
+    const templateIds = lifeEventDefinitions().flatMap((definition) =>
       definition.messageTemplateId ? [definition.messageTemplateId] : [],
     );
     expect(templateIds.length).toBeGreaterThan(0);
@@ -32,7 +32,7 @@ describe('authored life events', () => {
         eventTemplate(templateId, { amount: '123', item: 'Monitor' }),
       ).not.toMatch(/\{\w+\}/);
 
-    for (const definition of lifeEventDefinitions) {
+    for (const definition of lifeEventDefinitions()) {
       if (!definition.cashRange) continue;
       expect(Number.isInteger(definition.cashRange.minimum)).toBe(true);
       expect(Number.isInteger(definition.cashRange.maximum)).toBe(true);
@@ -96,7 +96,7 @@ describe('authored life events', () => {
 
   test('selects varied PC equipment and varied replacement costs', () => {
     const initial = { ...run(), balance: 10_000 };
-    const definition = lifeEventDefinitions.find(
+    const definition = lifeEventDefinitions().find(
       ({ id }) => id === 'equipment_failure',
     )!;
     const eligibleIds = new Set(
@@ -171,7 +171,7 @@ describe('authored life events', () => {
   });
 
   test('authors every cash-loss event to be ineligible below $0', () => {
-    const cashLossIds = lifeEventDefinitions
+    const cashLossIds = lifeEventDefinitions()
       .filter(
         (definition) =>
           (definition.cashRange?.minimum ?? 0) < 0 ||
@@ -193,7 +193,7 @@ describe('authored life events', () => {
         initial,
       );
       expect(
-        lifeEventDefinitions.find((definition) => definition.id === id)
+        lifeEventDefinitions().find((definition) => definition.id === id)
           ?.requiresNonnegativeBalance,
       ).toBe(true);
     }

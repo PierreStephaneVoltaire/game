@@ -1,6 +1,6 @@
 import type { Activity, GameEvent } from '$lib/game-types';
 import { companionProfile } from '$lib/companion-profile';
-import eventTexts from '$lib/data/event-texts.json';
+import { eventTexts } from '$lib/runtime-definition';
 
 export function activityJourneyMessage(
   events: GameEvent[],
@@ -57,7 +57,7 @@ function activityEnded(
     !interrupted &&
     type &&
     eventTexts.activityCompletions[type].some(
-      (template) =>
+      (template: string) =>
         template.replaceAll('{pet}', companionProfile.displayName) ===
         event.message,
     )

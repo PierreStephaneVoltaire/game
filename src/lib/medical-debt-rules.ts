@@ -1,5 +1,5 @@
 import type { GameEvent, GameState, MedicalDebtBill } from './game-types';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { localDate } from './shop-rules';
 import { finalizeFinancialOperation } from './financial-rules';
 

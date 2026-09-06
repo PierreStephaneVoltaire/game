@@ -1,4 +1,4 @@
-import lifeEventData from './data/life-events.json';
+import { lifeEvents as lifeEventData } from './runtime-definition';
 import { reconcileRunEnding } from './ending-rules';
 import { finalizeFinancialOperation } from './financial-rules';
 import { applyFollowerMilestones } from './follower-rules';
@@ -8,10 +8,8 @@ import { creditIncome } from './income-rules';
 import { actionRandom } from './seeded-rng';
 import { healthDamageSource } from './simulation/health-resolution';
 import { reconcileMetricSource } from './status-rules/metric-source-reconciliation';
-import {
-  BUNDLED_GAME_DEFINITION,
-  type GameDefinition,
-} from './game-definition';
+import type { GameDefinition } from './game-definition';
+import { currentGameDefinition } from './runtime-definition';
 import { recordLifetimePurchases } from './billing-rules';
 import { eventTemplate, lifeEventMessage } from './event-messages';
 import type {
@@ -30,8 +28,9 @@ import { stateTextContext } from './seeded-text';
 
 export type { LifeEventDefinition, LifeEventEffects } from './life-event-types';
 
-export const lifeEventDefinitions =
-  lifeEventData.events as LifeEventDefinition[];
+export function lifeEventDefinitions(): LifeEventDefinition[] {
+  return lifeEventData.events as LifeEventDefinition[];
+}
 
 const metricNames: MetricName[] = [
   'food',
@@ -48,9 +47,9 @@ export function resolveLifeEvent(
   eventId: string,
   at: number,
   sourceActionId: string,
-  gameDefinition: GameDefinition = BUNDLED_GAME_DEFINITION,
+  gameDefinition: GameDefinition = currentGameDefinition(),
 ): GameState {
-  const definition = lifeEventDefinitions.find(({ id }) => id === eventId);
+  const definition = lifeEventDefinitions().find(({ id }) => id === eventId);
   if (
     !definition ||
     state.ending ||
@@ -235,7 +234,7 @@ export function resolveLifeEvent(
 export function isLifeEventEligible(
   state: GameState,
   definition: LifeEventDefinition,
-  gameDefinition: GameDefinition = BUNDLED_GAME_DEFINITION,
+  gameDefinition: GameDefinition = currentGameDefinition(),
 ): boolean {
   if (definition.requiresNonnegativeBalance && state.balance < 0) return false;
   if (

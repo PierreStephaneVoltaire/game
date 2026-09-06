@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { eventCandidates } from './event-candidate-pool';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { startRun } from './game-engine';
 
 describe('autonomous event candidates', () => {

@@ -3,7 +3,6 @@ import type { GameEvent, GameState } from './game-types';
 import { actionRandom } from './seeded-rng';
 import { localDate } from './shop-rules';
 import { startAutonomousStream } from './stream-rules';
-import rules from './data/simulation-rules.json';
 import {
   eventTemplate,
   messageFor,
@@ -30,6 +29,7 @@ export function resolveAttemptEvent(
   commandId: string,
   definition: GameDefinition,
 ): GameState {
+  const rules = definition.simulationRules;
   const textContext = stateTextContext(state, commandId);
   const date = localDate(state.now, state.timezone);
   const { selected, opportunityEvent } = selectAttemptEvent(

@@ -1,8 +1,18 @@
 import { actionRandom } from './seeded-rng';
 import type { GameState, Metrics } from './game-types';
-import rules from './data/activity-rules.json';
-import { HOUR_MS, MINUTE_MS } from './game-constants';
+import { activityRules as rules } from './runtime-definition';
+import {
+  DEFAULT_PAUSED_DECAY_ACTIVITIES,
+  HOUR_MS,
+  MINUTE_MS,
+} from './game-constants';
 import { STAT_MAX, STAT_MIN } from './game-constants';
+
+export function activityPausesDecay(state: GameState): boolean {
+  return (
+    rules.pausedDecayActivities ?? DEFAULT_PAUSED_DECAY_ACTIVITIES
+  ).includes(state.activity?.type ?? '');
+}
 
 export function chooseDuration(
   type: 'rest' | 'socialize' | 'play',

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import { HOUR_MS } from './game-constants';
 import endingRules from './data/ending-rules.json';

@@ -6,7 +6,9 @@ import {
   currentAccount,
   loginAccount,
   logoutAccount,
+  registerAccount,
   restoreAccount,
+  resetPassword,
 } from './account-client';
 
 function jsonResponse(body: unknown, status = 200): Response {
@@ -47,12 +49,12 @@ describe('account client', () => {
       }),
     );
     vi.stubGlobal('fetch', fetchMock);
-    await loginAccount('Player_1', 'correct horse battery staple');
+    await loginAccount('Player_1', 'short');
     expect(fetchMock).toHaveBeenCalledWith('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify({
         username: 'player_1',
-        password: 'correct horse battery staple',
+        password: 'short',
       }),
       credentials: 'same-origin',
       headers: { 'content-type': 'application/json' },
@@ -63,7 +65,14 @@ describe('account client', () => {
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
     expect(credentialsAreValid('', '')).toBe(false);
-    expect(credentialsAreValid('player_1', 'short')).toBe(false);
+    expect(credentialsAreValid('player_1', 'short')).toBe(true);
+    expect(credentialsAreValid('player_1', 'x'.repeat(129))).toBe(false);
+    await expect(registerAccount('player_1', 'short')).rejects.toEqual(
+      new AccountRequestError(
+        'INVALID_REQUEST',
+        'Use at least 8 characters for a new password.',
+      ),
+    );
     await expect(loginAccount('', '')).rejects.toEqual(
       new AccountRequestError(
         'INVALID_REQUEST',
@@ -91,6 +100,28 @@ describe('account client', () => {
     );
     await expect(restoreAccount()).resolves.toBeNull();
     expect(get(currentAccount)).toBeNull();
+  });
+
+  it('accepts eight-character passwords for registration and reset', async () => {
+    const fetchMock = vi
+      .fn()
+      .mockImplementation(() =>
+        jsonResponse({ user: { userId: 'user-1', username: 'player_1' } }),
+      );
+    vi.stubGlobal('fetch', fetchMock);
+    await registerAccount('Player_1', 'abcdefgh');
+    expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual({
+      username: 'player_1',
+      password: 'abcdefgh',
+    });
+    await resetPassword('reset-token', 'abcdefgh');
+    await expect(registerAccount('player_1', 'abcdefg')).rejects.toThrow(
+      'at least 8',
+    );
+    await expect(resetPassword('reset-token', 'abcdefg')).rejects.toThrow(
+      '8–128',
+    );
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('surfaces stable API errors and clears state on logout', async () => {

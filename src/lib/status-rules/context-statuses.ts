@@ -6,7 +6,7 @@ import type {
 } from '../game-types';
 import type { StatusEffectEvent } from '../status-rules';
 import { addStatus, clearStatus, isHighMood } from '../status-rules';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { clampMetric, STAT_MIN } from '../game-constants';
 export { resolveNutritionStatuses } from './nutrition-statuses';
 export type { NutritionStatusResolution } from './nutrition-statuses';

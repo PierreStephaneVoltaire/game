@@ -1,5 +1,4 @@
-import rules from './data/simulation-rules.json';
-import endingRules from './data/ending-rules.json';
+import { endingRules, simulationRules as rules } from './runtime-definition';
 import { madeItUnlockedMessage } from './ending-rules/messages';
 import { creditIncome } from './income-rules';
 import { STAT_MAX } from './game-constants';
@@ -7,7 +6,7 @@ import type { CareerTier, GameEvent, GameState } from './game-types';
 import { finalizeFinancialOperation } from './financial-rules';
 import { stateTextContext } from './seeded-text';
 
-const progressionRules = rules.progression as {
+const progressionRules = () => rules.progression as {
   milestones: Array<{
     id: CareerTier;
     followers: number;
@@ -33,7 +32,7 @@ export function subscriberRevenueMultiplier(state: GameState): number {
     state.progression.peakFollowers,
   );
   return (
-    progressionRules.milestones
+    progressionRules().milestones
       .filter(
         (milestone) =>
           milestone.subscriberRevenueMultiplier &&
@@ -57,7 +56,7 @@ export function applyFollowerMilestones(
     ),
   };
   let metrics = state.metrics;
-  for (const milestone of progressionRules.milestones) {
+  for (const milestone of progressionRules().milestones) {
     if (
       progression.peakFollowers < milestone.followers ||
       progression.awardedMilestones.includes(milestone.id)
@@ -198,7 +197,7 @@ export function streamRateFor(state: GameState): [number, number] {
     state.progression.followers,
     state.progression.peakFollowers,
   );
-  const rate = progressionRules.milestones
+  const rate = progressionRules().milestones
     .filter(
       (milestone) =>
         milestone.streamRate && progressionFollowers >= milestone.followers,

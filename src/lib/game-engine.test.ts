@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { validateCatalog } from './catalog-validation';
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 

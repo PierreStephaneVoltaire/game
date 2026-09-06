@@ -51,7 +51,6 @@ export const en = {
     usernamePlaceholder: 'Your username',
     passwordLabel: 'Password',
     passwordPlaceholder: 'Enter your password',
-    passwordHint: 'Password must be 12–128 characters.',
     submit: 'Sign in',
     createAccount: 'Create account',
     signOut: 'Sign out',

@@ -1,6 +1,5 @@
 import type { GameDefinition, ItemActionDefinition } from '../game-definition';
 import type { GameCommand, GameEvent, GameState, Outcome } from '../game-types';
-import rules from '../data/simulation-rules.json';
 import { actionRandom } from '../seeded-rng';
 import { accepted, recordBondGain, rejected } from '../simulation/engine-state';
 import { resolveNutritionConsumption } from './nutrition-resolution';
@@ -27,6 +26,7 @@ export function resolveItemConsumption(
   definition: GameDefinition,
   context: { automatic: boolean; action?: ItemActionDefinition },
 ): ItemConsumptionResult {
+  const rules = definition.simulationRules;
   const item = definition.items.find(
     (candidate) => candidate.id === command.itemId,
   );

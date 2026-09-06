@@ -38,16 +38,11 @@
             name: 'Default',
             image: model.activeAvatar.assetPath,
             owned: 1,
-            detail: `Normal ${activeCareKind}`,
           },
           ...model.careChoices[activeCareKind],
         ]
       : [];
   $: roomAnchor = model?.anchors.find((anchor) => anchor.key === roomSlot);
-  $: roomInventoryChoices =
-    model?.anchors.flatMap((anchor) =>
-      anchor.item ? [] : anchor.placementChoices,
-    ) ?? [];
 
   onMount(() => {
     const open = () => openRoomInventoryPicker();
@@ -107,11 +102,13 @@
     closePicker();
   }
 
-  async function useCareItem(
-    kind: 'socialize' | 'play',
-    selected: Record<string, number>,
-  ) {
-    const choice = activeCareChoices.find(
+  async function useSelected(selected: Record<string, number>) {
+    const choices = activeCareKind
+      ? activeCareChoices
+      : picker === 'room'
+        ? roomAnchor?.placementChoices
+        : model?.roomChoices;
+    const choice = choices?.find(
       (candidate) => (selected[candidate.id] ?? 0) > 0,
     );
     if (!choice) return;
@@ -122,28 +119,12 @@
         itemId: choice.itemId,
         action: choice.actionId,
       });
-    closePicker();
-  }
-
-  async function placeSelected(selected: Record<string, number>) {
-    const choice = roomAnchor?.placementChoices.find(
-      (candidate) => (selected[candidate.id] ?? 0) > 0,
-    );
-    if (!choice || !roomSlot) return;
-    await act({ type: 'place_item', itemId: choice.itemId, slot: roomSlot });
-    closePicker();
-  }
-
-  async function placeFromRoomInventory(selected: Record<string, number>) {
-    const choice = roomInventoryChoices.find(
-      (candidate) => (selected[candidate.id] ?? 0) > 0,
-    );
-    if (!choice?.slot) return;
-    await act({
-      type: 'place_item',
-      itemId: choice.itemId,
-      slot: choice.slot,
-    });
+    else if (choice.slot)
+      await act({
+        type: 'place_item',
+        itemId: choice.itemId,
+        slot: choice.slot,
+      });
     closePicker();
   }
 
@@ -265,29 +246,29 @@
         emptyMessage="There are no applicable items in the inventory."
         selectionLimit={1}
         disabled={careBlocked}
-        onConfirm={(selected) => useCareItem(activeCareKind, selected)}
+        onConfirm={useSelected}
         onClose={closePicker}
       />
     {:else if picker === 'room'}
       <InventorySelectionDialog
-        title={`Choose an item for ${roomAnchor?.label ?? 'this spot'}`}
+        title="Room"
         choices={roomAnchor?.placementChoices ?? []}
         confirmLabel="Place selected"
-        emptyMessage="There are no inventory items that fit this spot."
+        emptyMessage=""
         selectionLimit={1}
         disabled={careBlocked}
-        onConfirm={placeSelected}
+        onConfirm={useSelected}
         onClose={closePicker}
       />
     {:else if picker === 'room-inventory'}
       <InventorySelectionDialog
-        title="Place furniture or an upgrade"
-        choices={roomInventoryChoices}
+        title="Room"
+        choices={model.roomChoices}
         confirmLabel="Place selected"
-        emptyMessage="There are no placeable inventory items for an empty room spot."
+        emptyMessage=""
         selectionLimit={1}
         disabled={careBlocked}
-        onConfirm={placeFromRoomInventory}
+        onConfirm={useSelected}
         onClose={closePicker}
       />
     {/if}

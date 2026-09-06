@@ -1,14 +1,14 @@
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { HOUR_MS } from './game-constants';
 import type { CareerTier, GameEvent, GameState } from './game-types';
 import { settleFollowerChange } from './follower-rules';
 import { CAREER_TIERS } from './progression-types';
 
-const audienceRules = rules.progression.naturalAudience;
-const clipperRules = rules.progression.clippers;
+const audienceRules = () => rules.progression.naturalAudience;
+const clipperRules = () => rules.progression.clippers;
 
 function tierRate(tier: CareerTier): number {
-  return audienceRules.tierRates[tier];
+  return audienceRules().tierRates[tier];
 }
 
 function appendFollowers(
@@ -50,7 +50,7 @@ export function registerStreamStart(
   state: GameState,
   streamId: string,
 ): GameState {
-  const expiresAt = state.now + audienceRules.streamBoostDays * 24 * HOUR_MS;
+  const expiresAt = state.now + audienceRules().streamBoostDays * 24 * HOUR_MS;
   return {
     ...state,
     progression: {
@@ -112,9 +112,9 @@ export function activateClippers(state: GameState): {
     ...state.timedEffects,
     clippers: {
       stacks: (active?.stacks ?? 0) + 1,
-      expiresAt: state.now + clipperRules.durationHours * HOUR_MS,
+      expiresAt: state.now + clipperRules().durationHours * HOUR_MS,
       nextClipAt:
-        active?.nextClipAt ?? state.now + clipperRules.intervalHours * HOUR_MS,
+        active?.nextClipAt ?? state.now + clipperRules().intervalHours * HOUR_MS,
     },
   };
   const next = { ...state, timedEffects };
@@ -164,7 +164,7 @@ export function resolveAudienceGrowth(
     };
     eventIds.push(event.id);
   }
-  const naturalInterval = audienceRules.intervalHours * HOUR_MS;
+  const naturalInterval = audienceRules().intervalHours * HOUR_MS;
   if ((at - state.history.runStartedAt) % naturalInterval === 0) {
     const activeBoosts = next.progression.activeAudienceBoosts
       .filter((boost) => boost.expiresAt > at)
@@ -175,10 +175,10 @@ export function resolveAudienceGrowth(
       );
     const fullValueBoosts = activeBoosts.slice(
       0,
-      audienceRules.fullValueBoostCount,
+      audienceRules().fullValueBoostCount,
     );
     const discountedBoosts = activeBoosts.slice(
-      audienceRules.fullValueBoostCount,
+      audienceRules().fullValueBoostCount,
     );
     const baseAmount =
       tierRate(next.progression.careerTier) +
@@ -186,15 +186,15 @@ export function resolveAudienceGrowth(
         (sum, boost) =>
           sum +
           tierRate(boost.careerTier) *
-            (1 + boost.creativity * audienceRules.creativityPerPoint),
+            (1 + boost.creativity * audienceRules().creativityPerPoint),
         0,
       ) +
       discountedBoosts.reduce(
         (sum, boost) =>
           sum +
           tierRate(boost.careerTier) *
-            (1 + boost.creativity * audienceRules.creativityPerPoint) *
-            audienceRules.excessBoostMultiplier,
+            (1 + boost.creativity * audienceRules().creativityPerPoint) *
+            audienceRules().excessBoostMultiplier,
         0,
       );
     const discoveryMultiplier = next.progression.discoveryBoosts.reduce(
@@ -245,7 +245,7 @@ export function resolveAudienceGrowth(
     eventIds.push(...growth.eventIds);
     clippers = {
       ...clippers,
-      nextClipAt: clipAt + clipperRules.intervalHours * HOUR_MS,
+      nextClipAt: clipAt + clipperRules().intervalHours * HOUR_MS,
     };
     next = { ...next, timedEffects: { ...next.timedEffects, clippers } };
   }
@@ -257,7 +257,7 @@ export function resolveAudienceGrowth(
 function clipperFollowerAmount(state: GameState): number {
   const tier = CAREER_TIERS.indexOf(state.progression.careerTier) + 1;
   return (
-    clipperRules.followersPerTierPerStack *
+    clipperRules().followersPerTierPerStack *
     tier *
     (state.timedEffects.clippers?.stacks ?? 0)
   );

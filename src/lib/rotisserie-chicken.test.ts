@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { resolveItemConsumption } from './commands/item-consumption';
-import { BUNDLED_GAME_DEFINITION } from './game-definition';
+import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
 import { dispatchCommand, startRun } from './game-engine';
 import type { GameState } from './game-types';
 

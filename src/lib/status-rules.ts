@@ -4,11 +4,10 @@ import type {
   StatusName as GameStatusName,
   StatusRecord as GameStatusRecord,
 } from './game-types';
-import rules from './data/simulation-rules.json';
+import { simulationRules as rules } from './runtime-definition';
 import { resolveStatusFixedPoint } from './status-rules/fixed-point';
 import { clampMetric, HOUR_MS, STAT_MIN } from './game-constants';
 import { STATUS_NAMES } from './status-rules/names';
-import { LOW_STATUS_RULES } from './status-rules/low-metric-rules';
 export { STATUS_NAMES, isStatusName } from './status-rules/names';
 export { nextStatusBoundary } from './status-rules/boundaries';
 import { applyStatusOnsetEffects } from './status-rules/context-statuses';
@@ -38,6 +37,13 @@ export {
   sugarCrashDelayHours,
   sugarCrashMetricDeltas,
 } from './status-rules/context-statuses';
+
+const LOW_STATUS_METRICS = [
+  ['sleep_deprived', 'rest'],
+  ['depressed', 'mood'],
+  ['lonely', 'bond'],
+  ['creative_block', 'creativity'],
+] as const;
 
 export function isHighMood(mood: number): boolean {
   return mood >= rules.statusRules.overstimulatedMoodMinimum;
@@ -72,13 +78,15 @@ export function alignGameStatuses(
       metrics.food < rules.statusRules.lowMetricClearMinimum,
     'food',
   );
-  for (const rule of LOW_STATUS_RULES.slice(1)) {
-    const current = metrics[rule.metric];
-    const wasActive = Boolean(previous[rule.status]);
+  for (const [status, metric] of LOW_STATUS_METRICS) {
+    const current = metrics[metric];
+    const wasActive = Boolean(previous[status]);
     set(
-      rule.status,
-      wasActive ? current < rule.clearMinimum : current <= rule.onsetMaximum,
-      rule.metric,
+      status,
+      wasActive
+        ? current < rules.statusRules.lowMetricClearMinimum
+        : current <= rules.statusRules.lowMetricOnsetMaximum,
+      metric,
     );
   }
 

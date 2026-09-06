@@ -1,0 +1,5 @@
+resource_group_name = "legally-distinct-virtual-pet-rg"
+app_base_url        = "https://brave-stone-0fb7e830f.7.azurestaticapps.net"
+discord_client_id   = "1545636698346491974"
+entra_admin_login   = "legally-distinct-virtual-pet-github-actions"
+entra_admin_type    = "ServicePrincipal"

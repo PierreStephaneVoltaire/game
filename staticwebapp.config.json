@@ -1,6 +1,6 @@
 {
   "platform": {
-    "apiRuntime": "node:22"
+    "apiRuntime": "python:3.11"
   },
   "routes": [
     {
@@ -32,7 +32,7 @@
   },
   "globalHeaders": {
     "x-content-type-options": "nosniff",
-    "referrer-policy": "same-origin",
+    "referrer-policy": "no-referrer",
     "x-frame-options": "DENY"
   }
 }

@@ -10,7 +10,6 @@ import {
 import { healthDamageSource } from '../simulation/health-resolution';
 import { HOUR_MS } from '../game-constants';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
-import rules from '../data/simulation-rules.json';
 
 export type RoomCommandResult = {
   handled: boolean;
@@ -33,6 +32,7 @@ function placeItem(
   command: Extract<GameCommand, { type: 'place_item' }>,
   definition: GameDefinition,
 ): RoomCommandResult {
+  const rules = definition.simulationRules;
   const quantity = state.inventory[command.itemId] ?? 0;
   const item = definition.items.find(
     (candidate) => candidate.id === command.itemId,

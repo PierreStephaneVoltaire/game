@@ -1,6 +1,6 @@
 import type { GameDefinition } from '$lib/game-definition';
 import type { GameCommand, GameState, StatusName } from '$lib/game-types';
-import { companion } from './companion';
+import { companionFromDefinition, type CompanionProfile } from './companion';
 import { gameCopy, statusLabel } from './game-copy';
 import {
   projectCausalJourney,
@@ -39,6 +39,7 @@ import {
 import {
   careActionChoices,
   roomPlacementChoices,
+  roomActionChoices,
   type InventoryActionChoice,
 } from './room-action-view-model';
 import { metricPresentation, type MetricViewModel } from './metric-view-model';
@@ -62,7 +63,7 @@ export type GameIntent =
   | { type: 'pay_medical_debt' }
   | { type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'wait' };
 export type GameViewModel = {
-  companion: typeof companion;
+  companion: CompanionProfile;
   mode: GameState['mode'];
   modeLabel: string;
   now: number;
@@ -96,6 +97,7 @@ export type GameViewModel = {
     socialize: InventoryActionChoice[];
     play: InventoryActionChoice[];
   };
+  roomChoices: InventoryActionChoice[];
   anchors: Array<{
     key: string;
     label: string;
@@ -146,6 +148,7 @@ export function createGameViewModel(
   definition: GameDefinition,
   locale = 'en-US',
 ): GameViewModel {
+  const companion = companionFromDefinition(definition);
   const ownership = createActionOwnership(state, definition);
   const catalogue = definition.items
     .map((item) => itemFor(state, definition, item.id, ownership))
@@ -214,6 +217,7 @@ export function createGameViewModel(
       socialize: careActionChoices(state, definition, ownership, 'mood'),
       play: careActionChoices(state, definition, ownership, 'creativity'),
     },
+    roomChoices: roomActionChoices(state, definition, ownership),
     anchors: anchorKeys.map((key) => ({
       key,
       label: gameCopy.anchors[key as keyof typeof gameCopy.anchors],

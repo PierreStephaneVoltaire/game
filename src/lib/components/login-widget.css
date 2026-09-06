@@ -104,6 +104,16 @@
   background: #ffdaea;
 }
 
+.login-card .discord-action {
+  width: 100%;
+  justify-content: center;
+  margin-top: 18px;
+  color: #fff;
+  background: #5865f2;
+  border-color: #5865f2;
+  box-shadow: 5px 5px 0 #24183d;
+}
+
 .login-card .secondary-action:hover:not(:disabled) {
   color: #fff;
   background: #512b9a;

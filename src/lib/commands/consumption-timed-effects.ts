@@ -1,6 +1,6 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameState } from '../game-types';
-import rules from '../data/simulation-rules.json';
+import { simulationRules as rules } from '../runtime-definition';
 import { HOUR_MS } from '../game-constants';
 import type { NutritionResolution } from './nutrition-resolution';
 
