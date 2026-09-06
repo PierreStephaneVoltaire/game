@@ -74,22 +74,20 @@ async function send(pending: OutboxRecord): Promise<Response> {
   const ending = pending.targetState.ending;
   const death = ending?.kind === 'death';
   const endingEventIds = ending?.kind === 'death' ? ending.eventIds : [];
-  const response = await fetch(
-    `/api/games/${encodeURIComponent(pending.gameHash)}${death ? '/death' : ''}`,
-    {
-      method: death ? 'POST' : 'PUT',
-      credentials: 'same-origin',
-      headers: {
-        'content-type': 'application/json',
-        'if-match': `"${pending.baseStateVersion}"`,
-        'x-content-version': pending.contentVersion,
-      },
-      body: JSON.stringify({
-        ...writeBody(pending),
-        ...(death ? { causeEventId: endingEventIds.at(-1) } : {}),
-      }),
+  const response = await fetch(`/api/games/current${death ? '/death' : ''}`, {
+    method: death ? 'POST' : 'PUT',
+    credentials: 'same-origin',
+    headers: {
+      'content-type': 'application/json',
+      'x-game-key': pending.gameHash,
+      'if-match': `"${pending.baseStateVersion}"`,
+      'x-content-version': pending.contentVersion,
     },
-  );
+    body: JSON.stringify({
+      ...writeBody(pending),
+      ...(death ? { causeEventId: endingEventIds.at(-1) } : {}),
+    }),
+  });
   return response.status === 404 && pending.baseStateVersion === 0
     ? create(pending)
     : response;

@@ -3,6 +3,7 @@
 import os
 
 import httpx
+from backend.content.schemas import RuntimeContentBundle
 
 
 def expect(response: httpx.Response, status: int) -> dict:
@@ -35,6 +36,11 @@ def check(origin: str, username: str, password: str) -> None:
         user = expect(client.get("/api/me"), 200)["user"]
         if user["username"] != username:
             raise RuntimeError("Session belongs to an unexpected account.")
+        manifest = expect(client.get("/api/content/manifest"), 200)
+        version = manifest["version"]
+        bundle = RuntimeContentBundle.model_validate(expect(client.get(f"/api/content/{version}"), 200))
+        if bundle.version != version or not bundle.shop_items:
+            raise RuntimeError("The published runtime content is missing or inconsistent.")
         expect(client.post("/api/auth/logout"), 200)
         expect(client.get("/api/me"), 401)
         client.cookies.clear()

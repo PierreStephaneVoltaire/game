@@ -116,7 +116,7 @@ export async function signInAndChooseMode(
     /^\d{8}$/,
   );
   await page.getByRole('button', { name: 'Continue' }).click();
-  await expect(page).toHaveURL(/\/mode\?key=\d{8}$/);
+  await expect(page).toHaveURL(/\/mode$/);
   await page.getByRole('button', { name: mode }).click();
   await expect(page).toHaveURL(/\/game$/);
 }

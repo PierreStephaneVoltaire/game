@@ -4,6 +4,8 @@ from collections.abc import Callable
 from datetime import datetime
 from typing import Any
 
+import re
+
 import azure.functions as func
 from sqlalchemy.orm import Session
 
@@ -20,6 +22,13 @@ from .service import GameService
 
 bp = func.Blueprint()
 service = GameService()
+
+
+def _game_key(request: func.HttpRequest) -> str:
+    key = request.headers.get("x-game-key", "")
+    if re.fullmatch(r"[0-9]{8}", key) is None:
+        raise ApiError(422, "INVALID_REQUEST", "A valid X-Game-Key header is required.")
+    return key
 
 
 def _content(request: func.HttpRequest, session: Session) -> str:
@@ -63,12 +72,12 @@ def create_game(request: func.HttpRequest) -> func.HttpResponse:
     return json_response(result, 201, {"ETag": f'"{result["stateVersion"]}"'})
 
 
-@bp.route(route="games/{game_hash}", methods=["GET"])
+@bp.route(route="games/current", methods=["GET"])
 @endpoint
 def get_game(request: func.HttpRequest) -> func.HttpResponse:
     with get_session_factory()() as session:
         user = require_user(request, session)
-        result = service.get(session, user.id, request.route_params["game_hash"])
+        result = service.get(session, user.id, _game_key(request))
         require_current_content_version(
             request.headers.get(CONTENT_VERSION_HEADER),
             session,
@@ -76,7 +85,7 @@ def get_game(request: func.HttpRequest) -> func.HttpResponse:
     return json_response(result, headers={"ETag": f'"{result["stateVersion"]}"'})
 
 
-@bp.route(route="games/{game_hash}", methods=["PUT"])
+@bp.route(route="games/current", methods=["PUT"])
 @endpoint
 def write_game(request: func.HttpRequest) -> dict[str, Any]:
     same_origin(request, get_settings())
@@ -87,13 +96,13 @@ def write_game(request: func.HttpRequest) -> dict[str, Any]:
             session,
             user.id,
             _content(request, session),
-            request.route_params["game_hash"],
+            _game_key(request),
             _if_match(request.headers.get("if-match")),
             data,
         )
 
 
-@bp.route(route="games/{game_hash}/death", methods=["POST"])
+@bp.route(route="games/current/death", methods=["POST"])
 @endpoint
 def record_death(request: func.HttpRequest) -> dict[str, Any]:
     same_origin(request, get_settings())
@@ -104,7 +113,7 @@ def record_death(request: func.HttpRequest) -> dict[str, Any]:
             session,
             user.id,
             _content(request, session),
-            request.route_params["game_hash"],
+            _game_key(request),
             _if_match(request.headers.get("if-match")),
             data,
             death=True,
@@ -112,11 +121,11 @@ def record_death(request: func.HttpRequest) -> dict[str, Any]:
         )
 
 
-@bp.route(route="games/{game_hash}/events", methods=["GET"])
+@bp.route(route="games/current/events", methods=["GET"])
 @endpoint
 def game_events(request: func.HttpRequest) -> dict[str, Any]:
     page_size = limit(request)
-    game_hash = request.route_params["game_hash"]
+    game_hash = _game_key(request)
     with get_session_factory()() as session:
         user = require_user(request, session)
         require_current_content_version(
@@ -124,7 +133,7 @@ def game_events(request: func.HttpRequest) -> dict[str, Any]:
             session,
         )
         route = f"game-events:{game_hash}"
-        token = request.params.get("continuationToken")
+        token = request.headers.get("x-continuation-token")
         values = decode_cursor(token, route, user.id) if token else [0]
         if len(values) != 1 or not isinstance(values[0], int):
             raise ApiError(400, "INVALID_CONTINUATION_TOKEN", "The continuation token is invalid.")
@@ -145,7 +154,7 @@ def _list_games(
     )
     route = "graves" if dead else "games"
     after = None
-    token = request.params.get("continuationToken")
+    token = request.headers.get("x-continuation-token")
     if token:
         values = decode_cursor(token, route, user.id)
         if len(values) != 2 or not all(isinstance(value, str) for value in values):
@@ -189,7 +198,7 @@ def list_graves(request: func.HttpRequest) -> dict[str, Any]:
         return _list_games(True, request, session, limit(request))
 
 
-@bp.route(route="graves/{game_hash}", methods=["GET"])
+@bp.route(route="graves/current", methods=["GET"])
 @endpoint
 def get_grave(request: func.HttpRequest) -> dict[str, Any]:
     with get_session_factory()() as session:
@@ -198,4 +207,4 @@ def get_grave(request: func.HttpRequest) -> dict[str, Any]:
             request.headers.get(CONTENT_VERSION_HEADER),
             session,
         )
-        return service.grave(session, user.id, request.route_params["game_hash"])
+        return service.grave(session, user.id, _game_key(request))

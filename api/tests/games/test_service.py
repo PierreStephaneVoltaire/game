@@ -117,3 +117,24 @@ def test_timestamp_cursor_and_death_cause_use_the_game_summary() -> None:
         cause_event_id="event-1",
     )
     assert result["stateVersion"] == 1
+
+
+def test_other_account_cannot_read_or_replay_committed_batch() -> None:
+    session, games, owner = setup()
+    other = User(username="other_player", password_hash="hash")
+    session.add(other)
+    session.commit()
+    key, version = "00421873", "a" * 64
+    games.create(session, owner, version, CreateGame(gameHash=key, stateSchemaVersion=1, state={"ending": None}))
+    write = GameWrite(batchId="batch-1", targetState={"ending": None}, events=[])
+    games.write(session, owner, version, key, 0, write)
+    for operation in (
+        lambda: games.get(session, other.id, key),
+        lambda: games.events(session, other.id, key, 0, 25),
+        lambda: games.grave(session, other.id, key),
+        lambda: games.write(session, other.id, version, key, 0, write),
+    ):
+        with pytest.raises(ApiError) as raised:
+            operation()
+        assert raised.value.status_code == 404
+        session.rollback()

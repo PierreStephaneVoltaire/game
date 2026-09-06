@@ -32,7 +32,7 @@
   },
   "globalHeaders": {
     "x-content-type-options": "nosniff",
-    "referrer-policy": "same-origin",
+    "referrer-policy": "no-referrer",
     "x-frame-options": "DENY"
   }
 }

@@ -18,6 +18,7 @@ from backend.content.service import (
 from backend.database import Base
 from backend.errors import ApiError
 from tools.global_content_publisher.bundle import load_bundle
+from tools.global_content_publisher import cli
 
 
 def bundle(version: str) -> RuntimeContentBundle:
@@ -92,3 +93,16 @@ def test_publisher_rejects_an_oversized_bundle() -> None:
     repository_root = Path(__file__).parents[3]
     with pytest.raises(ValueError, match="exceeds"):
         load_bundle(repository_root, validate=False, max_bytes=1)
+
+
+@pytest.mark.parametrize("existing", [False, True])
+def test_bootstrap_publishes_only_when_database_is_empty(session, monkeypatch, existing):
+    first = bundle("a" * 64)
+    if existing:
+        with session.begin():
+            publish_bundle(session, first)
+    monkeypatch.setattr("sys.argv", ["publisher", "--if-empty"])
+    monkeypatch.setattr(cli, "load_bundle", lambda root: bundle("b" * 64))
+    monkeypatch.setattr(cli, "get_session_factory", lambda: lambda: session)
+    cli.main()
+    assert current_content(session).version == (first.version if existing else "b" * 64)

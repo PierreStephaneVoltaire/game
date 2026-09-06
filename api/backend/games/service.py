@@ -128,14 +128,14 @@ class GameService:
         state_hash, events_hash = digest(data.target_state), digest([event.model_dump(mode="json", by_alias=True) for event in data.events])
         try:
             with session.begin():
+                game = session.scalar(select(Game).where(Game.game_hash == game_hash).with_for_update())
+                if game is None or game.owner_user_id != user_id:
+                    raise ApiError(404, "GAME_NOT_FOUND", "Game not found.")
                 previous = session.get(CommittedBatch, (game_hash, data.batch_id))
                 if previous:
                     if previous.state_hash != state_hash or previous.events_hash != events_hash:
                         raise ApiError(409, "EVENT_CONFLICT", "A batch ID cannot be reused with different data.")
                     return previous.acknowledgement_json
-                game = session.scalar(select(Game).where(Game.game_hash == game_hash).with_for_update())
-                if game is None or game.owner_user_id != user_id:
-                    raise ApiError(404, "GAME_NOT_FOUND", "Game not found.")
                 _require_current_content(session, content_version)
                 if game.life_status == "dead":
                     raise ApiError(409, "EVENT_CONFLICT", "Dead games are read-only.")

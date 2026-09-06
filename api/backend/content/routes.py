@@ -21,7 +21,7 @@ def get_manifest(request: func.HttpRequest) -> func.HttpResponse:
     return json_response(manifest, headers=headers)
 
 
-@bp.route(route="content/{content_version}", methods=["GET"])
+@bp.route(route="content/{content_version:length(64)}", methods=["GET"])
 @endpoint
 def get_bundle(request: func.HttpRequest) -> func.HttpResponse:
     with get_session_factory()() as session:

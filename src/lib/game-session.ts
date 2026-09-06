@@ -24,6 +24,7 @@ import {
 import { nextOutbox, replacePending } from './persistence/outbox';
 import { flushGame } from './persistence/sync';
 import type { EventRecord } from './persistence/types';
+export const pendingGameKey = writable<string | null>(null);
 
 const runtimeContent = new RuntimeContentCache();
 let activeController = new GameController(runtimeContent);
@@ -58,9 +59,12 @@ async function replayPending(gameHash: string): Promise<void> {
   const controller = new GameController(
     new InMemoryGameDefinitionRepository(definition),
   );
-  const response = await fetch(`/api/games/${encodeURIComponent(gameHash)}`, {
+  const response = await fetch('/api/games/current', {
     credentials: 'same-origin',
-    headers: { 'x-content-version': definition.version },
+    headers: {
+      'x-content-version': definition.version,
+      'x-game-key': gameHash,
+    },
   });
   let baseStateVersion: number;
   let baseEventSequence: number;

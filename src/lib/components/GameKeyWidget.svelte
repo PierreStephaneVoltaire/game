@@ -7,6 +7,7 @@
     createGameKey,
     gameKeyIsValid,
     openGameSession,
+    pendingGameKey,
   } from '$lib/game-session';
   import { listLocalGames } from '$lib/persistence/games';
 
@@ -57,7 +58,8 @@
 
   async function continueWithNewKey(): Promise<void> {
     if (busy || !generatedKeyIsCurrent) return;
-    await goto(resolve(`/mode?key=${generatedKey}`));
+    pendingGameKey.set(generatedKey);
+    await goto(resolve('/mode'));
   }
 </script>
 

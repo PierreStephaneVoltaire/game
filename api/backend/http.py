@@ -70,8 +70,9 @@ def endpoint(handler: Handler) -> Callable[[func.HttpRequest], Awaitable[str]]:
                 extra={"custom_dimensions": {"requestId": request_id, "function": handler.__name__}},
             )
             response = json_response(error_payload(error, request_id), error.status_code)
-        except Exception:
-            logging.exception("Unhandled API error [%s]", request_id)
+        except Exception as error:
+            logging.error("Unhandled API error [%s] function=%s cause=%s",
+                          request_id, handler.__name__, type(error).__name__)
             response = json_response(
                 error_payload(ApiError(500, "INTERNAL_ERROR", "The request could not be completed."), request_id),
                 500,

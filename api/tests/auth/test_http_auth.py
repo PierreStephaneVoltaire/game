@@ -75,3 +75,15 @@ def test_oauth_failure_logs_request_id_without_cookie_or_authorization_code(capl
     assert json.loads(response["body"])["error"]["code"] == "OAUTH_FAILED"
     assert "oauth-request-123" in caplog.text and "cause=ValueError" in caplog.text
     assert "private-code" not in caplog.text and "private-cookie" not in caplog.text
+
+
+def test_unhandled_exception_does_not_log_game_key_or_state(caplog):
+    @endpoint
+    def handler(request):
+        raise RuntimeError("SQL parameters: game_key=00421873 state=private-state")
+
+    request = func.HttpRequest("GET", "https://example.test/api/games/current", body=b"")
+    response = json.loads(asyncio.run(handler(request)))
+    assert response["statusCode"] == 500
+    assert "cause=RuntimeError" in caplog.text
+    assert "00421873" not in caplog.text and "private-state" not in caplog.text

@@ -14,9 +14,7 @@ test('moves from login through separate key and new-game mode screens', async ({
   await expect(
     page.getByRole('button', { name: 'Sign in with Discord' }),
   ).toBeVisible();
-  await expect(page.locator('body')).not.toContainText(
-    'Password must be',
-  );
+  await expect(page.locator('body')).not.toContainText('Password must be');
   await expect(page.locator('body')).not.toContainText('{pet}');
 
   await page.getByLabel('Username').fill('playtester');
@@ -38,7 +36,7 @@ test('moves from login through separate key and new-game mode screens', async ({
     /^\d{8}$/,
   );
   await page.getByRole('textbox', { name: 'Game key' }).press('Enter');
-  await expect(page).toHaveURL(/\/mode\?key=\d{8}$/);
+  await expect(page).toHaveURL(/\/mode$/);
   await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveCount(0);
   await expect(
     page.getByRole('button', { name: 'Streaming mode' }),
