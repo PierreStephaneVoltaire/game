@@ -64,7 +64,8 @@ async def profile(
     if not expected_state or not secrets.compare_digest(supplied_state, expected_state):
         raise ValueError("Discord OAuth state is invalid")
     async with _client(client_id, client_secret, redirect_uri, expected_state) as client:
-        await client.fetch_token(TOKEN_URL, authorization_response=callback_url)
+        authorization_response = redirect_uri + "?" + urlsplit(callback_url).query
+        await client.fetch_token(TOKEN_URL, authorization_response=authorization_response)
         response = await client.get(PROFILE_URL)
         response.raise_for_status()
     data = response.json()

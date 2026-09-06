@@ -22,7 +22,12 @@ module "static_app" {
   name              = var.name
   location          = data.azurerm_resource_group.existing.location
   resource_group_id = data.azurerm_resource_group.existing.id
-  app_settings      = local.non_secret_app_settings
+  app_settings = merge(local.non_secret_app_settings, {
+    APPLICATIONINSIGHTS_CONNECTION_STRING                    = azurerm_application_insights.api.connection_string
+    APPINSIGHTS_INSTRUMENTATIONKEY                           = azurerm_application_insights.api.instrumentation_key
+    "AzureFunctionsJobHost__logging__logLevel__Host.Results" = "Information"
+    "AzureFunctionsJobHost__logging__logLevel__Function"     = "Information"
+  })
 }
 
 module "database" {

@@ -69,7 +69,7 @@ def test_existing_preview_settings_do_not_trigger_another_restart(monkeypatch):
     assert azure.call_count == 1
 
 
-def test_api_check_reports_origin_rejection(monkeypatch):
+def test_api_check_rejects_a_discord_redirect_without_its_cookie(monkeypatch):
     client = MagicMock()
     responses = []
     for status, body in [(200, {"status": "ok"}), (401, {"error": {"code": "UNAUTHORIZED"}})]:
@@ -77,11 +77,15 @@ def test_api_check_reports_origin_rejection(monkeypatch):
         response.__enter__.return_value = response
         response.read.return_value = json.dumps(body).encode()
         responses.append(response)
-    responses.append(HTTPError("https://preview.example.test/api/auth/login", 403, "Forbidden", {},
-                               BytesIO(b'{"error":{"code":"ORIGIN_REJECTED"}}')))
+    from email.message import Message
+
+    headers = Message()
+    headers["Location"] = "https://discord.com/api/oauth2/authorize?redirect_uri=https%3A%2F%2Fpreview.example.test%2Fapi%2Fauth%2Fdiscord%2Fcallback"
+    responses.append(HTTPError("https://preview.example.test/api/auth/discord", 303, "See Other", headers,
+                               BytesIO(b'')))
     client.open.side_effect = responses
     monkeypatch.setattr(check_api, "build_opener", lambda *args: client)
-    with pytest.raises(RuntimeError, match="HTTP 403, ORIGIN_REJECTED"):
+    with pytest.raises(RuntimeError, match="no OAuth state cookie"):
         check_api.check("https://preview.example.test")
 
 

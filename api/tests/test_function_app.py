@@ -39,10 +39,10 @@ def test_each_route_is_a_native_function() -> None:
 
 def test_native_function_response_envelope() -> None:
     request = func.HttpRequest("GET", "https://example.test/api/health", body=b"")
-    response = asyncio.run(health(request))
-    assert response.status_code == 200
-    assert json.loads(response.get_body()) == {"status": "ok"}
-    assert response.headers["x-request-id"]
+    response = json.loads(asyncio.run(health(request)))
+    assert response["statusCode"] == 200
+    assert json.loads(response["body"]) == {"status": "ok"}
+    assert response["headers"]["x-request-id"]
 
 
 def test_worker_binding_signatures_match_every_function() -> None:
@@ -53,4 +53,4 @@ def test_worker_binding_signatures_match_every_function() -> None:
         assert set(inspect.signature(handler).parameters) == inputs
         hints = get_type_hints(handler)
         assert hints["req"] is func.HttpRequest
-        assert hints["return"] is func.HttpResponse
+        assert hints["return"] is str

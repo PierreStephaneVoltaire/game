@@ -101,13 +101,14 @@ jobs:
 
       - name: Check API credentials
         env:
+          AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
           AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
           AZURE_DATABASE_CLIENT_SECRET: ${{ secrets.AZURE_DATABASE_CLIENT_SECRET }}
           AZURE_DATABASE_OBJECT_ID: ${{ secrets.AZURE_DATABASE_OBJECT_ID }}
         run: |
-          for key in DISCORD_CLIENT_SECRET SIGNING_SECRET AZURE_DATABASE_CLIENT_ID AZURE_DATABASE_CLIENT_SECRET AZURE_DATABASE_OBJECT_ID; do
+          for key in AUTH_TEST_PASSWORD DISCORD_CLIENT_SECRET SIGNING_SECRET AZURE_DATABASE_CLIENT_ID AZURE_DATABASE_CLIENT_SECRET AZURE_DATABASE_OBJECT_ID; do
             test -n "${!key}" || { echo "::error::$key is missing."; exit 1; }
           done
 
@@ -165,6 +166,13 @@ jobs:
         env:
           APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
         run: python -m tools.check_api
+
+      - name: Verify account login and session persistence
+        env:
+          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
+          AUTH_TEST_USERNAME: admin
+          AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
+        run: python -m tools.check_login
 
   close_pull_request:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

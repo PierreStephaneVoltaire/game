@@ -48,8 +48,8 @@ def redirect(location: str, cookie: str | None = None) -> func.HttpResponse:
     return func.HttpResponse(status_code=303, headers=headers)
 
 
-def endpoint(handler: Handler) -> Handler:
-    async def wrapped(req: func.HttpRequest) -> func.HttpResponse:
+def endpoint(handler: Handler) -> Callable[[func.HttpRequest], Awaitable[str]]:
+    async def wrapped(req: func.HttpRequest) -> str:
         request_id = req.headers.get("x-request-id", str(uuid4()))
         try:
             result = handler(req)
@@ -62,6 +62,13 @@ def endpoint(handler: Handler) -> Handler:
                 422,
             )
         except ApiError as error:
+            logging.warning(
+                "API request failed [%s] function=%s status=%s code=%s cause=%s cookie_present=%s",
+                request_id, handler.__name__, error.status_code, error.code,
+                type(error.__cause__).__name__ if error.__cause__ else "none",
+                bool(req.headers.get("cookie")),
+                extra={"custom_dimensions": {"requestId": request_id, "function": handler.__name__}},
+            )
             response = json_response(error_payload(error, request_id), error.status_code)
         except Exception:
             logging.exception("Unhandled API error [%s]", request_id)
@@ -70,7 +77,12 @@ def endpoint(handler: Handler) -> Handler:
                 500,
             )
         response.headers["x-request-id"] = request_id
-        return response
+        response.headers["Cache-Control"] = "no-store"
+        return json.dumps({
+            "statusCode": response.status_code,
+            "headers": {"Content-Type": response.mimetype, **dict(response.headers)},
+            "body": response.get_body().decode(response.charset),
+        })
 
     # Azure indexes the wrapper's binding signature and uses its name as the route name.
     wrapped.__name__ = handler.__name__

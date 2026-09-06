@@ -1,9 +1,9 @@
-"""Fail deployment when the API is missing or authentication cannot reach its database."""
+"""Wait for API readiness and a usable Discord authorization redirect."""
 
 import json
 import os
-import secrets
 import time
+from http.cookies import SimpleCookie
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, urlsplit
 from urllib.request import HTTPRedirectHandler, Request, build_opener
@@ -39,17 +39,16 @@ def check(origin: str) -> None:
     status, _, body = request("/api/me")
     if status != 401 or body.get("error", {}).get("code") != "UNAUTHORIZED":
         raise RuntimeError(f"Session route check failed (HTTP {status}).")
-    status, _, body = request("/api/auth/login", {
-        "username": "check_" + secrets.token_hex(6), "password": secrets.token_urlsafe(24),
-    })
-    if status != 401 or body.get("error", {}).get("code") != "USERNAME_NOT_FOUND":
-        code = body.get("error", {}).get("code", "UNKNOWN")
-        raise RuntimeError(f"Password login/database check failed (HTTP {status}, {code}).")
     status, headers, _ = request("/api/auth/discord")
     location = urlsplit(headers.get("Location", ""))
     callback = parse_qs(location.query).get("redirect_uri")
     if status != 303 or location.hostname != "discord.com" or callback != [origin + "/api/auth/discord/callback"]:
         raise RuntimeError(f"Discord authorization redirect check failed (HTTP {status}).")
+    cookies = SimpleCookie()
+    for header in headers.get_all("Set-Cookie", []):
+        cookies.load(header)
+    if "discord_oauth" not in cookies or not cookies["discord_oauth"].value:
+        raise RuntimeError("Discord redirect returned no OAuth state cookie; callback cannot succeed.")
 
 
 def main() -> None:
@@ -58,7 +57,7 @@ def main() -> None:
     while True:
         try:
             check(origin)
-            print("API health, sessions, password login, and Discord redirect checks passed.")
+            print("API health, anonymous session, and Discord state-cookie checks passed.")
             return
         except (RuntimeError, URLError, TimeoutError) as error:
             if time.monotonic() >= deadline:
