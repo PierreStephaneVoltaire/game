@@ -14,11 +14,16 @@ def azure(*args: str):
     return json.loads(result.stdout) if result.stdout.strip() else None
 
 
-def production_settings() -> dict[str, str]:
+def environment_settings(environment: str = "default") -> dict[str, str]:
     return azure(
         "staticwebapp", "appsettings", "list", "--name", os.environ["STATIC_WEB_APP_NAME"],
         "--resource-group", os.environ["RESOURCE_GROUP_NAME"],
+        "--environment-name", environment,
     )["properties"]
+
+
+def production_settings() -> dict[str, str]:
+    return environment_settings()
 
 
 def deployment_settings(existing: dict[str, str]) -> dict[str, str]:
@@ -37,17 +42,31 @@ def deployment_settings(existing: dict[str, str]) -> dict[str, str]:
 
 
 def main() -> None:
-    settings = deployment_settings(production_settings())
+    environment = os.environ["API_ENVIRONMENT"]
+    if not os.environ.get("APP_URL"):
+        environments = azure(
+            "staticwebapp", "environment", "list", "--name", os.environ["STATIC_WEB_APP_NAME"],
+            "--resource-group", os.environ["RESOURCE_GROUP_NAME"],
+        )
+        target = next((item for item in environments if item["name"] == environment), None)
+        if target is None:
+            print(f"Environment {environment} will be configured after its first deployment.")
+            return
+        os.environ["APP_URL"] = "https://" + target["hostname"]
+    existing = environment_settings(environment)
+    settings = deployment_settings({**existing, **production_settings()})
     required = ["DATABASE_URL", "DATABASE_USERNAME", "SIGNING_SECRET", "DISCORD_CLIENT_ID",
                 "DISCORD_CLIENT_SECRET", "AZURE_CLIENT_ID", "AZURE_TENANT_ID", "AZURE_CLIENT_SECRET"]
     missing = [key for key in required if not settings.get(key)]
     if missing:
         raise RuntimeError("Missing API settings: " + ", ".join(missing))
+    if settings == existing:
+        print(f"API environment {environment} is already configured.")
+        return
     resource = azure(
         "staticwebapp", "show", "--name", os.environ["STATIC_WEB_APP_NAME"],
         "--resource-group", os.environ["RESOURCE_GROUP_NAME"],
     )["id"]
-    environment = os.environ["API_ENVIRONMENT"]
     if environment != "default":
         resource += f"/builds/{environment}"
     with tempfile.TemporaryDirectory() as directory:

@@ -43,7 +43,8 @@ def check(origin: str) -> None:
         "username": "check_" + secrets.token_hex(6), "password": secrets.token_urlsafe(24),
     })
     if status != 401 or body.get("error", {}).get("code") != "USERNAME_NOT_FOUND":
-        raise RuntimeError(f"Password login/database check failed (HTTP {status}).")
+        code = body.get("error", {}).get("code", "UNKNOWN")
+        raise RuntimeError(f"Password login/database check failed (HTTP {status}, {code}).")
     status, headers, _ = request("/api/auth/discord")
     location = urlsplit(headers.get("Location", ""))
     callback = parse_qs(location.query).get("redirect_uri")
@@ -53,13 +54,14 @@ def check(origin: str) -> None:
 
 def main() -> None:
     origin = os.environ["APP_URL"].rstrip("/")
-    for attempt in range(24):
+    deadline = time.monotonic() + 600
+    while True:
         try:
             check(origin)
             print("API health, sessions, password login, and Discord redirect checks passed.")
             return
         except (RuntimeError, URLError, TimeoutError) as error:
-            if attempt == 23:
+            if time.monotonic() >= deadline:
                 raise
             print(str(error), flush=True)
             time.sleep(5)

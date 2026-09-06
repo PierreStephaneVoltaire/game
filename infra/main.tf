@@ -7,7 +7,7 @@ locals {
     {
       DATABASE_URL      = module.database.database_url
       DATABASE_USERNAME = var.database_runtime_username
-      ENVIRONMENT       = var.env_type
+      ENVIRONMENT       = "production"
     }
   )
 }

@@ -1,9 +1,12 @@
+import json
+from io import BytesIO
 from unittest.mock import MagicMock
+from urllib.error import HTTPError
 
 import pytest
 
 from tools.configure_api import deployment_settings
-from tools import setup_api_database
+from tools import check_api, configure_api, setup_api_database
 
 
 def test_preview_settings_use_the_preview_origin_and_runtime_credentials(monkeypatch):
@@ -22,6 +25,80 @@ def test_preview_settings_use_the_preview_origin_and_runtime_credentials(monkeyp
     assert settings["DATABASE_URL"] == "database"
     assert settings["AZURE_CLIENT_ID"] == "runtime"
     assert settings["DISCORD_CLIENT_SECRET"] == "discord"
+
+    monkeypatch.setenv("API_ENVIRONMENT", "default")
+    monkeypatch.setenv("APP_URL", "https://production.example.test")
+    settings = deployment_settings(settings)
+    assert settings["ENVIRONMENT"] == "production"
+    assert settings["APP_BASE_URL"] == "https://production.example.test"
+    assert settings["DISCORD_CALLBACK_URL"] == "https://production.example.test/api/auth/discord/callback"
+
+
+def test_new_preview_is_configured_only_after_creation(monkeypatch):
+    monkeypatch.setenv("API_ENVIRONMENT", "8")
+    monkeypatch.setenv("STATIC_WEB_APP_NAME", "app")
+    monkeypatch.setenv("RESOURCE_GROUP_NAME", "group")
+    monkeypatch.delenv("APP_URL", raising=False)
+    azure = MagicMock(return_value=[{"name": "default", "hostname": "production.example.test"}])
+    monkeypatch.setattr(configure_api, "azure", azure)
+    configure_api.main()
+    assert azure.call_count == 1
+    assert azure.call_args.args[:3] == ("staticwebapp", "environment", "list")
+
+
+def test_existing_preview_settings_do_not_trigger_another_restart(monkeypatch):
+    monkeypatch.setenv("API_ENVIRONMENT", "8")
+    monkeypatch.setenv("STATIC_WEB_APP_NAME", "app")
+    monkeypatch.setenv("RESOURCE_GROUP_NAME", "group")
+    monkeypatch.delenv("APP_URL", raising=False)
+    for key in ("SIGNING_SECRET", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
+                "AZURE_DATABASE_CLIENT_SECRET", "AZURE_TENANT_ID"):
+        monkeypatch.setenv(key, "configured")
+    azure = MagicMock(return_value=[{"name": "8", "hostname": "preview.example.test"}])
+    monkeypatch.setattr(configure_api, "azure", azure)
+
+    def settings(environment="default"):
+        result = deployment_settings({"DATABASE_URL": "database", "DATABASE_USERNAME": "vpet_api",
+                                      "DISCORD_CLIENT_ID": "discord"})
+        if environment == "default":
+            result["APP_BASE_URL"] = "https://production.example.test"
+        return result
+
+    monkeypatch.setattr(configure_api, "environment_settings", settings)
+    configure_api.main()
+    assert azure.call_count == 1
+
+
+def test_api_check_reports_origin_rejection(monkeypatch):
+    client = MagicMock()
+    responses = []
+    for status, body in [(200, {"status": "ok"}), (401, {"error": {"code": "UNAUTHORIZED"}})]:
+        response = MagicMock(status=status)
+        response.__enter__.return_value = response
+        response.read.return_value = json.dumps(body).encode()
+        responses.append(response)
+    responses.append(HTTPError("https://preview.example.test/api/auth/login", 403, "Forbidden", {},
+                               BytesIO(b'{"error":{"code":"ORIGIN_REJECTED"}}')))
+    client.open.side_effect = responses
+    monkeypatch.setattr(check_api, "build_opener", lambda *args: client)
+    with pytest.raises(RuntimeError, match="HTTP 403, ORIGIN_REJECTED"):
+        check_api.check("https://preview.example.test")
+
+
+def test_api_check_waits_for_settings_but_still_fails_at_deadline(monkeypatch):
+    monkeypatch.setenv("APP_URL", "https://preview.example.test/")
+    probe = MagicMock(side_effect=[RuntimeError("ORIGIN_REJECTED")] * 30 + [None])
+    monkeypatch.setattr(check_api, "check", probe)
+    monkeypatch.setattr(check_api.time, "monotonic", lambda: 0)
+    monkeypatch.setattr(check_api.time, "sleep", lambda seconds: None)
+    check_api.main()
+    assert probe.call_count == 31
+    probe.assert_called_with("https://preview.example.test")
+
+    probe.side_effect = RuntimeError("ORIGIN_REJECTED")
+    monkeypatch.setattr(check_api.time, "monotonic", MagicMock(side_effect=[0, 600]))
+    with pytest.raises(RuntimeError, match="ORIGIN_REJECTED"):
+        check_api.main()
 
 
 def test_database_setup_rejects_a_role_owned_by_another_identity(monkeypatch):

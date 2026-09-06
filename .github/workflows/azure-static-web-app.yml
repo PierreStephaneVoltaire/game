@@ -117,6 +117,16 @@ jobs:
           AZURE_DATABASE_OBJECT_ID: ${{ secrets.AZURE_DATABASE_OBJECT_ID }}
         run: python -m tools.setup_api_database
 
+      - name: Configure existing API environment before deployment
+        env:
+          API_ENVIRONMENT: ${{ github.event.pull_request.number || 'default' }}
+          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
+          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
+          AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
+          AZURE_DATABASE_CLIENT_SECRET: ${{ secrets.AZURE_DATABASE_CLIENT_SECRET }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        run: python -m tools.configure_api
+
       - name: Deploy prebuilt frontend
         id: deploy
         uses: Azure/static-web-apps-deploy@v1
@@ -151,6 +161,7 @@ jobs:
         run: python -m tools.configure_api
 
       - name: Verify deployed authentication API
+        timeout-minutes: 12
         env:
           APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
         run: python -m tools.check_api
