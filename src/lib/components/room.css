@@ -11,17 +11,28 @@
   gap: clamp(18px, 2vw, 24px);
   align-items: start;
 }
-.room-card {
+.room-card,
+.room-page .metrics,
+.status-time-card,
+.event-panel {
   border: 4px solid var(--theme-pink);
-  background: var(--theme-pink-light);
+  background: var(--theme-white);
   box-shadow: 8px 8px 0 var(--theme-gold);
+}
+.room-page .metrics,
+.status-time-card {
+  padding: 16px 20px;
+}
+.status-time-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 .overview-column {
   display: flex;
   flex-direction: column;
   gap: 24px;
   min-width: 0;
-  padding: 8px 0;
 }
 .metrics h1 {
   margin: 0 0 18px;
@@ -97,7 +108,6 @@
   overflow-y: auto;
   padding: 16px 20px;
   color: var(--theme-ink);
-  background: var(--theme-pink-light);
 }
 .event-panel h2 {
   margin: 0 0 14px;
@@ -168,7 +178,7 @@ button:disabled {
   border: 4px solid var(--theme-pink);
   padding: 22px;
   color: var(--theme-ink);
-  background: var(--theme-pink-light);
+  background: var(--theme-white);
   box-shadow: 8px 8px 0 var(--theme-gold);
 }
 .hospital-dialog::backdrop {

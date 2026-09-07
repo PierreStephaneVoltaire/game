@@ -63,7 +63,7 @@
     border: 3px solid var(--theme-pink);
     padding: 18px;
     color: var(--theme-ink);
-    background: var(--theme-pink-light);
+    background: var(--theme-white);
     box-shadow: 6px 6px 0 var(--theme-gold);
     font-size: 0.8rem;
     line-height: 1.45;

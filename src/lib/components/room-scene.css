@@ -3,7 +3,19 @@
   width: 100%;
   aspect-ratio: 900 / 680;
   overflow: hidden;
-  background: var(--theme-cream);
+  container-type: size;
+  background: var(--theme-room-wall);
+}
+.room-contents {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(calc(100cqw * 900 / 770), calc(100cqh * 900 / 605));
+  aspect-ratio: 900 / 680;
+  transform: translate(calc(-100% * 475 / 900), calc(-100% * 347.5 / 680));
+}
+.room-scene .room-background-frame {
+  background: var(--theme-room-wall);
 }
 .companion {
   position: absolute;
@@ -33,15 +45,6 @@
   width: 52px;
   height: 52px;
   image-rendering: pixelated;
-}
-.anchor-label {
-  position: absolute;
-  top: 3px;
-  padding: 1px 3px;
-  background: var(--theme-white);
-  font-size: 0.58rem;
-  text-transform: uppercase;
-  pointer-events: none;
 }
 .anchor-unplace {
   z-index: 3;
@@ -130,21 +133,11 @@
   width: 6.8889%;
   aspect-ratio: 1;
 }
-.anchor-cat-corner .anchor-label {
-  top: auto;
-  bottom: 100%;
-  white-space: nowrap;
-}
 .anchor-cat-corner .anchor-empty {
   border: 0;
   background: transparent;
   box-shadow: none;
   color: var(--theme-room-wood);
-}
-@media (max-width: 460px) {
-  .anchor-label {
-    font-size: 0.46rem;
-  }
 }
 .anchor-unplace:hover:not(:disabled) {
   background: var(--theme-pink);

@@ -29,13 +29,11 @@
   });
 
   onMount(() => {
-    onboardingToken =
-      new URLSearchParams(window.location.hash.slice(1)).get(
-        'discord-onboarding',
-      ) ?? '';
-    resetToken =
-      new URLSearchParams(window.location.hash.slice(1)).get('reset-token') ??
-      '';
+    const parameters = new URLSearchParams(window.location.hash.slice(1));
+    onboardingToken = parameters.get('discord-onboarding') ?? '';
+    if (onboardingToken)
+      username = (parameters.get('username') ?? '').trim().toLowerCase();
+    resetToken = parameters.get('reset-token') ?? '';
     if (onboardingToken || resetToken)
       window.history.replaceState(null, '', window.location.pathname);
     void restoreAccount()

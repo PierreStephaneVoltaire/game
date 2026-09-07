@@ -192,7 +192,7 @@
   }
   .inventory-card:hover {
     border-color: var(--theme-pink);
-    box-shadow: 3px 3px var(--theme-pink);
+    box-shadow: 3px 3px var(--theme-gold);
     background: var(--theme-pink);
     color: var(--theme-on-pink);
   }

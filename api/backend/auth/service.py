@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from .models import AuthAttempt, DiscordIdentity, OAuthOnboarding, PasswordReset, Session as AuthSession, User, is_expired, utcnow
 from .passwords import Passwords
-from .schemas import SafeUser
+from .schemas import SafeUser, normalized_username
 from .sessions import create as create_session
 from .sessions import digest, revoke_user_sessions
 
@@ -163,7 +163,19 @@ class AuthService:
                 _, cookie = create_session(self.db, user.id)
                 self.db.commit()
                 return self.safe_user(user), cookie, None
-        return None, None, self.create_onboarding(discord_user_id, profile)
+        onboarding = self.create_onboarding(discord_user_id, profile)
+        name = profile.get("username")
+        try:
+            username = normalized_username(name if isinstance(name, str) else "")
+        except ValueError:
+            return None, None, onboarding
+        try:
+            user, cookie = self.complete_onboarding(onboarding, username)
+        except AuthProblem as problem:
+            if problem.code != "USERNAME_TAKEN":
+                raise
+            return None, None, onboarding
+        return user, cookie, None
 
     def link_discord(self, user: User, discord_user_id: str) -> None:
         identity = self.db.get(DiscordIdentity, discord_user_id)

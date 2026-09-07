@@ -94,10 +94,10 @@
     width: min(560px, calc(100% - 32px));
     max-height: calc(100vh - 40px);
     margin: auto;
-    border: 4px solid var(--theme-ink);
+    border: 4px solid var(--theme-pink);
     padding: 0;
     background: var(--theme-white);
-    box-shadow: 8px 8px 0 var(--theme-pink);
+    box-shadow: 8px 8px 0 var(--theme-gold);
   }
   .detail-dialog::backdrop {
     background: color-mix(in srgb, var(--theme-ink) 70%, transparent);

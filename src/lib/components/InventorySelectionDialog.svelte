@@ -158,7 +158,7 @@
     border: 4px solid var(--theme-pink);
     padding: clamp(18px, 4vw, 30px);
     color: var(--theme-ink);
-    background: var(--theme-pink-light);
+    background: var(--theme-white);
     box-shadow: 8px 8px 0 var(--theme-gold);
   }
   .selection-dialog::backdrop {
@@ -193,7 +193,7 @@
     min-height: 54px;
     padding: 11px;
     border: 3px solid var(--theme-pink);
-    background: var(--theme-pink-light);
+    background: var(--theme-white);
     box-shadow: 5px 5px 0 var(--theme-gold);
     place-items: center;
   }

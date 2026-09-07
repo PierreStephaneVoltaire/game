@@ -151,43 +151,45 @@
 
       <section class="room-card" aria-label={`${model.companion.name}'s room`}>
         <div class="room-scene">
-          <RoomBackground {daypart} />
-          {#each model.anchors as anchor (anchor.key)}
-            <div
-              class={`anchor anchor-${anchor.key}`}
-              role="group"
-              aria-label={anchor.label}
-            >
-              <span class="anchor-label">{anchor.label}</span>
-              {#if anchor.item}
-                <img
-                  src={anchor.item.image}
-                  alt={anchor.item.name}
-                  width="64"
-                  height="64"
-                  decoding="async"
-                />
-                <button
-                  type="button"
-                  class="anchor-unplace"
-                  on:click={() =>
-                    anchor.item?.placedSlot && unplace(anchor.item.placedSlot)}
-                  disabled={careBlocked}
-                  aria-label={`Unplace ${anchor.item.name}`}>Unplace</button
-                >
-              {:else}
-                <button
-                  type="button"
-                  class="anchor-place"
-                  on:click={() => openRoomPicker(anchor.key)}
-                  disabled={careBlocked}
-                  aria-label={`Choose an item for ${anchor.label}`}
-                >
-                  <span class="anchor-empty" aria-hidden="true">+</span>
-                </button>
-              {/if}
-            </div>
-          {/each}
+          <div class="room-contents">
+            <RoomBackground {daypart} />
+            {#each model.anchors as anchor (anchor.key)}
+              <div
+                class={`anchor anchor-${anchor.key}`}
+                role="group"
+                aria-label={anchor.label}
+              >
+                {#if anchor.item}
+                  <img
+                    src={anchor.item.image}
+                    alt={anchor.item.name}
+                    width="64"
+                    height="64"
+                    decoding="async"
+                  />
+                  <button
+                    type="button"
+                    class="anchor-unplace"
+                    on:click={() =>
+                      anchor.item?.placedSlot &&
+                      unplace(anchor.item.placedSlot)}
+                    disabled={careBlocked}
+                    aria-label={`Unplace ${anchor.item.name}`}>Unplace</button
+                  >
+                {:else}
+                  <button
+                    type="button"
+                    class="anchor-place"
+                    on:click={() => openRoomPicker(anchor.key)}
+                    disabled={careBlocked}
+                    aria-label={`Choose an item for ${anchor.label}`}
+                  >
+                    <span class="anchor-empty" aria-hidden="true">+</span>
+                  </button>
+                {/if}
+              </div>
+            {/each}
+          </div>
           <img
             class="companion"
             src={model.activeAvatar.assetPath}

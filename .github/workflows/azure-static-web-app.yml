@@ -12,7 +12,6 @@ on:
       - opened
       - synchronize
       - reopened
-      - closed
 
 permissions:
   contents: read
@@ -38,6 +37,7 @@ jobs:
     env:
       STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
       RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
+      API_ENVIRONMENT: ${{ github.event_name == 'pull_request' && 'staging' || 'default' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -128,7 +128,6 @@ jobs:
 
       - name: Configure existing API environment before deployment
         env:
-          API_ENVIRONMENT: ${{ github.event.pull_request.number || 'default' }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
           AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
@@ -147,6 +146,7 @@ jobs:
           api_location: api
           output_location: ''
           skip_app_build: true
+          deployment_environment: ${{ github.event_name == 'pull_request' && 'staging' || '' }}
 
       - name: Verify deployment and report app URL
         env:
@@ -161,7 +161,6 @@ jobs:
       - name: Configure deployed API environment
         env:
           APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
-          API_ENVIRONMENT: ${{ github.event.pull_request.number || 'default' }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
           AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
@@ -192,14 +191,3 @@ jobs:
           AUTH_TEST_USERNAME: admin
           AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
         run: node tools/check_game.mjs
-
-  close_pull_request:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Close Azure preview environment
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: close
-          skip_deploy_on_missing_secrets: true

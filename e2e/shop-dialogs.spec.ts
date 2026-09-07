@@ -12,6 +12,14 @@ test('opens item details over the shop without navigating', async ({
     .click();
   await expect(page).toHaveURL(/\/game$/);
   await expect(page.locator('.detail-dialog')).toBeVisible();
+  await expect(page.locator('.detail-dialog')).toHaveCSS(
+    'border-color',
+    'rgb(214, 72, 111)',
+  );
+  await expect(page.locator('.detail-dialog')).toHaveCSS(
+    'box-shadow',
+    'rgb(212, 175, 55) 8px 8px 0px 0px',
+  );
   await expect(page.getByText('ITEM DETAIL', { exact: true })).toBeVisible();
   await expect(page.getByRole('list', { name: 'Item tags' })).toBeVisible();
 });
@@ -28,6 +36,8 @@ for (const width of [1440, 320]) {
       await opener.click();
       const dialog = page.getByRole('dialog', { name, exact: true });
       await expect(dialog).toBeVisible();
+      await expect(dialog).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+      await expect(dialog).toHaveCSS('border-color', 'rgb(214, 72, 111)');
       await expect(page).toHaveURL(/\/game$/);
       expect(await dialog.boundingBox()).toEqual({
         x: 0,

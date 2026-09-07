@@ -182,7 +182,7 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await page.getByRole('button', { name: 'Shop', exact: true }).click();
   await expect(page.locator('.shop-dialog')).toHaveJSProperty('open', true);
   await expect(page.locator('.shop-dialog')).toHaveJSProperty(
-    'clientWidth',
+    'offsetWidth',
     1280,
   );
   await expect(

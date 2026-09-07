@@ -131,6 +131,41 @@ test('shows all six landing metrics and session wording', async ({ page }) => {
   ).toBe(true);
 });
 
+test('uses white game cards with pink borders and gold shadows', async ({
+  page,
+}) => {
+  await signInAndChooseMode(page, 'Realtime mode');
+  const cards = page.locator('.metrics, .status-time-card, .event-panel');
+  await expect(cards).toHaveCount(3);
+  for (const card of await cards.all()) {
+    await expect(card).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    await expect(card).toHaveCSS('border-color', 'rgb(214, 72, 111)');
+    await expect(card).toHaveCSS(
+      'box-shadow',
+      'rgb(212, 175, 55) 8px 8px 0px 0px',
+    );
+  }
+  await page.getByRole('button', { name: 'Feed', exact: true }).click();
+  for (const card of await page
+    .locator('.selection-dialog, .item-choice')
+    .all()) {
+    await expect(card).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    await expect(card).toHaveCSS('border-color', 'rgb(214, 72, 111)');
+  }
+  await page.keyboard.press('Escape');
+  await page.screenshot({
+    path: '/tmp/game-cards-desktop.png',
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 320, height: 900 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({ path: '/tmp/game-cards-mobile.png', fullPage: true });
+});
+
 test('provides the same palette on direct route loads and native controls', async ({
   page,
 }) => {

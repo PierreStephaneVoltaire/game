@@ -32,6 +32,11 @@ test('shares the room artwork across the landing preview and game', async ({
   );
   const background = page.locator('.room-scene .room-background');
   await expect(background).toBeVisible();
+  await expect(page.locator('.anchor-label')).toHaveCount(0);
+  for (const anchor of await page.locator('.anchor').all()) {
+    await expect(anchor).toHaveAttribute('aria-label', /\S+/);
+    await expect(anchor).toHaveText('+');
+  }
   await expect(page.locator('.room-scene .shelf-lamp')).toBeVisible();
   const daypart = await page
     .locator('.room-page')
@@ -71,6 +76,18 @@ test('shares the room artwork across the landing preview and game', async ({
     await page.setViewportSize({ width, height: 900 });
     const scene = await page.locator('.room-scene').boundingBox();
     expect(scene!.width / scene!.height).toBeCloseTo(900 / 680, 2);
+    const art = (await background.boundingBox())!;
+    expect(art.x + (art.width * 90) / 900).toBeLessThanOrEqual(scene!.x + 1);
+    expect(art.y + (art.height * 45) / 680).toBeLessThanOrEqual(scene!.y + 1);
+    expect(art.x + (art.width * 860) / 900).toBeGreaterThanOrEqual(
+      scene!.x + scene!.width - 1,
+    );
+    expect(art.y + (art.height * 650) / 680).toBeGreaterThanOrEqual(
+      scene!.y + scene!.height - 1,
+    );
+    const desk = (await page.locator('.anchor-desk').boundingBox())!;
+    expect(desk.x).toBeCloseTo(art.x + (art.width * 719) / 900, 1);
+    expect(desk.y).toBeCloseTo(art.y + (art.height * 278) / 680, 1);
     const catBed = page.locator('.room-scene div.cat-bed');
     await expect(catBed).toHaveCSS('border-radius', '50%');
     const catBedSize = await catBed.boundingBox();
