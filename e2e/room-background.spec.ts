@@ -75,7 +75,25 @@ test('shares the room artwork across the landing preview and game', async ({
   for (const width of [1280, 320]) {
     await page.setViewportSize({ width, height: 900 });
     const scene = await page.locator('.room-scene').boundingBox();
-    expect(scene!.width / scene!.height).toBeCloseTo(900 / 680, 2);
+    if (width === 320)
+      expect(scene!.width / scene!.height).toBeCloseTo(900 / 680, 2);
+    const room = (await page.locator('.room-card').boundingBox())!;
+    const events = page.locator('.event-panel');
+    await expect
+      .poll(async () => (await events.boundingBox())!.height)
+      .toBeCloseTo(room.height, 0);
+    await events.locator('ol').evaluate((list) => {
+      const event = list.firstElementChild!;
+      for (let index = 0; index < 30; index++)
+        list.append(event.cloneNode(true));
+    });
+    expect((await events.boundingBox())!.height).toBeCloseTo(room.height, 0);
+    await events.evaluate((panel) => {
+      panel.scrollTop = panel.scrollHeight;
+    });
+    expect(await events.evaluate((panel) => panel.scrollTop)).toBeGreaterThan(
+      0,
+    );
     const art = (await background.boundingBox())!;
     expect(art.x + (art.width * 90) / 900).toBeLessThanOrEqual(scene!.x + 1);
     expect(art.y + (art.height * 45) / 680).toBeLessThanOrEqual(scene!.y + 1);

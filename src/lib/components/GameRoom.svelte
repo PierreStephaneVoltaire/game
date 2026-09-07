@@ -15,6 +15,7 @@
   let errorMessage = '';
   let picker: PickerKind | null = null;
   let roomSlot = '';
+  let roomHeight = 0;
   $: model = $gameViewModel;
   $: daypart = model ? daypartFor(model.now, model.timezone) : 'day';
   $: edibleItems = model?.inventory.filter((item) => item.edible) ?? [];
@@ -149,7 +150,11 @@
         onIntent={act}
       />
 
-      <section class="room-card" aria-label={`${model.companion.name}'s room`}>
+      <section
+        class="room-card"
+        bind:offsetHeight={roomHeight}
+        aria-label={`${model.companion.name}'s room`}
+      >
         <div class="room-scene">
           <div class="room-contents">
             <RoomBackground {daypart} />
@@ -202,7 +207,11 @@
         </div>
       </section>
 
-      <RecentEventsPanel events={recentEvents} timezone={model.timezone} />
+      <RecentEventsPanel
+        events={recentEvents}
+        timezone={model.timezone}
+        height={roomHeight}
+      />
     </section>
 
     <section

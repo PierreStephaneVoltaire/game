@@ -119,15 +119,18 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
       direction: getComputedStyle(element).flexDirection,
       border: getComputedStyle(element).borderTopWidth,
     })),
-  ).toEqual({ display: 'flex', direction: 'column', border: '0px' });
+  ).toEqual({ display: 'contents', direction: 'column', border: '0px' });
   const overviewBoxes = await firstRow
-    .locator(
-      ':scope > .overview-column, :scope > .room-card, :scope > .event-panel',
-    )
+    .locator('.metrics, :scope > .room-card, :scope > .event-panel')
     .evaluateAll((elements) =>
       elements.map((element) => {
         const box = element.getBoundingClientRect();
-        return { left: box.left, top: box.top, width: box.width };
+        return {
+          left: box.left,
+          top: box.top,
+          width: box.width,
+          height: box.height,
+        };
       }),
     );
   expect(overviewBoxes).toHaveLength(3);
@@ -136,6 +139,23 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   expect(overviewBoxes[0].left).toBeLessThan(overviewBoxes[1].left);
   expect(overviewBoxes[1].left).toBeLessThan(overviewBoxes[2].left);
   expect(overviewBoxes[0].width).toBeCloseTo(overviewBoxes[2].width, 0);
+  expect(overviewBoxes[0].height).toBeCloseTo(overviewBoxes[1].height, 0);
+  expect(overviewBoxes[1].height).toBeCloseTo(overviewBoxes[2].height, 0);
+  const statusTime = await page.locator('.status-time-card').boundingBox();
+  const overview = await firstRow.boundingBox();
+  expect(statusTime!.x).toBeCloseTo(overview!.x, 0);
+  expect(statusTime!.width).toBeCloseTo(overview!.width, 0);
+  expect(statusTime!.y).toBeGreaterThan(
+    overviewBoxes[0].top + overviewBoxes[0].height,
+  );
+  const status = await page.locator('.status-panel').boundingBox();
+  const clock = await page.locator('.session-clock').boundingBox();
+  expect(status!.y).toBeCloseTo(clock!.y, 0);
+  expect(clock!.x).toBeGreaterThan(status!.x + status!.width);
+  await page.screenshot({
+    path: '/tmp/game-three-rows-desktop.png',
+    fullPage: true,
+  });
 
   const careRow = page.locator('[data-game-row="care"]');
   await expect(careRow.getByRole('button')).toHaveCount(4);
@@ -218,4 +238,48 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await expect(
     feedDialog.getByRole('button', { name: 'Feed selected (2)' }),
   ).toBeEnabled();
+});
+
+test('preserves the stacked mobile cards and both four-button rows', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 900 });
+  await signInAndChooseMode(page, 'Realtime mode');
+  const cards = await page
+    .locator('.metrics, .status-time-card, .room-card, .event-panel')
+    .all();
+  let previousBottom = 0;
+  for (const card of cards) {
+    const box = (await card.boundingBox())!;
+    expect(box.y).toBeGreaterThan(previousBottom);
+    previousBottom = box.y + box.height;
+  }
+  await expect(page.locator('.time-balance')).toHaveCSS(
+    'flex-direction',
+    'column',
+  );
+  for (const row of ['care', 'navigation']) {
+    const buttons = page
+      .locator(`[data-game-row="${row}"]`)
+      .locator('button, a');
+    await expect(buttons).toHaveCount(4);
+    const boxes = await buttons.evaluateAll((elements) =>
+      elements.map((element) => {
+        const box = element.getBoundingClientRect();
+        return { y: box.y, height: box.height };
+      }),
+    );
+    expect(
+      boxes.every((box) => box.y === boxes[0].y && box.height === 44),
+    ).toBe(true);
+  }
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: '/tmp/game-three-rows-mobile.png',
+    fullPage: true,
+  });
 });

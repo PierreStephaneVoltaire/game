@@ -3,20 +3,11 @@ name: Azure Static Web App
 on:
   push:
     branches:
-      - main
-      - static-web-hosting
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened
-      - synchronize
-      - reopened
+      - '**'
 
 permissions:
   contents: read
   id-token: write
-  pull-requests: write
 
 concurrency:
   group: azure-static-web-app
@@ -24,20 +15,16 @@ concurrency:
 
 jobs:
   infrastructure:
-    if: >-
-      github.event_name == 'push' ||
-      (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
     uses: ./.github/workflows/terraform-checks.yml
     secrets: inherit
 
   build_test_and_deploy:
     needs: infrastructure
-    if: github.event_name == 'push' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     env:
       STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
       RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
-      API_ENVIRONMENT: ${{ github.event_name == 'pull_request' && 'staging' || 'default' }}
+      API_ENVIRONMENT: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/static-web-hosting') && 'default' || 'staging' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -140,13 +127,12 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
           app_location: build
           api_location: api
           output_location: ''
           skip_app_build: true
-          deployment_environment: ${{ github.event_name == 'pull_request' && 'staging' || '' }}
+          deployment_environment: ${{ env.API_ENVIRONMENT != 'default' && env.API_ENVIRONMENT || '' }}
 
       - name: Verify deployment and report app URL
         env:

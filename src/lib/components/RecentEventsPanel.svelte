@@ -3,6 +3,7 @@
 
   export let events: EventViewModel[] = [];
   export let timezone: string;
+  export let height: number;
 
   function eventTime(at: number) {
     return new Intl.DateTimeFormat('en-US', {
@@ -16,7 +17,12 @@
   }
 </script>
 
-<aside class="event-panel" aria-label="Recent events" aria-live="polite">
+<aside
+  class="event-panel"
+  style:--room-height={`${height}px`}
+  aria-label="Recent events"
+  aria-live="polite"
+>
   <h2>Recent events</h2>
   <ol>
     {#each events as event (event.id)}<li>

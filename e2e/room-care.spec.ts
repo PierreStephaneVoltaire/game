@@ -83,7 +83,7 @@ test('Room places furniture and starts owned usable actions', async ({
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
 
-test('an empty room spot has only the Room title and close controls', async ({
+test('an empty room spot has only the Room title and one close control', async ({
   page,
 }) => {
   await page
@@ -92,4 +92,7 @@ test('an empty room spot has only the Room title and close controls', async ({
   const dialog = page.getByRole('dialog', { name: 'Room', exact: true });
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('p')).toHaveCount(0);
+  await expect(dialog.getByRole('button')).toHaveCount(1);
+  await dialog.getByRole('button', { name: 'Close inventory choices' }).click();
+  await expect(dialog).toHaveCount(0);
 });

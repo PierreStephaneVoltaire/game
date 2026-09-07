@@ -142,8 +142,8 @@
         >
       </div>
     {/if}
-  {:else}
-    {#if emptyMessage}<p>{emptyMessage}</p>{/if}
+  {:else if emptyMessage}
+    <p>{emptyMessage}</p>
     <div class="dialog-actions">
       <button type="button" class="secondary" on:click={onClose}>Close</button>
     </div>
