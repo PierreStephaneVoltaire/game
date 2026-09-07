@@ -84,9 +84,9 @@
 }
 .anchor-bed {
   left: 31.1111%;
-  top: 34.4118%;
+  top: 36.8985%;
   width: 26.6667%;
-  height: 30.2941%;
+  height: 24.6%;
 }
 .anchor-desk {
   left: 79.8889%;
@@ -101,10 +101,10 @@
   height: 20.7353%;
 }
 .anchor-wall {
-  left: 12.1167%;
-  top: 25%;
-  width: 4.8678%;
-  height: 23.5294%;
+  left: 57.2222%;
+  top: 12.4412%;
+  width: 12.7778%;
+  height: 14.7059%;
 }
 .anchor-floor {
   left: 81.8889%;
@@ -114,15 +114,15 @@
 }
 .anchor-shelf {
   left: 18.8889%;
-  top: 23.6765%;
+  top: 12.4412%;
   width: 12.2222%;
-  height: 28.5294%;
+  height: 39.7647%;
 }
 .anchor-window {
-  left: 56.6667%;
-  top: 12.2059%;
-  width: 27.7778%;
-  height: 24.4118%;
+  left: 33.3333%;
+  top: 12.4412%;
+  width: 22.2222%;
+  height: 19.5294%;
 }
 .anchor-cat-corner {
   left: 41%;

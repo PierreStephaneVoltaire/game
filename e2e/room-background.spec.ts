@@ -15,6 +15,7 @@ test('shares the room artwork across the landing preview and game', async ({
     .toBeGreaterThan(0);
   await expect(landing).toBeVisible();
   await expect(page.locator('.screen div.cat-bed')).toBeVisible();
+  await expect(page.locator('.screen .shelf-lamp')).toBeVisible();
   await expect(page.locator('.screen .room-background-frame')).toHaveClass(
     /fill/,
   );
@@ -31,6 +32,7 @@ test('shares the room artwork across the landing preview and game', async ({
   );
   const background = page.locator('.room-scene .room-background');
   await expect(background).toBeVisible();
+  await expect(page.locator('.room-scene .shelf-lamp')).toBeVisible();
   const daypart = await page
     .locator('.room-page')
     .evaluate((element) =>
@@ -54,7 +56,7 @@ test('shares the room artwork across the landing preview and game', async ({
       canvas.height = 680;
       const context = canvas.getContext('2d')!;
       context.drawImage(image, 0, 0, 900, 680);
-      colors.push([...context.getImageData(550, 110, 1, 1).data]);
+      colors.push([...context.getImageData(365, 115, 1, 1).data]);
     }
     return colors;
   });
@@ -98,6 +100,26 @@ test('shares the room artwork across the landing preview and game', async ({
   await expect(page.locator('.screen div.cat-bed')).toBeVisible();
   await page.screenshot({ path: '/tmp/room-landing-mobile.png' });
   await page.goto('/assets/room/room-svg-demo.html');
+  const bed = await page.evaluate(() => {
+    const rect = (id: string) => {
+      const element = document.getElementById(`front-bed-${id}`)!;
+      return {
+        y: Number(element.getAttribute('y')),
+        height: Number(element.getAttribute('height')),
+      };
+    };
+    return {
+      pillows: [rect('left-pillow'), rect('right-pillow')],
+      mattress: rect('mattress'),
+      base: rect('base-inset'),
+      headboard: rect('headboard-inset'),
+    };
+  });
+  for (const rectangle of [...bed.pillows, bed.mattress]) {
+    expect(rectangle.height).toBe(bed.base.height);
+  }
+  expect(bed.headboard.height).toBe(bed.base.height * 2);
+  expect(bed.headboard.y + bed.headboard.height).toBeCloseTo(bed.mattress.y, 2);
   await page.getByRole('button', { name: 'Night', exact: true }).click();
   await expect(page.locator('[data-part="window-sky"]')).toHaveAttribute(
     'fill',
