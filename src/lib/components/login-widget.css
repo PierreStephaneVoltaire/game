@@ -202,17 +202,45 @@
   box-sizing: border-box;
 }
 
+.login-card[aria-labelledby='mode-title'] button,
 .login-card:is([aria-labelledby='login-title'], [aria-labelledby='mode-title'])
-  :is(button, .login-card-mark) {
+  .login-card-mark {
   color: var(--theme-on-pink);
   background: var(--theme-pink);
   box-shadow: 5px 5px 0 var(--theme-gold);
 }
 
-.login-card:is([aria-labelledby='login-title'], [aria-labelledby='mode-title'])
-  button:hover:not(:disabled) {
+.login-card[aria-labelledby='mode-title'] button:hover:not(:disabled) {
   background: var(--theme-pink);
   box-shadow: 3px 3px 0 var(--theme-gold);
+}
+
+.login-card[aria-labelledby='login-title'] {
+  background: var(--theme-pink);
+}
+
+.login-card[aria-labelledby='login-title'] .login-card-mark {
+  background: var(--theme-teal);
+}
+
+.login-card[aria-labelledby='login-title'] button {
+  color: var(--theme-ink);
+  background: var(--theme-white);
+  box-shadow: 5px 5px 0 var(--theme-gold);
+}
+
+.login-card[aria-labelledby='login-title'] button:hover:not(:disabled) {
+  background: var(--theme-white);
+  box-shadow: 3px 3px 0 var(--theme-gold);
+}
+
+.login-card[aria-labelledby='login-title'] input {
+  box-shadow: 5px 5px 0 var(--theme-gold);
+}
+
+.login-card[aria-labelledby='login-title'] button:disabled {
+  color: var(--theme-brown);
+  opacity: 1;
 }
 
 .login-card[aria-labelledby='login-title'] .discord-action + form {
