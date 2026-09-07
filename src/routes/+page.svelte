@@ -2,6 +2,7 @@
   import { resolve } from '$app/paths';
   import { copy, createTranslator } from '$lib/i18n';
   import { companion } from '$lib/ui/companion';
+  import RoomBackground from '$lib/components/RoomBackground.svelte';
 
   const text = createTranslator({ pet: companion.name });
 </script>
@@ -37,22 +38,20 @@
     <div class="device-wrap">
       <article class="pet-device" aria-label={copy.previewLabel}>
         <div class="screen">
+          <RoomBackground fill />
           <div class="screen-stars" aria-hidden="true">
             <span>✦</span>
             <span>·</span>
             <span>✦</span>
           </div>
-          <div class="pet" aria-hidden="true">
-            <span class="bunny-ear bunny-ear-left"></span>
-            <span class="bunny-ear bunny-ear-right"></span>
-            <span class="pet-ear pet-ear-left"></span>
-            <span class="pet-ear pet-ear-right"></span>
-            <span class="pet-hair"></span>
-            <span class="pet-face">
-              <i></i><i></i><b></b>
-            </span>
-            <span class="pet-body"></span>
-          </div>
+          <img
+            class="landing-companion"
+            src={companion.avatar}
+            alt={companion.name}
+            width="110"
+            height="135"
+            decoding="async"
+          />
           <p class="screen-message">{copy.screenMessage}</p>
         </div>
         <div class="care-readout" aria-label={copy.statsLabel}>

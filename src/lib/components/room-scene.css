@@ -1,59 +1,33 @@
 .room-scene {
   position: relative;
-  min-height: 570px;
+  width: 100%;
+  aspect-ratio: 900 / 680;
   overflow: hidden;
-  background: var(--sky);
-}
-.room-scene::before {
-  position: absolute;
-  inset: auto 0 0;
-  height: 32%;
-  background: var(--theme-gold);
-  content: '';
-}
-.daypart-morning {
-  --sky: var(--theme-blonde);
-}
-.daypart-day {
-  --sky: var(--theme-pink-light);
-}
-.daypart-evening {
-  --sky: var(--theme-pink);
-}
-.daypart-night {
-  --sky: var(--theme-maroon);
-}
-.room-scene::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 18%;
-  background: var(--theme-blonde);
-  content: '';
+  background: var(--theme-cream);
 }
 .companion {
   position: absolute;
   z-index: 2;
-  bottom: 17%;
-  left: 50%;
-  width: min(176px, 27%);
+  bottom: -10px;
+  left: 57%;
+  width: min(274.56px, 42.12%);
   height: auto;
   image-rendering: pixelated;
   transform: translateX(-50%);
+  pointer-events: none;
 }
 .anchor {
   position: absolute;
   z-index: 1;
   display: grid;
-  min-width: 75px;
-  min-height: 62px;
+  min-width: 0;
   place-items: center;
-  border: 3px solid var(--theme-ink);
+  border: 0;
   color: var(--theme-ink);
-  background: var(--theme-gold);
+  background: transparent;
   font-size: 0.7rem;
   text-align: center;
+  font-weight: 700;
 }
 .anchor img {
   width: 52px;
@@ -63,19 +37,23 @@
 .anchor-label {
   position: absolute;
   top: 3px;
+  padding: 1px 3px;
+  background: var(--theme-white);
   font-size: 0.58rem;
   text-transform: uppercase;
+  pointer-events: none;
 }
 .anchor-unplace {
   z-index: 3;
   padding: 3px 6px;
-  border: 1px solid var(--theme-ink);
-  color: var(--theme-ink);
+  border: 1px solid var(--theme-pink);
+  color: var(--theme-pink-text);
   background: var(--theme-white);
   font: inherit;
   font-size: 0.58rem;
   font-weight: 800;
   cursor: pointer;
+  box-shadow: 5px 5px 0 var(--theme-gold);
 }
 .anchor-place {
   position: absolute;
@@ -90,68 +68,85 @@
   place-items: center;
 }
 .anchor-empty {
-  opacity: 0.7;
-  font-size: 1.4rem;
+  min-width: 24px;
+  border: 2px solid var(--theme-pink);
+  color: var(--theme-pink-text);
+  background: var(--theme-white);
+  box-shadow: 3px 3px 0 var(--theme-gold);
+  font-size: 1rem;
+}
+.anchor:has(button:hover:not(:disabled)) {
+  outline: 3px solid var(--theme-ink);
+  outline-offset: 2px;
+}
+.anchor-unplace:hover:not(:disabled) {
+  text-decoration: underline;
 }
 .anchor-bed {
-  bottom: 20%;
-  left: 7%;
-  width: 30%;
-  height: 95px;
-  background: var(--theme-pink);
-  color: var(--theme-on-pink);
+  left: 31.1111%;
+  top: 34.4118%;
+  width: 26.6667%;
+  height: 30.2941%;
 }
 .anchor-desk {
-  right: 7%;
-  bottom: 26%;
-  width: 25%;
-  height: 76px;
+  left: 79.8889%;
+  top: 40.8824%;
+  width: 15.6667%;
+  height: 31.7647%;
 }
 .anchor-chair {
-  right: 14%;
-  bottom: 13%;
+  left: 69.1111%;
+  top: 47.9412%;
+  width: 8.6667%;
+  height: 20.7353%;
 }
 .anchor-wall {
-  top: 12%;
-  left: 40%;
+  left: 12.1167%;
+  top: 25%;
+  width: 4.8678%;
+  height: 23.5294%;
 }
 .anchor-floor {
-  bottom: 4%;
-  left: 43%;
+  left: 81.8889%;
+  top: 79.4118%;
+  width: 11.6667%;
+  height: 10.2941%;
 }
 .anchor-shelf {
-  top: 26%;
-  left: 8%;
+  left: 18.8889%;
+  top: 23.6765%;
+  width: 12.2222%;
+  height: 28.5294%;
 }
 .anchor-window {
-  top: 12%;
-  right: 9%;
-  width: 112px;
-  height: 84px;
-  background: var(--theme-white);
+  left: 56.6667%;
+  top: 12.2059%;
+  width: 27.7778%;
+  height: 24.4118%;
 }
 .anchor-cat-corner {
-  bottom: 7%;
-  left: 8%;
+  left: 41%;
+  top: 67.6471%;
+  width: 6.8889%;
+  aspect-ratio: 1;
 }
-@media (max-width: 780px) {
-  .room-scene {
-    min-height: 500px;
-  }
+.anchor-cat-corner .anchor-label {
+  top: auto;
+  bottom: 100%;
+  white-space: nowrap;
+}
+.anchor-cat-corner .anchor-empty {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--theme-room-wood);
 }
 @media (max-width: 460px) {
-  .room-scene {
-    min-height: 420px;
-  }
-  .anchor {
-    min-width: 54px;
-    min-height: 48px;
-  }
   .anchor-label {
     font-size: 0.46rem;
   }
-  .anchor-window {
-    width: 76px;
-    height: 62px;
-  }
+}
+.anchor-unplace:hover:not(:disabled) {
+  background: var(--theme-pink);
+  color: var(--theme-on-pink);
 }

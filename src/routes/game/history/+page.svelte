@@ -144,7 +144,7 @@
   }
   .eyebrow {
     margin: 0;
-    color: var(--theme-ink);
+    color: var(--theme-pink-text);
     font-size: 0.65rem;
     font-weight: 900;
     letter-spacing: 0.12em;
@@ -158,12 +158,15 @@
   .ending-card {
     margin-bottom: 24px;
     padding: clamp(20px, 4vw, 34px);
-    border: 3px solid var(--theme-ink);
-    background: var(--theme-warm-white);
+    border: 3px solid var(--theme-pink);
+    background: var(--theme-pink-pale);
+    color: var(--theme-pink-text);
+    font-weight: 700;
+    line-height: 1.6;
   }
   .ending-card h2 {
     margin: 4px 0 7px;
-    color: var(--theme-ink);
+    color: var(--theme-pink-text);
     font-size: 2rem;
   }
   .ending-card h3 {
@@ -186,7 +189,8 @@
     gap: 5px 12px;
     margin-top: 25px;
     padding: 16px;
-    background: var(--theme-coral-light);
+    background: var(--theme-pink-light);
+    color: var(--theme-pink-text);
   }
   .graveyard span {
     grid-row: span 2;
@@ -195,7 +199,7 @@
   .graveyard p {
     grid-column: 2;
     margin: 0;
-    color: var(--theme-ink);
+    color: var(--theme-pink-text);
     font-size: 0.8rem;
   }
   .graveyard dl {
@@ -219,17 +223,17 @@
     justify-self: start;
     margin-top: 9px;
     padding: 9px 13px;
-    border: 2px solid var(--theme-ink);
-    color: var(--theme-ink);
-    background: var(--theme-cream);
-    box-shadow: 3px 3px 0 var(--theme-ink);
+    border: 2px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font: inherit;
     font-size: 0.75rem;
     font-weight: 900;
     cursor: pointer;
   }
   .graveyard button:hover {
-    color: var(--theme-ink);
+    color: var(--theme-on-pink);
     background: var(--theme-pink);
   }
   .event-log {
@@ -237,7 +241,7 @@
   }
   .event-log summary {
     padding: 17px 0;
-    color: var(--theme-ink);
+    color: var(--theme-pink-text);
     font-weight: 900;
     cursor: pointer;
   }

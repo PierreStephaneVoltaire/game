@@ -116,6 +116,10 @@
     padding: 0 clamp(16px, 4vw, 64px) 64px;
     color: var(--theme-ink);
     background: var(--theme-cream);
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 600;
+    line-height: 1.5;
   }
   .game-nav {
     display: flex;
@@ -132,7 +136,6 @@
     gap: 14px;
     margin-left: auto;
   }
-
   .game-navigation {
     display: flex;
     justify-content: space-between;
@@ -149,10 +152,10 @@
     min-height: 48px;
     padding: 0;
     place-items: center;
-    border: 3px solid var(--theme-ink);
-    color: var(--theme-ink);
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-pink-text);
     background: var(--theme-white);
-    box-shadow: 5px 5px 0 var(--theme-teal);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font-size: 0.78rem;
     font-weight: 900;
     font-family: inherit;
@@ -161,12 +164,14 @@
   }
   .game-navigation a:hover,
   .game-navigation button:hover:not(:disabled) {
-    color: var(--theme-ink);
-    background: var(--theme-gold);
+    box-shadow: 3px 3px 0 var(--theme-gold);
+    transform: translate(2px, 2px);
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
   }
   .game-navigation a:active,
   .game-navigation button:active:not(:disabled) {
-    box-shadow: 2px 2px 0 var(--theme-teal);
+    box-shadow: 2px 2px 0 var(--theme-gold);
     transform: translate(3px, 3px);
   }
   .game-navigation button:disabled {
@@ -195,6 +200,9 @@
     }
   }
   @media (max-width: 560px) {
+    .header-tools {
+      gap: 8px;
+    }
     .game-nav {
       padding-top: 16px;
     }
@@ -204,7 +212,7 @@
     .game-navigation a,
     .game-navigation button {
       min-height: 44px;
-      font-size: 0.7rem;
+      font-size: clamp(0.625rem, 3.125vw, 0.7rem);
     }
   }
 </style>

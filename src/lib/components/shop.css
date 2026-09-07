@@ -20,18 +20,18 @@
     width: 46px;
     height: 46px;
     place-items: center;
-    border: 3px solid var(--theme-ink);
-    color: var(--theme-ink);
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-pink-text);
     background: var(--theme-white);
-    box-shadow: 5px 5px 0 var(--theme-teal);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font-size: 1.6rem;
     font-weight: 900;
     line-height: 1;
     text-decoration: none;
   }
   .back-link:hover {
-    color: var(--theme-ink);
-    background: var(--theme-teal);
+    color: var(--theme-on-pink);
+    background: var(--theme-pink);
   }
   .eyebrow {
     margin: 0;
@@ -52,8 +52,8 @@
   .balance {
     padding: 10px 14px;
     color: var(--theme-ink);
-    background: var(--theme-gold);
-    border: 2px solid var(--theme-ink);
+    background: var(--theme-pink-light);
+    border: 2px solid var(--theme-pink);
   }
   .balance.debt {
     color: var(--theme-ink);
@@ -73,13 +73,14 @@
   }
   .medical-service button {
     padding: 8px 12px;
-    border: 0;
+    border: 2px solid var(--theme-pink);
     border-radius: 0;
-    color: var(--theme-ink);
-    background: var(--theme-teal);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 5px 5px 0 var(--theme-gold);
   }
   .tabs,
   .categories {
@@ -95,20 +96,22 @@
   .tabs button,
   .categories button {
     padding: 11px 15px;
-    border: 0;
-    background: transparent;
-    color: var(--theme-ink);
+    border: 2px solid var(--theme-pink);
+    background: var(--theme-white);
+    color: var(--theme-pink-text);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 5px 5px 0 var(--theme-gold);
   }
   .categories button {
-    border: 2px solid var(--theme-ink);
+    border: 2px solid var(--theme-pink);
   }
   .tabs button.active,
   .categories button.active {
-    background: var(--theme-gold);
-    box-shadow: inset 0 -4px var(--theme-ink);
+    background: var(--theme-pink);
+    box-shadow: inset 0 -4px var(--theme-gold);
+    color: var(--theme-on-pink);
   }
   .shop-toast {
     position: fixed;
@@ -129,8 +132,8 @@
   .item-card {
     padding: 14px;
     background: var(--theme-white);
-    border: 3px solid var(--theme-ink);
-    box-shadow: 5px 5px var(--theme-pink);
+    border: 3px solid var(--theme-pink);
+    box-shadow: 5px 5px var(--theme-gold);
   }
   .item-body {
     display: grid;
@@ -200,13 +203,14 @@
   .item-footer button,
   .checkout {
     padding: 8px 12px;
-    border: 0;
+    border: 2px solid var(--theme-pink);
     border-radius: 0;
-    color: var(--theme-ink);
-    background: var(--theme-teal);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 5px 5px 0 var(--theme-gold);
   }
   .quantity-stepper {
     display: inline-grid;
@@ -216,6 +220,10 @@
   .quantity-stepper button {
     min-height: 30px;
     padding: 4px;
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
+    border-color: var(--theme-pink);
+    box-shadow: none;
   }
   .quantity-stepper output {
     min-width: 28px;
@@ -237,9 +245,10 @@
     width: 28px;
     min-height: 28px;
     padding: 0;
-    border: 1px solid var(--theme-ink);
-    background: var(--theme-gold);
-    color: var(--theme-ink);
+    border: 1px solid var(--theme-pink);
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
+    box-shadow: none;
   }
   .cart-line output {
     display: inline-block;
@@ -259,6 +268,10 @@
     padding: 42px;
     color: var(--theme-ink);
     text-align: center;
+  }
+  button:hover:not(:disabled) {
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
   }
   button:disabled {
     cursor: not-allowed;

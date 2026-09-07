@@ -42,10 +42,10 @@
   summary {
     min-height: 42px;
     padding: 10px 16px;
-    border: 3px solid var(--theme-ink);
-    color: var(--theme-ink);
-    background: var(--theme-gold);
-    box-shadow: 4px 4px 0 var(--theme-pink);
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font-size: 0.78rem;
     font-weight: 900;
     cursor: pointer;
@@ -54,21 +54,17 @@
   summary::-webkit-details-marker {
     display: none;
   }
-  summary:hover {
-    color: var(--theme-ink);
-    background: var(--theme-teal);
-  }
   .settings-menu {
     position: absolute;
     z-index: 20;
     top: calc(100% + 10px);
     right: 0;
     width: min(320px, calc(100vw - 32px));
-    border: 3px solid var(--theme-ink);
+    border: 3px solid var(--theme-pink);
     padding: 18px;
     color: var(--theme-ink);
-    background: var(--theme-white);
-    box-shadow: 6px 6px 0 var(--theme-pink);
+    background: var(--theme-pink-light);
+    box-shadow: 6px 6px 0 var(--theme-gold);
     font-size: 0.8rem;
     line-height: 1.45;
   }
@@ -82,16 +78,25 @@
     width: 100%;
     min-height: 42px;
     padding: 10px 16px;
-    border: 3px solid var(--theme-ink);
-    color: var(--theme-ink);
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-pink-text);
     background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     cursor: pointer;
     font: inherit;
     font-weight: 900;
   }
+  summary:hover,
   button:hover:not(:disabled) {
-    color: var(--theme-ink);
-    background: var(--theme-teal);
+    box-shadow: 3px 3px 0 var(--theme-gold);
+    transform: translate(2px, 2px);
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
+  }
+  summary:active,
+  button:active:not(:disabled) {
+    box-shadow: 2px 2px 0 var(--theme-gold);
+    transform: translate(3px, 3px);
   }
   button:disabled {
     cursor: wait;

@@ -6,6 +6,7 @@
   import CompanionOverview from './CompanionOverview.svelte';
   import InventorySelectionDialog from './InventorySelectionDialog.svelte';
   import RecentEventsPanel from './RecentEventsPanel.svelte';
+  import RoomBackground from './RoomBackground.svelte';
   import './room.css';
   import './room-scene.css';
 
@@ -150,6 +151,7 @@
 
       <section class="room-card" aria-label={`${model.companion.name}'s room`}>
         <div class="room-scene">
+          <RoomBackground {daypart} />
           {#each model.anchors as anchor (anchor.key)}
             <div
               class={`anchor anchor-${anchor.key}`}

@@ -32,11 +32,28 @@
   }
 
   button {
-    border: 0;
-    color: inherit;
-    background: transparent;
+    min-height: 42px;
+    padding: 6px 8px;
+    white-space: nowrap;
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     cursor: pointer;
     font: inherit;
-    text-decoration: underline;
+  }
+  button:hover:not(:disabled) {
+    color: var(--theme-on-pink);
+    background: var(--theme-pink);
+    box-shadow: 3px 3px 0 var(--theme-gold);
+    transform: translate(2px, 2px);
+  }
+  button:active:not(:disabled) {
+    box-shadow: 2px 2px 0 var(--theme-gold);
+    transform: translate(3px, 3px);
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
   }
 </style>

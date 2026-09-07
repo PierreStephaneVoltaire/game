@@ -1,0 +1,371 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 900 680"
+  role="img"
+  aria-labelledby="room-title room-desc"
+>
+  <title id="room-title">Room with a front-view bed</title>
+  <desc id="room-desc">
+    Two walls and a wooden floor. A raised window has orange afternoon light.
+    Simple rectangular furniture includes a bed on the left, a shelf against the
+    back wall, and a solid-panel desk on the right. The chair, rug and cat
+    corner sit between the bed and desk.
+  </desc>
+  <style>
+    #morning:target ~ #window-sky {
+      fill: #ccefe8;
+    }
+    #evening:target ~ #window-sky {
+      fill: #f1cad0;
+    }
+    #night:target ~ #window-sky {
+      fill: #8d8cb8;
+    }
+  </style>
+  <g id="morning" />
+  <g id="evening" />
+  <g id="night" />
+  <defs>
+    <clipPath id="floor-clip">
+      <polygon points="170,355 860,355 860,650 90,650 90,545" />
+    </clipPath>
+  </defs>
+  <polygon
+    id="main-wall"
+    points="170,45 860,45 860,355 170,355"
+    fill="#FFF1DF"
+  />
+  <polygon
+    id="side-wall"
+    points="90,155 170,45 170,355 90,545"
+    fill="#E7D5BA"
+  />
+  <polygon
+    id="wood-floor"
+    points="170,355 860,355 860,650 90,650 90,545"
+    fill="#C99468"
+  />
+  <g
+    clip-path="url(#floor-clip)"
+    fill="none"
+    stroke="#A5714D"
+    stroke-width="1.5"
+  >
+    <path d="M170 355 l-124.21 295" />
+    <path d="M280 355 l-124.21 295" />
+    <path d="M390 355 l-124.21 295" />
+    <path d="M500 355 l-124.21 295" />
+    <path d="M610 355 l-124.21 295" />
+    <path d="M720 355 l-124.21 295" />
+    <path d="M830 355 l-124.21 295" />
+    <path d="M940 355 l-124.21 295" />
+    <path d="M1050 355 l-124.21 295" />
+    <path d="M1160 355 l-124.21 295" />
+    <path d="M148.52 406 h110" />
+    <path d="M368.52 406 h110" />
+    <path d="M588.52 406 h110" />
+    <path d="M808.52 406 h110" />
+    <path d="M1028.52 406 h110" />
+    <path d="M232.84 467 h110" />
+    <path d="M452.84 467 h110" />
+    <path d="M672.84 467 h110" />
+    <path d="M892.84 467 h110" />
+    <path d="M1112.84 467 h110" />
+    <path d="M97.16 528 h110" />
+    <path d="M317.16 528 h110" />
+    <path d="M537.16 528 h110" />
+    <path d="M757.16 528 h110" />
+    <path d="M977.16 528 h110" />
+    <path d="M181.48 589 h110" />
+    <path d="M401.48 589 h110" />
+    <path d="M621.48 589 h110" />
+    <path d="M841.48 589 h110" />
+    <path d="M1061.48 589 h110" />
+  </g>
+  <polygon
+    id="back-skirting"
+    points="170,347 860,347 860,355 170,355"
+    fill="#7D4A36"
+  />
+  <polygon
+    id="side-skirting"
+    points="90,534 170,344 170,355 90,545"
+    fill="#7D4A36"
+  />
+  <polygon
+    id="decoration-frame"
+    points="109.05,230 152.86,170 152.86,270 109.05,330"
+    fill="#7D4A36"
+  />
+  <polygon
+    id="decoration-paper"
+    points="112.10,233 149.81,181 149.81,267 112.10,319"
+    fill="#FFF9EE"
+  />
+  <rect
+    id="window-frame"
+    x="520"
+    y="83"
+    width="230"
+    height="160"
+    fill="#7D4A36"
+  />
+  <rect
+    id="window-sky"
+    x="530"
+    y="93"
+    width="210"
+    height="140"
+    fill="#F3B46D"
+    data-part="window-sky"
+  />
+  <rect
+    id="window-upright"
+    x="630"
+    y="93"
+    width="8"
+    height="140"
+    fill="#FFF9EE"
+  />
+  <rect
+    id="window-crossbar"
+    x="530"
+    y="158"
+    width="210"
+    height="8"
+    fill="#FFF9EE"
+  />
+  <rect
+    id="window-sill"
+    x="510"
+    y="239"
+    width="250"
+    height="10"
+    fill="#AC7751"
+  />
+  <g
+    aria-label="Wall decoration placement marker"
+    transform="matrix(0.3809525 0 0 1 74.761905 0)"
+  >
+    <rect x="130" y="230" width="34" height="34" fill="#FFF9EE" />
+    <path d="M147 239v16 M139 247h16" stroke="#7D4A36" stroke-width="3" />
+  </g>
+  <g
+    id="shelf"
+    aria-label="Shelf against the back wall between the bed and side wall"
+    transform="translate(-110 -19)"
+  >
+    <rect
+      id="shelf-frame"
+      x="280"
+      y="180"
+      width="110"
+      height="194"
+      fill="#7D4A36"
+    />
+    <rect
+      id="shelf-interior"
+      x="288"
+      y="188"
+      width="94"
+      height="178"
+      fill="#E7D5BA"
+    />
+    <rect
+      id="shelf-upper-board"
+      x="288"
+      y="243"
+      width="94"
+      height="7"
+      fill="#7D4A36"
+    />
+    <rect
+      id="shelf-lower-board"
+      x="288"
+      y="305"
+      width="94"
+      height="7"
+      fill="#7D4A36"
+    />
+  </g>
+  <g id="bed" aria-label="Front-view bed" transform="translate(140 -161)">
+    <rect
+      id="bed-headboard"
+      x="164"
+      y="395"
+      width="192"
+      height="104"
+      fill="#7D4A36"
+    />
+    <rect
+      id="bed-headboard-inset"
+      x="172"
+      y="403"
+      width="176"
+      height="88"
+      fill="#AC7751"
+    />
+    <rect
+      id="bed-left-pillow"
+      x="179"
+      y="422"
+      width="72"
+      height="35"
+      fill="#EAA7B8"
+    />
+    <rect
+      id="bed-right-pillow"
+      x="269"
+      y="422"
+      width="72"
+      height="35"
+      fill="#EAA7B8"
+    />
+    <rect
+      id="bed-mattress"
+      x="152"
+      y="461"
+      width="216"
+      height="42"
+      fill="#EAA7B8"
+    />
+    <rect
+      id="bed-base"
+      x="140"
+      y="503"
+      width="240"
+      height="82"
+      fill="#7D4A36"
+    />
+    <rect
+      id="bed-left-foot"
+      x="151"
+      y="585"
+      width="14"
+      height="16"
+      fill="#583829"
+    />
+    <rect
+      id="bed-right-foot"
+      x="355"
+      y="585"
+      width="14"
+      height="16"
+      fill="#583829"
+    />
+  </g>
+  <g
+    id="desk"
+    aria-label="Desk tucked against the right edge with a solid lower panel"
+  >
+    <rect
+      id="desk-panel"
+      x="733"
+      y="375"
+      width="127"
+      height="119"
+      fill="#7D4A36"
+    />
+    <rect
+      id="desk-top"
+      x="719"
+      y="356"
+      width="141"
+      height="19"
+      fill="#AC7751"
+    />
+    <rect
+      id="monitor-stand"
+      x="801"
+      y="337"
+      width="10"
+      height="19"
+      fill="#583829"
+    />
+    <rect
+      id="monitor-frame"
+      x="762"
+      y="278"
+      width="88"
+      height="59"
+      fill="#583829"
+    />
+    <rect
+      id="monitor-screen"
+      x="768"
+      y="284"
+      width="76"
+      height="47"
+      fill="#C3D2D0"
+    />
+  </g>
+  <g
+    id="chair"
+    transform="translate(0 -60)"
+    aria-label="Simple side-view chair facing right toward the desk"
+  >
+    <rect
+      id="chair-back"
+      x="622"
+      y="386"
+      width="16"
+      height="77"
+      fill="#454545"
+    />
+    <rect
+      id="chair-seat"
+      x="622"
+      y="449"
+      width="67"
+      height="15"
+      fill="#454545"
+    />
+    <rect
+      id="chair-post"
+      x="653"
+      y="464"
+      width="11"
+      height="46"
+      fill="#000000"
+    />
+    <rect
+      id="chair-base"
+      x="625"
+      y="510"
+      width="75"
+      height="8"
+      fill="#000000"
+    />
+    <rect
+      id="chair-left-wheel"
+      x="625"
+      y="518"
+      width="12"
+      height="9"
+      fill="#000000"
+    />
+    <rect
+      id="chair-right-wheel"
+      x="688"
+      y="518"
+      width="12"
+      height="9"
+      fill="#000000"
+    />
+  </g>
+  <g
+    id="floor-item"
+    transform="translate(247 0)"
+    aria-label="Floor item directly in front of the desk"
+  >
+    <rect
+      id="rug-border"
+      x="490"
+      y="540"
+      width="105"
+      height="70"
+      fill="#7D4A36"
+    />
+    <rect id="rug" x="497" y="547" width="91" height="56" fill="#DB9EAC" />
+  </g>
+</svg>

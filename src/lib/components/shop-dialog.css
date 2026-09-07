@@ -46,13 +46,18 @@ body:has(.shop-dialog[open]) {
     position: absolute;
     top: 8px;
     right: 8px;
-    border: 0;
-    color: var(--theme-ink);
-    background: transparent;
+    border: 2px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font: inherit;
     font-size: 1.4rem;
     font-weight: 900;
     cursor: pointer;
+  }
+  .dialog-close:hover:not(:disabled) {
+    color: var(--theme-on-pink);
+    background: var(--theme-pink);
   }
 
   .offer-detail-dialog::backdrop {

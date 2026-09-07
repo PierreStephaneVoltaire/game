@@ -15,5 +15,16 @@
   "warm-white": "#F5E9DD",
   "blonde": "#F3D681",
   "white": "#FFFFFF",
-  "on-pink": "#000000"
+  "on-pink": "#000000",
+  "pink-text": "#8F2949",
+  "pink-pale": "#FCE7EE",
+  "room-wall": "#FFF1DF",
+  "room-floor": "#C99468",
+  "room-foreground": "#D19E72",
+  "room-wood": "#7D4A36",
+  "room-bed": "#EAA7B8",
+  "room-window-morning": "#CCEFE8",
+  "room-window-day": "#BFE7F4",
+  "room-window-evening": "#F1CAD0",
+  "room-window-night": "#8D8CB8"
 }
