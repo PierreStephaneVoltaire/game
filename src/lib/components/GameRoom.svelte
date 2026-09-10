@@ -4,6 +4,7 @@
   import { daypartFor, type GameIntent } from '$lib/ui/game-view-model';
   import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
   import CompanionOverview from './CompanionOverview.svelte';
+  import CompanionAvatar from './CompanionAvatar.svelte';
   import InventorySelectionDialog from './InventorySelectionDialog.svelte';
   import RecentEventsPanel from './RecentEventsPanel.svelte';
   import RoomBackground from './RoomBackground.svelte';
@@ -195,14 +196,9 @@
               </div>
             {/each}
           </div>
-          <img
-            class="companion"
-            src={model.activeAvatar.assetPath}
-            alt={model.companion.name}
-            data-appearance-id={model.activeAvatar.id}
-            width="176"
-            height="176"
-            decoding="async"
+          <CompanionAvatar
+            name={model.companion.name}
+            appearance={model.activeAvatar}
           />
         </div>
       </section>

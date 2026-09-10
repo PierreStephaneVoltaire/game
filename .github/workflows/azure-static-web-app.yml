@@ -113,6 +113,16 @@ jobs:
           test -n "$database_url"
           DATABASE_URL="$database_url" python -m tools.global_content_publisher.cli --if-empty
 
+      - name: Import companion quotes
+        env:
+          PYTHONPATH: .:api
+        run: |
+          quote_file="$RUNNER_TEMP/companion-quotes.json"
+          az storage blob download --account-name legallydistinctvi95b050d --container-name companion-content --name companion-quotes.json --file "$quote_file" --auth-mode login --only-show-errors --output none
+          database_url="$(az staticwebapp appsettings list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.DATABASE_URL --output tsv)"
+          test -n "$database_url"
+          DATABASE_URL="$database_url" python -m tools.global_content_publisher.quotes "$quote_file"
+
       - name: Configure existing API environment before deployment
         env:
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}

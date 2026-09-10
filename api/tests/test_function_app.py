@@ -23,6 +23,7 @@ def test_each_route_is_a_native_function() -> None:
         "get_game",
         "get_grave",
         "get_manifest",
+        "get_quotes",
         "health",
         "list_games",
         "list_graves",

@@ -32,6 +32,7 @@ test-results/
 .DS_Store
 *.log
 .tmp-*.json
+.local-content/companion-quotes.json
 
 infra/.terraform/
 *.tfstate

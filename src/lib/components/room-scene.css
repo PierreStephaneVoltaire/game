@@ -17,17 +17,6 @@
 .room-scene .room-background-frame {
   background: var(--theme-room-wall);
 }
-.companion {
-  position: absolute;
-  z-index: 2;
-  bottom: -10px;
-  left: 57%;
-  width: min(274.56px, 42.12%);
-  height: auto;
-  image-rendering: pixelated;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
 .anchor {
   position: absolute;
   z-index: 1;
