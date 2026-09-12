@@ -4,8 +4,10 @@
   import { daypartFor, type GameIntent } from '$lib/ui/game-view-model';
   import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
   import CompanionOverview from './CompanionOverview.svelte';
+  import CompanionAvatar from './CompanionAvatar.svelte';
   import InventorySelectionDialog from './InventorySelectionDialog.svelte';
   import RecentEventsPanel from './RecentEventsPanel.svelte';
+  import RoomBackground from './RoomBackground.svelte';
   import './room.css';
   import './room-scene.css';
 
@@ -14,6 +16,7 @@
   let errorMessage = '';
   let picker: PickerKind | null = null;
   let roomSlot = '';
+  let roomHeight = 0;
   $: model = $gameViewModel;
   $: daypart = model ? daypartFor(model.now, model.timezone) : 'day';
   $: edibleItems = model?.inventory.filter((item) => item.edible) ?? [];
@@ -148,57 +151,63 @@
         onIntent={act}
       />
 
-      <section class="room-card" aria-label={`${model.companion.name}'s room`}>
+      <section
+        class="room-card"
+        bind:offsetHeight={roomHeight}
+        aria-label={`${model.companion.name}'s room`}
+      >
         <div class="room-scene">
-          {#each model.anchors as anchor (anchor.key)}
-            <div
-              class={`anchor anchor-${anchor.key}`}
-              role="group"
-              aria-label={anchor.label}
-            >
-              <span class="anchor-label">{anchor.label}</span>
-              {#if anchor.item}
-                <img
-                  src={anchor.item.image}
-                  alt={anchor.item.name}
-                  width="64"
-                  height="64"
-                  decoding="async"
-                />
-                <button
-                  type="button"
-                  class="anchor-unplace"
-                  on:click={() =>
-                    anchor.item?.placedSlot && unplace(anchor.item.placedSlot)}
-                  disabled={careBlocked}
-                  aria-label={`Unplace ${anchor.item.name}`}>Unplace</button
-                >
-              {:else}
-                <button
-                  type="button"
-                  class="anchor-place"
-                  on:click={() => openRoomPicker(anchor.key)}
-                  disabled={careBlocked}
-                  aria-label={`Choose an item for ${anchor.label}`}
-                >
-                  <span class="anchor-empty" aria-hidden="true">+</span>
-                </button>
-              {/if}
-            </div>
-          {/each}
-          <img
-            class="companion"
-            src={model.activeAvatar.assetPath}
-            alt={model.companion.name}
-            data-appearance-id={model.activeAvatar.id}
-            width="176"
-            height="176"
-            decoding="async"
+          <div class="room-contents">
+            <RoomBackground {daypart} />
+            {#each model.anchors as anchor (anchor.key)}
+              <div
+                class={`anchor anchor-${anchor.key}`}
+                role="group"
+                aria-label={anchor.label}
+              >
+                {#if anchor.item}
+                  <img
+                    src={anchor.item.image}
+                    alt={anchor.item.name}
+                    width="64"
+                    height="64"
+                    decoding="async"
+                  />
+                  <button
+                    type="button"
+                    class="anchor-unplace"
+                    on:click={() =>
+                      anchor.item?.placedSlot &&
+                      unplace(anchor.item.placedSlot)}
+                    disabled={careBlocked}
+                    aria-label={`Unplace ${anchor.item.name}`}>Unplace</button
+                  >
+                {:else}
+                  <button
+                    type="button"
+                    class="anchor-place"
+                    on:click={() => openRoomPicker(anchor.key)}
+                    disabled={careBlocked}
+                    aria-label={`Choose an item for ${anchor.label}`}
+                  >
+                    <span class="anchor-empty" aria-hidden="true">+</span>
+                  </button>
+                {/if}
+              </div>
+            {/each}
+          </div>
+          <CompanionAvatar
+            name={model.companion.name}
+            appearance={model.activeAvatar}
           />
         </div>
       </section>
 
-      <RecentEventsPanel events={recentEvents} timezone={model.timezone} />
+      <RecentEventsPanel
+        events={recentEvents}
+        timezone={model.timezone}
+        height={roomHeight}
+      />
     </section>
 
     <section

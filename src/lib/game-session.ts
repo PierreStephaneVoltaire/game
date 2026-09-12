@@ -1,9 +1,6 @@
 import { derived, writable } from 'svelte/store';
 import { GameController } from './game-controller';
-import type {
-  GameDefinition,
-  GameDefinitionRepository,
-} from './game-definition';
+import type { GameDefinitionRepository } from './game-definition';
 import { InMemoryGameDefinitionRepository } from './game-definition';
 import { RuntimeContentCache } from './content/runtime-content';
 import type { GameCommand, GameState, Outcome } from './game-types';
@@ -24,14 +21,13 @@ import {
 import { nextOutbox, replacePending } from './persistence/outbox';
 import { flushGame } from './persistence/sync';
 import type { EventRecord } from './persistence/types';
+import type { SpeechSession } from './ui/companion-speech';
 export const pendingGameKey = writable<string | null>(null);
 
 const runtimeContent = new RuntimeContentCache();
 let activeController = new GameController(runtimeContent);
-const gameSession = writable<{
-  state: GameState;
-  definition: GameDefinition;
-} | null>(null);
+const gameSession = writable<SpeechSession | null>(null);
+export const companionSpeechSession = { subscribe: gameSession.subscribe };
 const commandSequence = new UiCommandSequence();
 export const gameViewModel = derived<typeof gameSession, GameViewModel | null>(
   gameSession,
@@ -39,10 +35,14 @@ export const gameViewModel = derived<typeof gameSession, GameViewModel | null>(
     $session ? createGameViewModel($session.state, $session.definition) : null,
 );
 
-function publishGameState(state: GameState): void {
+function publishGameState(
+  state: GameState,
+  command?: GameCommand,
+  outcome?: Outcome,
+): void {
   const definition = activeController.currentDefinition;
   if (!definition) throw new Error('Game definition was not loaded.');
-  gameSession.set({ state, definition });
+  gameSession.set({ state, definition, command, outcome });
 }
 
 type RemoteGame = {
@@ -214,7 +214,7 @@ async function sendGameCommand(command: GameCommand): Promise<Outcome> {
   if (!before) throw new Error('Start a game session before sending actions.');
   const transition = await activeController.dispatch(command);
   await saveTransition(before, transition.state, command);
-  publishGameState(transition.state);
+  publishGameState(transition.state, command, transition.outcomes[0]);
   syncGame(transition.state.seed);
   return (
     transition.outcomes[0] ?? {

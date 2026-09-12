@@ -32,3 +32,10 @@ class ContentPointer(Base):
         String(64), ForeignKey("content_versions.version"), nullable=False
     )
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class CompanionQuotePool(Base):
+    __tablename__ = "companion_quote_pools"
+
+    action: Mapped[str] = mapped_column(String(255), primary_key=True)
+    quotes_json: Mapped[str] = mapped_column(Text, nullable=False)

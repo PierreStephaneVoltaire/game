@@ -3,21 +3,11 @@ name: Azure Static Web App
 on:
   push:
     branches:
-      - main
-      - static-web-hosting
-  pull_request:
-    branches:
-      - main
-    types:
-      - opened
-      - synchronize
-      - reopened
-      - closed
+      - '**'
 
 permissions:
   contents: read
   id-token: write
-  pull-requests: write
 
 concurrency:
   group: azure-static-web-app
@@ -25,19 +15,16 @@ concurrency:
 
 jobs:
   infrastructure:
-    if: >-
-      github.event_name == 'push' ||
-      (github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
     uses: ./.github/workflows/terraform-checks.yml
     secrets: inherit
 
   build_test_and_deploy:
     needs: infrastructure
-    if: github.event_name == 'push' || github.event.action != 'closed'
     runs-on: ubuntu-latest
     env:
       STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
       RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
+      API_ENVIRONMENT: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/static-web-hosting') && 'default' || 'staging' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -126,9 +113,18 @@ jobs:
           test -n "$database_url"
           DATABASE_URL="$database_url" python -m tools.global_content_publisher.cli --if-empty
 
+      - name: Import companion quotes
+        env:
+          PYTHONPATH: .:api
+        run: |
+          quote_file="$RUNNER_TEMP/companion-quotes.json"
+          az storage blob download --account-name legallydistinctvi95b050d --container-name companion-content --name companion-quotes.json --file "$quote_file" --auth-mode login --only-show-errors --output none
+          database_url="$(az staticwebapp appsettings list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.DATABASE_URL --output tsv)"
+          test -n "$database_url"
+          DATABASE_URL="$database_url" python -m tools.global_content_publisher.quotes "$quote_file"
+
       - name: Configure existing API environment before deployment
         env:
-          API_ENVIRONMENT: ${{ github.event.pull_request.number || 'default' }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
           AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
@@ -141,12 +137,12 @@ jobs:
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: upload
           app_location: build
           api_location: api
           output_location: ''
           skip_app_build: true
+          deployment_environment: ${{ env.API_ENVIRONMENT != 'default' && env.API_ENVIRONMENT || '' }}
 
       - name: Verify deployment and report app URL
         env:
@@ -161,7 +157,6 @@ jobs:
       - name: Configure deployed API environment
         env:
           APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
-          API_ENVIRONMENT: ${{ github.event.pull_request.number || 'default' }}
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
           AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
@@ -192,14 +187,3 @@ jobs:
           AUTH_TEST_USERNAME: admin
           AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
         run: node tools/check_game.mjs
-
-  close_pull_request:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Close Azure preview environment
-        uses: Azure/static-web-apps-deploy@v1
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
-          action: close
-          skip_deploy_on_missing_secrets: true

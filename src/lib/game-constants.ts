@@ -38,3 +38,4 @@ export const MINUTE_MS = 60_000;
 export const DAY_MS = 24 * HOUR_MS;
 export const LOCAL_MIDNIGHT_SEARCH_HOURS = 36;
 export const STATUS_FIXED_POINT_PASS_LIMIT = 14;
+export const MAX_QUOTE_ACTION_LENGTH = 255;

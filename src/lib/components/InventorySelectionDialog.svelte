@@ -142,8 +142,8 @@
         >
       </div>
     {/if}
-  {:else}
-    {#if emptyMessage}<p>{emptyMessage}</p>{/if}
+  {:else if emptyMessage}
+    <p>{emptyMessage}</p>
     <div class="dialog-actions">
       <button type="button" class="secondary" on:click={onClose}>Close</button>
     </div>
@@ -155,11 +155,11 @@
     width: min(720px, calc(100% - 32px));
     max-height: calc(100vh - 48px);
     margin: auto;
-    border: 4px solid var(--theme-ink);
+    border: 4px solid var(--theme-pink);
     padding: clamp(18px, 4vw, 30px);
     color: var(--theme-ink);
     background: var(--theme-white);
-    box-shadow: 8px 8px 0 var(--theme-pink);
+    box-shadow: 8px 8px 0 var(--theme-gold);
   }
   .selection-dialog::backdrop {
     background: color-mix(in srgb, var(--theme-ink) 70%, transparent);
@@ -175,9 +175,10 @@
     color: var(--theme-ink);
   }
   .dialog-close {
-    border: 0;
-    color: var(--theme-ink);
-    background: transparent;
+    border: 2px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font-size: 1.8rem;
     cursor: pointer;
   }
@@ -191,9 +192,9 @@
     gap: 5px;
     min-height: 54px;
     padding: 11px;
-    border: 3px solid var(--theme-ink);
+    border: 3px solid var(--theme-pink);
     background: var(--theme-white);
-    box-shadow: 5px 5px 0 var(--theme-pink);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     place-items: center;
   }
   button.item-choice {
@@ -217,10 +218,10 @@
     width: 34px;
     min-height: 34px;
     padding: 0;
-    border: 3px solid var(--theme-ink);
-    color: var(--theme-ink);
-    background: var(--theme-white);
-    box-shadow: 5px 5px 0 var(--theme-pink);
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-on-pink);
+    background: var(--theme-pink);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font: inherit;
     font-weight: 900;
     cursor: pointer;
@@ -241,16 +242,23 @@
   .dialog-actions button {
     min-height: 40px;
     padding: 8px 12px;
-    border: 2px solid var(--theme-ink);
-    color: var(--theme-ink);
-    background: var(--theme-teal);
+    border: 2px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
   }
-  .dialog-actions button.secondary {
-    color: var(--theme-ink);
-    background: var(--theme-gold);
+  button:hover:not(:disabled) {
+    box-shadow: 3px 3px 0 var(--theme-gold);
+    transform: translate(2px, 2px);
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
+  }
+  button:active:not(:disabled) {
+    box-shadow: 2px 2px 0 var(--theme-gold);
+    transform: translate(3px, 3px);
   }
   button:disabled {
     cursor: not-allowed;
@@ -259,5 +267,9 @@
   button:focus-visible {
     outline: 3px solid var(--theme-ink);
     outline-offset: 3px;
+  }
+  .selection-quantity button:hover:not(:disabled) {
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
   }
 </style>

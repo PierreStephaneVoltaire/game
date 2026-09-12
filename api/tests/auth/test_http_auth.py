@@ -7,8 +7,11 @@ import azure.functions as func
 from azure.functions.http import HttpResponseConverter
 import httpx
 import pytest
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
 from backend.auth import discord, routes
+from backend.auth.models import Base
 from backend.http import cookie_header, endpoint, json_response
 
 
@@ -75,6 +78,31 @@ def test_oauth_failure_logs_request_id_without_cookie_or_authorization_code(capl
     assert json.loads(response["body"])["error"]["code"] == "OAUTH_FAILED"
     assert "oauth-request-123" in caplog.text and "cause=ValueError" in caplog.text
     assert "private-code" not in caplog.text and "private-cookie" not in caplog.text
+
+
+@pytest.mark.parametrize("name", ["discord_player", "name.with&symbols"])
+def test_discord_callback_signs_up_or_preserves_username_for_onboarding(monkeypatch, name):
+    engine = create_engine("sqlite+pysqlite:///:memory:")
+    Base.metadata.create_all(engine)
+    monkeypatch.setattr(routes, "get_session_factory", lambda: sessionmaker(engine))
+
+    async def provider_profile(*args):
+        return "123456", {"username": name}, "login"
+
+    monkeypatch.setattr(routes, "profile", provider_profile)
+    request = func.HttpRequest("GET", "https://example.test/api/auth/discord/callback", body=b"")
+    response = json.loads(asyncio.run(routes.discord_callback(request)))
+    assert response["statusCode"] == 303
+    location = urlsplit(response["headers"]["Location"])
+    if name == "discord_player":
+        assert location.path == "/key" and not location.fragment
+        cookie = SimpleCookie(response["headers"]["Set-Cookie"])
+        assert cookie[routes.get_settings().session_cookie_name].value
+    else:
+        assert location.path == "/login"
+        fragment = parse_qs(location.fragment)
+        assert fragment["username"] == [name]
+        assert fragment["discord-onboarding"][0]
 
 
 def test_unhandled_exception_does_not_log_game_key_or_state(caplog):

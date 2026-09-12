@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from urllib.parse import urlencode
 
 import azure.functions as func
 from sqlalchemy.orm import Session
@@ -234,11 +235,13 @@ async def discord_callback(request: func.HttpRequest) -> func.HttpResponse:
                     discord_id,
                     provider_profile,
                 )
-                destination = (
-                    f"{settings.app_base_url}/login#discord-onboarding={onboarding}"
-                    if onboarding
-                    else f"{settings.app_base_url}/key"
-                )
+                destination = f"{settings.app_base_url}/key"
+                if onboarding:
+                    fragment = urlencode({
+                        "discord-onboarding": onboarding,
+                        "username": provider_profile.get("username") or "",
+                    })
+                    destination = f"{settings.app_base_url}/login#{fragment}"
     except AuthProblem as problem:
         _raise(problem)
     except Exception as error:

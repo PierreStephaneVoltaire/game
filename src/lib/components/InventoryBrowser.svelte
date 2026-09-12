@@ -156,17 +156,19 @@
   .inventory-categories button,
   .inventory-pagination button {
     padding: 7px 10px;
-    border: 2px solid var(--theme-ink);
-    color: var(--theme-ink);
+    border: 2px solid var(--theme-pink);
+    color: var(--theme-pink-text);
     background: var(--theme-white);
     font: inherit;
     font-size: 0.72rem;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 5px 5px 0 var(--theme-gold);
   }
   .inventory-categories button.active {
-    background: var(--theme-gold);
-    box-shadow: inset 0 -3px var(--theme-ink);
+    background: var(--theme-pink);
+    box-shadow: inset 0 -3px var(--theme-gold);
+    color: var(--theme-on-pink);
   }
   .inventory-grid {
     display: grid;
@@ -180,16 +182,19 @@
     align-items: center;
     min-width: 0;
     padding: 8px;
-    border: 2px solid var(--theme-ink);
-    color: var(--theme-ink);
+    border: 2px solid var(--theme-pink);
+    color: var(--theme-pink-text);
     background: var(--theme-white);
     font: inherit;
     text-align: left;
     cursor: pointer;
+    box-shadow: 5px 5px 0 var(--theme-gold);
   }
   .inventory-card:hover {
-    border-color: var(--theme-ink);
-    box-shadow: 3px 3px var(--theme-pink);
+    border-color: var(--theme-pink);
+    box-shadow: 3px 3px var(--theme-gold);
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
   }
   .inventory-card img {
     image-rendering: pixelated;
@@ -250,5 +255,10 @@
     .inventory-grid {
       grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
     }
+  }
+  .inventory-categories button:hover:not(:disabled),
+  .inventory-pagination button:hover:not(:disabled) {
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
   }
 </style>

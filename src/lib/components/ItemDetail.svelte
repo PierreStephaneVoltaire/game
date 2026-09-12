@@ -94,10 +94,10 @@
     width: min(560px, calc(100% - 32px));
     max-height: calc(100vh - 40px);
     margin: auto;
-    border: 4px solid var(--theme-ink);
+    border: 4px solid var(--theme-pink);
     padding: 0;
     background: var(--theme-white);
-    box-shadow: 8px 8px 0 var(--theme-pink);
+    box-shadow: 8px 8px 0 var(--theme-gold);
   }
   .detail-dialog::backdrop {
     background: color-mix(in srgb, var(--theme-ink) 70%, transparent);
@@ -161,20 +161,21 @@
   button {
     min-height: 40px;
     padding: 9px 13px;
-    border: 2px solid var(--theme-ink);
-    background: var(--theme-teal);
-    color: var(--theme-ink);
+    border: 2px solid var(--theme-pink);
+    background: var(--theme-white);
+    color: var(--theme-pink-text);
     font: inherit;
     font-weight: 800;
     cursor: pointer;
+    box-shadow: 5px 5px 0 var(--theme-gold);
   }
   button:disabled {
     cursor: not-allowed;
     opacity: 0.45;
   }
   button.secondary {
-    background: var(--theme-gold);
-    color: var(--theme-ink);
+    background: var(--theme-white);
+    color: var(--theme-pink-text);
   }
   button.close {
     position: absolute;
@@ -182,10 +183,11 @@
     right: 12px;
     min-width: 38px;
     padding: 4px;
-    color: var(--theme-ink);
+    color: var(--theme-pink-text);
     background: var(--theme-white);
-    box-shadow: 3px 3px 0 var(--theme-pink);
+    box-shadow: 5px 5px 0 var(--theme-gold);
     font-size: 1.4rem;
+    border-color: var(--theme-pink);
   }
   .outcome {
     padding: 9px;
@@ -199,5 +201,9 @@
   button:focus-visible {
     outline: 3px solid var(--theme-ink);
     outline-offset: 3px;
+  }
+  button:hover:not(:disabled) {
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
   }
 </style>

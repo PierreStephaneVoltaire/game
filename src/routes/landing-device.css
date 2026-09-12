@@ -41,128 +41,21 @@
   font-size: 1.2rem;
 }
 
-.pet {
-  position: relative;
-  width: 110px;
-  height: 135px;
-  margin-top: 14px;
-}
-
-.pet-ear,
-.bunny-ear,
-.pet-hair,
-.pet-face,
-.pet-body {
+.landing-companion {
   position: absolute;
-  display: block;
-}
-
-.bunny-ear {
-  z-index: 1;
-  top: 0;
-  width: 25px;
-  height: 49px;
-  background: #7a5a3a;
-  border: 4px solid #512b9a;
-}
-
-.bunny-ear-left {
-  left: 25px;
-  transform: rotate(-9deg);
-}
-
-.bunny-ear-right {
-  right: 25px;
-  transform: rotate(9deg);
-}
-
-.pet-ear {
-  top: 13px;
-  width: 36px;
-  height: 112px;
-  background: #f6cf67;
-  border: 4px solid #512b9a;
-}
-
-.pet-ear::after {
-  position: absolute;
-  top: 13px;
-  left: 3px;
-  width: 18px;
-  height: 3px;
-  background: #ff7ab5;
-  content: '';
-}
-
-.pet-ear-left {
-  left: 0;
-  transform: skewY(-20deg);
-}
-
-.pet-ear-right {
-  right: 0;
-  transform: skewY(20deg);
-}
-
-.pet-hair {
-  z-index: 2;
-  top: 14px;
-  left: 22px;
-  width: 66px;
-  height: 36px;
-  background: #f6cf67;
-  border: 4px solid #512b9a;
-  border-bottom: 0;
-}
-
-.pet-face {
-  z-index: 1;
-  top: 38px;
-  left: 21px;
-  width: 68px;
-  height: 58px;
-  background: #ffe2c6;
-  border: 4px solid #512b9a;
-}
-
-.pet-face i {
-  position: absolute;
-  top: 19px;
-  width: 7px;
-  height: 10px;
-  background: #2aa9a2;
-}
-
-.pet-face i:first-child {
-  left: 15px;
-}
-
-.pet-face i:nth-child(2) {
-  right: 15px;
-}
-
-.pet-face b {
-  position: absolute;
-  bottom: 11px;
-  left: 26px;
-  width: 10px;
-  height: 5px;
-  border-bottom: 3px solid #e45c8d;
-}
-
-.pet-body {
-  bottom: 3px;
-  left: 14px;
-  width: 82px;
-  height: 49px;
-  background: #ff7ab5;
-  border: 4px solid #512b9a;
+  bottom: -10px;
+  left: 57%;
+  width: 171.6px;
+  height: 210.6px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  image-rendering: pixelated;
 }
 
 .screen-message {
   position: absolute;
   right: 14px;
-  bottom: 13px;
+  bottom: 5px;
   margin: 0;
   color: var(--theme-ink);
   font-size: 0.58rem;
@@ -232,10 +125,10 @@
 .device-controls span {
   width: 30px;
   height: 30px;
-  background: var(--theme-white);
+  background: var(--theme-gold);
   border: 3px solid var(--theme-ink);
   border-radius: 0;
-  box-shadow: 2px 3px 0 var(--theme-ink);
+  box-shadow: 2px 3px 0 var(--theme-teal);
 }
 
 .sticker {

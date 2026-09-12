@@ -42,6 +42,10 @@ export const test = base.extend<{ requestViolations: string[] }>({
             headers: cookie ? { 'set-cookie': cookie } : undefined,
             body: JSON.stringify(body),
           });
+        if (path === '/api/content/quotes') {
+          await json({});
+          return;
+        }
         if (path === '/api/content/manifest') {
           if (
             request.headers()['if-none-match'] === `"${definition.version}"`

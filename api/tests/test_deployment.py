@@ -11,7 +11,7 @@ from tools import check_api, configure_api, setup_api_database
 
 def test_preview_settings_use_the_preview_origin_and_runtime_credentials(monkeypatch):
     values = {
-        "APP_URL": "https://preview.example.test/", "API_ENVIRONMENT": "8",
+        "APP_URL": "https://preview.example.test/", "API_ENVIRONMENT": "staging",
         "SIGNING_SECRET": "signing", "DISCORD_CLIENT_SECRET": "discord",
         "AZURE_DATABASE_CLIENT_ID": "runtime", "AZURE_DATABASE_CLIENT_SECRET": "credential",
         "AZURE_TENANT_ID": "tenant",
@@ -35,7 +35,7 @@ def test_preview_settings_use_the_preview_origin_and_runtime_credentials(monkeyp
 
 
 def test_new_preview_is_configured_only_after_creation(monkeypatch):
-    monkeypatch.setenv("API_ENVIRONMENT", "8")
+    monkeypatch.setenv("API_ENVIRONMENT", "staging")
     monkeypatch.setenv("STATIC_WEB_APP_NAME", "app")
     monkeypatch.setenv("RESOURCE_GROUP_NAME", "group")
     monkeypatch.delenv("APP_URL", raising=False)
@@ -47,14 +47,14 @@ def test_new_preview_is_configured_only_after_creation(monkeypatch):
 
 
 def test_existing_preview_settings_do_not_trigger_another_restart(monkeypatch):
-    monkeypatch.setenv("API_ENVIRONMENT", "8")
+    monkeypatch.setenv("API_ENVIRONMENT", "staging")
     monkeypatch.setenv("STATIC_WEB_APP_NAME", "app")
     monkeypatch.setenv("RESOURCE_GROUP_NAME", "group")
     monkeypatch.delenv("APP_URL", raising=False)
     for key in ("SIGNING_SECRET", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
                 "AZURE_DATABASE_CLIENT_SECRET", "AZURE_TENANT_ID"):
         monkeypatch.setenv(key, "configured")
-    azure = MagicMock(return_value=[{"name": "8", "hostname": "preview.example.test"}])
+    azure = MagicMock(return_value=[{"name": "staging", "hostname": "preview.example.test"}])
     monkeypatch.setattr(configure_api, "azure", azure)
 
     def settings(environment="default"):

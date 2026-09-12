@@ -48,71 +48,74 @@
     {/each}
   </section>
 
-  <StatusPanel statuses={model.statuses} />
-  {#if hospitalAvailable}
-    <button
-      class="secondary-action"
-      type="button"
-      on:click={() => hospitalDialog.showModal()}
-      {disabled}>Hospital</button
-    >
-  {/if}
-
-  <section class="time-balance" aria-label="Time and balance">
-    <h2>Time</h2>
-    <span>{model.formattedTime}</span>
-    <strong>Balance: ${numbers.format(model.balance)}</strong>
-    <span>Subscribers: {numbers.format(model.followers)}</span>
-    {#if model.madeItUnlocked && !model.ending}<strong
-        >Ending unlocked: Made It</strong
-      >{/if}
-    <span><strong>Career:</strong> {model.career.label}</span>
-    <span
-      ><strong>Streams:</strong>
-      {numbers.format(model.streamStats.completed)}</span
-    >
-    {#if model.career.nextMilestone}
-      <span
-        >Next milestone: {model.career.nextMilestone.label} · {numbers.format(
-          model.career.nextMilestone.remaining,
-        )} to go</span
-      >
-    {:else}
-      <span>All career milestones reached</span>
-    {/if}
-    {#each model.projects as project (project.id)}
-      <div class="project-progress">
-        <div>
-          <span>{project.label}</span><strong
-            >{project.progressPercentage}%</strong
-          >
-        </div>
-        <meter
-          min="0"
-          max="100"
-          value={project.progressPercentage}
-          aria-label={`${project.label}: ${project.progressPercentage}% complete`}
-          >{project.progressPercentage}%</meter
-        >
-        <small>Due {activityTime(project.endsAt)}</small>
-      </div>
-    {/each}
-    {#if model.activity}
-      <p class="activity" role="status">
-        {model.companion.name} is {model.activity.label} until
-        {activityTime(model.activity.endsAt)}.
-      </p>
-    {/if}
-    {#if model.mode === 'streaming' && !model.ending}
+  <div class="status-time-card">
+    <StatusPanel statuses={model.statuses} />
+    {#if hospitalAvailable}
       <button
         class="secondary-action"
         type="button"
-        on:click={() => onIntent({ type: 'wait' })}
-        {disabled}>Advance time</button
+        on:click={() => hospitalDialog.showModal()}
+        {disabled}>Hospital</button
       >
     {/if}
-  </section>
 
+    <section class="time-balance" aria-label="Time and balance">
+      <div class="session-clock">
+        <h2>Time</h2>
+        <span>{model.formattedTime}</span>
+      </div>
+      <strong>Balance: ${numbers.format(model.balance)}</strong>
+      <span>Subscribers: {numbers.format(model.followers)}</span>
+      {#if model.madeItUnlocked && !model.ending}<strong
+          >Ending unlocked: Made It</strong
+        >{/if}
+      <span><strong>Career:</strong> {model.career.label}</span>
+      <span
+        ><strong>Streams:</strong>
+        {numbers.format(model.streamStats.completed)}</span
+      >
+      {#if model.career.nextMilestone}
+        <span
+          >Next milestone: {model.career.nextMilestone.label} · {numbers.format(
+            model.career.nextMilestone.remaining,
+          )} to go</span
+        >
+      {:else}
+        <span>All career milestones reached</span>
+      {/if}
+      {#each model.projects as project (project.id)}
+        <div class="project-progress">
+          <div>
+            <span>{project.label}</span><strong
+              >{project.progressPercentage}%</strong
+            >
+          </div>
+          <meter
+            min="0"
+            max="100"
+            value={project.progressPercentage}
+            aria-label={`${project.label}: ${project.progressPercentage}% complete`}
+            >{project.progressPercentage}%</meter
+          >
+          <small>Due {activityTime(project.endsAt)}</small>
+        </div>
+      {/each}
+      {#if model.activity}
+        <p class="activity" role="status">
+          {model.companion.name} is {model.activity.label} until
+          {activityTime(model.activity.endsAt)}.
+        </p>
+      {/if}
+      {#if model.mode === 'streaming' && !model.ending}
+        <button
+          class="secondary-action"
+          type="button"
+          on:click={() => onIntent({ type: 'wait' })}
+          {disabled}>Advance time</button
+        >
+      {/if}
+    </section>
+  </div>
   {#if model.ending}
     <section class="ending-card" role="alert">
       <h2>{model.ending.title}</h2>
@@ -159,3 +162,32 @@
     <button type="button" on:click={confirmHospital}>Confirm visit</button>
   </div>
 </dialog>
+
+<style>
+  .session-clock {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  @media (min-width: 781px) {
+    .overview-column {
+      display: contents;
+    }
+    .status-time-card {
+      grid-area: 2 / 1 / auto / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      align-items: start;
+    }
+    .time-balance {
+      display: contents;
+    }
+    .secondary-action {
+      justify-self: start;
+    }
+    .ending-card,
+    .command-error {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

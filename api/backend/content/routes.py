@@ -2,12 +2,22 @@ from __future__ import annotations
 
 import azure.functions as func
 
+from backend.auth.routes import require_user
 from backend.database import get_session_factory
 from backend.http import endpoint, json_response
 
 from .service import content_manifest, immutable_bundle
+from .quotes import read_quotes
 
 bp = func.Blueprint()
+
+
+@bp.route(route="content/quotes", methods=["GET"])
+@endpoint
+def get_quotes(request: func.HttpRequest) -> func.HttpResponse:
+    with get_session_factory()() as session:
+        require_user(request, session)
+        return json_response(read_quotes(session))
 
 
 @bp.route(route="content/manifest", methods=["GET"])
