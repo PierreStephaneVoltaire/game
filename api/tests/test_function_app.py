@@ -35,6 +35,7 @@ def test_each_route_is_a_native_function() -> None:
         "register",
         "reset",
         "write_game",
+        "telemetry_batch",
     }
 
 

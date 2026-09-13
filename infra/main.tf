@@ -5,9 +5,10 @@ locals {
     module.game_data.app_settings,
     module.global_data.app_settings,
     {
-      DATABASE_URL      = module.database.database_url
-      DATABASE_USERNAME = var.database_runtime_username
-      ENVIRONMENT       = "production"
+      DATABASE_URL              = module.database.database_url
+      DATABASE_USERNAME         = var.database_runtime_username
+      ENVIRONMENT               = "production"
+      TELEMETRY_STORAGE_ACCOUNT = data.azurerm_storage_account.quotes.name
     }
   )
 }

@@ -76,6 +76,26 @@ gameplay rules.
   JSON-authored event, Ending, History, and archive text pools.
 - `src/lib/game-engine.ts` — pure `startRun`, `dispatchCommand`, and
   `reconcileTime` public seam.
+- `src/lib/telemetry/collector.ts` — synchronous calculation collection scoped
+  outside simulation state; records the original random draws and results.
+- `tools/trace-instrumentation.ts` — instruments expressions in engine dependencies
+  without evaluating operands twice; assigns source-rule IDs and an engine build digest.
+- `src/lib/telemetry/capture.ts` and `state-changes.ts` — per-stream operation
+  identity, initialization checkpoints, ordered state changes, and reconstruction.
+- `src/lib/telemetry/financial.ts` and `nutrition.ts` — separate purchase/payment
+  evidence and resolved feeding context, without changing financial or nutrition rules.
+- `src/lib/telemetry/browser.ts`, `outbox.ts`, `batches.ts`, and `delivery.ts` —
+  account-bound capture, independent IndexedDB storage, lossless fragmentation,
+  acknowledged uploads, and retained retry/rejection data.
+- `src/lib/persistence/replay.ts` — existing canonical-save conflict replay,
+  extracted from the session module; associates corrections with capture streams.
+- `api/backend/telemetry/` — authenticated, same-origin validation and immutable
+  compressed blob writes followed by queue acceptance.
+- `telemetry-worker/` — separate queue-triggered chronological Table index;
+  native poison handling preserves source blobs after six failed attempts.
+- `src/lib/telemetry/*.test.ts`, `api/tests/telemetry/test_pipeline.py`, and
+  `tools/check_telemetry.mjs` — reconstruction, determinism, conflict, storage,
+  retry, account-switch, and browser persistence checks.
 - `src/lib/ending-rules.ts` — pure terminal reconciliation for Death and the
   persistent Quit Streaming Mood-risk clock. Financial Ruin is finalized by
   the financial operation seam; Made It is finalized by audience progression,
