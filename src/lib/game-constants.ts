@@ -1,6 +1,8 @@
 import type { GameDefinition } from './game-definition';
 import type { MetricName } from './game-types';
 
+export const ADVANCE_TIME_HOURS = [12, 6, 3, 1];
+
 export let SIMULATION_RULES = {} as GameDefinition['simulationRules'];
 export let PET_PROFILE = {} as GameDefinition['petProfile'];
 export let STAT_MIN = Number.NaN;

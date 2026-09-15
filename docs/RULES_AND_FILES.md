@@ -70,7 +70,7 @@ gameplay rules.
 - `src/lib/content/runtime-content.ts` — IndexedDB-backed runtime bundle cache:
   it opens cached content without a network request, conditionally checks the
   manifest before writes, and atomically changes the bundle and active pointer.
-- `src/lib/game-constants.ts` — structural time units, stat bounds, and
+- `src/lib/game-constants.ts` — structural time units, Advance Time picker options, stat bounds, and
   simulation limits shared by runtime modules.
 - `src/lib/seeded-text.ts` — shared seeded selection and interpolation for
   JSON-authored event, Ending, History, and archive text pools.
@@ -104,7 +104,7 @@ gameplay rules.
   interpolation for Ending copy loaded from `ending-rules.json`; Ending prose
   is not authored in TypeScript.
 - `src/lib/commands/activity-commands.ts` — start, wait, and timed-activity
-  command resolution.
+  command resolution, including seeded or selected fixed wait durations.
 - `src/lib/commands/progression-actions.ts` — Commission Work and data-driven
   model/full-body service actions.
 - `src/lib/commands/item-action-commands.ts` and
@@ -336,6 +336,11 @@ gameplay rules.
   anchor presentation.
 - `src/lib/components/CompanionOverview.svelte` — metrics, discovery-safe
   statuses, Time/Balance, Subscribers, career, appearance, and project progress.
+- `src/lib/ui/companion-speech.ts` and `CompanionAvatar.svelte` — seeded quote
+  selection for item use, taps, idle contexts, and event/activity/status
+  transitions; speech waits for open dialogs to close.
+- `api/backend/content/quotes.py` and root `companion-quotes.json` — validated
+  quote pools retaining verbatim text and source metadata, with optional in-game edits.
 - `src/lib/components/GameShop.svelte`, `ShoppingCart.svelte`,
   `ShopItemGrid.svelte`, `QuantityStepper.svelte`, `InventoryBrowser.svelte`,
   and `ItemDetail.svelte` — URL-addressable Shop, shared catalogue/LOC Cart,

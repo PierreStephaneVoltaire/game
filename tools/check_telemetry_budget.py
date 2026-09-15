@@ -2,15 +2,21 @@ import argparse
 import calendar
 import json
 import subprocess
+import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 
 
 def azure(*arguments):
-    result = subprocess.run(["az", *arguments, "--output", "json"], capture_output=True, text=True)
-    if result.returncode:
-        raise RuntimeError(f"Azure billing verification failed: {result.stderr.strip()}")
-    return json.loads(result.stdout)
+    for attempt in range(4):
+        result = subprocess.run(["az", *arguments, "--output", "json"], capture_output=True, text=True)
+        if not result.returncode:
+            return json.loads(result.stdout)
+        if attempt == 3 or not any(code in result.stderr for code in ('"code":"429"', '"code": "429"', "Too Many Requests")):
+            raise RuntimeError(f"Azure billing verification failed: {result.stderr.strip()}")
+        print("Azure billing is throttled; retrying in 60 seconds.", file=sys.stderr, flush=True)
+        time.sleep(60)
 
 
 def estimate(measurements, baseline, players, retention_months):

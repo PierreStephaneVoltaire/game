@@ -13,6 +13,7 @@ function record(): GameViewModel {
       appearances: [],
     },
     mode: 'streaming',
+    waitHours: [12, 6, 3, 1],
     modeLabel: 'Streaming mode',
     now: Date.UTC(2026, 7, 23, 12),
     runStartedAt: Date.UTC(2026, 7, 22, 12),

@@ -60,16 +60,21 @@ Game time advances only through timed actions and Advance Time. Instant actions
 do not advance it. Timed activities resolve immediately to their ending or
 interruption boundary.
 
-Advance Time is seeded:
+Advance Time opens a duration picker: Random, 12 hours, 6 hours, 3 hours,
+or 1 hour. Random keeps the seeded behavior below:
 
 | State before waiting  | Sampled time | Safety rule                                                                                                                            |
 | --------------------- | -----------: | -------------------------------------------------------------------------------------------------------------------------------------- |
 | No critical condition |   1–12 hours | Stop at the first new critical boundary and prevent simultaneous periodic or direct Health harm from making that first crossing lethal |
 | Already critical      |    1–2 hours | No grace; ordinary harm can be lethal                                                                                                  |
 
-An autonomous Rest selected during Advance Time interrupts the sampled wait
+Fixed durations use the selected number of hours. They keep the same safety
+rules: a new critical condition can stop the advance early; an already-critical
+companion has no grace. Cancel or Escape closes the picker without advancing time.
+
+An autonomous Rest selected during Advance Time interrupts the requested wait
 and resolves fully. The resulting elapsed time can therefore exceed the
-original sample.
+requested duration.
 
 ### Calendar and boundary order
 
@@ -928,3 +933,17 @@ making Balance positive. It does not automatically reduce Hospital principal
 or remaining LOC units. `In Debt` is determined only by `Balance < $0`, and
 Financial Ruin checks only an actual Balance crossing to `−$20,000` or below;
 unpaid principal and remaining LOC units are not added to that threshold.
+
+## Companion speech
+
+Avatar taps, hourly idle or stream moments, item use, and activity,
+status, and event transitions can select one seeded quote. Dedicated item or
+transition pools take precedence over their general fallback pools. Empty pools
+stay silent, and consecutive selections avoid repeating the same text when an
+alternative exists. Player purchases and cart checkout do not trigger speech.
+Speech stays silent during Rest, Hospital care, and ended runs.
+
+Each authored quote can preserve `quote` verbatim, an optional `inGameQuote` edit,
+and optional `timestamp` and `videoSource` strings. The bubble displays the edit
+when filled, otherwise the verbatim quote. Source metadata remains in storage;
+blank template entries are not displayed. Quotes do not change simulation outcomes.

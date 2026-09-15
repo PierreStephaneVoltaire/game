@@ -1,0 +1,930 @@
+{
+  "idle": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:start": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:from_rest": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:from_socialize": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:from_play": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:from_stream": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:from_medical_care": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:from_commission_work": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:starving": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:hungry": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:sleep_deprived": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:depressed": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:lonely": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:creative_block": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:annoyed": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:sick": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:overstimulated": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:kidney_stone": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:full": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:low_energy": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:sugar_crash": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:dizzy_spell": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "idle:in_debt": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "click": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "click:idle": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "click:socialize": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "click:play": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "click:stream": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "click:commission_work": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "use_item": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "feed": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "item_action": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "use_item:example-item-id": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "feed:example-item-id": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "item_action:example-item-id:example-action-id": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "rest:complete": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "socialize": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "socialize:start": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "socialize:complete": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "socialize:interrupt": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "play": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "play:start": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "play:complete": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "play:interrupt": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "stream": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "stream:start": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "stream:complete": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "stream:interrupt": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "medical_care:complete": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "commission_work": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "commission_work:start": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "commission_work:complete": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "commission_work:interrupt": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:low_money_stress": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:food_craving": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:creative_inspiration": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:socks": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:benign_room_event": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:self_entertainment": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:stood_up_too_fast": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:tiny_walk": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:barely_moved_today": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:moms_care_package": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:rest_snoring": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:off_stream_support": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:full_body_project_started": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:project_completed": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:item_automatic_hook": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:life_event_resolved": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:status_added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:status_cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:debt_status_entered": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:debt_status_recovered": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:line_of_credit_opened": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "event:line_of_credit_repaid": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:rain": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:personal_purchase": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:sponsored_stream_deal": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:algorithm_boost": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:tax_bill": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:equipment_failure": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:twitter_cancellation": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:twitter_cancellation:minor": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:twitter_cancellation:moderate": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:twitter_cancellation:major": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "life_event:agency_invitation": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:starving:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:starving:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:hungry:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:hungry:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:sleep_deprived:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:sleep_deprived:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:depressed:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:depressed:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:lonely:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:lonely:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:creative_block:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:creative_block:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:annoyed:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:annoyed:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:sick:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:sick:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:overstimulated:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:overstimulated:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:kidney_stone:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:kidney_stone:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:full:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:full:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:low_energy:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:low_energy:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:sugar_crash:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:sugar_crash:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:dizzy_spell:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:dizzy_spell:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:in_debt:added": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ],
+  "status:in_debt:cleared": [
+    {
+      "quote": "",
+      "inGameQuote": "",
+      "timestamp": "",
+      "videoSource": ""
+    }
+  ]
+}
