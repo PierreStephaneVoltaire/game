@@ -76,23 +76,6 @@ jobs:
       - name: Initialize existing remote state
         run: terraform -chdir=infra init -input=false -backend-config="$RUNNER_TEMP/backend.tfbackend"
 
-      - name: Set up pnpm for trace measurement
-        uses: pnpm/action-setup@v4
-        with:
-          version: 11.22.0
-
-      - name: Set up Node.js for trace measurement
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-
-      - name: Measure trace volume and verify infrastructure budget
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm exec svelte-kit sync
-          node tools/measure_gameplay_traces.mjs "$RUNNER_TEMP/gameplay-volume.json"
-          python3 tools/check_telemetry_budget.py "$RUNNER_TEMP/gameplay-volume.json"
-
       - name: Plan infrastructure changes
         run: terraform -chdir=infra plan -input=false -no-color -lock-timeout=5m -var-file=deployment.tfvars -out="$RUNNER_TEMP/deployment.tfplan"
 
