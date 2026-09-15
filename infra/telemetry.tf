@@ -82,6 +82,7 @@ resource "azurerm_role_assignment" "gameplay_worker_host_storage" {
   scope                = each.value.id
   role_definition_name = "Storage Blob Data Owner"
   principal_id         = azurerm_function_app_flex_consumption.gameplay_worker.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_storage_container" "gameplay_host" {
@@ -95,12 +96,14 @@ resource "azurerm_role_assignment" "gameplay_worker_deployments" {
   scope                = azurerm_storage_container.gameplay_worker_deployments.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_function_app_flex_consumption.gameplay_worker.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_role_assignment" "gameplay_worker_traces" {
   scope                = azurerm_storage_container.gameplay_traces.id
   role_definition_name = "Storage Blob Data Reader"
   principal_id         = azurerm_function_app_flex_consumption.gameplay_worker.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_role_assignment" "gameplay_worker_queues" {
@@ -108,12 +111,14 @@ resource "azurerm_role_assignment" "gameplay_worker_queues" {
   scope                = each.value
   role_definition_name = "Storage Queue Data Contributor"
   principal_id         = azurerm_function_app_flex_consumption.gameplay_worker.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_role_assignment" "gameplay_worker_index" {
-  scope                = azurerm_storage_table.gameplay_runs.resource_manager_id
+  scope                = azurerm_storage_table.gameplay_runs.id
   role_definition_name = "Storage Table Data Contributor"
   principal_id         = azurerm_function_app_flex_consumption.gameplay_worker.identity[0].principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_role_assignment" "gameplay_ingest_blob" {
@@ -121,6 +126,7 @@ resource "azurerm_role_assignment" "gameplay_ingest_blob" {
   scope                = azurerm_storage_container.gameplay_traces.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = var.telemetry_ingest_principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_role_assignment" "gameplay_ingest_queue" {
@@ -128,6 +134,7 @@ resource "azurerm_role_assignment" "gameplay_ingest_queue" {
   scope                = azurerm_storage_queue.gameplay_traces.id
   role_definition_name = "Storage Queue Data Message Sender"
   principal_id         = var.telemetry_ingest_principal_id
+  principal_type       = "ServicePrincipal"
 }
 
 resource "azurerm_consumption_budget_subscription" "infrastructure" {
