@@ -160,7 +160,8 @@ jobs:
             echo "::error::Azure returned no deployment URL. Check that staging environments are enabled for PR previews."
             exit 1
           fi
-          printf 'App deployed: [%s](%s)\n' "$APP_URL" "$APP_URL" >> "$GITHUB_STEP_SUMMARY"
+          printf '::notice title=Deployed game::%s\n' "$APP_URL"
+          printf '## Deployed game\n\n[Play the game](%s)\n\nEnvironment: `%s`\n' "$APP_URL" "$API_ENVIRONMENT" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Configure deployed API environment
         env:

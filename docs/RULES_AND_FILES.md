@@ -12,7 +12,7 @@ gameplay rules.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, and strong-outcome chance. Player-facing activity copy
   belongs to `event-texts.json`.
-- `src/lib/data/shop-items.json` — the 232 compiled canonical item definitions:
+- `src/lib/data/shop-items.json` — the 275 compiled canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and content-versioned generated
   PNG paths.
@@ -22,7 +22,7 @@ gameplay rules.
   copy/gameplay fields. Nutrition facts stay separate from gameplay values so
   the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  232-item allowlist. The compiler and validator reject missing, unexpected,
+  275-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   generic avatar path. Runtime code does not hardcode a companion name; the

@@ -25,7 +25,13 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 
 describe('catalogue item consumption validation', () => {
   test('consumes non-room stat items while placed furniture stays reusable', () => {
-    for (const id of ['movie-rental', 'fresh-bedsheets']) {
+    for (const id of [
+      'movie-rental',
+      'fresh-bedsheets',
+      'manga',
+      'photo-album',
+      'kindle',
+    ]) {
       const item = BUNDLED_GAME_DEFINITION.items.find(
         (entry) => entry.id === id,
       );
