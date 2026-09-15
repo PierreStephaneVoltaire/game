@@ -58,6 +58,28 @@ def test_override_keys_support_catalogue_ids_starting_with_numbers():
     assert validate_quotes(pools) == pools
 
 
+def test_quote_records_preserve_sources_and_publish_only_playable_text(session):
+    original = {"quote": "I, I was... saying something else.", "inGameQuote": "I was saying something else.",
+                "timestamp": "01:23:45", "videoSource": "https://www.youtube.com/watch?v=example"}
+    fallback = {"quote": "Verbatim punctuation…", "inGameQuote": "", "timestamp": None, "videoSource": None}
+    blank = {"quote": "", "inGameQuote": "", "timestamp": "", "videoSource": ""}
+    pools = {"buy_item:example-item-id": [original], "idle": [fallback, blank, "Legacy quote"], "click": [blank]}
+    replace_quotes(session, pools)
+    assert read_quotes(session) == {"buy_item:example-item-id": [original["inGameQuote"]], "idle": [fallback["quote"], "Legacy quote"], "click": []}
+    stored = {row.action: json.loads(row.quotes_json) for row in session.query(CompanionQuotePool)}
+    assert stored == pools
+
+
+@pytest.mark.parametrize("record", [{}, {"quote": 3}, {"quote": "text", "timestamp": 30},
+                                    {"quote": "text", "inGameQuote": []}, {"quote": "text", "unknown": "value"},
+                                    {"quote": "", "inGameQuote": "An edit needs its original"}])
+def test_malformed_quote_records_retain_published_content(session, record):
+    replace_quotes(session, {"idle": ["retained"]})
+    with pytest.raises(ValueError):
+        replace_quotes(session, {"idle": [record]})
+    assert read_quotes(session) == {"idle": ["retained"]}
+
+
 @pytest.mark.parametrize("contents", [None, '{"click":', '{"click":[],"click":[]}', '{"click":[null]}'])
 def test_import_failure_never_replaces_quotes(tmp_path, monkeypatch, contents):
     path = tmp_path / "quotes.json"

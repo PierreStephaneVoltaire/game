@@ -12,6 +12,7 @@ const quotes = {
   'stream:start': ['Starting stream test.'],
   'rest:complete': ['Wake-up test quote.'],
   'medical_care:complete': ['Hospital return test quote.'],
+  buy_item: ['Purchase test quote.'],
 };
 
 test.beforeEach(async ({ page }) => {
@@ -221,4 +222,25 @@ test('unavailable quotes leave the game usable', async ({ page }) => {
   await expect(
     page.getByRole('button', { name: 'Feed', exact: true }),
   ).toBeEnabled();
+});
+
+test('checkout does not trigger speech when the Shop dialog closes', async ({
+  page,
+}) => {
+  await prepareRoom(page);
+  await page.getByRole('button', { name: 'Shop', exact: true }).click();
+  const shop = page.getByRole('dialog', { name: 'Shop', exact: true });
+  await shop
+    .locator(
+      'button[aria-label^="Add one "]:not([aria-label*="Line of Credit"]):not([disabled])',
+    )
+    .first()
+    .click();
+  await shop.getByRole('tab', { name: /Cart/ }).click();
+  await shop.getByRole('button', { name: 'Checkout', exact: true }).click();
+  await expect(shop).toContainText('Your cart is empty.');
+  await expect(page.locator('.speech-bubble')).toHaveCount(0);
+  await shop.getByRole('button', { name: 'Close Shop' }).click();
+  await page.clock.runFor(100);
+  await expect(page.locator('.speech-bubble')).toHaveCount(0);
 });

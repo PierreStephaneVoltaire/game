@@ -20,7 +20,10 @@ import {
   type TimedEffectViewModel,
 } from './progression-view-model';
 import type { CompanionAppearance } from './companion';
-import { LINE_OF_CREDIT_OFFER_ID } from '$lib/game-constants';
+import {
+  ADVANCE_TIME_HOURS,
+  LINE_OF_CREDIT_OFFER_ID,
+} from '$lib/game-constants';
 import {
   endingPresentation,
   endingRiskPresentation,
@@ -61,10 +64,12 @@ export type GameIntent =
   | { type: 'set_cart_quantity'; itemId: string; quantity: number }
   | { type: 'checkout_cart' }
   | { type: 'pay_medical_debt' }
-  | { type: 'rest' | 'socialize' | 'play' | 'medical_care' | 'wait' };
+  | { type: 'wait'; hours?: number }
+  | { type: 'rest' | 'socialize' | 'play' | 'medical_care' };
 export type GameViewModel = {
   companion: CompanionProfile;
   mode: GameState['mode'];
+  waitHours: number[];
   modeLabel: string;
   now: number;
   runStartedAt: number;
@@ -186,6 +191,7 @@ export function createGameViewModel(
   return {
     companion,
     mode: state.mode,
+    waitHours: ADVANCE_TIME_HOURS,
     modeLabel: gameCopy.mode[state.mode],
     now: state.now,
     runStartedAt: state.history.runStartedAt,
@@ -290,5 +296,5 @@ export function intentToCommand(
     return { ...base, type: 'checkout_cart' };
   if (intent.type === 'pay_medical_debt')
     return { ...base, type: 'pay_medical_debt' };
-  return { ...base, type: intent.type } as GameCommand;
+  return { ...base, ...intent };
 }

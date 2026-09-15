@@ -12,7 +12,7 @@ gameplay rules.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, and strong-outcome chance. Player-facing activity copy
   belongs to `event-texts.json`.
-- `src/lib/data/shop-items.json` — the 232 compiled canonical item definitions:
+- `src/lib/data/shop-items.json` — the 275 compiled canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and content-versioned generated
   PNG paths.
@@ -22,7 +22,7 @@ gameplay rules.
   copy/gameplay fields. Nutrition facts stay separate from gameplay values so
   the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  232-item allowlist. The compiler and validator reject missing, unexpected,
+  275-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   generic avatar path. Runtime code does not hardcode a companion name; the
@@ -70,12 +70,32 @@ gameplay rules.
 - `src/lib/content/runtime-content.ts` — IndexedDB-backed runtime bundle cache:
   it opens cached content without a network request, conditionally checks the
   manifest before writes, and atomically changes the bundle and active pointer.
-- `src/lib/game-constants.ts` — structural time units, stat bounds, and
+- `src/lib/game-constants.ts` — structural time units, Advance Time picker options, stat bounds, and
   simulation limits shared by runtime modules.
 - `src/lib/seeded-text.ts` — shared seeded selection and interpolation for
   JSON-authored event, Ending, History, and archive text pools.
 - `src/lib/game-engine.ts` — pure `startRun`, `dispatchCommand`, and
   `reconcileTime` public seam.
+- `src/lib/telemetry/collector.ts` — synchronous calculation collection scoped
+  outside simulation state; records the original random draws and results.
+- `tools/trace-instrumentation.ts` — instruments expressions in engine dependencies
+  without evaluating operands twice; assigns source-rule IDs and an engine build digest.
+- `src/lib/telemetry/capture.ts` and `state-changes.ts` — per-stream operation
+  identity, initialization checkpoints, ordered state changes, and reconstruction.
+- `src/lib/telemetry/financial.ts` and `nutrition.ts` — separate purchase/payment
+  evidence and resolved feeding context, without changing financial or nutrition rules.
+- `src/lib/telemetry/browser.ts`, `outbox.ts`, `batches.ts`, and `delivery.ts` —
+  account-bound capture, independent IndexedDB storage, lossless fragmentation,
+  acknowledged uploads, and retained retry/rejection data.
+- `src/lib/persistence/replay.ts` — existing canonical-save conflict replay,
+  extracted from the session module; associates corrections with capture streams.
+- `api/backend/telemetry/` — authenticated, same-origin validation and immutable
+  compressed blob writes followed by queue acceptance.
+- `telemetry-worker/` — separate queue-triggered chronological Table index;
+  native poison handling preserves source blobs after six failed attempts.
+- `src/lib/telemetry/*.test.ts`, `api/tests/telemetry/test_pipeline.py`, and
+  `tools/check_telemetry.mjs` — reconstruction, determinism, conflict, storage,
+  retry, account-switch, and browser persistence checks.
 - `src/lib/ending-rules.ts` — pure terminal reconciliation for Death and the
   persistent Quit Streaming Mood-risk clock. Financial Ruin is finalized by
   the financial operation seam; Made It is finalized by audience progression,
@@ -84,7 +104,7 @@ gameplay rules.
   interpolation for Ending copy loaded from `ending-rules.json`; Ending prose
   is not authored in TypeScript.
 - `src/lib/commands/activity-commands.ts` — start, wait, and timed-activity
-  command resolution.
+  command resolution, including seeded or selected fixed wait durations.
 - `src/lib/commands/progression-actions.ts` — Commission Work and data-driven
   model/full-body service actions.
 - `src/lib/commands/item-action-commands.ts` and
@@ -316,6 +336,11 @@ gameplay rules.
   anchor presentation.
 - `src/lib/components/CompanionOverview.svelte` — metrics, discovery-safe
   statuses, Time/Balance, Subscribers, career, appearance, and project progress.
+- `src/lib/ui/companion-speech.ts` and `CompanionAvatar.svelte` — seeded quote
+  selection for item use, taps, idle contexts, and event/activity/status
+  transitions; speech waits for open dialogs to close.
+- `api/backend/content/quotes.py` and root `companion-quotes.json` — validated
+  quote pools retaining verbatim text and source metadata, with optional in-game edits.
 - `src/lib/components/GameShop.svelte`, `ShoppingCart.svelte`,
   `ShopItemGrid.svelte`, `QuantityStepper.svelte`, `InventoryBrowser.svelte`,
   and `ItemDetail.svelte` — URL-addressable Shop, shared catalogue/LOC Cart,

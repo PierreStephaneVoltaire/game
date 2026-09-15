@@ -60,16 +60,21 @@ Game time advances only through timed actions and Advance Time. Instant actions
 do not advance it. Timed activities resolve immediately to their ending or
 interruption boundary.
 
-Advance Time is seeded:
+Advance Time opens a duration picker: Random, 12 hours, 6 hours, 3 hours,
+or 1 hour. Random keeps the seeded behavior below:
 
 | State before waiting  | Sampled time | Safety rule                                                                                                                            |
 | --------------------- | -----------: | -------------------------------------------------------------------------------------------------------------------------------------- |
 | No critical condition |   1–12 hours | Stop at the first new critical boundary and prevent simultaneous periodic or direct Health harm from making that first crossing lethal |
 | Already critical      |    1–2 hours | No grace; ordinary harm can be lethal                                                                                                  |
 
-An autonomous Rest selected during Advance Time interrupts the sampled wait
+Fixed durations use the selected number of hours. They keep the same safety
+rules: a new critical condition can stop the advance early; an already-critical
+companion has no grace. Cancel or Escape closes the picker without advancing time.
+
+An autonomous Rest selected during Advance Time interrupts the requested wait
 and resolves fully. The resulting elapsed time can therefore exceed the
-original sample.
+requested duration.
 
 ### Calendar and boundary order
 
@@ -414,11 +419,15 @@ adds Bond +1. Otherwise it expires after 24 game-hours or the second shop
 refresh after onset, whichever comes first; expiry is narrated and frees the
 slot.
 
-Nutrition uses the typical labeled serving. Branded foods use first-party
-labels, simple foods use USDA Foundation records, and prepared foods use USDA
-FNDDS as-consumed records. Missing water or caffeine remains unknown rather
-than becoming zero. The Concoction uses three explicitly fictional seeded
-profiles. Only qualitative hints appear in the game.
+Nutrition uses a real serving stated as a measured weight, volume, or labeled
+piece count. Branded foods use first-party labels, simple foods use USDA
+Foundation records, and prepared
+foods use USDA FNDDS as-consumed records. Comparable-food and mixed-recipe
+estimates record their source foods and portion weights and mark estimated
+values as approximate. Missing water or caffeine remains unknown rather than
+becoming zero. Only The Concoction uses fictional seeded profiles; ordinary
+foods cannot use a fictional profile or a placeholder game portion. Only
+qualitative hints appear in the game, without revealing food preferences.
 
 ## Autonomous events
 
@@ -689,42 +698,41 @@ Ending:
 
 ## Shop, Inventory, and room
 
-The catalogue has exactly 232 items:
+The catalogue has exactly 275 items:
 
 | Category   | Count |
 | ---------- | ----: |
-| Food       |   114 |
+| Food       |   134 |
 | Medicine   |     2 |
 | Care       |     3 |
-| Reusable   |    75 |
+| Reusable   |    98 |
 | Upgrade    |    23 |
 | Decoration |    15 |
 
-The renamed items are Mini Tacos, Cheeseless Toppingless Pizza, and The
-Concoction. Cheeseless Toppingless Pizza has an 85% acceptable-preparation
-chance.
+The catalogue includes Mini Tacos, Bite-Sized Pizza Cubes, and The Concoction.
+Bite-Sized Pizza Cubes are Liked and always meet their preparation requirement.
 
-The catalogue includes Jaffa Cakes ($6), Oatmeal ($2), Homegrown
-Chocolate Chip Cookies ($3), and Ring Fit ($69). The three Foods are Liked and
-use their authored nutrition scores/effects; their provenance records clone
-the explicitly named comparable catalogue nutrition source. Ring Fit is a
+The catalogue includes Jaffa Cakes ($6), Brown-Sugar Oatmeal ($2), Soft
+Chocolate-Chip Cookies ($3), and Ring Fit ($69). The three Foods are Liked and
+use their authored nutrition scores/effects. Jaffa Cakes retains its comparable
+catalogue nutrition source; the oatmeal and cookies use sourced USDA serving
+estimates. Ring Fit is a
 single-use interaction that requires owned game-control equipment and applies
 its authored seeded Mood, Rest, and Creativity effects. Final descriptions and
 item-use narration are authored directly on their canonical catalogue records.
 
 The catalogue additions include Insurance Card ($250, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($1; salt 2/water 2), Jar of Pickle Juice
-($3; Liked; Food +1/Mood +1; salt 3/water 2), Sheet of Cute Stickers ($3;
+($3; Disliked; 65% refusal chance; Food +1; salt 3/water 2), Sheet of Cute Stickers ($3;
 single-use Mood −2 interaction), Rigging Tablet ($699), Limited-Edition Dr Pepper
 ($2; stock 1–2; high effective sugar), Convention Guest Set ($528), New Model
 Commission ($1,000), and Clippers ($29). Five Plain Tortillas is a $1 essential
 Food and starter comfort item with Food +2 and Mood +2.
-The Can Opener is a single-use item priced at $11. Three-Month-Old Rotisserie Chicken
-is a $5 Variable Food with stock, ownership, and lifetime-purchase limit 1;
-it participates in ordinary shop rotation and automatic stream snacks.
-Consuming the complete item once applies Food +5, Health −8, and Creativity
-+2, creates no persistent status or recurrence, and attributes lethal damage
-directly to the item. Its gameplay nutrition scores are all zero.
+The Can Opener is a single-use item priced at $11. Forgotten Rotisserie Chicken
+is a $5 cleanup item with stock, ownership, and lifetime-purchase limit 1.
+Throwing it away consumes the item and applies Mood 0–1 and Creativity 0–1.
+It is not edible or eligible for automatic stream snacks, and its gameplay
+nutrition scores are all zero.
 
 Non-furniture items with stat-granting or commission actions are consumed when
 their action succeeds; only placed room furniture remains permanently reusable.
@@ -928,3 +936,17 @@ making Balance positive. It does not automatically reduce Hospital principal
 or remaining LOC units. `In Debt` is determined only by `Balance < $0`, and
 Financial Ruin checks only an actual Balance crossing to `−$20,000` or below;
 unpaid principal and remaining LOC units are not added to that threshold.
+
+## Companion speech
+
+Avatar taps, hourly idle or stream moments, item use, and activity,
+status, and event transitions can select one seeded quote. Dedicated item or
+transition pools take precedence over their general fallback pools. Empty pools
+stay silent, and consecutive selections avoid repeating the same text when an
+alternative exists. Player purchases and cart checkout do not trigger speech.
+Speech stays silent during Rest, Hospital care, and ended runs.
+
+Each authored quote can preserve `quote` verbatim, an optional `inGameQuote` edit,
+and optional `timestamp` and `videoSource` strings. The bubble displays the edit
+when filled, otherwise the verbatim quote. Source metadata remains in storage;
+blank template entries are not displayed. Quotes do not change simulation outcomes.

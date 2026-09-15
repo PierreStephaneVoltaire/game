@@ -8,7 +8,15 @@ test('keeps the terminal record and exports the grave with its Journey', async (
   for (let attempt = 0; attempt < 120; attempt += 1) {
     const advanceTime = page.getByRole('button', { name: 'Advance time' });
     if (!(await advanceTime.isVisible())) break;
+    const previousTime = await page.locator('.session-clock span').innerText();
     await advanceTime.click();
+    await page
+      .getByRole('dialog', { name: 'Advance time', exact: true })
+      .getByRole('button', { name: 'Random', exact: true })
+      .click();
+    await expect(page.locator('.session-clock span')).not.toHaveText(
+      previousTime,
+    );
     if (await page.getByRole('heading', { name: 'Run ended' }).isVisible())
       break;
   }

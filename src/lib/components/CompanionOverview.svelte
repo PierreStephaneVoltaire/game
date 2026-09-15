@@ -9,6 +9,7 @@
   export let onIntent: (intent: GameIntent) => Promise<void> | void;
 
   let hospitalDialog: HTMLDialogElement;
+  let advanceTimeDialog: HTMLDialogElement;
   const numbers = new Intl.NumberFormat('en-US');
   $: hospitalAvailable = model.statuses.some(
     (status) => status.key === 'kidney_stone' || status.key === 'sick',
@@ -24,6 +25,13 @@
   async function confirmHospital() {
     hospitalDialog.close();
     await onIntent({ type: 'medical_care' });
+  }
+
+  async function advanceTime(hours?: number) {
+    advanceTimeDialog.close();
+    await onIntent(
+      hours === undefined ? { type: 'wait' } : { type: 'wait', hours },
+    );
   }
 </script>
 
@@ -110,7 +118,7 @@
         <button
           class="secondary-action"
           type="button"
-          on:click={() => onIntent({ type: 'wait' })}
+          on:click={() => advanceTimeDialog.showModal()}
           {disabled}>Advance time</button
         >
       {/if}
@@ -134,6 +142,27 @@
     <p class="command-error" role="alert">{errorMessage}</p>
   {/if}
 </aside>
+
+<dialog
+  class="advance-time-dialog"
+  bind:this={advanceTimeDialog}
+  aria-labelledby="advance-time-title"
+>
+  <h2 id="advance-time-title">Advance time</h2>
+  <div class="dialog-actions time-options">
+    <button type="button" {disabled} on:click={() => advanceTime()}
+      >Random</button
+    >
+    {#each model.waitHours as hours (hours)}
+      <button type="button" {disabled} on:click={() => advanceTime(hours)}
+        >{hours} {hours === 1 ? 'hour' : 'hours'}</button
+      >
+    {/each}
+    <button type="button" on:click={() => advanceTimeDialog.close()}
+      >Cancel</button
+    >
+  </div>
+</dialog>
 
 <dialog
   class="hospital-dialog"
@@ -164,6 +193,9 @@
 </dialog>
 
 <style>
+  .time-options {
+    flex-direction: column;
+  }
   .session-clock {
     display: flex;
     flex-direction: column;

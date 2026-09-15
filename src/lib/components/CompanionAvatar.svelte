@@ -32,6 +32,8 @@
   let expiresAt = 0;
   let dismissal: ReturnType<typeof setTimeout> | undefined;
   let pending: ReturnType<typeof setTimeout> | undefined;
+  let deferred: SpeechTrigger | null = null;
+  let deferredDialog: HTMLDialogElement | null = null;
   $: allowed = session !== null && speechAllowed(session.state);
   $: pause(focused || hovered);
 
@@ -54,12 +56,17 @@
   }
 
   function speak(trigger: SpeechTrigger) {
-    if (
-      !session ||
-      document.visibilityState !== 'visible' ||
-      document.querySelector('dialog[open]')
-    )
+    if (!session || document.visibilityState !== 'visible') return;
+    const dialog = document.querySelector<HTMLDialogElement>('dialog[open]');
+    if (dialog) {
+      deferredDialog?.removeEventListener('close', dialogClosed);
+      deferredDialog = dialog;
+      dialog.addEventListener('close', dialogClosed, { once: true });
+      deferred = trigger;
       return;
+    }
+    deferred = null;
+    deferredDialog = null;
     const quote = selectQuote(pools, trigger, session.state, previousQuote);
     clearSpeech();
     if (!quote) return;
@@ -71,6 +78,10 @@
   function clicked() {
     clearTimeout(pending);
     if (session) speak(clickSpeech(session.state, ++clickSequence));
+  }
+
+  function dialogClosed() {
+    if (deferred) speak(deferred);
   }
 
   onMount(() => {
@@ -110,9 +121,11 @@
       if (!next || !before || next.state.seed !== before.state.seed) {
         clearTimeout(pending);
         clearSpeech();
+        deferred = null;
         previousQuote = '';
         clickSequence = 0;
       } else if (!speechAllowed(next.state)) {
+        deferred = null;
         clearTimeout(pending);
         clearSpeech();
       } else if (document.visibilityState === 'visible') {
@@ -120,6 +133,7 @@
           before.state,
           next,
           rules.intervalHours,
+          pools,
         );
         if (trigger) {
           clearTimeout(pending);
@@ -129,6 +143,7 @@
       schedule();
     });
     const visibility = () => {
+      deferred = null;
       clearTimeout(pending);
       clearSpeech();
       schedule();
@@ -141,6 +156,7 @@
       stopped = true;
       unsubscribe();
       document.removeEventListener('visibilitychange', visibility);
+      deferredDialog?.removeEventListener('close', dialogClosed);
       clearTimeout(clock);
       clearTimeout(pending);
       clearSpeech();

@@ -20,18 +20,17 @@ function stocked(health = 20): GameState {
   };
 }
 
-describe('Three-Month-Old Rotisserie Chicken', () => {
-  test('publishes its exact data-authored one-use effects', () => {
+describe('Forgotten Rotisserie Chicken', () => {
+  test('publishes a non-edible cleanup action', () => {
     const item = BUNDLED_GAME_DEFINITION.items.find(({ id }) => id === ITEM_ID);
     expect(item).toMatchObject({
-      name: 'Three-Month-Old Rotisserie Chicken',
-      category: 'food',
-      preferences: ['variable'],
-      effects: {
-        food: { min: 5, max: 5 },
-        health: { min: -8, max: -8 },
-        creativity: { min: 2, max: 2 },
-      },
+      name: 'Forgotten Rotisserie Chicken',
+      category: 'reusable',
+      edible: false,
+      effects: {},
+      itemActions: [
+        expect.objectContaining({ kind: 'interaction', consumes: true }),
+      ],
       statusHooks: [],
       image: expect.stringMatching(
         new RegExp(`^/items/generated/${ITEM_ID}\\.png\\?v=[a-f0-9]{12}$`),
@@ -39,43 +38,36 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
     });
   });
 
-  test('manual consumption applies the atomic effect once and consumes it', () => {
+  test('throwing it away removes it without feeding or damaging health', () => {
     const result = dispatchCommand(
       stocked(),
       {
-        type: 'use_item',
-        commandId: 'eat-old-chicken',
+        type: 'perform_item_action',
+        commandId: 'discard-old-chicken',
         itemId: ITEM_ID,
+        action: 'consume',
         now: 0,
       },
       BUNDLED_GAME_DEFINITION,
     ).state;
     const event = result.events.find(
-      (candidate) => candidate.sourceActionId === 'eat-old-chicken',
+      (candidate) => candidate.sourceActionId === 'discard-old-chicken',
     );
 
     expect(result.metrics).toMatchObject({
-      food: 6,
-      health: 12,
-      creativity: 4,
+      food: 1,
+      health: 20,
     });
     expect(result.inventory[ITEM_ID]).toBe(0);
-    expect(event?.metricDeltas).toMatchObject({
-      food: 5,
-      health: -8,
-      creativity: 2,
-    });
-    expect(event).toMatchObject({
-      itemId: ITEM_ID,
-      itemUseMode: 'manual',
-    });
+    expect(result.metrics.creativity).toBeGreaterThanOrEqual(2);
+    expect(result.metrics.creativity).toBeLessThanOrEqual(3);
     expect(event?.itemNarration).toContain(
-      'three-month-old rotisserie chicken',
+      'threw out the forgotten rotisserie chicken',
     );
     expect(result.statuses.sick).toBeUndefined();
   });
 
-  test('automatic stream-snack use keeps the complete effect and authored line', () => {
+  test('automatic stream-snack consumption rejects the cleanup item', () => {
     const state = stocked();
     const result = resolveItemConsumption(
       state,
@@ -87,22 +79,12 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
       },
       BUNDLED_GAME_DEFINITION,
       { automatic: true },
-    ).state;
-    const event = result.events.find(
-      (candidate) => candidate.sourceActionId === 'stream:snack:0',
     );
-
-    expect(result.metrics).toMatchObject({
-      food: 6,
-      health: 12,
-      creativity: 4,
+    expect(result.outcome).toMatchObject({
+      accepted: false,
+      kind: 'unavailable',
     });
-    expect(result.inventory[ITEM_ID]).toBe(0);
-    expect(event).toMatchObject({
-      itemId: ITEM_ID,
-      itemUseMode: 'automatic_stream_snack',
-    });
-    expect(event?.itemNarration).toContain('during the stream');
+    expect(result.state).toBe(state);
   });
 
   test('lifetime purchase cap remains after the consumed item leaves inventory', () => {
@@ -129,9 +111,10 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
     const consumed = dispatchCommand(
       purchased,
       {
-        type: 'use_item',
-        commandId: 'eat-bought-chicken',
+        type: 'perform_item_action',
+        commandId: 'discard-bought-chicken',
         itemId: ITEM_ID,
+        action: 'consume',
         now: 0,
       },
       BUNDLED_GAME_DEFINITION,
@@ -157,21 +140,20 @@ describe('Three-Month-Old Rotisserie Chicken', () => {
     });
   });
 
-  test('a lethal bite attributes death to the item', () => {
+  test('cleanup remains harmless at low health', () => {
     const result = dispatchCommand(
       stocked(8),
       {
-        type: 'use_item',
-        commandId: 'fatal-old-chicken',
+        type: 'perform_item_action',
+        commandId: 'cleanup-low-health',
         itemId: ITEM_ID,
+        action: 'consume',
         now: 0,
       },
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(result.ending).toMatchObject({
-      kind: 'death',
-      causes: [expect.objectContaining({ kind: 'item', id: ITEM_ID })],
-    });
+    expect(result.metrics.health).toBe(8);
+    expect(result.ending).toBeNull();
   });
 });
