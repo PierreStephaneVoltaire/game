@@ -62,6 +62,7 @@ resource "azurerm_function_app_flex_consumption" "gameplay_worker" {
 
   app_settings = {
     TELEMETRY_STORAGE_ACCOUNT             = data.azurerm_storage_account.quotes.name
+    AzureWebJobsStorage                   = ""
     AzureWebJobsStorage__accountName      = data.azurerm_storage_account.quotes.name
     AzureWebJobsStorage__credential       = "managedidentity"
     TraceQueue__queueServiceUri           = data.azurerm_storage_account.quotes.primary_queue_endpoint
