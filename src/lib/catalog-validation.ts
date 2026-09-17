@@ -12,10 +12,10 @@ import {
 import { isStatusName } from './status-rules';
 
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
-  food: 114,
+  food: 134,
   medicine: 2,
   care: 3,
-  reusable: 75,
+  reusable: 98,
   upgrade: 23,
   decoration: 15,
 };
@@ -113,7 +113,9 @@ function validateItem(
     issues.push('qualitative nutrition hint is missing or generic');
   if (
     companionNamePattern.test(
-      `${item.description} ${item.qualitativeNutritionHint} ${(item.narration ?? []).join(' ')}`,
+      `${item.description} ${item.qualitativeNutritionHint} ${(item.narration ?? []).join(' ')}`
+        .split(item.name)
+        .join(''),
     )
   )
     issues.push('catalogue copy hardcodes the companion name');
@@ -147,7 +149,7 @@ function validateItem(
       issues.push(`invalid context probability: ${name}`);
   const preparationSpecific = preferences.includes('specific_preparation');
   const disliked = preferences.includes('disliked') || preparationSpecific;
-  if (disliked && !context?.dislikedEffects)
+  if (item.edible && disliked && !context?.dislikedEffects)
     issues.push('disliked behavior needs authored disliked effects');
   if (disliked && item.effects?.mood)
     issues.push('disliked mood effects must not be top-level consume effects');
@@ -242,9 +244,9 @@ export function validateCatalog(
     }
   }
   if (requireComplete) {
-    if (definition.items.length !== 232)
+    if (definition.items.length !== canonicalItemIds.length)
       issues.push({
-        message: `expected 232 canonical items, found ${definition.items.length}`,
+        message: `expected ${canonicalItemIds.length} canonical items, found ${definition.items.length}`,
       });
     for (const [category, expected] of Object.entries(
       COMPLETE_CATEGORY_COUNTS,

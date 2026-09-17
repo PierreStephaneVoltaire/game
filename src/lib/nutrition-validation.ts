@@ -23,11 +23,11 @@ const GENERIC_SOURCE_URLS = new Set([
 ]);
 const QUALIFIERS = new Set(['less_than', 'approximately']);
 const COMPLETE_SOURCE_TYPE_COUNTS = {
-  manufacturer_label: 7,
-  usda_foundation: 38,
-  usda_fndds: 68,
+  manufacturer_label: 14,
+  usda_foundation: 33,
+  usda_fndds: 86,
   fictional_seeded_profile: 1,
-  not_applicable: 118,
+  not_applicable: 141,
 } as const;
 
 function validateScores(
@@ -101,6 +101,8 @@ export function validateItemNutrition(item: ItemDefinition): string[] {
   ])
     if (!(field in nutrition)) issues.push(`nutrition field missing: ${field}`);
   if (!nutrition.serving?.trim()) issues.push('nutrition serving is empty');
+  if (item.id !== 'the-concoction' && /game portion/i.test(nutrition.serving))
+    issues.push('food nutrition needs a real serving, not a game portion');
   if (!SOURCE_TYPES.has(nutrition.sourceType))
     issues.push(`unknown nutrition source type: ${nutrition.sourceType}`);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(nutrition.retrievalDate ?? ''))
@@ -181,7 +183,7 @@ export function validateItemNutrition(item: ItemDefinition): string[] {
 
   if (nutrition.sourceType === 'fictional_seeded_profile') {
     if (item.id !== 'the-concoction')
-      issues.push('fictional seeded nutrition is restricted to The Concoction');
+      issues.push('fictional nutrition is restricted to The Concoction');
     if (item.nutritionScores)
       issues.push(
         'fictional seeded item must not carry fixed nutrition scores',

@@ -11,6 +11,7 @@ import {
 } from '../status-rules';
 import { clampMetric, HOUR_MS } from '../game-constants';
 import { resolveSugarCrashConsumption } from '../status-rules/sugar-crash';
+import { traceNutrition } from '../telemetry/nutrition';
 
 type UseItemCommand = Extract<GameCommand, { type: 'use_item' }>;
 
@@ -257,7 +258,7 @@ export function resolveNutritionConsumption(
     [...(item.clearsStatuses ?? []), ...(action?.clearsStatuses ?? [])],
     action?.tags,
   );
-  return {
+  const result: NutritionResolution = {
     metrics: resolvedMetrics,
     statuses,
     metricDeltas,
@@ -285,4 +286,6 @@ export function resolveNutritionConsumption(
     dizzySpell: nutritionResolution.dizzySpell,
     dizzySpellDeltas: nutritionResolution.dizzySpellDeltas,
   };
+  traceNutrition(state, item, action, result);
+  return result;
 }

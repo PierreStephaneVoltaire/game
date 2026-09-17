@@ -514,15 +514,14 @@
   },
   {
     "id": "tea",
-    "name": "Tea",
+    "name": "Sleepytime Tea",
     "narration": [
-      "happily drank Tea.",
-      "savored every sip of Tea."
+      "enjoyed Sleepytime Tea."
     ],
     "category": "food",
     "price": 3,
-    "description": "Warm mug, gentle caffeine.",
-    "qualitativeNutritionHint": "A light drink with gentle caffeine and dependable hydration.",
+    "description": "Chamomile, spearmint, and a mug that has already put its pajamas on.",
+    "qualitativeNutritionHint": "An unsweetened herbal infusion with no caffeine.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -530,9 +529,10 @@
     "tags": [
       "food",
       "drink",
-      "caffeinated",
       "favorite",
-      "hydrating"
+      "hydrating",
+      "herbal",
+      "caffeine-free"
     ],
     "preferences": [
       "liked"
@@ -549,10 +549,6 @@
       "mood": {
         "min": 1,
         "max": 1
-      },
-      "rest": {
-        "min": -1,
-        "max": -1
       }
     },
     "nutritionScores": {
@@ -560,14 +556,14 @@
       "water": 3,
       "protein": 0,
       "sugar": 0,
-      "caffeine": 2
+      "caffeine": 0
     },
     "properties": {
       "salt": 0,
       "water": 3,
       "protein": 0,
       "sugar": 0,
-      "caffeine": 2,
+      "caffeine": 0,
       "portion": 1
     },
     "statusHooks": [],
@@ -586,20 +582,22 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/tea.png?v=10bb08d5439d",
+    "image": "/items/generated/tea.png?v=a4adc69657e6",
     "nutrition": {
-      "serving": "1 cup (240 g)",
-      "calories": 2.4,
-      "sodiumMg": 7.2,
+      "serving": "1 mug brewed herbal tea (240 mL, from 1 tea bag)",
+      "calories": 0,
+      "sodiumMg": 0,
       "sugarG": 0,
       "proteinG": 0,
-      "waterG": 239.28,
-      "caffeineMg": 48,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710488/nutrients",
-      "sourceReference": "FDC ID 2710488 / food code 92302000 — Tea, hot, leaf, black",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "waterG": 240,
+      "caffeineMg": 0,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://celestialseasonings.com/products/sleepytime-20-ct",
+      "sourceReference": "Celestial Seasonings Sleepytime Original herbal tea, 20-count box: online Nutrition Facts for one tea bag; the product page expressly reports a 0 mg caffeine meter. This is the original herbal blend, not Sleepytime Extra or a decaffeinated tea. Values exclude added milk or sweeteners. Serving is one mug brewed with 240 mL water. Water is approximated as 240 g from the brewing water volume; this is not a measured water analysis.",
+      "retrievalDate": "2026-09-15",
+      "qualifiers": {
+        "waterG": "approximately"
+      }
     }
   },
   {
@@ -691,15 +689,14 @@
   },
   {
     "id": "pasta",
-    "name": "Pasta",
+    "name": "Alfredo Pasta",
     "narration": [
-      "happily ate Pasta.",
-      "savored every bite of Pasta."
+      "enjoyed Alfredo Pasta."
     ],
     "category": "food",
     "price": 3,
-    "description": "Certified comfort food. The bowl understands her.",
-    "qualitativeNutritionHint": "Filling, low-drama energy that benefits from a balanced side.",
+    "description": "Pasta buried under creamy Alfredo sauce. The fork has requested backup.",
+    "qualitativeNutritionHint": "A filling bowl of pasta with rich dairy sauce and a salty edge.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -719,8 +716,8 @@
     },
     "effects": {
       "food": {
-        "min": 1,
-        "max": 2
+        "min": 3,
+        "max": 3
       },
       "mood": {
         "min": 1,
@@ -729,18 +726,18 @@
     },
     "nutritionScores": {
       "salt": 2,
-      "water": 0,
+      "water": 1,
       "protein": 2,
       "sugar": 0,
       "caffeine": 0
     },
     "properties": {
       "salt": 2,
-      "water": 0,
+      "water": 1,
       "protein": 2,
       "sugar": 0,
       "caffeine": 0,
-      "portion": 2
+      "portion": 3
     },
     "statusHooks": [
       "rolling_salt"
@@ -760,20 +757,28 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pasta.png?v=0058b8a2d102",
+    "image": "/items/generated/pasta.png?v=5b98e4046d23",
     "nutrition": {
-      "serving": "1 cup, cooked (140 g)",
-      "calories": 219.8,
-      "sodiumMg": 324.8,
-      "sugarG": 0.78,
-      "proteinG": 8.06,
-      "waterG": 86.52,
+      "serving": "1 cup Alfredo pasta (250 g)",
+      "calories": 385,
+      "sodiumMg": 665,
+      "sugarG": 1.8,
+      "proteinG": 10.08,
+      "waterG": 176,
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708357/nutrients",
-      "sourceReference": "FDC ID 2708357 / food code 56130000 — Pasta, cooked",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708856/nutrients",
+      "sourceReference": "250 g of FDC ID 2708856 / food code 58146382 — Pasta with cream sauce, home recipe (https://fdc.nal.usda.gov/food-details/2708856/nutrients). USDA home-recipe pasta with cream sauce is the closest dish proxy for Alfredo pasta; uses its listed one-cup portion. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
     }
   },
   {
@@ -1385,14 +1390,14 @@
   },
   {
     "id": "mustard",
-    "name": "Mustard",
+    "name": "Yellow Mustard",
     "narration": [
-      "happily ate Mustard.",
-      "savored every bite of Mustard."
+      "happily ate Yellow Mustard.",
+      "savored every bite of Yellow Mustard."
     ],
     "category": "food",
     "price": 1,
-    "description": "Sharp, tangy, and sneakily salty.",
+    "description": "Bright yellow, sharp enough to interrupt a conversation. Apply directly to something beige.",
     "qualitativeNutritionHint": "Punchy condiment flavor with more salt than substance.",
     "edible": true,
     "usable": true,
@@ -1451,7 +1456,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mustard.png?v=f9652ccd5c59",
+    "image": "/items/generated/mustard.png?v=1f61d09dcabb",
     "nutrition": {
       "serving": "1 teaspoon (6 g)",
       "calories": 3.7,
@@ -1560,15 +1565,15 @@
   },
   {
     "id": "corn",
-    "name": "Corn",
+    "name": "Corn Kernels",
     "narration": [
-      "happily ate Corn.",
-      "savored every bite of Corn."
+      "happily ate Corn Kernels.",
+      "savored every bite of Corn Kernels."
     ],
     "category": "food",
     "price": 3,
-    "description": "Sweet little kernels of starch.",
-    "qualitativeNutritionHint": "Sweet, starchy kernels that sit between vegetable and comfort food.",
+    "description": "Sweet golden kernels, conveniently detached from their original equipment.",
+    "qualitativeNutritionHint": "Sweet, starchy kernels with plenty of moisture.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -1627,22 +1632,27 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/corn.png?v=dfb34462388d",
+    "image": "/items/generated/corn.png?v=6d66646f3e4b",
     "nutrition": {
-      "serving": "1 RACC (85 g)",
-      "calories": 71.9,
-      "sodiumMg": 0,
-      "sugarG": 6.26,
-      "proteinG": 2.37,
-      "waterG": 68.17,
-      "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710826/nutrients",
-      "sourceReference": "FDC ID 2710826 — Corn, sweet, yellow and white kernels,  fresh, raw",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
-      "nullReasons": {
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      "serving": "1/2 cup cooked corn kernels (82.5 g)",
+      "calories": 70.95,
+      "sodiumMg": 108.08,
+      "sugarG": 5.15,
+      "proteinG": 2.69,
+      "waterG": 62.53,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709910/nutrients",
+      "sourceReference": "82.5 g of FDC ID 2709910 / food code 75216111 — Corn, fresh, cooked, no added fat (https://fdc.nal.usda.gov/food-details/2709910/nutrients). Half the listed 165 g cup of cooked fresh corn without added fat; the survey recipe includes salt. Edible kernels only. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
       }
     }
   },
@@ -3289,15 +3299,14 @@
   },
   {
     "id": "granola",
-    "name": "Granola",
+    "name": "Crunchy Granola Bar",
     "narration": [
-      "ate Granola.",
-      "finished a serving of Granola."
+      "reluctantly tried Crunchy Granola Bar."
     ],
     "category": "food",
     "price": 4,
-    "description": "Crunchy sugar wearing a health-food badge.",
-    "qualitativeNutritionHint": "Energy-dense crunch that can be sweeter than it looks.",
+    "description": "Compressed oats with explosive crumb physics. Open over a plate. Or a different postcode.",
+    "qualitativeNutritionHint": "A dry, sweet oat snack with a little protein.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -3305,35 +3314,41 @@
     "tags": [
       "food",
       "snack",
-      "stream-snack"
+      "sugar"
     ],
     "preferences": [
-      "variable"
+      "disliked"
     ],
     "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
     },
     "effects": {
       "food": {
         "min": 1,
-        "max": 2
+        "max": 1
       }
     },
     "nutritionScores": {
       "salt": 0,
       "water": 0,
       "protein": 1,
-      "sugar": 1,
+      "sugar": 2,
       "caffeine": 0
     },
     "properties": {
       "salt": 0,
       "water": 0,
       "protein": 1,
-      "sugar": 1,
+      "sugar": 2,
       "caffeine": 0,
-      "portion": 2
+      "portion": 1
     },
     "statusHooks": [],
     "automaticEventHooks": [],
@@ -3351,32 +3366,40 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/granola.png?v=b25ccc428608",
+    "image": "/items/generated/granola.png?v=67c4433c50df",
     "nutrition": {
-      "serving": "1 prepackaged single serving (30 g)",
-      "calories": 126,
-      "sodiumMg": 48.3,
-      "sugarG": 6.66,
-      "proteinG": 2.95,
-      "waterG": 2.4,
+      "serving": "1 crunchy granola bar (21 g)",
+      "calories": 98.91,
+      "sodiumMg": 61.74,
+      "sugarG": 6.01,
+      "proteinG": 2.12,
+      "waterG": 0.82,
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708461/nutrients",
-      "sourceReference": "FDC ID 2708461 / food code 57227000 — Cereal, granola",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708094/nutrients",
+      "sourceReference": "21 g of FDC ID 2708094 / food code 53710906 — Cereal or granola bar (General Mills Nature Valley Crunchy Granola Bar) (https://fdc.nal.usda.gov/food-details/2708094/nutrients). Uses the listed single-bar portion of the crunchy Nature Valley bar survey record; flavors may differ. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
     }
   },
   {
     "id": "cheese",
-    "name": "Cheese",
+    "name": "Sharp Cheddar",
     "narration": [
-      "ate Cheese.",
-      "finished a serving of Cheese."
+      "happily ate some sharp cheddar.",
+      "approved of the sharp cheddar."
     ],
     "category": "food",
     "price": 1,
-    "description": "Dense fat, protein, and strong opinions.",
+    "description": "A block of sharp cheddar. Aged long enough to develop opinions.",
     "qualitativeNutritionHint": "Compact protein and richness, usually with a salty side.",
     "edible": true,
     "usable": true,
@@ -3388,7 +3411,7 @@
       "stream-snack"
     ],
     "preferences": [
-      "variable"
+      "liked"
     ],
     "context": {
       "refusalProbability": 0,
@@ -3431,7 +3454,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheese.png?v=c783907b13c0",
+    "image": "/items/generated/cheese.png?v=2f326e6ce233",
     "nutrition": {
       "serving": "1 RACC (30 g)",
       "calories": 122.4,
@@ -3459,7 +3482,7 @@
     ],
     "category": "food",
     "price": 8,
-    "description": "Famously not her thing. Protein is protein, though.",
+    "description": "Tender chicken, ready for whatever the sauce department has planned.",
     "qualitativeNutritionHint": "A strong protein choice with little sugar.",
     "edible": true,
     "usable": true,
@@ -3513,7 +3536,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chicken.png?v=99595c6601ba",
+    "image": "/items/generated/chicken.png?v=b9bacd4de42c",
     "nutrition": {
       "serving": "1 RACC (114 g)",
       "calories": 189.2,
@@ -3535,18 +3558,18 @@
   },
   {
     "id": "three_month_old_rotisserie_chicken",
-    "name": "Three-Month-Old Rotisserie Chicken",
+    "name": "Forgotten Rotisserie Chicken",
     "narration": [
-      "ate the three-month-old rotisserie chicken and somehow turned it into a funny story."
+      "threw out the forgotten rotisserie chicken."
     ],
     "automaticNarration": [
-      "found and ate the three-month-old rotisserie chicken during the stream."
+      "found the forgotten chicken in the fridge and threw it away."
     ],
-    "category": "food",
+    "category": "reusable",
     "price": 5,
-    "description": "She doesn't even like chicken. That's what makes it content.",
-    "qualitativeNutritionHint": "The joke lands harder than any nutritional benefit.",
-    "edible": true,
+    "description": "Two and a half weeks behind the milk. This fridge side quest ends at the bin.",
+    "qualitativeNutritionHint": "A forgotten fridge resident awaiting disposal.",
+    "edible": false,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
@@ -3557,31 +3580,13 @@
       "max": 1
     },
     "tags": [
-      "food",
-      "meal",
-      "stream-snack"
+      "reusable",
+      "cleanup"
     ],
     "preferences": [
-      "variable"
+      "disliked"
     ],
-    "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
-    },
-    "effects": {
-      "food": {
-        "min": 5,
-        "max": 5
-      },
-      "health": {
-        "min": -8,
-        "max": -8
-      },
-      "creativity": {
-        "min": 2,
-        "max": 2
-      }
-    },
+    "effects": {},
     "nutritionScores": {
       "salt": 0,
       "water": 0,
@@ -3602,34 +3607,47 @@
     "itemActions": [
       {
         "id": "consume",
-        "label": "Eat the whole chicken",
-        "kind": "consume",
+        "label": "Throw out the forgotten chicken",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
         "consumes": true,
         "tags": [
-          "feeding"
+          "cleanup"
         ]
       }
     ],
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/three_month_old_rotisserie_chicken.png?v=c30430c6ba10",
+    "image": "/items/generated/three_month_old_rotisserie_chicken.png?v=4978747815ec",
     "nutrition": {
-      "serving": "1 RACC (114 g)",
-      "calories": 189.2,
-      "sodiumMg": 53.6,
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
       "sugarG": null,
-      "proteinG": 36.59,
-      "waterG": 74.44,
+      "proteinG": null,
+      "waterG": null,
       "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/331960/nutrients",
-      "sourceReference": "FDC ID 331960 — Chicken, broiler or fryers, breast, skinless, boneless, meat only, cooked, braised",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Forgotten Rotisserie Chicken is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
       "nullReasons": {
-        "sugarG": "The selected USDA record does not report sugarG.",
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
       }
     }
   },
@@ -3967,12 +3985,11 @@
     "id": "raisins",
     "name": "Raisins",
     "narration": [
-      "ate Raisins.",
-      "finished a serving of Raisins."
+      "reluctantly tried the raisins."
     ],
     "category": "food",
     "price": 3,
-    "description": "Grapes with the water removed.",
+    "description": "Grapes after the water budget got cut. Small enough to hide in an otherwise innocent snack.",
     "qualitativeNutritionHint": "Concentrated fruit sweetness after most of the water is gone.",
     "edible": true,
     "usable": true,
@@ -3986,11 +4003,17 @@
       "sugar"
     ],
     "preferences": [
-      "variable"
+      "disliked"
     ],
     "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
     },
     "effects": {
       "food": {
@@ -4029,7 +4052,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/raisins.png?v=9c28fedeaa34",
+    "image": "/items/generated/raisins.png?v=2af1cbb3e0ff",
     "nutrition": {
       "serving": "1 small box (1.5 oz) (43 g)",
       "calories": 128.6,
@@ -4047,15 +4070,14 @@
   },
   {
     "id": "lollipop",
-    "name": "Lollipop",
+    "name": "Mint Mentos",
     "narration": [
-      "ate Lollipop.",
-      "finished a serving of Lollipop."
+      "enjoyed Mint Mentos."
     ],
     "category": "food",
     "price": 1,
-    "description": "Flavored sugar with a time commitment.",
-    "qualitativeNutritionHint": "Slow-release candy sweetness without meaningful nourishment.",
+    "description": "A roll of chewy mint buttons. Fresh breath, questionable impulse control.",
+    "qualitativeNutritionHint": "A small, sugary mint with little food value.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -4063,10 +4085,10 @@
     "tags": [
       "food",
       "snack",
-      "stream-snack"
+      "favorite"
     ],
     "preferences": [
-      "variable"
+      "liked"
     ],
     "context": {
       "refusalProbability": 0,
@@ -4074,6 +4096,10 @@
     },
     "effects": {
       "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
         "min": 1,
         "max": 1
       }
@@ -4109,20 +4135,23 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/lollipop.png?v=90e87dfe146f",
+    "image": "/items/generated/lollipop.png?v=8d8eac18e6a7",
     "nutrition": {
-      "serving": "1 piece (10 g)",
-      "calories": 39.4,
-      "sodiumMg": 3.8,
-      "sugarG": 6.29,
+      "serving": "1 piece",
+      "calories": 10,
+      "sodiumMg": 0,
+      "sugarG": 2,
       "proteinG": 0,
-      "waterG": 0.13,
-      "caffeineMg": 0,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710361/nutrients",
-      "sourceReference": "FDC ID 2710361 / food code 91745030 — Candy, lollipop",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://smartlabel.labelinsight.com/product/6585361/nutrition",
+      "sourceReference": "Mentos-maintained SmartLabel for Mint Flavor Chewy Mint Candy, individually wrapped 40-piece peg bag, UPC 00073390009304; page identifies Perfetti van Melle USA as manufacturer and says updated by Mentos on 2021-11-30. Nutrition is per one piece, not the whole bag. The requested legacy item ID lollipop maps here to Mint Mentos candy, not a lollipop or Mentos gum. Piece mass is not reported on this page.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "waterG": "The manufacturer-maintained SmartLabel does not report water mass.",
+        "caffeineMg": "The manufacturer-maintained SmartLabel does not report caffeine content; absence of a caffeine declaration is not a measured zero."
+      }
     }
   },
   {
@@ -4877,12 +4906,11 @@
     "id": "bacon",
     "name": "Bacon",
     "narration": [
-      "reluctantly ate Bacon.",
-      "managed to get through Bacon."
+      "ate some bacon."
     ],
     "category": "food",
     "price": 3,
-    "description": "Crispy fat, protein, and a lot of salt.",
+    "description": "Crispy, smoky strips. The kitchen smells like breakfast has a marketing budget.",
     "qualitativeNutritionHint": "Strong flavor, protein, and a heavy salt load.",
     "edible": true,
     "usable": true,
@@ -4894,17 +4922,11 @@
       "salty"
     ],
     "preferences": [
-      "disliked"
+      "variable"
     ],
     "context": {
-      "refusalProbability": 0.5,
-      "preparationAcceptance": 1,
-      "dislikedEffects": {
-        "mood": {
-          "min": -1,
-          "max": 0
-        }
-      }
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
     },
     "effects": {
       "food": {
@@ -4945,9 +4967,9 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bacon.png?v=7df110821fec",
+    "image": "/items/generated/bacon.png?v=fe40ec2ee1ea",
     "nutrition": {
-      "serving": "Quantity not specified (16 g)",
+      "serving": "2 medium cooked bacon slices (16 g)",
       "calories": 77.4,
       "sodiumMg": 281.6,
       "sugarG": 0.25,
@@ -5236,7 +5258,7 @@
     ],
     "category": "food",
     "price": 14,
-    "description": "Bitter caffeine delivery system.",
+    "description": "Dark roasted beans in liquid form. The mug has logged on before everyone else.",
     "qualitativeNutritionHint": "A concentrated caffeine option with little food value.",
     "edible": true,
     "usable": true,
@@ -5302,7 +5324,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/coffee.png?v=fa77a4a93663",
+    "image": "/items/generated/coffee.png?v=5b15e4eff898",
     "nutrition": {
       "serving": "1 cup (8 fl oz) (240 g)",
       "calories": 2.4,
@@ -6034,12 +6056,11 @@
     "id": "chicken-finger",
     "name": "Chicken Finger",
     "narration": [
-      "reluctantly ate Chicken Finger.",
-      "managed to get through Chicken Finger."
+      "tried the chicken fingers."
     ],
     "category": "food",
     "price": 7,
-    "description": "Protein wearing crispy armor.",
+    "description": "Crispy chicken with a handle made of more chicken. The dipping sauce is a tactical decision.",
     "qualitativeNutritionHint": "Breaded protein that is richer and saltier than plain chicken.",
     "edible": true,
     "usable": true,
@@ -6051,11 +6072,11 @@
       "salty"
     ],
     "preferences": [
-      "disliked"
+      "specific_preparation"
     ],
     "context": {
-      "refusalProbability": 0.5,
-      "preparationAcceptance": 1,
+      "refusalProbability": 0.35,
+      "preparationAcceptance": 0.85,
       "dislikedEffects": {
         "mood": {
           "min": -1,
@@ -6102,7 +6123,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chicken-finger.png?v=b07537f481d0",
+    "image": "/items/generated/chicken-finger.png?v=39aa6c4ac020",
     "nutrition": {
       "serving": "1 tender, strip, or finger (50 g)",
       "calories": 135.5,
@@ -6120,23 +6141,22 @@
   },
   {
     "id": "onion",
-    "name": "Onion",
+    "name": "Onion Rings",
     "narration": [
-      "reluctantly ate Onion.",
-      "managed to get through Onion."
+      "reluctantly tried Onion Rings."
     ],
     "category": "food",
     "price": 3,
-    "description": "Crunchy raw; slippery when cooked.",
-    "qualitativeNutritionHint": "A low-energy vegetable whose texture changes dramatically when cooked.",
+    "description": "Golden batter wrapped around slippery onion loops. Structural integrity sold separately.",
+    "qualitativeNutritionHint": "A fried, salty side with more batter than vegetable.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
       "food",
-      "vegetable",
-      "ingredient"
+      "meal",
+      "salty"
     ],
     "preferences": [
       "disliked"
@@ -6153,26 +6173,28 @@
     },
     "effects": {
       "food": {
-        "min": 1,
-        "max": 1
+        "min": 2,
+        "max": 2
       }
     },
     "nutritionScores": {
-      "salt": 0,
-      "water": 1,
-      "protein": 0,
+      "salt": 2,
+      "water": 0,
+      "protein": 1,
       "sugar": 0,
       "caffeine": 0
     },
     "properties": {
-      "salt": 0,
-      "water": 1,
-      "protein": 0,
+      "salt": 2,
+      "water": 0,
+      "protein": 1,
       "sugar": 0,
       "caffeine": 0,
-      "portion": 1
+      "portion": 2
     },
-    "statusHooks": [],
+    "statusHooks": [
+      "rolling_salt"
+    ],
     "automaticEventHooks": [],
     "itemActions": [
       {
@@ -6188,22 +6210,27 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/onion.png?v=56b6dc86c2cc",
+    "image": "/items/generated/onion.png?v=0984d7a81ef4",
     "nutrition": {
-      "serving": "1 RACC (85 g)",
-      "calories": 32.3,
-      "sodiumMg": 0.8,
-      "sugarG": 4.95,
-      "proteinG": 0.71,
-      "waterG": 76.58,
-      "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/790646/nutrients",
-      "sourceReference": "FDC ID 790646 — Onions, yellow, raw",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
-      "nullReasons": {
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      "serving": "1 small order onion rings (120 g)",
+      "calories": 422.4,
+      "sodiumMg": 690,
+      "sugarG": 5.95,
+      "proteinG": 5.03,
+      "waterG": 40.8,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710055/nutrients",
+      "sourceReference": "120 g of FDC ID 2710055 / food code 75415022 — Fried onion rings (https://fdc.nal.usda.gov/food-details/2710055/nutrients). Uses the listed fast-food order of fried onion rings. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
       }
     }
   },
@@ -7019,23 +7046,21 @@
   },
   {
     "id": "hummus",
-    "name": "Hummus",
+    "name": "Pumpkin Hummus",
     "narration": [
-      "reluctantly ate Hummus.",
-      "managed to get through Hummus."
+      "reluctantly tried Pumpkin Hummus."
     ],
     "category": "food",
     "price": 3,
-    "description": "Chickpeas blended into protein paste.",
-    "qualitativeNutritionHint": "Creamy chickpea dip with plant protein and moderate richness.",
+    "description": "Chickpeas and pumpkin mashed into a smooth orange dip. Autumn has entered the snack aisle.",
+    "qualitativeNutritionHint": "A creamy chickpea dip with some plant protein and a savory edge.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
       "food",
-      "snack",
-      "stream-snack"
+      "snack"
     ],
     "preferences": [
       "disliked"
@@ -7058,14 +7083,14 @@
     },
     "nutritionScores": {
       "salt": 1,
-      "water": 0,
+      "water": 1,
       "protein": 1,
       "sugar": 0,
       "caffeine": 0
     },
     "properties": {
       "salt": 1,
-      "water": 0,
+      "water": 1,
       "protein": 1,
       "sugar": 0,
       "caffeine": 0,
@@ -7087,22 +7112,27 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/hummus.png?v=ad33b2577d9f",
+    "image": "/items/generated/hummus.png?v=846b81f70d58",
     "nutrition": {
-      "serving": "1 RACC (30 g)",
-      "calories": 68.7,
-      "sodiumMg": 131.4,
-      "sugarG": 0.1,
-      "proteinG": 2.2,
-      "waterG": 17.61,
-      "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/321358/nutrients",
-      "sourceReference": "FDC ID 321358 — Hummus, commercial",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
-      "nullReasons": {
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      "serving": "2 tablespoons pumpkin hummus (30 g)",
+      "calories": 54.2,
+      "sodiumMg": 88.9,
+      "sugarG": 0.39,
+      "proteinG": 1.58,
+      "waterG": 20.51,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707402/nutrients",
+      "sourceReference": "20 g of FDC ID 2707402 / food code 41205070 — Hummus, plain (https://fdc.nal.usda.gov/food-details/2707402/nutrients); 10 g of FDC ID 2709691 / food code 73201013 — Pumpkin, canned, cooked (https://fdc.nal.usda.gov/food-details/2709691/nutrients). Assumed blend: 20 g prepared plain hummus plus 10 g cooked canned pumpkin. Ratio is a recipe estimate; the original brand and recipe are unspecified. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
       }
     }
   },
@@ -7636,12 +7666,11 @@
     "id": "nachos",
     "name": "Nachos",
     "narration": [
-      "reluctantly ate Nachos.",
-      "managed to get through Nachos."
+      "tried the nachos, inspecting the arrangement."
     ],
     "category": "food",
     "price": 1,
-    "description": "Chips, cheese, salt, structural chaos.",
+    "description": "Crunchy chips with a squad of dips on the side. Build each bite before it gets soggy.",
     "qualitativeNutritionHint": "A rich salty mix where chips and cheese do most of the work.",
     "edible": true,
     "usable": true,
@@ -7652,11 +7681,11 @@
       "salty"
     ],
     "preferences": [
-      "disliked"
+      "specific_preparation"
     ],
     "context": {
-      "refusalProbability": 0.5,
-      "preparationAcceptance": 1,
+      "refusalProbability": 0.35,
+      "preparationAcceptance": 0.85,
       "dislikedEffects": {
         "mood": {
           "min": -1,
@@ -7703,9 +7732,9 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/nachos.png?v=7776db974b90",
+    "image": "/items/generated/nachos.png?v=1034d7500901",
     "nutrition": {
-      "serving": "Quantity not specified (125 g)",
+      "serving": "1/2 order nachos with dips (125 g)",
       "calories": 331.3,
       "sodiumMg": 610,
       "sugarG": 0.49,
@@ -8425,38 +8454,36 @@
   },
   {
     "id": "bread",
-    "name": "Bread",
+    "name": "Tiger Bread",
     "narration": [
-      "carefully tried Bread.",
-      "gave Bread a cautious first bite."
+      "enjoyed Tiger Bread."
     ],
     "category": "food",
     "price": 1,
-    "description": "Basic carbs with endless configuration options.",
-    "qualitativeNutritionHint": "Neutral carbohydrate fuel with many possible preparations.",
+    "description": "Soft white bread under a crackly striped crust. The tiger is purely cosmetic.",
+    "qualitativeNutritionHint": "A starchy bakery slice with modest protein and some salt.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
       "food",
-      "ingredient"
+      "snack",
+      "favorite"
     ],
     "preferences": [
-      "specific_preparation"
+      "liked"
     ],
     "context": {
-      "refusalProbability": 0.35,
-      "preparationAcceptance": 0.8,
-      "dislikedEffects": {
-        "mood": {
-          "min": -1,
-          "max": 0
-        }
-      }
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
     },
     "effects": {
       "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
         "min": 1,
         "max": 1
       }
@@ -8492,20 +8519,29 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bread.png?v=a8dc0c5d5fc5",
+    "image": "/items/generated/bread.png?v=85ed25fc9010",
     "nutrition": {
-      "serving": "1 medium or regular slice (28 g)",
-      "calories": 74.8,
+      "serving": "1 slice tiger bread (35 g)",
+      "calories": 87.15,
       "sodiumMg": 126,
-      "sugarG": 1.5,
-      "proteinG": 2.64,
-      "waterG": 10,
-      "caffeineMg": 0,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707598/nutrients",
-      "sourceReference": "FDC ID 2707598 / food code 51101000 — Bread, white",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "sugarG": 0.42,
+      "proteinG": 2.98,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.ah.nl/producten/product/wi446410/ah-tijger-wit-heel",
+      "sourceReference": "Albert Heijn own-label AH Tijger wit heel, product wi446410 / EAN 08718265909786. Listed 35 g portion; per 100 g: 249 kcal, 0.9 g salt, 1.2 g sugars, 8.5 g protein. Scaled by 0.35; sodium = salt / 2.5, converted to mg. Comparable tiger-bread estimate; bakeries vary.",
+      "retrievalDate": "2026-09-15",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately"
+      },
+      "nullReasons": {
+        "waterG": "The selected manufacturer label does not report water mass.",
+        "caffeineMg": "The selected manufacturer label does not report caffeine; absence from the label is not treated as zero."
+      }
     }
   },
   {
@@ -8686,56 +8722,54 @@
   },
   {
     "id": "ice-cream",
-    "name": "Ice cream",
+    "name": "Green Mint-Chocolate-Chip Ice Cream",
     "narration": [
-      "carefully tried Ice cream.",
-      "gave Ice cream a cautious first bite."
+      "enjoyed Green Mint-Chocolate-Chip Ice Cream."
     ],
     "category": "food",
     "price": 2,
-    "description": "Cold dairy, fat, and plenty of sugar.",
-    "qualitativeNutritionHint": "Sweet cold dairy where flavor and texture matter.",
+    "description": "Green mint ice cream studded with chocolate chips. Definitely not vanilla in a disguise.",
+    "qualitativeNutritionHint": "A cold, sugary dairy treat with rich chocolate pieces.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
       "food",
-      "caffeinated",
+      "meal",
+      "favorite",
       "sugar"
     ],
     "preferences": [
-      "specific_preparation"
+      "liked"
     ],
     "context": {
-      "refusalProbability": 0.45,
-      "preparationAcceptance": 0.7,
-      "dislikedEffects": {
-        "mood": {
-          "min": -1,
-          "max": 0
-        }
-      }
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
     },
     "effects": {
       "food": {
-        "min": 1,
+        "min": 2,
         "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
       }
     },
     "nutritionScores": {
-      "salt": 1,
+      "salt": 0,
       "water": 0,
       "protein": 1,
       "sugar": 3,
-      "caffeine": 1
+      "caffeine": 0
     },
     "properties": {
-      "salt": 1,
+      "salt": 0,
       "water": 0,
       "protein": 1,
       "sugar": 3,
-      "caffeine": 1,
+      "caffeine": 0,
       "portion": 2
     },
     "statusHooks": [],
@@ -8754,50 +8788,56 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/ice-cream.png?v=0752df086128",
+    "image": "/items/generated/ice-cream.png?v=4516032514d6",
     "nutrition": {
-      "serving": "1 cup (135 g)",
-      "calories": 298.4,
-      "sodiumMg": 121.5,
-      "sugarG": 30.91,
-      "proteinG": 4.82,
-      "waterG": 78.03,
-      "caffeineMg": 1.4,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2705629/nutrients",
-      "sourceReference": "FDC ID 2705629 / food code 13110000 — Ice cream, NFS",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "serving": "2/3 cup green mint-chocolate-chip ice cream (103 g)",
+      "calories": 250,
+      "sodiumMg": 65,
+      "sugarG": 20,
+      "proteinG": 4,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.hersheyicecream.com/wp-content/uploads/2024/01/580922906-nutritionals_bulk_-35.pdf",
+      "sourceReference": "Hershey's Ice Cream Minty Mint Chip manufacturer nutrition sheet, serving 2/3 cup (103 g). The ingredient list includes peppermint flavor, Yellow 5 and Blue 1, matching a green mint-chip ice cream. Label: 250 kcal, 65 mg sodium, 20 g total sugars, 4 g protein. Used as a comparable product estimate.",
+      "retrievalDate": "2026-09-15",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately"
+      },
+      "nullReasons": {
+        "waterG": "The selected manufacturer label does not report water mass.",
+        "caffeineMg": "The selected manufacturer label does not report caffeine; absence from the label is not treated as zero."
+      }
     }
   },
   {
     "id": "brownie",
-    "name": "Brownie",
+    "name": "Cosmic Brownie",
     "narration": [
-      "carefully tried Brownie.",
-      "gave Brownie a cautious first bite."
+      "reluctantly tried Cosmic Brownie."
     ],
     "category": "food",
     "price": 4,
-    "description": "Dense chocolate with serious sugar potential.",
-    "qualitativeNutritionHint": "Dense chocolate sweetness; serving style can change the verdict.",
+    "description": "Fudgy chocolate terrain scattered with crunchy candy meteorites. Watch the texture changes.",
+    "qualitativeNutritionHint": "A dense, sweet brownie with icing and candy-coated chocolate.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
       "food",
-      "snack",
-      "stream-snack",
-      "caffeinated",
+      "meal",
       "sugar"
     ],
     "preferences": [
-      "specific_preparation"
+      "disliked"
     ],
     "context": {
-      "refusalProbability": 0.45,
-      "preparationAcceptance": 0.65,
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
       "dislikedEffects": {
         "mood": {
           "min": -1,
@@ -8807,24 +8847,24 @@
     },
     "effects": {
       "food": {
-        "min": 1,
-        "max": 2
+        "min": 3,
+        "max": 3
       }
     },
     "nutritionScores": {
       "salt": 1,
       "water": 0,
       "protein": 1,
-      "sugar": 2,
-      "caffeine": 1
+      "sugar": 3,
+      "caffeine": 0
     },
     "properties": {
       "salt": 1,
       "water": 0,
       "protein": 1,
-      "sugar": 2,
-      "caffeine": 1,
-      "portion": 2
+      "sugar": 3,
+      "caffeine": 0,
+      "portion": 3
     },
     "statusHooks": [],
     "automaticEventHooks": [],
@@ -8842,20 +8882,23 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/brownie.png?v=f8d2d32cd67f",
+    "image": "/items/generated/brownie.png?v=e11d6cf4b422",
     "nutrition": {
-      "serving": "1 medium (50 g)",
-      "calories": 202.5,
-      "sodiumMg": 143,
-      "sugarG": 18.3,
-      "proteinG": 2.4,
-      "waterG": 6.8,
-      "caffeineMg": 1,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707903/nutrients",
-      "sourceReference": "FDC ID 2707903 / food code 53204000 — Cookie, brownie, NS as to icing",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "serving": "1 whole Cosmic Brownie, 4 oz foodservice/vending variant (113 g)",
+      "calories": 510,
+      "sodiumMg": 290,
+      "sugarG": 42,
+      "proteinG": 4,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.mckeefoodservice.com/storage/app/media/Products/Product-pdfs/260120Nutritionals%20Table.pdf",
+      "sourceReference": "McKee Foodservice nutrition table updated 2026-01-20, Cosmic Brownies product rows 89186 and 89586, 113 g. Confirmed against the whole-brownie column on page 3 of McKee's 4 oz label: https://mckeefoodservice.com/storage/app/media/Products/Cosmic-Brownies/LDS-NP-VEND-4oz-Cosmic-Brownies-IL-NF.pdf (issued 2022-05-25). The label also lists a separate 1/3-brownie serving (38 g); the values here are expressly for the entire 113 g brownie, not that third and not the smaller family-pack brownie. No scaling was performed.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "waterG": "The manufacturer nutrition table and product label do not report water mass; water in the ingredients list is not a quantity.",
+        "caffeineMg": "The manufacturer nutrition table and product label do not report caffeine content. No zero value was inferred for this cocoa-containing brownie."
+      }
     }
   },
   {
@@ -9123,15 +9166,14 @@
   },
   {
     "id": "cheeseless-toppingless-pizza",
-    "name": "Cheeseless Toppingless Pizza",
+    "name": "Bite-Sized Pizza Cubes",
     "narration": [
-      "carefully tried Cheeseless Toppingless Pizza.",
-      "gave Cheeseless Toppingless Pizza a cautious first bite."
+      "enjoyed Bite-Sized Pizza Cubes."
     ],
     "category": "food",
     "price": 9,
-    "description": "The correct order: crust, sauce, nothing else. No questions.",
-    "qualitativeNutritionHint": "A favorite comfort meal with a specific plain preparation and a salty edge.",
+    "description": "Pizza divided into tiny cubes. Someone finally lowered the difficulty of taking a bite.",
+    "qualitativeNutritionHint": "Bread, cheese, and sauce in small, salty bites.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -9139,41 +9181,40 @@
     "tags": [
       "food",
       "meal",
+      "favorite",
       "salty"
     ],
     "preferences": [
-      "specific_preparation"
+      "liked"
     ],
     "context": {
-      "refusalProbability": 0.4,
-      "preparationAcceptance": 0.85,
-      "dislikedEffects": {
-        "mood": {
-          "min": -1,
-          "max": 0
-        }
-      }
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
     },
     "effects": {
       "food": {
         "min": 2,
-        "max": 3
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
       }
     },
     "nutritionScores": {
-      "salt": 3,
-      "water": 0,
+      "salt": 2,
+      "water": 1,
       "protein": 2,
       "sugar": 0,
       "caffeine": 0
     },
     "properties": {
-      "salt": 3,
-      "water": 0,
+      "salt": 2,
+      "water": 1,
       "protein": 2,
       "sugar": 0,
       "caffeine": 0,
-      "portion": 3
+      "portion": 2
     },
     "statusHooks": [
       "rolling_salt"
@@ -9193,26 +9234,27 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheeseless-toppingless-pizza.png?v=3966b9a463f3",
+    "image": "/items/generated/cheeseless-toppingless-pizza.png?v=1bf2e3948562",
     "nutrition": {
-      "serving": "1 piece, NFS (119 g)",
-      "calories": 316.5,
-      "sodiumMg": 642.6,
-      "sugarG": 4.26,
-      "proteinG": 13.57,
-      "waterG": 51.41,
+      "serving": "1 small plate pizza cubes (120 g)",
+      "calories": 319.2,
+      "sodiumMg": 648,
+      "sugarG": 4.3,
+      "proteinG": 13.68,
+      "waterG": 51.84,
       "caffeineMg": 0,
       "sourceType": "usda_fndds",
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708614/nutrients",
-      "sourceReference": "FDC ID 2708614 / food code 58106210 — Pizza, cheese, from restaurant or fast food, NS as to type of crust; proxy for the cheeseless/toppingless preparation",
-      "retrievalDate": "2026-08-22",
+      "sourceReference": "120 g of FDC ID 2708614 / food code 58106210 — Pizza, cheese, from restaurant or fast food, NS as to type of crust (https://fdc.nal.usda.gov/food-details/2708614/nutrients). Assumed plate: 120 g cheese pizza cut into bite-sized cubes. Cutting changes the shape, not the nutrient total; no exact event recipe is known. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
       "snapshotDate": "2024-10-31",
       "qualifiers": {
         "calories": "approximately",
         "sodiumMg": "approximately",
         "sugarG": "approximately",
         "proteinG": "approximately",
-        "waterG": "approximately"
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
       }
     }
   },
@@ -9763,15 +9805,15 @@
   },
   {
     "id": "new-keyboard",
-    "name": "New Keyboard",
+    "name": "Quiet New Keyboard",
     "narration": [
-      "used New Keyboard to write ideas.",
-      "spent some time with New Keyboard."
+      "used Quiet New Keyboard to write ideas.",
+      "spent some time with Quiet New Keyboard."
     ],
     "category": "reusable",
     "price": 159,
-    "description": "Click clack, productivity allegedly.",
-    "qualitativeNutritionHint": "Use the fresh keys to capture an idea before it disappears.",
+    "description": "Fresh keys with a quiet tap. The microphone may finally get a word in.",
+    "qualitativeNutritionHint": "A quiet keyboard for typing, playing, and catching stray ideas.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -9780,7 +9822,9 @@
       "reusable",
       "streaming-gear"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -9816,7 +9860,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/new-keyboard.png?v=2d6f6fd51531",
+    "image": "/items/generated/new-keyboard.png?v=5271db4e08c5",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -9827,7 +9871,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: New Keyboard is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Quiet New Keyboard is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -11054,15 +11098,15 @@
   },
   {
     "id": "soulslike",
-    "name": "Soulslike",
+    "name": "Dark Souls",
     "narration": [
-      "used Soulslike to attempt the soulslike.",
-      "spent some time with Soulslike."
+      "used Dark Souls to attempt the soulslike.",
+      "spent some time with Dark Souls."
     ],
     "category": "reusable",
     "price": 59,
-    "description": "'This game is so easy smh.' (This is ragebait. Don't fall for it.)",
-    "qualitativeNutritionHint": "Attempt a difficult run when frustration feels worth the challenge.",
+    "description": "A difficult game with very confident skeletons. The bonfire remembers your last mistake.",
+    "qualitativeNutritionHint": "A demanding game built around timing, practice, and repeated attempts.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -11071,7 +11115,9 @@
       "reusable",
       "game"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -11093,7 +11139,7 @@
     "itemActions": [
       {
         "id": "play_soulslike",
-        "label": "Attempt the soulslike",
+        "label": "Play Dark Souls",
         "kind": "interaction",
         "effects": {
           "mood": {
@@ -11123,7 +11169,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/soulslike.png?v=89f478c85505",
+    "image": "/items/generated/soulslike.png?v=18e7c2d90b20",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -11134,7 +11180,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Soulslike is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Dark Souls is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -11570,8 +11616,8 @@
     ],
     "category": "reusable",
     "price": 24,
-    "description": "Timing, music, immediate regret.",
-    "qualitativeNutritionHint": "Good timing turns music into an active creative break.",
+    "description": "Notes arrive on schedule. Your fingers have been informed of the schedule.",
+    "qualitativeNutritionHint": "A music game that asks for quick reactions and precise timing.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -11580,7 +11626,9 @@
       "reusable",
       "game"
     ],
-    "preferences": [],
+    "preferences": [
+      "disliked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -11632,7 +11680,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/rhythm-game.png?v=9aa570dd6431",
+    "image": "/items/generated/rhythm-game.png?v=8e62e86496a0",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13614,15 +13662,15 @@
   },
   {
     "id": "book",
-    "name": "Book",
+    "name": "A Deadly Education",
     "narration": [
-      "used Book to read the book.",
-      "spent some time with Book."
+      "used A Deadly Education to read the book.",
+      "spent some time with A Deadly Education."
     ],
     "category": "reusable",
     "price": 18,
-    "description": "A few hundred pages of disappearing for a while.",
-    "qualitativeNutritionHint": "Settle in with a manageable read for a quiet mental break.",
+    "description": "A magic-school novel where the homework might be the safest thing in the building.",
+    "qualitativeNutritionHint": "A dark fantasy read with dangerous lessons and plenty of pages.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -13631,7 +13679,9 @@
       "reusable",
       "read"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -13677,7 +13727,7 @@
     "itemActions": [
       {
         "id": "read_book",
-        "label": "Read the book",
+        "label": "Read A Deadly Education",
         "kind": "interaction",
         "effects": {
           "mood": {
@@ -13698,7 +13748,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/book.png?v=0c6c4bf10805",
+    "image": "/items/generated/book.png?v=aa5d690d2451",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13709,7 +13759,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Book is a non-food catalogue item.",
+      "sourceReference": "Not applicable: A Deadly Education is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -13723,15 +13773,15 @@
   },
   {
     "id": "really-long-book",
-    "name": "Really Long Book",
+    "name": "Alchemised",
     "narration": [
-      "used Really Long Book to read the really long book.",
-      "spent some time with Really Long Book."
+      "used Alchemised to read the really long book.",
+      "spent some time with Alchemised."
     ],
     "category": "reusable",
     "price": 29,
-    "description": "Unavailable for several business days.",
-    "qualitativeNutritionHint": "A deeper reading session rewards patience and available energy.",
+    "description": "A hefty dark-fantasy novel. Set aside an evening. Possibly the next one too.",
+    "qualitativeNutritionHint": "A long, bleak read for a substantial stretch of quiet time.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -13740,7 +13790,9 @@
       "reusable",
       "read"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -13804,7 +13856,7 @@
     "itemActions": [
       {
         "id": "read_long_book",
-        "label": "Read the really long book",
+        "label": "Read Alchemised",
         "kind": "interaction",
         "effects": {
           "mood": {
@@ -13829,7 +13881,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/really-long-book.png?v=e9425547ce20",
+    "image": "/items/generated/really-long-book.png?v=4db3cf28c56b",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13840,7 +13892,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Really Long Book is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Alchemised is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -13854,24 +13906,24 @@
   },
   {
     "id": "manga",
-    "name": "Manga",
+    "name": "Dark Souls Art Book",
     "narration": [
-      "used Manga to read the manga.",
-      "spent some time with Manga."
+      "spent some time with Dark Souls Art Book."
     ],
     "category": "reusable",
     "price": 12,
-    "description": "Reading, but with pictures.",
-    "qualitativeNutritionHint": "A visual reading break that is easy to pick up and enjoy.",
+    "description": "Dark Souls artwork, printed where the bosses cannot hit you. Excellent viewing conditions.",
+    "qualitativeNutritionHint": "A collection of game artwork to browse slowly.",
     "edible": false,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
-      "reusable",
-      "read"
+      "reusable"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -13889,18 +13941,15 @@
       "portion": 0
     },
     "statusHooks": [],
-    "automaticEventHooks": [
+    "automaticEventHooks": [],
+    "itemActions": [
       {
-        "id": "autonomous-manga",
-        "weight": 5,
-        "messages": [
-          "Companion vanished into a manga for a while.",
-          "Companion called the manga research and refused follow-up questions."
-        ],
-        "eligibility": "owned",
+        "id": "read_manga",
+        "label": "Browse the Dark Souls art book",
+        "kind": "interaction",
         "effects": {
           "mood": {
-            "min": 1,
+            "min": 0,
             "max": 1
           },
           "creativity": {
@@ -13908,36 +13957,14 @@
             "max": 1
           }
         },
-        "cooldownHours": 12,
-        "sharedCooldownKey": "autonomous_reading",
-        "requiresIdle": true
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "read_manga",
-        "label": "Read the manga",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 2
-          },
-          "creativity": {
-            "min": 1,
-            "max": 1
-          }
-        },
-        "tags": [
-          "read"
-        ],
-        "consumes": true
+        "consumes": true,
+        "tags": []
       }
     ],
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/manga.png?v=eb1f4c3ded79",
+    "image": "/items/generated/manga.png?v=f25caa2f0346",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13948,8 +13975,8 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Manga is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
+      "sourceReference": "Not applicable: Dark Souls Art Book is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
         "sodiumMg": "Not applicable to a non-food catalogue item.",
@@ -14695,15 +14722,15 @@
   },
   {
     "id": "headphones",
-    "name": "Headphones",
+    "name": "Worn Kitty Quartz Headphones",
     "narration": [
-      "used Headphones to listen with headphones.",
-      "spent some time with Headphones."
+      "used Worn Kitty Quartz Headphones to listen with headphones.",
+      "spent some time with Worn Kitty Quartz Headphones."
     ],
     "category": "reusable",
     "price": 129,
-    "description": "Everything else has been muted.",
-    "qualitativeNutritionHint": "Listen privately for a focused mood reset.",
+    "description": "Pink kitty headphones with worn, loose ear cups. Comfort has voided the warranty.",
+    "qualitativeNutritionHint": "Well-worn headphones with a loose fit and soft ear cups.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -14711,7 +14738,9 @@
     "tags": [
       "reusable"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -14757,7 +14786,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/headphones.png?v=0f1c1ac86ade",
+    "image": "/items/generated/headphones.png?v=b2a04f9305df",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14768,7 +14797,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Headphones is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Worn Kitty Quartz Headphones is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -14789,8 +14818,8 @@
     ],
     "category": "reusable",
     "price": 19,
-    "description": "Entertainment may now occur horizontally.",
-    "qualitativeNutritionHint": "Place it on the bed to make downtime more restorative.",
+    "description": "One soft blanket. Portable warmth, with a built-in argument about the room temperature.",
+    "qualitativeNutritionHint": "An extra layer for the bed when the room feels cold.",
     "edible": false,
     "usable": false,
     "consumable": false,
@@ -14799,7 +14828,9 @@
       "reusable",
       "comfort"
     ],
-    "preferences": [],
+    "preferences": [
+      "variable"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -14824,7 +14855,7 @@
       "mood": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/blanket.png?v=c0bed3f3690b",
+    "image": "/items/generated/blanket.png?v=d4ebaff3304f",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14849,24 +14880,24 @@
   },
   {
     "id": "photo-album",
-    "name": "Photo Album",
+    "name": "Bri and Booger Trading Cards",
     "narration": [
-      "used Photo Album to look through memories.",
-      "spent some time with Photo Album."
+      "spent some time with Bri and Booger Trading Cards."
     ],
     "category": "reusable",
     "price": 24,
-    "description": "Evidence that any of this happened.",
-    "qualitativeNutritionHint": "Look back through shared memories for a gentle social moment.",
+    "description": "Glittery fan-made trading cards. The sleeves are doing their best to contain the sparkle.",
+    "qualitativeNutritionHint": "Small collectible cards with fan artwork and a glittery finish.",
     "edible": false,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
-      "reusable",
-      "social"
+      "reusable"
     ],
-    "preferences": [],
+    "preferences": [
+      "liked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -14888,28 +14919,26 @@
     "itemActions": [
       {
         "id": "look_through_memories",
-        "label": "Look through memories",
+        "label": "Admire the trading cards",
         "kind": "interaction",
         "effects": {
           "mood": {
-            "min": -1,
-            "max": 2
+            "min": 0,
+            "max": 1
           },
-          "bond": {
-            "min": 1,
-            "max": 2
+          "creativity": {
+            "min": 0,
+            "max": 1
           }
         },
-        "tags": [
-          "social"
-        ],
-        "consumes": true
+        "consumes": true,
+        "tags": []
       }
     ],
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/photo-album.png?v=a9089849cf58",
+    "image": "/items/generated/photo-album.png?v=54e388475fe7",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14920,8 +14949,8 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Photo Album is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
+      "sourceReference": "Not applicable: Bri and Booger Trading Cards is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
         "sodiumMg": "Not applicable to a non-food catalogue item.",
@@ -16361,15 +16390,15 @@
   },
   {
     "id": "wall-art",
-    "name": "Wall Art",
+    "name": "Fan-Art Corkboard",
     "narration": [
-      "admired Wall Art in the room.",
-      "took another look at Wall Art."
+      "admired Fan-Art Corkboard in the room.",
+      "took another look at Fan-Art Corkboard."
     ],
     "category": "upgrade",
     "price": 49,
-    "description": "The wall looked suspiciously empty.",
-    "qualitativeNutritionHint": "Use the wall anchor to give the room a stronger identity.",
+    "description": "A corkboard for fan art and fairy lights. The wall is accepting submissions.",
+    "qualitativeNutritionHint": "A place to display artwork and small keepsakes.",
     "edible": false,
     "usable": false,
     "consumable": false,
@@ -16403,7 +16432,7 @@
       "creativity": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/wall-art.png?v=6d254932b66d",
+    "image": "/items/generated/wall-art.png?v=335d609feb45",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -16414,7 +16443,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Wall Art is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Fan-Art Corkboard is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -18158,15 +18187,15 @@
   },
   {
     "id": "life-size-cardboard-cutout",
-    "name": "Life-Size Cardboard Cutout",
+    "name": "Astarion Cardboard Cutout",
     "narration": [
-      "admired Life-Size Cardboard Cutout in the room.",
-      "took another look at Life-Size Cardboard Cutout."
+      "admired Astarion Cardboard Cutout in the room.",
+      "took another look at Astarion Cardboard Cutout."
     ],
     "category": "decoration",
     "price": 79,
-    "description": "This will be funny exactly once.",
-    "qualitativeNutritionHint": "A wall-adjacent figure supplies surprise and dubious ambience.",
+    "description": "Astarion, at an inconveniently large scale. Brooding requires this much floor space.",
+    "qualitativeNutritionHint": "A tall cardboard figure with limited resistance to bending.",
     "edible": false,
     "usable": false,
     "consumable": false,
@@ -18214,7 +18243,7 @@
       "mood": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/life-size-cardboard-cutout.png?v=3b5234815118",
+    "image": "/items/generated/life-size-cardboard-cutout.png?v=56f8517821a8",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -18225,7 +18254,7 @@
       "caffeineMg": null,
       "sourceType": "not_applicable",
       "sourceUrl": null,
-      "sourceReference": "Not applicable: Life-Size Cardboard Cutout is a non-food catalogue item.",
+      "sourceReference": "Not applicable: Astarion Cardboard Cutout is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -18866,13 +18895,13 @@
     "id": "jar-of-pickle-juice",
     "name": "Jar of Pickle Juice",
     "narration": [
-      "happily drank Jar of Pickle Juice.",
-      "savored every sip of Jar of Pickle Juice."
+      "reluctantly tried the pickle juice.",
+      "made her opinion of plain pickle juice very clear."
     ],
     "category": "food",
     "price": 3,
-    "description": "Three cups is the canonical serving.",
-    "qualitativeNutritionHint": "A salty, hydrating favorite with an unmistakably pickled personality.",
+    "description": "The pickles have left. Their aggressively salty bath remains.",
+    "qualitativeNutritionHint": "A sour, very salty liquid with almost no food value.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -18880,23 +18909,24 @@
     "tags": [
       "food",
       "drink",
-      "favorite",
       "hydrating",
       "salty"
     ],
     "preferences": [
-      "liked"
+      "disliked"
     ],
     "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
     },
     "effects": {
       "food": {
-        "min": 1,
-        "max": 1
-      },
-      "mood": {
         "min": 1,
         "max": 1
       }
@@ -18934,7 +18964,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/jar-of-pickle-juice.png?v=5bccac0c172f",
+    "image": "/items/generated/jar-of-pickle-juice.png?v=d202110c576b",
     "nutrition": {
       "serving": "1 fl oz (30 mL)",
       "calories": 2,
@@ -19483,8 +19513,8 @@
     ],
     "category": "decoration",
     "price": 3,
-    "description": "A diagnosed phobia, sold by the sheet.",
-    "qualitativeNutritionHint": "A cursed decorative sheet whose tiny adhesive shapes are a known hazard.",
+    "description": "Tiny cute pictures backed by irreversible decisions. Peeling is the point of no return.",
+    "qualitativeNutritionHint": "A sheet of adhesive decorations; the backing keeps them intact.",
     "edible": false,
     "usable": true,
     "consumable": true,
@@ -19493,7 +19523,9 @@
       "decoration",
       "cursed"
     ],
-    "preferences": [],
+    "preferences": [
+      "disliked"
+    ],
     "effects": {},
     "nutritionScores": {
       "salt": 0,
@@ -19532,7 +19564,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sheet-of-cute-stickers.png?v=aed9e13cc812",
+    "image": "/items/generated/sheet-of-cute-stickers.png?v=bd416e5a688e",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -19843,23 +19875,24 @@
   },
   {
     "id": "oatmeal",
-    "name": "Oatmeal",
+    "name": "Brown-Sugar Oatmeal",
     "narration": [
-      "ate a warm bowl of oatmeal. Beige and thriving.",
-      "had oatmeal. Comfort level: canonical."
+      "enjoyed Brown-Sugar Oatmeal."
     ],
     "category": "food",
     "price": 2,
-    "description": "Beige, warm, and canonically comforting.",
-    "qualitativeNutritionHint": "Warm, gentle comfort carbs that ask nothing of anyone.",
+    "description": "Warm oats under a swirl of brown sugar. Breakfast has equipped its comfort blanket.",
+    "qualitativeNutritionHint": "A soft, filling oat bowl with added sweetness.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
       "food",
+      "meal",
       "favorite",
-      "comfort-food"
+      "sugar",
+      "hydrating"
     ],
     "preferences": [
       "liked"
@@ -19870,7 +19903,7 @@
     },
     "effects": {
       "food": {
-        "min": 1,
+        "min": 2,
         "max": 2
       },
       "mood": {
@@ -19880,16 +19913,16 @@
     },
     "nutritionScores": {
       "salt": 0,
-      "water": 1,
+      "water": 2,
       "protein": 1,
-      "sugar": 0,
+      "sugar": 2,
       "caffeine": 0
     },
     "properties": {
       "salt": 0,
-      "water": 1,
+      "water": 2,
       "protein": 1,
-      "sugar": 0,
+      "sugar": 2,
       "caffeine": 0,
       "portion": 2
     },
@@ -19898,7 +19931,7 @@
     "itemActions": [
       {
         "id": "consume",
-        "label": "Feed {pet}",
+        "label": "Feed companion",
         "kind": "consume",
         "consumes": true,
         "tags": [
@@ -19909,36 +19942,40 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/oatmeal.png?v=9698b94f218b",
+    "image": "/items/generated/oatmeal.png?v=56594691aa23",
     "nutrition": {
-      "serving": "1 RACC (170 g)",
-      "calories": 132.6,
-      "sodiumMg": 71.1,
-      "sugarG": 6.95,
-      "proteinG": 6.49,
-      "waterG": 145.01,
-      "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2259793/nutrients",
-      "sourceReference": "FDC ID 2259793 — Yogurt, plain, whole milk",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
-      "nullReasons": {
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
+      "serving": "1 cup cooked oatmeal with 2 teaspoons brown sugar (249.2 g)",
+      "calories": 188.56,
+      "sodiumMg": 170.58,
+      "sugarG": 9.33,
+      "proteinG": 5.32,
+      "waterG": 203.64,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708381/nutrients",
+      "sourceReference": "240 g of FDC ID 2708381 / food code 56203056 — Oatmeal, regular or quick, made with water, no added fat (https://fdc.nal.usda.gov/food-details/2708381/nutrients); 9.2 g of FDC ID 2710260 / food code 91102010 — Sugar, brown (https://fdc.nal.usda.gov/food-details/2710260/nutrients). Assumed recipe: USDA one-cup cooked oats portion, made with water and no added fat, plus two listed 4.6 g teaspoons of brown sugar. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
       }
     }
   },
   {
     "id": "homegrown-cookies",
-    "name": "Homegrown Chocolate Chip Cookies",
+    "name": "Soft Chocolate-Chip Cookies",
     "narration": [
-      "ate a homegrown chocolate chip cookie and got briefly homesick.",
-      "savored a cookie from the village. Mom's recipe never misses."
+      "enjoyed Soft Chocolate-Chip Cookies."
     ],
     "category": "food",
     "price": 3,
-    "description": "Chocolate chip, straight from the village. Mom's recipe.",
-    "qualitativeNutritionHint": "A sweet taste of home with more feelings than fiber.",
+    "description": "Soft cookies with chocolate still melting into the middle. The cooling rack has been bypassed.",
+    "qualitativeNutritionHint": "Sweet baked snacks with soft centers and melted chocolate.",
     "edible": true,
     "usable": true,
     "consumable": true,
@@ -19946,9 +19983,7 @@
     "tags": [
       "food",
       "snack",
-      "stream-snack",
       "favorite",
-      "comfort-food",
       "sugar"
     ],
     "preferences": [
@@ -19964,8 +19999,8 @@
         "max": 1
       },
       "mood": {
-        "min": 2,
-        "max": 2
+        "min": 1,
+        "max": 1
       }
     },
     "nutritionScores": {
@@ -19988,7 +20023,7 @@
     "itemActions": [
       {
         "id": "consume",
-        "label": "Feed {pet}",
+        "label": "Feed companion",
         "kind": "consume",
         "consumes": true,
         "tags": [
@@ -19999,20 +20034,28 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/homegrown-cookies.png?v=b28a68002fde",
+    "image": "/items/generated/homegrown-cookies.png?v=3beb47369f29",
     "nutrition": {
-      "serving": "1 cupcake, any size (90 g)",
-      "calories": 316.8,
-      "sodiumMg": 273.6,
-      "sugarG": 35.55,
-      "proteinG": 2.56,
-      "waterG": 24.39,
-      "caffeineMg": 2.7,
+      "serving": "2 soft chocolate-chip cookies (60 g)",
+      "calories": 303,
+      "sodiumMg": 156.6,
+      "sugarG": 24.72,
+      "proteinG": 3.5,
+      "waterG": 2.75,
+      "caffeineMg": 8.4,
       "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707853/nutrients",
-      "sourceReference": "FDC ID 2707853 / food code 53100100 — Cake or cupcake, NFS",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707910/nutrients",
+      "sourceReference": "60 g of FDC ID 2707910 / food code 53206020 — Cookie, chocolate chip, made from home recipe or purchased at a bakery (https://fdc.nal.usda.gov/food-details/2707910/nutrients). Uses two listed medium 30 g home-recipe/bakery cookies as the closest proxy for soft chocolate-chip cookies; baking time and chip distribution vary. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
     }
   },
   {
@@ -20099,6 +20142,3799 @@
       "sourceUrl": null,
       "sourceReference": "Not applicable: Ring Fit is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "kindle",
+    "name": "Kindle E-Reader",
+    "narration": [
+      "spent some time with Kindle E-Reader."
+    ],
+    "category": "reusable",
+    "price": 129,
+    "description": "A whole library on one quiet screen. The shelf space has been refunded.",
+    "qualitativeNutritionHint": "A dedicated e-reader with few distractions.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "read"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "read_kindle",
+        "label": "Read on the Kindle",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "read"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/kindle.png?v=169cbc4a25c4",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Kindle E-Reader is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "duct-tape",
+    "name": "Duct Tape",
+    "narration": [
+      "spent some time with Duct Tape."
+    ],
+    "category": "reusable",
+    "price": 3,
+    "description": "Strong adhesive. Shiny grey finish. Every repair now has a texture.",
+    "qualitativeNutritionHint": "A sticky repair strip that changes how a surface feels.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "cursed"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consider_tape_repair",
+        "label": "Consider taping the headphones",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -1,
+            "max": -1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "cursed"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/duct-tape.png?v=4b448c2a6886",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Duct Tape is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "pearly-pink-nails",
+    "name": "Pearly Pink Gem Nails",
+    "narration": [
+      "spent some time with Pearly Pink Gem Nails."
+    ],
+    "category": "reusable",
+    "price": 19,
+    "description": "Pearly pink nails with tiny gems. Typing now has special effects.",
+    "qualitativeNutritionHint": "A small set of glossy, gem-decorated nails.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "admire_nails",
+        "label": "Admire the nail set",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/pearly-pink-nails.png?v=b9d226a76737",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Pearly Pink Gem Nails is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "orange-cream-candle",
+    "name": "Orange-Cream Gigi Candle",
+    "narration": [
+      "spent some time with Orange-Cream Gigi Candle."
+    ],
+    "category": "reusable",
+    "price": 12,
+    "description": "Orange cream in candle form, courtesy of Gigi. Dessert ambience. Please do not lick the decor.",
+    "qualitativeNutritionHint": "A decorative candle with an orange-and-cream scent.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "comfort"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "smell_candle",
+        "label": "Smell the candle",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "comfort"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/orange-cream-candle.png?v=14c5a8a71e1e",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Orange-Cream Gigi Candle is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "spinning-fidget-ring",
+    "name": "Spinning Fidget Ring",
+    "narration": [
+      "spent some time with Spinning Fidget Ring."
+    ],
+    "category": "reusable",
+    "price": 9,
+    "description": "A little ring with a spinning band. Loading animation for your fingers.",
+    "qualitativeNutritionHint": "A wearable ring with a moving band to fidget with.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "spin_ring",
+        "label": "Spin the ring",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/spinning-fidget-ring.png?v=06fbb233a242",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Spinning Fidget Ring is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "corn-on-cob",
+    "name": "Corn on the Cob",
+    "narration": [
+      "struggled with the corn on the cob."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Sweet corn on its original controller. Kernels must be unlocked one row at a time.",
+    "qualitativeNutritionHint": "Juicy, starchy kernels still attached to the cob.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "vegetable",
+      "ingredient"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 1,
+      "protein": 1,
+      "sugar": 1,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 1,
+      "protein": 1,
+      "sugar": 1,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/corn-on-cob.png?v=dbc90117b3ed",
+    "nutrition": {
+      "serving": "1 regular ear cooked corn (105 g edible kernels)",
+      "calories": 90.3,
+      "sodiumMg": 137.55,
+      "sugarG": 6.55,
+      "proteinG": 3.42,
+      "waterG": 79.59,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709910/nutrients",
+      "sourceReference": "105 g of FDC ID 2709910 / food code 75216111 — Corn, fresh, cooked, no added fat (https://fdc.nal.usda.gov/food-details/2709910/nutrients). Uses the listed regular ear of cooked fresh corn without added fat; the survey recipe includes salt. The 105 g is edible corn, excluding the cob. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "black-tea",
+    "name": "Black Tea",
+    "narration": [
+      "happily drank Black Tea.",
+      "savored every sip of Black Tea."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Dark tea leaves, hot water, tiny caffeine department. Steep before speaking.",
+    "qualitativeNutritionHint": "An unsweetened drink with modest caffeine and plenty of water.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "drink",
+      "caffeinated",
+      "favorite",
+      "hydrating"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      },
+      "rest": {
+        "min": -1,
+        "max": -1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 3,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 2
+    },
+    "properties": {
+      "salt": 0,
+      "water": 3,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 2,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/black-tea.png?v=b733dd2afcef",
+    "nutrition": {
+      "serving": "1 cup (240 g)",
+      "calories": 2.4,
+      "sodiumMg": 7.2,
+      "sugarG": 0,
+      "proteinG": 0,
+      "waterG": 239.28,
+      "caffeineMg": 48,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710488/nutrients",
+      "sourceReference": "FDC ID 2710488 / food code 92302000 — Tea, hot, leaf, black",
+      "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "saved-craft-materials",
+    "name": "Saved Jars and Cute Tissue Paper",
+    "narration": [
+      "used Saved Jars and Cute Tissue Paper to make something together.",
+      "spent some time with Saved Jars and Cute Tissue Paper."
+    ],
+    "category": "reusable",
+    "price": 19,
+    "description": "Empty jars. Cute tissue paper. The crafting quest has been in the log for six months.",
+    "qualitativeNutritionHint": "Reusable jars and decorative paper saved for a future project.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "creative"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "make_craft",
+        "label": "Make something together",
+        "kind": "interaction",
+        "effects": {
+          "creativity": {
+            "min": 1,
+            "max": 3
+          },
+          "mood": {
+            "min": 0,
+            "max": 2
+          },
+          "bond": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        "tags": [
+          "make",
+          "social"
+        ],
+        "consumes": true
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/saved-craft-materials.png?v=24a620be10ed",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Saved Jars and Cute Tissue Paper is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "sweet-decaf-latte",
+    "name": "Sweet Decaf Caramel Iced Latte",
+    "narration": [
+      "enjoyed Sweet Decaf Caramel Iced Latte."
+    ],
+    "category": "food",
+    "price": 8,
+    "description": "An enormous iced latte with caramel, sugar, and whipped cream. There may be coffee under there.",
+    "qualitativeNutritionHint": "A sweet, milky drink with very little caffeine and plenty of added sugar.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "sugar",
+      "decaf"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 3,
+        "max": 3
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 1,
+      "protein": 1,
+      "sugar": 3,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 1,
+      "protein": 1,
+      "sugar": 3,
+      "caffeine": 0,
+      "portion": 3
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/sweet-decaf-latte.png?v=1c1c030530b9",
+    "nutrition": {
+      "serving": "1 large iced caramel latte with whipped cream (592 g, including 150 g ice)",
+      "calories": 400.3,
+      "sodiumMg": 272.98,
+      "sugarG": 61.5,
+      "proteinG": 11.02,
+      "waterG": 502.53,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710395/nutrients",
+      "sourceReference": "372 g of FDC ID 2710395 / food code 92101917 — Coffee, Latte, decaffeinated, flavored (https://fdc.nal.usda.gov/food-details/2710395/nutrients); 40 g of FDC ID 2710284 / food code 91304010 — Topping, butterscotch or caramel (https://fdc.nal.usda.gov/food-details/2710284/nutrients); 10 g of FDC ID 2710258 / food code 91101010 — Sugar, white, granulated or lump (https://fdc.nal.usda.gov/food-details/2710258/nutrients); 20 g of FDC ID 2705598 / food code 12140000 — Cream, whipped (https://fdc.nal.usda.gov/food-details/2705598/nutrients); 150 g of FDC ID 2710707 / food code 94000100 — Water, tap (https://fdc.nal.usda.gov/food-details/2710707/nutrients). Assumed recipe: 372 g sweetened decaf latte, 40 g caramel topping, 10 g extra sugar, 20 g whipped cream, and 150 g ice. USDA butterscotch/caramel topping approximates caramel sauce. USDA reports 0 mg caffeine for this decaf latte proxy at its reporting precision; this is not a guarantee that decaf coffee is caffeine-free. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "dutch-raisin-bread",
+    "name": "Dutch Raisin Bread",
+    "narration": [
+      "enjoyed Dutch Raisin Bread."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Soft Dutch bread packed with raisins. The grapes have found a new hiding place.",
+    "qualitativeNutritionHint": "A sweet fruit bread with concentrated sugars from the raisins.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "sugar"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 1,
+      "protein": 1,
+      "sugar": 2,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 1,
+      "protein": 1,
+      "sugar": 2,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/dutch-raisin-bread.png?v=4933a8ecf88c",
+    "nutrition": {
+      "serving": "1 slice Dutch raisin bread (45 g)",
+      "calories": 121.5,
+      "sodiumMg": 149.4,
+      "sugarG": 11.25,
+      "proteinG": 3.78,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.ah.nl/producten/product/wi404569/ah-rozijnen-brood",
+      "sourceReference": "Albert Heijn own-label AH Rozijnen brood, product wi404569 / EAN 08718907044684. Listed 45 g portion; per 100 g: 270 kcal, 0.83 g salt, 25 g sugars, 8.4 g protein. Scaled by 0.45; sodium = salt / 2.5, converted to mg. Comparable Dutch raisin-bread estimate; the exact bakery loaf is unspecified.",
+      "retrievalDate": "2026-09-15",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately"
+      },
+      "nullReasons": {
+        "waterG": "The selected manufacturer label does not report water mass.",
+        "caffeineMg": "The selected manufacturer label does not report caffeine; absence from the label is not treated as zero."
+      }
+    }
+  },
+  {
+    "id": "bacon-cheese-breakfast-sandwich",
+    "name": "Bacon-and-Cheese Breakfast Sandwich (No Egg)",
+    "narration": [
+      "enjoyed Bacon-and-Cheese Breakfast Sandwich (No Egg)."
+    ],
+    "category": "food",
+    "price": 5,
+    "description": "Bacon and melted cheese in a breakfast bun. The egg slot is empty.",
+    "qualitativeNutritionHint": "A filling, salty sandwich with bacon and cheese protein.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 3,
+        "max": 3
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 3
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/bacon-cheese-breakfast-sandwich.png?v=95d5468176b4",
+    "nutrition": {
+      "serving": "1 bacon-and-cheese breakfast bun, no egg (89 g)",
+      "calories": 308.41,
+      "sodiumMg": 675.82,
+      "sugarG": 4.11,
+      "proteinG": 15.96,
+      "waterG": 28.55,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707654/nutrients",
+      "sourceReference": "52 g of FDC ID 2707654 / food code 51150000 — Roll, white, soft (https://fdc.nal.usda.gov/food-details/2707654/nutrients); 16 g of FDC ID 2705885 / food code 22600100 — Bacon, NS as to type of meat, cooked (https://fdc.nal.usda.gov/food-details/2705885/nutrients); 21 g of FDC ID 2705709 / food code 14104100 — Cheese, Cheddar (https://fdc.nal.usda.gov/food-details/2705709/nutrients). Assumed sandwich: one large 52 g soft white roll, two medium cooked bacon slices totaling 16 g, and one 21 g cheddar slice. No egg or additional sauce included. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "mac-and-cheese",
+    "name": "Mac and Cheese",
+    "narration": [
+      "enjoyed Mac and Cheese."
+    ],
+    "category": "food",
+    "price": 4,
+    "description": "Macaroni swimming in cheese sauce. The noodles are not requesting rescue.",
+    "qualitativeNutritionHint": "A filling pasta dish with dairy protein and a generous salt load.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 3,
+        "max": 3
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 3
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/mac-and-cheese.png?v=bf439c4ee2af",
+    "nutrition": {
+      "serving": "1 cup macaroni and cheese (230 g)",
+      "calories": 512.9,
+      "sodiumMg": 823.4,
+      "sugarG": 5.61,
+      "proteinG": 19.96,
+      "waterG": 129.03,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708811/nutrients",
+      "sourceReference": "230 g of FDC ID 2708811 / food code 58145110 — Macaroni or noodles with cheese (https://fdc.nal.usda.gov/food-details/2708811/nutrients). Uses the listed one-cup portion of prepared macaroni with cheese. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "hazelnut-uncrustables",
+    "name": "Chocolate-Hazelnut Uncrustables",
+    "narration": [
+      "enjoyed Chocolate-Hazelnut Uncrustables."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Chocolate-hazelnut filling, soft bread, zero crust. Sandwich edges have been patched out.",
+    "qualitativeNutritionHint": "A sweet, rich sandwich with a little protein.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "sugar"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 2,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 2,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/hazelnut-uncrustables.png?v=a81ee0b5a6bc",
+    "nutrition": {
+      "serving": "1 sandwich (52 g)",
+      "calories": 210,
+      "sodiumMg": 160,
+      "sugarG": 11,
+      "proteinG": 4,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "manufacturer_label",
+      "sourceUrl": "https://www.smuckersuncrustables.com/sandwiches/hazelnut-spread-sandwich",
+      "sourceReference": "Smucker's Uncrustables Chocolate Flavored Hazelnut Spread Sandwich, current US Fridge Friendly product-page Nutrition Facts: 52 g sandwich. Sugar is total sugar, not the separately reported 10 g added sugar. This is not the peanut-butter-and-jelly variety.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "waterG": "The first-party nutrition label does not report water mass; water in the ingredients list is not a quantity.",
+        "caffeineMg": "The first-party label does not report caffeine content. No zero value was inferred for the cocoa-containing filling."
+      }
+    }
+  },
+  {
+    "id": "peppermint",
+    "name": "Peppermint Candy",
+    "narration": [
+      "enjoyed Peppermint Candy."
+    ],
+    "category": "food",
+    "price": 1,
+    "description": "A tiny peppermint candy with an unnecessarily dramatic cooling effect.",
+    "qualitativeNutritionHint": "Mostly sugar, with a sharp mint finish.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "favorite"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/peppermint.png?v=048d140e40a4",
+    "nutrition": {
+      "serving": "1 peppermint hard candy (5 g)",
+      "calories": 19.7,
+      "sodiumMg": 1.9,
+      "sugarG": 3.15,
+      "proteinG": 0,
+      "waterG": 0.07,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710360/nutrients",
+      "sourceReference": "5 g of FDC ID 2710360 / food code 91745025 — Candy, hard (https://fdc.nal.usda.gov/food-details/2710360/nutrients). Uses the listed 5 g hard-candy portion as a proxy for a sugar-based peppermint candy; flavoring is not separately modeled. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "spearmint",
+    "name": "Spearmint Candy",
+    "narration": [
+      "reluctantly tried Spearmint Candy."
+    ],
+    "category": "food",
+    "price": 1,
+    "description": "Sweet spearmint in a tiny wrapper. The aftertaste has booked an extended stay.",
+    "qualitativeNutritionHint": "A small sugary candy with a lingering herbal mint flavor.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/spearmint.png?v=d9c2c0d329ad",
+    "nutrition": {
+      "serving": "1 spearmint hard candy (5 g)",
+      "calories": 19.7,
+      "sodiumMg": 1.9,
+      "sugarG": 3.15,
+      "proteinG": 0,
+      "waterG": 0.07,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710360/nutrients",
+      "sourceReference": "5 g of FDC ID 2710360 / food code 91745025 — Candy, hard (https://fdc.nal.usda.gov/food-details/2710360/nutrients). Uses the listed 5 g hard-candy portion as a proxy for a sugar-based spearmint candy; flavoring is not separately modeled. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "brie-cheese",
+    "name": "Brie Cheese",
+    "narration": [
+      "reluctantly tried Brie Cheese."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Soft cheese beneath a pale rind. Its aroma arrives before the plate does.",
+    "qualitativeNutritionHint": "A rich, soft cheese with protein and some salt.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/brie-cheese.png?v=14f0df0b0ecb",
+    "nutrition": {
+      "serving": "1 small wedge Brie (30 g)",
+      "calories": 100.2,
+      "sodiumMg": 188.7,
+      "sugarG": 0.14,
+      "proteinG": 6.24,
+      "waterG": 14.52,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2705708/nutrients",
+      "sourceReference": "30 g of FDC ID 2705708 / food code 14103020 — Cheese, Brie (https://fdc.nal.usda.gov/food-details/2705708/nutrients). Assumed 30 g cheese wedge; the selected record is specifically Brie. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "camembert",
+    "name": "Camembert and Crackers",
+    "narration": [
+      "enjoyed Camembert and Crackers."
+    ],
+    "category": "food",
+    "price": 5,
+    "description": "Creamy Camembert and crisp crackers. The snack plate has put on a little suit.",
+    "qualitativeNutritionHint": "Rich cheese protein with crunchy, salty crackers.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/camembert.png?v=51a307fc4b3d",
+    "nutrition": {
+      "serving": "1 wedge Camembert with crackers (53 g)",
+      "calories": 176.7,
+      "sodiumMg": 461.11,
+      "sugarG": 0.37,
+      "proteinG": 8.94,
+      "waterG": 20.44,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2705707/nutrients",
+      "sourceReference": "38 g of FDC ID 2705707 / food code 14103010 — Cheese, Camembert (https://fdc.nal.usda.gov/food-details/2705707/nutrients); 15 g of FDC ID 2708167 / food code 54325000 — Crackers, saltine (https://fdc.nal.usda.gov/food-details/2708167/nutrients). Assumed snack plate: the listed 38 g Camembert wedge plus 15 g saltine crackers. Cracker brand and exact count may vary. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "tomato-soup",
+    "name": "Tomato Soup",
+    "narration": [
+      "reluctantly tried Tomato Soup."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Tomatoes have been promoted to soup. Still red. Now requires a spoon.",
+    "qualitativeNutritionHint": "A watery, savory bowl with tomato sweetness and some salt.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "drink",
+      "hydrating",
+      "salty"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 3,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 3,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/tomato-soup.png?v=da673cf1acdb",
+    "nutrition": {
+      "serving": "1 cup prepared tomato soup (245 g)",
+      "calories": 46.55,
+      "sodiumMg": 597.8,
+      "sugarG": 4.92,
+      "proteinG": 1.59,
+      "waterG": 230.79,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709757/nutrients",
+      "sourceReference": "245 g of FDC ID 2709757 / food code 74601000 — Soup, tomato (https://fdc.nal.usda.gov/food-details/2709757/nutrients). Uses the listed one-cup prepared soup portion, not undiluted concentrate. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "split-pea-soup",
+    "name": "Split-Pea Soup",
+    "narration": [
+      "reluctantly tried Split-Pea Soup."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Peas, cooked down into a thick green soup. The spoon stands a fighting chance.",
+    "qualitativeNutritionHint": "A thick legume soup with plant protein and a salty broth.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "hydrating",
+      "salty"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 2,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 2,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/split-pea-soup.png?v=266e4c2bec83",
+    "nutrition": {
+      "serving": "1 cup split-pea soup (255 g)",
+      "calories": 155.55,
+      "sodiumMg": 622.2,
+      "sugarG": 5.51,
+      "proteinG": 9.05,
+      "waterG": 214.46,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707459/nutrients",
+      "sourceReference": "255 g of FDC ID 2707459 / food code 41602050 — Soup, split pea (https://fdc.nal.usda.gov/food-details/2707459/nutrients). Uses the listed one-cup split-pea soup portion without meat. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "cooked-eggplant",
+    "name": "Cooked Eggplant",
+    "narration": [
+      "reluctantly tried Cooked Eggplant."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Soft cooked eggplant with a silky middle. Crunch was not invited.",
+    "qualitativeNutritionHint": "A moist vegetable side with little sugar or protein.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "hydrating"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cooked-eggplant.png?v=ab2815263842",
+    "nutrition": {
+      "serving": "1 cup cooked eggplant (95 g)",
+      "calories": 25.65,
+      "sodiumMg": 120.65,
+      "sugarG": 3.59,
+      "proteinG": 1,
+      "waterG": 86.83,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709929/nutrients",
+      "sourceReference": "95 g of FDC ID 2709929 / food code 75217010 — Eggplant, cooked, no added fat (https://fdc.nal.usda.gov/food-details/2709929/nutrients). Uses the listed one-cup cooked eggplant portion without added fat; the survey recipe includes its usual seasoning. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "cooked-mushroom",
+    "name": "Cooked Mushrooms",
+    "narration": [
+      "reluctantly tried Cooked Mushrooms."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Soft, earthy mushrooms. The forest has submitted a side dish.",
+    "qualitativeNutritionHint": "A moist, savory vegetable serving with a little protein.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "hydrating"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 2,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 2,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cooked-mushroom.png?v=0a22408e703c",
+    "nutrition": {
+      "serving": "1/2 cup cooked mushrooms (77.5 g)",
+      "calories": 30.23,
+      "sodiumMg": 117.8,
+      "sugarG": 1.91,
+      "proteinG": 2.8,
+      "waterG": 69.28,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709937/nutrients",
+      "sourceReference": "77.5 g of FDC ID 2709937 / food code 75219011 — Mushrooms, fresh, cooked, no added fat (https://fdc.nal.usda.gov/food-details/2709937/nutrients). Half the listed 155 g cup of cooked fresh mushrooms, without added fat; survey seasoning is included. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "cooked-cabbage",
+    "name": "Cooked Cabbage",
+    "narration": [
+      "reluctantly tried Cooked Cabbage."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Tender cabbage leaves in a steaming heap. The kitchen will remember this.",
+    "qualitativeNutritionHint": "A light, watery vegetable side with a mild sweetness.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "hydrating"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cooked-cabbage.png?v=9e7cf2ffe008",
+    "nutrition": {
+      "serving": "1/2 cup cooked cabbage (75 g)",
+      "calories": 24,
+      "sodiumMg": 102.75,
+      "sugarG": 2.49,
+      "proteinG": 0.75,
+      "waterG": 68.4,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709889/nutrients",
+      "sourceReference": "75 g of FDC ID 2709889 / food code 75211020 — Cabbage, green, cooked, no added fat (https://fdc.nal.usda.gov/food-details/2709889/nutrients). Half the listed 150 g cup of cooked green cabbage, without added fat; survey seasoning is included. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "cooked-zucchini",
+    "name": "Cooked Zucchini",
+    "narration": [
+      "reluctantly tried Cooked Zucchini."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Zucchini cooked until soft. The crunch setting has been turned all the way down.",
+    "qualitativeNutritionHint": "A watery vegetable side with little food energy.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "hydrating"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 2,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cooked-zucchini.png?v=fa6fc542f2d2",
+    "nutrition": {
+      "serving": "1/2 cup cooked zucchini (90 g)",
+      "calories": 18.9,
+      "sodiumMg": 127.8,
+      "sugarG": 2.84,
+      "proteinG": 1.17,
+      "waterG": 83.88,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709991/nutrients",
+      "sourceReference": "90 g of FDC ID 2709991 / food code 75233011 — Summer squash, yellow or green, fresh, cooked, no added fat (https://fdc.nal.usda.gov/food-details/2709991/nutrients). Half the listed 180 g cup of cooked fresh summer squash, yellow or green, without added fat. Green summer squash is the zucchini proxy; survey seasoning is included. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "spicy-food",
+    "name": "Spicy Noodles",
+    "narration": [
+      "reluctantly tried Spicy Noodles."
+    ],
+    "category": "food",
+    "price": 4,
+    "description": "Noodles wearing a suspiciously red sauce. The first bite is the tutorial.",
+    "qualitativeNutritionHint": "A starchy noodle bowl with salty seasoning and chili heat.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "salty"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.65,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/spicy-food.png?v=a5538d0d9efb",
+    "nutrition": {
+      "serving": "1 bowl spicy ramen (360 g)",
+      "calories": 232.2,
+      "sodiumMg": 1050.3,
+      "sugarG": 1.06,
+      "proteinG": 5.48,
+      "waterG": 310.17,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709152/nutrients",
+      "sourceReference": "350 g of FDC ID 2709152 / food code 58407030 — Soup, ramen noodles, water added (https://fdc.nal.usda.gov/food-details/2709152/nutrients); 10 g of FDC ID 2710093 / food code 75511010 — Hot pepper sauce (https://fdc.nal.usda.gov/food-details/2710093/nutrients). Assumed bowl: 350 g prepared ramen noodles with broth plus 10 g hot pepper sauce. Exact noodle brand, seasoning, and chili heat are unspecified. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "dutch-savory-pancake",
+    "name": "Dutch Savory Pancake",
+    "narration": [
+      "enjoyed Dutch Savory Pancake."
+    ],
+    "category": "food",
+    "price": 4,
+    "description": "A broad, thin Dutch pancake with savory toppings. Syrup has the day off.",
+    "qualitativeNutritionHint": "A filling pancake with salty bacon and cheese.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/dutch-savory-pancake.png?v=29aaf0d86ab3",
+    "nutrition": {
+      "serving": "1 large savory pancake with bacon and cheese (196 g)",
+      "calories": 536.14,
+      "sodiumMg": 894.8,
+      "sugarG": 7.07,
+      "proteinG": 26.25,
+      "waterG": 98.6,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708342/nutrients",
+      "sourceReference": "150 g of FDC ID 2708342 / food code 55401000 — Crepe, plain (https://fdc.nal.usda.gov/food-details/2708342/nutrients); 16 g of FDC ID 2705885 / food code 22600100 — Bacon, NS as to type of meat, cooked (https://fdc.nal.usda.gov/food-details/2705885/nutrients); 30 g of FDC ID 2705709 / food code 14104100 — Cheese, Cheddar (https://fdc.nal.usda.gov/food-details/2705709/nutrients). Assumed Dutch-style thin pancake: 150 g plain crepe as the batter proxy, 16 g cooked bacon, and 30 g cheddar. No syrup. This estimates a savory preparation, not a specific restaurant recipe. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "cucumber-sandwich",
+    "name": "Cucumber Sandwich",
+    "narration": [
+      "enjoyed Cucumber Sandwich."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Cool cucumber tucked into soft little sandwiches. Afternoon tea has spawned finger food.",
+    "qualitativeNutritionHint": "A light bread-and-cucumber snack with a creamy filling.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "hydrating"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 2,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 2,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cucumber-sandwich.png?v=868e611e5a7f",
+    "nutrition": {
+      "serving": "1 cucumber sandwich cut into finger pieces (110 g)",
+      "calories": 233.6,
+      "sodiumMg": 344.2,
+      "sugarG": 4.46,
+      "proteinG": 7,
+      "waterG": 61.13,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707598/nutrients",
+      "sourceReference": "60 g of FDC ID 2707598 / food code 51101000 — Bread, white (https://fdc.nal.usda.gov/food-details/2707598/nutrients); 30 g of FDC ID 2709784 / food code 75111000 — Cucumber, raw (https://fdc.nal.usda.gov/food-details/2709784/nutrients); 20 g of FDC ID 2705760 / food code 14301010 — Cream cheese, regular, plain (https://fdc.nal.usda.gov/food-details/2705760/nutrients). Assumed tea sandwich: 60 g white bread, 30 g raw cucumber, and 20 g plain cream cheese. No exact cafe recipe or crust-trimming weight is available. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "vanilla-milkshake-and-fries",
+    "name": "Vanilla Milkshake and Fries",
+    "narration": [
+      "enjoyed Vanilla Milkshake and Fries."
+    ],
+    "category": "food",
+    "price": 6,
+    "description": "Cold vanilla milkshake. Hot salty fries. The dipping debate begins now.",
+    "qualitativeNutritionHint": "A sugary dairy drink paired with a salty, starchy side.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "sugar",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 3,
+        "max": 3
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 1,
+      "sugar": 3,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 1,
+      "sugar": 3,
+      "caffeine": 0,
+      "portion": 3
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/vanilla-milkshake-and-fries.png?v=152c10d7fa81",
+    "nutrition": {
+      "serving": "1 vanilla milkshake (10 fl oz, 280 g) with small fries (110 g)",
+      "calories": 659.6,
+      "sodiumMg": 379.4,
+      "sugarG": 30.29,
+      "proteinG": 13.15,
+      "waterG": 261.98,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2705504/nutrients",
+      "sourceReference": "280 g of FDC ID 2705504 / food code 11541120 — Milk shake, home recipe, flavors other than chocolate (https://fdc.nal.usda.gov/food-details/2705504/nutrients); 110 g of FDC ID 2709461 / food code 71401030 — Potato, french fries, fast food (https://fdc.nal.usda.gov/food-details/2709461/nutrients). Uses the listed 10 fl oz milkshake and small fast-food fries portions. The selected home-recipe shake record uses vanilla ice cream and whole milk. Restaurant shakes may be larger or richer. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "wonky-mascot-plush",
+    "name": "Wonky Mascot Plush",
+    "narration": [
+      "spent some time with Wonky Mascot Plush."
+    ],
+    "category": "reusable",
+    "price": 29,
+    "description": "A mascot plush with its tail attached to its head. The assembly diagram was more of a mood board.",
+    "qualitativeNutritionHint": "A soft mascot with an unusual arrangement of parts.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "hug_plush",
+        "label": "Hug the plush",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/wonky-mascot-plush.png?v=358d340e4b63",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Wonky Mascot Plush is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "booger-plush",
+    "name": "Booger Plush",
+    "narration": [
+      "spent some time with Booger Plush."
+    ],
+    "category": "reusable",
+    "price": 29,
+    "description": "A finished Booger plush. Soft stuffing, familiar face, all sewing pins accounted for.",
+    "qualitativeNutritionHint": "A soft collectible mascot, fully assembled.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "hug_plush",
+        "label": "Hug the plush",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/booger-plush.png?v=2904e1e2f914",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Booger Plush is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "fairy-figure",
+    "name": "Swamp Fairy Figure",
+    "narration": [
+      "spent some time with Swamp Fairy Figure."
+    ],
+    "category": "reusable",
+    "price": 15,
+    "description": "Blue hair, leafy details, tiny wings. The swamp has appointed a very small manager.",
+    "qualitativeNutritionHint": "A small fairy figure with a woodland look.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "admire_figure",
+        "label": "Admire the fairy",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/fairy-figure.png?v=f65cc383eb12",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Swamp Fairy Figure is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "the-cruel-prince",
+    "name": "The Cruel Prince",
+    "narration": [
+      "spent some time with The Cruel Prince."
+    ],
+    "category": "reusable",
+    "price": 18,
+    "description": "Faerie politics in paperback. Bring a bookmark and a healthy suspicion of everyone.",
+    "qualitativeNutritionHint": "A fantasy novel with a dangerous court and plenty of intrigue.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "read"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "read_book",
+        "label": "Read the book",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "read"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/the-cruel-prince.png?v=bf6aacf46dc6",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: The Cruel Prince is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "the-wicked-king",
+    "name": "The Wicked King",
+    "narration": [
+      "spent some time with The Wicked King."
+    ],
+    "category": "reusable",
+    "price": 18,
+    "description": "Another round of faerie politics. The bookmark is losing ground.",
+    "qualitativeNutritionHint": "A fantasy sequel full of schemes and shifting loyalties.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "read"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "read_book",
+        "label": "Read the book",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "read"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/the-wicked-king.png?v=9ebcdf0a3070",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: The Wicked King is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "a-court-of-thorns-and-roses",
+    "name": "A Court of Thorns and Roses",
+    "narration": [
+      "spent some time with A Court of Thorns and Roses."
+    ],
+    "category": "reusable",
+    "price": 18,
+    "description": "Thorns, roses, and a suspicious amount of sequel shelf space. The star rating may need a footnote.",
+    "qualitativeNutritionHint": "A fantasy romance that can leave complicated opinions behind.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "read"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "read_book",
+        "label": "Read the book",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "read"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/a-court-of-thorns-and-roses.png?v=b793c1ab5c8c",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: A Court of Thorns and Roses is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "fourth-wing",
+    "name": "Fourth Wing",
+    "narration": [
+      "spent some time with Fourth Wing."
+    ],
+    "category": "reusable",
+    "price": 18,
+    "description": "Dragons, danger, and strong opinions in hardcover. Additional copies do not settle the argument.",
+    "qualitativeNutritionHint": "A dragon-filled fantasy romance with plenty to argue about.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "read"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "read_book",
+        "label": "Read the book",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "read"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/fourth-wing.png?v=5716ea36a7bf",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Fourth Wing is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "iron-flame",
+    "name": "Iron Flame",
+    "narration": [
+      "spent some time with Iron Flame."
+    ],
+    "category": "reusable",
+    "price": 18,
+    "description": "More dragons. More pages. Plenty of room for complaints in the margins.",
+    "qualitativeNutritionHint": "A long fantasy sequel that invites both page-turning and grumbling.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable",
+      "read"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "read_book",
+        "label": "Read the book",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": [
+          "read"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/iron-flame.png?v=a6c7b5466e4e",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Iron Flame is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "picnic-kit",
+    "name": "Picnic Basket Kit",
+    "narration": [
+      "spent some time with Picnic Basket Kit."
+    ],
+    "category": "reusable",
+    "price": 39,
+    "description": "Bento boxes, basket, outdoor meal supplies. The touch-grass quest now includes lunch.",
+    "qualitativeNutritionHint": "A basket and containers for taking a meal outside.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "plan_picnic",
+        "label": "Plan a picnic",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/picnic-kit.png?v=ef1fd6960cd2",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Picnic Basket Kit is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "comfy-hoodie",
+    "name": "Comfy Hoodie with Pockets",
+    "narration": [
+      "spent some time with Comfy Hoodie with Pockets."
+    ],
+    "category": "reusable",
+    "price": 29,
+    "description": "Soft fabric and actual pockets. Inventory space you can wear.",
+    "qualitativeNutritionHint": "A comfortable extra layer with room to carry small things.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "wear_hoodie",
+        "label": "Wear the comfy hoodie",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": -1,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/comfy-hoodie.png?v=7f3a9bcb938d",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Comfy Hoodie with Pockets is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "fishing-bucket-hat",
+    "name": "Reversible Fishing-Joke Bucket Hat",
+    "narration": [
+      "spent some time with Reversible Fishing-Joke Bucket Hat."
+    ],
+    "category": "reusable",
+    "price": 19,
+    "description": "Leaf pattern on one side, fishing joke included. Reversible for tactical hat situations.",
+    "qualitativeNutritionHint": "A reversible bucket hat with a leafy pattern and a fishing joke.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "wear_hat",
+        "label": "Wear the bucket hat",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/fishing-bucket-hat.png?v=dd13f1fd8dc7",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Reversible Fishing-Joke Bucket Hat is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "worn-black-uggs",
+    "name": "Worn Black Uggs",
+    "narration": [
+      "spent some time with Worn Black Uggs."
+    ],
+    "category": "reusable",
+    "price": 19,
+    "description": "Old black winter boots, broken in so thoroughly they have retired as slippers.",
+    "qualitativeNutritionHint": "Soft, well-worn boots for warmth and lounging.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "wear_uggs",
+        "label": "Wear the old Uggs",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/worn-black-uggs.png?v=6318f964e8c9",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Worn Black Uggs is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "ollie-foil-card",
+    "name": "Ollie Foil Trading Card",
+    "narration": [
+      "spent some time with Ollie Foil Trading Card."
+    ],
+    "category": "reusable",
+    "price": 9,
+    "description": "A shiny Ollie card. Tilt to activate the extremely expensive rainbow.",
+    "qualitativeNutritionHint": "A collectible trading card with a reflective foil finish.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "admire_card",
+        "label": "Admire the foil card",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/ollie-foil-card.png?v=ad7546aca55a",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Ollie Foil Trading Card is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "my-melody-cotton-swabs",
+    "name": "My Melody Cotton Swabs",
+    "narration": [
+      "spent some time with My Melody Cotton Swabs."
+    ],
+    "category": "reusable",
+    "price": 3,
+    "description": "Cotton swabs in My Melody packaging. Even the bathroom supplies have merch now.",
+    "qualitativeNutritionHint": "Ordinary cotton swabs in a decorated character box.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "admire_swabs",
+        "label": "Admire the packaging",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/my-melody-cotton-swabs.png?v=5edcf03ee572",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: My Melody Cotton Swabs is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "pink-bottle-perfume",
+    "name": "Perfume in a Pink Rock-Shaped Bottle",
+    "narration": [
+      "spent some time with Perfume in a Pink Rock-Shaped Bottle."
+    ],
+    "category": "reusable",
+    "price": 19,
+    "description": "Perfume inside a pink rock-shaped bottle. The dressing table has discovered a new mineral.",
+    "qualitativeNutritionHint": "A fragrance in a decorative pink bottle.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "admire_bottle",
+        "label": "Admire the pink bottle",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/pink-bottle-perfume.png?v=407c55e82861",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Perfume in a Pink Rock-Shaped Bottle is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "cooking-gloves",
+    "name": "Cut-Resistant Cooking Gloves",
+    "narration": [
+      "spent some time with Cut-Resistant Cooking Gloves."
+    ],
+    "category": "reusable",
+    "price": 9,
+    "description": "Cut-resistant gloves for the kitchen. Finger armor for the chopping-board encounter.",
+    "qualitativeNutritionHint": "Protective cooking gloves designed to resist cuts.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "reusable"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "try_gloves",
+        "label": "Try the cooking gloves",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "creativity": {
+            "min": 0,
+            "max": 1
+          }
+        },
+        "consumes": true,
+        "tags": []
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cooking-gloves.png?v=79441ddb2828",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Cut-Resistant Cooking Gloves is a non-food catalogue item.",
+      "retrievalDate": "2026-09-13",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
         "sodiumMg": "Not applicable to a non-food catalogue item.",

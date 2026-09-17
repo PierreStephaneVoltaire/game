@@ -44,12 +44,14 @@
 }
 .metric > div {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   font-size: 0.8rem;
+  text-align: center;
 }
 .metric strong {
-  color: var(--theme-ink);
+  font-size: 0.95rem;
 }
 .metric meter {
   width: 100%;
@@ -139,15 +141,18 @@
   width: 100%;
   margin: 38px 0 0;
 }
-.care-actions button {
+.care-actions button,
+.advance-time-action {
   border: 3px solid var(--theme-ink);
   font: inherit;
   font-weight: 900;
   cursor: pointer;
 }
-.care-actions button {
+.care-actions button,
+.advance-time-action {
   display: grid;
   flex: 1 1 0;
+  width: 100%;
   min-height: 48px;
   padding: 0;
   place-items: center;
@@ -172,7 +177,8 @@ button:disabled {
   color: inherit;
   font-weight: 800;
 }
-.hospital-dialog {
+.hospital-dialog,
+.advance-time-dialog {
   width: min(480px, calc(100% - 32px));
   margin: auto;
   border: 4px solid var(--theme-pink);
@@ -181,10 +187,12 @@ button:disabled {
   background: var(--theme-white);
   box-shadow: 8px 8px 0 var(--theme-gold);
 }
-.hospital-dialog::backdrop {
+.hospital-dialog::backdrop,
+.advance-time-dialog::backdrop {
   background: color-mix(in srgb, var(--theme-ink) 70%, transparent);
 }
-.hospital-dialog h2 {
+.hospital-dialog h2,
+.advance-time-dialog h2 {
   margin-top: 0;
   color: var(--theme-ink);
 }
@@ -203,24 +211,30 @@ button:disabled {
   cursor: pointer;
 }
 .room-page .secondary-action,
+.room-page .advance-time-action,
 .care-actions button,
-.hospital-dialog .dialog-actions button {
+.hospital-dialog .dialog-actions button,
+.advance-time-dialog .dialog-actions button {
   color: var(--theme-pink-text);
   background: var(--theme-white);
   box-shadow: 5px 5px 0 var(--theme-gold);
   border-color: var(--theme-pink);
 }
 .room-page .secondary-action:hover:not(:disabled),
+.room-page .advance-time-action:hover:not(:disabled),
 .care-actions button:hover:not(:disabled),
-.hospital-dialog .dialog-actions button:hover:not(:disabled) {
+.hospital-dialog .dialog-actions button:hover:not(:disabled),
+.advance-time-dialog .dialog-actions button:hover:not(:disabled) {
   box-shadow: 3px 3px 0 var(--theme-gold);
   transform: translate(2px, 2px);
   background: var(--theme-pink);
   color: var(--theme-on-pink);
 }
 .room-page .secondary-action:active:not(:disabled),
+.room-page .advance-time-action:active:not(:disabled),
 .care-actions button:active:not(:disabled),
-.hospital-dialog .dialog-actions button:active:not(:disabled) {
+.hospital-dialog .dialog-actions button:active:not(:disabled),
+.advance-time-dialog .dialog-actions button:active:not(:disabled) {
   box-shadow: 2px 2px 0 var(--theme-gold);
   transform: translate(3px, 3px);
 }
@@ -244,6 +258,9 @@ a:focus-visible {
   }
   .room-scene {
     height: 100%;
+  }
+  .advance-time-action {
+    grid-area: 3 / 1 / auto / -1;
   }
   .event-panel {
     grid-area: 1 / 3;

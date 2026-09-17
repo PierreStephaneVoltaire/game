@@ -96,6 +96,10 @@ test('renders the selected feed outcome and advances streaming time', async ({
 
   await signInAndChooseMode(page, 'Streaming mode');
   await page.getByRole('button', { name: 'Advance time' }).click();
+  await page
+    .getByRole('dialog', { name: 'Advance time', exact: true })
+    .getByRole('button', { name: 'Random', exact: true })
+    .click();
   await expect(page.locator('.event-panel li:last-child')).not.toContainText(
     /Time advanced|decay interval/,
   );
@@ -156,7 +160,15 @@ test('renders a refusal outcome and keeps status feedback visible', async ({
     if (await status.count()) break;
     const advanceTime = page.getByRole('button', { name: 'Advance time' });
     if (!(await advanceTime.isVisible())) break;
+    const previousTime = await page.locator('.session-clock span').innerText();
     await advanceTime.click();
+    await page
+      .getByRole('dialog', { name: 'Advance time', exact: true })
+      .getByRole('button', { name: 'Random', exact: true })
+      .click();
+    await expect(page.locator('.session-clock span')).not.toHaveText(
+      previousTime,
+    );
   }
   await expect(page.locator('.status-name').first()).toBeVisible();
 });

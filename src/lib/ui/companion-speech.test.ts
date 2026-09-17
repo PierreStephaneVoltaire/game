@@ -171,7 +171,12 @@ test('real batch feeding responds once to the last consumed food and preserves s
       command,
       outcome: transition.outcomes[0],
     })?.pools,
-  ).toEqual([`feed:${consumed.itemId}`, 'feed']);
+  ).toEqual([
+    `feed:${consumed.itemId}`,
+    `use_item:${consumed.itemId}`,
+    'feed',
+    'use_item',
+  ]);
   expect(transition.state).toEqual(snapshot);
 });
 
@@ -193,7 +198,12 @@ test('accepted item actions use overrides and rejected actions stay silent', () 
   expect(
     transitionSpeech(before, { definition, state: before, command, outcome })
       ?.pools,
-  ).toEqual(['item_action:3d-printer:print', 'item_action']);
+  ).toEqual([
+    'item_action:3d-printer:print',
+    'use_item:3d-printer',
+    'item_action',
+    'use_item',
+  ]);
   expect(
     transitionSpeech(before, {
       definition,

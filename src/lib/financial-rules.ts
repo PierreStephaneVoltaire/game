@@ -4,6 +4,7 @@ import type { GameEvent, GameState } from './game-types';
 import { alignFinancialStatus } from './status-rules';
 import { financialRuinCause, runEndingMessage } from './ending-rules/messages';
 import { stateTextContext } from './seeded-text';
+import { trace } from './telemetry/collector';
 
 export function debtBreakdown(state: GameState): DebtBreakdown {
   const negativeCash = Math.max(0, -state.balance);
@@ -54,6 +55,12 @@ export function finalizeFinancialOperation(input: {
     purchaseCategory: input.purchaseCategory,
   };
   let next = patchTriggerEvent(input.state, input.triggerEventId, effect);
+  trace('financial_settlement', input.kind, {
+    triggerEventId: input.triggerEventId,
+    cashBefore: input.before.balance,
+    cashAfter: input.state.balance,
+    ...effect,
+  });
   const aligned = alignFinancialStatus(next.statuses, next.balance, next.now);
   if (aligned.entered || aligned.cleared) {
     const event: GameEvent = {

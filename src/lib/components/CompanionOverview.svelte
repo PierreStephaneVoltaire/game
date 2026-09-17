@@ -9,6 +9,7 @@
   export let onIntent: (intent: GameIntent) => Promise<void> | void;
 
   let hospitalDialog: HTMLDialogElement;
+  let advanceTimeDialog: HTMLDialogElement;
   const numbers = new Intl.NumberFormat('en-US');
   $: hospitalAvailable = model.statuses.some(
     (status) => status.key === 'kidney_stone' || status.key === 'sick',
@@ -25,6 +26,13 @@
     hospitalDialog.close();
     await onIntent({ type: 'medical_care' });
   }
+
+  async function advanceTime(hours?: number) {
+    advanceTimeDialog.close();
+    await onIntent(
+      hours === undefined ? { type: 'wait' } : { type: 'wait', hours },
+    );
+  }
 </script>
 
 <aside class="overview-column">
@@ -32,7 +40,7 @@
     <h1>{model.companion.name}</h1>
     {#each model.metrics as metric (metric.key)}
       <div class="metric">
-        <div>
+        <div class="metric-readout">
           <span>{metric.label}</span><strong
             >{metric.value}/{metric.maximum}</strong
           >
@@ -106,16 +114,16 @@
           {activityTime(model.activity.endsAt)}.
         </p>
       {/if}
-      {#if model.mode === 'streaming' && !model.ending}
-        <button
-          class="secondary-action"
-          type="button"
-          on:click={() => onIntent({ type: 'wait' })}
-          {disabled}>Advance time</button
-        >
-      {/if}
     </section>
   </div>
+  {#if model.mode === 'streaming' && !model.ending}
+    <button
+      class="advance-time-action"
+      type="button"
+      on:click={() => advanceTimeDialog.showModal()}
+      {disabled}>Advance time</button
+    >
+  {/if}
   {#if model.ending}
     <section class="ending-card" role="alert">
       <h2>{model.ending.title}</h2>
@@ -134,6 +142,27 @@
     <p class="command-error" role="alert">{errorMessage}</p>
   {/if}
 </aside>
+
+<dialog
+  class="advance-time-dialog"
+  bind:this={advanceTimeDialog}
+  aria-labelledby="advance-time-title"
+>
+  <h2 id="advance-time-title">Advance time</h2>
+  <div class="dialog-actions time-options">
+    <button type="button" {disabled} on:click={() => advanceTime()}
+      >Random</button
+    >
+    {#each model.waitHours as hours (hours)}
+      <button type="button" {disabled} on:click={() => advanceTime(hours)}
+        >{hours} {hours === 1 ? 'hour' : 'hours'}</button
+      >
+    {/each}
+    <button type="button" on:click={() => advanceTimeDialog.close()}
+      >Cancel</button
+    >
+  </div>
+</dialog>
 
 <dialog
   class="hospital-dialog"
@@ -164,6 +193,9 @@
 </dialog>
 
 <style>
+  .time-options {
+    flex-direction: column;
+  }
   .session-clock {
     display: flex;
     flex-direction: column;
