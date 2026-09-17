@@ -122,15 +122,7 @@ test('clicks and keyboard activation speak without advancing time', async ({
   await page.keyboard.press('Space');
   await expect(bubble).not.toHaveText(first);
   await page.screenshot({ path: '/tmp/companion-speech-desktop.png' });
-  await page.clock.runFor(11_000);
-  await expect(bubble).toBeVisible();
-  await avatar.blur();
-  await page.clock.runFor(4000);
-  await bubble.hover();
-  await page.clock.runFor(11_000);
-  await expect(bubble).toBeVisible();
-  await page.mouse.move(0, 0);
-  await page.clock.runFor(6500);
+  await page.clock.runFor(10_000);
   await expect(bubble).toHaveCount(0);
   await expect(page.locator('.session-clock')).toHaveText(before);
 });

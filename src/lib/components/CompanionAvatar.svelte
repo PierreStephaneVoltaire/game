@@ -26,28 +26,11 @@
   let text = '';
   let previousQuote = '';
   let clickSequence = 0;
-  let focused = false;
-  let hovered = false;
-  let remaining = 0;
-  let expiresAt = 0;
   let dismissal: ReturnType<typeof setTimeout> | undefined;
   let pending: ReturnType<typeof setTimeout> | undefined;
   let deferred: SpeechTrigger | null = null;
   let deferredDialog: HTMLDialogElement | null = null;
   $: allowed = session !== null && speechAllowed(session.state);
-  $: pause(focused || hovered);
-
-  function pause(held: boolean) {
-    if (dismissal !== undefined) {
-      remaining = Math.max(0, expiresAt - performance.now());
-      clearTimeout(dismissal);
-      dismissal = undefined;
-    }
-    if (!held && text) {
-      expiresAt = performance.now() + remaining;
-      dismissal = setTimeout(clearSpeech, remaining);
-    }
-  }
 
   function clearSpeech() {
     clearTimeout(dismissal);
@@ -71,8 +54,7 @@
     clearSpeech();
     if (!quote) return;
     previousQuote = text = quote;
-    remaining = rules.displaySeconds * 1000;
-    pause(focused || hovered);
+    dismissal = setTimeout(clearSpeech, rules.displaySeconds * 1000);
   }
 
   function clicked() {
@@ -170,8 +152,6 @@
   disabled={!allowed}
   aria-label={`Talk to ${name}`}
   on:click={clicked}
-  on:focus={() => (focused = true)}
-  on:blur={() => (focused = false)}
 >
   <img
     class="companion"
@@ -190,12 +170,7 @@
   aria-atomic="true"
 >
   {#if text}
-    <div
-      class="speech-bubble"
-      on:mouseenter={() => (hovered = true)}
-      on:mouseleave={() => (hovered = false)}
-      role="presentation"
-    >
+    <div class="speech-bubble" role="presentation">
       {text}
     </div>
   {/if}

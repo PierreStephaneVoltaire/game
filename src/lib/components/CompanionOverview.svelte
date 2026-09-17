@@ -40,7 +40,7 @@
     <h1>{model.companion.name}</h1>
     {#each model.metrics as metric (metric.key)}
       <div class="metric">
-        <div>
+        <div class="metric-readout">
           <span>{metric.label}</span><strong
             >{metric.value}/{metric.maximum}</strong
           >
@@ -114,16 +114,16 @@
           {activityTime(model.activity.endsAt)}.
         </p>
       {/if}
-      {#if model.mode === 'streaming' && !model.ending}
-        <button
-          class="secondary-action"
-          type="button"
-          on:click={() => advanceTimeDialog.showModal()}
-          {disabled}>Advance time</button
-        >
-      {/if}
     </section>
   </div>
+  {#if model.mode === 'streaming' && !model.ending}
+    <button
+      class="advance-time-action"
+      type="button"
+      on:click={() => advanceTimeDialog.showModal()}
+      {disabled}>Advance time</button
+    >
+  {/if}
   {#if model.ending}
     <section class="ending-card" role="alert">
       <h2>{model.ending.title}</h2>

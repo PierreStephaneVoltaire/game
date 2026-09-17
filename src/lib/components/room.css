@@ -44,12 +44,14 @@
 }
 .metric > div {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   font-size: 0.8rem;
+  text-align: center;
 }
 .metric strong {
-  color: var(--theme-ink);
+  font-size: 0.95rem;
 }
 .metric meter {
   width: 100%;
@@ -139,15 +141,18 @@
   width: 100%;
   margin: 38px 0 0;
 }
-.care-actions button {
+.care-actions button,
+.advance-time-action {
   border: 3px solid var(--theme-ink);
   font: inherit;
   font-weight: 900;
   cursor: pointer;
 }
-.care-actions button {
+.care-actions button,
+.advance-time-action {
   display: grid;
   flex: 1 1 0;
+  width: 100%;
   min-height: 48px;
   padding: 0;
   place-items: center;
@@ -206,6 +211,7 @@ button:disabled {
   cursor: pointer;
 }
 .room-page .secondary-action,
+.room-page .advance-time-action,
 .care-actions button,
 .hospital-dialog .dialog-actions button,
 .advance-time-dialog .dialog-actions button {
@@ -215,6 +221,7 @@ button:disabled {
   border-color: var(--theme-pink);
 }
 .room-page .secondary-action:hover:not(:disabled),
+.room-page .advance-time-action:hover:not(:disabled),
 .care-actions button:hover:not(:disabled),
 .hospital-dialog .dialog-actions button:hover:not(:disabled),
 .advance-time-dialog .dialog-actions button:hover:not(:disabled) {
@@ -224,6 +231,7 @@ button:disabled {
   color: var(--theme-on-pink);
 }
 .room-page .secondary-action:active:not(:disabled),
+.room-page .advance-time-action:active:not(:disabled),
 .care-actions button:active:not(:disabled),
 .hospital-dialog .dialog-actions button:active:not(:disabled),
 .advance-time-dialog .dialog-actions button:active:not(:disabled) {
@@ -250,6 +258,9 @@ a:focus-visible {
   }
   .room-scene {
     height: 100%;
+  }
+  .advance-time-action {
+    grid-area: 3 / 1 / auto / -1;
   }
   .event-panel {
     grid-area: 1 / 3;
