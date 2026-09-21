@@ -72,24 +72,40 @@
         <h2>Time</h2>
         <span>{model.formattedTime}</span>
       </div>
-      <strong>Balance: ${numbers.format(model.balance)}</strong>
-      <span>Subscribers: {numbers.format(model.followers)}</span>
-      {#if model.madeItUnlocked && !model.ending}<strong
-          >Ending unlocked: Made It</strong
-        >{/if}
-      <span><strong>Career:</strong> {model.career.label}</span>
-      <span
-        ><strong>Streams:</strong>
-        {numbers.format(model.streamStats.completed)}</span
-      >
+      <div class="detail">
+        <strong>Balance</strong>
+        <span>${numbers.format(model.balance)}</span>
+      </div>
+      <div class="detail">
+        <strong>Subscribers</strong>
+        <span>{numbers.format(model.followers)}</span>
+      </div>
+      {#if model.madeItUnlocked && !model.ending}<div class="detail">
+          <strong>Ending unlocked</strong>
+          <span>Made It</span>
+        </div>{/if}
+      <div class="detail">
+        <strong>Career</strong>
+        <span>{model.career.label}</span>
+      </div>
+      <div class="detail">
+        <strong>Streams</strong>
+        <span>{numbers.format(model.streamStats.completed)}</span>
+      </div>
       {#if model.career.nextMilestone}
-        <span
-          >Next milestone: {model.career.nextMilestone.label} · {numbers.format(
-            model.career.nextMilestone.remaining,
-          )} to go</span
-        >
+        <div class="detail">
+          <strong>Next milestone</strong>
+          <span
+            >{model.career.nextMilestone.label} · {numbers.format(
+              model.career.nextMilestone.remaining,
+            )} to go</span
+          >
+        </div>
       {:else}
-        <span>All career milestones reached</span>
+        <div class="detail">
+          <strong>Next milestone</strong>
+          <span>All career milestones reached</span>
+        </div>
       {/if}
       {#each model.projects as project (project.id)}
         <div class="project-progress">
@@ -213,6 +229,21 @@
     }
     .time-balance {
       display: contents;
+    }
+    .detail,
+    .session-clock {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .detail strong,
+    .session-clock h2 {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    .project-progress,
+    .activity {
+      grid-column: 1 / -1;
     }
     .secondary-action {
       justify-self: start;

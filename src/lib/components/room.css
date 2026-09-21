@@ -250,6 +250,11 @@ a:focus-visible {
   outline-offset: 3px;
 }
 @media (min-width: 781px) {
+  .metric > .metric-readout {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
   .overview-row {
     align-items: stretch;
   }

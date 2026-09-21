@@ -65,6 +65,7 @@ describe('browser game session', () => {
         '**/*-test-fixtures.ts',
         '**/*-study.ts',
         '**/catalog-validation.ts',
+        '**/content/local-content.ts',
       ],
     });
     for (const file of files) {

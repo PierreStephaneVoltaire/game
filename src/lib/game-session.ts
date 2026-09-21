@@ -21,9 +21,13 @@ import { replayPending } from './persistence/replay';
 import { flushGame } from './persistence/sync';
 import type { SpeechSession } from './ui/companion-speech';
 import { browserCapture } from './telemetry/browser';
+import { isLocalDevelopment } from './local-development';
+import { localContent } from './content/local-content';
 export const pendingGameKey = writable<string | null>(null);
 
-const runtimeContent = new RuntimeContentCache();
+const runtimeContent = isLocalDevelopment()
+  ? localContent
+  : new RuntimeContentCache();
 let activeController = new GameController(runtimeContent);
 const gameSession = writable<SpeechSession | null>(null);
 export const companionSpeechSession = { subscribe: gameSession.subscribe };
@@ -45,10 +49,11 @@ function publishGameState(
 }
 
 function syncGame(gameHash: string): void {
+  if (isLocalDevelopment()) return;
   let capture = activeController.capture;
   void flushGame(gameHash, {
     refreshContent: async () => {
-      await runtimeContent.refreshBeforeWrite();
+      await (runtimeContent as RuntimeContentCache).refreshBeforeWrite();
     },
     replayConflict: async (hash) => {
       capture =
