@@ -131,8 +131,8 @@ been approved.
 
 ### Food, Rest, and Bond
 
-- Every two game-hours, Food has a 65% chance to lose 1 while awake and a
-  32.5% chance while Rest is active.
+- Every two game-hours, Food has a 90% chance to lose 1 while awake and a
+  67.5% chance while Rest is active.
 - Rest loses 1 every two game-hours while awake, including streams, Hospital,
   and Commission Work. Socialize and Play pause passive Food, Rest, and Bond
   decay. Partial decay clocks are preserved and resume afterward without
@@ -146,8 +146,8 @@ been approved.
 ### Periodic Health
 
 An unprotected Health check occurs every two game-hours. Rest, Socialize,
-Play, streams, and Hospital preserve and pause the partially accumulated Health
-clock. Commission Work does not protect Health.
+Play, and Hospital preserve and pause the partially accumulated Health clock.
+Streams and Commission Work do not protect Health.
 
 Recovery uses Food, Rest, and Mood from before Food and Rest decay at the same
 boundary. Each point above 5 contributes to a combined recovery score:
@@ -518,7 +518,8 @@ equally across 4–12 hours. Ordinary effective duration is base duration minus
 `10 - Rest`, then capped at local midnight. A nonpositive result narrates that
 the companion is too tired.
 
-Food has a floor of 2 during a stream. A due decay that would cross the floor
+Food has a floor of 2 during a stream unless it starts below that floor; a
+stream never raises Food by itself. A due decay that would cross the floor
 tries one eligible automatic snack first. A new critical condition ends the
 stream after the required snack resolves.
 

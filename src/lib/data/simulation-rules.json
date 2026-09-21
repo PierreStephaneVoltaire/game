@@ -30,8 +30,8 @@
   "timeDecay": {
     "intervalHours": 2,
     "foodPerInterval": 1,
-    "foodDecayProbability": 0.65,
-    "restingFoodDecayProbabilityMultiplier": 0.5,
+    "foodDecayProbability": 0.9,
+    "restingFoodDecayProbabilityMultiplier": 0.75,
     "restPerInterval": 1,
     "bondLossHours": 48,
     "criticalNeed": { "lowMaximum": 2, "zeroLoss": 1, "lowLoss": 1 },

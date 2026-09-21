@@ -5,6 +5,7 @@ import { nextStatusBoundary } from '../status-rules';
 import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
 import { nextEndingBoundary } from '../ending-rules';
+import { isHealthProtectedActivity } from './health-resolution';
 import {
   nextLifeEventBoundary,
   processLifeEventBoundary,
@@ -25,7 +26,7 @@ export function nextReconciliationBoundaries(
   const nextDecayAt =
     state.lastResolvedAt +
     (intervalHours - state.history.decayRemainderHours) * HOUR_MS;
-  const nextHealthAt = state.activity
+  const nextHealthAt = isHealthProtectedActivity(state)
     ? undefined
     : state.lastResolvedAt +
       (intervalHours - state.history.healthRemainderHours) * HOUR_MS;
