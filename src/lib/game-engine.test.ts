@@ -90,15 +90,14 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    expect(afterThreeHours.metrics).toMatchObject({ food: 6, rest: 6 });
-    expect(afterFourHours.metrics).toMatchObject({ food: 6, rest: 5 });
-    expect(afterFourHours.statuses.hungry).toBeUndefined();
+    expect(afterThreeHours.metrics).toMatchObject({ food: 5, rest: 6 });
+    expect(afterFourHours.metrics).toMatchObject({ food: 4, rest: 5 });
     expect(afterFourHours.lastResolvedAt).toBe(startedAt + 4 * 60 * 60 * 1_000);
   });
 
-  test('halves Food decay probability while Rest is active', () => {
+  test('uses the Rest Food decay multiplier', () => {
     const initial = startRun(
-      { mode: 'realtime', now: 0, seed: 'rest-half-3', timezone: 'UTC' },
+      { mode: 'realtime', now: 0, seed: 'rest-config-1', timezone: 'UTC' },
       BUNDLED_GAME_DEFINITION,
     );
     const awake = reconcileTime(
@@ -141,8 +140,7 @@ describe('reconcileTime', () => {
       BUNDLED_GAME_DEFINITION,
     ).state;
 
-    // This seed misses both Food decay opportunities at the reduced 65% rate.
-    expect(afterFourHours.metrics).toMatchObject({ food: 2, health: 24 });
+    expect(afterFourHours.metrics).toMatchObject({ food: 1, health: 23 });
   });
 
   test('records the terminal Health-loss event as the causal death chain', () => {

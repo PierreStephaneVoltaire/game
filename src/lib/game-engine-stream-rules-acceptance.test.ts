@@ -176,13 +176,13 @@ describe('automatic stream snacks and income', () => {
         id: 'stream-1',
         type: 'stream' as const,
         startedAt: 0,
-        endsAt: 10 * HOUR,
+        endsAt: 2 * HOUR,
         sourceActionId: 'stream-source',
       },
     };
     const result = reconcileTime(
       state,
-      6 * HOUR,
+      2 * HOUR,
       BUNDLED_GAME_DEFINITION,
     ).state;
     const snacks = result.events.filter(
@@ -192,7 +192,7 @@ describe('automatic stream snacks and income', () => {
     );
     expect(snacks).toHaveLength(1);
     expect(result.inventory.cake).toBe(1);
-    expect(result.metrics.food).toBe(2);
+    expect(result.metrics.food).toBe(3);
     expect(result.activity).toBeNull();
     expect(result.events.some((event) => AUTO_TYPES.has(event.type))).toBe(
       false,
@@ -204,8 +204,8 @@ describe('automatic stream snacks and income', () => {
     const result = reconcileTime(
       {
         ...initial,
-        metrics: { ...initial.metrics, food: 2 },
-        inventory: { water: 1 },
+        metrics: { ...initial.metrics, food: 1 },
+        inventory: {},
         activity: {
           id: 'stream-2',
           type: 'stream' as const,
@@ -217,7 +217,7 @@ describe('automatic stream snacks and income', () => {
       2 * HOUR,
       BUNDLED_GAME_DEFINITION,
     ).state;
-    expect(result.metrics.food).toBe(2);
+    expect(result.metrics.food).toBe(1);
     expect(result.events.some((event) => event.type === 'item_used')).toBe(
       false,
     );

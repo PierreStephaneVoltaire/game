@@ -25,7 +25,7 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 }
 
 describe('catalogue validation', () => {
-  test('accepts all 232 maintained catalogue records', () => {
+  test('accepts all 275 maintained catalogue records', () => {
     expect(validateCatalog(BUNDLED_GAME_DEFINITION, true)).toEqual([]);
   });
 
@@ -164,7 +164,13 @@ describe('catalogue validation', () => {
       item.nutrition.sourceType = 'fictional_seeded_profile';
     });
     expect(messages(fictional, 'water')).toContain(
-      'fictional seeded nutrition is restricted to The Concoction',
+      'fictional nutrition is restricted to The Concoction',
+    );
+    const placeholder = definitionWithItem('pasta', (item) => {
+      item.nutrition!.serving = '1 game portion';
+    });
+    expect(messages(placeholder, 'pasta')).toContain(
+      'food nutrition needs a real serving, not a game portion',
     );
   });
 
@@ -267,8 +273,8 @@ describe('catalogue validation', () => {
       validateCatalog(wrongMix, true).map((issue) => issue.message),
     ).toEqual(
       expect.arrayContaining([
-        'expected 38 usda_foundation nutrition records, found 39',
-        'expected 68 usda_fndds nutrition records, found 67',
+        'expected 33 usda_foundation nutrition records, found 34',
+        'expected 86 usda_fndds nutrition records, found 85',
       ]),
     );
 

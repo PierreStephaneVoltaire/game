@@ -10,6 +10,10 @@ type WriteResponse = Partial<SyncAcknowledgement> & {
 export type SyncHooks = {
   refreshContent?: (latestVersion?: string) => Promise<void>;
   replayConflict?: (gameHash: string) => Promise<void>;
+  confirmed?: (
+    pending: OutboxRecord,
+    acknowledgement: SyncAcknowledgement,
+  ) => void;
 };
 
 const active = new Set<string>();
@@ -133,8 +137,14 @@ export async function flushGame(
             (await response.json()) as WriteResponse,
             pending,
           );
-          if (committed) await acknowledge(pending, committed);
-          else await noteRetry(pending.batchId);
+          if (committed) {
+            await acknowledge(pending, committed);
+            try {
+              hooks.confirmed?.(pending, committed);
+            } catch {
+              console.warn('Gameplay save confirmation trace failed.');
+            }
+          } else await noteRetry(pending.batchId);
           if (!committed) return;
           continue;
         }

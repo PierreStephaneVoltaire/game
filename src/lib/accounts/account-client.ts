@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { isLocalDevelopment } from '$lib/local-development';
 
 export type Account = {
   userId: string;
@@ -29,6 +30,41 @@ export class AccountRequestError extends Error {
 }
 
 export const currentAccount = writable<Account | null>(null);
+
+const LOCAL_ACCOUNT_KEY = 'local-development-account';
+const LOCAL_CREDENTIALS = new Map([
+  ['admin', 'admin'],
+  ['local', 'local'],
+]);
+
+function localAccount(): Account | null {
+  if (!isLocalDevelopment()) return null;
+  try {
+    return window.localStorage.getItem(LOCAL_ACCOUNT_KEY)
+      ? {
+          userId: 'local-development',
+          username: window.localStorage.getItem(LOCAL_ACCOUNT_KEY)!,
+        }
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function setLocalAccount(username: string | null): Account | null {
+  if (!isLocalDevelopment()) return null;
+  try {
+    if (username) window.localStorage.setItem(LOCAL_ACCOUNT_KEY, username);
+    else window.localStorage.removeItem(LOCAL_ACCOUNT_KEY);
+  } catch {
+    return null;
+  }
+  const account = username
+    ? { userId: 'local-development', username, hasPassword: true }
+    : null;
+  currentAccount.set(account);
+  return account;
+}
 
 const USERNAME_PATTERN = /^[a-z0-9_]{3,24}$/;
 
@@ -73,6 +109,11 @@ async function accountRequest(
 }
 
 export async function restoreAccount(): Promise<Account | null> {
+  if (isLocalDevelopment()) {
+    const account = localAccount();
+    currentAccount.set(account);
+    return account;
+  }
   try {
     const result = await accountRequest('/api/me');
     currentAccount.set(result.user);
@@ -105,6 +146,18 @@ async function authenticate(
       'INVALID_REQUEST',
       'Use at least 8 characters for a new password.',
     );
+  const normalizedUsername = username.trim().toLowerCase();
+  if (isLocalDevelopment()) {
+    if (
+      action !== 'login' ||
+      LOCAL_CREDENTIALS.get(normalizedUsername) !== password
+    )
+      throw new AccountRequestError(
+        'INVALID_CREDENTIALS',
+        'Use admin/admin or local/local locally.',
+      );
+    return setLocalAccount(normalizedUsername)!;
+  }
   const result = await accountRequest(`/api/auth/${action}`, {
     method: 'POST',
     body: JSON.stringify({
@@ -167,6 +220,10 @@ export function loginAccount(
 }
 
 export async function logoutAccount(): Promise<void> {
+  if (isLocalDevelopment()) {
+    setLocalAccount(null);
+    return;
+  }
   try {
     await accountRequest('/api/auth/logout', { method: 'POST' });
   } catch (error) {

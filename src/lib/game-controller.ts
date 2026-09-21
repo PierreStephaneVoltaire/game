@@ -5,6 +5,7 @@ import type {
 import { dispatchCommand, reconcileTime, startRun } from './game-engine';
 import { normalizeLoadedRunEnding } from './ending-rules';
 import { activateGameDefinition } from './runtime-definition';
+import type { GameplayCapture } from './telemetry/capture';
 import type {
   GameCommand,
   GameState,
@@ -16,12 +17,23 @@ export class GameController {
   private state: GameState | null = null;
   private definition: GameDefinition | null = null;
 
-  constructor(private readonly definitions: GameDefinitionRepository) {}
+  constructor(
+    private readonly definitions: GameDefinitionRepository,
+    public capture?: GameplayCapture,
+  ) {}
 
   async start(input: StartRunInput): Promise<GameState> {
     this.definition = await this.definitions.load();
     activateGameDefinition(this.definition);
-    this.state = startRun(input, this.definition);
+    const execute = () => startRun(input, this.definition!);
+    this.state = this.capture
+      ? this.capture.execute(
+          'run_initialized',
+          input,
+          execute,
+          (state) => state,
+        )
+      : execute();
     return this.state;
   }
 
@@ -29,13 +41,25 @@ export class GameController {
     this.definition = await this.definitions.load();
     activateGameDefinition(this.definition);
     this.state = normalizeLoadedRunEnding(state);
+    this.capture?.record('checkpoint', null, this.state);
     return this.state;
   }
 
   async dispatch(command: GameCommand): Promise<Transition> {
     if (!this.state) throw new Error('Run has not started.');
     if (!this.definition) throw new Error('Game definition was not loaded.');
-    const transition = dispatchCommand(this.state, command, this.definition);
+    const execute = () =>
+      dispatchCommand(this.state!, command, this.definition!);
+    const transition = this.capture
+      ? this.capture.execute(
+          'command',
+          command,
+          execute,
+          (result) => result.state,
+          (result) => result.outcomes,
+          this.state,
+        )
+      : execute();
     this.state = transition.state;
     return transition;
   }
@@ -43,7 +67,17 @@ export class GameController {
   async reconcile(now: number): Promise<Transition> {
     if (!this.state) throw new Error('Run has not started.');
     if (!this.definition) throw new Error('Game definition was not loaded.');
-    const transition = reconcileTime(this.state, now, this.definition);
+    const execute = () => reconcileTime(this.state!, now, this.definition!);
+    const transition = this.capture
+      ? this.capture.execute(
+          'clock_reconciled',
+          { now },
+          execute,
+          (result) => result.state,
+          (result) => result.outcomes,
+          this.state,
+        )
+      : execute();
     this.state = transition.state;
     return {
       state: transition.state,

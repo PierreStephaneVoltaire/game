@@ -97,7 +97,12 @@ export function resolveDecay(
       const decayedFood = foodBefore - rules.timeDecay.foodPerInterval;
       metrics.food =
         state.activity?.type === 'stream'
-          ? Math.max(rules.stream.snackFloor, decayedFood)
+          ? Math.max(
+              foodBefore < rules.stream.snackFloor
+                ? foodBefore
+                : rules.stream.snackFloor,
+              decayedFood,
+            )
           : Math.max(STAT_MIN, decayedFood);
       if (
         state.activity?.type === 'stream' &&

@@ -63,8 +63,8 @@
   min-width: 24px;
   border: 2px solid var(--theme-pink);
   color: var(--theme-pink-text);
-  background: var(--theme-white);
-  box-shadow: 3px 3px 0 var(--theme-gold);
+  background: transparent;
+  box-shadow: none;
   font-size: 1rem;
 }
 .anchor:has(button:hover:not(:disabled)) {
