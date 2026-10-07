@@ -1,4 +1,5 @@
 import type {
+  CreatorVenture,
   DonationTier,
   ProgressionState,
   Project,
@@ -23,6 +24,7 @@ export type { GameCommand } from './game-command-types';
 export type {
   AppearanceId,
   CareerTier,
+  CreatorVenture,
   DonationTier,
   ProgressionState,
   Project,
@@ -52,6 +54,7 @@ export type StatusName =
   | 'low_energy'
   | 'sugar_crash'
   | 'dizzy_spell'
+  | 'lost_voice'
   | 'in_debt';
 
 export type StatusRecord = {
@@ -206,6 +209,8 @@ export type GameState = {
   timedEffects: TimedEffects;
   progression: ProgressionState;
   projects: Project[];
+  /** Absent on runs saved before merch runs and conventions existed. */
+  ventures?: CreatorVenture[];
   events: GameEvent[];
   history: GameHistory;
   endingRisks: EndingRiskClocks;

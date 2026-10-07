@@ -116,6 +116,7 @@ export function clearRestStatuses(
 ): GameState['statuses'] {
   let next = clearStatus(statuses, 'overstimulated');
   if (canClearSick(metrics)) next = clearStatus(next, 'sick');
+  next = clearStatus(next, 'lost_voice');
   return clearStatus(next, 'sugar_crash');
 }
 

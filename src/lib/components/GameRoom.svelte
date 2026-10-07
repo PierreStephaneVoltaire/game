@@ -7,7 +7,8 @@
   import CompanionAvatar from './CompanionAvatar.svelte';
   import InventorySelectionDialog from './InventorySelectionDialog.svelte';
   import RecentEventsPanel from './RecentEventsPanel.svelte';
-  import RoomBackground from './RoomBackground.svelte';
+  import RoomScene from './RoomScene.svelte';
+  import { roomSetForTier } from '$lib/ui/room-look';
   import './room.css';
   import './room-scene.css';
 
@@ -46,6 +47,11 @@
         ]
       : [];
   $: roomAnchor = model?.anchors.find((anchor) => anchor.key === roomSlot);
+  $: placedVariants = Object.fromEntries(
+    (model?.anchors ?? []).flatMap((anchor) =>
+      anchor.item?.roomVariant ? [[anchor.key, anchor.item.roomVariant]] : [],
+    ),
+  );
 
   onMount(() => {
     const open = () => openRoomInventoryPicker();
@@ -158,7 +164,10 @@
       >
         <div class="room-scene">
           <div class="room-contents">
-            <RoomBackground {daypart} />
+            <RoomScene
+              set={roomSetForTier(model.career.key)}
+              placed={placedVariants}
+            />
             {#each model.anchors as anchor (anchor.key)}
               <div
                 class={`anchor anchor-${anchor.key}`}
@@ -189,17 +198,12 @@
                     on:click={() => openRoomPicker(anchor.key)}
                     disabled={careBlocked}
                     aria-label={`Choose an item for ${anchor.label}`}
-                  >
-                    <span class="anchor-empty" aria-hidden="true">+</span>
-                  </button>
+                  ></button>
                 {/if}
               </div>
             {/each}
+            <CompanionAvatar name={model.companion.name} />
           </div>
-          <CompanionAvatar
-            name={model.companion.name}
-            appearance={model.activeAvatar}
-          />
         </div>
       </section>
 

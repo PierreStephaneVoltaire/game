@@ -1,18 +1,22 @@
 .room-scene {
   position: relative;
   width: 100%;
-  aspect-ratio: 900 / 680;
+  min-width: 335px;
+  aspect-ratio: 256 / 192;
   overflow: hidden;
   container-type: size;
   background: var(--theme-room-wall);
+}
+.room-card {
+  min-width: 343px;
 }
 .room-contents {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: max(calc(100cqw * 900 / 770), calc(100cqh * 900 / 605));
-  aspect-ratio: 900 / 680;
-  transform: translate(calc(-100% * 475 / 900), calc(-100% * 347.5 / 680));
+  width: min(100cqw, calc(100cqh * 256 / 192));
+  aspect-ratio: 256 / 192;
+  transform: translate(-50%, -50%);
 }
 .room-scene .room-background-frame {
   background: var(--theme-room-wall);
@@ -59,74 +63,76 @@
   cursor: pointer;
   place-items: center;
 }
-.anchor-empty {
-  min-width: 24px;
-  border: 2px solid var(--theme-pink);
-  color: var(--theme-pink-text);
-  background: transparent;
-  box-shadow: none;
-  font-size: 1rem;
-}
 .anchor:has(button:hover:not(:disabled)) {
-  outline: 3px solid var(--theme-ink);
+  outline: 3px solid var(--theme-white);
   outline-offset: 2px;
 }
 .anchor-unplace:hover:not(:disabled) {
   text-decoration: underline;
 }
 .anchor-bed {
-  left: 31.1111%;
-  top: 36.8985%;
-  width: 26.6667%;
-  height: 24.6%;
+  left: 12.9%;
+  top: 37.5%;
+  width: 25%;
+  height: 38.5%;
 }
 .anchor-desk {
-  left: 79.8889%;
-  top: 40.8824%;
-  width: 15.6667%;
-  height: 31.7647%;
+  left: 43%;
+  top: 39.6%;
+  width: 21.9%;
+  height: 10%;
 }
 .anchor-chair {
-  left: 69.1111%;
-  top: 47.9412%;
-  width: 8.6667%;
-  height: 20.7353%;
+  left: 47.3%;
+  top: 49.6%;
+  width: 8.6%;
+  height: 17.2%;
 }
 .anchor-wall {
-  left: 57.2222%;
-  top: 12.4412%;
-  width: 12.7778%;
-  height: 14.7059%;
+  left: 42.6%;
+  top: 13.5%;
+  width: 25%;
+  height: 16.7%;
 }
 .anchor-floor {
-  left: 81.8889%;
-  top: 79.4118%;
-  width: 11.6667%;
-  height: 10.2941%;
+  left: 76%;
+  top: 78%;
+  width: 15.6%;
+  height: 15.6%;
 }
 .anchor-shelf {
-  left: 18.8889%;
-  top: 12.4412%;
-  width: 12.2222%;
-  height: 39.7647%;
+  left: 75%;
+  top: 18.9%;
+  width: 24.6%;
+  height: 32.8%;
 }
 .anchor-window {
-  left: 33.3333%;
-  top: 12.4412%;
-  width: 22.2222%;
-  height: 19.5294%;
+  left: 13.7%;
+  top: 9%;
+  width: 25%;
+  height: 28%;
 }
 .anchor-cat-corner {
-  left: 41%;
-  top: 67.6471%;
-  width: 6.8889%;
+  left: 86.3%;
+  top: 58.6%;
+  width: 10.5%;
   aspect-ratio: 1;
 }
-.anchor-cat-corner .anchor-empty {
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  color: var(--theme-room-wood);
+.anchor-poster {
+  left: 0.8%;
+  top: 16.1%;
+  width: 12.5%;
+  height: 16.7%;
+}
+.anchor-avatar {
+  left: 44.9%;
+  top: 67%;
+  width: 12.5%;
+  height: 32.4%;
+}
+.anchor-poster img,
+.anchor-avatar img {
+  display: none;
 }
 .anchor-unplace:hover:not(:disabled) {
   background: var(--theme-pink);

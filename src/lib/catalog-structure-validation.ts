@@ -113,9 +113,12 @@ export function validateItemStructure(
         issues.push(`action ${action.id} cannot define an activity`);
       if (
         action.kind === 'service' &&
-        !['model_commission', 'full_body_commission'].includes(
-          action.service?.type ?? '',
-        )
+        ![
+          'model_commission',
+          'full_body_commission',
+          'merch_run',
+          'convention_appearance',
+        ].includes(action.service?.type ?? '')
       )
         issues.push(`action ${action.id} needs a valid service definition`);
       if (action.kind !== 'service' && action.service)

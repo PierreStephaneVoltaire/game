@@ -2,10 +2,42 @@ name: Terraform infrastructure
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: Environment state to apply (prod or stage).
+        type: string
+        required: true
+    outputs:
+      static_web_app_name:
+        value: ${{ jobs.environment.outputs.static_web_app_name }}
+      app_url:
+        value: ${{ jobs.environment.outputs.app_url }}
+      telemetry_worker_name:
+        value: ${{ jobs.shared.outputs.telemetry_worker_name }}
   workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment state to apply.
+        type: choice
+        options: [stage, prod]
+        default: stage
+      apply_shared:
+        description: Apply the shared stack from this ref.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
+
+env:
+  TF_IN_AUTOMATION: 'true'
+  ARM_USE_OIDC: 'true'
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  TF_VAR_resource_group_name: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
+  TF_VAR_storage_account_name: ${{ vars.AZURE_STORAGE_ACCOUNT_NAME }}
+  TF_VAR_ci_admin: ${{ secrets.TF_CI_ADMIN }}
 
 jobs:
   validate:
@@ -22,32 +54,29 @@ jobs:
       - name: Check formatting
         run: terraform -chdir=infra fmt -check -recursive
 
-      - name: Initialize Terraform
-        run: terraform -chdir=infra init -backend=false -input=false
+      - name: Validate stacks
+        run: |
+          for stack in shared env; do
+            terraform -chdir=infra/$stack init -backend=false -input=false
+            terraform -chdir=infra/$stack validate
+          done
 
-      - name: Validate Terraform
-        run: terraform -chdir=infra validate
-
-  apply:
+  shared:
     needs: validate
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'push' ||
-      (github.event_name == 'pull_request' && github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository)
     runs-on: ubuntu-latest
     concurrency:
-      group: terraform-application-state
+      group: terraform-shared-state
       cancel-in-progress: false
     permissions:
       contents: read
       id-token: write
     env:
-      TF_IN_AUTOMATION: 'true'
-      ARM_USE_OIDC: 'true'
-      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       TF_VAR_telemetry_ingest_principal_id: ${{ secrets.AZURE_DATABASE_OBJECT_ID }}
+      TF_VAR_owner_admin: ${{ secrets.TF_OWNER_ADMIN }}
+      TF_VAR_database_location: ${{ secrets.TF_DATABASE_LOCATION }}
+      APPLY_SHARED: ${{ github.ref == 'refs/heads/main' || inputs.apply_shared == true }}
+    outputs:
+      telemetry_worker_name: ${{ steps.outputs.outputs.telemetry_worker_name }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
@@ -56,6 +85,7 @@ jobs:
         uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: 1.16.0
+          terraform_wrapper: false
 
       - name: Load remote backend configuration
         env:
@@ -73,11 +103,72 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Initialize existing remote state
-        run: terraform -chdir=infra init -input=false -backend-config="$RUNNER_TEMP/backend.tfbackend"
+      - name: Initialize shared state
+        run: terraform -chdir=infra/shared init -input=false -backend-config="$RUNNER_TEMP/backend.tfbackend" -backend-config="key=shared.tfstate"
 
-      - name: Plan infrastructure changes
-        run: terraform -chdir=infra plan -input=false -no-color -lock-timeout=5m -var-file=deployment.tfvars -out="$RUNNER_TEMP/deployment.tfplan"
+      - name: Plan shared infrastructure
+        run: terraform -chdir=infra/shared plan -input=false -no-color -lock-timeout=5m -out="$RUNNER_TEMP/shared.tfplan"
 
-      - name: Apply planned infrastructure changes
-        run: terraform -chdir=infra apply -input=false -no-color -lock-timeout=5m "$RUNNER_TEMP/deployment.tfplan"
+      - name: Apply shared infrastructure
+        if: env.APPLY_SHARED == 'true'
+        run: terraform -chdir=infra/shared apply -input=false -no-color -lock-timeout=5m "$RUNNER_TEMP/shared.tfplan"
+
+      - name: Read shared outputs
+        id: outputs
+        run: printf 'telemetry_worker_name=%s\n' "$(terraform -chdir=infra/shared output -raw telemetry_worker_name)" >> "$GITHUB_OUTPUT"
+
+  environment:
+    needs: shared
+    runs-on: ubuntu-latest
+    concurrency:
+      group: terraform-${{ inputs.environment }}-state
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TF_VAR_env: ${{ inputs.environment }}
+      TF_VAR_discord_client_id: ${{ secrets.DISCORD_CLIENT_ID }}
+    outputs:
+      static_web_app_name: ${{ steps.outputs.outputs.static_web_app_name }}
+      app_url: ${{ steps.outputs.outputs.app_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: 1.16.0
+          terraform_wrapper: false
+
+      - name: Load remote backend configuration
+        env:
+          TF_BACKEND_CONFIG: ${{ secrets.TF_BACKEND_CONFIG }}
+        run: |
+          test -n "$TF_BACKEND_CONFIG" || { echo '::error::TF_BACKEND_CONFIG is missing.'; exit 1; }
+          umask 077
+          printf '%s' "$TF_BACKEND_CONFIG" > "$RUNNER_TEMP/backend.tfbackend"
+          printf 'TF_DATA_DIR=%s/terraform-data\n' "$RUNNER_TEMP" >> "$GITHUB_ENV"
+
+      - name: Sign in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Initialize environment state
+        run: terraform -chdir=infra/env init -input=false -backend-config="$RUNNER_TEMP/backend.tfbackend" -backend-config="key=env-${TF_VAR_env}.tfstate"
+
+      - name: Plan environment infrastructure
+        run: terraform -chdir=infra/env plan -input=false -no-color -lock-timeout=5m -out="$RUNNER_TEMP/env.tfplan"
+
+      - name: Apply environment infrastructure
+        run: terraform -chdir=infra/env apply -input=false -no-color -lock-timeout=5m "$RUNNER_TEMP/env.tfplan"
+
+      - name: Read environment outputs
+        id: outputs
+        run: |
+          printf 'static_web_app_name=%s\n' "$(terraform -chdir=infra/env output -raw static_web_app_name)" >> "$GITHUB_OUTPUT"
+          printf 'app_url=%s\n' "$(terraform -chdir=infra/env output -raw app_url)" >> "$GITHUB_OUTPUT"

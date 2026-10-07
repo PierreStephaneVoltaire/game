@@ -34,6 +34,10 @@
   tying each one back to the instruction. Revert anything without a clear
   line back before presenting.
 - When scope is ambiguous, ask. Don't default to adding something.
+- When a prompt names a UI element that matches more than one canonical
+  element in the UI terminology list, show the matching nickname choices and
+  ask which one is meant before changing files. If exactly one element
+  matches, assume that element without asking.
 
 ## Plan fidelity
 

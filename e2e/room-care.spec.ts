@@ -16,8 +16,8 @@ test.beforeEach(async ({ page }) => {
             record.state.inventory = {
               'new-game': 1,
               controller: 1,
-              'socks-plushie': 1,
-              'desk-chair': 1,
+              'giant-plushie': 1,
+              'rubber-duck': 1,
               'rigging-tablet': 1,
             };
             record.state.metrics.creativity = 5;
@@ -36,7 +36,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const [kind, item] of [
-  ['Socialize', 'Socks Plushie'],
+  ['Socialize', 'Giant Plushie'],
   ['Play', 'New Game'],
 ] as const) {
   test(`${kind} cards execute directly without quantity controls or extra copy`, async ({
@@ -70,9 +70,11 @@ test('Room places furniture and starts owned usable actions', async ({
   await expect(
     dialog.getByRole('button', { name: 'New Game', exact: true }),
   ).toHaveCount(0);
-  await dialog.getByRole('button', { name: 'Desk Chair', exact: true }).click();
+  await dialog
+    .getByRole('button', { name: 'Rubber Duck', exact: true })
+    .click();
   await expect(
-    page.getByRole('button', { name: 'Unplace Desk Chair', exact: true }),
+    page.getByRole('button', { name: 'Unplace Rubber Duck', exact: true }),
   ).toBeVisible();
   await open.click();
   await dialog

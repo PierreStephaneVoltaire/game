@@ -5,68 +5,45 @@ from urllib.error import HTTPError
 
 import pytest
 
-from tools.configure_api import deployment_settings
+from tools.configure_api import secret_settings
 from tools import check_api, configure_api, setup_api_database
 
 
-def test_preview_settings_use_the_preview_origin_and_runtime_credentials(monkeypatch):
-    values = {
-        "APP_URL": "https://preview.example.test/", "API_ENVIRONMENT": "staging",
-        "SIGNING_SECRET": "signing", "DISCORD_CLIENT_SECRET": "discord",
-        "AZURE_DATABASE_CLIENT_ID": "runtime", "AZURE_DATABASE_CLIENT_SECRET": "credential",
-        "AZURE_TENANT_ID": "tenant",
-    }
-    for key, value in values.items():
+def test_secrets_are_added_on_top_of_terraform_settings(monkeypatch):
+    for key, value in {"SIGNING_SECRET": "signing", "DISCORD_CLIENT_SECRET": "discord",
+                       "AZURE_DATABASE_CLIENT_ID": "runtime", "AZURE_DATABASE_CLIENT_SECRET": "credential",
+                       "AZURE_TENANT_ID": "tenant"}.items():
         monkeypatch.setenv(key, value)
-    settings = deployment_settings({"DATABASE_URL": "database", "APP_BASE_URL": "https://production.example.test"})
-    assert settings["APP_BASE_URL"] == "https://preview.example.test"
-    assert settings["DISCORD_CALLBACK_URL"] == "https://preview.example.test/api/auth/discord/callback"
-    assert settings["ENVIRONMENT"] == "preview"
+    settings = secret_settings({"DATABASE_URL": "database", "APP_BASE_URL": "https://stage.example.test"})
     assert settings["DATABASE_URL"] == "database"
+    assert settings["APP_BASE_URL"] == "https://stage.example.test"
     assert settings["AZURE_CLIENT_ID"] == "runtime"
     assert settings["DISCORD_CLIENT_SECRET"] == "discord"
 
-    monkeypatch.setenv("API_ENVIRONMENT", "default")
-    monkeypatch.setenv("APP_URL", "https://production.example.test")
-    settings = deployment_settings(settings)
-    assert settings["ENVIRONMENT"] == "production"
-    assert settings["APP_BASE_URL"] == "https://production.example.test"
-    assert settings["DISCORD_CALLBACK_URL"] == "https://production.example.test/api/auth/discord/callback"
 
-
-def test_new_preview_is_configured_only_after_creation(monkeypatch):
-    monkeypatch.setenv("API_ENVIRONMENT", "staging")
-    monkeypatch.setenv("STATIC_WEB_APP_NAME", "app")
-    monkeypatch.setenv("RESOURCE_GROUP_NAME", "group")
-    monkeypatch.delenv("APP_URL", raising=False)
-    azure = MagicMock(return_value=[{"name": "default", "hostname": "production.example.test"}])
-    monkeypatch.setattr(configure_api, "azure", azure)
-    configure_api.main()
-    assert azure.call_count == 1
-    assert azure.call_args.args[:3] == ("staticwebapp", "environment", "list")
-
-
-def test_existing_preview_settings_do_not_trigger_another_restart(monkeypatch):
-    monkeypatch.setenv("API_ENVIRONMENT", "staging")
-    monkeypatch.setenv("STATIC_WEB_APP_NAME", "app")
-    monkeypatch.setenv("RESOURCE_GROUP_NAME", "group")
-    monkeypatch.delenv("APP_URL", raising=False)
+def test_configured_secrets_do_not_trigger_another_restart(monkeypatch):
     for key in ("SIGNING_SECRET", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
                 "AZURE_DATABASE_CLIENT_SECRET", "AZURE_TENANT_ID"):
         monkeypatch.setenv(key, "configured")
-    azure = MagicMock(return_value=[{"name": "staging", "hostname": "preview.example.test"}])
-    monkeypatch.setattr(configure_api, "azure", azure)
-
-    def settings(environment="default"):
-        result = deployment_settings({"DATABASE_URL": "database", "DATABASE_USERNAME": "vpet_api",
-                                      "DISCORD_CLIENT_ID": "discord"})
-        if environment == "default":
-            result["APP_BASE_URL"] = "https://production.example.test"
-        return result
-
-    monkeypatch.setattr(configure_api, "environment_settings", settings)
+    existing = secret_settings({"DATABASE_URL": "database", "DATABASE_USERNAME": "vpet_api",
+                                "APP_BASE_URL": "https://stage.example.test", "DISCORD_CLIENT_ID": "discord"})
+    monkeypatch.setattr(configure_api, "app_settings", lambda: existing)
+    write = MagicMock()
+    monkeypatch.setattr(configure_api, "write_app_settings", write)
     configure_api.main()
-    assert azure.call_count == 1
+    write.assert_not_called()
+
+
+def test_missing_terraform_settings_fail_before_writing(monkeypatch):
+    for key in ("SIGNING_SECRET", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
+                "AZURE_DATABASE_CLIENT_SECRET", "AZURE_TENANT_ID"):
+        monkeypatch.setenv(key, "configured")
+    monkeypatch.setattr(configure_api, "app_settings", lambda: {"DATABASE_URL": "database"})
+    write = MagicMock()
+    monkeypatch.setattr(configure_api, "write_app_settings", write)
+    with pytest.raises(RuntimeError, match="APP_BASE_URL"):
+        configure_api.main()
+    write.assert_not_called()
 
 
 def test_api_check_rejects_a_discord_redirect_without_its_cookie(monkeypatch):
@@ -107,7 +84,7 @@ def test_api_check_waits_for_settings_but_still_fails_at_deadline(monkeypatch):
 
 def test_database_setup_rejects_a_role_owned_by_another_identity(monkeypatch):
     monkeypatch.setenv("AZURE_DATABASE_OBJECT_ID", "11111111-1111-1111-1111-111111111111")
-    monkeypatch.setattr(setup_api_database, "production_settings", lambda: {
+    monkeypatch.setattr(setup_api_database, "app_settings", lambda: {
         "DATABASE_URL": "postgresql+psycopg://example.test/pet?user=admin&sslmode=require",
         "DATABASE_USERNAME": "vpet_api",
     })

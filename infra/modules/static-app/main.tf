@@ -24,7 +24,7 @@ resource "azapi_resource" "this" {
 
   body = {
     properties = {
-      stagingEnvironmentPolicy = "Enabled"
+      stagingEnvironmentPolicy = "Disabled"
     }
     sku = {
       name = "Free"
@@ -54,5 +54,6 @@ resource "azapi_resource_action" "app_settings" {
   }
 }
 
+output "id" { value = azapi_resource.this.id }
 output "name" { value = azapi_resource.this.name }
 output "hostname" { value = azapi_resource.this.output.properties.defaultHostname }

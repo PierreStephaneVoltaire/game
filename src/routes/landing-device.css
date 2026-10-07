@@ -32,6 +32,14 @@
   box-shadow: inset 4px 4px 0 var(--theme-coral-light);
 }
 
+.landing-game-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
 .screen-stars {
   position: absolute;
   inset: 16px 20px auto;
@@ -39,17 +47,6 @@
   justify-content: space-between;
   color: var(--theme-ink);
   font-size: 1.2rem;
-}
-
-.landing-companion {
-  position: absolute;
-  bottom: -10px;
-  left: 57%;
-  width: 171.6px;
-  height: 210.6px;
-  transform: translateX(-50%);
-  object-fit: contain;
-  image-rendering: pixelated;
 }
 
 .screen-message {

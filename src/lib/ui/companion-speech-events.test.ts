@@ -16,9 +16,9 @@ test.each(['buy_item', 'checkout_cart'] as const)(
   (type) => {
     const before = initial();
     before.balance = 1000;
-    before.shop.itemIds = ['water', 'socks-plushie'];
-    before.shop.stock = { water: 2, 'socks-plushie': 2 };
-    before.shop.cart = { water: 1, 'socks-plushie': 1 };
+    before.shop.itemIds = ['water', 'giant-plushie'];
+    before.shop.stock = { water: 2, 'giant-plushie': 2 };
+    before.shop.cart = { water: 1, 'giant-plushie': 1 };
     const command = {
       type,
       itemId: 'water',

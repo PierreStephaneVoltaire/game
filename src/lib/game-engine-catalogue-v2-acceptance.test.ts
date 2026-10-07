@@ -7,7 +7,7 @@ const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('publishes exactly 275 canonical items in the locked category counts', () => {
+  test('publishes exactly 258 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
         (category) => [
@@ -19,14 +19,14 @@ describe('V2 catalogue definition seam', () => {
       ),
     );
 
-    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(275);
+    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(258);
     expect(counts).toEqual({
-      food: 134,
+      food: 140,
       medicine: 2,
-      care: 3,
-      reusable: 98,
-      upgrade: 23,
-      decoration: 15,
+      care: 2,
+      reusable: 74,
+      upgrade: 18,
+      decoration: 22,
     });
   });
 
@@ -65,7 +65,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('insurance-card')).toMatchObject({
       category: 'care',
-      price: 250,
+      price: 740,
       supportsQuantity: false,
       maximumOwned: 1,
     });
@@ -124,7 +124,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('new-model-commission')).toMatchObject({
       category: 'upgrade',
-      price: 1000,
+      price: 3500,
       consumable: true,
       supportsQuantity: true,
       progression: { requiredCareerTier: 'first_model' },
@@ -159,14 +159,6 @@ describe('V2 catalogue definition seam', () => {
         expect.objectContaining({
           progressionEffect: { type: 'activate_clippers' },
         }),
-      ],
-    });
-  });
-
-  test('authors the Cat Tree Socks modifier in catalogue data', () => {
-    expect(item('cat-tree')).toMatchObject({
-      eventPoolModifiers: [
-        { eventId: 'socks', weightDelta: 3, eligibility: 'placed' },
       ],
     });
   });

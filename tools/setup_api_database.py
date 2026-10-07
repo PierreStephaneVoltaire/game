@@ -9,11 +9,11 @@ from azure.identity import AzureCliCredential
 from sqlalchemy.engine import make_url
 
 from backend.database import create_schema
-from tools.configure_api import production_settings
+from tools.configure_api import app_settings
 
 
 def main() -> None:
-    settings = production_settings()
+    settings = app_settings()
     url = make_url(settings["DATABASE_URL"])
     role = settings["DATABASE_USERNAME"]
     object_id = str(UUID(os.environ["AZURE_DATABASE_OBJECT_ID"]))

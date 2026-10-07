@@ -249,7 +249,7 @@ describe('dispatchCommand', () => {
     expect(result.state.inventory.uncrustables).toBe(0);
     expect(result.state.metrics.food).toBe(9);
     expect(result.state.statuses.sick).toMatchObject({ source: 'feeding' });
-    expect(result.state.metrics).toMatchObject({ health: 23, mood: 5 });
+    expect(result.state.metrics).toMatchObject({ health: 23, mood: 6 });
   });
 
   test('uses an owned care consumable through the same item command seam', () => {

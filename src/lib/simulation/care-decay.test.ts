@@ -35,7 +35,7 @@ describe('care activity decay pause', () => {
   });
 
   test.each([
-    ['socks-plushie', 'offer_plushie_apology'],
+    ['giant-plushie', 'offer_plushie_apology'],
     ['new-game', 'play_game'],
   ])('using %s does not advance or charge decay time', (itemId, action) => {
     const initial = startRun(

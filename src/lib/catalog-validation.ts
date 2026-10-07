@@ -12,12 +12,12 @@ import {
 import { isStatusName } from './status-rules';
 
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
-  food: 134,
+  food: 140,
   medicine: 2,
-  care: 3,
-  reusable: 98,
-  upgrade: 23,
-  decoration: 15,
+  care: 2,
+  reusable: 74,
+  upgrade: 18,
+  decoration: 22,
 };
 const METRICS = new Set([
   'food',
@@ -42,12 +42,14 @@ const ROOM_SLOTS = new Set([
   'shelf',
   'window',
   'cat-corner',
+  'poster',
+  'avatar',
 ]);
+const COSMETIC_ROOM_SLOTS = new Set(['poster', 'avatar']);
 const STATUS_HOOKS = new Set(['rolling_salt']);
 const FORBIDDEN_ALIASES = new Set([
   'salted-pretzels',
   'pretzels',
-  'pizza-slice',
   'potatoe-chips',
   'hash-browns',
   'lollipops',
@@ -188,7 +190,10 @@ function validateItem(
   for (const [metric, value] of Object.entries(roomEffects))
     if (!METRICS.has(metric) || !Number.isFinite(value) || value === 0)
       issues.push(`invalid room effect: ${metric}`);
-  if (item.roomSlot && !Object.keys(roomEffects).length)
+  const cosmetic = COSMETIC_ROOM_SLOTS.has(item.roomSlot ?? '');
+  if (cosmetic !== Boolean(item.roomVariant))
+    issues.push('room variant must match a cosmetic room slot');
+  if (item.roomSlot && !cosmetic && !Object.keys(roomEffects).length)
     issues.push('placeable item needs an authored room effect');
   if (!item.roomSlot && Object.keys(roomEffects).length)
     issues.push('unplaceable item cannot have room effects');
@@ -223,16 +228,8 @@ export function validateCatalog(
     for (const message of validateItem(item, ids, allTags))
       issues.push({ itemId: item.id, message });
 
-  const hints = new Map<string, string>();
   const hookOwners = new Map<string, string>();
   for (const item of definition.items) {
-    const prior = hints.get(item.qualitativeNutritionHint);
-    if (prior)
-      issues.push({
-        itemId: item.id,
-        message: `qualitative nutrition hint duplicates ${prior}`,
-      });
-    hints.set(item.qualitativeNutritionHint, item.id);
     for (const hook of item.automaticEventHooks ?? []) {
       const priorOwner = hookOwners.get(hook.id);
       if (priorOwner)

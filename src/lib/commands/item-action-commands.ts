@@ -32,6 +32,7 @@ import {
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { selectItemNarration } from './item-consumption-events';
 import { performClipperAction } from './clipper-action';
+import { startConventionAppearance, startMerchRun } from './creator-services';
 import { inventoryAfterConsumedUnit } from './inventory-mutations';
 
 export type ItemActionCommandResult = {
@@ -111,6 +112,25 @@ export function handleItemActionCommand(
     return {
       handled: true,
       ...startFullBodyCommission(state, command, item, itemAction, definition),
+    };
+  if (itemAction.kind === 'service' && itemAction.service?.type === 'merch_run')
+    return {
+      handled: true,
+      ...startMerchRun(state, command, item, itemAction, definition),
+    };
+  if (
+    itemAction.kind === 'service' &&
+    itemAction.service?.type === 'convention_appearance'
+  )
+    return {
+      handled: true,
+      ...startConventionAppearance(
+        state,
+        command,
+        item,
+        itemAction,
+        definition,
+      ),
     };
   if (itemAction.progressionEffect?.type === 'activate_clippers') {
     const result = performClipperAction(state, command, item, itemAction);

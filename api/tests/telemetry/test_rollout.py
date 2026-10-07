@@ -1,4 +1,3 @@
-import json
 from unittest.mock import MagicMock
 from subprocess import CompletedProcess
 
@@ -41,27 +40,15 @@ def test_cost_estimate_includes_retention_and_the_100_player_stress_case():
 
 
 def test_rollout_requires_an_indexed_worker_and_keeps_the_existing_identity_key(monkeypatch):
-    for key, value in {"TELEMETRY_WORKER_NAME": "worker", "RESOURCE_GROUP_NAME": "group", "STATIC_WEB_APP_NAME": "app", "API_ENVIRONMENT": "staging"}.items():
+    for key, value in {"TELEMETRY_WORKER_NAME": "worker", "RESOURCE_GROUP_NAME": "group", "STATIC_WEB_APP_NAME": "app"}.items():
         monkeypatch.setenv(key, value)
-    production = {"TELEMETRY_HMAC_SECRET": "stable-key", "DATABASE_URL": "unchanged"}
-    staging = {"APP_BASE_URL": "https://staging.example.test", "DISCORD_CALLBACK_URL": "https://staging.example.test/api/auth/discord/callback"}
-    monkeypatch.setattr(configure_telemetry, "environment_settings", lambda environment="default": production if environment == "default" else staging)
-    requests = []
-
-    def azure(*arguments):
-        if arguments[:3] == ("functionapp", "function", "list"):
-            return [{"name": "worker/process_gameplay_trace"}]
-        if arguments[:2] == ("staticwebapp", "show"):
-            return {"id": "/subscription/app"}
-        path = arguments[arguments.index("--body") + 1][1:]
-        requests.append((arguments, json.loads(open(path).read())))
-
-    monkeypatch.setattr(configure_telemetry, "azure", azure)
+    existing = {"TELEMETRY_HMAC_SECRET": "stable-key", "APP_BASE_URL": "https://stage.example.test"}
+    monkeypatch.setattr(configure_telemetry, "app_settings", lambda: existing)
+    writes = []
+    monkeypatch.setattr(configure_telemetry, "write_app_settings", writes.append)
+    monkeypatch.setattr(configure_telemetry, "azure", MagicMock(return_value=[{"name": "worker/process_gameplay_trace"}]))
     configure_telemetry.main()
-    assert len(requests) == 1
-    assert "/builds/staging/" in requests[0][0][4]
-    assert requests[0][1]["properties"] == {**staging, "TELEMETRY_HMAC_SECRET": "stable-key", "TELEMETRY_ENABLED": "true"}
-    assert "TELEMETRY_ENABLED" not in production
+    assert writes == [{**existing, "TELEMETRY_ENABLED": "true"}]
     monkeypatch.setattr(configure_telemetry, "azure", MagicMock(return_value=[]))
     with pytest.raises(RuntimeError, match="Deploy and index"):
         configure_telemetry.main()

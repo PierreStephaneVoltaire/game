@@ -6,6 +6,7 @@ import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
 import { nextEndingBoundary } from '../ending-rules';
 import { isHealthProtectedActivity } from './health-resolution';
+import { nextVentureBoundaries } from '../commands/creator-services';
 import {
   nextLifeEventBoundary,
   processLifeEventBoundary,
@@ -43,6 +44,7 @@ export function nextReconciliationBoundaries(
       : undefined,
     state.history.nextAutonomousAt,
     ...state.projects.map((project) => project.completesAt),
+    ...nextVentureBoundaries(state),
     nextDecayAt,
     nextHealthAt,
     nextStatusBoundary(state, state.lastResolvedAt),

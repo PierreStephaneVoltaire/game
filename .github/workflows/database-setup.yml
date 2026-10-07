@@ -2,6 +2,12 @@ name: Database setup
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: Environment database to set up.
+        type: choice
+        options: [stage, prod]
+        default: stage
 
 permissions:
   contents: read
@@ -25,7 +31,7 @@ jobs:
       - name: Read Terraform-managed database URL
         id: database
         env:
-          STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
+          STATIC_WEB_APP_NAME: legally-distinct-virtual-pet-${{ inputs.environment }}-web
           RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
         run: |
           database_url="$(az staticwebapp appsettings list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.DATABASE_URL --output tsv)"
@@ -46,5 +52,5 @@ jobs:
         working-directory: api
         env:
           DATABASE_URL: ${{ steps.database.outputs.url }}
-          ENVIRONMENT: production
+          ENVIRONMENT: ${{ inputs.environment == 'prod' && 'production' || 'preview' }}
         run: python -c "from backend.database import create_schema; create_schema()"

@@ -25,7 +25,7 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 }
 
 describe('catalogue validation', () => {
-  test('accepts all 275 maintained catalogue records', () => {
+  test('accepts all 258 maintained catalogue records', () => {
     expect(validateCatalog(BUNDLED_GAME_DEFINITION, true)).toEqual([]);
   });
 
@@ -197,21 +197,21 @@ describe('catalogue validation', () => {
   });
 
   test('validates automatic hook eligibility and effect ranges', () => {
-    const definition = definitionWithItem('catnip', (item) => {
+    const definition = definitionWithItem('fog-machine', (item) => {
       const hook = item.automaticEventHooks?.[0];
-      if (!hook) throw new Error('Catnip needs a hook.');
+      if (!hook) throw new Error('Fog Machine needs a hook.');
       hook.eligibility = 'placed';
       hook.weight = 0;
       hook.cooldownHoursWhenBalanceNegative = -1;
       hook.effects = { mood: { min: 2, max: -1 } };
     });
 
-    expect(messages(definition, 'catnip')).toEqual(
+    expect(messages(definition, 'fog-machine')).toEqual(
       expect.arrayContaining([
-        'automatic event hook catnip_event has invalid weight',
-        'automatic event hook catnip_event cannot require placement',
-        'automatic event hook catnip_event has invalid negative-Balance cooldown',
-        'invalid hook catnip_event effect range for mood',
+        'automatic event hook fog-machine_event has invalid weight',
+        'automatic event hook fog-machine_event cannot require placement',
+        'automatic event hook fog-machine_event has invalid negative-Balance cooldown',
+        'invalid hook fog-machine_event effect range for mood',
       ]),
     );
   });
@@ -231,14 +231,14 @@ describe('catalogue validation', () => {
   });
 
   test('requires automatic hook IDs to be globally unique', () => {
-    const definition = definitionWithItem('cat-toy', (item) => {
+    const definition = definitionWithItem('disco-ball', (item) => {
       const hook = item.automaticEventHooks?.[0];
-      if (!hook) throw new Error('Cat Toy needs a hook.');
-      hook.id = 'catnip_event';
+      if (!hook) throw new Error('Disco Ball needs a hook.');
+      hook.id = 'fog-machine_event';
     });
 
-    expect(messages(definition, 'cat-toy')).toContain(
-      'automatic event hook id duplicates catnip: catnip_event',
+    expect(messages(definition, 'disco-ball')).toContain(
+      'automatic event hook id duplicates fog-machine: fog-machine_event',
     );
   });
 
@@ -273,12 +273,12 @@ describe('catalogue validation', () => {
       validateCatalog(wrongMix, true).map((issue) => issue.message),
     ).toEqual(
       expect.arrayContaining([
-        'expected 33 usda_foundation nutrition records, found 34',
-        'expected 86 usda_fndds nutrition records, found 85',
+        'expected 31 usda_foundation nutrition records, found 32',
+        'expected 94 usda_fndds nutrition records, found 93',
       ]),
     );
 
-    const noApology = definitionWithItem('socks-plushie', (item) => {
+    const noApology = definitionWithItem('giant-plushie', (item) => {
       item.itemActions = [];
       item.usable = false;
     });

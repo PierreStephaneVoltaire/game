@@ -71,7 +71,7 @@ async function prepareRoom(
                       },
                     }
                   : {};
-              record.state.inventory = { water: 4, 'desk-chair': 1 };
+              record.state.inventory = { water: 4, 'rubber-duck': 1 };
               record.state.activity = type
                 ? {
                     id: 'speech-activity',

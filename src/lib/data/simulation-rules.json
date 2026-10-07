@@ -97,7 +97,8 @@
       "sleep_deprived",
       "sick",
       "kidney_stone",
-      "depressed"
+      "depressed",
+      "lost_voice"
     ],
     "weight": {
       "base": 50,
@@ -237,6 +238,22 @@
     "onset": { "rest": -1, "mood": -1 }
   },
   "sick": { "naturalPassHours": 48, "refusalProbabilityBonus": 0.25 },
+  "creatorServices": {
+    "merchRun": { "flopPayoutMultiplier": 0.5, "flopMood": -1 },
+    "convention": {
+      "tiers": {
+        "low": { "peakFollowerShare": 0.03, "minimumFollowers": 100 },
+        "medium": { "peakFollowerShare": 0.05, "minimumFollowers": 200 },
+        "high": { "peakFollowerShare": 0.08, "minimumFollowers": 400 }
+      },
+      "completion": { "mood": 2, "rest": -2 }
+    }
+  },
+  "lostVoice": {
+    "minimumStreamHours": 8,
+    "probability": 0.25,
+    "naturalPassHours": { "min": 24, "max": 48 }
+  },
   "craving": { "expiryHours": 24, "refreshLimit": 2 },
   "caffeine": { "minimumScore": 2, "deferHours": 2 },
   "hyperfocus": {

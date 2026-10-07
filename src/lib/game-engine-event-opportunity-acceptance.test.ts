@@ -243,20 +243,20 @@ describe('automatic event candidate availability', () => {
     const definition = {
       ...BUNDLED_GAME_DEFINITION,
       items: BUNDLED_GAME_DEFINITION.items.map((item) =>
-        item.id === 'catnip' ? { ...item, roomSlot: 'shelf' } : item,
+        item.id === 'fog-machine' ? { ...item, roomSlot: 'shelf' } : item,
       ),
     };
     const base = run('streaming', 'placed-owned-hook');
     const state: GameState = {
       ...base,
       inventory: {},
-      room: { shelf: 'catnip' },
+      room: { shelf: 'fog-machine' },
     };
 
     expect(
       eventCandidates(state, definition, '1970-01-01', 0).find(
-        ({ type }) => type === 'item_hook:catnip:catnip_event',
+        ({ type }) => type === 'item_hook:fog-machine:fog-machine_event',
       )?.weight,
-    ).toBe(7);
+    ).toBe(4);
   });
 });

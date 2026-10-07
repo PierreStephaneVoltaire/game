@@ -23,6 +23,8 @@ export const gameCopy = {
     shelf: 'Shelf',
     window: 'Window',
     'cat-corner': 'Cat corner',
+    poster: 'Poster',
+    avatar: 'Avatar',
   },
   care: {
     feed: 'Feed',

@@ -2,6 +2,7 @@
   import { resolve } from '$app/paths';
   import { logoutAccount } from '$lib/accounts/account-client';
   import type { GameMode } from '$lib/game-types';
+  import RoomLookSettings from './RoomLookSettings.svelte';
   export let mode: GameMode = 'realtime';
   export let seed = '';
   export let ended = false;
@@ -24,6 +25,7 @@
 <details class="settings">
   <summary>Settings</summary>
   <div class="settings-menu">
+    <RoomLookSettings />
     <p>Current mode: <strong>{modeLabel(mode)}</strong></p>
     <p>Game key: <code>{seed}</code></p>
     <p>

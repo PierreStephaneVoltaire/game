@@ -4,7 +4,6 @@
     companionSpeechSession,
     reconcileGameClock,
   } from '$lib/game-session';
-  import type { CompanionAppearance } from '$lib/ui/companion';
   import {
     clickSpeech,
     loadQuotes,
@@ -19,7 +18,6 @@
   import rules from '$lib/data/speech-rules.json';
 
   export let name: string;
-  export let appearance: CompanionAppearance;
 
   let session: SpeechSession | null = null;
   let pools: QuotePools = {};
@@ -152,17 +150,7 @@
   disabled={!allowed}
   aria-label={`Talk to ${name}`}
   on:click={clicked}
->
-  <img
-    class="companion"
-    src={appearance.assetPath}
-    alt={name}
-    data-appearance-id={appearance.id}
-    width="176"
-    height="176"
-    decoding="async"
-  />
-</button>
+></button>
 <div
   class="speech-position"
   role="status"
@@ -180,19 +168,19 @@
   .companion-avatar {
     position: absolute;
     z-index: 2;
-    bottom: -10px;
-    left: 57%;
-    width: min(274.56px, 42.12%);
+    top: 66%;
+    left: 45%;
+    width: 12.5%;
+    height: 33.5%;
     padding: 0;
     border: 0;
     background: transparent;
-    transform: translateX(-50%);
     cursor: pointer;
     pointer-events: none;
   }
   .companion-avatar::after {
     position: absolute;
-    inset: 0 25%;
+    inset: 0;
     pointer-events: auto;
     content: '';
   }
@@ -203,16 +191,10 @@
     opacity: 1;
     cursor: default;
   }
-  .companion-avatar img {
-    display: block;
-    width: 100%;
-    height: auto;
-    image-rendering: pixelated;
-  }
   .speech-position {
     position: absolute;
     z-index: 3;
-    bottom: min(264.56px, calc(42.12cqw - 10px));
+    bottom: calc(34% + 12px);
     left: 8%;
     width: 84%;
     pointer-events: none;
@@ -235,7 +217,7 @@
   .speech-position:has(.speech-bubble)::after {
     position: absolute;
     bottom: -9px;
-    left: 56%;
+    left: 50%;
     width: 14px;
     height: 14px;
     border-right: 3px solid var(--theme-ink);

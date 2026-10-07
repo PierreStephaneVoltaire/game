@@ -1,55 +1,49 @@
-variable "telemetry_ingest_principal_id" {
-  type    = string
-  default = ""
-}
-
 resource "azurerm_storage_container" "gameplay_traces" {
   name                  = "gameplay-traces"
-  storage_account_id    = data.azurerm_storage_account.quotes.id
+  storage_account_id    = data.azurerm_storage_account.shared.id
   container_access_type = "private"
   lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_storage_container" "gameplay_worker_deployments" {
   name                  = "gameplay-worker-deployments"
-  storage_account_id    = data.azurerm_storage_account.quotes.id
+  storage_account_id    = data.azurerm_storage_account.shared.id
   container_access_type = "private"
 }
 
 resource "azurerm_storage_queue" "gameplay_traces" {
   name               = "gameplay-traces"
-  storage_account_id = data.azurerm_storage_account.quotes.id
+  storage_account_id = data.azurerm_storage_account.shared.id
   lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_storage_queue" "gameplay_poison" {
   name               = "gameplay-traces-poison"
-  storage_account_id = data.azurerm_storage_account.quotes.id
+  storage_account_id = data.azurerm_storage_account.shared.id
   lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_storage_table" "gameplay_runs" {
   name               = "GameplayRuns"
-  storage_account_id = data.azurerm_storage_account.quotes.id
+  storage_account_id = data.azurerm_storage_account.shared.id
   lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_service_plan" "gameplay_worker" {
   name                = "${var.name}-trace-worker"
   resource_group_name = var.resource_group_name
-  location            = data.azurerm_storage_account.quotes.location
+  location            = data.azurerm_storage_account.shared.location
   os_type             = "Linux"
   sku_name            = "FC1"
 }
 
 resource "azurerm_function_app_flex_consumption" "gameplay_worker" {
-  depends_on                  = [azurerm_resource_provider_registration.gameplay_flex]
   name                        = "${var.name}-trace-worker"
   resource_group_name         = var.resource_group_name
-  location                    = data.azurerm_storage_account.quotes.location
+  location                    = data.azurerm_storage_account.shared.location
   service_plan_id             = azurerm_service_plan.gameplay_worker.id
   storage_container_type      = "blobContainer"
-  storage_container_endpoint  = "${data.azurerm_storage_account.quotes.primary_blob_endpoint}${azurerm_storage_container.gameplay_worker_deployments.name}"
+  storage_container_endpoint  = "${data.azurerm_storage_account.shared.primary_blob_endpoint}${azurerm_storage_container.gameplay_worker_deployments.name}"
   storage_authentication_type = "SystemAssignedIdentity"
   runtime_name                = "python"
   runtime_version             = "3.11"
@@ -61,21 +55,16 @@ resource "azurerm_function_app_flex_consumption" "gameplay_worker" {
   site_config {}
 
   app_settings = {
-    TELEMETRY_STORAGE_ACCOUNT             = data.azurerm_storage_account.quotes.name
+    TELEMETRY_STORAGE_ACCOUNT             = data.azurerm_storage_account.shared.name
     AzureWebJobsStorage                   = ""
-    AzureWebJobsStorage__accountName      = data.azurerm_storage_account.quotes.name
+    AzureWebJobsStorage__accountName      = data.azurerm_storage_account.shared.name
     AzureWebJobsStorage__credential       = "managedidentity"
-    TraceQueue__queueServiceUri           = data.azurerm_storage_account.quotes.primary_queue_endpoint
+    TraceQueue__queueServiceUri           = data.azurerm_storage_account.shared.primary_queue_endpoint
     TraceQueue__credential                = "managedidentity"
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.api.connection_string
     AzureFunctionsWebHost__hostid         = "companion-gameplay-worker"
     PYTHON_ENABLE_WORKER_EXTENSIONS       = "0"
   }
-}
-
-resource "azurerm_resource_provider_registration" "gameplay_flex" {
-  name = "Microsoft.App"
-  lifecycle { prevent_destroy = true }
 }
 
 resource "azurerm_role_assignment" "gameplay_worker_host_storage" {
@@ -89,7 +78,7 @@ resource "azurerm_role_assignment" "gameplay_worker_host_storage" {
 resource "azurerm_storage_container" "gameplay_host" {
   for_each              = toset(["azure-webjobs-hosts", "azure-webjobs-secrets"])
   name                  = each.value
-  storage_account_id    = data.azurerm_storage_account.quotes.id
+  storage_account_id    = data.azurerm_storage_account.shared.id
   container_access_type = "private"
 }
 
@@ -137,36 +126,3 @@ resource "azurerm_role_assignment" "gameplay_ingest_queue" {
   principal_id         = var.telemetry_ingest_principal_id
   principal_type       = "ServicePrincipal"
 }
-
-resource "azurerm_consumption_budget_subscription" "infrastructure" {
-  name            = "companion-infrastructure-cad-50"
-  subscription_id = "/subscriptions/${data.azurerm_client_config.quotes.subscription_id}"
-  amount          = 50
-  time_grain      = "Monthly"
-
-  time_period { start_date = "2026-09-01T00:00:00Z" }
-
-  notification {
-    enabled        = true
-    threshold      = 80
-    operator       = "GreaterThanOrEqualTo"
-    threshold_type = "Actual"
-    contact_roles  = ["Owner"]
-  }
-  notification {
-    enabled        = true
-    threshold      = 90
-    operator       = "GreaterThanOrEqualTo"
-    threshold_type = "Actual"
-    contact_roles  = ["Owner"]
-  }
-  notification {
-    enabled        = true
-    threshold      = 100
-    operator       = "GreaterThanOrEqualTo"
-    threshold_type = "Forecasted"
-    contact_roles  = ["Owner"]
-  }
-}
-
-output "telemetry_worker_name" { value = azurerm_function_app_flex_consumption.gameplay_worker.name }

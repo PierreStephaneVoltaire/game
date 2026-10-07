@@ -24,6 +24,7 @@ export type ItemViewModel = {
   edible: boolean;
   itemActions: ItemActionViewModel[];
   roomSlot: string | null;
+  roomVariant: string | null;
   owned: number;
   stock: number;
   inCart: number;
@@ -109,6 +110,7 @@ export function itemFor(
     edible: item.edible,
     itemActions,
     roomSlot: item.roomSlot ?? null,
+    roomVariant: item.roomVariant ?? null,
     owned: presentationOwned,
     stock: state.shop.stock[id] ?? 0,
     inCart: state.shop.cart[id] ?? 0,

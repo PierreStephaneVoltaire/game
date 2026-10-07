@@ -33,6 +33,32 @@ export type Project = {
   modelTier?: 1 | 2 | 3 | 4;
 };
 
+export type ServiceTier = 'low' | 'medium' | 'high';
+
+export type CreatorVenture =
+  | {
+      id: string;
+      type: 'merch_run';
+      itemId: string;
+      startedAt: number;
+      sourceActionId: string;
+      flopped: boolean;
+      totalPayout: number;
+      paidOut: number;
+      payoutDays: number;
+      daysPaid: number;
+      nextPayoutAt: number;
+    }
+  | {
+      id: string;
+      type: 'convention_appearance';
+      itemId: string;
+      tier: ServiceTier;
+      startedAt: number;
+      sourceActionId: string;
+      completesAt: number;
+    };
+
 export type QueuedEventStream = {
   id: string;
   type: 'tournament' | 'model_debut';

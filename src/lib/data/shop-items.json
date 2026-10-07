@@ -576,6 +576,9 @@
         "consumes": true,
         "tags": [
           "feeding"
+        ],
+        "clearsStatuses": [
+          "lost_voice"
         ]
       }
     ],
@@ -694,7 +697,7 @@
       "enjoyed Alfredo Pasta."
     ],
     "category": "food",
-    "price": 3,
+    "price": 12,
     "description": "Pasta buried under creamy Alfredo sauce. The fork has requested backup.",
     "qualitativeNutritionHint": "A filling bowl of pasta with rich dairy sauce and a salty edge.",
     "edible": true,
@@ -770,6 +773,101 @@
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708856/nutrients",
       "sourceReference": "250 g of FDC ID 2708856 / food code 58146382 — Pasta with cream sauce, home recipe (https://fdc.nal.usda.gov/food-details/2708856/nutrients). USDA home-recipe pasta with cream sauce is the closest dish proxy for Alfredo pasta; uses its listed one-cup portion. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
       "retrievalDate": "2026-09-15",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
+    "id": "buttered-noodles",
+    "name": "Buttered Noodles",
+    "narration": [
+      "enjoyed Buttered Noodles.",
+      "ate a bowl of Buttered Noodles with zero complaints."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Why do they call it buttered noodles? Because they put butter on noodles!",
+    "qualitativeNutritionHint": "Plain, filling noodles with a little butter and moderate salt.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "favorite",
+      "salty"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 2
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 1,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/buttered-noodles.png?v=5b98e4046d23",
+    "nutrition": {
+      "serving": "1 cup cooked noodles with 1 tablespoon butter (174 g)",
+      "calories": 323.22,
+      "sodiumMg": 450.96,
+      "sugarG": 0.72,
+      "proteinG": 7.34,
+      "waterG": 109.94,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708352/nutrients",
+      "sourceReference": "160 g of FDC ID 2708352 / food code 56112000 — Noodles, cooked (https://fdc.nal.usda.gov/food-details/2708352/nutrients); 14 g of FDC ID 2710154 / food code 81100500 — Butter, NFS (https://fdc.nal.usda.gov/food-details/2710154/nutrients). Assumed recipe: the listed one-cup cooked noodle portion plus one listed tablespoon of butter. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
+      "retrievalDate": "2026-10-06",
       "snapshotDate": "2024-10-31",
       "qualifiers": {
         "calories": "approximately",
@@ -1230,7 +1328,7 @@
     ],
     "category": "food",
     "price": 1,
-    "description": "A butter-ready rectangle of stability.",
+    "description": "What about toast? Bread's already been baked. I don't get why you need to cook it again!",
     "qualitativeNutritionHint": "Simple carbohydrate fuel that depends on what goes on top.",
     "edible": true,
     "usable": true,
@@ -1305,137 +1403,53 @@
     }
   },
   {
-    "id": "ketchup",
-    "name": "Ketchup",
+    "id": "burnt-toast",
+    "name": "Burnt Toast",
     "narration": [
-      "happily ate Ketchup.",
-      "savored every bite of Ketchup."
-    ],
-    "category": "food",
-    "price": 3,
-    "description": "Sweet tomato sauce in disguise.",
-    "qualitativeNutritionHint": "A sweet-and-salty condiment rather than a filling bite.",
-    "edible": true,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "food",
-      "ingredient",
-      "favorite"
-    ],
-    "preferences": [
-      "liked"
-    ],
-    "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
-    },
-    "effects": {
-      "food": {
-        "min": 1,
-        "max": 1
-      },
-      "mood": {
-        "min": 1,
-        "max": 1
-      }
-    },
-    "nutritionScores": {
-      "salt": 1,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 1,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 1
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "consume",
-        "label": "Feed companion",
-        "kind": "consume",
-        "consumes": true,
-        "tags": [
-          "feeding"
-        ]
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/ketchup.png?v=473c4078b209",
-    "nutrition": {
-      "serving": "1 tablespoon (17 g)",
-      "calories": 18.5,
-      "sodiumMg": 157.8,
-      "sugarG": 3.66,
-      "proteinG": 0.18,
-      "waterG": 11.65,
-      "caffeineMg": 0,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2709733/nutrients",
-      "sourceReference": "FDC ID 2709733 / food code 74401010 — Ketchup",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
-    }
-  },
-  {
-    "id": "mustard",
-    "name": "Yellow Mustard",
-    "narration": [
-      "happily ate Yellow Mustard.",
-      "savored every bite of Yellow Mustard."
+      "reluctantly ate Burnt Toast.",
+      "scraped the Burnt Toast. The black part stayed."
     ],
     "category": "food",
     "price": 1,
-    "description": "Bright yellow, sharp enough to interrupt a conversation. Apply directly to something beige.",
-    "qualitativeNutritionHint": "Punchy condiment flavor with more salt than substance.",
+    "description": "Your toast has been burnt, and no amount of scraping will remove the black part.",
+    "qualitativeNutritionHint": "The same simple carbs as toast, with a charred, bitter finish.",
     "edible": true,
     "usable": true,
     "consumable": true,
     "supportsQuantity": true,
     "tags": [
-      "food",
-      "ingredient",
-      "favorite"
+      "food"
     ],
     "preferences": [
-      "liked"
+      "disliked"
     ],
     "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
+      "refusalProbability": 0.5,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
     },
     "effects": {
       "food": {
         "min": 1,
         "max": 1
-      },
-      "mood": {
-        "min": 1,
-        "max": 1
       }
     },
     "nutritionScores": {
-      "salt": 0,
+      "salt": 1,
       "water": 0,
-      "protein": 0,
+      "protein": 1,
       "sugar": 0,
       "caffeine": 0
     },
     "properties": {
-      "salt": 0,
+      "salt": 1,
       "water": 0,
-      "protein": 0,
+      "protein": 1,
       "sugar": 0,
       "caffeine": 0,
       "portion": 1
@@ -1456,23 +1470,20 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mustard.png?v=1f61d09dcabb",
+    "image": "/items/generated/burnt-toast.png?v=dd9a666a62f4",
     "nutrition": {
-      "serving": "1 teaspoon (6 g)",
-      "calories": 3.7,
-      "sodiumMg": 66,
-      "sugarG": 0.09,
-      "proteinG": 0.26,
-      "waterG": 5.02,
-      "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/326698/nutrients",
-      "sourceReference": "FDC ID 326698 — Mustard, prepared, yellow",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
-      "nullReasons": {
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
-      }
+      "serving": "1 medium or regular slice (25 g)",
+      "calories": 73.3,
+      "sodiumMg": 123.8,
+      "sugarG": 1.47,
+      "proteinG": 2.6,
+      "waterG": 7.33,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707599/nutrients",
+      "sourceReference": "FDC ID 2707599 / food code 51101010 — Bread, white, toasted. Same record and portion as Toast; charring is not modeled separately.",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
     }
   },
   {
@@ -2375,7 +2386,7 @@
     ],
     "category": "food",
     "price": 2,
-    "description": "Tiny potato cylinders with crunch.",
+    "description": "They look like deep-fried deer poop.",
     "qualitativeNutritionHint": "Snackable potato bites that lean salty rather than balanced.",
     "edible": true,
     "usable": true,
@@ -2543,7 +2554,7 @@
       "savored every sip of Milkshake."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Dessert, dairy, and sugar through a straw.",
     "qualitativeNutritionHint": "A sugary dairy dessert that offers a little protein.",
     "edible": true,
@@ -2715,7 +2726,7 @@
       "savored every bite of Burrito."
     ],
     "category": "food",
-    "price": 5,
+    "price": 11,
     "description": "An entire meal under tortilla containment.",
     "qualitativeNutritionHint": "Substantial all-in-one fuel with a salty, filling profile.",
     "edible": true,
@@ -2802,7 +2813,7 @@
       "savored every bite of Fries."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Crispy potatoes carrying a lot of salt.",
     "qualitativeNutritionHint": "A salty potato side that pairs better with a drink.",
     "edible": true,
@@ -3816,6 +3827,87 @@
     }
   },
   {
+    "id": "kettle-corn",
+    "name": "Kettle Corn",
+    "narration": [
+      "ate Kettle Corn.",
+      "finished a bag of Kettle Corn."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Kettle corn! That’s a fun time snack!",
+    "qualitativeNutritionHint": "Light, crunchy popcorn with a sweet and salty coating.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "stream-snack",
+      "sugar"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 0,
+      "sugar": 1,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/kettle-corn.png?v=86cabc497acb",
+    "nutrition": {
+      "serving": "1 small single serving bag (28 g)",
+      "calories": 148.68,
+      "sodiumMg": 138.6,
+      "sugarG": 7.99,
+      "proteinG": 1.53,
+      "waterG": 0.4,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708238/nutrients",
+      "sourceReference": "FDC ID 2708238 / food code 54403089 — Popcorn, ready-to-eat, kettle",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
     "id": "carrot",
     "name": "Carrot",
     "narration": [
@@ -3898,87 +3990,6 @@
         "sugarG": "The selected USDA record does not report sugarG.",
         "caffeineMg": "The selected USDA record does not report caffeineMg."
       }
-    }
-  },
-  {
-    "id": "ranch-dressing",
-    "name": "Ranch dressing",
-    "narration": [
-      "ate Ranch dressing.",
-      "finished a serving of Ranch dressing."
-    ],
-    "category": "food",
-    "price": 3,
-    "description": "Creamy, salty vegetable camouflage.",
-    "qualitativeNutritionHint": "A rich, salty dip that works best in a small role.",
-    "edible": true,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "food",
-      "salty"
-    ],
-    "preferences": [
-      "variable"
-    ],
-    "context": {
-      "refusalProbability": 0,
-      "preparationAcceptance": 1
-    },
-    "effects": {
-      "food": {
-        "min": 1,
-        "max": 1
-      }
-    },
-    "nutritionScores": {
-      "salt": 2,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 2,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 1
-    },
-    "statusHooks": [
-      "rolling_salt"
-    ],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "consume",
-        "label": "Feed companion",
-        "kind": "consume",
-        "consumes": true,
-        "tags": [
-          "feeding"
-        ]
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/ranch-dressing.png?v=16045a586010",
-    "nutrition": {
-      "serving": "Quantity not specified (30 g)",
-      "calories": 129,
-      "sodiumMg": 243,
-      "sugarG": 1.41,
-      "proteinG": 0.4,
-      "waterG": 13.71,
-      "caffeineMg": 0,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710212/nutrients",
-      "sourceReference": "FDC ID 2710212 / food code 83113500 — Ranch dressing",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2024-10-31"
     }
   },
   {
@@ -4657,7 +4668,7 @@
     ],
     "category": "food",
     "price": 3,
-    "description": "Portable frosting with cake underneath.",
+    "description": "Baking is a science, Troy. It takes precision.",
     "qualitativeNutritionHint": "A small cake with a frosting-led sugar profile.",
     "edible": true,
     "usable": true,
@@ -4727,6 +4738,86 @@
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707853/nutrients",
       "sourceReference": "FDC ID 2707853 / food code 53100100 — Cake or cupcake, NFS",
       "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "custard-doughnut",
+    "name": "Custard-Filled Doughnut",
+    "narration": [
+      "ate a Custard-Filled Doughnut.",
+      "found the custard in the Custard-Filled Doughnut. It found her shirt."
+    ],
+    "category": "food",
+    "price": 2,
+    "description": "Is it true that if you eat a doughnut without a hole, you gain ten pounds?",
+    "qualitativeNutritionHint": "A sweet fried pastry with a creamy filling and an icing top.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "sugar"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 3,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 1,
+      "sugar": 3,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/custard-doughnut.png?v=eb861440a5b5",
+    "nutrition": {
+      "serving": "1 doughnut (90 g)",
+      "calories": 331.2,
+      "sodiumMg": 243,
+      "sugarG": 24.85,
+      "proteinG": 4.07,
+      "waterG": 26.5,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708076/nutrients",
+      "sourceReference": "FDC ID 2708076 / food code 53521230 — Doughnut, custard-filled, with icing",
+      "retrievalDate": "2026-10-06",
       "snapshotDate": "2024-10-31"
     }
   },
@@ -4900,6 +4991,91 @@
       "nullReasons": {
         "caffeineMg": "The selected USDA record does not report caffeineMg."
       }
+    }
+  },
+  {
+    "id": "omelette",
+    "name": "Omelette",
+    "narration": [
+      "reluctantly ate the Omelette.",
+      "managed to get through the Omelette."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "You're all coffee and no omelette!",
+    "qualitativeNutritionHint": "A soft, protein-rich egg dish with almost no sugar.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal"
+    ],
+    "preferences": [
+      "disliked"
+    ],
+    "context": {
+      "refusalProbability": 0.5,
+      "preparationAcceptance": 1,
+      "dislikedEffects": {
+        "mood": {
+          "min": -1,
+          "max": 0
+        }
+      }
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/omelette.png?v=77d89c6fc34e",
+    "nutrition": {
+      "serving": "2-egg omelette (110 g)",
+      "calories": 200.2,
+      "sodiumMg": 289.3,
+      "sugarG": 0.24,
+      "proteinG": 12.77,
+      "waterG": 78.85,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707201/nutrients",
+      "sourceReference": "FDC ID 2707201 / food code 32130020 — Egg omelet or scrambled egg, made with butter",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
     }
   },
   {
@@ -6419,7 +6595,7 @@
       "managed to get through Açaí Bowl."
     ],
     "category": "food",
-    "price": 3,
+    "price": 12,
     "description": "Cold fruit under a pile of textures.",
     "qualitativeNutritionHint": "Nutrition varies by recipe; no exact primary-source profile is claimed.",
     "edible": true,
@@ -6956,187 +7132,6 @@
     }
   },
   {
-    "id": "salsa",
-    "name": "Salsa",
-    "narration": [
-      "reluctantly ate Salsa.",
-      "managed to get through Salsa."
-    ],
-    "category": "food",
-    "price": 3,
-    "description": "Tomato, acid, chunks, and surprise heat.",
-    "qualitativeNutritionHint": "A light tomato condiment whose salt and heat can vary.",
-    "edible": true,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "food",
-      "vegetable",
-      "ingredient"
-    ],
-    "preferences": [
-      "disliked"
-    ],
-    "context": {
-      "refusalProbability": 0.35,
-      "preparationAcceptance": 1,
-      "dislikedEffects": {
-        "mood": {
-          "min": -1,
-          "max": 0
-        }
-      }
-    },
-    "effects": {
-      "food": {
-        "min": 1,
-        "max": 1
-      }
-    },
-    "nutritionScores": {
-      "salt": 1,
-      "water": 1,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 1,
-      "water": 1,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 1
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "consume",
-        "label": "Feed companion",
-        "kind": "consume",
-        "consumes": true,
-        "tags": [
-          "feeding"
-        ]
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/salsa.png?v=eea341e0752d",
-    "nutrition": {
-      "serving": "2 tbsp (35.7 g)",
-      "calories": 10.4,
-      "sodiumMg": 234.2,
-      "sugarG": 1.36,
-      "proteinG": 0.51,
-      "waterG": 31.88,
-      "caffeineMg": null,
-      "sourceType": "usda_foundation",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/746777/nutrients",
-      "sourceReference": "FDC ID 746777 — Sauce, salsa, ready-to-serve",
-      "retrievalDate": "2026-08-22",
-      "snapshotDate": "2026-04-30",
-      "nullReasons": {
-        "caffeineMg": "The selected USDA record does not report caffeineMg."
-      }
-    }
-  },
-  {
-    "id": "hummus",
-    "name": "Pumpkin Hummus",
-    "narration": [
-      "reluctantly tried Pumpkin Hummus."
-    ],
-    "category": "food",
-    "price": 3,
-    "description": "Chickpeas and pumpkin mashed into a smooth orange dip. Autumn has entered the snack aisle.",
-    "qualitativeNutritionHint": "A creamy chickpea dip with some plant protein and a savory edge.",
-    "edible": true,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "food",
-      "snack"
-    ],
-    "preferences": [
-      "disliked"
-    ],
-    "context": {
-      "refusalProbability": 0.65,
-      "preparationAcceptance": 1,
-      "dislikedEffects": {
-        "mood": {
-          "min": -1,
-          "max": 0
-        }
-      }
-    },
-    "effects": {
-      "food": {
-        "min": 1,
-        "max": 1
-      }
-    },
-    "nutritionScores": {
-      "salt": 1,
-      "water": 1,
-      "protein": 1,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 1,
-      "water": 1,
-      "protein": 1,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 1
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "consume",
-        "label": "Feed companion",
-        "kind": "consume",
-        "consumes": true,
-        "tags": [
-          "feeding"
-        ]
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/hummus.png?v=846b81f70d58",
-    "nutrition": {
-      "serving": "2 tablespoons pumpkin hummus (30 g)",
-      "calories": 54.2,
-      "sodiumMg": 88.9,
-      "sugarG": 0.39,
-      "proteinG": 1.58,
-      "waterG": 20.51,
-      "caffeineMg": 0,
-      "sourceType": "usda_fndds",
-      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707402/nutrients",
-      "sourceReference": "20 g of FDC ID 2707402 / food code 41205070 — Hummus, plain (https://fdc.nal.usda.gov/food-details/2707402/nutrients); 10 g of FDC ID 2709691 / food code 73201013 — Pumpkin, canned, cooked (https://fdc.nal.usda.gov/food-details/2709691/nutrients). Assumed blend: 20 g prepared plain hummus plus 10 g cooked canned pumpkin. Ratio is a recipe estimate; the original brand and recipe are unspecified. Nutrients calculated from published per-100-g values; this is an approximate serving, not an exact recipe analysis.",
-      "retrievalDate": "2026-09-15",
-      "snapshotDate": "2024-10-31",
-      "qualifiers": {
-        "calories": "approximately",
-        "sodiumMg": "approximately",
-        "sugarG": "approximately",
-        "proteinG": "approximately",
-        "waterG": "approximately",
-        "caffeineMg": "approximately"
-      }
-    }
-  },
-  {
     "id": "coconut",
     "name": "Coconut",
     "narration": [
@@ -7669,7 +7664,7 @@
       "tried the nachos, inspecting the arrangement."
     ],
     "category": "food",
-    "price": 1,
+    "price": 7,
     "description": "Crunchy chips with a squad of dips on the side. Build each bite before it gets soggy.",
     "qualitativeNutritionHint": "A rich salty mix where chips and cheese do most of the work.",
     "edible": true,
@@ -7756,7 +7751,7 @@
       "managed to get through BBQ ribs."
     ],
     "category": "food",
-    "price": 9,
+    "price": 18,
     "description": "Fatty protein, sweet sauce, bone logistics.",
     "qualitativeNutritionHint": "Heavy protein, fat, salt, and a sweet sauce finish.",
     "edible": true,
@@ -8017,7 +8012,7 @@
       "managed to get through Chicken pot pie."
     ],
     "category": "food",
-    "price": 1,
+    "price": 3,
     "description": "Protein and vegetables under soft pastry.",
     "qualitativeNutritionHint": "A full comfort meal under pastry, rich and moderately salty.",
     "edible": true,
@@ -8640,7 +8635,7 @@
       "gave Steak a cautious first bite."
     ],
     "category": "food",
-    "price": 13,
+    "price": 17,
     "description": "Dense protein with adjustable doneness.",
     "qualitativeNutritionHint": "Dense protein whose doneness can decide the whole experience.",
     "edible": true,
@@ -8727,7 +8722,7 @@
       "enjoyed Green Mint-Chocolate-Chip Ice Cream."
     ],
     "category": "food",
-    "price": 2,
+    "price": 4,
     "description": "Green mint ice cream studded with chocolate chips. Definitely not vanilla in a disguise.",
     "qualitativeNutritionHint": "A cold, sugary dairy treat with rich chocolate pieces.",
     "edible": true,
@@ -8996,7 +8991,7 @@
       "gave Sushi a cautious first bite."
     ],
     "category": "food",
-    "price": 4,
+    "price": 6,
     "description": "Rice, protein, and texture roulette.",
     "qualitativeNutritionHint": "Rice and protein with preparation-sensitive texture and salt.",
     "edible": true,
@@ -9259,6 +9254,334 @@
     }
   },
   {
+    "id": "pizza-slice",
+    "name": "Greasy Pizza Slice",
+    "narration": [
+      "ate a Greasy Pizza Slice.",
+      "folded the Greasy Pizza Slice and got to work."
+    ],
+    "category": "food",
+    "price": 4,
+    "description": "Doc, pizza is the food. It's like, perfect in its simplicity. Three ingredients! A holy trinity that come together to form a greasy triangle of perfection.",
+    "qualitativeNutritionHint": "A thin cheese slice with bread, dairy protein, and a salty edge.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "salty"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 2,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/pizza-slice.png?v=1bf2e3948562",
+    "nutrition": {
+      "serving": "1 piece, large thin-crust pizza (86 g)",
+      "calories": 228.76,
+      "sodiumMg": 464.4,
+      "sugarG": 3.08,
+      "proteinG": 9.8,
+      "waterG": 37.13,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708615/nutrients",
+      "sourceReference": "FDC ID 2708615 / food code 58106220 — Pizza, cheese, from restaurant or fast food, thin crust",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "cheese-pizza",
+    "name": "Classic Cheese Pizza",
+    "narration": [
+      "ate a Classic Cheese Pizza.",
+      "worked through a whole Classic Cheese Pizza."
+    ],
+    "category": "food",
+    "price": 6,
+    "description": "Dough on the bottom, then the to-ma-to. Then the mozzarella. Then you bake it. But just the right amount! Too much and you get a cracker crust, which is a mortal f***ing sin, you neanderthal!",
+    "qualitativeNutritionHint": "A whole personal pizza: filling, cheesy, and properly salty.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "salty"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 3
+      }
+    },
+    "nutritionScores": {
+      "salt": 3,
+      "water": 1,
+      "protein": 3,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 3,
+      "water": 1,
+      "protein": 3,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 3
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/cheese-pizza.png?v=1bf2e3948562",
+    "nutrition": {
+      "serving": "1 personal size pizza, 5-7\" diameter (175 g)",
+      "calories": 465.5,
+      "sodiumMg": 945,
+      "sugarG": 6.26,
+      "proteinG": 19.93,
+      "waterG": 75.55,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708616/nutrients",
+      "sourceReference": "FDC ID 2708616 / food code 58106225 — Pizza, cheese, from restaurant or fast food, medium crust",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "deep-dish-pizza",
+    "name": "Deep-Dish Pizza",
+    "narration": [
+      "ate a slice of Deep-Dish Pizza.",
+      "excavated a slice of Deep-Dish Pizza."
+    ],
+    "category": "food",
+    "price": 6,
+    "description": "I refuse to let anyone else invent pizza but the ancient Italians, Doc. These aholes may be dumb as dirt, but their blood is rich in tomato sauce.",
+    "qualitativeNutritionHint": "A thick, heavy slice with plenty of bread, cheese, and salt.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "salty"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 2,
+        "max": 3
+      }
+    },
+    "nutritionScores": {
+      "salt": 3,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 3,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 3
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/deep-dish-pizza.png?v=1bf2e3948562",
+    "nutrition": {
+      "serving": "1 piece, large thick-crust pizza (132 g)",
+      "calories": 357.72,
+      "sodiumMg": 712.8,
+      "sugarG": 4.41,
+      "proteinG": 14.27,
+      "waterG": 56.83,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708617/nutrients",
+      "sourceReference": "FDC ID 2708617 / food code 58106230 — Pizza, cheese, from restaurant or fast food, thick crust; used as the closest deep-dish proxy",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "pepperoni-pizza",
+    "name": "Pepperoni Pizza",
+    "narration": [
+      "ate a slice of Pepperoni Pizza.",
+      "approved of the Pepperoni Pizza."
+    ],
+    "category": "food",
+    "price": 5,
+    "description": "This is really good pizza, I think they import the pepperoni from Canada or something.",
+    "qualitativeNutritionHint": "A salty, protein-rich slice where the cured meat does a lot of the work.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "meal",
+      "salty"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 2
+      }
+    },
+    "nutritionScores": {
+      "salt": 3,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 3,
+      "water": 1,
+      "protein": 2,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 2
+    },
+    "statusHooks": [
+      "rolling_salt"
+    ],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/pepperoni-pizza.png?v=1bf2e3948562",
+    "nutrition": {
+      "serving": "1 piece, NFS (124 g)",
+      "calories": 349.68,
+      "sodiumMg": 768.8,
+      "sugarG": 4.04,
+      "proteinG": 14.56,
+      "waterG": 51.79,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2708640/nutrients",
+      "sourceReference": "FDC ID 2708640 / food code 58106555 — Pizza with pepperoni, from restaurant or fast food, medium crust",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
     "id": "apple-pie",
     "name": "Apple pie",
     "narration": [
@@ -9352,7 +9675,7 @@
       "took a cautious sip of Fruit Smoothie."
     ],
     "category": "food",
-    "price": 2,
+    "price": 6,
     "description": "Several fruits compressed past texture.",
     "qualitativeNutritionHint": "Hydrating fruit sweetness with a texture that depends on the blend.",
     "edible": true,
@@ -10237,73 +10560,6 @@
     }
   },
   {
-    "id": "desk-chair",
-    "name": "Desk Chair",
-    "narration": [
-      "admired Desk Chair in the room.",
-      "took another look at Desk Chair."
-    ],
-    "category": "reusable",
-    "price": 159,
-    "description": "Sitting equipment. Posture sold separately.",
-    "qualitativeNutritionHint": "Place this at the chair anchor for a more restorative workspace.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "streaming-gear"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "chair",
-    "roomEffects": {
-      "rest": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/desk-chair.png?v=aef4d16986a9",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Desk Chair is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
     "id": "live2d-model",
     "name": "Live2D Model",
     "narration": [
@@ -10311,7 +10567,7 @@
       "spent some time with Live2D Model."
     ],
     "category": "reusable",
-    "price": 850,
+    "price": 2000,
     "description": "'Just one more model.' — her, before every single model.",
     "qualitativeNutritionHint": "Rehearsal makes the model feel expressive before it goes public.",
     "edible": false,
@@ -10802,6 +11058,261 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Merch Sample is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "merch-run-small",
+    "name": "Merch Run (Small Batch)",
+    "narration": [
+      "launched a small merch run and started counting boxes."
+    ],
+    "category": "upgrade",
+    "price": 3000,
+    "description": "Shirts and keychains in a modest run. No stickers, for obvious reasons.",
+    "qualitativeNutritionHint": "An upfront investment that pays back slowly over about two months, if it sells.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "career",
+      "merch"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "launch_merch_run",
+        "label": "Launch the merch run",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "career"
+        ],
+        "service": {
+          "type": "merch_run",
+          "tier": "low",
+          "payoutMultiplier": {
+            "min": 1.2,
+            "max": 1.4
+          },
+          "payoutDays": 60,
+          "flopChance": 0.15
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/merch-run-small.png?v=76ff453841c5",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Merch Run (Small Batch) is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "merch-run-standard",
+    "name": "Merch Run (Standard)",
+    "narration": [
+      "launched a standard merch run. The spare room is now a warehouse."
+    ],
+    "category": "upgrade",
+    "price": 5500,
+    "description": "Hoodies, plushies, and acrylic stands. The shipping labels will show up in dreams.",
+    "qualitativeNutritionHint": "An upfront investment that pays back slowly over about two months, if it sells.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "career",
+      "merch"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "launch_merch_run",
+        "label": "Launch the merch run",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "career"
+        ],
+        "service": {
+          "type": "merch_run",
+          "tier": "medium",
+          "payoutMultiplier": {
+            "min": 1.3,
+            "max": 1.6
+          },
+          "payoutDays": 60,
+          "flopChance": 0.15
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/merch-run-standard.png?v=76ff453841c5",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Merch Run (Standard) is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "merch-run-full",
+    "name": "Merch Run (Full Collection)",
+    "narration": [
+      "launched the full merch collection and hid from the spreadsheet."
+    ],
+    "category": "upgrade",
+    "price": 8000,
+    "description": "Every product line at once. The accountant has started praying.",
+    "qualitativeNutritionHint": "An upfront investment that pays back slowly over about two months, if it sells.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "career",
+      "merch"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "launch_merch_run",
+        "label": "Launch the merch run",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "career"
+        ],
+        "service": {
+          "type": "merch_run",
+          "tier": "high",
+          "payoutMultiplier": {
+            "min": 1.4,
+            "max": 1.8
+          },
+          "payoutDays": 60,
+          "flopChance": 0.15
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/merch-run-full.png?v=76ff453841c5",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Merch Run (Full Collection) is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -11830,7 +12341,7 @@
       "spent some time with Console."
     ],
     "category": "reusable",
-    "price": 449,
+    "price": 499,
     "description": "A little extra fun for the room.",
     "qualitativeNutritionHint": "A console night makes the room feel built for play.",
     "edible": false,
@@ -12097,1558 +12608,6 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Second Controller is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-treats",
-    "name": "Cat Treats",
-    "narration": [
-      "used Cat Treats to give the cat a treat.",
-      "spent some time with Cat Treats."
-    ],
-    "category": "care",
-    "price": 7,
-    "description": "The actual currency of this household.",
-    "qualitativeNutritionHint": "A single-use peace offering for the household cat.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "care",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "give_cat_treat",
-        "label": "Give the cat a treat",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 1
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          }
-        },
-        "consumes": true,
-        "tags": [
-          "cat-care"
-        ]
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-treats.png?v=adb665d5d697",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Treats is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "catnip",
-    "name": "Catnip",
-    "narration": [
-      "used Catnip to share the catnip.",
-      "spent some time with Catnip."
-    ],
-    "category": "reusable",
-    "price": 9,
-    "description": "What could possibly go wrong?",
-    "qualitativeNutritionHint": "Share it when a burst of feline chaos sounds welcome.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "catnip_event",
-        "weight": 7,
-        "message": "The household cat launched into a catnip sprint.",
-        "eligibility": "owned",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          }
-        },
-        "cooldownHours": 12
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "share_catnip",
-        "label": "Share the catnip",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          },
-          "bond": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "tags": [
-          "cat-care"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/catnip.png?v=0f8b4905d06e",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Catnip is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-toy",
-    "name": "Cat Toy",
-    "narration": [
-      "used Cat Toy to play with the cat.",
-      "spent some time with Cat Toy."
-    ],
-    "category": "reusable",
-    "price": 5,
-    "description": "It moves. Someone must destroy it.",
-    "qualitativeNutritionHint": "A simple excuse to stop working and play with the cat.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "cat-toy_event",
-        "weight": 6,
-        "message": "The cat proudly dropped the toy in the middle of the room.",
-        "eligibility": "owned",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 10
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "play_with_cat",
-        "label": "Play with the cat",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 2
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          }
-        },
-        "tags": [
-          "cat-care",
-          "play"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-toy.png?v=724cf0f2cc64",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Toy is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "feather-wand",
-    "name": "Feather Wand",
-    "narration": [
-      "used Feather Wand to play with the feather wand.",
-      "spent some time with Feather Wand."
-    ],
-    "category": "reusable",
-    "price": 5,
-    "description": "Exercise for a cat. And a person.",
-    "qualitativeNutritionHint": "Interactive cat play that strengthens the household bond.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "use_feather_wand",
-        "label": "Play with the feather wand",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 2
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          },
-          "rest": {
-            "min": -1,
-            "max": 0
-          }
-        },
-        "tags": [
-          "cat-care",
-          "play"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/feather-wand.png?v=f148a284a9be",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Feather Wand is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "laser-pointer",
-    "name": "Laser Pointer",
-    "narration": [
-      "used Laser Pointer to play with the laser pointer.",
-      "spent some time with Laser Pointer."
-    ],
-    "category": "reusable",
-    "price": 6,
-    "description": "Tiny red enemy detected.",
-    "qualitativeNutritionHint": "A lively chase game with a chance of overstimulation.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "use_laser_pointer",
-        "label": "Play with the laser pointer",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 2
-          },
-          "bond": {
-            "min": 1,
-            "max": 1
-          }
-        },
-        "tags": [
-          "cat-care",
-          "play"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/laser-pointer.png?v=bba0f0f0ab5f",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Laser Pointer is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cardboard-box",
-    "name": "Cardboard Box",
-    "narration": [
-      "admired Cardboard Box in the room.",
-      "took another look at Cardboard Box."
-    ],
-    "category": "reusable",
-    "price": 2,
-    "description": "Preferred over the expensive tree beside it. Every time.",
-    "qualitativeNutritionHint": "Place it in the cat corner for cheap, dependable enrichment.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "cardboard-box_event",
-        "weight": 7,
-        "message": "The cardboard box became the most desirable seat in the room.",
-        "eligibility": "placed",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 12
-      }
-    ],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/cardboard-box.png?v=b6542892cda3",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cardboard Box is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-bed",
-    "name": "Cat Bed",
-    "narration": [
-      "admired Cat Bed in the room.",
-      "took another look at Cat Bed."
-    ],
-    "category": "reusable",
-    "price": 20,
-    "description": "A dedicated place to sleep.",
-    "qualitativeNutritionHint": "A dedicated cat-corner bed creates a calmer resting spot.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "rest": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-bed.png?v=78bc43b50e21",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Bed is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-tree",
-    "name": "Cat Tree",
-    "narration": [
-      "admired Cat Tree in the room.",
-      "took another look at Cat Tree."
-    ],
-    "category": "reusable",
-    "price": 86,
-    "description": "Vertical infrastructure for Socks' surveillance state.",
-    "qualitativeNutritionHint": "Vertical cat-corner space supports play, rest, and curiosity.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "cat-tree_event",
-        "weight": 6,
-        "message": "The cat surveyed the room from the top of the tree.",
-        "eligibility": "placed",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 12
-      }
-    ],
-    "eventPoolModifiers": [
-      {
-        "eventId": "socks",
-        "weightDelta": 3,
-        "eligibility": "placed"
-      }
-    ],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "mood": 1,
-      "bond": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-tree.png?v=e3834248811b",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Tree is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "scratching-post",
-    "name": "Scratching Post",
-    "narration": [
-      "admired Scratching Post in the room.",
-      "took another look at Scratching Post."
-    ],
-    "category": "reusable",
-    "price": 25,
-    "description": "An optimistic attempt to save the furniture.",
-    "qualitativeNutritionHint": "Cat-corner placement redirects claws toward approved furniture.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "scratching-post_event",
-        "weight": 5,
-        "message": "The scratching post spared the furniture another attack.",
-        "eligibility": "placed",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 18
-      }
-    ],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/scratching-post.png?v=81fff15c3feb",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Scratching Post is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-tunnel",
-    "name": "Cat Tunnel",
-    "narration": [
-      "used Cat Tunnel to play by the cat tunnel.",
-      "spent some time with Cat Tunnel."
-    ],
-    "category": "reusable",
-    "price": 14,
-    "description": "Someone has entered the tube.",
-    "qualitativeNutritionHint": "Play beside the tunnel for an energetic shared diversion.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "play_in_cat_tunnel",
-        "label": "Play by the cat tunnel",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 2
-          },
-          "bond": {
-            "min": 1,
-            "max": 1
-          }
-        },
-        "tags": [
-          "cat-care",
-          "play"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-tunnel.png?v=e43d6003e977",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Tunnel is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "window-perch",
-    "name": "Window Perch",
-    "narration": [
-      "admired Window Perch in the room.",
-      "took another look at Window Perch."
-    ],
-    "category": "reusable",
-    "price": 29,
-    "description": "Premium bird television. Socks-approved.",
-    "qualitativeNutritionHint": "Place it at the window to unlock premium bird-watching.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "window-perch_event",
-        "weight": 5,
-        "message": "Bird television held the cat's attention for a while.",
-        "eligibility": "placed",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 12
-      }
-    ],
-    "itemActions": [],
-    "roomSlot": "window",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/window-perch.png?v=7cc61af6dfff",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Window Perch is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-brush",
-    "name": "Cat Brush",
-    "narration": [
-      "used Cat Brush to brush the cat.",
-      "spent some time with Cat Brush."
-    ],
-    "category": "reusable",
-    "price": 6,
-    "description": "Removes fur; relocates it elsewhere.",
-    "qualitativeNutritionHint": "A grooming session can be soothing when cooperation holds.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "brush_cat",
-        "label": "Brush the cat",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          }
-        },
-        "tags": [
-          "cat-care"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-brush.png?v=0f4093425c1e",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Brush is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-costume",
-    "name": "Cat Costume",
-    "narration": [
-      "used Cat Costume to try the cat costume.",
-      "spent some time with Cat Costume."
-    ],
-    "category": "reusable",
-    "price": 15,
-    "description": "Socks did not approve this purchase and will remember it.",
-    "qualitativeNutritionHint": "Trying the outfit is funny, risky, and entirely optional.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "cat-costume_event",
-        "weight": 4,
-        "message": "The cat found where the costume was stored and objected.",
-        "eligibility": "owned",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 1
-          }
-        },
-        "cooldownHours": 24
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "try_cat_costume",
-        "label": "Try the cat costume",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -2,
-            "max": 2
-          },
-          "bond": {
-            "min": -1,
-            "max": 1
-          }
-        },
-        "tags": [
-          "cat-care"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-costume.png?v=08af0742d266",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Costume is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "tiny-cat-hat",
-    "name": "Tiny Cat Hat",
-    "narration": [
-      "used Tiny Cat Hat to try the tiny cat hat.",
-      "spent some time with Tiny Cat Hat."
-    ],
-    "category": "reusable",
-    "price": 9,
-    "description": "Excellent for approximately four seconds.",
-    "qualitativeNutritionHint": "A very brief costume experiment with unpredictable approval.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "tiny-cat-hat_event",
-        "weight": 4,
-        "message": "The tiny hat remained on the cat for almost four seconds.",
-        "eligibility": "owned",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          }
-        },
-        "cooldownHours": 24
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "try_tiny_cat_hat",
-        "label": "Try the tiny cat hat",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          },
-          "bond": {
-            "min": -1,
-            "max": 1
-          }
-        },
-        "tags": [
-          "cat-care"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/tiny-cat-hat.png?v=1a4dea601ef0",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Tiny Cat Hat is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-camera",
-    "name": "Cat Camera",
-    "narration": [
-      "used Cat Camera to check the cat camera.",
-      "spent some time with Cat Camera."
-    ],
-    "category": "reusable",
-    "price": 39,
-    "description": "Socks surveillance, from anywhere. She watches back.",
-    "qualitativeNutritionHint": "Check in remotely for reassurance and occasional cat drama.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "cat-camera_event",
-        "weight": 5,
-        "message": "The cat camera captured an inexplicable midnight sprint.",
-        "eligibility": "owned",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 18
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "check_cat_camera",
-        "label": "Check the cat camera",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          },
-          "bond": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "tags": [
-          "cat-care"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-camera.png?v=d55b55d37bb2",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Camera is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "automatic-feeder",
-    "name": "Automatic Feeder",
-    "narration": [
-      "admired Automatic Feeder in the room.",
-      "took another look at Automatic Feeder."
-    ],
-    "category": "reusable",
-    "price": 39,
-    "description": "Removes one opportunity for human error.",
-    "qualitativeNutritionHint": "Cat-corner placement makes the daily setup feel more reliable.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "bond": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/automatic-feeder.png?v=c49276f9b288",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Automatic Feeder is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "fancy-cat-fountain",
-    "name": "Fancy Cat Fountain",
-    "narration": [
-      "admired Fancy Cat Fountain in the room.",
-      "took another look at Fancy Cat Fountain."
-    ],
-    "category": "reusable",
-    "price": 36,
-    "description": "Maybe someone in this house will drink water.",
-    "qualitativeNutritionHint": "Place it in the cat corner to encourage better household hydration.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/fancy-cat-fountain.png?v=e4fe0269f7ad",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Fancy Cat Fountain is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "socks-plushie",
-    "name": "Socks Plushie",
-    "narration": [
-      "used Socks Plushie to offer a plushie apology.",
-      "spent some time with Socks Plushie."
-    ],
-    "category": "reusable",
-    "price": 247,
-    "description": "A plush Socks. Softer, and accepts apologies.",
-    "qualitativeNutritionHint": "Offer the shelf-sized tribute as a sincere, non-consuming apology.",
-    "edible": false,
-    "usable": true,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "reusable",
-      "cat-care"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "offer_plushie_apology",
-        "label": "Offer a plushie apology",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 1
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          }
-        },
-        "consumes": false,
-        "clearsStatuses": [
-          "annoyed"
-        ],
-        "tags": [
-          "apology",
-          "social"
-        ]
-      }
-    ],
-    "roomSlot": "shelf",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/socks-plushie.png?v=00df9ee08bcc",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Socks Plushie is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -14168,465 +13127,6 @@
     }
   },
   {
-    "id": "movie-rental",
-    "name": "Movie Rental",
-    "narration": [
-      "used Movie Rental to have a movie night.",
-      "spent some time with Movie Rental."
-    ],
-    "category": "reusable",
-    "price": 5,
-    "description": "Two hours of mandatory not-working.",
-    "qualitativeNutritionHint": "Put on a rented movie for one dedicated night away from work.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "watch"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "movie_night",
-        "label": "Have a movie night",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 2
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          },
-          "rest": {
-            "min": -1,
-            "max": 0
-          }
-        },
-        "consumes": true,
-        "tags": [
-          "watch",
-          "social"
-        ]
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/movie-rental.png?v=b1dec6c98d13",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Movie Rental is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "board-game",
-    "name": "Board Game",
-    "narration": [
-      "used Board Game to have a game night.",
-      "spent some time with Board Game."
-    ],
-    "category": "reusable",
-    "price": 29,
-    "description": "Requires locating other humans.",
-    "qualitativeNutritionHint": "Bring people together for a social, mildly competitive evening.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "social"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "game_night",
-        "label": "Have a game night",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 2
-          },
-          "bond": {
-            "min": 1,
-            "max": 2
-          }
-        },
-        "tags": [
-          "play",
-          "social"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/board-game.png?v=dc20a0ef058d",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Board Game is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "puzzle",
-    "name": "Puzzle",
-    "narration": [
-      "used Puzzle to work on the puzzle.",
-      "spent some time with Puzzle."
-    ],
-    "category": "reusable",
-    "price": 19,
-    "description": "One thousand tiny problems in one box.",
-    "qualitativeNutritionHint": "Work piece by piece for focused creativity with uncertain patience.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "creative"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "solve_puzzle",
-        "label": "Work on the puzzle",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": -1,
-            "max": 1
-          },
-          "creativity": {
-            "min": 1,
-            "max": 2
-          },
-          "rest": {
-            "min": -1,
-            "max": 0
-          }
-        },
-        "tags": [
-          "make"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/puzzle.png?v=427c2264a338",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Puzzle is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "coloring-book",
-    "name": "Coloring Book",
-    "narration": [
-      "used Coloring Book to color a page.",
-      "spent some time with Coloring Book."
-    ],
-    "category": "reusable",
-    "price": 16,
-    "description": "Productive procrastination.",
-    "qualitativeNutritionHint": "Color a page when structured creativity feels easier than a blank canvas.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "creative"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "autonomous-coloring",
-        "weight": 3,
-        "message": "Companion colored a page instead of dealing with a blank canvas.",
-        "eligibility": "owned",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 1
-          },
-          "creativity": {
-            "min": 1,
-            "max": 1
-          }
-        },
-        "cooldownHours": 18,
-        "sharedCooldownKey": "autonomous_creative_hobby",
-        "requiresIdle": true
-      }
-    ],
-    "itemActions": [
-      {
-        "id": "color",
-        "label": "Color a page",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 1,
-            "max": 2
-          },
-          "creativity": {
-            "min": 1,
-            "max": 1
-          }
-        },
-        "tags": [
-          "make"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/coloring-book.png?v=90630e08a847",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Coloring Book is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "lego-set",
-    "name": "LEGO Set",
-    "narration": [
-      "used LEGO Set to build the lego set.",
-      "spent some time with LEGO Set."
-    ],
-    "category": "reusable",
-    "price": 79,
-    "description": "Expensive plastic meditation.",
-    "qualitativeNutritionHint": "Build slowly for hands-on focus and a satisfying result.",
-    "edible": false,
-    "usable": true,
-    "consumable": true,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "creative"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [
-      {
-        "id": "build_lego",
-        "label": "Build the LEGO set",
-        "kind": "interaction",
-        "effects": {
-          "mood": {
-            "min": 0,
-            "max": 2
-          },
-          "creativity": {
-            "min": 2,
-            "max": 3
-          },
-          "rest": {
-            "min": -1,
-            "max": -1
-          }
-        },
-        "tags": [
-          "make"
-        ],
-        "consumes": true
-      }
-    ],
-    "roomSlot": null,
-    "roomEffects": {},
-    "clearsStatuses": [],
-    "image": "/items/generated/lego-set.png?v=797a7265e533",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: LEGO Set is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
     "id": "karaoke-machine",
     "name": "Karaoke Machine",
     "narration": [
@@ -14798,75 +13298,6 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Worn Kitty Quartz Headphones is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "blanket",
-    "name": "Blanket",
-    "narration": [
-      "admired Blanket in the room.",
-      "took another look at Blanket."
-    ],
-    "category": "reusable",
-    "price": 19,
-    "description": "One soft blanket. Portable warmth, with a built-in argument about the room temperature.",
-    "qualitativeNutritionHint": "An extra layer for the bed when the room feels cold.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": true,
-    "tags": [
-      "reusable",
-      "comfort"
-    ],
-    "preferences": [
-      "variable"
-    ],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "bed",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/blanket.png?v=d4ebaff3304f",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Blanket is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -15237,141 +13668,6 @@
     }
   },
   {
-    "id": "new-bed",
-    "name": "New Bed",
-    "narration": [
-      "admired New Bed in the room.",
-      "took another look at New Bed."
-    ],
-    "category": "upgrade",
-    "price": 249,
-    "description": "A compelling argument for going to sleep.",
-    "qualitativeNutritionHint": "A bed-anchor upgrade that permanently improves the rest space.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "bed",
-    "roomEffects": {
-      "rest": 2
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/new-bed.png?v=c33dd332fa39",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: New Bed is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "soft-mattress",
-    "name": "Soft Mattress",
-    "narration": [
-      "admired Soft Mattress in the room.",
-      "took another look at Soft Mattress."
-    ],
-    "category": "upgrade",
-    "price": 299,
-    "description": "Dangerously comfortable.",
-    "qualitativeNutritionHint": "Place it on the bed for deeper, more comfortable downtime.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "bed",
-    "roomEffects": {
-      "rest": 2,
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/soft-mattress.png?v=a659bc493bc0",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Soft Mattress is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
     "id": "fresh-bedsheets",
     "name": "Fresh Bedsheets",
     "narration": [
@@ -15457,546 +13753,6 @@
     }
   },
   {
-    "id": "weighted-blanket",
-    "name": "Weighted Blanket",
-    "narration": [
-      "admired Weighted Blanket in the room.",
-      "took another look at Weighted Blanket."
-    ],
-    "category": "upgrade",
-    "price": 49,
-    "description": "Maximum cozy achieved.",
-    "qualitativeNutritionHint": "Bed placement adds steady comfort and calmer downtime.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "bed",
-    "roomEffects": {
-      "rest": 1,
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/weighted-blanket.png?v=4f6cd3c24856",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Weighted Blanket is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "pillow",
-    "name": "Pillow",
-    "narration": [
-      "admired Pillow in the room.",
-      "took another look at Pillow."
-    ],
-    "category": "upgrade",
-    "price": 19,
-    "description": "One more could not hurt.",
-    "qualitativeNutritionHint": "Add it to the bed for a modest comfort improvement.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": true,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "bed",
-    "roomEffects": {
-      "rest": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/pillow.png?v=e03b10351395",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Pillow is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "body-pillow",
-    "name": "Body Pillow",
-    "narration": [
-      "admired Body Pillow in the room.",
-      "took another look at Body Pillow."
-    ],
-    "category": "upgrade",
-    "price": 39,
-    "description": "Technically furniture.",
-    "qualitativeNutritionHint": "Bed placement adds support with an extra touch of coziness.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "bed",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/body-pillow.png?v=981699bb216e",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Body Pillow is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "sofa",
-    "name": "Sofa",
-    "narration": [
-      "admired Sofa in the room.",
-      "took another look at Sofa."
-    ],
-    "category": "upgrade",
-    "price": 799,
-    "description": "Sitting without being at the computer.",
-    "qualitativeNutritionHint": "A floor seat that makes social downtime feel more inviting.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "floor",
-    "roomEffects": {
-      "rest": 1,
-      "bond": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/sofa.png?v=28ba7ea1cd39",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Sofa is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "beanbag-chair",
-    "name": "Beanbag Chair",
-    "narration": [
-      "admired Beanbag Chair in the room.",
-      "took another look at Beanbag Chair."
-    ],
-    "category": "upgrade",
-    "price": 99,
-    "description": "Productivity drops dramatically nearby.",
-    "qualitativeNutritionHint": "Place it at the chair anchor for relaxed, low-formality rest.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "chair",
-    "roomEffects": {
-      "mood": 1,
-      "rest": 1,
-      "creativity": -1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/beanbag-chair.png?v=8729ab4a89e4",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Beanbag Chair is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "new-desk",
-    "name": "New Desk",
-    "narration": [
-      "admired New Desk in the room.",
-      "took another look at New Desk."
-    ],
-    "category": "upgrade",
-    "price": 209,
-    "description": "More surface area to cover in stuff.",
-    "qualitativeNutritionHint": "A desk-anchor upgrade that gives creative work a better home.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "room"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "desk",
-    "roomEffects": {
-      "creativity": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/new-desk.png?v=b3634f224bf6",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: New Desk is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "bookshelf",
-    "name": "Bookshelf",
-    "narration": [
-      "admired Bookshelf in the room.",
-      "took another look at Bookshelf."
-    ],
-    "category": "upgrade",
-    "price": 79,
-    "description": "Storage for the inevitable book problem.",
-    "qualitativeNutritionHint": "Place it on the shelf anchor to support a reading-friendly room.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "room"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "shelf",
-    "roomEffects": {
-      "creativity": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/bookshelf.png?v=32072bdfbf49",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Bookshelf is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "bedside-lamp",
-    "name": "Bedside Lamp",
-    "narration": [
-      "admired Bedside Lamp in the room.",
-      "took another look at Bedside Lamp."
-    ],
-    "category": "upgrade",
-    "price": 29,
-    "description": "The big light is no longer required.",
-    "qualitativeNutritionHint": "Desk placement offers softer light for winding down.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "desk",
-    "roomEffects": {
-      "creativity": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/bedside-lamp.png?v=351194a2f907",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Bedside Lamp is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
     "id": "fairy-lights",
     "name": "Fairy Lights",
     "narration": [
@@ -16066,154 +13822,6 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Fairy Lights is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "blackout-curtains",
-    "name": "Blackout Curtains",
-    "narration": [
-      "admired Blackout Curtains in the room.",
-      "took another look at Blackout Curtains."
-    ],
-    "category": "upgrade",
-    "price": 34,
-    "description": "Outside privileges revoked.",
-    "qualitativeNutritionHint": "Window placement turns outside light down at rest time.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [
-      {
-        "id": "blackout-curtains_event",
-        "weight": 4,
-        "message": "The blackout curtains turned midday into instant night.",
-        "eligibility": "placed",
-        "effects": {
-          "rest": {
-            "min": 0,
-            "max": 1
-          }
-        },
-        "cooldownHours": 24
-      }
-    ],
-    "itemActions": [],
-    "roomSlot": "window",
-    "roomEffects": {
-      "rest": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/blackout-curtains.png?v=7982dcf87ed2",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Blackout Curtains is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "rug",
-    "name": "Rug",
-    "narration": [
-      "admired Rug in the room.",
-      "took another look at Rug."
-    ],
-    "category": "upgrade",
-    "price": 149,
-    "description": "The floor has been upgraded.",
-    "qualitativeNutritionHint": "A floor anchor upgrade that makes the whole room feel softer.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "comfort"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "floor",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/rug.png?v=7313971ccb6d",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Rug is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -16444,208 +14052,6 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Fan-Art Corkboard is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "mini-fridge",
-    "name": "Mini Fridge",
-    "narration": [
-      "admired Mini Fridge in the room.",
-      "took another look at Mini Fridge."
-    ],
-    "category": "upgrade",
-    "price": 119,
-    "description": "Dr Pepper logistics optimized.",
-    "qualitativeNutritionHint": "Shelf placement keeps refreshments close and the room convenient.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "room"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "shelf",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/mini-fridge.png?v=0c1cf01192b4",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Mini Fridge is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "snack-shelf",
-    "name": "Snack Shelf",
-    "narration": [
-      "admired Snack Shelf in the room.",
-      "took another look at Snack Shelf."
-    ],
-    "category": "upgrade",
-    "price": 49,
-    "description": "Emergency provisions within arm’s reach.",
-    "qualitativeNutritionHint": "A dedicated shelf makes food storage feel intentional.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "room"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "shelf",
-    "roomEffects": {
-      "mood": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/snack-shelf.png?v=fc4a132ed975",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Snack Shelf is a non-food catalogue item.",
-      "retrievalDate": "2026-08-22",
-      "nullReasons": {
-        "calories": "Not applicable to a non-food catalogue item.",
-        "sodiumMg": "Not applicable to a non-food catalogue item.",
-        "sugarG": "Not applicable to a non-food catalogue item.",
-        "proteinG": "Not applicable to a non-food catalogue item.",
-        "waterG": "Not applicable to a non-food catalogue item.",
-        "caffeineMg": "Not applicable to a non-food catalogue item."
-      }
-    }
-  },
-  {
-    "id": "cat-corner",
-    "name": "Cat Corner",
-    "narration": [
-      "admired Cat Corner in the room.",
-      "took another look at Cat Corner."
-    ],
-    "category": "upgrade",
-    "price": 131,
-    "description": "A cat owns part of the room now.",
-    "qualitativeNutritionHint": "Claim the cat-corner anchor as a cozy household zone.",
-    "edible": false,
-    "usable": false,
-    "consumable": false,
-    "supportsQuantity": false,
-    "tags": [
-      "upgrade",
-      "room"
-    ],
-    "preferences": [],
-    "effects": {},
-    "nutritionScores": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0
-    },
-    "properties": {
-      "salt": 0,
-      "water": 0,
-      "protein": 0,
-      "sugar": 0,
-      "caffeine": 0,
-      "portion": 0
-    },
-    "statusHooks": [],
-    "automaticEventHooks": [],
-    "itemActions": [],
-    "roomSlot": "cat-corner",
-    "roomEffects": {
-      "mood": 1,
-      "bond": 1
-    },
-    "clearsStatuses": [],
-    "image": "/items/generated/cat-corner.png?v=9145ffc82178",
-    "nutrition": {
-      "serving": "Not applicable",
-      "calories": null,
-      "sodiumMg": null,
-      "sugarG": null,
-      "proteinG": null,
-      "waterG": null,
-      "caffeineMg": null,
-      "sourceType": "not_applicable",
-      "sourceUrl": null,
-      "sourceReference": "Not applicable: Cat Corner is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -18481,7 +15887,7 @@
     "description": "Furniture with a face.",
     "qualitativeNutritionHint": "Floor placement doubles as comfort and oversized company.",
     "edible": false,
-    "usable": false,
+    "usable": true,
     "consumable": false,
     "supportsQuantity": false,
     "tags": [
@@ -18521,7 +15927,31 @@
         "cooldownHours": 24
       }
     ],
-    "itemActions": [],
+    "itemActions": [
+      {
+        "id": "offer_plushie_apology",
+        "label": "Offer a plushie apology",
+        "kind": "interaction",
+        "effects": {
+          "mood": {
+            "min": 0,
+            "max": 1
+          },
+          "bond": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        "consumes": false,
+        "clearsStatuses": [
+          "annoyed"
+        ],
+        "tags": [
+          "apology",
+          "social"
+        ]
+      }
+    ],
     "roomSlot": "floor",
     "roomEffects": {
       "mood": 1,
@@ -19249,7 +16679,7 @@
       "checked what the Insurance Card would cover at the hospital."
     ],
     "category": "care",
-    "price": 250,
+    "price": 740,
     "description": "For the next 'entirely unrelated injury.' There will be one.",
     "qualitativeNutritionHint": "A one-claim care safeguard for an expensive medical emergency.",
     "edible": false,
@@ -19430,7 +16860,7 @@
       "spent some time with New Model Commission."
     ],
     "category": "upgrade",
-    "price": 1000,
+    "price": 3500,
     "description": "Another debut. She'll rig it herself. She always does.",
     "qualitativeNutritionHint": "A long-term creative upgrade reserved for an unlocked career tier.",
     "edible": false,
@@ -19493,6 +16923,255 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: New Model Commission is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "3d-model-indie",
+    "name": "3D Model (Indie)",
+    "narration": [
+      "commissioned a 3D model from an indie studio."
+    ],
+    "category": "upgrade",
+    "price": 10000,
+    "description": "A full 3D body from a small studio. Moves fine, as long as nobody asks it to wave.",
+    "qualitativeNutritionHint": "A large creative investment; higher tiers make a bigger impression at higher follower counts.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "commission",
+      "model"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "first_model"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "start_3d_model_commission",
+        "label": "Start 3D model commission",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "model"
+        ],
+        "service": {
+          "type": "model_commission",
+          "modelType": "3d",
+          "quality": "low"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/3d-model-indie.png?v=9ba1f100b4ea",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: 3D Model (Indie) is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "3d-model-studio",
+    "name": "3D Model (Studio)",
+    "narration": [
+      "commissioned a studio 3D model and started planning the debut."
+    ],
+    "category": "upgrade",
+    "price": 17500,
+    "description": "A polished 3D model with real physics. The hair now has more bones than the skeleton.",
+    "qualitativeNutritionHint": "A large creative investment; higher tiers make a bigger impression at higher follower counts.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "commission",
+      "model"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "first_model"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "start_3d_model_commission",
+        "label": "Start 3D model commission",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "model"
+        ],
+        "service": {
+          "type": "model_commission",
+          "modelType": "3d",
+          "quality": "medium"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/3d-model-studio.png?v=9ba1f100b4ea",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: 3D Model (Studio) is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "3d-model-premium",
+    "name": "3D Model (Premium)",
+    "narration": [
+      "commissioned a premium 3D model. The bank sent a concerned email."
+    ],
+    "category": "upgrade",
+    "price": 25000,
+    "description": "Top-tier 3D model with full tracking and every expression. Chat will clip the eyebrows alone.",
+    "qualitativeNutritionHint": "A large creative investment; higher tiers make a bigger impression at higher follower counts.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "upgrade",
+      "commission",
+      "model"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "first_model"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "start_3d_model_commission",
+        "label": "Start 3D model commission",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "model"
+        ],
+        "service": {
+          "type": "model_commission",
+          "modelType": "3d",
+          "quality": "high"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/3d-model-premium.png?v=9ba1f100b4ea",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: 3D Model (Premium) is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -19646,6 +17325,255 @@
       "sourceType": "not_applicable",
       "sourceUrl": null,
       "sourceReference": "Not applicable: Convention Guest Set is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "convention-local",
+    "name": "Convention Trip (Local Con)",
+    "narration": [
+      "packed up for the local con."
+    ],
+    "category": "upgrade",
+    "price": 2000,
+    "description": "A table at the local con. Bring a banner, a cash box, and enough Dr Pepper for eight hours.",
+    "qualitativeNutritionHint": "A one-time trip that trades travel and booth costs for a big subscriber burst.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "maximumLifetimePurchases": 1,
+    "tags": [
+      "upgrade",
+      "career",
+      "convention"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "convention_guest"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "attend_convention",
+        "label": "Attend the convention",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "career"
+        ],
+        "service": {
+          "type": "convention_appearance",
+          "tier": "low"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/convention-local.png?v=4912bae554cf",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Convention Trip (Local Con) is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "convention-regional",
+    "name": "Convention Trip (Regional Con)",
+    "narration": [
+      "headed off to a regional con with a suitcase full of merch."
+    ],
+    "category": "upgrade",
+    "price": 3000,
+    "description": "A booth, a hotel room, and a panel slot. The lanyard alone feels like a promotion.",
+    "qualitativeNutritionHint": "A one-time trip that trades travel and booth costs for a big subscriber burst.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "maximumLifetimePurchases": 1,
+    "tags": [
+      "upgrade",
+      "career",
+      "convention"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "convention_guest"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "attend_convention",
+        "label": "Attend the convention",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "career"
+        ],
+        "service": {
+          "type": "convention_appearance",
+          "tier": "medium"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/convention-regional.png?v=4912bae554cf",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Convention Trip (Regional Con) is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "convention-major",
+    "name": "Convention Trip (Major Con)",
+    "narration": [
+      "flew out for a major con. Correct Birmingham confirmed."
+    ],
+    "category": "upgrade",
+    "price": 4000,
+    "description": "Flights, the main hall, and a signing line. Confirm which Birmingham before booking.",
+    "qualitativeNutritionHint": "A one-time trip that trades travel and booth costs for a big subscriber burst.",
+    "edible": false,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "maximumLifetimePurchases": 1,
+    "tags": [
+      "upgrade",
+      "career",
+      "convention"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "convention_guest"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "attend_convention",
+        "label": "Attend the convention",
+        "kind": "service",
+        "consumes": true,
+        "tags": [
+          "career"
+        ],
+        "service": {
+          "type": "convention_appearance",
+          "tier": "high"
+        }
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/convention-major.png?v=4912bae554cf",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Convention Trip (Major Con) is a non-food catalogue item.",
       "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
@@ -20059,6 +17987,100 @@
     }
   },
   {
+    "id": "oreos",
+    "name": "Oreos",
+    "narration": [
+      "happily ate some Oreos.",
+      "took the Oreos apart before eating them, as is tradition."
+    ],
+    "category": "food",
+    "price": 3,
+    "description": "Two chocolate cookies guarding a stripe of cream. Taking them apart is optional, but traditional.",
+    "qualitativeNutritionHint": "A sweet chocolate sandwich cookie with little else to offer nutritionally.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "stream-snack",
+      "favorite",
+      "sugar"
+    ],
+    "preferences": [
+      "liked"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      },
+      "mood": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 1,
+      "water": 0,
+      "protein": 0,
+      "sugar": 2,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 1,
+      "water": 0,
+      "protein": 0,
+      "sugar": 2,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/oreos.png?v=3beb47369f29",
+    "nutrition": {
+      "serving": "3 Oreo sandwich cookies (33 g)",
+      "calories": 153.12,
+      "sodiumMg": 128.04,
+      "sugarG": 13.42,
+      "proteinG": 1.72,
+      "waterG": 1.03,
+      "caffeineMg": 1.65,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2707920/nutrients",
+      "sourceReference": "33 g of FDC ID 2707920 / food code 53209015 — Cookie, chocolate sandwich (https://fdc.nal.usda.gov/food-details/2707920/nutrients). Three of the listed 11 g 'Oreo sandwich' portions. Nutrients calculated from published per-100-g values; this is an approximate serving.",
+      "retrievalDate": "2026-10-06",
+      "snapshotDate": "2024-10-31",
+      "qualifiers": {
+        "calories": "approximately",
+        "sodiumMg": "approximately",
+        "sugarG": "approximately",
+        "proteinG": "approximately",
+        "waterG": "approximately",
+        "caffeineMg": "approximately"
+      }
+    }
+  },
+  {
     "id": "ring-fit-game",
     "name": "Ring Fit",
     "narration": [
@@ -20159,7 +18181,7 @@
       "spent some time with Kindle E-Reader."
     ],
     "category": "reusable",
-    "price": 129,
+    "price": 149,
     "description": "A whole library on one quiet screen. The shelf space has been refunded.",
     "qualitativeNutritionHint": "A dedicated e-reader with few distractions.",
     "edible": false,
@@ -20740,6 +18762,89 @@
       "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710488/nutrients",
       "sourceReference": "FDC ID 2710488 / food code 92302000 — Tea, hot, leaf, black",
       "retrievalDate": "2026-08-22",
+      "snapshotDate": "2024-10-31"
+    }
+  },
+  {
+    "id": "honey",
+    "name": "Honey",
+    "narration": [
+      "took a spoonful of Honey.",
+      "had some Honey and immediately sounded less like a door hinge."
+    ],
+    "category": "food",
+    "price": 6,
+    "description": "A spoonful of liquid gold. Coats the throat, glues the fingers.",
+    "qualitativeNutritionHint": "Nearly pure sugar by the spoonful; soothing rather than filling.",
+    "edible": true,
+    "usable": true,
+    "consumable": true,
+    "supportsQuantity": true,
+    "tags": [
+      "food",
+      "snack",
+      "sugar"
+    ],
+    "preferences": [
+      "variable"
+    ],
+    "context": {
+      "refusalProbability": 0,
+      "preparationAcceptance": 1
+    },
+    "effects": {
+      "food": {
+        "min": 1,
+        "max": 1
+      }
+    },
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 2,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 2,
+      "caffeine": 0,
+      "portion": 1
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [
+      {
+        "id": "consume",
+        "label": "Feed companion",
+        "kind": "consume",
+        "consumes": true,
+        "tags": [
+          "feeding"
+        ],
+        "clearsStatuses": [
+          "lost_voice"
+        ]
+      }
+    ],
+    "roomSlot": null,
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/honey.png?v=b04983544558",
+    "nutrition": {
+      "serving": "1 tablespoon (20 g)",
+      "calories": 60.8,
+      "sodiumMg": 0.8,
+      "sugarG": 16.42,
+      "proteinG": 0.06,
+      "waterG": 3.42,
+      "caffeineMg": 0,
+      "sourceType": "usda_fndds",
+      "sourceUrl": "https://fdc.nal.usda.gov/food-details/2710281/nutrients",
+      "sourceReference": "FDC ID 2710281 / food code 91302010 — Honey",
+      "retrievalDate": "2026-10-06",
       "snapshotDate": "2024-10-31"
     }
   },
@@ -22328,7 +20433,7 @@
       "enjoyed Dutch Savory Pancake."
     ],
     "category": "food",
-    "price": 4,
+    "price": 12,
     "description": "A broad, thin Dutch pancake with savory toppings. Syrup has the day off.",
     "qualitativeNutritionHint": "A filling pancake with salty bacon and cheese.",
     "edible": true,
@@ -22514,7 +20619,7 @@
       "enjoyed Vanilla Milkshake and Fries."
     ],
     "category": "food",
-    "price": 6,
+    "price": 9,
     "description": "Cold vanilla milkshake. Hot salty fries. The dipping debate begins now.",
     "qualitativeNutritionHint": "A sugary dairy drink paired with a salty, starchy side.",
     "edible": true,
@@ -23935,6 +22040,537 @@
       "sourceUrl": null,
       "sourceReference": "Not applicable: Cut-Resistant Cooking Gloves is a non-food catalogue item.",
       "retrievalDate": "2026-09-13",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-umi",
+    "name": "Umi",
+    "narration": [
+      "hung up the Umi poster.",
+      "took another look at the Umi poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The Umi poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "umi",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-umi.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Umi is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-selfcest",
+    "name": "Selfcest",
+    "narration": [
+      "hung up the Selfcest poster.",
+      "took another look at the Selfcest poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The Selfcest poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "selfcest",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-selfcest.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Selfcest is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-booger",
+    "name": "Booger",
+    "narration": [
+      "hung up the Booger poster.",
+      "took another look at the Booger poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The Booger poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "booger",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-booger.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Booger is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-wife",
+    "name": "Wife",
+    "narration": [
+      "hung up the Wife poster.",
+      "took another look at the Wife poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The Wife poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "wife",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-wife.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Wife is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-rvb",
+    "name": "RVB",
+    "narration": [
+      "hung up the RVB poster.",
+      "took another look at the RVB poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The RVB poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "rvb",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-rvb.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: RVB is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-glee",
+    "name": "Glee",
+    "narration": [
+      "hung up the Glee poster.",
+      "took another look at the Glee poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The Glee poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "glee",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-glee.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Glee is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "poster-socks",
+    "name": "Socks",
+    "narration": [
+      "hung up the Socks poster.",
+      "took another look at the Socks poster."
+    ],
+    "category": "decoration",
+    "price": 200,
+    "description": "The Socks poster.",
+    "qualitativeNutritionHint": "Place it in the poster frame on the wall.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "decoration",
+      "poster"
+    ],
+    "preferences": [],
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "poster",
+    "roomVariant": "socks",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/poster-socks.png?v=d464ff6d4223",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Socks is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
+      "nullReasons": {
+        "calories": "Not applicable to a non-food catalogue item.",
+        "sodiumMg": "Not applicable to a non-food catalogue item.",
+        "sugarG": "Not applicable to a non-food catalogue item.",
+        "proteinG": "Not applicable to a non-food catalogue item.",
+        "waterG": "Not applicable to a non-food catalogue item.",
+        "caffeineMg": "Not applicable to a non-food catalogue item."
+      }
+    }
+  },
+  {
+    "id": "bunny-pixie-model",
+    "name": "Bunny Pixie",
+    "narration": [
+      "switched to the Bunny Pixie model.",
+      "spent some time in the Bunny Pixie model."
+    ],
+    "category": "upgrade",
+    "price": 3500,
+    "description": "A 2D model variant.",
+    "qualitativeNutritionHint": "Place it to switch the room avatar to the Bunny Pixie model.",
+    "edible": false,
+    "usable": false,
+    "consumable": false,
+    "supportsQuantity": false,
+    "tags": [
+      "upgrade",
+      "model"
+    ],
+    "preferences": [],
+    "progression": {
+      "requiredCareerTier": "model_redesign"
+    },
+    "effects": {},
+    "nutritionScores": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0
+    },
+    "properties": {
+      "salt": 0,
+      "water": 0,
+      "protein": 0,
+      "sugar": 0,
+      "caffeine": 0,
+      "portion": 0
+    },
+    "statusHooks": [],
+    "automaticEventHooks": [],
+    "itemActions": [],
+    "roomSlot": "avatar",
+    "roomVariant": "bunny_pixie",
+    "roomEffects": {},
+    "clearsStatuses": [],
+    "image": "/items/generated/bunny-pixie-model.png?v=67015d5160d4",
+    "nutrition": {
+      "serving": "Not applicable",
+      "calories": null,
+      "sodiumMg": null,
+      "sugarG": null,
+      "proteinG": null,
+      "waterG": null,
+      "caffeineMg": null,
+      "sourceType": "not_applicable",
+      "sourceUrl": null,
+      "sourceReference": "Not applicable: Bunny Pixie is a non-food catalogue item.",
+      "retrievalDate": "2026-08-22",
       "nullReasons": {
         "calories": "Not applicable to a non-food catalogue item.",
         "sodiumMg": "Not applicable to a non-food catalogue item.",

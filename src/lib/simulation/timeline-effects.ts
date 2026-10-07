@@ -11,6 +11,7 @@ import { HOUR_MS } from '../game-constants';
 import { healthDamageSource } from './health-resolution';
 import { appendStatusTransitionEvents } from './engine-state';
 import { completeDueProjects } from '../project-rules';
+import { settleDueVentures } from '../commands/creator-services';
 import { resolveTimelineOpportunities } from './timeline-opportunities';
 import { appendTimelineStatusEvents } from './timeline-status-events';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
@@ -62,6 +63,7 @@ export function resolveTimelineEffects({
   const eventIds: string[] = [];
   const beforeProjectEvents = next.events.length;
   next = completeDueProjects(next, reconciliationNow);
+  next = settleDueVentures(next, reconciliationNow);
   eventIds.push(
     ...next.events.slice(beforeProjectEvents).map((event) => event.id),
   );

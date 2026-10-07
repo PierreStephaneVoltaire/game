@@ -170,14 +170,14 @@ describe('room and item action commands', () => {
 
     const actionState = {
       ...initial,
-      inventory: { ...initial.inventory, 'cat-treats': 1 },
+      inventory: { ...initial.inventory, 'book-club-pick': 1 },
     };
     const action = dispatchCommand(
       actionState,
       {
         type: 'perform_item_action',
-        itemId: 'cat-treats',
-        action: 'give_cat_treat',
+        itemId: 'book-club-pick',
+        action: 'read_together',
         commandId: 'bond-item-action',
         now,
       },
@@ -185,24 +185,6 @@ describe('room and item action commands', () => {
     ).state;
     expect(action.metrics.bond).toBeGreaterThan(actionState.metrics.bond);
     expect(action.history.lastBondGainAt).toBe(now);
-
-    const placementState = {
-      ...initial,
-      inventory: { ...initial.inventory, 'automatic-feeder': 1 },
-    };
-    const placement = dispatchCommand(
-      placementState,
-      {
-        type: 'place_item',
-        itemId: 'automatic-feeder',
-        slot: 'cat-corner',
-        commandId: 'bond-room-placement',
-        now,
-      },
-      BUNDLED_GAME_DEFINITION,
-    ).state;
-    expect(placement.metrics.bond).toBeGreaterThan(placementState.metrics.bond);
-    expect(placement.history.lastBondGainAt).toBe(now);
   });
 
   test('an automatic item event that raises Bond resets the decay clock', () => {

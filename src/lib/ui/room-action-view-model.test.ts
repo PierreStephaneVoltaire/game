@@ -21,8 +21,8 @@ describe('room action view model', () => {
           ...initial.inventory,
           'new-game': 1,
           controller: 1,
-          'socks-plushie': 1,
-          'desk-chair': 1,
+          'giant-plushie': 1,
+          'rubber-duck': 1,
           'rigging-tablet': 1,
         },
       },
@@ -36,7 +36,7 @@ describe('room action view model', () => {
           actionId: 'play_game',
         }),
         expect.objectContaining({
-          itemId: 'socks-plushie',
+          itemId: 'giant-plushie',
           actionId: 'offer_plushie_apology',
         }),
       ]),
@@ -51,12 +51,12 @@ describe('room action view model', () => {
     );
     expect(
       model.careChoices.play.some(
-        (choice) => choice.itemId === 'socks-plushie',
+        (choice) => choice.itemId === 'giant-plushie',
       ),
     ).toBe(false);
     expect(model.roomChoices).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ itemId: 'desk-chair', slot: 'chair' }),
+        expect.objectContaining({ itemId: 'rubber-duck', slot: 'shelf' }),
         expect.objectContaining({
           itemId: 'rigging-tablet',
           actionId: 'commission_work',
@@ -75,21 +75,21 @@ describe('room action view model', () => {
       false,
     );
     expect(
-      model.anchors.find((anchor) => anchor.key === 'chair')?.placementChoices,
-    ).toEqual([
-      expect.objectContaining({
-        itemId: 'desk-chair',
-        owned: 1,
-        slot: 'chair',
-      }),
-    ]);
-    expect(
       model.anchors.find((anchor) => anchor.key === 'shelf')?.placementChoices,
     ).toEqual([
       expect.objectContaining({
-        itemId: 'socks-plushie',
+        itemId: 'rubber-duck',
         owned: 1,
         slot: 'shelf',
+      }),
+    ]);
+    expect(
+      model.anchors.find((anchor) => anchor.key === 'floor')?.placementChoices,
+    ).toEqual([
+      expect.objectContaining({
+        itemId: 'giant-plushie',
+        owned: 1,
+        slot: 'floor',
       }),
     ]);
   });

@@ -246,6 +246,14 @@ It persists until rolling salt reaches at least 5 and rolling water reaches at
 least 4. That managed band also adds 5 to raw autonomous-stream weight before
 the daypart multiplier.
 
+### Lost Voice
+
+When a stream that lasted more than 8 game-hours ends, a seeded 25% roll can
+add Lost Voice. It cannot stack. Onset schedules a seeded natural recovery 24
+through 48 whole game-hours later. Lost Voice blocks autonomous streams and
+clears when any Rest ends, when Honey or Tea is consumed, or at its natural
+recovery boundary. Natural recovery gives no metric bonus.
+
 ### Overstimulated and Annoyed
 
 A Mood-raising Socialize, Play, or item result attempted from Mood 9–10 adds
@@ -260,7 +268,7 @@ unavailable, stale, automatic, and Rest-at-10 attempts do not count.
 
 Acceptance resets the streak. Onset applies Mood −2, resets the streak, and
 further refusals do not accumulate while Annoyed remains active. Annoyed clears
-after three game-hours without a companion attempt or through the Socks Plushie
+after three game-hours without a companion attempt or through the Giant Plushie
 apology action.
 
 ### Sugar Crash and scheduled effects
@@ -408,8 +416,7 @@ Emergency Food and Rest rescues are separate from the weighted pool. After a
 periodic check actually applies matching damage, an idle living companion at
 Food or Rest 0–2 may act once: Food consumes one acceptable owned Liked or
 Variable food through the ordinary feeding pipeline, then Rest may start the
-normal Rest activity. Snack Shelf prefers snack-tagged choices; Mini Fridge
-prefers useful drinks or refrigerated food. The Health damage is never
+normal Rest activity. The Health damage is never
 refunded, no item is bought or created, and each metric has an independent
 lock. Only a player-commanded action that actually raises the matching metric
 to at least 5 resets its lock.
@@ -436,27 +443,26 @@ time-owned weighted opportunity. Companion attempts have their own separate
 opportunities. During an activity, narration and stat events remain eligible,
 unless their authored hook requires idle state; another stream cannot begin.
 
-| Candidate                 | Weight and eligibility                                                                                   |
-| ------------------------- | -------------------------------------------------------------------------------------------------------- |
-| No visible event          | 100                                                                                                      |
-| Low-money stress          | 20 below $10, once per local date                                                                        |
-| Food craving              | 20 when a Liked target exists and no craving is active                                                   |
-| Creative inspiration      | 15, 12-hour cooldown, Creativity +1                                                                      |
-| Socks                     | Requires a placed Cat Tree; weight 15 plus placement modifiers, six-hour cooldown, Mood −1/+1/+1 equally |
-| Benign room event         | 10, four-hour cooldown                                                                                   |
-| Self-entertainment        | 5 while idle, Mood +1, 24-hour cooldown                                                                  |
-| Stood up too fast         | 3 while idle, seeded neutral/Rest −1/Health −1 outcomes, 24-hour cooldown                                |
-| Tiny walk / barely moved  | 3 each, one shared local-day slot; the negative event requires no movement in 24 hours                   |
-| Rare full-body commission | 5 with an owned Rigging Tablet, no active one, and a 14-local-day cooldown                               |
-| Mom's Care Package        | 5 below $0 Balance or at Food 0–2, 72-hour cooldown                                                      |
-| Rest snoring              | 10 once during an eligible low-Rest Rest                                                                 |
-| Autonomous stream         | Dynamic                                                                                                  |
-| Random offline donation   | 10, 24-hour cooldown, $5–$40 uniformly                                                                   |
+| Candidate                 | Weight and eligibility                                                                 |
+| ------------------------- | -------------------------------------------------------------------------------------- |
+| No visible event          | 100                                                                                    |
+| Low-money stress          | 20 below $10, once per local date                                                      |
+| Food craving              | 20 when a Liked target exists and no craving is active                                 |
+| Creative inspiration      | 15, 12-hour cooldown, Creativity +1                                                    |
+| Socks                     | 15 plus item modifiers, six-hour cooldown, Mood −1/+1/+1 equally                       |
+| Benign room event         | 10, four-hour cooldown                                                                 |
+| Self-entertainment        | 5 while idle, Mood +1, 24-hour cooldown                                                |
+| Stood up too fast         | 3 while idle, seeded neutral/Rest −1/Health −1 outcomes, 24-hour cooldown              |
+| Tiny walk / barely moved  | 3 each, one shared local-day slot; the negative event requires no movement in 24 hours |
+| Rare full-body commission | 5 with an owned Rigging Tablet, no active one, and a 14-local-day cooldown             |
+| Mom's Care Package        | 5 below $0 Balance or at Food 0–2, 72-hour cooldown                                    |
+| Rest snoring              | 10 once during an eligible low-Rest Rest                                               |
+| Autonomous stream         | Dynamic                                                                                |
+| Random offline donation   | 10, 24-hour cooldown, $5–$40 uniformly                                                 |
 
 Mom's Care Package clearly records two seeded Liked foods as gifts, distinct
 where possible, and adds Mood +1. The full-body commission is a nonblocking project that completes at
-the third local midnight and pays a seeded $400–$800. Placing Cat Tree adds 3
-to Socks weight.
+the third local midnight and pays a seeded $400–$800.
 
 All catalogue-authored automatic hooks also join the weighted pool. Hooks may
 use seeded message pools and outcomes, shared cooldowns, idle/career/Follower
@@ -483,7 +489,7 @@ starts a stream nor resets stream-drought protection.
 
 The player cannot start an ordinary stream. It is selected from the autonomous
 pool only when no activity or blocking status is active. Stream blockers are
-Starving, Sleep Deprived, Sick, Kidney Stone, and Depressed. Hungry, Low Energy,
+Starving, Sleep Deprived, Sick, Kidney Stone, Depressed, and Lost Voice. Hungry, Low Energy,
 Overstimulated, and Dizzy Spell keep their other effects but are not hard
 stream blockers.
 
@@ -630,7 +636,7 @@ bands also remain unlocked after a loss.
 |          500,000 | 500K Subscribers: Subscriber Revenue 7×                                                   |
 |        1,000,000 | 1M Subscribers: Subscriber Revenue 10×                                                    |
 
-New Model Commission costs $1,000 and appears once the required career tier is
+New Model Commission costs $3,500 and appears once the required career tier is
 unlocked. Each unlocked unfinished tier can be purchased once. Its nonblocking
 project ends at the third local midnight and grants Mood +3, Creativity +2,
 Subscribers +50, a new active appearance, and a queued fixed four-hour debut
@@ -641,6 +647,32 @@ goth/oni-inspired, and 3D-debut-inspired models. Appearance artwork is selected
 entirely by the companion profile, and multiple identities may share one asset.
 Completing the fourth project is the actual 3D Debut and permanently increases
 base donation chance by one percentage point.
+
+### Merch runs
+
+Merch runs cost $3,000, $5,500, or $8,000 and consume their item. Only one can
+be active at a time. On launch, a seeded roll uses the item's 15% flop chance.
+A successful run rolls a payout multiplier from the item's range (1.2–1.4×,
+1.3–1.6×, or 1.4–1.8×). A flop instead uses 0.5× and applies Mood −1
+immediately. The rounded total (price × multiplier) is paid out in whole
+dollars at each local midnight across the item's 60 payout days, and the last
+payout settles any rounding remainder. Merch runs and convention trips never
+block full-body or model commissions.
+
+### Convention appearances
+
+Convention appearances cost $2,000, $3,000, or $4,000, unlock at the
+Convention Guest career tier, and can each be bought once per run. Only one
+trip can be booked at a time. The trip completes at the next local midnight
+and applies Mood +2 and Rest −2, plus a Subscriber burst:
+
+| Tier     | Share of peak Subscribers | Minimum |
+| -------- | ------------------------: | ------: |
+| Local    |                        3% |     100 |
+| Regional |                        5% |     200 |
+| Major    |                        8% |     400 |
+
+The 3D model commissions currently use the ordinary model-commission rules.
 
 Tournament Appearance and model-debut streams wait until ordinary stream blockers are gone and
 a 13:00–19:59 opportunity occurs. Their fixed duration ignores ordinary
@@ -699,16 +731,16 @@ Ending:
 
 ## Shop, Inventory, and room
 
-The catalogue has exactly 275 items:
+The catalogue has exactly 258 items:
 
 | Category   | Count |
 | ---------- | ----: |
-| Food       |   134 |
+| Food       |   140 |
 | Medicine   |     2 |
-| Care       |     3 |
-| Reusable   |    98 |
-| Upgrade    |    23 |
-| Decoration |    15 |
+| Care       |     2 |
+| Reusable   |    74 |
+| Upgrade    |    18 |
+| Decoration |    22 |
 
 The catalogue includes Mini Tacos, Bite-Sized Pizza Cubes, and The Concoction.
 Bite-Sized Pizza Cubes are Liked and always meet their preparation requirement.
@@ -722,12 +754,12 @@ single-use interaction that requires owned game-control equipment and applies
 its authored seeded Mood, Rest, and Creativity effects. Final descriptions and
 item-use narration are authored directly on their canonical catalogue records.
 
-The catalogue additions include Insurance Card ($250, at most one owned),
+The catalogue additions include Insurance Card ($740, at most one owned),
 Painkillers ($7), Electrolyte Sachet ($1; salt 2/water 2), Jar of Pickle Juice
 ($3; Disliked; 65% refusal chance; Food +1; salt 3/water 2), Sheet of Cute Stickers ($3;
 single-use Mood −2 interaction), Rigging Tablet ($699), Limited-Edition Dr Pepper
 ($2; stock 1–2; high effective sugar), Convention Guest Set ($528), New Model
-Commission ($1,000), and Clippers ($29). Five Plain Tortillas is a $1 essential
+Commission ($3,500), and Clippers ($29). Five Plain Tortillas is a $1 essential
 Food and starter comfort item with Food +2 and Mood +2.
 The Can Opener is a single-use item priced at $11. Forgotten Rotisserie Chicken
 is a $5 cleanup item with stock, ownership, and lifetime-purchase limit 1.
@@ -773,6 +805,25 @@ applied, so clamping never makes placement changes irreversible. The room keeps
 its fixed anchors and three-row layout. Clicking an empty anchor lists only
 owned items that fit it. On the room page, the active Room navigation control
 lists all owned placeable items whose destination anchor is empty.
+
+### Room sets
+
+The room furniture art follows the career tier instead of player choice. Each
+distinct Subscriber Revenue multiplier starts the next numbered set, so the
+room has 8 sets: set 1 covers ×1 (Debut through Twitch Partner), set 2 ×1.5
+(30K, Tournament Appearance), set 3 ×2 (50K, Convention Guest), set 4 ×3 (100K,
+3D Ready), set 5 ×4 (200K), set 6 ×5 (250K), set 7 ×7 (500K), and set 8 ×10
+(1M). A furniture slot without art for the current set keeps its default
+layer. The room settings picker only chooses the wall, poster, and second
+poster layers.
+
+The Poster and Avatar anchors hold cosmetic items with no room effects. The
+seven $200 Decoration posters (Umi, Selfcest, Booger, Wife, RVB, Glee, Socks)
+place in the Poster anchor and replace the poster layer while placed. Bunny
+Pixie ($3,500 Upgrade) joins the shop at Model Redesign and places in the
+Avatar anchor, switching the room avatar from `original` to `bunny_pixie`
+until it is unplaced. A placed cosmetic item overrides the picker for its
+slot. Model commissions are unaffected.
 
 ## Journey and Endings
 

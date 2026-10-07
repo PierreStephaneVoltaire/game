@@ -1,4 +1,5 @@
 import type { CareerTier, Metrics, StatusName } from './game-types';
+import type { ServiceTier } from './progression-types';
 import type activityRulesDocument from './data/activity-rules.json';
 import type endingRulesDocument from './data/ending-rules.json';
 import type eventTextsDocument from './data/event-texts.json';
@@ -44,7 +45,17 @@ export type ItemActionDefinition = {
     durationHours: number;
   };
   service?: {
-    type: 'model_commission' | 'full_body_commission';
+    type:
+      | 'model_commission'
+      | 'full_body_commission'
+      | 'merch_run'
+      | 'convention_appearance';
+    tier?: ServiceTier;
+    payoutMultiplier?: { min: number; max: number };
+    payoutDays?: number;
+    flopChance?: number;
+    modelType?: string;
+    quality?: string;
   };
   progressionEffect?: { type: 'activate_clippers' };
   clearsStatuses?: StatusName[];
@@ -164,6 +175,7 @@ export type ItemDefinition = {
     portion?: number;
   };
   roomSlot?: string | null;
+  roomVariant?: string;
   roomEffects?: Partial<Metrics>;
   statusHooks?: string[];
   automaticEventHooks?: AutomaticEventHookDefinition[];

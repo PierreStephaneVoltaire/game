@@ -2,7 +2,6 @@
   import { resolve } from '$app/paths';
   import { copy, createTranslator } from '$lib/i18n';
   import { companion } from '$lib/ui/companion';
-  import RoomBackground from '$lib/components/RoomBackground.svelte';
 
   const text = createTranslator({ pet: companion.name });
 </script>
@@ -38,20 +37,19 @@
     <div class="device-wrap">
       <article class="pet-device" aria-label={copy.previewLabel}>
         <div class="screen">
-          <RoomBackground fill />
+          <img
+            class="landing-game-art"
+            src="/assets/landingpage.png"
+            alt=""
+            width="1000"
+            height="694"
+            draggable="false"
+          />
           <div class="screen-stars" aria-hidden="true">
             <span>✦</span>
             <span>·</span>
             <span>✦</span>
           </div>
-          <img
-            class="landing-companion"
-            src={companion.avatar}
-            alt={companion.name}
-            width="110"
-            height="135"
-            decoding="async"
-          />
           <p class="screen-message">{copy.screenMessage}</p>
         </div>
         <div class="care-readout" aria-label={copy.statsLabel}>

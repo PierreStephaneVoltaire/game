@@ -28,7 +28,12 @@ export function nextStatusBoundary(
       (kidney.lastPenaltyAt ?? kidney.since) +
         rules.kidneyStoneRecurrenceHours * HOUR_MS,
     );
-  for (const status of ['kidney_stone', 'sick', 'dizzy_spell'] as const) {
+  for (const status of [
+    'kidney_stone',
+    'sick',
+    'dizzy_spell',
+    'lost_voice',
+  ] as const) {
     const pass = state.statuses[status]?.naturalPassAt;
     if (pass) candidates.push(pass);
   }
