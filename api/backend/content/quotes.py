@@ -40,6 +40,22 @@ def read_quotes(session: Session) -> dict[str, list[str]]:
     }
 
 
+def read_quote_credits(session: Session) -> list[dict[str, str | None]]:
+    credits: list[dict[str, str | None]] = []
+    for row in session.scalars(select(CompanionQuotePool).order_by(CompanionQuotePool.action)):
+        for quote in json.loads(row.quotes_json):
+            if not isinstance(quote, dict) or not quote["quote"].strip():
+                continue
+            source = (quote.get("videoSource") or "").strip()
+            if not source:
+                continue
+            credit = {"quote": quote["quote"], "videoSource": source,
+                      "timestamp": (quote.get("timestamp") or "").strip() or None}
+            if credit not in credits:
+                credits.append(credit)
+    return credits
+
+
 def display_quote(quote: str | dict[str, str | None]) -> str:
     if isinstance(quote, str):
         return quote

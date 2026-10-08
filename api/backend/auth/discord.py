@@ -21,7 +21,7 @@ def _client(
         client_id,
         client_secret,
         redirect_uri=redirect_uri,
-        scope="identify email",
+        scope="identify",
         state=state,
     )
 

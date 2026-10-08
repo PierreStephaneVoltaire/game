@@ -119,3 +119,21 @@ def test_deployment_imports_uploaded_quotes_after_schema_setup_and_before_deploy
     assert workflow.index("python -m tools.setup_api_database") < workflow.index("az storage blob download")
     assert workflow.index("az storage blob download") < workflow.index("python -m tools.global_content_publisher.quotes") < workflow.index("- name: Deploy prebuilt frontend")
     assert "--auth-mode login" in workflow
+
+
+def test_quote_credits_are_public_and_list_each_sourced_verbatim_quote_once(monkeypatch, session):
+    sourced = {"quote": "I, I was... saying something else.", "inGameQuote": "I was saying something else.",
+               "timestamp": " 01:23:45 ", "videoSource": "https://www.youtube.com/watch?v=example"}
+    tweet = {"quote": "Posted words.", "inGameQuote": "", "timestamp": None, "videoSource": "https://x.com/bri/status/1"}
+    unsourced = {"quote": "No source.", "inGameQuote": "", "timestamp": "00:01", "videoSource": ""}
+    blank = {"quote": "", "inGameQuote": "", "timestamp": "", "videoSource": ""}
+    replace_quotes(session, {"click": [sourced, tweet], "idle": [sourced, unsourced, blank, "Legacy quote"]})
+    monkeypatch.setattr(routes, "get_session_factory", lambda: sessionmaker(session.bind))
+    monkeypatch.setattr(routes, "require_user", Mock(side_effect=AssertionError("credits must stay public")))
+    response = json.loads(asyncio.run(routes.get_quote_credits(
+        func.HttpRequest("GET", "https://example.test/api/content/quote-credits", body=b""))))
+    assert response["statusCode"] == 200
+    assert json.loads(response["body"]) == [
+        {"quote": sourced["quote"], "videoSource": sourced["videoSource"], "timestamp": "01:23:45"},
+        {"quote": tweet["quote"], "videoSource": tweet["videoSource"], "timestamp": None},
+    ]

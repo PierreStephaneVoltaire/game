@@ -1,9 +1,21 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import { copy, createTranslator } from '$lib/i18n';
+  import { onMount } from 'svelte';
   import { companion } from '$lib/ui/companion';
+  import {
+    creditHref,
+    creditTimestamp,
+    loadQuoteCredits,
+    type QuoteCredit,
+  } from '$lib/ui/quote-credits';
 
   const text = createTranslator({ pet: companion.name });
+  let quoteCredits: QuoteCredit[] = [];
+
+  onMount(async () => {
+    quoteCredits = await loadQuoteCredits();
+  });
 </script>
 
 <svelte:head>
@@ -57,7 +69,27 @@
 
     <section aria-labelledby="credits-title">
       <h2 id="credits-title">Credits</h2>
-      <p class="section-copy"></p>
+      <div class="section-copy">
+        {#if quoteCredits.length}
+          <h3>{companion.name}</h3>
+          <ul class="quote-credits">
+            {#each quoteCredits as credit (credit.videoSource + credit.timestamp + credit.quote)}
+              <li>
+                <a
+                  href={creditHref(credit)}
+                  target="_blank"
+                  rel="external noopener noreferrer"
+                >
+                  “{credit.quote}”
+                </a>
+                {#if creditTimestamp(credit)}
+                  <span class="quote-timestamp">{creditTimestamp(credit)}</span>
+                {/if}
+              </li>
+            {/each}
+          </ul>
+        {/if}
+      </div>
     </section>
   </article>
 </main>
@@ -83,7 +115,8 @@
     box-shadow: 8px 8px 0 var(--theme-ink);
   }
   h1,
-  h2 {
+  h2,
+  h3 {
     margin: 0;
     color: var(--theme-ink);
   }
@@ -92,6 +125,28 @@
   }
   h2 {
     font-size: clamp(2rem, 6vw, 3.8rem);
+  }
+  h3 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+  }
+  .quote-credits {
+    display: grid;
+    gap: 12px;
+    margin: 12px 0 0;
+    padding-left: 1.2em;
+  }
+  .quote-credits a {
+    color: var(--theme-ink);
+    font-weight: 700;
+    text-decoration-color: var(--theme-pink);
+    text-decoration-thickness: 3px;
+  }
+  .quote-timestamp {
+    margin-left: 8px;
+    padding: 0 6px;
+    border: 2px solid var(--theme-ink);
+    background: var(--theme-blonde);
+    font-variant-numeric: tabular-nums;
   }
   .section-copy {
     min-height: 8rem;

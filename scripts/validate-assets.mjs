@@ -4,6 +4,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { inflateSync } from 'node:zlib';
 
 const assetDirectory = new URL('../static/items/generated/', import.meta.url);
+const spriteDirectory = new URL('../static/items/sprites/', import.meta.url);
 const catalogueUrl = new URL(
   '../src/lib/data/shop-items.json',
   import.meta.url,
@@ -17,6 +18,9 @@ const catalogue = JSON.parse(await readFile(catalogueUrl, 'utf8'));
 const petProfile = JSON.parse(await readFile(petProfileUrl, 'utf8'));
 const files = new Set(
   (await readdir(assetDirectory)).filter((file) => file.endsWith('.png')),
+);
+const spriteFiles = new Set(
+  (await readdir(spriteDirectory)).filter((file) => file.endsWith('.png')),
 );
 const issues = [];
 const hashes = new Map();
@@ -34,7 +38,7 @@ function crc32(bytes) {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
-function validatePng(bytes, filename) {
+function validatePng(bytes, filename, size = 256) {
   const messages = [];
   const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
   if (bytes.length < 33 || !bytes.subarray(0, 8).equals(signature))
@@ -84,15 +88,17 @@ function validatePng(bytes, filename) {
   const filter = header[11];
   const interlace = header[12];
   if (
-    width !== 256 ||
-    height !== 256 ||
+    width !== size ||
+    height !== size ||
     bitDepth !== 8 ||
     ![4, 6].includes(colorType) ||
     compression !== 0 ||
     filter !== 0 ||
     interlace !== 0
   )
-    messages.push('expected a non-interlaced 256x256 8-bit PNG with alpha');
+    messages.push(
+      `expected a non-interlaced ${size}x${size} 8-bit PNG with alpha`,
+    );
 
   try {
     const pixels = inflateSync(Buffer.concat(imageData));
@@ -122,16 +128,20 @@ if (new Set(paths).size !== catalogue.length)
 
 for (const item of catalogue) {
   const filename = `${item.id}.png`;
-  if (!files.has(filename)) {
+  const isSprite = spriteFiles.has(filename);
+  if (!isSprite && !files.has(filename)) {
     issues.push(`${item.id}: missing generated PNG`);
     continue;
   }
-  const bytes = await readFile(new URL(filename, assetDirectory));
-  issues.push(...validatePng(bytes, filename));
+  const bytes = await readFile(
+    new URL(filename, isSprite ? spriteDirectory : assetDirectory),
+  );
+  issues.push(...validatePng(bytes, filename, isSprite ? 32 : 256));
   const hash = createHash('sha256').update(bytes).digest('hex');
-  const expected = `/items/generated/${filename}?v=${hash.slice(0, 12)}`;
+  const expected = `/items/${isSprite ? 'sprites' : 'generated'}/${filename}?v=${hash.slice(0, 12)}`;
   if (item.image !== expected)
     issues.push(`${item.id}: expected image ${expected}`);
+  if (isSprite) continue;
   const duplicate = hashes.get(hash);
   if (duplicate)
     issues.push(`${filename}: duplicates the bytes of ${duplicate}`);
@@ -139,6 +149,7 @@ for (const item of catalogue) {
 }
 
 for (const file of files) {
+  if (spriteFiles.has(file)) continue;
   if (
     !catalogue.some((item) =>
       item.image.startsWith(`/items/generated/${file}?v=`),
@@ -146,6 +157,14 @@ for (const file of files) {
   )
     issues.push(`${file}: not referenced by the canonical catalogue`);
 }
+
+for (const file of spriteFiles)
+  if (
+    !catalogue.some((item) =>
+      item.image.startsWith(`/items/sprites/${file}?v=`),
+    )
+  )
+    issues.push(`sprites/${file}: not referenced by the canonical catalogue`);
 
 const companionFiles = new Set(
   (await readdir(companionDirectory)).filter((file) => file.endsWith('.png')),

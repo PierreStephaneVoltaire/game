@@ -101,7 +101,10 @@ function validateItem(
     issues.push('price must be a positive integer');
   const [imagePath, imageQuery] = item.image.split('?');
   if (
-    imagePath !== `/items/generated/${item.id}.png` ||
+    ![
+      `/items/generated/${item.id}.png`,
+      `/items/sprites/${item.id}.png`,
+    ].includes(imagePath) ||
     !/^v=[a-f0-9]{12}$/.test(imageQuery ?? '')
   )
     issues.push(

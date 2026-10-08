@@ -73,7 +73,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/dr-pepper.png?v=a19404c6d042",
+    "image": "/items/sprites/dr-pepper.png?v=81d5ad14a505",
     "nutrition": {
       "serving": "12 fl oz",
       "calories": 150,
@@ -164,7 +164,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/uncrustables.png?v=2beaebb44add",
+    "image": "/items/sprites/uncrustables.png?v=f0326f57630a",
     "nutrition": {
       "serving": "1 sandwich (58 g)",
       "calories": 210,
@@ -238,7 +238,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/salt-tablet.png?v=f21c387210f8",
+    "image": "/items/sprites/salt-tablet.png?v=acdedcb79ffa",
     "nutrition": {
       "serving": "1 tablet (0.5 g)",
       "calories": null,
@@ -327,7 +327,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/waffle.png?v=fb6adb80551e",
+    "image": "/items/sprites/waffle.png?v=b75b82273b2f",
     "nutrition": {
       "serving": "1 medium waffle (75 g)",
       "calories": 231.8,
@@ -410,7 +410,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pancake.png?v=b04983544558",
+    "image": "/items/sprites/pancake.png?v=967ed984e9a5",
     "nutrition": {
       "serving": "1 medium pancake (50 g)",
       "calories": 141,
@@ -496,7 +496,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/orange-juice.png?v=ea678cda0081",
+    "image": "/items/sprites/orange-juice.png?v=78b6b68ca979",
     "nutrition": {
       "serving": "Quantity not specified (248 g)",
       "calories": 116.6,
@@ -585,7 +585,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/tea.png?v=a4adc69657e6",
+    "image": "/items/sprites/tea.png?v=ffb9cf19513d",
     "nutrition": {
       "serving": "1 mug brewed herbal tea (240 mL, from 1 tea bag)",
       "calories": 0,
@@ -674,7 +674,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chocolate-milk.png?v=cd38b1661063",
+    "image": "/items/sprites/chocolate-milk.png?v=27b1f8f9f2e5",
     "nutrition": {
       "serving": "1 cup (248 g)",
       "calories": 161.2,
@@ -760,7 +760,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pasta.png?v=5b98e4046d23",
+    "image": "/items/sprites/pasta.png?v=2d736420beba",
     "nutrition": {
       "serving": "1 cup Alfredo pasta (250 g)",
       "calories": 385,
@@ -855,7 +855,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/buttered-noodles.png?v=5b98e4046d23",
+    "image": "/items/sprites/buttered-noodles.png?v=f1a8a126a391",
     "nutrition": {
       "serving": "1 cup cooked noodles with 1 tablespoon butter (174 g)",
       "calories": 323.22,
@@ -947,7 +947,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/butter.png?v=21cdaea15d0f",
+    "image": "/items/sprites/butter.png?v=3335ef56100b",
     "nutrition": {
       "serving": "1 tablespoon (14 g)",
       "calories": 104,
@@ -1035,7 +1035,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bbq-chips.png?v=acfd80a87197",
+    "image": "/items/sprites/bbq-chips.png?v=728aef5da684",
     "nutrition": {
       "serving": "1 small single serving bag (28 g)",
       "calories": 136.4,
@@ -1209,7 +1209,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/lettuce.png?v=40684b347ec4",
+    "image": "/items/sprites/lettuce.png?v=71e618998a66",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 14.5,
@@ -1299,7 +1299,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/tomato.png?v=c21cb797e236",
+    "image": "/items/sprites/tomato.png?v=1bc55e5628ae",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 18.7,
@@ -1386,7 +1386,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/toast.png?v=dd9a666a62f4",
+    "image": "/items/sprites/toast.png?v=40eb35392a16",
     "nutrition": {
       "serving": "1 medium or regular slice (25 g)",
       "calories": 73.3,
@@ -1470,7 +1470,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/burnt-toast.png?v=dd9a666a62f4",
+    "image": "/items/sprites/burnt-toast.png?v=1d884ff23d02",
     "nutrition": {
       "serving": "1 medium or regular slice (25 g)",
       "calories": 73.3,
@@ -1555,7 +1555,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/broccoli.png?v=def908f2253a",
+    "image": "/items/sprites/broccoli.png?v=b780d5065e77",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 26.3,
@@ -1643,7 +1643,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/corn.png?v=6d66646f3e4b",
+    "image": "/items/sprites/corn.png?v=feb8dd39be34",
     "nutrition": {
       "serving": "1/2 cup cooked corn kernels (82.5 g)",
       "calories": 70.95,
@@ -1738,7 +1738,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/banana.png?v=904b3b3f3767",
+    "image": "/items/sprites/banana.png?v=b3795190c105",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 135.8,
@@ -1829,7 +1829,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/potato-chips.png?v=1576b57cfab3",
+    "image": "/items/sprites/potato-chips.png?v=728aef5da684",
     "nutrition": {
       "serving": "1 small single serving bag (28 g)",
       "calories": 149,
@@ -1917,7 +1917,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/doritos.png?v=8f751e3e1f74",
+    "image": "/items/sprites/doritos.png?v=728aef5da684",
     "nutrition": {
       "serving": "1 package (28.3 g)",
       "calories": 150,
@@ -2011,7 +2011,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheez-its.png?v=a1318447357e",
+    "image": "/items/sprites/cheez-its.png?v=99a4f132b135",
     "nutrition": {
       "serving": "27 crackers (30 g)",
       "calories": 150,
@@ -2101,7 +2101,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cucumber.png?v=7398d60318d7",
+    "image": "/items/sprites/cucumber.png?v=f169503956b8",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 13.5,
@@ -2188,7 +2188,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/garlic-bread.png?v=8f6949137a40",
+    "image": "/items/sprites/garlic-bread.png?v=fffbfb9bd03f",
     "nutrition": {
       "serving": "1 piece/slice Texas Toast (41 g)",
       "calories": 143.1,
@@ -2275,7 +2275,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/rice.png?v=3280f2bf7cd9",
+    "image": "/items/sprites/rice.png?v=46940c24c927",
     "nutrition": {
       "serving": "1 cup, cooked (158 g)",
       "calories": 203.8,
@@ -2361,7 +2361,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/hash-brown.png?v=7c8660a604d1",
+    "image": "/items/sprites/hash-brown.png?v=00e32b3f063f",
     "nutrition": {
       "serving": "1 patty (55 g)",
       "calories": 119.4,
@@ -2447,7 +2447,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/tater-tots.png?v=e143eeb18208",
+    "image": "/items/sprites/tater-tots.png?v=5336ea53b954",
     "nutrition": {
       "serving": "Quantity not specified (65 g)",
       "calories": 154.1,
@@ -2530,7 +2530,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mashed-potatoes.png?v=e38b871c14d6",
+    "image": "/items/sprites/mashed-potatoes.png?v=ac83cc5eaa44",
     "nutrition": {
       "serving": "Quantity not specified (125 g)",
       "calories": 142.5,
@@ -2615,7 +2615,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/milkshake.png?v=09b275c6bcd7",
+    "image": "/items/sprites/milkshake.png?v=421995de281a",
     "nutrition": {
       "serving": "1 cup (224 g)",
       "calories": 253.1,
@@ -2702,7 +2702,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mini-tacos.png?v=c82bad4247a5",
+    "image": "/items/sprites/mini-tacos.png?v=c2ed3db516d8",
     "nutrition": {
       "serving": "1 small/regular (105 g)",
       "calories": 258.3,
@@ -2789,7 +2789,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/burrito.png?v=d01b13d534a9",
+    "image": "/items/sprites/burrito.png?v=5f4ac053500f",
     "nutrition": {
       "serving": "1 small/regular (220 g)",
       "calories": 481.8,
@@ -2876,7 +2876,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/fries.png?v=54125ffc20a7",
+    "image": "/items/sprites/fries.png?v=005a46f081ce",
     "nutrition": {
       "serving": "Quantity not specified (110 g)",
       "calories": 247.5,
@@ -2957,7 +2957,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sausage.png?v=484ebe29fa7b",
+    "image": "/items/sprites/sausage.png?v=d728b232a973",
     "nutrition": {
       "serving": "1 piece (35 g)",
       "calories": 113.7,
@@ -3042,7 +3042,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/water.png?v=969472863cf7",
+    "image": "/items/sprites/water.png?v=f1b66216ce65",
     "nutrition": {
       "serving": "1 cup (240 g)",
       "calories": 0,
@@ -3124,7 +3124,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/watermelon.png?v=b04588f91de7",
+    "image": "/items/sprites/watermelon.png?v=37cea211dff2",
     "nutrition": {
       "serving": "1 cup (155 g)",
       "calories": 46.5,
@@ -3206,7 +3206,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/grape.png?v=8cc5482c941f",
+    "image": "/items/sprites/grape.png?v=27da10f78bc8",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 120.3,
@@ -3289,7 +3289,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/yogurt.png?v=bffbf6d0a5e8",
+    "image": "/items/sprites/yogurt.png?v=04adfcbfd2cc",
     "nutrition": {
       "serving": "1 RACC (170 g)",
       "calories": 132.6,
@@ -3377,7 +3377,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/granola.png?v=67c4433c50df",
+    "image": "/items/sprites/granola.png?v=5cd51b576621",
     "nutrition": {
       "serving": "1 crunchy granola bar (21 g)",
       "calories": 98.91,
@@ -3465,7 +3465,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheese.png?v=2f326e6ce233",
+    "image": "/items/sprites/cheese.png?v=7035a129d8e5",
     "nutrition": {
       "serving": "1 RACC (30 g)",
       "calories": 122.4,
@@ -3547,7 +3547,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chicken.png?v=b9bacd4de42c",
+    "image": "/items/sprites/chicken.png?v=b3973d784127",
     "nutrition": {
       "serving": "1 RACC (114 g)",
       "calories": 189.2,
@@ -3730,7 +3730,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cake.png?v=a7053ebb2975",
+    "image": "/items/sprites/cake.png?v=4a8bd840e007",
     "nutrition": {
       "serving": "1 piece/slice, any size (175 g)",
       "calories": 616,
@@ -3810,7 +3810,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/popcorn.png?v=86cabc497acb",
+    "image": "/items/sprites/popcorn.png?v=004ac162bfad",
     "nutrition": {
       "serving": "1 small single serving bag (28 g)",
       "calories": 145,
@@ -3891,7 +3891,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/kettle-corn.png?v=86cabc497acb",
+    "image": "/items/sprites/kettle-corn.png?v=004ac162bfad",
     "nutrition": {
       "serving": "1 small single serving bag (28 g)",
       "calories": 148.68,
@@ -3972,7 +3972,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/carrot.png?v=225f36870aee",
+    "image": "/items/sprites/carrot.png?v=1dba1199070c",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 40.8,
@@ -4063,7 +4063,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/raisins.png?v=2af1cbb3e0ff",
+    "image": "/items/sprites/raisins.png?v=27da10f78bc8",
     "nutrition": {
       "serving": "1 small box (1.5 oz) (43 g)",
       "calories": 128.6,
@@ -4146,7 +4146,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/lollipop.png?v=8d8eac18e6a7",
+    "image": "/items/sprites/lollipop.png?v=7db55bb3db8d",
     "nutrition": {
       "serving": "1 piece",
       "calories": 10,
@@ -4231,7 +4231,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chocolate.png?v=c08c27360c18",
+    "image": "/items/sprites/chocolate.png?v=560db24c325c",
     "nutrition": {
       "serving": "1 pouch/regular size (45 g)",
       "calories": 240.8,
@@ -4313,7 +4313,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/caramel.png?v=4094560dcbc8",
+    "image": "/items/sprites/caramel.png?v=35d901bc38d7",
     "nutrition": {
       "serving": "1 pouch/regular size (60 g)",
       "calories": 230.4,
@@ -4475,7 +4475,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/tuna.png?v=9d00f13da5f3",
+    "image": "/items/sprites/tuna.png?v=df0f634e0990",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 76.5,
@@ -4643,7 +4643,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pretzel.png?v=89e6b1f9537b",
+    "image": "/items/sprites/pretzel.png?v=0a6fdbb65529",
     "nutrition": {
       "serving": "1 small single serving bag (28 g)",
       "calories": 107.5,
@@ -4725,7 +4725,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cupcake.png?v=eb861440a5b5",
+    "image": "/items/sprites/cupcake.png?v=874e120cfa15",
     "nutrition": {
       "serving": "1 cupcake, any size (90 g)",
       "calories": 316.8,
@@ -4805,7 +4805,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/custard-doughnut.png?v=eb861440a5b5",
+    "image": "/items/sprites/custard-doughnut.png?v=ef5a4e909034",
     "nutrition": {
       "serving": "1 doughnut (90 g)",
       "calories": 331.2,
@@ -4889,7 +4889,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/french-toast.png?v=df4aaf6d32f7",
+    "image": "/items/sprites/french-toast.png?v=1f0ab40dcdcb",
     "nutrition": {
       "serving": "1 slice, any size (65 g)",
       "calories": 177.5,
@@ -4974,7 +4974,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/egg.png?v=77d89c6fc34e",
+    "image": "/items/sprites/egg.png?v=dd30bb7fe13a",
     "nutrition": {
       "serving": "1 RACC (50 g)",
       "calories": 74,
@@ -5062,7 +5062,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/omelette.png?v=77d89c6fc34e",
+    "image": "/items/sprites/omelette.png?v=f88b37fa976e",
     "nutrition": {
       "serving": "2-egg omelette (110 g)",
       "calories": 200.2,
@@ -5143,7 +5143,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bacon.png?v=fe40ec2ee1ea",
+    "image": "/items/sprites/bacon.png?v=1cc7cc3a80e1",
     "nutrition": {
       "serving": "2 medium cooked bacon slices (16 g)",
       "calories": 77.4,
@@ -5231,7 +5231,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/ham.png?v=58c2022f73f6",
+    "image": "/items/sprites/ham.png?v=600a8f0a5e1b",
     "nutrition": {
       "serving": "1 RACC (85 g)",
       "calories": 90.1,
@@ -5322,7 +5322,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/apple-juice.png?v=83fa6b311bab",
+    "image": "/items/sprites/apple-juice.png?v=b71316890d83",
     "nutrition": {
       "serving": "Quantity not specified (248 g)",
       "calories": 119,
@@ -5409,7 +5409,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/lemonade.png?v=ae4d99307b4d",
+    "image": "/items/sprites/lemonade.png?v=b57a2fcfea25",
     "nutrition": {
       "serving": "Quantity not specified (248 g)",
       "calories": 114.1,
@@ -5500,7 +5500,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/coffee.png?v=5b15e4eff898",
+    "image": "/items/sprites/coffee.png?v=8d4486b7e256",
     "nutrition": {
       "serving": "1 cup (8 fl oz) (240 g)",
       "calories": 2.4,
@@ -5587,7 +5587,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/milk.png?v=9148da011a65",
+    "image": "/items/sprites/milk.png?v=057dd06797cf",
     "nutrition": {
       "serving": "1 cup (249 g)",
       "calories": 149.4,
@@ -5676,7 +5676,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pear.png?v=6f521de61d09",
+    "image": "/items/sprites/pear.png?v=8f21a7d00f93",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 79.8,
@@ -5765,7 +5765,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/orange.png?v=b8adf52bc96a",
+    "image": "/items/sprites/orange.png?v=1a146a4b23a4",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 65.8,
@@ -5943,7 +5943,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/blueberry.png?v=4565ff51bf5e",
+    "image": "/items/sprites/blueberry.png?v=de9eabecf39b",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 89.5,
@@ -6032,7 +6032,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/raspberry.png?v=4f05cc22c4da",
+    "image": "/items/sprites/raspberry.png?v=f864ec96bade",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 80.2,
@@ -6121,7 +6121,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/kiwi.png?v=12a08b848ab7",
+    "image": "/items/sprites/kiwi.png?v=262dacc2263a",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 91.1,
@@ -6212,7 +6212,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/hot-dog.png?v=017a171b4c7f",
+    "image": "/items/sprites/hot-dog.png?v=36761a94f450",
     "nutrition": {
       "serving": "1 sandwich (102 g)",
       "calories": 301.9,
@@ -6299,7 +6299,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chicken-finger.png?v=39aa6c4ac020",
+    "image": "/items/sprites/chicken-finger.png?v=99b88ab76153",
     "nutrition": {
       "serving": "1 tender, strip, or finger (50 g)",
       "calories": 135.5,
@@ -6386,7 +6386,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/onion.png?v=0984d7a81ef4",
+    "image": "/items/sprites/onion.png?v=e3c59b3a5bf8",
     "nutrition": {
       "serving": "1 small order onion rings (120 g)",
       "calories": 422.4,
@@ -6481,7 +6481,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pineapple.png?v=b4db028191dc",
+    "image": "/items/sprites/pineapple.png?v=71f8094c8f2f",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 84.1,
@@ -6657,7 +6657,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/acai-bowl.png?v=1711788b0a1d",
+    "image": "/items/sprites/acai-bowl.png?v=81369e893bfd",
     "nutrition": {
       "serving": "Unavailable: no exact sourced serving",
       "calories": null,
@@ -6842,7 +6842,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cherry.png?v=384a4fe6dbe6",
+    "image": "/items/sprites/cherry.png?v=ca0abfced608",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 98.7,
@@ -6931,7 +6931,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/peas.png?v=af1f09c01b28",
+    "image": "/items/sprites/peas.png?v=0be708a3df06",
     "nutrition": {
       "serving": "1 RACC (130 g)",
       "calories": 104.1,
@@ -7111,7 +7111,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sunflower-seeds.png?v=307f935e6020",
+    "image": "/items/sprites/sunflower-seeds.png?v=6267daaa70b8",
     "nutrition": {
       "serving": "1 RACC (30 g)",
       "calories": 182.7,
@@ -7202,7 +7202,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/coconut.png?v=01e594eb2418",
+    "image": "/items/sprites/coconut.png?v=e2a162f25c32",
     "nutrition": {
       "serving": "Quantity not specified (28 g)",
       "calories": 99.1,
@@ -7290,7 +7290,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/turkey.png?v=cd561bcb7676",
+    "image": "/items/sprites/turkey.png?v=10f36a7991db",
     "nutrition": {
       "serving": "Quantity not specified (85 g)",
       "calories": 118.1,
@@ -7376,7 +7376,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cranberry-sauce.png?v=01afd29567ba",
+    "image": "/items/sprites/cranberry-sauce.png?v=0a80b30c5924",
     "nutrition": {
       "serving": "Quantity not specified (70 g)",
       "calories": 111.3,
@@ -7461,7 +7461,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sweet-potato.png?v=4b9f7d40b0e9",
+    "image": "/items/sprites/sweet-potato.png?v=40de66e32175",
     "nutrition": {
       "serving": "1 medium (150 g)",
       "calories": 172.5,
@@ -7550,7 +7550,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/goldfish.png?v=2a88854720da",
+    "image": "/items/sprites/goldfish.png?v=99a4f132b135",
     "nutrition": {
       "serving": "55 pieces (30 g)",
       "calories": 140,
@@ -7641,7 +7641,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/meatballs.png?v=396d9c2e396f",
+    "image": "/items/sprites/meatballs.png?v=9a122a432e30",
     "nutrition": {
       "serving": "Quantity not specified (129 g)",
       "calories": 239.9,
@@ -7727,7 +7727,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/nachos.png?v=1034d7500901",
+    "image": "/items/sprites/nachos.png?v=8fd0601de152",
     "nutrition": {
       "serving": "1/2 order nachos with dips (125 g)",
       "calories": 331.3,
@@ -7815,7 +7815,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bbq-ribs.png?v=eb6b77b1857d",
+    "image": "/items/sprites/bbq-ribs.png?v=d8eca956413f",
     "nutrition": {
       "serving": "Quantity not specified (105 g)",
       "calories": 266.7,
@@ -7903,7 +7903,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/meat-loaf.png?v=bb695f19f41b",
+    "image": "/items/sprites/meat-loaf.png?v=5e59e81b8d48",
     "nutrition": {
       "serving": "Quantity not specified (84 g)",
       "calories": 169.7,
@@ -7988,7 +7988,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/roast-beef.png?v=dd2db95c8211",
+    "image": "/items/sprites/roast-beef.png?v=89a0f17db1ae",
     "nutrition": {
       "serving": "1 regular/thin slice (60 g)",
       "calories": 123.6,
@@ -8076,7 +8076,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/chicken-pot-pie.png?v=969b3824f32a",
+    "image": "/items/sprites/chicken-pot-pie.png?v=e44ab28bc72d",
     "nutrition": {
       "serving": "1 individual pie (250 g)",
       "calories": 637.5,
@@ -8163,7 +8163,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bagel.png?v=b8cb002ce8e8",
+    "image": "/items/sprites/bagel.png?v=78afa975b7fb",
     "nutrition": {
       "serving": "1 regular (105 g)",
       "calories": 277.2,
@@ -8252,7 +8252,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/apple.png?v=f5e23b154033",
+    "image": "/items/sprites/apple.png?v=6b12d816da39",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 90.6,
@@ -8340,7 +8340,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/lemon.png?v=0a07dfdd1b1c",
+    "image": "/items/sprites/lemon.png?v=8024b3e6385f",
     "nutrition": {
       "serving": "1 fruit (65 g)",
       "calories": 18.9,
@@ -8428,7 +8428,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/strawberry.png?v=07484cca3c56",
+    "image": "/items/sprites/strawberry.png?v=78d2b819a826",
     "nutrition": {
       "serving": "1 RACC (140 g)",
       "calories": 51,
@@ -8514,7 +8514,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bread.png?v=85ed25fc9010",
+    "image": "/items/sprites/bread.png?v=94413e8b26bb",
     "nutrition": {
       "serving": "1 slice tiger bread (35 g)",
       "calories": 87.15,
@@ -8611,7 +8611,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheeseburger.png?v=0d8e096749a1",
+    "image": "/items/sprites/cheeseburger.png?v=b61edd0041d4",
     "nutrition": {
       "serving": "1 cheeseburger (165 g)",
       "calories": 488.4,
@@ -8699,7 +8699,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/steak.png?v=06065d03b60d",
+    "image": "/items/sprites/steak.png?v=4e4c27f58d28",
     "nutrition": {
       "serving": "1 regular (160 g)",
       "calories": 368,
@@ -8783,7 +8783,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/ice-cream.png?v=4516032514d6",
+    "image": "/items/sprites/ice-cream.png?v=1d89198417d1",
     "nutrition": {
       "serving": "2/3 cup green mint-chocolate-chip ice cream (103 g)",
       "calories": 250,
@@ -8877,7 +8877,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/brownie.png?v=e11d6cf4b422",
+    "image": "/items/sprites/brownie.png?v=bf55340506d0",
     "nutrition": {
       "serving": "1 whole Cosmic Brownie, 4 oz foodservice/vending variant (113 g)",
       "calories": 510,
@@ -8967,7 +8967,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/salad.png?v=ca359f92bec6",
+    "image": "/items/sprites/salad.png?v=889c1b73833e",
     "nutrition": {
       "serving": "Guideline amount in salad (70 g)",
       "calories": 14,
@@ -9055,7 +9055,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sushi.png?v=034a1527e4bb",
+    "image": "/items/sprites/sushi.png?v=8d2f959af091",
     "nutrition": {
       "serving": "Quantity not specified (180 g)",
       "calories": 169.2,
@@ -9143,7 +9143,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/gravy.png?v=82e4aae76d6b",
+    "image": "/items/sprites/gravy.png?v=93e10813dec9",
     "nutrition": {
       "serving": "Quantity not specified (60 g)",
       "calories": 31.8,
@@ -9229,7 +9229,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheeseless-toppingless-pizza.png?v=1bf2e3948562",
+    "image": "/items/sprites/cheeseless-toppingless-pizza.png?v=4d034b720a30",
     "nutrition": {
       "serving": "1 small plate pizza cubes (120 g)",
       "calories": 319.2,
@@ -9319,7 +9319,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pizza-slice.png?v=1bf2e3948562",
+    "image": "/items/sprites/pizza-slice.png?v=edc468458ae3",
     "nutrition": {
       "serving": "1 piece, large thin-crust pizza (86 g)",
       "calories": 228.76,
@@ -9401,7 +9401,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cheese-pizza.png?v=1bf2e3948562",
+    "image": "/items/sprites/cheese-pizza.png?v=a181cab242c4",
     "nutrition": {
       "serving": "1 personal size pizza, 5-7\" diameter (175 g)",
       "calories": 465.5,
@@ -9483,7 +9483,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/deep-dish-pizza.png?v=1bf2e3948562",
+    "image": "/items/sprites/deep-dish-pizza.png?v=c7eb03bb7806",
     "nutrition": {
       "serving": "1 piece, large thick-crust pizza (132 g)",
       "calories": 357.72,
@@ -9565,7 +9565,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pepperoni-pizza.png?v=1bf2e3948562",
+    "image": "/items/sprites/pepperoni-pizza.png?v=e446f0acdac0",
     "nutrition": {
       "serving": "1 piece, NFS (124 g)",
       "calories": 349.68,
@@ -9651,7 +9651,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/apple-pie.png?v=66f5c23801c5",
+    "image": "/items/sprites/apple-pie.png?v=19f0f69d006f",
     "nutrition": {
       "serving": "1 regular slice (150 g)",
       "calories": 444,
@@ -9739,7 +9739,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/fruit-smoothie.png?v=8efb9831e98b",
+    "image": "/items/sprites/fruit-smoothie.png?v=697595de4045",
     "nutrition": {
       "serving": "1 cup (216 g)",
       "calories": 142.6,
@@ -9811,7 +9811,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/the-concoction.png?v=f16413e9644c",
+    "image": "/items/sprites/the-concoction.png?v=431e64cfb6b7",
     "nutrition": {
       "serving": "1 mystery portion",
       "calories": null,
@@ -12707,7 +12707,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/book.png?v=aa5d690d2451",
+    "image": "/items/sprites/book.png?v=80f448121fe9",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -12840,7 +12840,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/really-long-book.png?v=4db3cf28c56b",
+    "image": "/items/sprites/really-long-book.png?v=d72f0b16d264",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -12923,7 +12923,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/manga.png?v=f25caa2f0346",
+    "image": "/items/sprites/manga.png?v=ac50d97f813b",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13197,7 +13197,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/karaoke-machine.png?v=d0d2ce1707a7",
+    "image": "/items/sprites/karaoke-machine.png?v=f962801d6520",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13460,7 +13460,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/book-club-pick.png?v=401d6430f381",
+    "image": "/items/sprites/book-club-pick.png?v=80f448121fe9",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13550,7 +13550,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/blanket-fort-supplies.png?v=548e22e737d8",
+    "image": "/items/sprites/blanket-fort-supplies.png?v=edaf2ef94249",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13644,7 +13644,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cooking-supplies.png?v=68ea554e837f",
+    "image": "/items/sprites/cooking-supplies.png?v=d3472e38e1c2",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13810,7 +13810,7 @@
       "mood": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/fairy-lights.png?v=75bf1dd995ee",
+    "image": "/items/sprites/fairy-lights.png?v=8fe1c76a2134",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13892,7 +13892,7 @@
       "creativity": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/plants.png?v=8badb165f46e",
+    "image": "/items/sprites/plants.png?v=1d7a4c95724f",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -13973,7 +13973,7 @@
       "mood": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/fake-plants.png?v=ad04bc7ee65c",
+    "image": "/items/sprites/fake-plants.png?v=7c735b98b1af",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14145,7 +14145,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sketchbook.png?v=2d7274c30fcf",
+    "image": "/items/sprites/sketchbook.png?v=1c94ed36f977",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14405,7 +14405,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/craft-supplies.png?v=8f53f0c36035",
+    "image": "/items/sprites/craft-supplies.png?v=2e42544997ae",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14490,7 +14490,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sewing-kit.png?v=d524a57467ea",
+    "image": "/items/sprites/sewing-kit.png?v=1aef05620d3e",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -14920,7 +14920,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/notebook.png?v=6f17fe9f055b",
+    "image": "/items/sprites/notebook.png?v=1c94ed36f977",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -15172,7 +15172,7 @@
       "mood": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/sword.png?v=91bfb6491ae4",
+    "image": "/items/sprites/sword.png?v=f3856a1560f8",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -15253,7 +15253,7 @@
       "creativity": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/battle-axe.png?v=a9e57db91c83",
+    "image": "/items/sprites/battle-axe.png?v=c5666e84f587",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -15335,7 +15335,7 @@
       "creativity": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/second-sword.png?v=133650b3f29f",
+    "image": "/items/sprites/second-sword.png?v=38d00fd2089e",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -15402,7 +15402,7 @@
       "creativity": 1
     },
     "clearsStatuses": [],
-    "image": "/items/generated/dagger.png?v=b644672c2c95",
+    "image": "/items/sprites/dagger.png?v=fedaf51a7ad6",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -15487,7 +15487,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/knight-helmet.png?v=375f13504b2c",
+    "image": "/items/sprites/knight-helmet.png?v=7fea3d5343d4",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -16205,7 +16205,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mystery-box.png?v=747d2a31336a",
+    "image": "/items/sprites/mystery-box.png?v=ad9a148bca1b",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -16394,7 +16394,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/jar-of-pickle-juice.png?v=d202110c576b",
+    "image": "/items/sprites/jar-of-pickle-juice.png?v=d0e28decf3b1",
     "nutrition": {
       "serving": "1 fl oz (30 mL)",
       "calories": 2,
@@ -16494,7 +16494,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/limited-edition-dr-pepper.png?v=94805a95dce6",
+    "image": "/items/sprites/limited-edition-dr-pepper.png?v=da563a2d2ce6",
     "nutrition": {
       "serving": "12 fl oz",
       "calories": 150,
@@ -16570,7 +16570,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/painkillers.png?v=23230038f587",
+    "image": "/items/sprites/painkillers.png?v=3105082af7b9",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -16648,7 +16648,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/electrolyte-sachet.png?v=5df088a41b01",
+    "image": "/items/sprites/electrolyte-sachet.png?v=01eb209a6639",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -17691,7 +17691,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/can-opener.png?v=722114a02b61",
+    "image": "/items/sprites/can-opener.png?v=685a54902fcb",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -17870,7 +17870,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/oatmeal.png?v=56594691aa23",
+    "image": "/items/sprites/oatmeal.png?v=b1ccec66284c",
     "nutrition": {
       "serving": "1 cup cooked oatmeal with 2 teaspoons brown sugar (249.2 g)",
       "calories": 188.56,
@@ -17962,7 +17962,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/homegrown-cookies.png?v=3beb47369f29",
+    "image": "/items/sprites/homegrown-cookies.png?v=e44b2834418a",
     "nutrition": {
       "serving": "2 soft chocolate-chip cookies (60 g)",
       "calories": 303,
@@ -18480,7 +18480,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/orange-cream-candle.png?v=14c5a8a71e1e",
+    "image": "/items/sprites/orange-cream-candle.png?v=2a9f3f2853e8",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -18559,7 +18559,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/spinning-fidget-ring.png?v=06fbb233a242",
+    "image": "/items/sprites/spinning-fidget-ring.png?v=fbc7e9fa1098",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -18651,7 +18651,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/corn-on-cob.png?v=dbc90117b3ed",
+    "image": "/items/sprites/corn-on-cob.png?v=feb8dd39be34",
     "nutrition": {
       "serving": "1 regular ear cooked corn (105 g edible kernels)",
       "calories": 90.3,
@@ -18749,7 +18749,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/black-tea.png?v=b733dd2afcef",
+    "image": "/items/sprites/black-tea.png?v=ffb9cf19513d",
     "nutrition": {
       "serving": "1 cup (240 g)",
       "calories": 2.4,
@@ -18832,7 +18832,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/honey.png?v=b04983544558",
+    "image": "/items/sprites/honey.png?v=d97f8e511d75",
     "nutrition": {
       "serving": "1 tablespoon (20 g)",
       "calories": 60.8,
@@ -19009,7 +19009,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/sweet-decaf-latte.png?v=1c1c030530b9",
+    "image": "/items/sprites/sweet-decaf-latte.png?v=5e5a56854def",
     "nutrition": {
       "serving": "1 large iced caramel latte with whipped cream (592 g, including 150 g ice)",
       "calories": 400.3,
@@ -19101,7 +19101,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/dutch-raisin-bread.png?v=4933a8ecf88c",
+    "image": "/items/sprites/dutch-raisin-bread.png?v=1f9efa51c71b",
     "nutrition": {
       "serving": "1 slice Dutch raisin bread (45 g)",
       "calories": 121.5,
@@ -19196,7 +19196,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/bacon-cheese-breakfast-sandwich.png?v=95d5468176b4",
+    "image": "/items/sprites/bacon-cheese-breakfast-sandwich.png?v=6caecc8539bb",
     "nutrition": {
       "serving": "1 bacon-and-cheese breakfast bun, no egg (89 g)",
       "calories": 308.41,
@@ -19290,7 +19290,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/mac-and-cheese.png?v=bf439c4ee2af",
+    "image": "/items/sprites/mac-and-cheese.png?v=2ce2e3d11133",
     "nutrition": {
       "serving": "1 cup macaroni and cheese (230 g)",
       "calories": 512.9,
@@ -19382,7 +19382,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/hazelnut-uncrustables.png?v=a81ee0b5a6bc",
+    "image": "/items/sprites/hazelnut-uncrustables.png?v=f0326f57630a",
     "nutrition": {
       "serving": "1 sandwich (52 g)",
       "calories": 210,
@@ -19468,7 +19468,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/peppermint.png?v=048d140e40a4",
+    "image": "/items/sprites/peppermint.png?v=453906c03612",
     "nutrition": {
       "serving": "1 peppermint hard candy (5 g)",
       "calories": 19.7,
@@ -19560,7 +19560,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/spearmint.png?v=d9c2c0d329ad",
+    "image": "/items/sprites/spearmint.png?v=453906c03612",
     "nutrition": {
       "serving": "1 spearmint hard candy (5 g)",
       "calories": 19.7,
@@ -19652,7 +19652,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/brie-cheese.png?v=14f0df0b0ecb",
+    "image": "/items/sprites/brie-cheese.png?v=bb9cc47e9b8e",
     "nutrition": {
       "serving": "1 small wedge Brie (30 g)",
       "calories": 100.2,
@@ -19743,7 +19743,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/camembert.png?v=51a307fc4b3d",
+    "image": "/items/sprites/camembert.png?v=0c21eafcedd0",
     "nutrition": {
       "serving": "1 wedge Camembert with crackers (53 g)",
       "calories": 176.7,
@@ -19839,7 +19839,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/tomato-soup.png?v=da673cf1acdb",
+    "image": "/items/sprites/tomato-soup.png?v=b84e22a0348d",
     "nutrition": {
       "serving": "1 cup prepared tomato soup (245 g)",
       "calories": 46.55,
@@ -19935,7 +19935,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/split-pea-soup.png?v=266e4c2bec83",
+    "image": "/items/sprites/split-pea-soup.png?v=e79e4d23a606",
     "nutrition": {
       "serving": "1 cup split-pea soup (255 g)",
       "calories": 155.55,
@@ -20028,7 +20028,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cooked-eggplant.png?v=ab2815263842",
+    "image": "/items/sprites/cooked-eggplant.png?v=fcb8dcf76af7",
     "nutrition": {
       "serving": "1 cup cooked eggplant (95 g)",
       "calories": 25.65,
@@ -20121,7 +20121,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cooked-mushroom.png?v=0a22408e703c",
+    "image": "/items/sprites/cooked-mushroom.png?v=9e4e26ee3bc2",
     "nutrition": {
       "serving": "1/2 cup cooked mushrooms (77.5 g)",
       "calories": 30.23,
@@ -20214,7 +20214,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cooked-cabbage.png?v=9e7cf2ffe008",
+    "image": "/items/sprites/cooked-cabbage.png?v=bb47f6f3c83f",
     "nutrition": {
       "serving": "1/2 cup cooked cabbage (75 g)",
       "calories": 24,
@@ -20307,7 +20307,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cooked-zucchini.png?v=fa6fc542f2d2",
+    "image": "/items/sprites/cooked-zucchini.png?v=2edbe3bedc8a",
     "nutrition": {
       "serving": "1/2 cup cooked zucchini (90 g)",
       "calories": 18.9,
@@ -20402,7 +20402,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/spicy-food.png?v=a5538d0d9efb",
+    "image": "/items/sprites/spicy-food.png?v=724431b0114f",
     "nutrition": {
       "serving": "1 bowl spicy ramen (360 g)",
       "calories": 232.2,
@@ -20496,7 +20496,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/dutch-savory-pancake.png?v=29aaf0d86ab3",
+    "image": "/items/sprites/dutch-savory-pancake.png?v=4ac43c0918aa",
     "nutrition": {
       "serving": "1 large savory pancake with bacon and cheese (196 g)",
       "calories": 536.14,
@@ -20588,7 +20588,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cucumber-sandwich.png?v=868e611e5a7f",
+    "image": "/items/sprites/cucumber-sandwich.png?v=c6f996d19f12",
     "nutrition": {
       "serving": "1 cucumber sandwich cut into finger pieces (110 g)",
       "calories": 233.6,
@@ -20683,7 +20683,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/vanilla-milkshake-and-fries.png?v=152c10d7fa81",
+    "image": "/items/sprites/vanilla-milkshake-and-fries.png?v=421995de281a",
     "nutrition": {
       "serving": "1 vanilla milkshake (10 fl oz, 280 g) with small fries (110 g)",
       "calories": 659.6,
@@ -21019,7 +21019,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/the-cruel-prince.png?v=bf6aacf46dc6",
+    "image": "/items/sprites/the-cruel-prince.png?v=78024f8a2bf1",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21105,7 +21105,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/the-wicked-king.png?v=9ebcdf0a3070",
+    "image": "/items/sprites/the-wicked-king.png?v=3aab8cbfc451",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21191,7 +21191,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/a-court-of-thorns-and-roses.png?v=b793c1ab5c8c",
+    "image": "/items/sprites/a-court-of-thorns-and-roses.png?v=d9fdcd9a6268",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21277,7 +21277,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/fourth-wing.png?v=5716ea36a7bf",
+    "image": "/items/sprites/fourth-wing.png?v=0f26673d770c",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21363,7 +21363,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/iron-flame.png?v=a6c7b5466e4e",
+    "image": "/items/sprites/iron-flame.png?v=41d92d757682",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21446,7 +21446,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/picnic-kit.png?v=ef1fd6960cd2",
+    "image": "/items/sprites/picnic-kit.png?v=697076f8f42d",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21612,7 +21612,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/fishing-bucket-hat.png?v=dd13f1fd8dc7",
+    "image": "/items/sprites/fishing-bucket-hat.png?v=1b4d6531749c",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -21944,7 +21944,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/pink-bottle-perfume.png?v=407c55e82861",
+    "image": "/items/sprites/pink-bottle-perfume.png?v=ead673b1d1a0",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -22027,7 +22027,7 @@
     "roomSlot": null,
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/cooking-gloves.png?v=79441ddb2828",
+    "image": "/items/sprites/cooking-gloves.png?v=f1da1327b425",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,

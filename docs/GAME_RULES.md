@@ -1001,5 +1001,8 @@ Speech stays silent during Rest, Hospital care, and ended runs.
 
 Each authored quote can preserve `quote` verbatim, an optional `inGameQuote` edit,
 and optional `timestamp` and `videoSource` strings. The bubble displays the edit
-when filled, otherwise the verbatim quote. Source metadata remains in storage;
-blank template entries are not displayed. Quotes do not change simulation outcomes.
+when filled, otherwise the verbatim quote. Every verbatim quote with a
+`videoSource` is credited on the About page under the companion's name, linked
+to its source at the `timestamp` when one is set; tweets show only the link and
+quote. Blank template entries are not displayed. Quotes do not change simulation
+outcomes.

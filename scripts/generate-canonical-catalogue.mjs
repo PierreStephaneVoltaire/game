@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const ROOT = new URL('../', import.meta.url);
 const SOURCE_FILES = [
@@ -39,9 +39,12 @@ function assertUniqueIds(records, label) {
 }
 
 function versionedItemImage(id) {
-  const bytes = readFileSync(new URL(`static/items/generated/${id}.png`, ROOT));
+  const folder = existsSync(new URL(`static/items/sprites/${id}.png`, ROOT))
+    ? 'sprites'
+    : 'generated';
+  const bytes = readFileSync(new URL(`static/items/${folder}/${id}.png`, ROOT));
   const version = createHash('sha256').update(bytes).digest('hex').slice(0, 12);
-  return `/items/generated/${id}.png?v=${version}`;
+  return `/items/${folder}/${id}.png?v=${version}`;
 }
 
 function notApplicableNutrition(item) {
