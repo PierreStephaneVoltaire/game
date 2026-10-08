@@ -14,9 +14,29 @@
   import RunSettings from '$lib/components/RunSettings.svelte';
   import { gameCopy } from '$lib/ui/game-copy';
   import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
+  import { REALTIME_CATCH_UP_MS } from '$lib/game-constants';
 
   let authorized = false;
   let openDialog: 'shop' | 'inventory' | null = null;
+  let activityTimer: ReturnType<typeof setTimeout> | undefined;
+
+  function reconcileWhenVisible() {
+    if (authorized && document.visibilityState === 'visible')
+      void reconcileGameClock();
+  }
+
+  $: activityEndsAt =
+    $gameViewModel?.mode === 'realtime'
+      ? $gameViewModel.activity?.endsAt
+      : null;
+  $: {
+    clearTimeout(activityTimer);
+    if (activityEndsAt)
+      activityTimer = setTimeout(
+        reconcileWhenVisible,
+        Math.max(0, activityEndsAt - Date.now()),
+      );
+  }
 
   async function openShop(mode: 'shop' | 'inventory', event: MouseEvent) {
     const opener = event.currentTarget as HTMLButtonElement;
@@ -46,14 +66,13 @@
         if (mounted) authorized = true;
       })
       .catch(() => goto(resolve('/login')));
-    const reconcile = () => {
-      if (authorized && document.visibilityState === 'visible')
-        void reconcileGameClock();
-    };
-    document.addEventListener('visibilitychange', reconcile);
+    document.addEventListener('visibilitychange', reconcileWhenVisible);
+    const catchUp = setInterval(reconcileWhenVisible, REALTIME_CATCH_UP_MS);
     return () => {
       mounted = false;
-      document.removeEventListener('visibilitychange', reconcile);
+      clearInterval(catchUp);
+      clearTimeout(activityTimer);
+      document.removeEventListener('visibilitychange', reconcileWhenVisible);
     };
   });
 </script>

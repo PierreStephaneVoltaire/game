@@ -41,8 +41,10 @@ IDs, and submits against the new version.
 ### Realtime mode
 
 Game time follows real elapsed time. The game catches up when the game is
-entered, when the document becomes visible again, and immediately before each
-command. It does not run a minute-by-minute simulation poll.
+entered, when the document becomes visible again, immediately before each
+command, every minute while the game is visible, and at the moment a running
+activity ends. Catch-ups and commands run one at a time in the order they were
+requested.
 
 Catch-up resolves every crossed boundary in historical order. Event dayparts,
 cooldowns, eligibility, local dates, project deadlines, and stream endings use

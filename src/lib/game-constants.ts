@@ -38,6 +38,7 @@ export const LINE_OF_CREDIT_OFFER_ID = 'line-of-credit';
 export const HOUR_MS = 3_600_000;
 export const MINUTE_MS = 60_000;
 export const DAY_MS = 24 * HOUR_MS;
+export const REALTIME_CATCH_UP_MS = MINUTE_MS;
 export const LOCAL_MIDNIGHT_SEARCH_HOURS = 36;
 export const STATUS_FIXED_POINT_PASS_LIMIT = 14;
 export const MAX_QUOTE_ACTION_LENGTH = 255;

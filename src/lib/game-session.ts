@@ -84,6 +84,13 @@ function syncGame(gameHash: string): void {
 }
 
 const GAME_KEY_PATTERN = /^\d{8}$/;
+let gameQueue: Promise<unknown> = Promise.resolve();
+
+function queued<T>(task: () => Promise<T>): Promise<T> {
+  const run = gameQueue.then(task, task);
+  gameQueue = run.catch(() => undefined);
+  return run;
+}
 
 export function useGameDefinitionRepository(
   repository: GameDefinitionRepository,
@@ -169,20 +176,26 @@ async function sendGameCommand(command: GameCommand): Promise<Outcome> {
   );
 }
 
-export async function sendGameIntent(intent: GameIntent): Promise<Outcome> {
-  let state = activeController.current;
-  if (!state) throw new Error('Start a game session before sending actions.');
-  if (state.mode === 'realtime') {
-    await reconcileGameClock();
-    state = activeController.current;
-    if (!state) throw new Error('The active game session was lost.');
-  }
-  return sendGameCommand(
-    intentToCommand(intent, state, commandSequence.next()),
-  );
+export function sendGameIntent(intent: GameIntent): Promise<Outcome> {
+  return queued(async () => {
+    let state = activeController.current;
+    if (!state) throw new Error('Start a game session before sending actions.');
+    if (state.mode === 'realtime') {
+      await catchUpGameClock();
+      state = activeController.current;
+      if (!state) throw new Error('The active game session was lost.');
+    }
+    return sendGameCommand(
+      intentToCommand(intent, state, commandSequence.next()),
+    );
+  });
 }
 
-export async function reconcileGameClock(): Promise<void> {
+export function reconcileGameClock(): Promise<void> {
+  return queued(catchUpGameClock);
+}
+
+async function catchUpGameClock(): Promise<void> {
   const current = activeController.current;
   if (!current || current.mode !== 'realtime') return;
   const transition = await activeController.reconcile(Date.now());
