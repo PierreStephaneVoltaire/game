@@ -820,7 +820,10 @@ layers.
 
 The Poster and Avatar anchors hold cosmetic items with no room effects. The
 seven $200 Decoration posters (Umi, Selfcest, Booger, Wife, RVB, Glee, Socks)
-place in the Poster anchor and replace the poster layer while placed. Bunny
+place in the Poster anchor. Each cosmetic item's room variant names its own
+room layer, which stays hidden until the item is placed and is shown wherever
+that layer sits in the room: Umi's on the left wall, Selfcest's above the desk.
+Their shop images are copies of that room art. Bunny
 Pixie ($3,500 Upgrade) joins the shop at Model Redesign and places in the
 Avatar anchor, switching the room avatar from `original` to `bunny_pixie`
 until it is unplaced. A placed cosmetic item overrides the picker for its

@@ -30,6 +30,14 @@ describe('room sets', () => {
     ).toBe('umi');
   });
 
+  test('poster layers stay hidden until their item is placed', () => {
+    expect(roomVariantFor('poster', look)).toBeUndefined();
+    expect(roomVariantFor('second-poster', look)).toBeUndefined();
+    const selfcest = { ...look, placed: { poster: 'selfcest' } };
+    expect(roomVariantFor('second-poster', selfcest)).toBe('selfcest');
+    expect(roomVariantFor('poster', selfcest)).toBeUndefined();
+  });
+
   test('the picker only offers poster slots', () => {
     for (const [slot] of swappableSlots)
       expect(['poster', 'second-poster']).toContain(slot);

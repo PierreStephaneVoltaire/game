@@ -49,7 +49,10 @@ export function roomVariantFor(
     picked: Record<string, string>;
   },
 ): string {
-  if (look.placed[slot]) return look.placed[slot];
+  const placedVariant = slotVariants[slot]?.find((variant) =>
+    Object.values(look.placed).includes(variant),
+  );
+  if (placedVariant) return placedVariant;
   if (PICKER_SLOTS.includes(slot)) return look.picked[slot] ?? defaults[slot];
   const setVariant = String(look.set);
   return slotVariants[slot]?.includes(setVariant) ? setVariant : defaults[slot];

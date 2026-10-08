@@ -22093,7 +22093,7 @@
     "roomVariant": "umi",
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/poster-umi.png?v=d464ff6d4223",
+    "image": "/items/sprites/poster-umi.png?v=e1176398f305",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,
@@ -22159,7 +22159,7 @@
     "roomVariant": "selfcest",
     "roomEffects": {},
     "clearsStatuses": [],
-    "image": "/items/generated/poster-selfcest.png?v=d464ff6d4223",
+    "image": "/items/sprites/poster-selfcest.png?v=a4156d36f0fa",
     "nutrition": {
       "serving": "Not applicable",
       "calories": null,

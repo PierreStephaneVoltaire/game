@@ -272,7 +272,7 @@
 <svg x="199" y="54" width="32" height="32" viewBox="128 544 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
 <svg x="199" y="86" width="32" height="32" viewBox="128 576 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
 </g>
-<g data-slot="poster" data-variant="poster" data-default="">
+<g data-slot="poster" data-variant="umi">
 <svg x="2" y="31" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/poster-umi.jpeg" width="32" height="38"/></svg>
 </g>
 <g data-slot="cat-bed" data-variant="cat bed" data-default="">
@@ -295,7 +295,7 @@
 <svg x="115" y="72" width="32" height="32" viewBox="288 640 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
 <svg x="115" y="104" width="32" height="32" viewBox="288 672 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
 </g>
-<g data-slot="second-poster" data-variant="second poster" data-default="">
+<g data-slot="second-poster" data-variant="selfcest">
 <svg x="109" y="26" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/poster-wide.png" width="64" height="32"/></svg>
 <svg x="141" y="26" width="32" height="32" viewBox="32 0 32 32"><image href="/assets/room/tiles/poster-wide.png" width="64" height="32"/></svg>
 </g>

@@ -38,7 +38,7 @@ function crc32(bytes) {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
-function validatePng(bytes, filename, size = 256) {
+function validatePng(bytes, filename, maxSize = 256) {
   const messages = [];
   const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
   if (bytes.length < 33 || !bytes.subarray(0, 8).equals(signature))
@@ -88,8 +88,9 @@ function validatePng(bytes, filename, size = 256) {
   const filter = header[11];
   const interlace = header[12];
   if (
-    width !== size ||
-    height !== size ||
+    width !== height ||
+    width > maxSize ||
+    (maxSize === 256 && width !== 256) ||
     bitDepth !== 8 ||
     ![4, 6].includes(colorType) ||
     compression !== 0 ||
@@ -97,7 +98,9 @@ function validatePng(bytes, filename, size = 256) {
     interlace !== 0
   )
     messages.push(
-      `expected a non-interlaced ${size}x${size} 8-bit PNG with alpha`,
+      maxSize === 256
+        ? 'expected a non-interlaced 256x256 8-bit PNG with alpha'
+        : `expected a non-interlaced square 8-bit PNG with alpha, at most ${maxSize}px`,
     );
 
   try {
@@ -136,7 +139,7 @@ for (const item of catalogue) {
   const bytes = await readFile(
     new URL(filename, isSprite ? spriteDirectory : assetDirectory),
   );
-  issues.push(...validatePng(bytes, filename, isSprite ? 32 : 256));
+  issues.push(...validatePng(bytes, filename, isSprite ? 64 : 256));
   const hash = createHash('sha256').update(bytes).digest('hex');
   const expected = `/items/${isSprite ? 'sprites' : 'generated'}/${filename}?v=${hash.slice(0, 12)}`;
   if (item.image !== expected)
