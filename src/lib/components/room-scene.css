@@ -39,18 +39,7 @@
   height: 52px;
   image-rendering: pixelated;
 }
-.anchor-unplace {
-  z-index: 3;
-  padding: 3px 6px;
-  border: 1px solid var(--theme-pink);
-  color: var(--theme-pink-text);
-  background: var(--theme-white);
-  font: inherit;
-  font-size: 0.58rem;
-  font-weight: 800;
-  cursor: pointer;
-  box-shadow: 5px 5px 0 var(--theme-gold);
-}
+.anchor-unplace,
 .anchor-place {
   position: absolute;
   inset: 0;
@@ -66,9 +55,6 @@
 .anchor:has(button:hover:not(:disabled)) {
   outline: 3px solid var(--theme-white);
   outline-offset: 2px;
-}
-.anchor-unplace:hover:not(:disabled) {
-  text-decoration: underline;
 }
 .anchor-bed {
   left: 12.9%;
@@ -133,8 +119,4 @@
 .anchor-poster img,
 .anchor-avatar img {
   display: none;
-}
-.anchor-unplace:hover:not(:disabled) {
-  background: var(--theme-pink);
-  color: var(--theme-on-pink);
 }

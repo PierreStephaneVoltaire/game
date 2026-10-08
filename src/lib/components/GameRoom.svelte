@@ -190,8 +190,8 @@
                       anchor.item?.placedSlot &&
                       unplace(anchor.item.placedSlot)}
                     disabled={careBlocked}
-                    aria-label={`Unplace ${anchor.item.name}`}>Unplace</button
-                  >
+                    aria-label={`Unplace ${anchor.item.name}`}
+                  ></button>
                 {:else if SELECTABLE_ANCHORS.includes(anchor.key)}
                   <button
                     type="button"

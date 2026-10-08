@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { resolve } from '$app/paths';
   import { logoutAccount, currentAccount } from './account-client';
 
   let busy = false;
@@ -9,7 +10,7 @@
     try {
       await logoutAccount();
     } finally {
-      busy = false;
+      window.location.assign(resolve('/login'));
     }
   }
 </script>

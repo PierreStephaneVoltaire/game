@@ -138,8 +138,7 @@
   .quote-credits a {
     color: var(--theme-ink);
     font-weight: 700;
-    text-decoration-color: var(--theme-pink);
-    text-decoration-thickness: 3px;
+    text-decoration: none;
   }
   .quote-timestamp {
     margin-left: 8px;
