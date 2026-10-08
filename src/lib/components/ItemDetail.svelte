@@ -51,7 +51,6 @@
     <p class="eyebrow">ITEM DETAIL</p>
     <h2 id="item-detail-title">{item.name}</h2>
     <p>{item.description}</p>
-    <p class="hint">{item.qualitativeHint}</p>
     <p>Owned: ×{item.owned} · {item.category}</p>
     {#if item.tags.length}<ul class="tags" aria-label="Item tags">
         {#each item.tags as tag (tag)}<li>{tagLabel(tag)}</li>{/each}
