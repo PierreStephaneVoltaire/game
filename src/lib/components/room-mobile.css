@@ -17,6 +17,10 @@
   }
   .room-card {
     order: 1;
+    min-width: 0;
+  }
+  .room-scene {
+    min-width: 0;
   }
   .stats-action,
   .advance-time-action,
