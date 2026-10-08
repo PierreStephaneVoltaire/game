@@ -5,8 +5,13 @@
   import RoomLookSettings from './RoomLookSettings.svelte';
   export let mode: GameMode = 'realtime';
   export let seed = '';
-  export let ended = false;
   let busy = false;
+  let settings: HTMLDetailsElement;
+
+  function closeOnOutsideClick(event: MouseEvent): void {
+    if (settings?.open && !settings.contains(event.target as Node))
+      settings.open = false;
+  }
 
   const modeLabel = (value: GameMode) =>
     value === 'streaming' ? 'Streaming mode' : 'Realtime mode';
@@ -22,17 +27,14 @@
   }
 </script>
 
-<details class="settings">
+<svelte:window on:click={closeOnOutsideClick} />
+
+<details class="settings" bind:this={settings}>
   <summary>Settings</summary>
   <div class="settings-menu">
     <RoomLookSettings />
     <p>Current mode: <strong>{modeLabel(mode)}</strong></p>
     <p>Game key: <code>{seed}</code></p>
-    <p>
-      {#if ended}This game has ended.
-      {:else}This game is active.
-      {/if} The time mode is selected before entering the room.
-    </p>
     <button type="button" disabled={busy} on:click={signOut}>Sign out</button>
   </div>
 </details>

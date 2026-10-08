@@ -802,9 +802,10 @@ and appears as a searchable, filterable grid with 24 items per page.
 
 Placed room effects are removed by the exact amount that was originally
 applied, so clamping never makes placement changes irreversible. The room keeps
-its fixed anchors and three-row layout. Clicking an empty anchor lists only
-owned items that fit it. On the room page, the active Room navigation control
-lists all owned placeable items whose destination anchor is empty.
+its fixed anchors and three-row layout. Only the Wall and Poster anchors can be
+clicked; clicking one while it is empty lists only owned items that fit it. On
+the room page, the active Room navigation control lists all owned placeable
+items whose destination anchor is empty.
 
 ### Room sets
 
@@ -814,8 +815,8 @@ room has 8 sets: set 1 covers ×1 (Debut through Twitch Partner), set 2 ×1.5
 (30K, Tournament Appearance), set 3 ×2 (50K, Convention Guest), set 4 ×3 (100K,
 3D Ready), set 5 ×4 (200K), set 6 ×5 (250K), set 7 ×7 (500K), and set 8 ×10
 (1M). A furniture slot without art for the current set keeps its default
-layer. The room settings picker only chooses the wall, poster, and second
-poster layers.
+layer. The room settings picker only chooses the poster and second poster
+layers.
 
 The Poster and Avatar anchors hold cosmetic items with no room effects. The
 seven $200 Decoration posters (Umi, Selfcest, Booger, Wife, RVB, Glee, Socks)

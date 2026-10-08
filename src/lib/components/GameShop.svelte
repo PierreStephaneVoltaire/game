@@ -174,6 +174,15 @@
           tabindex="-1"
           aria-label="Shop items"
         >
+          <label class="category-select">
+            <span>Category</span>
+            <select bind:value={category}>
+              <option value="all">All</option>
+              {#each model.categories as option (option)}
+                <option value={option}>{option}</option>
+              {/each}
+            </select>
+          </label>
           <nav class="categories" aria-label="Shop categories">
             <button
               class:active={category === 'all'}

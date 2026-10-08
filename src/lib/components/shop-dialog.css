@@ -66,3 +66,32 @@ body:has(.shop-dialog[open]) {
     opacity: 0.55;
   }
 }
+
+.shop-dialog .category-select {
+  display: none;
+}
+@media (max-width: 780px) {
+  .shop-dialog .categories {
+    display: none;
+  }
+  .shop-dialog .category-select {
+    display: grid;
+    gap: 6px;
+    margin: 20px 0;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .shop-dialog .category-select select {
+    min-height: 44px;
+    padding: 8px 10px;
+    border: 2px solid var(--theme-pink);
+    border-radius: 0;
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
+    font: inherit;
+    font-size: 0.85rem;
+    text-transform: capitalize;
+  }
+}

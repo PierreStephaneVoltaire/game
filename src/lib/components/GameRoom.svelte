@@ -8,9 +8,10 @@
   import InventorySelectionDialog from './InventorySelectionDialog.svelte';
   import RecentEventsPanel from './RecentEventsPanel.svelte';
   import RoomScene from './RoomScene.svelte';
-  import { roomSetForTier } from '$lib/ui/room-look';
+  import { roomSetForTier, SELECTABLE_ANCHORS } from '$lib/ui/room-look';
   import './room.css';
   import './room-scene.css';
+  import './room-mobile.css';
 
   type PickerKind = 'feed' | 'socialize' | 'play' | 'room' | 'room-inventory';
 
@@ -191,7 +192,7 @@
                     disabled={careBlocked}
                     aria-label={`Unplace ${anchor.item.name}`}>Unplace</button
                   >
-                {:else}
+                {:else if SELECTABLE_ANCHORS.includes(anchor.key)}
                   <button
                     type="button"
                     class="anchor-place"

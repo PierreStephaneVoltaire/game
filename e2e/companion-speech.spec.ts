@@ -191,7 +191,7 @@ test('room navigation clears speech and timers; modal controls and narrow layout
   await page.keyboard.press('Escape');
   await expect(page.getByRole('dialog')).toHaveCount(0);
   await page
-    .getByRole('button', { name: 'Choose an item for Chair', exact: true })
+    .getByRole('button', { name: 'Choose an item for Poster', exact: true })
     .click();
   await expect(page.getByRole('dialog')).toBeVisible();
   await page.keyboard.press('Escape');

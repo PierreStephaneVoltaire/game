@@ -28,6 +28,8 @@
   let pending: ReturnType<typeof setTimeout> | undefined;
   let deferred: SpeechTrigger | null = null;
   let deferredDialog: HTMLDialogElement | null = null;
+  let avatar: HTMLButtonElement;
+  let bubble: HTMLDivElement;
   $: allowed = session !== null && speechAllowed(session.state);
 
   function clearSpeech() {
@@ -53,6 +55,12 @@
     if (!quote) return;
     previousQuote = text = quote;
     dismissal = setTimeout(clearSpeech, rules.displaySeconds * 1000);
+  }
+
+  function dismissOnOutsideClick(event: MouseEvent) {
+    const target = event.target as Node;
+    if (text && !avatar.contains(target) && !bubble?.contains(target))
+      clearSpeech();
   }
 
   function clicked() {
@@ -144,7 +152,10 @@
   });
 </script>
 
+<svelte:window on:click={dismissOnOutsideClick} />
+
 <button
+  bind:this={avatar}
   type="button"
   class="companion-avatar"
   disabled={!allowed}
@@ -158,7 +169,7 @@
   aria-atomic="true"
 >
   {#if text}
-    <div class="speech-bubble" role="presentation">
+    <div bind:this={bubble} class="speech-bubble" role="presentation">
       {text}
     </div>
   {/if}

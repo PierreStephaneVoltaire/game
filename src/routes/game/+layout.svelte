@@ -71,11 +71,7 @@
       <div class="header-tools">
         <AccountMenu />
         {#if $gameViewModel}
-          <RunSettings
-            mode={$gameViewModel.mode}
-            seed={$gameViewModel.seed}
-            ended={Boolean($gameViewModel.ending)}
-          />
+          <RunSettings mode={$gameViewModel.mode} seed={$gameViewModel.seed} />
         {/if}
       </div>
     </header>

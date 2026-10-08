@@ -30,9 +30,9 @@ describe('room sets', () => {
     ).toBe('umi');
   });
 
-  test('the picker only offers wall and poster slots', () => {
+  test('the picker only offers poster slots', () => {
     for (const [slot] of swappableSlots)
-      expect(['wall', 'poster', 'second-poster']).toContain(slot);
+      expect(['poster', 'second-poster']).toContain(slot);
   });
 });
 

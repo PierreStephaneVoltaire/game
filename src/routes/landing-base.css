@@ -68,6 +68,7 @@ a {
 
 .build-label {
   padding: 7px 9px;
+  white-space: nowrap;
   color: var(--theme-ink);
   background: var(--theme-teal);
   box-shadow: 3px 3px 0 var(--theme-pink);

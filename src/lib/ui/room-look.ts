@@ -3,7 +3,8 @@ import roomSvg from '$lib/assets/room/room.svg?raw';
 import { simulationRules as rules } from '$lib/runtime-definition';
 import type { CareerTier } from '$lib/game-types';
 
-const PICKER_SLOTS = ['wall', 'poster', 'second-poster'];
+const PICKER_SLOTS = ['poster', 'second-poster'];
+export const SELECTABLE_ANCHORS = ['wall', 'poster'];
 
 const slotVariants: Record<string, string[]> = {};
 const defaults: Record<string, string> = {};

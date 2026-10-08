@@ -89,7 +89,7 @@ test('an empty room spot has only the Room title and one close control', async (
   page,
 }) => {
   await page
-    .getByRole('button', { name: 'Choose an item for Desk', exact: true })
+    .getByRole('button', { name: 'Choose an item for Poster', exact: true })
     .click();
   const dialog = page.getByRole('dialog', { name: 'Room', exact: true });
   await expect(dialog).toBeVisible();
