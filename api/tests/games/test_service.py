@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 
 import pytest
+from pydantic import ValidationError
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
@@ -10,7 +11,8 @@ from backend.auth.models import User
 from backend.content.models import ContentPointer, ContentVersion
 from backend.database import Base
 from backend.errors import ApiError
-from backend.games.schemas import CreateGame, DeathWrite, GameWrite
+from backend.games.models import Game
+from backend.games.schemas import CreateGame, DeathWrite, GameWrite, NicknameWrite
 from backend.games.service import GameService
 
 
@@ -138,3 +140,42 @@ def test_other_account_cannot_read_or_replay_committed_batch() -> None:
             operation()
         assert raised.value.status_code == 404
         session.rollback()
+
+
+def test_game_keys_list_living_and_dead_games_with_nicknames() -> None:
+    session, games, user_id = setup()
+    version = "a" * 64
+    games.create(session, user_id, version, CreateGame(gameHash="00421873", stateSchemaVersion=1, state={"ending": None}))
+    games.create(session, user_id, version, CreateGame(gameHash="00421874", stateSchemaVersion=1, state={"ending": None}))
+    session.get(Game, "00421874").life_status = "dead"
+    session.commit()
+    assert games.set_nickname(session, user_id, "00421873", "Morning run") == {"gameHash": "00421873", "nickname": "Morning run"}
+    keys = {item["gameHash"]: item for item in games.game_keys(session, user_id)}
+    assert keys["00421873"]["nickname"] == "Morning run"
+    assert keys["00421873"]["lifeStatus"] == "alive"
+    assert keys["00421874"]["nickname"] is None
+    assert keys["00421874"]["lifeStatus"] == "dead"
+
+
+def test_blank_nickname_clears_and_other_accounts_cannot_rename() -> None:
+    session, games, user_id = setup()
+    version = "a" * 64
+    games.create(session, user_id, version, CreateGame(gameHash="00421873", stateSchemaVersion=1, state={"ending": None}))
+    games.set_nickname(session, user_id, "00421873", "First")
+    games.set_nickname(session, user_id, "00421873", "Second")
+    assert games.game_keys(session, user_id)[0]["nickname"] == "Second"
+    games.set_nickname(session, user_id, "00421873", "")
+    assert games.game_keys(session, user_id)[0]["nickname"] is None
+    other = User(username="player_2", password_hash="hash")
+    session.add(other)
+    session.commit()
+    with pytest.raises(ApiError) as error:
+        games.set_nickname(session, other.id, "00421873", "Mine")
+    assert error.value.code == "GAME_NOT_FOUND"
+    assert games.game_keys(session, other.id) == []
+
+
+def test_nickname_is_trimmed_and_length_limited() -> None:
+    assert NicknameWrite(nickname="  Cozy  ").nickname == "Cozy"
+    with pytest.raises(ValidationError):
+        NicknameWrite(nickname="x" * 41)

@@ -36,6 +36,15 @@ class DeathWrite(GameWrite):
     cause_event_id: str = Field(alias="causeEventId", min_length=1, max_length=128)
 
 
+class NicknameWrite(WireModel):
+    nickname: str = Field(max_length=40)
+
+    @field_validator("nickname")
+    @classmethod
+    def strip_nickname(cls, value: str) -> str:
+        return value.strip()
+
+
 class GameResponse(WireModel):
     game_hash: str = Field(alias="gameHash")
     life_status: str = Field(alias="lifeStatus")

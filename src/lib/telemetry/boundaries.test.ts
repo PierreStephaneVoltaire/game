@@ -16,6 +16,7 @@ const saving = vi.hoisted(() => ({
 }));
 vi.mock('../persistence/outbox', () => ({
   nextOutbox: saving.next,
+  markSent: async (record: unknown) => record,
   acknowledge: saving.acknowledge,
   noteRetry: saving.retry,
 }));

@@ -24,6 +24,16 @@ function eventRecords(
   }));
 }
 
+// Mirrors GameService.write: each committed batch bumps state_version by one.
+export function chainedCursor(
+  sent: OutboxRecord,
+): Pick<OutboxRecord, 'baseStateVersion' | 'previousEventId'> {
+  return {
+    baseStateVersion: sent.baseStateVersion + 1,
+    previousEventId: sent.events.at(-1)?.id ?? sent.previousEventId,
+  };
+}
+
 async function database(): Promise<IDBDatabase | null> {
   return openVirtualPetDb();
 }
@@ -149,30 +159,33 @@ export async function saveTransition(
   const last = pending
     .sort((left, right) => left.createdAt - right.createdAt)
     .at(-1);
-  if (last) {
+  const unsentEvents = newEvents.filter(
+    (event) => event.sequence > acknowledgedSequence,
+  );
+  if (last && last.batchId !== existing.lastSentBatchId) {
     outbox.put({
       ...last,
       commands: command ? [...last.commands, command] : last.commands,
-      events: [
-        ...last.events,
-        ...newEvents.filter((event) => event.sequence > acknowledgedSequence),
-      ],
+      events: [...last.events, ...unsentEvents],
       targetState: after,
       contentVersion: after.definitionVersion,
     });
   } else {
+    const cursor = last
+      ? chainedCursor(last)
+      : {
+          baseStateVersion: existing.stateVersion,
+          previousEventId: existing.lastAcknowledgedEventId,
+        };
     outbox.put({
       batchId: batchId(),
       gameHash,
-      baseStateVersion: existing.stateVersion,
-      previousEventId: existing.lastAcknowledgedEventId,
+      ...cursor,
       contentVersion: after.definitionVersion,
       commands: command ? [command] : [],
-      events: newEvents.filter(
-        (event) => event.sequence > acknowledgedSequence,
-      ),
+      events: unsentEvents,
       targetState: after,
-      createdAt: Date.now(),
+      createdAt: Math.max(Date.now(), (last?.createdAt ?? 0) + 1),
       retryCount: 0,
     } satisfies OutboxRecord);
   }

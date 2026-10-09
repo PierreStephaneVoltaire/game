@@ -17,7 +17,7 @@ from backend.errors import ApiError
 from backend.http import body, endpoint, json_response, limit, same_origin
 from backend.pagination import decode_cursor, encode_cursor
 
-from .schemas import CreateGame, DeathWrite, GameWrite
+from .schemas import CreateGame, DeathWrite, GameWrite, NicknameWrite
 from .service import GameService
 
 bp = func.Blueprint()
@@ -189,6 +189,24 @@ def _list_games(
 def list_games(request: func.HttpRequest) -> dict[str, Any]:
     with get_session_factory()() as session:
         return _list_games(False, request, session, limit(request))
+
+
+@bp.route(route="me/game-keys", methods=["GET"])
+@endpoint
+def list_game_keys(request: func.HttpRequest) -> dict[str, Any]:
+    with get_session_factory()() as session:
+        user = require_user(request, session)
+        return {"items": service.game_keys(session, user.id)}
+
+
+@bp.route(route="games/current/nickname", methods=["PUT"])
+@endpoint
+def write_nickname(request: func.HttpRequest) -> dict[str, Any]:
+    same_origin(request, get_settings())
+    data = body(request, NicknameWrite)
+    with get_session_factory()() as session:
+        user = require_user(request, session)
+        return service.set_nickname(session, user.id, _game_key(request), data.nickname)
 
 
 @bp.route(route="me/graves", methods=["GET"])

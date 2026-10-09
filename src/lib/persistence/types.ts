@@ -8,6 +8,7 @@ export type GameRecord = {
   stateVersion: number;
   lastAcknowledgedSequence: number;
   lastAcknowledgedEventId: string | null;
+  lastSentBatchId?: string | null;
   createdAt: number;
   updatedAt: number;
 };

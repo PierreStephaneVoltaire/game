@@ -13,7 +13,7 @@ from backend.config import get_settings
 from backend.content.service import current_content
 from backend.errors import ApiError
 
-from .models import CommittedBatch, Game, GameEvent
+from .models import CommittedBatch, Game, GameEvent, GameNickname
 from .schemas import CreateGame, DeathWrite, GameWrite
 from .validation import digest, validate_death_state, validate_write
 
@@ -218,6 +218,31 @@ class GameService:
         event_ids = ending.get("eventIds", []) if isinstance(ending, dict) else []
         causes = list(session.scalars(select(GameEvent).where(GameEvent.game_hash == game_hash, GameEvent.event_id.in_(event_ids)).order_by(GameEvent.sequence))) if event_ids else []
         return {"game": _game_dict(game), "ending": ending, "causalEvents": [_event_dict(event) for event in causes]}
+
+    def game_keys(self, session: Session, user_id: str) -> list[dict[str, Any]]:
+        rows = session.execute(
+            select(Game.game_hash, Game.life_status, Game.updated_at, GameNickname.nickname)
+            .outerjoin(GameNickname, GameNickname.game_hash == Game.game_hash)
+            .where(Game.owner_user_id == user_id)
+            .order_by(Game.updated_at.desc(), Game.game_hash.desc())
+        ).all()
+        return [
+            {"gameHash": game_hash, "lifeStatus": life_status, "updatedAt": updated_at, "nickname": nickname}
+            for game_hash, life_status, updated_at, nickname in rows
+        ]
+
+    def set_nickname(self, session: Session, user_id: str, game_hash: str, nickname: str) -> dict[str, Any]:
+        self._owned_game(session, user_id, game_hash)
+        existing = session.get(GameNickname, game_hash)
+        if not nickname:
+            if existing:
+                session.delete(existing)
+        elif existing:
+            existing.nickname, existing.updated_at = nickname, _now()
+        else:
+            session.add(GameNickname(game_hash=game_hash, nickname=nickname, updated_at=_now()))
+        session.commit()
+        return {"gameHash": game_hash, "nickname": nickname or None}
 
     @staticmethod
     def _owned_game(session: Session, user_id: str, game_hash: str) -> Game:

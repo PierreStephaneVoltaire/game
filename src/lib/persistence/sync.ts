@@ -1,4 +1,4 @@
-import { acknowledge, nextOutbox, noteRetry } from './outbox';
+import { acknowledge, markSent, nextOutbox, noteRetry } from './outbox';
 import type { EventRecord, OutboxRecord, SyncAcknowledgement } from './types';
 
 type ErrorBody = { error?: { code?: string; latestVersion?: string } };
@@ -17,6 +17,7 @@ export type SyncHooks = {
 };
 
 const active = new Set<string>();
+const REPLAYABLE_CONFLICTS = new Set(['STALE_STATE', 'EVENT_CONFLICT']);
 
 function wireEvent(event: EventRecord) {
   const { gameHash: _gameHash, sequence, id, type, at, ...payload } = event;
@@ -119,6 +120,7 @@ export async function flushGame(
 ): Promise<void> {
   if (active.has(gameHash)) return;
   active.add(gameHash);
+  let replayed = false;
   try {
     while (true) {
       const pending = await nextOutbox(gameHash);
@@ -126,21 +128,25 @@ export async function flushGame(
       try {
         const version = await currentContent(pending);
         if (version !== pending.contentVersion) {
-          if (!hooks.refreshContent || !hooks.replayConflict) return;
+          if (replayed || !hooks.refreshContent || !hooks.replayConflict)
+            return;
+          replayed = true;
           await hooks.refreshContent(version ?? undefined);
           await hooks.replayConflict(gameHash);
           continue;
         }
-        const response = await send(pending);
+        const sent = await markSent(pending);
+        if (!sent) continue;
+        const response = await send(sent);
         if (response.ok) {
           const committed = acknowledgement(
             (await response.json()) as WriteResponse,
-            pending,
+            sent,
           );
           if (committed) {
-            await acknowledge(pending, committed);
+            await acknowledge(sent, committed);
             try {
-              hooks.confirmed?.(pending, committed);
+              hooks.confirmed?.(sent, committed);
             } catch {
               console.warn('Gameplay save confirmation trace failed.');
             }
@@ -148,15 +154,19 @@ export async function flushGame(
           if (!committed) return;
           continue;
         }
+        if (response.status === 429) return;
         const body = await error(response);
-        if (body.error?.code === 'CONTENT_VERSION_OUTDATED') {
+        const code = body.error?.code ?? '';
+        if (code === 'CONTENT_VERSION_OUTDATED' && !replayed) {
           if (!hooks.refreshContent || !hooks.replayConflict) return;
-          await hooks.refreshContent(body.error.latestVersion);
+          replayed = true;
+          await hooks.refreshContent(body.error?.latestVersion);
           await hooks.replayConflict(gameHash);
           continue;
         }
-        if (body.error?.code === 'STALE_STATE') {
+        if (REPLAYABLE_CONFLICTS.has(code) && !replayed) {
           if (!hooks.replayConflict) return;
+          replayed = true;
           await hooks.replayConflict(gameHash);
           continue;
         }

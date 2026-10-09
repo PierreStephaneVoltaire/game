@@ -1,12 +1,43 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { resolve } from '$app/paths';
   import { logoutAccount } from '$lib/accounts/account-client';
+  import {
+    listAccountGameKeys,
+    NICKNAME_MAX_LENGTH,
+    saveGameNickname,
+  } from '$lib/accounts/game-keys';
   import type { GameMode } from '$lib/game-types';
   import RoomLookSettings from './RoomLookSettings.svelte';
   export let mode: GameMode = 'realtime';
   export let seed = '';
   let busy = false;
   let settings: HTMLDetailsElement;
+  let nickname = '';
+  let nicknameBusy = false;
+  let nicknameMessage = '';
+
+  onMount(() => {
+    void listAccountGameKeys()
+      .then((games) => {
+        nickname = games.find((game) => game.gameHash === seed)?.nickname ?? '';
+      })
+      .catch(() => undefined);
+  });
+
+  async function saveNickname(): Promise<void> {
+    if (nicknameBusy || !seed) return;
+    nicknameBusy = true;
+    nicknameMessage = '';
+    try {
+      nickname = (await saveGameNickname(seed, nickname)) ?? '';
+      nicknameMessage = 'Nickname saved.';
+    } catch {
+      nicknameMessage = 'Could not save that nickname. Try again.';
+    } finally {
+      nicknameBusy = false;
+    }
+  }
 
   function closeOnOutsideClick(event: MouseEvent): void {
     if (settings?.open && !settings.contains(event.target as Node))
@@ -35,6 +66,17 @@
     <RoomLookSettings />
     <p>Current mode: <strong>{modeLabel(mode)}</strong></p>
     <p>Game key: <code>{seed}</code></p>
+    <form class="nickname" on:submit|preventDefault={saveNickname}>
+      <label for="game-nickname">Game key nickname</label>
+      <input
+        id="game-nickname"
+        type="text"
+        maxlength={NICKNAME_MAX_LENGTH}
+        bind:value={nickname}
+      />
+      <button type="submit" disabled={nicknameBusy}>Save nickname</button>
+      {#if nicknameMessage}<p role="status">{nicknameMessage}</p>{/if}
+    </form>
     <button type="button" disabled={busy} on:click={signOut}>Sign out</button>
   </div>
 </details>
@@ -77,6 +119,28 @@
   }
   .settings-menu p:last-child {
     margin-bottom: 0;
+  }
+  .nickname {
+    margin: 0 0 14px;
+  }
+  .nickname label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 900;
+  }
+  .nickname input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 42px;
+    margin-bottom: 10px;
+    padding: 8px 10px;
+    border: 3px solid var(--theme-ink);
+    color: var(--theme-ink);
+    background: var(--theme-white);
+    font: inherit;
+  }
+  .nickname p {
+    margin: 8px 0 0;
   }
   button {
     width: 100%;

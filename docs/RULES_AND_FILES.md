@@ -462,7 +462,8 @@ nicknames are prompt aliases only; each alias identifies one element.
   SQL runtime bundles, current-pointer reads, version enforcement, and the
   validated publisher.
 - `src/lib/persistence/` — IndexedDB games, events, outbox, and single-game
-  sync/replay.
+  sync/replay. A batch whose ID matches the game's `lastSentBatchId` is
+  frozen; later saves chain a new batch after it.
 - `infra/shared` — one long-lived state (`shared.tfstate`): the Entra-only
   PostgreSQL server (tagged `stack = shared`), Log Analytics/App Insights, the
   telemetry worker and its storage, the quote reader role, and the monthly

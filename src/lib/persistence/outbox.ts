@@ -23,6 +23,23 @@ export async function nextOutbox(
   );
 }
 
+export async function markSent(
+  pending: OutboxRecord,
+): Promise<OutboxRecord | null> {
+  const db = await openVirtualPetDb();
+  if (!db) return pending;
+  const transaction = db.transaction(['games', 'outbox'], 'readwrite');
+  const current = (await read(
+    transaction.objectStore('outbox').get(pending.batchId),
+  )) as OutboxRecord | undefined;
+  const games = transaction.objectStore('games');
+  const game = (await read(games.get(pending.gameHash))) as
+    GameRecord | undefined;
+  if (current && game) games.put({ ...game, lastSentBatchId: current.batchId });
+  await completed(transaction);
+  return current ?? null;
+}
+
 export async function acknowledge(
   sent: OutboxRecord,
   acknowledgement: SyncAcknowledgement,
@@ -46,6 +63,7 @@ export async function acknowledge(
         updatedAt: Date.now(),
       });
     outbox.delete(sent.batchId);
+    // Only records saved before lastSentBatchId existed can grow after send.
     const hasMore =
       pending.events.length > sent.events.length ||
       pending.commands.length > sent.commands.length ||
