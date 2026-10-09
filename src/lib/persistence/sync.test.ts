@@ -1,154 +1,139 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { GameState } from '$lib/game-types';
-import type { EventRecord, OutboxRecord } from './types';
+import { afterEach, beforeEach, expect, test, vi } from 'vitest';
+import type { GameState } from '../game-types';
+import type { OutboxRecord } from './types';
 
-const outbox = vi.hoisted(() => ({
+const storage = vi.hoisted(() => ({
   nextOutbox: vi.fn(),
   markSent: vi.fn(),
   acknowledge: vi.fn(),
   noteRetry: vi.fn(),
 }));
-vi.mock('./outbox', () => outbox);
-
+const remote = vi.hoisted(() => ({
+  downloadGame: vi.fn(),
+  cacheRemoteGame: vi.fn(),
+}));
+vi.mock('./outbox', () => storage);
+vi.mock('./remote', () => remote);
 const { flushGame } = await import('./sync');
-const { chainedCursor } = await import('./games');
-
-function batch(overrides: Partial<OutboxRecord> = {}): OutboxRecord {
-  return {
-    batchId: 'batch-1',
-    gameHash: '00421873',
-    baseStateVersion: 3,
-    previousEventId: 'event-3',
-    contentVersion: 'v1',
-    commands: [],
-    events: [],
-    targetState: { ending: null, stateVersion: 1 } as unknown as GameState,
-    createdAt: 1,
-    retryCount: 0,
-    ...overrides,
-  };
-}
-
-function json(status: number, body: unknown): Response {
-  return new Response(JSON.stringify(body), { status });
-}
-
-const manifest = () => new Response(null, { status: 304 });
-const conflict = () => json(409, { error: { code: 'EVENT_CONFLICT' } });
-
-let fetchMock: ReturnType<typeof vi.fn>;
-
+const state = {
+  events: [],
+  ending: null,
+  stateVersion: 5,
+  balance: 10,
+} as unknown as GameState;
+const pending: OutboxRecord = {
+  batchId: 'batch',
+  gameHash: '00421873',
+  baseStateVersion: 3,
+  previousEventId: null,
+  contentVersion: 'old',
+  commands: [],
+  events: [],
+  targetState: state,
+  createdAt: 1,
+  retryCount: 0,
+};
+const acknowledgement = {
+  stateVersion: 4,
+  committedThroughSequence: 0,
+  committedThroughEventId: null,
+};
+let fetcher: ReturnType<typeof vi.fn>;
+const json = (status: number, body: unknown) =>
+  new Response(JSON.stringify(body), { status });
 beforeEach(() => {
-  const pending = batch();
-  outbox.nextOutbox.mockResolvedValue(pending);
-  outbox.markSent.mockImplementation(async (record) => record);
-  fetchMock = vi.fn();
-  vi.stubGlobal('fetch', fetchMock);
+  storage.nextOutbox.mockResolvedValueOnce(pending).mockResolvedValue(null);
+  storage.markSent.mockImplementation(async (record) => record);
+  fetcher = vi.fn();
+  vi.stubGlobal('fetch', fetcher);
 });
-
 afterEach(() => {
+  vi.resetAllMocks();
   vi.unstubAllGlobals();
-  vi.clearAllMocks();
 });
 
-function writeCalls() {
-  return fetchMock.mock.calls.filter(([url]) =>
-    String(url).startsWith('/api/games/current'),
+test('freezes the batch before delivery and saves already-resolved results across content refreshes', async () => {
+  const order: string[] = [];
+  const refreshContent = vi.fn(async () => {
+    order.push('refresh');
+  });
+  storage.markSent.mockImplementation(async (record) => {
+    order.push('freeze');
+    return record;
+  });
+  fetcher.mockImplementation(async () => {
+    order.push('send');
+    return json(200, acknowledgement);
+  });
+  await flushGame(pending.gameHash, { refreshContent });
+  expect(order).toEqual(['refresh', 'freeze', 'send']);
+  expect(storage.acknowledge).toHaveBeenCalledWith(
+    pending,
+    expect.objectContaining({ stateVersion: 4 }),
   );
-}
-
-describe('game save flush', () => {
-  it('marks the batch as sent before writing it', async () => {
-    const order: string[] = [];
-    outbox.markSent.mockImplementation(async (record) => {
-      order.push('markSent');
-      return record;
-    });
-    fetchMock.mockImplementation(async (url: string) => {
-      if (url.endsWith('/manifest')) return manifest();
-      order.push('write');
-      return json(429, { error: { code: 'RATE_LIMITED' } });
-    });
-
-    await flushGame('00421873');
-
-    expect(order).toEqual(['markSent', 'write']);
-  });
-
-  it('replays once on an event conflict, then resends', async () => {
-    const replayConflict = vi.fn();
-    let writes = 0;
-    fetchMock.mockImplementation(async (url: string) => {
-      if (url.endsWith('/manifest')) return manifest();
-      writes += 1;
-      return writes === 1
-        ? conflict()
-        : json(200, {
-            gameHash: '00421873',
-            stateVersion: 4,
-            committedThroughSequence: 3,
-            committedThroughEventId: 'event-3',
-          });
-    });
-    outbox.nextOutbox
-      .mockResolvedValueOnce(batch())
-      .mockResolvedValueOnce(batch({ batchId: 'replayed' }))
-      .mockResolvedValueOnce(null);
-
-    await flushGame('00421873', { replayConflict });
-
-    expect(replayConflict).toHaveBeenCalledTimes(1);
-    expect(writeCalls()).toHaveLength(2);
-    expect(outbox.acknowledge).toHaveBeenCalledWith(
-      expect.objectContaining({ batchId: 'replayed' }),
-      expect.objectContaining({ stateVersion: 4 }),
-    );
-  });
-
-  it('stops after one replay when conflicts repeat', async () => {
-    const replayConflict = vi.fn();
-    fetchMock.mockImplementation(async (url: string) =>
-      url.endsWith('/manifest') ? manifest() : conflict(),
-    );
-
-    await flushGame('00421873', { replayConflict });
-
-    expect(replayConflict).toHaveBeenCalledTimes(1);
-    expect(writeCalls()).toHaveLength(2);
-    expect(outbox.noteRetry).toHaveBeenCalledTimes(1);
-  });
-
-  it('stops without replaying when rate limited', async () => {
-    const replayConflict = vi.fn();
-    fetchMock.mockImplementation(async (url: string) =>
-      url.endsWith('/manifest')
-        ? manifest()
-        : json(429, { error: { code: 'RATE_LIMITED' } }),
-    );
-
-    await flushGame('00421873', { replayConflict });
-
-    expect(replayConflict).not.toHaveBeenCalled();
-    expect(writeCalls()).toHaveLength(1);
-  });
+  expect(JSON.parse(fetcher.mock.calls[0][1].body).targetState).toEqual(state);
 });
 
-describe('chained batch cursor', () => {
-  it('follows the last event of the sent batch', () => {
-    const events = [
-      { id: 'event-4', sequence: 4 },
-      { id: 'event-5', sequence: 5 },
-    ] as EventRecord[];
-    expect(chainedCursor(batch({ events }))).toEqual({
-      baseStateVersion: 4,
-      previousEventId: 'event-5',
-    });
-  });
+test('a competing save adopts the complete server state without executing pending commands', async () => {
+  fetcher.mockResolvedValue(
+    json(412, {
+      error: { code: 'STALE_STATE', message: 'The game state is stale.' },
+    }),
+  );
+  const canonical = {
+    stateVersion: 9,
+    lastEventSequence: 0,
+    lastEventId: null,
+    state: { ...state, balance: 0 },
+  };
+  remote.downloadGame.mockResolvedValue(canonical);
+  const adoptRemote = vi.fn();
+  const rejected = vi.fn();
+  await flushGame(pending.gameHash, { adoptRemote, rejected });
+  expect(adoptRemote).toHaveBeenCalledWith(canonical, pending);
+  expect(fetcher).toHaveBeenCalledTimes(1);
+  expect(storage.acknowledge).not.toHaveBeenCalled();
+  expect(rejected).toHaveBeenCalledWith(
+    pending,
+    expect.objectContaining({
+      code: 'STALE_STATE',
+      batchId: pending.batchId,
+      baseStateVersion: 3,
+    }),
+  );
+});
 
-  it('keeps the previous event when the sent batch has no events', () => {
-    expect(chainedCursor(batch())).toEqual({
-      baseStateVersion: 4,
-      previousEventId: 'event-3',
-    });
+test('a lost acknowledgement for this batch confirms it instead of discarding newer local state', async () => {
+  fetcher.mockResolvedValue(json(412, { error: { code: 'STALE_STATE' } }));
+  remote.downloadGame.mockResolvedValue({
+    stateVersion: 4,
+    lastEventSequence: 0,
+    lastEventId: null,
+    latestCommittedBatchId: pending.batchId,
+    state,
   });
+  const adoptRemote = vi.fn();
+  await flushGame(pending.gameHash, { adoptRemote });
+  expect(adoptRemote).not.toHaveBeenCalled();
+  expect(storage.acknowledge).toHaveBeenCalledWith(
+    pending,
+    expect.objectContaining({ stateVersion: 4 }),
+  );
+});
+
+test('failed deliveries retain the same batch, and competing senders share a flight', async () => {
+  fetcher.mockResolvedValue(json(429, { error: { code: 'RATE_LIMITED' } }));
+  await Promise.all([flushGame(pending.gameHash), flushGame(pending.gameHash)]);
+  expect(fetcher).toHaveBeenCalledTimes(1);
+  expect(storage.noteRetry).toHaveBeenCalledWith(pending.batchId);
+  expect(storage.acknowledge).not.toHaveBeenCalled();
+});
+
+test('invalid acknowledgements cannot advance a cursor', async () => {
+  fetcher.mockResolvedValue(
+    json(200, { ...acknowledgement, committedThroughSequence: 2 }),
+  );
+  await flushGame(pending.gameHash);
+  expect(storage.acknowledge).not.toHaveBeenCalled();
+  expect(storage.noteRetry).toHaveBeenCalledWith(pending.batchId);
 });

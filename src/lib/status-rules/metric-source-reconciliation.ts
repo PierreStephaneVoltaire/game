@@ -1,3 +1,4 @@
+import { resolvedState } from '../telemetry/collector';
 import type { GameEvent, GameState, StatusName } from '../game-types';
 import { alignGameStatuses, applyStatusOnsetEffects } from '../status-rules';
 import { resolveStatusFixedPoint } from './fixed-point';
@@ -24,6 +25,7 @@ export function reconcileMetricSource(
   state: GameState,
   sourceActionId: string,
 ): GameState {
+  resolvedState(state);
   const metrics = {
     ...state.metrics,
     ...(state.timedEffects.hyperfocusUntil !== null &&

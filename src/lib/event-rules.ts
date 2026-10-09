@@ -1,3 +1,4 @@
+import { resolvedState } from './telemetry/collector';
 import type { GameDefinition } from './game-definition';
 import type { GameEvent, GameState } from './game-types';
 import { actionRandom } from './seeded-rng';
@@ -29,6 +30,7 @@ export function resolveAttemptEvent(
   commandId: string,
   definition: GameDefinition,
 ): GameState {
+  resolvedState(state);
   const rules = definition.simulationRules;
   const textContext = stateTextContext(state, commandId);
   const date = localDate(state.now, state.timezone);

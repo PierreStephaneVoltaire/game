@@ -1,3 +1,4 @@
+import { resolvedState } from '../telemetry/collector';
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState } from '../game-types';
 import { HOUR_MS } from '../game-constants';
@@ -11,26 +12,28 @@ export function resolveTimelineOpportunities(input: {
   autonomous: boolean;
 }): { state: GameState; eventIds: string[] } {
   const rules = input.definition.simulationRules;
-  let next = input.state;
+  let next = resolvedState(input.state);
   const eventIds: string[] = [];
   if (input.autonomous) {
     const commandId = `autonomous:${input.at}`;
     const beforeVersion = next.stateVersion;
-    next = resolveAttemptEvent(next, commandId, input.definition);
+    next = resolvedState(
+      resolveAttemptEvent(next, commandId, input.definition),
+    );
     const opportunity = next.events[next.events.length - 1];
     if (
       opportunity?.type === 'random_event_opportunity' &&
       opportunity.cause === 'none'
     )
-      next = { ...next, stateVersion: beforeVersion };
-    next = {
+      next = resolvedState({ ...next, stateVersion: beforeVersion });
+    next = resolvedState({
       ...next,
       history: {
         ...next.history,
         nextAutonomousAt:
           input.at + rules.events.autonomous.intervalHours * HOUR_MS,
       },
-    };
+    });
     eventIds.push(
       ...next.events.slice(input.state.events.length).map((event) => event.id),
     );
@@ -47,7 +50,7 @@ export function resolveTimelineOpportunities(input: {
       at: input.at,
       message: 'The craving faded before it could be fulfilled.',
     };
-    next = {
+    next = resolvedState({
       ...next,
       history: {
         ...next.history,
@@ -56,7 +59,7 @@ export function resolveTimelineOpportunities(input: {
         cravingRefreshCount: 0,
       },
       events: [...next.events, event],
-    };
+    });
     eventIds.push(event.id);
   }
   const date = localDate(input.at, next.timezone);
@@ -65,7 +68,7 @@ export function resolveTimelineOpportunities(input: {
       ? next.history.cravingRefreshCount + 1
       : next.history.cravingRefreshCount;
     const refreshExpires = refreshCount >= rules.craving.refreshLimit;
-    next = {
+    next = resolvedState({
       ...next,
       shop: rotateShop(next, input.definition, date),
       history: {
@@ -79,7 +82,7 @@ export function resolveTimelineOpportunities(input: {
           : { cravingRefreshCount: refreshCount }),
       },
       stateVersion: next.stateVersion + 1,
-    };
+    });
     const event: GameEvent = {
       id: `event-${next.events.length + 1}`,
       type: 'shop_rotated',
@@ -87,7 +90,7 @@ export function resolveTimelineOpportunities(input: {
       message: 'The shop refreshed for a new local day.',
       shopItemIds: next.shop.itemIds,
     };
-    next = { ...next, events: [...next.events, event] };
+    next = resolvedState({ ...next, events: [...next.events, event] });
     eventIds.push(event.id);
     if (refreshExpires) {
       const expiry: GameEvent = {
@@ -96,7 +99,7 @@ export function resolveTimelineOpportunities(input: {
         at: input.at,
         message: 'The craving faded after the shop changed twice.',
       };
-      next = { ...next, events: [...next.events, expiry] };
+      next = resolvedState({ ...next, events: [...next.events, expiry] });
       eventIds.push(expiry.id);
     }
   }

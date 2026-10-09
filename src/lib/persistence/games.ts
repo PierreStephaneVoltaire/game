@@ -1,3 +1,4 @@
+import { MAX_SAVE_EVENTS } from '../game-constants';
 import type { GameCommand, GameEvent, GameState } from '$lib/game-types';
 import { completed, openVirtualPetDb, read } from './indexed-db';
 import type { EventRecord, GameRecord, OutboxRecord } from './types';
@@ -24,16 +25,6 @@ function eventRecords(
   }));
 }
 
-// Mirrors GameService.write: each committed batch bumps state_version by one.
-export function chainedCursor(
-  sent: OutboxRecord,
-): Pick<OutboxRecord, 'baseStateVersion' | 'previousEventId'> {
-  return {
-    baseStateVersion: sent.baseStateVersion + 1,
-    previousEventId: sent.events.at(-1)?.id ?? sent.previousEventId,
-  };
-}
-
 async function database(): Promise<IDBDatabase | null> {
   return openVirtualPetDb();
 }
@@ -44,6 +35,7 @@ export async function loadGame(gameHash: string): Promise<GameRecord | null> {
   const transaction = db.transaction('games', 'readonly');
   const game = await read(transaction.objectStore('games').get(gameHash));
   await completed(transaction);
+  db.close();
   return (game as GameRecord | undefined) ?? null;
 }
 
@@ -55,6 +47,7 @@ export async function loadActiveGameHash(): Promise<string | null> {
     transaction.objectStore('metadata').get(ACTIVE_GAME_KEY),
   )) as { value?: unknown } | undefined;
   await completed(transaction);
+  db.close();
   return typeof record?.value === 'string' ? record.value : null;
 }
 
@@ -66,6 +59,7 @@ export async function setActiveGameHash(gameHash: string): Promise<void> {
     .objectStore('metadata')
     .put({ key: ACTIVE_GAME_KEY, value: gameHash });
   await completed(transaction);
+  db.close();
 }
 
 export async function listLocalGames(): Promise<GameRecord[]> {
@@ -76,14 +70,19 @@ export async function listLocalGames(): Promise<GameRecord[]> {
     transaction.objectStore('games').getAll(),
   )) as GameRecord[];
   await completed(transaction);
+  db.close();
   return games.sort((left, right) => right.updatedAt - left.updatedAt);
 }
 
-export async function saveNewGame(state: GameState): Promise<void> {
+export async function saveNewGame(
+  state: GameState,
+  capturePosition?: OutboxRecord['capturePosition'],
+): Promise<void> {
   const db = await database();
   if (!db) return;
   const gameHash = state.seed;
   const events = eventRecords(gameHash, 0, state.events);
+  const creationBatchId = batchId();
   const transaction = db.transaction(
     ['games', 'gameEvents', 'outbox', 'metadata'],
     'readwrite',
@@ -92,6 +91,7 @@ export async function saveNewGame(state: GameState): Promise<void> {
     gameHash,
     state,
     stateVersion: 0,
+    creationBatchId,
     lastAcknowledgedSequence: 0,
     lastAcknowledgedEventId: null,
     createdAt: Date.now(),
@@ -99,7 +99,8 @@ export async function saveNewGame(state: GameState): Promise<void> {
   } satisfies GameRecord);
   for (const event of events) transaction.objectStore('gameEvents').put(event);
   transaction.objectStore('outbox').put({
-    batchId: batchId(),
+    batchId: creationBatchId,
+    creationBatchId,
     gameHash,
     baseStateVersion: 0,
     previousEventId: null,
@@ -107,6 +108,7 @@ export async function saveNewGame(state: GameState): Promise<void> {
     commands: [],
     events,
     targetState: state,
+    capturePosition,
     createdAt: Date.now(),
     retryCount: 0,
   } satisfies OutboxRecord);
@@ -114,13 +116,16 @@ export async function saveNewGame(state: GameState): Promise<void> {
     .objectStore('metadata')
     .put({ key: ACTIVE_GAME_KEY, value: gameHash });
   await completed(transaction);
+  db.close();
 }
 
 export async function saveTransition(
   before: GameState,
   after: GameState,
   command?: GameCommand,
+  capturePosition?: OutboxRecord['capturePosition'],
 ): Promise<void> {
+  if (after === before) return;
   const db = await database();
   if (!db) return;
   const gameHash = after.seed;
@@ -162,21 +167,25 @@ export async function saveTransition(
   const unsentEvents = newEvents.filter(
     (event) => event.sequence > acknowledgedSequence,
   );
-  if (last && last.batchId !== existing.lastSentBatchId) {
+  if (
+    last &&
+    !last.attemptedAt &&
+    last.batchId !== existing.lastSentBatchId &&
+    last.events.length + unsentEvents.length <= MAX_SAVE_EVENTS
+  ) {
     outbox.put({
       ...last,
       commands: command ? [...last.commands, command] : last.commands,
       events: [...last.events, ...unsentEvents],
       targetState: after,
+      capturePosition,
       contentVersion: after.definitionVersion,
     });
   } else {
-    const cursor = last
-      ? chainedCursor(last)
-      : {
-          baseStateVersion: existing.stateVersion,
-          previousEventId: existing.lastAcknowledgedEventId,
-        };
+    const cursor = {
+      baseStateVersion: existing.stateVersion,
+      previousEventId: existing.lastAcknowledgedEventId,
+    };
     outbox.put({
       batchId: batchId(),
       gameHash,
@@ -185,9 +194,11 @@ export async function saveTransition(
       commands: command ? [command] : [],
       events: unsentEvents,
       targetState: after,
+      capturePosition,
       createdAt: Math.max(Date.now(), (last?.createdAt ?? 0) + 1),
       retryCount: 0,
     } satisfies OutboxRecord);
   }
   await completed(transaction);
+  db.close();
 }

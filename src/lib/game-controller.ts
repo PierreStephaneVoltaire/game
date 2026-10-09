@@ -1,3 +1,4 @@
+import { collectSavePoints } from './persistence/save-points';
 import type {
   GameDefinition,
   GameDefinitionRepository,
@@ -15,6 +16,7 @@ import type {
 
 export class GameController {
   private state: GameState | null = null;
+  savePoints: GameState[] = [];
   private definition: GameDefinition | null = null;
 
   constructor(
@@ -47,37 +49,55 @@ export class GameController {
 
   async dispatch(command: GameCommand): Promise<Transition> {
     if (!this.state) throw new Error('Run has not started.');
-    if (!this.definition) throw new Error('Game definition was not loaded.');
+    this.definition = await this.definitions.load();
+    activateGameDefinition(this.definition);
+    this.state = { ...this.state, definitionVersion: this.definition.version };
     const execute = () =>
       dispatchCommand(this.state!, command, this.definition!);
-    const transition = this.capture
-      ? this.capture.execute(
-          'command',
-          command,
-          execute,
-          (result) => result.state,
-          (result) => result.outcomes,
-          this.state,
-        )
-      : execute();
+    const collected = collectSavePoints(
+      this.state,
+      () =>
+        this.capture
+          ? this.capture.execute(
+              'command',
+              command,
+              execute,
+              (result) => result.state,
+              (result) => result.outcomes,
+              this.state!,
+            )
+          : execute(),
+      (result) => result.state,
+    );
+    const transition = collected.result;
+    this.savePoints = collected.states;
     this.state = transition.state;
     return transition;
   }
 
   async reconcile(now: number): Promise<Transition> {
     if (!this.state) throw new Error('Run has not started.');
-    if (!this.definition) throw new Error('Game definition was not loaded.');
+    this.definition = await this.definitions.load();
+    activateGameDefinition(this.definition);
+    this.state = { ...this.state, definitionVersion: this.definition.version };
     const execute = () => reconcileTime(this.state!, now, this.definition!);
-    const transition = this.capture
-      ? this.capture.execute(
-          'clock_reconciled',
-          { now },
-          execute,
-          (result) => result.state,
-          (result) => result.outcomes,
-          this.state,
-        )
-      : execute();
+    const collected = collectSavePoints(
+      this.state,
+      () =>
+        this.capture
+          ? this.capture.execute(
+              'clock_reconciled',
+              { now },
+              execute,
+              (result) => result.state,
+              (result) => result.outcomes,
+              this.state!,
+            )
+          : execute(),
+      (result) => result.state,
+    );
+    const transition = collected.result;
+    this.savePoints = collected.states;
     this.state = transition.state;
     return {
       state: transition.state,

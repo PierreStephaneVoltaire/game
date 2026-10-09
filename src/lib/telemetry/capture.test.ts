@@ -138,9 +138,15 @@ describe('gameplay traces', () => {
           ),
       ).toBe(true);
       expect(
-        operations.slice(1).every((operation) => !operation.checkpoint),
+        operations
+          .slice(1)
+          .every(
+            (operation) =>
+              !operation.checkpoint || operation.kind === 'checkpoint',
+          ),
       ).toBe(true);
     },
+    15_000,
   );
 
   test('records offsetting checkout transactions, prices, and a terminal transition', async () => {

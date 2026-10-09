@@ -1,11 +1,8 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { UiCommandSequence } from './command-sequence';
 
-describe('UI command sequence', () => {
-  test('is unique within a run and resets for the next run', () => {
-    const sequence = new UiCommandSequence();
-    expect([sequence.next(), sequence.next()]).toEqual(['ui-1', 'ui-2']);
-    sequence.reset();
-    expect(sequence.next()).toBe('ui-1');
-  });
+test('action IDs remain unique across controller instances and reloads', () => {
+  const ids = Array.from({ length: 100 }, () => new UiCommandSequence().next());
+  expect(new Set(ids).size).toBe(ids.length);
+  expect(ids.every((id) => /^ui-[0-9a-f-]{36}$/.test(id))).toBe(true);
 });

@@ -1,5 +1,5 @@
 import type { GameDefinition } from '$lib/game-definition';
-import type { GameCommand, GameState, StatusName } from '$lib/game-types';
+import type { GameState, StatusName } from '$lib/game-types';
 import { companionFromDefinition, type CompanionProfile } from './companion';
 import { gameCopy, statusLabel } from './game-copy';
 import {
@@ -255,46 +255,4 @@ export function createGameViewModel(
   };
 }
 
-export function intentToCommand(
-  intent: GameIntent,
-  state: GameState,
-  commandId: string,
-): GameCommand {
-  const base = {
-    commandId,
-    now: state.mode === 'realtime' ? Date.now() : state.now,
-    expectedStateVersion: state.stateVersion,
-  } as const;
-  if (intent.type === 'use_item')
-    return { ...base, type: 'use_item', itemId: intent.itemId };
-  if (intent.type === 'feed_items')
-    return { ...base, type: 'feed_items', items: intent.items };
-  if (intent.type === 'item_action')
-    return {
-      ...base,
-      type: 'perform_item_action',
-      itemId: intent.itemId,
-      action: intent.action,
-    };
-  if (intent.type === 'unplace_item')
-    return { ...base, type: 'unplace_item', slot: intent.slot };
-  if (intent.type === 'place_item')
-    return {
-      ...base,
-      type: 'place_item',
-      itemId: intent.itemId,
-      slot: intent.slot,
-    };
-  if (intent.type === 'set_cart_quantity')
-    return {
-      ...base,
-      type: 'set_cart_quantity',
-      itemId: intent.itemId,
-      quantity: intent.quantity,
-    };
-  if (intent.type === 'checkout_cart')
-    return { ...base, type: 'checkout_cart' };
-  if (intent.type === 'pay_medical_debt')
-    return { ...base, type: 'pay_medical_debt' };
-  return { ...base, ...intent };
-}
+export { intentToCommand } from './intent-command';

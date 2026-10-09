@@ -86,31 +86,21 @@ def test_timestamp_cursor_and_death_cause_use_the_game_summary() -> None:
             events=[event(1, "event-1")],
         ),
     )
-    with pytest.raises(ApiError) as raised:
-        games.write(
-            session,
-            user_id,
-            version,
-            "00421873",
-            0,
-            GameWrite(
-                batchId="older",
-                previousEventId="event-1",
-                targetState={"ending": None},
-                events=[{**event(2, "event-2"), "eventAt": "2026-09-03T11:59:59Z"}],
-            ),
-        )
-    assert raised.value.code == "EVENT_CONFLICT"
+    games.write(
+        session, user_id, version, "00421873", 0,
+        GameWrite(batchId="older", previousEventId="event-1", targetState={"ending": None},
+                  events=[{**event(2, "event-2"), "eventAt": "2026-09-03T11:59:59Z"}]),
+    )
     ending = {"kind": "death", "eventIds": ["event-1"]}
     result = games.write(
         session,
         user_id,
         version,
         "00421873",
-        0,
+        1,
         DeathWrite(
             batchId="death",
-            previousEventId="event-1",
+            previousEventId="event-2",
             targetState={"ending": ending},
             events=[],
             causeEventId="event-1",
@@ -118,7 +108,7 @@ def test_timestamp_cursor_and_death_cause_use_the_game_summary() -> None:
         death=True,
         cause_event_id="event-1",
     )
-    assert result["stateVersion"] == 1
+    assert result["stateVersion"] == 2
 
 
 def test_other_account_cannot_read_or_replay_committed_batch() -> None:
@@ -179,3 +169,61 @@ def test_nickname_is_trimmed_and_length_limited() -> None:
     assert NicknameWrite(nickname="  Cozy  ").nickname == "Cozy"
     with pytest.raises(ValidationError):
         NicknameWrite(nickname="x" * 41)
+
+
+def test_creation_and_write_retries_survive_content_updates_and_other_writers() -> None:
+    session, games, user_id = setup()
+    version, key = "a" * 64, "00421873"
+    creation = CreateGame(gameHash=key, creationBatchId="create-a", stateSchemaVersion=1,
+                          state={"ending": None}, events=[event(1, "event-1")])
+    initial = games.create(session, user_id, version, creation)
+    assert initial["stateVersion"] == 0
+    newer = "b" * 64
+    session.add(ContentVersion(version=newer, schema_version=1, bundle_json="{}", item_count=0, published_at=datetime.now(UTC)))
+    session.get(ContentPointer, "current").version = newer
+    session.commit()
+    assert games.create(session, user_id, version, creation) == initial
+    write = GameWrite(batchId="batch-a", previousEventId="event-1", targetState={"ending": None, "value": 2}, events=[event(2, "event-2")])
+    committed = games.write(session, user_id, version, key, 0, write)
+    assert committed["stateVersion"] == 1
+    assert games.write(session, user_id, version, key, 0, write) == committed
+    assert games.create(session, user_id, version, creation) == initial
+    saved = games.get(session, user_id, key)
+    assert saved["creationBatchId"] == "create-a"
+    assert saved["latestCommittedBatchId"] == "batch-a"
+    assert saved["state"]["value"] == 2
+    session.rollback()
+    with pytest.raises(ApiError) as conflict:
+        games.create(session, user_id, newer, creation.model_copy(update={"creation_batch_id": "other-device"}))
+    assert conflict.value.code == "GAME_HASH_CONFLICT"
+    with pytest.raises(ApiError):
+        games.create(session, user_id, newer, creation.model_copy(update={"state": {"different": True}}))
+
+
+def test_sequence_order_accepts_earlier_timestamps_without_duplicate_history() -> None:
+    session, games, user_id = setup()
+    games.create(session, user_id, "a" * 64, CreateGame(gameHash="00421873", stateSchemaVersion=1, state={"ending": None}))
+    write = GameWrite(batchId="chronology", targetState={"ending": None}, events=[
+        event(1, "first"), {**event(2, "second"), "eventAt": "2026-09-03T11:00:00Z"},
+    ])
+    result = games.write(session, user_id, "a" * 64, "00421873", 0, write)
+    assert games.write(session, user_id, "a" * 64, "00421873", 0, write) == result
+    assert [row["eventId"] for row in games.events(session, user_id, "00421873", 0, 25)] == ["first", "second"]
+
+
+def test_compact_snapshots_restore_history_and_terminal_creation() -> None:
+    session, games, user_id = setup()
+    key = "00421873"
+    ending = {"kind": "death", "eventIds": ["cause"]}
+    creation = CreateGame(
+        gameHash=key, creationBatchId="created-ended", stateSchemaVersion=1,
+        state={"ending": ending, "events": []}, events=[event(1, "cause")],
+    )
+    games.create(session, user_id, "a" * 64, creation)
+    restored = games.get(session, user_id, key)
+    assert restored["lifeStatus"] == "dead"
+    assert restored["state"]["events"] == [{"id": "cause", "type": "care", "at": 1788436800000}]
+    assert games.grave(session, user_id, key)["game"]["state"] == restored["state"]
+    assert session.get(Game, key).state_json["events"] == []
+    session.rollback()
+    assert games.create(session, user_id, "a" * 64, creation)["stateVersion"] == 0

@@ -1,3 +1,4 @@
+import { resolvedState } from '../telemetry/collector';
 import { recordStreamEnd } from '../audience-growth-rules';
 import { completeStreamEconomy } from '../economy-rules';
 import { HOUR_MS, MINUTE_MS, STAT_MAX, STAT_MIN } from '../game-constants';
@@ -23,7 +24,26 @@ export function settleStreamCompletion(input: {
     streamMetrics,
     completionEventId,
   } = input;
-  let next = recordStreamEnd(input.state, elapsedMs, interrupted);
+  let next = resolvedState(
+    recordStreamEnd(input.state, elapsedMs, interrupted),
+  );
+  const resolvedEconomy = (state: GameState, events: GameEvent[]) =>
+    resolvedState({
+      ...next,
+      balance: state.balance,
+      metrics: {
+        ...next.metrics,
+        mood: Math.max(
+          STAT_MIN,
+          Math.min(
+            STAT_MAX,
+            next.metrics.mood + (state.metrics.mood - streamMetrics.mood),
+          ),
+        ),
+      },
+      progression: state.progression,
+      events: [...next.events, ...events],
+    });
   const economy = completeStreamEconomy(
     { ...next, metrics: streamMetrics },
     activity.sourceActionId,
@@ -31,36 +51,22 @@ export function settleStreamCompletion(input: {
     completedAt,
     Number(activity.payload?.hourlyRate ?? rules.stream.income.minimumRate),
     Number(activity.payload?.donationMultiplier ?? 1),
+    resolvedEconomy,
   );
-  next = {
-    ...next,
-    balance: economy.state.balance,
-    metrics: {
-      ...next.metrics,
-      mood: Math.max(
-        STAT_MIN,
-        Math.min(
-          STAT_MAX,
-          next.metrics.mood + (economy.state.metrics.mood - streamMetrics.mood),
-        ),
-      ),
-    },
-    progression: economy.state.progression,
-    events: [...next.events, ...economy.events],
-  };
+  next = resolvedEconomy(economy.state, economy.events);
   const ordinaryStream = Boolean(activity.payload?.ordinaryStream);
   const midnightCapped = Boolean(activity.payload?.midnightCapped);
   const droughtResetQualified =
     ordinaryStream && !interrupted && !midnightCapped && elapsedMs >= MINUTE_MS;
-  next = rollLostVoice(next, activity, completedAt, elapsedMs);
+  next = resolvedState(rollLostVoice(next, activity, completedAt, elapsedMs));
   if (droughtResetQualified)
-    next = {
+    next = resolvedState({
       ...next,
       progression: {
         ...next.progression,
         lastQualifyingOrdinaryStreamStartedAt: activity.startedAt,
       },
-    };
+    });
   return {
     ...next,
     events: next.events.map((event) =>

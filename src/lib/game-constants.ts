@@ -42,3 +42,5 @@ export const REALTIME_CATCH_UP_MS = MINUTE_MS;
 export const LOCAL_MIDNIGHT_SEARCH_HOURS = 36;
 export const STATUS_FIXED_POINT_PASS_LIMIT = 14;
 export const MAX_QUOTE_ACTION_LENGTH = 255;
+
+export const MAX_SAVE_EVENTS = 500;

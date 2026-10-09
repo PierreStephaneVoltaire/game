@@ -1,3 +1,4 @@
+import { resolvedState } from './telemetry/collector';
 import type { GameState } from './game-types';
 import { lifeEventDefinitions, resolveLifeEvent } from './life-event-rules';
 import { isLifeEventEligible } from './life-event-rules';
@@ -62,7 +63,7 @@ export function processLifeEventBoundary(
   };
   for (const eventId of orderedSuccessfulEventIds)
     successfulRolls[eventId] = (successfulRolls[eventId] ?? 0) + 1;
-  let next: GameState = {
+  let next: GameState = resolvedState({
     ...state,
     now: at,
     history: {
@@ -77,14 +78,14 @@ export function processLifeEventBoundary(
           (orderedSuccessfulEventIds.length > 1 ? 1 : 0),
       },
     },
-  };
+  });
   for (const eventId of orderedSuccessfulEventIds) {
     if (next.ending) break;
     if (
       eventId === 'agency_invitation' &&
       next.progression.agencyJoinedAt !== null
     ) {
-      next = {
+      next = resolvedState({
         ...next,
         history: {
           ...next.history,
@@ -94,18 +95,20 @@ export function processLifeEventBoundary(
               next.history.lifeEventScheduler.suppressedAgencyInvitations + 1,
           },
         },
-      };
+      });
       continue;
     }
     const definition = lifeEventDefinitions().find(({ id }) => id === eventId);
     if (!definition || !isLifeEventEligible(next, definition, gameDefinition))
       continue;
-    next = resolveLifeEvent(
-      next,
-      eventId,
-      at,
-      `life-events:${at}:${eventId}`,
-      gameDefinition,
+    next = resolvedState(
+      resolveLifeEvent(
+        next,
+        eventId,
+        at,
+        `life-events:${at}:${eventId}`,
+        gameDefinition,
+      ),
     );
   }
   return {

@@ -1,3 +1,5 @@
+import { resolvedBoundary } from './simulation/resolution-boundary';
+import { resolvedState } from './telemetry/collector';
 import type { GameDefinition, ItemActionDefinition } from './game-definition';
 import type { GameCommand, GameState, Outcome, Transition } from './game-types';
 import {
@@ -82,19 +84,19 @@ export function dispatchCommand(
       'stale',
       'This command was based on an older simulation state.',
     );
-    let staleState = timed;
+    let staleState = resolvedState(timed);
     if (companionAttempt) {
-      staleState = resolveAttemptEvent(
-        staleState,
-        command.commandId,
-        definition,
+      staleState = resolvedState(
+        resolveAttemptEvent(staleState, command.commandId, definition),
       );
-      staleState = recordAttempt(
-        staleState,
-        staleOutcome,
-        timed,
-        command.commandId,
-        command.type,
+      staleState = resolvedState(
+        recordAttempt(
+          staleState,
+          staleOutcome,
+          timed,
+          command.commandId,
+          command.type,
+        ),
       );
     }
     return rememberAndCompleteStreaming(
@@ -124,7 +126,7 @@ export function dispatchCommand(
       );
     }
   }
-  let next = timed;
+  let next = resolvedState(timed);
   let outcome: Outcome = rejected('invalid', 'Command was not understood.');
   let completionOwnsAttemptOpportunity = false;
   if (
@@ -164,11 +166,11 @@ export function dispatchCommand(
     );
   if (command.type === 'place_item' || command.type === 'unplace_item') {
     const roomResult = handleRoomCommand(next, command, definition);
-    next = roomResult.state;
+    next = resolvedState(roomResult.state);
     outcome = roomResult.outcome;
   } else if (command.type === 'pay_medical_debt') {
     const payment = payMedicalDebtInFull(next, command.commandId);
-    next = payment.state;
+    next = resolvedState(payment.state);
     outcome = payment.outcome;
   } else if (
     command.type === 'wait' ||
@@ -183,7 +185,7 @@ export function dispatchCommand(
       definition,
       reconcileTime,
     );
-    next = activityResult.state;
+    next = resolvedState(activityResult.state);
     outcome = activityResult.outcome;
     completionOwnsAttemptOpportunity =
       activityResult.completionOwnsAttemptOpportunity;
@@ -193,14 +195,14 @@ export function dispatchCommand(
     command.type === 'buy_item'
   ) {
     const shopResult = handleShopCommand(next, command, definition);
-    next = shopResult.state;
+    next = resolvedState(shopResult.state);
     outcome = shopResult.outcome;
   } else if (command.type === 'use_item') {
     const itemResult = resolveItemConsumption(next, command, definition, {
       automatic: false,
       action: consumptionAction,
     });
-    next = itemResult.state;
+    next = resolvedState(itemResult.state);
     outcome = itemResult.outcome;
   } else if (command.type === 'feed_items') {
     const batch = resolveBatchFeeding(
@@ -209,29 +211,36 @@ export function dispatchCommand(
       definition,
       (working, child) => dispatchCommand(working, child, definition),
     );
-    next = batch.state;
+    next = resolvedState(batch.state);
     outcome = batch.outcome;
   }
-  if (outcome.accepted) next = resetPlayerCareRescueLocks(timed, next);
+  if (outcome.accepted)
+    next = resolvedState(resetPlayerCareRescueLocks(timed, next));
   if (
     companionAttempt &&
     next.metrics.health > 0 &&
     !completionOwnsAttemptOpportunity
   ) {
-    next = applyCriticalHealthMoodPenalty(next, timed, command.commandId);
+    next = resolvedState(
+      applyCriticalHealthMoodPenalty(next, timed, command.commandId),
+    );
     const beforeEvent = next;
-    next = resolveAttemptEvent(next, command.commandId, definition);
-    next = applyCriticalHealthMoodPenalty(next, beforeEvent, command.commandId);
+    next = resolvedState(
+      resolveAttemptEvent(next, command.commandId, definition),
+    );
+    next = resolvedState(
+      applyCriticalHealthMoodPenalty(next, beforeEvent, command.commandId),
+    );
   }
   if (companionAttempt)
-    next = recordAttempt(next, outcome, timed, command.commandId, command.type);
-  if (command.type !== 'feed_items')
-    next = appendStatusTransitionEvents(
-      next,
-      timed.statuses,
-      command.commandId,
+    next = resolvedState(
+      recordAttempt(next, outcome, timed, command.commandId, command.type),
     );
-  next = reconcileRunEnding(next);
+  if (command.type !== 'feed_items')
+    next = resolvedState(
+      appendStatusTransitionEvents(next, timed.statuses, command.commandId),
+    );
+  next = resolvedState(reconcileRunEnding(next));
   return rememberAndCompleteStreaming(
     next,
     command.commandId,
@@ -247,11 +256,13 @@ function rememberAndCompleteStreaming(
   definition: GameDefinition,
 ): Transition {
   const transition = remember(state, commandId, outcome);
-  let next = transition.state;
+  let next = resolvedState(transition.state);
   while (next.mode === 'streaming' && next.activity && !next.ending) {
     const before = next;
-    next = reconcileTime(next, next.activity.endsAt, definition).state;
+    next = resolvedState(
+      reconcileTime(next, next.activity.endsAt, definition).state,
+    );
     if (next === before) break;
   }
-  return { state: next, outcomes: transition.outcomes };
+  return { state: resolvedBoundary(next), outcomes: transition.outcomes };
 }

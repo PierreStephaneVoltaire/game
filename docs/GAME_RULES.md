@@ -16,8 +16,26 @@ immutable, SHA-256-versioned bundle. A game records the bundle version it was
 played with. Cached content can be used offline after it has been downloaded;
 a first visit without cached content needs a connection. Before a game write,
 the client conditionally checks the manifest. If the version changed, it
-atomically stores the new bundle, replays pending commands with their stable
-IDs, and submits against the new version.
+atomically stores the new bundle for the next transition. Already-resolved
+results retain their original version and are never replayed for delivery.
+
+Gameplay resolves locally once, with unique action IDs and serialized state
+changes. IndexedDB saves immediately. Background uploads debounce for one
+second, wait at most five seconds to become eligible, and space normal writes
+at least five seconds apart. Attempted batches keep their identity and contents
+until acknowledged. Server acknowledgements advance delivery cursors without
+replacing newer local gameplay. A competing device's saved state wins; this
+device's unsent gameplay remains only in its superseded diagnostic stream.
+Opening a game code downloads its saved state and complete ordered history,
+after reconciling any unsent local data.
+
+History is recorded during resolution. Optional diagnostic capture includes
+intermediate state changes, calculations, refusals, and simulation clocks.
+Debug reconstruction applies recorded changes in execution sequence without
+running game rules. Multiple narrative events can share one atomic transition.
+Missing records mark reconstruction incomplete; a later checkpoint restores
+coverage from that point only. Capture or upload failures do not change game
+outcomes. Earlier missing history cannot be reconstructed without its records.
 
 ## Core rules
 

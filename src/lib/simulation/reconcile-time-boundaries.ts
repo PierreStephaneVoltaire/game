@@ -1,3 +1,5 @@
+import { resolvedBoundary } from './resolution-boundary';
+import { resolvedState } from '../telemetry/collector';
 import type { GameState } from '../game-types';
 import type { GameDefinition } from '../game-definition';
 import { simulationRules as rules } from '../runtime-definition';
@@ -88,7 +90,7 @@ export function catchUpLifeEvents(
   nextRegularBoundary: number,
   definition: GameDefinition,
 ): { state: GameState; eventIds: string[] } {
-  let lifeState = state;
+  let lifeState = resolvedState(state);
   const eventIds: string[] = [];
   while (!lifeState.ending) {
     const boundary = nextLifeEventBoundary(lifeState);
@@ -99,7 +101,7 @@ export function catchUpLifeEvents(
       undefined,
       definition,
     );
-    lifeState = lifeEvents.state;
+    lifeState = resolvedBoundary(resolvedState(lifeEvents.state));
     eventIds.push(...lifeEvents.eventIds);
   }
   return { state: lifeState, eventIds };

@@ -1,3 +1,4 @@
+import { resolvedState } from '../telemetry/collector';
 import type { Activity, GameEvent, GameState, Metrics } from '../game-types';
 import type { GameDefinition } from '../game-definition';
 import { activityRules, simulationRules as rules } from '../runtime-definition';
@@ -185,7 +186,7 @@ export function completeActivity({
           },
         })
       : 0;
-  let next: GameState = {
+  let next: GameState = resolvedState({
     ...creditIncome(state, commissionPayout),
     metrics: completedMetrics,
     statuses,
@@ -199,35 +200,43 @@ export function completeActivity({
         : state.history,
     events: [...state.events, event],
     stateVersion: state.stateVersion + 1,
-  };
+  });
   if (activity.type === 'medical_care' && !interrupted)
-    next = completeMedicalCare(next, activity, completedAt);
+    next = resolvedState(completeMedicalCare(next, activity, completedAt));
   if (activity.type === 'stream') {
-    next = settleStreamCompletion({
-      state: next,
-      activity,
-      completedAt,
-      elapsedMs: elapsed,
-      interrupted,
-      streamMetrics: state.metrics,
-      completionEventId: event.id,
-    });
+    next = resolvedState(
+      settleStreamCompletion({
+        state: next,
+        activity,
+        completedAt,
+        elapsedMs: elapsed,
+        interrupted,
+        streamMetrics: state.metrics,
+        completionEventId: event.id,
+      }),
+    );
   }
   if (activity.type === 'commission_work' && !interrupted)
-    next = appendCommissionPayoutEvent(
-      next,
-      activity,
-      completedAt,
-      commissionPayout,
+    next = resolvedState(
+      appendCommissionPayoutEvent(
+        next,
+        activity,
+        completedAt,
+        commissionPayout,
+      ),
     );
-  next = reconcileMetricSource(state, next, activity.sourceActionId);
+  next = resolvedState(
+    reconcileMetricSource(state, next, activity.sourceActionId),
+  );
   if (!activity.payload?.autonomous)
-    next = resetPlayerCareRescueLocks(state, next);
-  next = recordBondGain(next, state, completedAt);
-  next = appendStatusTransitionEvents(
-    next,
-    beforeActivityStatuses,
-    activity.sourceActionId,
+    next = resolvedState(resetPlayerCareRescueLocks(state, next));
+  next = resolvedState(recordBondGain(next, state, completedAt));
+  next = resolvedState(
+    appendStatusTransitionEvents(
+      next,
+      beforeActivityStatuses,
+      activity.sourceActionId,
+    ),
   );
   const financial = settleActivityFinances({
     before: state,
@@ -235,14 +244,16 @@ export function completeActivity({
     activity,
     completionEvent: event,
   });
-  next = financial.state;
+  next = resolvedState(financial.state);
   const eventIds = financial.eventIds;
   if (activity.type !== 'medical_care' && activity.type !== 'commission_work') {
     const beforePenaltyCount = next.events.length;
-    next = applyCriticalHealthMoodPenalty(
-      next,
-      { ...next, metrics: beforeActivityMetrics },
-      activity.sourceActionId,
+    next = resolvedState(
+      applyCriticalHealthMoodPenalty(
+        next,
+        { ...next, metrics: beforeActivityMetrics },
+        activity.sourceActionId,
+      ),
     );
     eventIds.push(
       ...next.events.slice(beforePenaltyCount).map((item) => item.id),
@@ -257,11 +268,15 @@ export function completeActivity({
   ) {
     const beforeEventCount = next.events.length;
     const beforeEventState = next;
-    next = resolveAttemptEvent(next, activity.sourceActionId, definition);
-    next = applyCriticalHealthMoodPenalty(
-      next,
-      beforeEventState,
-      activity.sourceActionId,
+    next = resolvedState(
+      resolveAttemptEvent(next, activity.sourceActionId, definition),
+    );
+    next = resolvedState(
+      applyCriticalHealthMoodPenalty(
+        next,
+        beforeEventState,
+        activity.sourceActionId,
+      ),
     );
     eventIds.push(
       ...next.events.slice(beforeEventCount).map((item) => item.id),

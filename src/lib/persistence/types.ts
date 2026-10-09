@@ -6,6 +6,8 @@ export type GameRecord = {
   gameHash: string;
   state: GameState;
   stateVersion: number;
+  creationBatchId?: string | null;
+  latestCommittedBatchId?: string | null;
   lastAcknowledgedSequence: number;
   lastAcknowledgedEventId: string | null;
   lastSentBatchId?: string | null;
@@ -24,6 +26,9 @@ export type OutboxRecord = {
   targetState: GameState;
   createdAt: number;
   retryCount: number;
+  capturePosition?: import('../telemetry/capture').CapturePosition;
+  attemptedAt?: number;
+  creationBatchId?: string;
 };
 
 export type SyncAcknowledgement = {
@@ -31,4 +36,5 @@ export type SyncAcknowledgement = {
   stateVersion: number;
   committedThroughSequence: number;
   committedThroughEventId: string | null;
+  latestCommittedBatchId?: string | null;
 };

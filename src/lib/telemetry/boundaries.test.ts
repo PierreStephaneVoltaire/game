@@ -108,7 +108,7 @@ test('a failed logging confirmation cannot reject or retry an acknowledged game 
     contentVersion: 'test',
     baseStateVersion: 1,
     previousEventId: null,
-    targetState: { ending: null },
+    targetState: { ending: null, events: [] },
     events: [],
   } as unknown as OutboxRecord;
   saving.next.mockResolvedValueOnce(pending).mockResolvedValueOnce(null);
@@ -117,7 +117,6 @@ test('a failed logging confirmation cannot reject or retry an acknowledged game 
     'fetch',
     vi
       .fn()
-      .mockResolvedValueOnce(new Response(null, { status: 304 }))
       .mockResolvedValueOnce(
         new Response(
           JSON.stringify({ stateVersion: 2, committedThroughSequence: 0 }),

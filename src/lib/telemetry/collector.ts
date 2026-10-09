@@ -1,3 +1,4 @@
+import type { GameState } from '../game-types';
 export type TraceEntry = {
   sequence: number;
   parentId: string;
@@ -6,12 +7,20 @@ export type TraceEntry = {
   values: unknown;
 };
 
-type Collector = { operationId: string; entries: TraceEntry[] };
+type Collector = {
+  operationId: string;
+  entries: TraceEntry[];
+  resolved?: (state: GameState, entries: TraceEntry[]) => void;
+};
 let active: Collector | undefined;
 
-export function collectCalculations<T>(operationId: string, execute: () => T) {
+export function collectCalculations<T>(
+  operationId: string,
+  execute: () => T,
+  resolved?: Collector['resolved'],
+) {
   const previous = active;
-  const collector: Collector = { operationId, entries: [] };
+  const collector: Collector = { operationId, entries: [], resolved };
   active = collector;
   try {
     return { result: execute(), entries: collector.entries };
@@ -44,4 +53,13 @@ export function calculation<T>(
   if (inputs.every((value) => value === null || typeof value !== 'object'))
     trace('calculation', ruleId, { expression, inputs, result });
   return result;
+}
+
+export function resolvedState<T extends GameState>(state: T): T {
+  try {
+    active?.resolved?.(state, active.entries);
+  } catch {
+    console.warn('Gameplay transition capture failed.');
+  }
+  return state;
 }

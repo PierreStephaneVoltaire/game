@@ -178,3 +178,20 @@ def test_account_suffix_is_stable_and_identity_key_is_independent(monkeypatch):
     assert first == storage.account_suffix("first")
     assert first != storage.account_suffix("second")
     assert len(first) == 32
+
+
+@pytest.mark.parametrize("kind", ["transition", "save_rejected", "stream_superseded"])
+def test_transition_diagnostics_reach_the_existing_blob_queue_and_table_path(monkeypatch, kind):
+    data = payload()
+    record = data["records"][0]
+    record["kind"] = kind
+    evidence = {"input": {"eventIds": ["event-2"], "origin": {"commandId": "action"}},
+                "changes": [{"path": ["balance"], "value": 42}], "calculations": []}
+    record["data"] = [{"path": [], "value": evidence}]
+    _, raw, blobs, queue = ingest(data, monkeypatch)
+    table = MagicMock()
+    processor.process_reference(queue.send_message.call_args.args[0].encode(), blobs, table)
+    entity = table.submit_transaction.call_args.args[0][0][1]
+    assert entity["Kind"] == kind
+    assert entity["Sequence"] == record["sequence"]
+    assert json.loads(gzip.decompress(next(iter(blobs.values.values()))[0]))["records"][0]["data"][0]["value"] == evidence

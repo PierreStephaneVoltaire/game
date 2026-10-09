@@ -87,8 +87,21 @@ gameplay rules.
 - `src/lib/telemetry/browser.ts`, `outbox.ts`, `batches.ts`, and `delivery.ts` —
   account-bound capture, independent IndexedDB storage, lossless fragmentation,
   acknowledged uploads, and retained retry/rejection data.
-- `src/lib/persistence/replay.ts` — existing canonical-save conflict replay,
-  extracted from the session module; associates corrections with capture streams.
+- `src/lib/telemetry/reconstruction.ts` — ordered, read-only patch replay with
+  event steps, checkpoint recovery, missing-record detection, and superseded streams.
+- `src/lib/persistence/replay.ts` — verifies a committed save by batch identity
+  or matching legacy snapshot; it never executes simulation rules.
+- `src/lib/persistence/remote.ts` — complete saved-state/history downloads and
+  atomic local cache replacement after pending data is reconciled.
+- `src/lib/persistence/scheduler.ts`, `write-spacing.ts`, and `locks.ts` —
+  debounced delivery, cross-tab write spacing, and serialized local transitions.
+- `src/lib/persistence/save-points.ts` and
+  `src/lib/simulation/resolution-boundary.ts` — completed simulation boundaries
+  used to split large catch-ups within the existing save event limit.
+- `src/lib/ui/intent-command.ts` — unique action inputs built with the reconciled
+  state version and simulation timestamp.
+- `api/backend/games/snapshot.py` and `diagnostics.py` — complete history hydration
+  from the event ledger and save-rejection diagnostics without snapshot contents.
 - `api/backend/telemetry/` — authenticated, same-origin validation and immutable
   compressed blob writes followed by queue acceptance.
 - `telemetry-worker/` — separate queue-triggered chronological Table index;
@@ -462,8 +475,13 @@ nicknames are prompt aliases only; each alias identifies one element.
   SQL runtime bundles, current-pointer reads, version enforcement, and the
   validated publisher.
 - `src/lib/persistence/` — IndexedDB games, events, outbox, and single-game
-  sync/replay. A batch whose ID matches the game's `lastSentBatchId` is
-  frozen; later saves chain a new batch after it.
+  delivery. Attempted batches are frozen; later saves form a new batch using
+  the actual acknowledged server version and event cursor when first sent.
+  Creation and write retries retain their identities across content updates.
+  Snapshot uploads omit duplicated history, which is restored from the ordered
+  event ledger on reads; completed simulation boundaries keep event batches bounded.
+- `tools/check_gameplay.mjs` — real IndexedDB regressions for action identity,
+  overlapping saves, retries, competing devices, and fresh-browser restoration.
 - `infra/shared` — one long-lived state (`shared.tfstate`): the Entra-only
   PostgreSQL server (tagged `stack = shared`), Log Analytics/App Insights, the
   telemetry worker and its storage, the quote reader role, and the monthly

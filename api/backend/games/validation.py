@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from datetime import datetime
 from typing import Any
 
 from backend.config import get_settings
@@ -31,7 +30,6 @@ def validate_write(write: GameWrite, previous_sequence: int, previous_event_id: 
         raise ApiError(412, "STALE_STATE", "The game event cursor is stale.")
     expected = previous_sequence + 1
     event_ids: set[str] = set()
-    event_at: datetime | None = None
     for event in write.events:
         if event.sequence != expected:
             raise ApiError(409, "EVENT_CONFLICT", "Event sequences must be contiguous.")
@@ -39,10 +37,7 @@ def validate_write(write: GameWrite, previous_sequence: int, previous_event_id: 
             raise ApiError(409, "EVENT_CONFLICT", "Event IDs must be unique.")
         if len(canonical_json(event.payload).encode()) > settings.max_event_bytes:
             raise ApiError(400, "INVALID_REQUEST", "An event is too large.")
-        if event_at and event.event_at < event_at:
-            raise ApiError(409, "EVENT_CONFLICT", "Event timestamps must not decrease.")
         event_ids.add(event.event_id)
-        event_at = event.event_at
         expected += 1
 
 

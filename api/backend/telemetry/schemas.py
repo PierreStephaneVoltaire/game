@@ -84,7 +84,7 @@ class Fragment(StrictModel):
     recordedAt: Timestamp
     engineBuild: Annotated[str, StringConstraints(pattern=r"^[0-9a-f]{64}$")]
     contentVersion: Version
-    kind: Literal["run_initialized", "checkpoint", "command", "clock_reconciled", "save_confirmed", "save_conflict", "command_replay", "replay_applied", "replay_superseded", "run_ended"]
+    kind: Literal["run_initialized", "checkpoint", "command", "clock_reconciled", "save_confirmed", "save_conflict", "command_replay", "replay_applied", "replay_superseded", "run_ended", "transition", "save_rejected", "stream_superseded"]
     summary: Summary
     part: Annotated[int, Field(ge=0, le=9_007_199_254_740_990)]
     parts: Annotated[int, Field(ge=1, le=9_007_199_254_740_991)]
