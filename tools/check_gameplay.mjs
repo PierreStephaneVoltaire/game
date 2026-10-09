@@ -1,4 +1,5 @@
 import { installSaveServer } from './gameplay-check-server.mjs';
+import { verifyConsoleAndPublications } from './gameplay-console-check.mjs';
 import assert from 'node:assert/strict';
 import { chromium } from '@playwright/test';
 import { createServer } from 'vite';
@@ -29,6 +30,7 @@ await context.route('**/gameplay-check', (route) =>
 await page.goto(`${origin}gameplay-check`);
 
 try {
+  await verifyConsoleAndPublications(page);
   const firstCommandId = await page.evaluate(async () => {
     const { UiCommandSequence } =
       await import('/src/lib/ui/command-sequence.ts');

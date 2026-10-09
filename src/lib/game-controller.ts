@@ -51,7 +51,11 @@ export class GameController {
     if (!this.state) throw new Error('Run has not started.');
     this.definition = await this.definitions.load();
     activateGameDefinition(this.definition);
-    this.state = { ...this.state, definitionVersion: this.definition.version };
+    if (this.state.definitionVersion !== this.definition.version)
+      this.state = {
+        ...this.state,
+        definitionVersion: this.definition.version,
+      };
     const execute = () =>
       dispatchCommand(this.state!, command, this.definition!);
     const collected = collectSavePoints(
@@ -79,7 +83,11 @@ export class GameController {
     if (!this.state) throw new Error('Run has not started.');
     this.definition = await this.definitions.load();
     activateGameDefinition(this.definition);
-    this.state = { ...this.state, definitionVersion: this.definition.version };
+    if (this.state.definitionVersion !== this.definition.version)
+      this.state = {
+        ...this.state,
+        definitionVersion: this.definition.version,
+      };
     const execute = () => reconcileTime(this.state!, now, this.definition!);
     const collected = collectSavePoints(
       this.state,

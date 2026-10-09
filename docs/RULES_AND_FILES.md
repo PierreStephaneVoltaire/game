@@ -82,10 +82,15 @@ gameplay rules.
   without evaluating operands twice; assigns source-rule IDs and an engine build digest.
 - `src/lib/telemetry/capture.ts` and `state-changes.ts` — per-stream operation
   identity, initialization checkpoints, ordered state changes, and reconstruction.
+- `src/lib/telemetry/console.ts` — browser console events and applied metric
+  changes with action, calculation, and simulation-time evidence, independent
+  of remote logging configuration.
+- `src/lib/ui/session-state.ts` — publishes one final UI state per serialized
+  session operation, combining local refresh, clock catch-up, and action effects.
 - `src/lib/telemetry/financial.ts` and `nutrition.ts` — separate purchase/payment
   evidence and resolved feeding context, without changing financial or nutrition rules.
 - `src/lib/telemetry/browser.ts`, `outbox.ts`, `batches.ts`, and `delivery.ts` —
-  account-bound capture, independent IndexedDB storage, lossless fragmentation,
+  console capture with account-bound uploads, independent IndexedDB storage, lossless fragmentation,
   acknowledged uploads, and retained retry/rejection data.
 - `src/lib/telemetry/reconstruction.ts` — ordered, read-only patch replay with
   event steps, checkpoint recovery, missing-record detection, and superseded streams.

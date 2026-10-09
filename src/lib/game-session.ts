@@ -1,14 +1,11 @@
-import { derived, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { GameController } from './game-controller';
 import type { GameDefinitionRepository } from './game-definition';
 import { RuntimeContentCache } from './content/runtime-content';
 import type { GameCommand, GameState, Outcome } from './game-types';
-import {
-  createGameViewModel,
-  intentToCommand,
-  type GameIntent,
-  type GameViewModel,
-} from './ui/game-view-model';
+import { intentToCommand, type GameIntent } from './ui/game-view-model';
+import { batchSessionPublication, publishSession } from './ui/session-state';
+export { companionSpeechSession, gameViewModel } from './ui/session-state';
 import { UiCommandSequence } from './ui/command-sequence';
 import {
   loadGame,
@@ -26,7 +23,6 @@ import { nextOutbox } from './persistence/outbox';
 import { withGameLock } from './persistence/locks';
 import { scheduleGameSync } from './persistence/scheduler';
 import { flushGame } from './persistence/sync';
-import type { SpeechSession } from './ui/companion-speech';
 import { browserCapture } from './telemetry/browser';
 import { isLocalDevelopment } from './local-development';
 import { localContent } from './content/local-content';
@@ -36,14 +32,7 @@ const runtimeContent = isLocalDevelopment()
   ? localContent
   : new RuntimeContentCache();
 let activeController = new GameController(runtimeContent);
-const gameSession = writable<SpeechSession | null>(null);
-export const companionSpeechSession = { subscribe: gameSession.subscribe };
 const commandSequence = new UiCommandSequence();
-export const gameViewModel = derived<typeof gameSession, GameViewModel | null>(
-  gameSession,
-  ($session) =>
-    $session ? createGameViewModel($session.state, $session.definition) : null,
-);
 
 function publishGameState(
   state: GameState,
@@ -52,7 +41,7 @@ function publishGameState(
 ): void {
   const definition = activeController.currentDefinition;
   if (!definition) throw new Error('Game definition was not loaded.');
-  gameSession.set({ state, definition, command, outcome });
+  publishSession({ state, definition, command, outcome });
 }
 
 function syncHooks(gameHash: string) {
@@ -131,7 +120,7 @@ function queued<T>(task: () => Promise<T>, gameHash?: string): Promise<T> {
     withGameLock(
       gameHash ?? activeController.current?.seed ?? 'session',
       'transition',
-      task,
+      () => batchSessionPublication(task),
     );
   const run = gameQueue.then(locked, locked);
   gameQueue = run.catch(() => undefined);
@@ -142,7 +131,7 @@ export function useGameDefinitionRepository(
   repository: GameDefinitionRepository,
 ): void {
   activeController = new GameController(repository);
-  gameSession.set(null);
+  publishSession(null);
 }
 
 export function gameKeyIsValid(gameKey: string): boolean {

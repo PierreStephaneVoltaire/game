@@ -33,7 +33,7 @@ export type Operation = {
 
 export type CapturePosition = { streamId: string; operationId: string };
 
-export type TraceSink = (operation: Operation) => void;
+export type TraceSink = (operation: Operation, state: GameState) => void;
 
 export class GameplayCapture {
   readonly streamId = crypto.randomUUID();
@@ -210,7 +210,7 @@ export class GameplayCapture {
         changes: this.previous ? stateChanges(this.previous, state) : [],
         calculations,
       };
-      this.sink(operation);
+      this.sink(operation, state);
       this.previous = structuredClone(state);
       this.parentId = operationId;
       this.positions.set(state, operationId);
