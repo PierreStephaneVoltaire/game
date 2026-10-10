@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
-import { dispatchCommand, reconcileTime, startRun } from './game-engine';
+import { reconcileTime, startRun } from './game-engine';
 import type { GameMode, GameState } from './game-types';
 import rules from './data/simulation-rules.json';
 
@@ -14,6 +14,12 @@ const AUTO_TYPES = new Set([
   'benign_room_event',
   'stream_candidate',
   'item_automatic_hook',
+]);
+
+const OTHER_INCOME_TYPES = new Set([
+  'donation_received',
+  'off_stream_support',
+  'life_event_resolved',
 ]);
 
 function preparedRun(
@@ -52,18 +58,26 @@ function preparedRun(
 
 function streamAttempt(now: number, seed: string, timezone = 'UTC', rest = 10) {
   const state = preparedRun(now, seed, timezone, 'streaming', rest);
-  return dispatchCommand(
-    state,
-    { type: 'use_item', commandId: 'stream-control', itemId: 'missing', now },
+  const opened = reconcileTime(
+    {
+      ...state,
+      now: now - 1,
+      lastResolvedAt: now - 1,
+      history: { ...state.history, nextAutonomousAt: now },
+    },
+    now,
     BUNDLED_GAME_DEFINITION,
-  );
+  ).state;
+  return opened.activity
+    ? reconcileTime(opened, opened.activity.endsAt, BUNDLED_GAME_DEFINITION)
+    : { state: opened, outcomes: [] };
 }
 
-function hasStream(result: ReturnType<typeof dispatchCommand>) {
+function hasStream(result: ReturnType<typeof streamAttempt>) {
   return result.state.events.some((event) => event.type === 'stream_candidate');
 }
 
-function streamDuration(result: ReturnType<typeof dispatchCommand>) {
+function streamDuration(result: ReturnType<typeof streamAttempt>) {
   const candidate = result.state.events.find(
     (event) => event.type === 'stream_candidate',
   );
@@ -119,7 +133,7 @@ describe('stream duration and local-midnight rules', () => {
 
   test('effective duration subtracts missing Rest', () => {
     let seed: string | undefined;
-    let base: ReturnType<typeof dispatchCommand> | undefined;
+    let base: ReturnType<typeof streamAttempt> | undefined;
     for (let index = 0; index < 10_000 && !seed; index += 1) {
       const candidate = streamAttempt(0, `subtraction-${index}`, 'UTC', 10);
       if (streamDuration(candidate) === 6) {
@@ -132,9 +146,9 @@ describe('stream duration and local-midnight rules', () => {
   });
 
   test('a too-tired candidate records refusal instead of starting activity', () => {
-    let result: ReturnType<typeof dispatchCommand> | undefined;
+    let result: ReturnType<typeof streamAttempt> | undefined;
     for (let index = 0; index < 10_000 && !result; index += 1) {
-      const candidate = streamAttempt(0, `tired-${index}`, 'UTC', 0);
+      const candidate = streamAttempt(0, `tired-${index}`, 'UTC', 3);
       if (
         candidate.state.events.some(
           (event) =>
@@ -153,7 +167,7 @@ describe('stream duration and local-midnight rules', () => {
     ['America/Toronto', Date.UTC(2026, 2, 9, 3), Date.UTC(2026, 2, 9, 4)],
     ['America/Toronto', Date.UTC(2026, 10, 2, 4), Date.UTC(2026, 10, 2, 5)],
   ])('caps a stream at local midnight across %s', (timezone, now, midnight) => {
-    let result: ReturnType<typeof dispatchCommand> | undefined;
+    let result: ReturnType<typeof streamAttempt> | undefined;
     for (let index = 0; index < 10_000 && !result; index += 1) {
       const candidate = streamAttempt(now, `midnight-${index}`, timezone);
       if (hasStream(candidate)) result = candidate;
@@ -224,8 +238,18 @@ describe('automatic stream snacks and income', () => {
   });
 
   test('stream rate, completion, and income are deterministic through the public seam', () => {
-    const first = streamAttempt(0, 'income-replay');
-    const second = streamAttempt(0, 'income-replay');
+    const seed = Array.from(
+      { length: 500 },
+      (_, index) => `income-replay-${index}`,
+    ).find((candidate) => {
+      const events = streamAttempt(0, candidate).state.events;
+      return (
+        events.some((event) => event.type === 'activity_completed') &&
+        !events.some((event) => OTHER_INCOME_TYPES.has(event.type))
+      );
+    })!;
+    const first = streamAttempt(0, seed);
+    const second = streamAttempt(0, seed);
     expect(second.state).toEqual(first.state);
     expect(first.state.activity).toBeNull();
     expect(first.state.balance).toBeGreaterThan(
@@ -235,8 +259,13 @@ describe('automatic stream snacks and income', () => {
       (event) => event.type === 'activity_completed',
     )!;
     const duration = (completion.at - 0) / HOUR;
+    const subscriberRevenue = first.state.events
+      .filter((event) => event.type === 'subscriber_revenue')
+      .reduce((sum, event) => sum + (event.amount ?? 0), 0);
     const income =
-      first.state.balance - BUNDLED_GAME_DEFINITION.startingCurrency;
+      first.state.balance -
+      BUNDLED_GAME_DEFINITION.startingCurrency -
+      subscriberRevenue;
     expect(
       Array.from(
         { length: rules.stream.income.rateSlots },

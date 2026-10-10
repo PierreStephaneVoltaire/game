@@ -47,6 +47,21 @@ export function consoleGameplaySink(): TraceSink {
     const before = previous;
     previous = next;
     try {
+      const timeOf = (time: number) => `at ${new Date(time).toISOString()}`;
+      const at = timeOf(operation.simulationAt);
+      const cause =
+        operation.kind === 'stream_superseded'
+          ? 'server replacement'
+          : action?.type
+            ? `requested ${action.type}`
+            : action?.now !== undefined
+              ? 'elapsed time'
+              : operation.kind;
+      const eventCause = (event: { type: string }) =>
+        event.type === 'activity_completed' ||
+        event.type === 'activity_interrupted'
+          ? 'activity completion'
+          : cause;
       if (operation.checkpoint)
         console.log(`[gameplay] ${operation.kind}`, {
           ...context,
@@ -63,7 +78,7 @@ export function consoleGameplaySink(): TraceSink {
           const delta = values[metric] - prior[metric];
           if (!delta) continue;
           console.log(
-            `[gameplay] metric ${metric} ${delta > 0 ? '+' : ''}${delta} (${prior[metric]} → ${values[metric]}): ${reason}`,
+            `[gameplay] metric ${metric} ${delta > 0 ? '+' : ''}${delta} (${prior[metric]} → ${values[metric]}) ${at} [${cause}]: ${reason}`,
             {
               ...context,
               metric,
@@ -75,10 +90,13 @@ export function consoleGameplaySink(): TraceSink {
         }
       }
       for (const event of events)
-        console.log(`[gameplay] event ${event.type}: ${event.message}`, {
-          ...context,
-          event: structuredClone(event),
-        });
+        console.log(
+          `[gameplay] event ${event.type} ${timeOf(event.at)} [${eventCause(event)}]: ${event.message}`,
+          {
+            ...context,
+            event: structuredClone(event),
+          },
+        );
       if (operation.kind === 'command')
         console.log('[gameplay] command', {
           ...context,
@@ -86,7 +104,10 @@ export function consoleGameplaySink(): TraceSink {
           outcomes: operation.outcome,
         });
       if (operation.kind === 'stream_superseded')
-        console.log('[gameplay] stream_superseded', operation.input);
+        console.log(
+          `[gameplay] stream_superseded ${at} [${cause}]`,
+          operation.input,
+        );
     } catch {
       // Browser console extensions can throw; diagnostics must not affect gameplay.
     }

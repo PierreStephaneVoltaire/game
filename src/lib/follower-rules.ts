@@ -58,6 +58,9 @@ export function applyFollowerMilestones(
     ),
   };
   let metrics = state.metrics;
+  const ledgerIds = new Set(state.events.map(({ id }) => id));
+  const nextEventId = () =>
+    `event-${state.events.length + events.filter(({ id }) => !ledgerIds.has(id)).length + 1}`;
   for (const milestone of progressionRules().milestones) {
     if (
       progression.peakFollowers < milestone.followers ||
@@ -101,7 +104,7 @@ export function applyFollowerMilestones(
         },
       ];
     events.push({
-      id: `event-${state.events.length + events.length + 1}`,
+      id: nextEventId(),
       type: 'career_milestone',
       at,
       message: `${milestone.id.replaceAll('_', ' ')} milestone reached.`,
@@ -119,7 +122,7 @@ export function applyFollowerMilestones(
   ) {
     const triggerEventId = events[0]?.id ?? sourceActionId;
     const event: GameEvent = {
-      id: `event-${state.events.length + events.length + 1}`,
+      id: nextEventId(),
       type: 'ending_unlocked',
       at,
       message: madeItUnlockedMessage(

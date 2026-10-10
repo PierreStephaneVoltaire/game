@@ -31,12 +31,12 @@ describe('V2 edge regressions', () => {
             endsAt: 4 * HOUR_MS,
             sourceActionId: type,
           },
-          history: { ...state.history, healthRemainderHours: 1 },
+          history: { ...state.history, healthRemainderMs: HOUR_MS },
         },
         2 * HOUR_MS,
       );
       expect(result.healthIntervals).toBe(0);
-      expect(result.resolvedHealthRemainderHours).toBe(1);
+      expect(result.resolvedHealthRemainderMs).toBe(HOUR_MS);
     }
     const state = run(0, 'unprotected-commission');
     const result = resolveDecay(
@@ -49,7 +49,7 @@ describe('V2 edge regressions', () => {
           endsAt: 6 * HOUR_MS,
           sourceActionId: 'commission',
         },
-        history: { ...state.history, healthRemainderHours: 1 },
+        history: { ...state.history, healthRemainderMs: HOUR_MS },
       },
       2 * HOUR_MS,
     );
@@ -253,28 +253,37 @@ describe('V2 edge regressions', () => {
     const now = Date.UTC(2026, 0, 1, 14);
     for (const seed of ['queued-one', 'queued-two', 'queued-three']) {
       const state = run(now, seed);
-      const resolved = resolveAttemptEvent(
-        {
-          ...state,
-          progression: {
-            ...state.progression,
-            queuedEventStreams: [
-              {
-                id: 'queued',
-                type: 'model_debut',
-                queuedAt: now - HOUR_MS,
-                durationHours: 4,
-                donationMultiplier: 1,
-                modelTier: 1,
-              },
-            ],
-          },
+      const queued: GameState = {
+        ...state,
+        progression: {
+          ...state.progression,
+          queuedEventStreams: [
+            {
+              id: 'queued',
+              type: 'model_debut',
+              queuedAt: now - HOUR_MS,
+              durationHours: 4,
+              donationMultiplier: 1,
+              modelTier: 1,
+            },
+          ],
         },
+      };
+      const resolved = resolveAttemptEvent(
+        queued,
         `opportunity-${seed}`,
         BUNDLED_GAME_DEFINITION,
+        { scheduledOpportunity: true },
       );
       expect(resolved.activity?.type).toBe('stream');
       expect(resolved.progression.queuedEventStreams).toEqual([]);
+      const attempt = resolveAttemptEvent(
+        queued,
+        `attempt-${seed}`,
+        BUNDLED_GAME_DEFINITION,
+      );
+      expect(attempt.activity).toBeNull();
+      expect(attempt.progression.queuedEventStreams).toHaveLength(1);
     }
   });
 });

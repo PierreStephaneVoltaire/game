@@ -62,7 +62,7 @@
   });
 
   async function act(intent: GameIntent) {
-    if (careBlocked) return;
+    if (intent.type === 'wait' ? model?.commandsDisabled : careBlocked) return;
     errorMessage = '';
     try {
       await sendGameIntent(intent);

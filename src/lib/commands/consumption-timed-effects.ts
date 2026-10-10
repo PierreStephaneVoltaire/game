@@ -2,6 +2,7 @@ import type { GameDefinition } from '../game-definition';
 import type { GameState } from '../game-types';
 import { simulationRules as rules } from '../runtime-definition';
 import { HOUR_MS } from '../game-constants';
+import { decayRemainderMs } from '../simulation/decay-remainders';
 import type { NutritionResolution } from './nutrition-resolution';
 
 export function resolveTimedEffectsAfterConsumption(
@@ -19,10 +20,8 @@ export function resolveTimedEffectsAfterConsumption(
     caffeine >= rules.caffeine.minimumScore &&
     state.timedEffects.deferredRestLossAt === null
       ? at +
-        (rules.timeDecay.intervalHours -
-          state.history.decayRemainderHours +
-          rules.caffeine.deferHours) *
-          HOUR_MS
+        (rules.timeDecay.intervalHours + rules.caffeine.deferHours) * HOUR_MS -
+        decayRemainderMs(state.history)
       : state.timedEffects.deferredRestLossAt;
   const hyperfocus = item.tags.includes('hyperfocus');
   return {

@@ -1,5 +1,5 @@
 import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
-import { dispatchCommand, startRun } from './game-engine';
+import { reconcileTime, startRun } from './game-engine';
 import type { GameState } from './game-types';
 
 export const HOUR = 3_600_000;
@@ -52,21 +52,29 @@ export function eligibleRunAt(
   };
 }
 
+export function scheduledOpportunity(state: GameState) {
+  return reconcileTime(
+    {
+      ...state,
+      lastResolvedAt: state.now - 1,
+      history: {
+        ...state.history,
+        lastStatusReconcileAt: state.now - 1,
+        nextAutonomousAt: state.now,
+      },
+    },
+    state.now,
+    BUNDLED_GAME_DEFINITION,
+  );
+}
+
 export function opportunityCauseAt(
   seed: string,
   droughtHours: number,
   now: number,
 ) {
-  const state = eligibleRunAt(seed, droughtHours, now);
-  return dispatchCommand(
-    state,
-    {
-      type: 'use_item',
-      commandId: 'stream-protection-opportunity',
-      itemId: 'missing',
-      now,
-    },
-    BUNDLED_GAME_DEFINITION,
+  return scheduledOpportunity(
+    eligibleRunAt(seed, droughtHours, now),
   ).state.events.find((event) => event.type === 'random_event_opportunity')
     ?.cause;
 }

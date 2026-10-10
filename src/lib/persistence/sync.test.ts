@@ -137,3 +137,54 @@ test('invalid acknowledgements cannot advance a cursor', async () => {
   expect(storage.acknowledge).not.toHaveBeenCalled();
   expect(storage.noteRetry).toHaveBeenCalledWith(pending.batchId);
 });
+
+test('a rejected save with no newer server progress keeps local progress and its batch', async () => {
+  fetcher.mockResolvedValue(
+    json(409, {
+      error: { code: 'EVENT_CONFLICT', message: 'Event IDs must be unique.' },
+    }),
+  );
+  remote.downloadGame.mockResolvedValue({
+    stateVersion: 3,
+    lastEventSequence: 0,
+    lastEventId: null,
+    state: { ...state, stateVersion: 3, balance: 0 },
+  });
+  const adoptRemote = vi.fn();
+  const rejected = vi.fn();
+  await flushGame(pending.gameHash, { adoptRemote, rejected });
+  expect(adoptRemote).not.toHaveBeenCalled();
+  expect(remote.cacheRemoteGame).not.toHaveBeenCalled();
+  expect(storage.acknowledge).not.toHaveBeenCalled();
+  expect(storage.noteRetry).toHaveBeenCalledWith(pending.batchId);
+  expect(rejected).toHaveBeenLastCalledWith(
+    pending,
+    expect.objectContaining({
+      code: 'EVENT_CONFLICT',
+      resolution: 'local_progress_retained',
+      remoteStateVersion: 3,
+      batchId: pending.batchId,
+    }),
+  );
+});
+
+test('a malformed local ledger is diagnosed and retained without being sent', async () => {
+  const duplicate = { id: 'event-1', type: 'x', at: 0, message: '' };
+  const malformed: OutboxRecord = {
+    ...pending,
+    targetState: {
+      ...state,
+      events: [duplicate, duplicate],
+    } as unknown as GameState,
+  };
+  storage.nextOutbox.mockReset();
+  storage.nextOutbox.mockResolvedValueOnce(malformed).mockResolvedValue(null);
+  const rejected = vi.fn();
+  await flushGame(pending.gameHash, { rejected });
+  expect(fetcher).not.toHaveBeenCalled();
+  expect(storage.noteRetry).toHaveBeenCalledWith(pending.batchId);
+  expect(rejected).toHaveBeenCalledWith(
+    malformed,
+    expect.objectContaining({ code: 'LOCAL_LEDGER_INVALID' }),
+  );
+});

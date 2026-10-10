@@ -76,9 +76,16 @@ whose end is later than the return time remains visibly active.
 
 ### Streaming mode
 
-Game time advances only through timed actions and Advance Time. Instant actions
-do not advance it. Timed activities resolve immediately to their ending or
-interruption boundary.
+Game time advances only through timed actions and Advance Time. No game time
+passes while the player is idle, whether or not an activity is running. Instant
+actions do not advance it. A player-requested Rest, Socialize, Play, Hospital
+visit, or Commission Work resolves immediately to its own ending or
+interruption boundary and stops there; an activity that begins at that boundary
+does not extend it.
+
+Advance Time remains available while an activity is running. A stream that
+ends inside the requested interval completes at its own boundary; a stream
+that extends past the interval's end remains active.
 
 Advance Time opens a duration picker: Random, 12 hours, 6 hours, 3 hours,
 or 1 hour. Random keeps the seeded behavior below:
@@ -508,7 +515,10 @@ starts a stream nor resets stream-drought protection.
 ## Autonomous streaming and donations
 
 The player cannot start an ordinary stream. It is selected from the autonomous
-pool only when no activity or blocking status is active. Stream blockers are
+pool only at a time-owned opportunity, and only when no activity or blocking
+status is active. Attempt-owned and completion-owned opportunities keep their
+other candidates but cannot start a stream, including a queued Tournament or
+model-debut stream. Stream blockers are
 Starving, Sleep Deprived, Sick, Kidney Stone, Depressed, and Lost Voice. Hungry, Low Energy,
 Overstimulated, and Dizzy Spell keep their other effects but are not hard
 stream blockers.

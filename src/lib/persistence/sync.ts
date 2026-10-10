@@ -2,6 +2,7 @@ import { waitForWriteSlot } from './write-spacing';
 import { acknowledge, markSent, nextOutbox, noteRetry } from './outbox';
 import { committedSave } from './replay';
 import { cacheRemoteGame, downloadGame, type RemoteGame } from './remote';
+import type { GameState } from '../game-types';
 import { withGameLock } from './locks';
 import type { EventRecord, OutboxRecord, SyncAcknowledgement } from './types';
 
@@ -109,12 +110,53 @@ function acknowledgement(
   };
 }
 
+function ledgerProblem(pending: OutboxRecord): string | null {
+  const ledgerIds = pending.targetState.events.map(({ id }) => id);
+  if (new Set(ledgerIds).size !== ledgerIds.length)
+    return 'Local event IDs are not unique.';
+  const first = pending.events[0]?.sequence ?? 0;
+  if (pending.events.some(({ sequence }, index) => sequence !== first + index))
+    return 'Local event sequences are not contiguous.';
+  return null;
+}
+
+function hasNewerProgress(remote: RemoteGame, pending: OutboxRecord) {
+  return (
+    remote.stateVersion > pending.baseStateVersion ||
+    remote.lastEventId !== pending.previousEventId
+  );
+}
+
+function metricDifferences(local: GameState, remote: GameState) {
+  const differences: Record<string, number> = {};
+  for (const metric of Object.keys(local.metrics) as Array<
+    keyof GameState['metrics']
+  >) {
+    const delta = remote.metrics[metric] - local.metrics[metric];
+    if (delta) differences[metric] = delta;
+  }
+  if (remote.balance !== local.balance)
+    differences.balance = remote.balance - local.balance;
+  return differences;
+}
+
 function notify(task: () => void): void {
   try {
     task();
   } catch {
     console.warn('Gameplay save diagnostic failed.');
   }
+}
+
+function rejectionDetail(sent: OutboxRecord) {
+  return {
+    batchId: sent.batchId,
+    baseStateVersion: sent.baseStateVersion,
+    localStateVersion: sent.targetState.stateVersion,
+    previousEventId: sent.previousEventId,
+    firstSequence: sent.events[0]?.sequence,
+    throughSequence: sent.events.at(-1)?.sequence,
+  };
 }
 
 async function flush(gameHash: string, hooks: SyncHooks): Promise<void> {
@@ -131,6 +173,18 @@ async function flush(gameHash: string, hooks: SyncHooks): Promise<void> {
     await waitForWriteSlot(gameHash);
     const sent = await markSent(pending);
     if (!sent) continue;
+    const problem = ledgerProblem(sent);
+    if (problem) {
+      notify(() =>
+        hooks.rejected?.(sent, {
+          ...rejectionDetail(sent),
+          reason: problem,
+          code: 'LOCAL_LEDGER_INVALID',
+        }),
+      );
+      await noteRetry(sent.batchId);
+      return;
+    }
     try {
       const response = await send(sent);
       if (response.ok) {
@@ -143,14 +197,11 @@ async function flush(gameHash: string, hooks: SyncHooks): Promise<void> {
       const body: ErrorBody = await response.json().catch(() => ({}));
       const code = body.error?.code ?? `HTTP_${response.status}`;
       const detail = {
+        ...rejectionDetail(sent),
         reason: body.error?.message ?? code,
         code,
         status: response.status,
         requestId: response.headers.get('x-request-id') ?? sent.batchId,
-        batchId: sent.batchId,
-        baseStateVersion: sent.baseStateVersion,
-        previousEventId: sent.previousEventId,
-        throughSequence: sent.events.at(-1)?.sequence,
       };
       notify(() => hooks.rejected?.(sent, detail));
       if (CONFLICTS.has(code)) {
@@ -162,6 +213,36 @@ async function flush(gameHash: string, hooks: SyncHooks): Promise<void> {
           notify(() => hooks.confirmed?.(sent, committed));
           continue;
         }
+        if (!hasNewerProgress(remote, sent)) {
+          notify(() =>
+            hooks.rejected?.(sent, {
+              ...detail,
+              resolution: 'local_progress_retained',
+              remoteStateVersion: remote.stateVersion,
+              remoteLastEventId: remote.lastEventId,
+              remoteLastEventSequence: remote.lastEventSequence,
+            }),
+          );
+          await noteRetry(sent.batchId);
+          return;
+        }
+        notify(() =>
+          console.warn(
+            `[gameplay] save replaced by newer server progress (batch ${sent.batchId}, version ${sent.baseStateVersion} → ${remote.stateVersion})`,
+            {
+              batchId: sent.batchId,
+              code,
+              localStateVersion: sent.targetState.stateVersion,
+              remoteStateVersion: remote.stateVersion,
+              previousEventId: sent.previousEventId,
+              remoteLastEventId: remote.lastEventId,
+              metricDifferences: metricDifferences(
+                sent.targetState,
+                remote.state,
+              ),
+            },
+          ),
+        );
         if (hooks.adoptRemote) await hooks.adoptRemote(remote, sent);
         else
           await withGameLock(gameHash, 'transition', () =>

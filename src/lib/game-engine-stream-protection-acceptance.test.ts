@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 
 import { BUNDLED_GAME_DEFINITION } from './test-game-definition';
-import { dispatchCommand, reconcileTime } from './game-engine';
+import { reconcileTime } from './game-engine';
 import type { GameState } from './game-types';
 import rules from './data/simulation-rules.json';
 import { actionRandom } from './seeded-rng';
@@ -13,6 +13,7 @@ import {
   NOW,
   opportunityCause,
   opportunityCauseAt,
+  scheduledOpportunity,
 } from './stream-protection-test-fixtures';
 
 describe('autonomous stream drought protection', () => {
@@ -94,16 +95,7 @@ describe('autonomous stream drought protection', () => {
     let selected: GameState | undefined;
     for (let index = 0; index < 100 && !selected; index += 1) {
       const seed = `pity-reset-${index}`;
-      const result = dispatchCommand(
-        eligibleRun(seed, 100),
-        {
-          type: 'use_item',
-          commandId: 'ordinary-stream-selection',
-          itemId: 'missing',
-          now: NOW,
-        },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
+      const result = scheduledOpportunity(eligibleRun(seed, 100)).state;
       if (
         result.events.some(
           (event) =>
@@ -141,19 +133,10 @@ describe('autonomous stream drought protection', () => {
 
   test('pity accrues unchanged while an ordinary stream is blocked', () => {
     const initial = eligibleRun('blocked-pity', 100);
-    const result = dispatchCommand(
-      {
-        ...initial,
-        statuses: { sick: { since: NOW, source: 'test' } },
-      },
-      {
-        type: 'use_item',
-        commandId: 'blocked-pity-opportunity',
-        itemId: 'missing',
-        now: NOW,
-      },
-      BUNDLED_GAME_DEFINITION,
-    ).state;
+    const result = scheduledOpportunity({
+      ...initial,
+      statuses: { sick: { since: NOW, source: 'test' } },
+    }).state;
 
     expect(result.progression.lastQualifyingOrdinaryStreamStartedAt).toBe(
       NOW - 100 * HOUR,
@@ -165,31 +148,23 @@ describe('autonomous stream drought protection', () => {
     (type) => {
       const now = Date.UTC(2026, 0, 2, 14);
       const initial = eligibleRunAt(`queued-${type}`, 100, now);
-      const result = dispatchCommand(
-        {
-          ...initial,
-          progression: {
-            ...initial.progression,
-            queuedEventStreams: [
-              {
-                id: `queued-${type}`,
-                type,
-                queuedAt: now - HOUR,
-                durationHours: 4,
-                donationMultiplier: 1,
-              },
-            ],
-          },
+      const result = scheduledOpportunity({
+        ...initial,
+        progression: {
+          ...initial.progression,
+          queuedEventStreams: [
+            {
+              id: `queued-${type}`,
+              type,
+              queuedAt: now - HOUR,
+              durationHours: 4,
+              donationMultiplier: 1,
+            },
+          ],
         },
-        {
-          type: 'use_item',
-          commandId: `queued-${type}-opportunity`,
-          itemId: 'missing',
-          now,
-        },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
+      }).state;
 
+      expect(result.activity?.type).toBe('stream');
       expect(result.progression.lastQualifyingOrdinaryStreamStartedAt).toBe(
         now - 100 * HOUR,
       );
@@ -200,16 +175,10 @@ describe('autonomous stream drought protection', () => {
     let selected: GameState | undefined;
     for (let index = 0; index < 100 && !selected; index += 1) {
       const initial = eligibleRun(`too-tired-reset-${index}`, 100);
-      const result = dispatchCommand(
-        { ...initial, metrics: { ...initial.metrics, rest: 0 } },
-        {
-          type: 'use_item',
-          commandId: 'too-tired-stream-selection',
-          itemId: 'missing',
-          now: NOW,
-        },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
+      const result = scheduledOpportunity({
+        ...initial,
+        metrics: { ...initial.metrics, rest: 3 },
+      }).state;
       if (
         result.events.some(
           (event) =>
@@ -231,16 +200,7 @@ describe('autonomous stream drought protection', () => {
     let selected: GameState | undefined;
     for (let index = 0; index < 100 && !selected; index += 1) {
       const initial = eligibleRunAt(`midnight-reset-${index}`, 100, now);
-      const result = dispatchCommand(
-        initial,
-        {
-          type: 'use_item',
-          commandId: 'midnight-capped-selection',
-          itemId: 'missing',
-          now,
-        },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
+      const result = scheduledOpportunity(initial).state;
       if (result.activity?.type === 'stream') selected = result;
     }
 
@@ -269,16 +229,7 @@ describe('autonomous stream drought protection', () => {
     let selected: GameState | undefined;
     for (let index = 0; index < 100 && !selected; index += 1) {
       const initial = eligibleRun(`interrupted-reset-${index}`, 100);
-      const result = dispatchCommand(
-        initial,
-        {
-          type: 'use_item',
-          commandId: 'interrupted-stream-selection',
-          itemId: 'missing',
-          now: NOW,
-        },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
+      const result = scheduledOpportunity(initial).state;
       if (result.activity?.type === 'stream') selected = result;
     }
 

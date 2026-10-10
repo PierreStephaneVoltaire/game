@@ -103,6 +103,23 @@ describe('console gameplay diagnostics', () => {
     );
     expect(metricLines.some((line) => line.message.includes(' +'))).toBe(true);
     expect(metricLines.some((line) => line.message.includes(' -'))).toBe(true);
+    const eventLines = lines.filter((line) =>
+      line.message.startsWith('[gameplay] event '),
+    );
+    for (const line of eventLines)
+      expect(line.message).toContain(
+        `at ${new Date((line.detail?.event as { at: number }).at).toISOString()} [`,
+      );
+    expect(
+      metricLines.every((line) =>
+        /\) at \d{4}-\d{2}-\d{2}T[\d:.]+Z \[requested (wait|socialize)\]: /.test(
+          line.message,
+        ),
+      ),
+    ).toBe(true);
+    expect(
+      eventLines.some((line) => line.message.includes('[requested wait]')),
+    ).toBe(true);
     const operations: Operation[] = [];
     const capture = new GameplayCapture((operation) =>
       operations.push(operation),

@@ -29,6 +29,7 @@ export function resolveAttemptEvent(
   state: GameState,
   commandId: string,
   definition: GameDefinition,
+  { scheduledOpportunity = false }: { scheduledOpportunity?: boolean } = {},
 ): GameState {
   resolvedState(state);
   const rules = definition.simulationRules;
@@ -38,6 +39,7 @@ export function resolveAttemptEvent(
     state,
     commandId,
     definition,
+    scheduledOpportunity,
   );
   if (selected === 'none')
     return {

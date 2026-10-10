@@ -43,7 +43,7 @@
       class="advance-time-action"
       type="button"
       on:click={() => advanceTimeDialog.showModal()}
-      {disabled}>Advance time</button
+      disabled={model.commandsDisabled}>Advance time</button
     >
   {/if}
   {#if model.ending}
@@ -89,11 +89,16 @@
 >
   <h2 id="advance-time-title">Advance time</h2>
   <div class="dialog-actions time-options">
-    <button type="button" {disabled} on:click={() => advanceTime()}
-      >Random</button
+    <button
+      type="button"
+      disabled={model.commandsDisabled}
+      on:click={() => advanceTime()}>Random</button
     >
     {#each model.waitHours as hours (hours)}
-      <button type="button" {disabled} on:click={() => advanceTime(hours)}
+      <button
+        type="button"
+        disabled={model.commandsDisabled}
+        on:click={() => advanceTime(hours)}
         >{hours} {hours === 1 ? 'hour' : 'hours'}</button
       >
     {/each}

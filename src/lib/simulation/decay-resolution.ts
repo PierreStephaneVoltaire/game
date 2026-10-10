@@ -10,6 +10,7 @@ import {
   resolveHealthWindow,
 } from './health-resolution';
 import { resolveDizzyHealthCheck } from './dizzy-resolution';
+import { decayRemainderMs, healthRemainderMs } from './decay-remainders';
 import {
   pinHyperfocusStatusEffects,
   resolveHyperfocusBoundary,
@@ -26,8 +27,8 @@ export type DecayResolution = {
   deathAt: number | null;
   reconciliationNow: number;
   resolvedElapsedHours: number;
-  resolvedDecayRemainderHours: number;
-  resolvedHealthRemainderHours: number;
+  resolvedDecayRemainderMs: number;
+  resolvedHealthRemainderMs: number;
   pendingFoodDecayHit: boolean;
   lastBondGainAt: number;
   healthDamageSources: HealthDamageSource[];
@@ -41,24 +42,24 @@ export function resolveDecay(
   now: number,
   options: { preventLethal?: boolean } = {},
 ): DecayResolution {
-  const intervalHours = rules.timeDecay.intervalHours;
+  const intervalMs = rules.timeDecay.intervalHours * HOUR_MS;
   const foodDecayProbability =
     rules.timeDecay.foodDecayProbability *
     (state.activity?.type === 'rest'
       ? rules.timeDecay.restingFoodDecayProbabilityMultiplier
       : 1);
-  const elapsedHours = (now - state.lastResolvedAt) / HOUR_MS;
+  const elapsedMs = now - state.lastResolvedAt;
   const paused = activityPausesDecay(state);
-  const accumulatedHours =
-    state.history.decayRemainderHours + (paused ? 0 : elapsedHours);
-  const intervals = Math.floor(accumulatedHours / intervalHours);
-  const decayRemainderHours = accumulatedHours - intervals * intervalHours;
+  const priorDecayMs = decayRemainderMs(state.history);
+  const accumulatedMs = priorDecayMs + (paused ? 0 : elapsedMs);
+  const intervals = Math.floor(accumulatedMs / intervalMs);
+  const decayRemainder = accumulatedMs - intervals * intervalMs;
   const protectedActivity = isHealthProtectedActivity(state);
-  const accumulatedHealthHours =
-    state.history.healthRemainderHours + (protectedActivity ? 0 : elapsedHours);
-  const healthIntervals = Math.floor(accumulatedHealthHours / intervalHours);
-  const healthRemainderHours =
-    accumulatedHealthHours - healthIntervals * intervalHours;
+  const priorHealthMs = healthRemainderMs(state.history);
+  const accumulatedHealthMs =
+    priorHealthMs + (protectedActivity ? 0 : elapsedMs);
+  const healthIntervals = Math.floor(accumulatedHealthMs / intervalMs);
+  const healthRemainder = accumulatedHealthMs - healthIntervals * intervalMs;
   const recoveryMetrics = { ...state.metrics };
   const hyperfocus = resolveHyperfocusBoundary(
     state,
@@ -79,11 +80,7 @@ export function resolveDecay(
 
   for (let interval = 0; interval < intervals; interval += 1) {
     const boundaryAt =
-      state.lastResolvedAt +
-      (intervalHours -
-        state.history.decayRemainderHours +
-        interval * intervalHours) *
-        HOUR_MS;
+      state.lastResolvedAt + intervalMs - priorDecayMs + interval * intervalMs;
     const foodDecayHit =
       actionRandom(
         state.seed,
@@ -137,11 +134,7 @@ export function resolveDecay(
 
   for (let interval = 0; interval < healthIntervals; interval += 1) {
     const boundaryAt =
-      state.lastResolvedAt +
-      (intervalHours -
-        state.history.healthRemainderHours +
-        interval * intervalHours) *
-        HOUR_MS;
+      state.lastResolvedAt + intervalMs - priorHealthMs + interval * intervalMs;
     const health = resolveHealthWindow({
       health: metrics.health,
       metricsAfterDecay: metrics,
@@ -178,7 +171,7 @@ export function resolveDecay(
     (reconciliationNow - state.lastResolvedAt) / HOUR_MS;
   const bondClock =
     state.history.lastBondGainAt +
-    (paused ? resolvedElapsedHours * HOUR_MS : 0);
+    (paused ? reconciliationNow - state.lastResolvedAt : 0);
   const bondIntervals = Math.floor(
     (reconciliationNow - bondClock) / (rules.timeDecay.bondLossHours * HOUR_MS),
   );
@@ -251,10 +244,10 @@ export function resolveDecay(
     deathAt,
     reconciliationNow,
     resolvedElapsedHours,
-    resolvedDecayRemainderHours: decayRemainderHours,
-    resolvedHealthRemainderHours: protectedActivity
-      ? state.history.healthRemainderHours
-      : healthRemainderHours,
+    resolvedDecayRemainderMs: decayRemainder,
+    resolvedHealthRemainderMs: protectedActivity
+      ? priorHealthMs
+      : healthRemainder,
     pendingFoodDecayHit,
     lastBondGainAt:
       bondIntervals > 0

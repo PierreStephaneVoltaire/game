@@ -227,3 +227,19 @@ def test_compact_snapshots_restore_history_and_terminal_creation() -> None:
     assert session.get(Game, key).state_json["events"] == []
     session.rollback()
     assert games.create(session, user_id, "a" * 64, creation)["stateVersion"] == 0
+
+
+@pytest.mark.parametrize(
+    ("events", "message"),
+    [
+        ([event(1, "event-1"), event(2, "event-1")], "Event IDs must be unique."),
+        ([event(1, "event-1"), event(3, "event-3")], "Event sequences must be contiguous."),
+    ],
+)
+def test_malformed_ledgers_are_rejected_as_event_conflicts(events: list[dict[str, object]], message: str) -> None:
+    from backend.games.validation import validate_write
+
+    write = GameWrite.model_validate({"batchId": "batch", "previousEventId": None, "targetState": {}, "events": events})
+    with pytest.raises(ApiError) as raised:
+        validate_write(write, 0, None)
+    assert (raised.value.status_code, raised.value.code, str(raised.value)) == (409, "EVENT_CONFLICT", message)

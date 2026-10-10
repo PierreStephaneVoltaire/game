@@ -160,6 +160,8 @@ gameplay rules.
   clocks, plus ordered
   project, autonomous-opportunity, Subscriber Revenue, status, and recurrence
   effects.
+- `src/lib/simulation/decay-remainders.ts` — integer-millisecond need and
+  Health interval remainders, reading legacy fractional-hour saves.
 - `src/lib/subscriber-revenue-rules.ts` — interval eligibility, payout, and
   atomic financial settlement for Subscriber Revenue.
 - `src/lib/simulation/timeline-opportunities.ts` and

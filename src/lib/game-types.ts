@@ -120,6 +120,7 @@ export type GameEvent = {
   streamEligible?: boolean;
   streamBlockers?: StatusName[];
   streamBlockedByActivity?: boolean;
+  streamBlockedByUnscheduledOpportunity?: boolean;
   streamRawWeight?: number;
   streamFinalWeight?: number;
   streamDroughtHours?: number;

@@ -43,7 +43,7 @@ describe('care activity decay pause', () => {
       quiet,
     );
     initial.inventory = { [itemId]: 1, controller: 1 };
-    initial.history.decayRemainderHours = 1.9;
+    initial.history.decayRemainderMs = 1.9 * HOUR_MS;
     const result = dispatchCommand(
       initial,
       {
@@ -57,8 +57,8 @@ describe('care activity decay pause', () => {
     );
     expect(result.outcomes[0]?.accepted).toBe(true);
     expect(result.state.now).toBe(initial.now);
-    expect(result.state.history.decayRemainderHours).toBe(
-      initial.history.decayRemainderHours,
+    expect(result.state.history.decayRemainderMs).toBe(
+      initial.history.decayRemainderMs,
     );
     const effects = result.state.events.find(
       (event) => event.type === 'item_used',
@@ -82,8 +82,8 @@ describe('care activity decay pause', () => {
         ...initial,
         history: {
           ...initial.history,
-          decayRemainderHours: 1.75,
-          healthRemainderHours: 1.75,
+          decayRemainderMs: 1.75 * HOUR_MS,
+          healthRemainderMs: 1.75 * HOUR_MS,
           lastBondGainAt: -47.75 * HOUR_MS,
         },
         activity: {
@@ -96,8 +96,8 @@ describe('care activity decay pause', () => {
       };
       const paused = resolveDecay(state, 3 * HOUR_MS);
       expect(paused.metrics).toEqual(state.metrics);
-      expect(paused.resolvedDecayRemainderHours).toBe(1.75);
-      expect(paused.resolvedHealthRemainderHours).toBe(1.75);
+      expect(paused.resolvedDecayRemainderMs).toBe(1.75 * HOUR_MS);
+      expect(paused.resolvedHealthRemainderMs).toBe(1.75 * HOUR_MS);
       const resumed = {
         ...state,
         activity: null,
@@ -123,7 +123,7 @@ describe('care activity decay pause', () => {
           { mode, now: 0, seed: 'care-pause', timezone: 'UTC' },
           quiet,
         );
-        initial.history.decayRemainderHours = 1.9;
+        initial.history.decayRemainderMs = 1.9 * HOUR_MS;
         const transition = dispatchCommand(
           initial,
           { type, commandId: 'care', now: 0 },

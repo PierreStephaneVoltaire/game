@@ -8,6 +8,7 @@ import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
 import { nextEndingBoundary } from '../ending-rules';
 import { isHealthProtectedActivity } from './health-resolution';
+import { decayRemainderMs, healthRemainderMs } from './decay-remainders';
 import { nextVentureBoundaries } from '../commands/creator-services';
 import {
   nextLifeEventBoundary,
@@ -25,14 +26,12 @@ export function nextReconciliationBoundaries(
   state: GameState,
   now: number,
 ): ReconciliationBoundarySet {
-  const intervalHours = rules.timeDecay.intervalHours;
+  const intervalMs = rules.timeDecay.intervalHours * HOUR_MS;
   const nextDecayAt =
-    state.lastResolvedAt +
-    (intervalHours - state.history.decayRemainderHours) * HOUR_MS;
+    state.lastResolvedAt + intervalMs - decayRemainderMs(state.history);
   const nextHealthAt = isHealthProtectedActivity(state)
     ? undefined
-    : state.lastResolvedAt +
-      (intervalHours - state.history.healthRemainderHours) * HOUR_MS;
+    : state.lastResolvedAt + intervalMs - healthRemainderMs(state.history);
   const potentialRegularBoundaries = [
     state.activity?.endsAt,
     state.history.sugarCrashDueAt ?? undefined,

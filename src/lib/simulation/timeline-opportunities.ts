@@ -18,7 +18,9 @@ export function resolveTimelineOpportunities(input: {
     const commandId = `autonomous:${input.at}`;
     const beforeVersion = next.stateVersion;
     next = resolvedState(
-      resolveAttemptEvent(next, commandId, input.definition),
+      resolveAttemptEvent(next, commandId, input.definition, {
+        scheduledOpportunity: true,
+      }),
     );
     const opportunity = next.events[next.events.length - 1];
     if (

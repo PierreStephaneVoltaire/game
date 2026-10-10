@@ -139,7 +139,7 @@ describe('protected activities and Streaming fairness', () => {
     ).state;
 
     expect(result.metrics.health).toBe(11);
-    expect(result.history.healthRemainderHours).toBe(0);
+    expect(result.history.healthRemainderMs).toBe(0);
     expect(result.activity?.type).toBe('stream');
   });
 
@@ -150,7 +150,7 @@ describe('protected activities and Streaming fairness', () => {
       metrics: metrics({ food: 0, health: 4, rest: 10 }),
       history: {
         ...initial.history,
-        healthRemainderHours: 1,
+        healthRemainderMs: HOUR,
         pendingFoodDecayHit: true,
       },
       activity: {
@@ -169,7 +169,7 @@ describe('protected activities and Streaming fairness', () => {
     ).state;
 
     expect(during.metrics.health).toBe(4);
-    expect(during.history.healthRemainderHours).toBe(1);
+    expect(during.history.healthRemainderMs).toBe(HOUR);
     expect(during.history.pendingFoodDecayHit).toBe(true);
   });
 

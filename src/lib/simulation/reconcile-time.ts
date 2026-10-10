@@ -125,8 +125,8 @@ export function reconcileTime(
     history: {
       ...state.history,
       lastStatusReconcileAt: reconciliationNow,
-      decayRemainderHours: decay.resolvedDecayRemainderHours,
-      healthRemainderHours: decay.resolvedHealthRemainderHours,
+      decayRemainderMs: decay.resolvedDecayRemainderMs,
+      healthRemainderMs: decay.resolvedHealthRemainderMs,
       pendingFoodDecayHit: decay.pendingFoodDecayHit,
       lastBondGainAt: decay.lastBondGainAt,
       sugarCrashDueAt: decay.statusReconciliation.sugarCrashDueAt,
