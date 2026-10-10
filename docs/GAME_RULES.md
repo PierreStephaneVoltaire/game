@@ -77,15 +77,11 @@ whose end is later than the return time remains visibly active.
 ### Streaming mode
 
 Game time advances only through timed actions and Advance Time. No game time
-passes while the player is idle, whether or not an activity is running. Instant
-actions do not advance it. A player-requested Rest, Socialize, Play, Hospital
-visit, or Commission Work resolves immediately to its own ending or
-interruption boundary and stops there; an activity that begins at that boundary
-does not extend it.
-
-Advance Time remains available while an activity is running. A stream that
-ends inside the requested interval completes at its own boundary; a stream
-that extends past the interval's end remains active.
+passes while the player is idle. Instant actions do not advance it and cannot
+start an activity. Every activity resolves immediately to its ending or
+interruption boundary, so the companion is never left busy between commands.
+This includes a stream or exhausted Rest that begins during Advance Time, even
+when it runs past the requested interval.
 
 Advance Time opens a duration picker: Random, 12 hours, 6 hours, 3 hours,
 or 1 hour. Random keeps the seeded behavior below:

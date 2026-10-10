@@ -99,7 +99,7 @@ export function dispatchCommand(
         ),
       );
     }
-    return rememberAndAdvance(
+    return rememberAndCompleteStreaming(
       staleState,
       command.commandId,
       staleOutcome,
@@ -118,12 +118,11 @@ export function dispatchCommand(
       consumptionAction = itemActionResult.consumeAction;
       command = { ...command, type: 'use_item' };
     } else {
-      return rememberAndAdvance(
+      return rememberAndCompleteStreaming(
         reconcileRunEnding(itemActionResult.state),
         command.commandId,
         itemActionResult.outcome,
         definition,
-        requestedActivityEnd(timed, itemActionResult.state, 'commission_work'),
       );
     }
   }
@@ -142,7 +141,7 @@ export function dispatchCommand(
     ].includes(command.type)
   )
     if (command.type === 'medical_care')
-      return rememberAndAdvance(
+      return rememberAndCompleteStreaming(
         timed,
         command.commandId,
         rejected('activity_blocked', 'Companion is busy right now.'),
@@ -159,7 +158,7 @@ export function dispatchCommand(
       'perform_item_action',
     ].includes(command.type)
   )
-    return rememberAndAdvance(
+    return rememberAndCompleteStreaming(
       resolveAttemptEvent(next, command.commandId, definition),
       command.commandId,
       rejected('activity_blocked', 'Companion is busy right now.'),
@@ -215,7 +214,6 @@ export function dispatchCommand(
     next = resolvedState(batch.state);
     outcome = batch.outcome;
   }
-  const requestedUntil = requestedActivityEnd(timed, next, command.type);
   if (outcome.accepted)
     next = resolvedState(resetPlayerCareRescueLocks(timed, next));
   if (
@@ -243,35 +241,28 @@ export function dispatchCommand(
       appendStatusTransitionEvents(next, timed.statuses, command.commandId),
     );
   next = resolvedState(reconcileRunEnding(next));
-  return rememberAndAdvance(
+  return rememberAndCompleteStreaming(
     next,
     command.commandId,
     outcome,
     definition,
-    requestedUntil,
   );
 }
 
-function requestedActivityEnd(
-  before: GameState,
-  after: GameState,
-  requestedType: string,
-): number | undefined {
-  return !before.activity && after.activity?.type === requestedType
-    ? after.activity.endsAt
-    : undefined;
-}
-
-function rememberAndAdvance(
+function rememberAndCompleteStreaming(
   state: GameState,
   commandId: string,
   outcome: Outcome,
   definition: GameDefinition,
-  requestedUntil?: number,
 ): Transition {
   const transition = remember(state, commandId, outcome);
   let next = resolvedState(transition.state);
-  if (requestedUntil !== undefined && next.mode === 'streaming')
-    next = resolvedState(reconcileTime(next, requestedUntil, definition).state);
+  while (next.mode === 'streaming' && next.activity && !next.ending) {
+    const before = next;
+    next = resolvedState(
+      reconcileTime(next, next.activity.endsAt, definition).state,
+    );
+    if (next === before) break;
+  }
   return { state: resolvedBoundary(next), outcomes: transition.outcomes };
 }

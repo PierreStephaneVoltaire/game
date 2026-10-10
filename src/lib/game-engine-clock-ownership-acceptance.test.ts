@@ -126,7 +126,7 @@ describe('Streaming clock ownership', () => {
     },
   );
 
-  test('Advance Time is accepted while streaming and leaves a longer stream active', () => {
+  test('Advance Time never leaves the companion busy when a stream runs past the endpoint', () => {
     const result = dispatch(
       streamingRun('spanning-stream', { activity: stream(NOW + 10 * HOUR) }),
       { type: 'wait', commandId: 'advance-3', hours: 3 },
@@ -135,8 +135,15 @@ describe('Streaming clock ownership', () => {
       accepted: true,
       kind: 'waited',
     });
-    expect(result.state.now).toBe(NOW + 3 * HOUR);
-    expect(result.state.activity?.id).toBe('activity-stream');
+    expect(result.state.activity).toBeNull();
+    expect(
+      result.state.events.some(
+        (event) =>
+          (event.type === 'activity_completed' ||
+            event.type === 'activity_interrupted') &&
+          event.activityType === 'stream',
+      ),
+    ).toBe(true);
   });
 
   test('Advance Time completes a stream inside the interval at its own boundary', () => {
@@ -162,15 +169,41 @@ describe('Streaming clock ownership', () => {
     expect(result.state.now).toBe(NOW + 3 * HOUR);
   });
 
-  test('idle Streaming time does not advance without input', () => {
-    const initial = streamingRun('idle', { activity: stream(NOW + 4 * HOUR) });
-    const result = dispatch(initial, {
-      type: 'set_cart_quantity',
-      commandId: 'cart',
-      itemId: 'water',
-      quantity: 1,
-    });
-    expect(result.state.now).toBe(NOW);
-    expect(result.state.activity?.endsAt).toBe(NOW + 4 * HOUR);
+  test('an exhausted Rest started during Advance Time resolves fully', () => {
+    let rescued: GameState | undefined;
+    for (let index = 0; index < 200 && !rescued; index += 1) {
+      const result = dispatch(
+        streamingRun(`exhausted-${index}`, {
+          metrics: {
+            food: 8,
+            health: 10,
+            mood: 8,
+            rest: 3,
+            bond: 8,
+            creativity: 8,
+          },
+        }),
+        { type: 'wait', commandId: `advance-${index}`, hours: 12 },
+      );
+      expect(result.state.activity).toBeNull();
+      if (
+        result.state.events.some(
+          (event) =>
+            event.type === 'activity_started' &&
+            event.activityType === 'rest' &&
+            !event.sourceActionId?.startsWith(`advance-${index}`),
+        )
+      )
+        rescued = result.state;
+    }
+    expect(rescued).toBeDefined();
+    expect(
+      rescued!.events.some(
+        (event) =>
+          (event.type === 'activity_completed' ||
+            event.type === 'activity_interrupted') &&
+          event.activityType === 'rest',
+      ),
+    ).toBe(true);
   });
 });
