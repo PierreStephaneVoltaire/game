@@ -37,15 +37,20 @@ describe('item and history fidelity', () => {
   test('direct use cannot bypass an item interaction', () => {
     const state = {
       ...run('direct-interaction'),
-      inventory: { 'cat-treats': 1 },
+      inventory: { 'fresh-bedsheets': 1 },
     };
     const result = dispatchCommand(
       state,
-      { type: 'use_item', commandId: 'bypass', itemId: 'cat-treats', now: 0 },
+      {
+        type: 'use_item',
+        commandId: 'bypass',
+        itemId: 'fresh-bedsheets',
+        now: 0,
+      },
       BUNDLED_GAME_DEFINITION,
     );
     expect(result.outcomes[0].accepted).toBe(false);
-    expect(result.state.inventory['cat-treats']).toBe(1);
+    expect(result.state.inventory['fresh-bedsheets']).toBe(1);
     expect(
       result.state.events.some((event) => event.type === 'item_used'),
     ).toBe(false);
@@ -200,7 +205,7 @@ describe('item and history fidelity', () => {
     const definition = {
       ...BUNDLED_GAME_DEFINITION,
       items: BUNDLED_GAME_DEFINITION.items.map((item) =>
-        item.id === 'socks-plushie'
+        item.id === 'giant-plushie'
           ? {
               ...item,
               itemActions: item.itemActions?.map((action) => ({
@@ -217,13 +222,13 @@ describe('item and history fidelity', () => {
         {
           ...run(commandId),
           metrics: { ...run(commandId).metrics, food: 5, health },
-          inventory: { 'socks-plushie': 1 },
+          inventory: { 'giant-plushie': 1 },
           statuses: { sick: { since: 0, source: 'test' } },
         },
         {
           type: 'perform_item_action',
           commandId,
-          itemId: 'socks-plushie',
+          itemId: 'giant-plushie',
           action: 'offer_plushie_apology',
           now: 0,
         },

@@ -12,8 +12,18 @@ export function selectAttemptEvent(
   state: GameState,
   commandId: string,
   definition: GameDefinition,
+  scheduledOpportunity: boolean,
 ): { selected: Candidate; opportunityEvent: GameEvent } {
-  const streamDiagnostics = streamWeightDiagnostics(state, commandId);
+  const weighed = streamWeightDiagnostics(state, commandId);
+  const streamDiagnostics = scheduledOpportunity
+    ? { ...weighed, streamBlockedByUnscheduledOpportunity: false }
+    : {
+        ...weighed,
+        streamEligible: false,
+        streamRawWeight: 0,
+        streamFinalWeight: 0,
+        streamBlockedByUnscheduledOpportunity: true,
+      };
   const resolvedStreamWeight = streamDiagnostics.streamFinalWeight;
   const candidates = eventCandidates(
     state,

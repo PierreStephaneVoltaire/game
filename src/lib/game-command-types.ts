@@ -23,6 +23,7 @@ export type GameCommand =
     }
   | {
       type: 'wait';
+      hours?: number;
       commandId: string;
       now: number;
       expectedStateVersion?: number;

@@ -25,7 +25,7 @@ function messages(definition: GameDefinition, itemId: string): string[] {
 
 describe('catalogue item consumption validation', () => {
   test('consumes non-room stat items while placed furniture stays reusable', () => {
-    for (const id of ['movie-rental', 'fresh-bedsheets']) {
+    for (const id of ['fresh-bedsheets', 'manga', 'photo-album', 'kindle']) {
       const item = BUNDLED_GAME_DEFINITION.items.find(
         (entry) => entry.id === id,
       );
@@ -40,10 +40,10 @@ describe('catalogue item consumption validation', () => {
     }
 
     const furniture = BUNDLED_GAME_DEFINITION.items.find(
-      (entry) => entry.id === 'socks-plushie',
+      (entry) => entry.id === 'giant-plushie',
     );
     expect(furniture).toMatchObject({
-      roomSlot: 'shelf',
+      roomSlot: 'floor',
       consumable: false,
       supportsQuantity: false,
     });
@@ -53,14 +53,14 @@ describe('catalogue item consumption validation', () => {
   });
 
   test('rejects a permanent non-room action that grants stats', () => {
-    const invalid = definitionWithItem('movie-rental', (item) => {
+    const invalid = definitionWithItem('fresh-bedsheets', (item) => {
       item.consumable = false;
       item.supportsQuantity = false;
       item.itemActions![0].consumes = false;
     });
 
-    expect(messages(invalid, 'movie-rental')).toContain(
-      'non-room stat action movie_night must consume its inventory item',
+    expect(messages(invalid, 'fresh-bedsheets')).toContain(
+      'non-room stat action change_sheets must consume its inventory item',
     );
   });
 

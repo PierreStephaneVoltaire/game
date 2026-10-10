@@ -10,12 +10,19 @@
     pendingGameKey,
   } from '$lib/game-session';
   import { listLocalGames } from '$lib/persistence/games';
+  import {
+    listAccountGameKeys,
+    type AccountGameKey,
+  } from '$lib/accounts/game-keys';
 
   let gameKey = '';
   let generatedKey = '';
   let busy = true;
   let savedKeys: string[] = [];
   let errorMessage = '';
+  let accountKeys: AccountGameKey[] | null = null;
+  let accountKeysLoading = false;
+  let accountKeysError = '';
 
   $: validGameKey = gameKeyIsValid(gameKey);
   $: generatedKeyIsCurrent = generatedKey !== '' && gameKey === generatedKey;
@@ -46,6 +53,19 @@
       errorMessage = 'Could not open that game. Try again.';
     } finally {
       busy = false;
+    }
+  }
+
+  async function requestAccountKeys(): Promise<void> {
+    if (accountKeysLoading) return;
+    accountKeysLoading = true;
+    accountKeysError = '';
+    try {
+      accountKeys = await listAccountGameKeys();
+    } catch {
+      accountKeysError = 'Could not load your game keys. Try again.';
+    } finally {
+      accountKeysLoading = false;
     }
   }
 
@@ -104,6 +124,44 @@
     </section>
   {/if}
 
+  <section class="saved-games" aria-label="Your game keys">
+    <button
+      class="secondary-action"
+      type="button"
+      disabled={busy || accountKeysLoading}
+      on:click={requestAccountKeys}>Show my game keys</button
+    >
+    {#if accountKeys}
+      {#if accountKeys.length}
+        <p>Your game keys</p>
+        {#each accountKeys as game (game.gameHash)}
+          {#if game.lifeStatus === 'alive'}
+            <button
+              class="secondary-action"
+              type="button"
+              disabled={busy}
+              on:click={() => openKey(game.gameHash)}
+              >Open {game.nickname
+                ? `${game.nickname} (${game.gameHash})`
+                : game.gameHash}</button
+            >
+          {:else}
+            <p class="ended-game">
+              {game.nickname
+                ? `${game.nickname} (${game.gameHash})`
+                : game.gameHash} · Ended
+            </p>
+          {/if}
+        {/each}
+      {:else}
+        <p>No games on this account yet.</p>
+      {/if}
+    {/if}
+  </section>
+  {#if accountKeysError}<p class="form-error" role="alert">
+      {accountKeysError}
+    </p>{/if}
+
   {#if !generatedKeyIsCurrent}
     <button
       class="secondary-action"
@@ -129,5 +187,9 @@
   }
   .saved-games .secondary-action + .secondary-action {
     margin-top: 8px;
+  }
+  .saved-games .ended-game {
+    margin: 8px 0 0;
+    text-transform: none;
   }
 </style>

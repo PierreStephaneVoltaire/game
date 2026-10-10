@@ -46,12 +46,9 @@ function resolveFoodRescue(
       blocked ?? 'no_eligible_owned_food',
       damageEventId,
     );
-  const bestTier = Math.min(
-    ...foods.map((item) => preferenceTier(state, item)),
+  const preferred = [...foods].sort((left, right) =>
+    left.id.localeCompare(right.id),
   );
-  const preferred = foods
-    .filter((item) => preferenceTier(state, item) === bestTier)
-    .sort((left, right) => left.id.localeCompare(right.id));
   const commandId = `autonomous-food-rescue:${state.now}`;
   const roll = actionRandom(
     state.seed,
@@ -176,21 +173,6 @@ function eligibleFoods(state: GameState, definition: GameDefinition) {
         item.preferences?.includes('variable')) &&
       item.itemActions?.some((action) => action.kind === 'consume'),
   );
-}
-
-function preferenceTier(
-  state: GameState,
-  item: GameDefinition['items'][number],
-): number {
-  const shelf = Object.values(state.room).includes('snack-shelf');
-  const fridge = Object.values(state.room).includes('mini-fridge');
-  if (shelf && item.tags.includes('snack')) return 0;
-  if (
-    fridge &&
-    (item.tags.includes('drink') || item.tags.includes('refrigerated'))
-  )
-    return 0;
-  return 1;
 }
 
 function foodBlockedReason(state: GameState): string | null {

@@ -26,5 +26,7 @@
   "room-window-morning": "#CCEFE8",
   "room-window-day": "#BFE7F4",
   "room-window-evening": "#F1CAD0",
-  "room-window-night": "#8D8CB8"
+  "room-window-night": "#8D8CB8",
+  "lcd-ink": "#28352B",
+  "lcd-paper": "#C7D1AD"
 }

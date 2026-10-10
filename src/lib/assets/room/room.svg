@@ -1,0 +1,368 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 192" width="256" height="192" overflow="hidden" shape-rendering="crispEdges">
+<g data-slot="wall" data-variant="wall" data-default="">
+<svg x="0" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="0" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="32" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="64" width="32" height="32" viewBox="32 192 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="wall" data-variant="wall2">
+<svg x="0" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="0" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="32" width="32" height="32" viewBox="288 256 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="64" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="floor" data-variant="floor" data-default="">
+<svg x="0" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="floor" data-variant="floor2">
+<svg x="0" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="96" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="128" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="160" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+</g>
+<g data-slot="floor" data-variant="floor3">
+<svg x="64" y="64" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="96" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="128" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="160" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+</g>
+<g data-slot="floor" data-variant="floor4">
+<svg x="64" y="64" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="96" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="128" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="160" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+</g>
+<g data-slot="floor" data-variant="floor5">
+<svg x="64" y="64" width="32" height="32" viewBox="96 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="96" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="128" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="0" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="32" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="64" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="96" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="128" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="160" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="192" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+<svg x="224" y="160" width="32" height="32" viewBox="224 0 32 32"><image href="/assets/room/tiles/floor-a5.png" width="256" height="64"/></svg>
+</g>
+<g data-slot="floor" data-variant="floor6">
+<svg x="0" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="96" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="128" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="192" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="224" y="160" width="32" height="32" viewBox="0 96 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="carpet" data-variant="carpet">
+<svg x="0" y="99" width="32" height="32" viewBox="224 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="99" width="32" height="32" viewBox="256 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="99" width="32" height="32" viewBox="256 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="99" width="32" height="32" viewBox="256 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="99" width="32" height="32" viewBox="256 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="99" width="32" height="32" viewBox="288 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="131" width="32" height="32" viewBox="224 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="131" width="32" height="32" viewBox="256 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="131" width="32" height="32" viewBox="256 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="131" width="32" height="32" viewBox="256 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="131" width="32" height="32" viewBox="256 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="131" width="32" height="32" viewBox="288 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="0" y="163" width="32" height="32" viewBox="224 416 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="32" y="163" width="32" height="32" viewBox="256 416 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="64" y="163" width="32" height="32" viewBox="256 416 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="96" y="163" width="32" height="32" viewBox="256 416 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="128" y="163" width="32" height="32" viewBox="256 416 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="160" y="163" width="32" height="32" viewBox="288 416 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="carpet" data-variant="carpet 2" data-default="">
+<svg x="15" y="147" width="32" height="32" viewBox="128 352 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="47" y="147" width="32" height="32" viewBox="160 352 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="79" y="147" width="32" height="32" viewBox="192 352 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="window" data-variant="window2" data-default="">
+<svg x="35" y="14" width="32" height="32" viewBox="384 160 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="67" y="14" width="32" height="32" viewBox="416 160 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="35" y="46" width="32" height="32" viewBox="384 192 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="67" y="46" width="32" height="32" viewBox="416 192 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="window" data-variant="window">
+<svg x="46" y="20" width="32" height="32" viewBox="96 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="46" y="52" width="32" height="32" viewBox="96 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="46" y="22" width="32" height="32" viewBox="160 352 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="46" y="54" width="32" height="32" viewBox="160 384 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="bedstand" data-variant="bedstand2" data-default="">
+<svg x="-1" y="76" width="32" height="32" viewBox="128 128 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="bedstand" data-variant="bedstand">
+<svg x="0" y="74" width="32" height="32" viewBox="224 448 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="top-of-bed-stand" data-variant="top of bed stand">
+<svg x="0" y="64" width="32" height="32" viewBox="448 576 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="top-of-bed-stand" data-variant="top of bed stand 2">
+<svg x="9" y="54" width="32" height="32" viewBox="224 672 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="top-of-bed-stand" data-variant="top of bed stand 3" data-default="">
+<svg x="-3" y="65" width="32" height="32" viewBox="1952 416 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+</g>
+<g data-slot="shelf" data-variant="shelf2" data-default="">
+<svg x="192" y="36" width="32" height="32" viewBox="0 288 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="224" y="36" width="32" height="32" viewBox="32 288 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="192" y="68" width="32" height="32" viewBox="0 320 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="224" y="68" width="32" height="32" viewBox="32 320 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="shelf" data-variant="shelf">
+<svg x="199" y="54" width="32" height="32" viewBox="128 544 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="199" y="86" width="32" height="32" viewBox="128 576 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="poster" data-variant="umi">
+<svg x="2" y="31" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/poster-umi.jpeg" width="32" height="38"/></svg>
+</g>
+<g data-slot="cat-bed" data-variant="cat bed" data-default="">
+<svg x="202" y="98" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/cat-bed-pink.png" width="64" height="64"/></svg>
+<svg x="234" y="98" width="32" height="32" viewBox="32 0 32 32"><image href="/assets/room/tiles/cat-bed-pink.png" width="64" height="64"/></svg>
+<svg x="202" y="130" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/cat-bed-pink.png" width="64" height="64"/></svg>
+<svg x="234" y="130" width="32" height="32" viewBox="32 32 32 32"><image href="/assets/room/tiles/cat-bed-pink.png" width="64" height="64"/></svg>
+</g>
+<g data-slot="table" data-variant="table2" data-default="">
+<svg x="105" y="66" width="32" height="32" viewBox="320 192 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="137" y="66" width="32" height="32" viewBox="352 192 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="105" y="98" width="32" height="32" viewBox="320 224 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="137" y="98" width="32" height="32" viewBox="352 224 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="table" data-variant="table">
+<svg x="106" y="72" width="32" height="32" viewBox="0 448 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="138" y="72" width="32" height="32" viewBox="64 448 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="106" y="104" width="32" height="32" viewBox="0 480 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="138" y="104" width="32" height="32" viewBox="64 480 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="115" y="72" width="32" height="32" viewBox="288 640 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="115" y="104" width="32" height="32" viewBox="288 672 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="second-poster" data-variant="selfcest">
+<svg x="109" y="26" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/poster-wide.png" width="64" height="32"/></svg>
+<svg x="141" y="26" width="32" height="32" viewBox="32 0 32 32"><image href="/assets/room/tiles/poster-wide.png" width="64" height="32"/></svg>
+</g>
+<g data-slot="second-monitor" data-variant="second monitor" data-default="">
+<svg x="88" y="61" width="32" height="32" viewBox="416 672 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="120" y="61" width="32" height="32" viewBox="448 672 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="second-monitor" data-variant="second monitor 2">
+<svg x="104" y="43" width="32" height="32" viewBox="1472 224 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+<svg x="104" y="75" width="32" height="32" viewBox="1472 256 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+</g>
+<g data-slot="second-monitor" data-variant="second monitor 3">
+<svg x="106" y="61" width="32" height="32" viewBox="1632 448 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+</g>
+<g data-slot="laptop" data-variant="laptop3" data-default="">
+<svg x="140" y="61" width="32" height="32" viewBox="1632 448 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+</g>
+<g data-slot="laptop" data-variant="laptop">
+<svg x="137" y="56" width="32" height="32" viewBox="416 640 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="laptop" data-variant="laptop 2">
+<svg x="137" y="56" width="32" height="32" viewBox="1568 416 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+</g>
+<g data-slot="bed" data-variant="bed3">
+<svg x="34" y="50" width="32" height="32" viewBox="288 416 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="66" y="50" width="32" height="32" viewBox="320 416 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="34" y="82" width="32" height="32" viewBox="288 448 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="66" y="82" width="32" height="32" viewBox="320 448 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="34" y="114" width="32" height="32" viewBox="288 480 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="66" y="114" width="32" height="32" viewBox="320 480 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="bed" data-variant="bed2" data-default="">
+<svg x="33" y="50" width="32" height="32" viewBox="352 416 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="65" y="50" width="32" height="32" viewBox="384 416 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="33" y="82" width="32" height="32" viewBox="352 448 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="65" y="82" width="32" height="32" viewBox="384 448 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="33" y="114" width="32" height="32" viewBox="352 480 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+<svg x="65" y="114" width="32" height="32" viewBox="384 480 32 32"><image href="/assets/room/tiles/furniture-d.png" width="512" height="512"/></svg>
+</g>
+<g data-slot="bed" data-variant="bed">
+<svg x="33" y="74" width="32" height="32" viewBox="224 896 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="65" y="74" width="32" height="32" viewBox="256 896 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="33" y="106" width="32" height="32" viewBox="224 928 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="65" y="106" width="32" height="32" viewBox="256 928 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="top-of-bed" data-variant="top of bed 2" data-default="">
+<svg x="61" y="82" width="32" height="32" viewBox="192 736 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="top-of-bed" data-variant="top of bed">
+<svg x="61" y="82" width="32" height="32" viewBox="192 704 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="cat" data-variant="cat" data-default="">
+<svg x="220" y="99" width="32" height="32" viewBox="64 0 32 32"><image href="/assets/room/tiles/cat-sleep.png" width="96" height="32"/></svg>
+</g>
+<g data-slot="plants" data-variant="plants">
+<svg x="167" y="65" width="32" height="32" viewBox="192 640 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+<svg x="167" y="97" width="32" height="32" viewBox="192 672 32 32"><image href="/assets/room/tiles/interior.png" width="512" height="1056"/></svg>
+</g>
+<g data-slot="plants" data-variant="plants 2" data-default="">
+<svg x="167" y="97" width="32" height="32" viewBox="1952 448 32 32"><image href="/assets/room/tiles/office-interior.png" width="2496" height="928"/></svg>
+</g>
+<g data-slot="avatar" data-variant="original" data-default="">
+<svg x="117" y="123" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/avatar.png" width="37" height="64"/></svg>
+<svg x="117" y="155" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/avatar.png" width="37" height="64"/></svg>
+</g>
+<g data-slot="avatar" data-variant="bunny_pixie">
+<svg x="115" y="127" width="32" height="32" viewBox="0 0 32 32"><image href="/assets/room/tiles/avatar-retro.png" width="36" height="64"/></svg>
+<svg x="115" y="159" width="32" height="32" viewBox="0 32 32 32"><image href="/assets/room/tiles/avatar-retro.png" width="36" height="64"/></svg>
+</g>
+</svg>

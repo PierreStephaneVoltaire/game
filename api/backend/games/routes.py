@@ -17,8 +17,10 @@ from backend.errors import ApiError
 from backend.http import body, endpoint, json_response, limit, same_origin
 from backend.pagination import decode_cursor, encode_cursor
 
-from .schemas import CreateGame, DeathWrite, GameWrite
+from .schemas import CreateGame, DeathWrite, GameWrite, NicknameWrite
 from .service import GameService
+from .snapshot import game_snapshot
+from .diagnostics import save_diagnostics
 
 bp = func.Blueprint()
 service = GameService()
@@ -32,10 +34,9 @@ def _game_key(request: func.HttpRequest) -> str:
 
 
 def _content(request: func.HttpRequest, session: Session) -> str:
-    version = require_current_content_version(
-        request.headers.get(CONTENT_VERSION_HEADER),
-        session,
-    )
+    version = request.headers.get(CONTENT_VERSION_HEADER)
+    if not version:
+        raise ApiError(422, "INVALID_REQUEST", "A content version is required.")
     session.commit()
     return version
 
@@ -66,7 +67,7 @@ def _page(
 def create_game(request: func.HttpRequest) -> func.HttpResponse:
     same_origin(request, get_settings())
     data = body(request, CreateGame)
-    with get_session_factory()() as session:
+    with save_diagnostics(request, data), get_session_factory()() as session:
         user = require_user(request, session)
         result = service.create(session, user.id, _content(request, session), data)
     return json_response(result, 201, {"ETag": f'"{result["stateVersion"]}"'})
@@ -78,10 +79,6 @@ def get_game(request: func.HttpRequest) -> func.HttpResponse:
     with get_session_factory()() as session:
         user = require_user(request, session)
         result = service.get(session, user.id, _game_key(request))
-        require_current_content_version(
-            request.headers.get(CONTENT_VERSION_HEADER),
-            session,
-        )
     return json_response(result, headers={"ETag": f'"{result["stateVersion"]}"'})
 
 
@@ -90,7 +87,7 @@ def get_game(request: func.HttpRequest) -> func.HttpResponse:
 def write_game(request: func.HttpRequest) -> dict[str, Any]:
     same_origin(request, get_settings())
     data = body(request, GameWrite)
-    with get_session_factory()() as session:
+    with save_diagnostics(request, data), get_session_factory()() as session:
         user = require_user(request, session)
         return service.write(
             session,
@@ -107,7 +104,7 @@ def write_game(request: func.HttpRequest) -> dict[str, Any]:
 def record_death(request: func.HttpRequest) -> dict[str, Any]:
     same_origin(request, get_settings())
     data = body(request, DeathWrite)
-    with get_session_factory()() as session:
+    with save_diagnostics(request, data), get_session_factory()() as session:
         user = require_user(request, session)
         return service.write(
             session,
@@ -128,10 +125,6 @@ def game_events(request: func.HttpRequest) -> dict[str, Any]:
     game_hash = _game_key(request)
     with get_session_factory()() as session:
         user = require_user(request, session)
-        require_current_content_version(
-            request.headers.get(CONTENT_VERSION_HEADER),
-            session,
-        )
         route = f"game-events:{game_hash}"
         token = request.headers.get("x-continuation-token")
         values = decode_cursor(token, route, user.id) if token else [0]
@@ -167,7 +160,7 @@ def _list_games(
     items = [
         {
             "gameHash": game.game_hash,
-            "state": game.state_json,
+            "state": game_snapshot(session, game),
             "stateVersion": game.state_version,
             "diedAt": game.died_at,
             "updatedAt": game.updated_at,
@@ -189,6 +182,24 @@ def _list_games(
 def list_games(request: func.HttpRequest) -> dict[str, Any]:
     with get_session_factory()() as session:
         return _list_games(False, request, session, limit(request))
+
+
+@bp.route(route="me/game-keys", methods=["GET"])
+@endpoint
+def list_game_keys(request: func.HttpRequest) -> dict[str, Any]:
+    with get_session_factory()() as session:
+        user = require_user(request, session)
+        return {"items": service.game_keys(session, user.id)}
+
+
+@bp.route(route="games/current/nickname", methods=["PUT"])
+@endpoint
+def write_nickname(request: func.HttpRequest) -> dict[str, Any]:
+    same_origin(request, get_settings())
+    data = body(request, NicknameWrite)
+    with get_session_factory()() as session:
+        user = require_user(request, session)
+        return service.set_nickname(session, user.id, _game_key(request), data.nickname)
 
 
 @bp.route(route="me/graves", methods=["GET"])

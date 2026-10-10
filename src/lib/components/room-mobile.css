@@ -1,0 +1,101 @@
+.stats-action {
+  display: none;
+}
+@media (max-width: 780px) {
+  .game-shell:has(> .room-page) {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .game-shell > .room-page {
+    display: contents;
+  }
+  .game-shell:has(> .room-page) > .game-navigation {
+    order: 4;
+    margin: 0;
+    padding: 0;
+  }
+  .overview-row,
+  .overview-column {
+    display: contents;
+  }
+  .overview-column > .metrics,
+  .overview-column > .status-time-card {
+    display: none;
+  }
+  .room-card {
+    order: 1;
+    min-width: 0;
+    margin-top: calc(clamp(32px, 8vh, 96px) - 24px);
+  }
+  .room-scene {
+    min-width: 0;
+  }
+  .stats-action,
+  .advance-time-action,
+  .ending-card,
+  .command-error {
+    order: 2;
+  }
+  .care-actions {
+    order: 3;
+    margin: 0;
+  }
+  .event-panel {
+    order: 5;
+  }
+  .room-page .stats-action {
+    display: grid;
+    width: 100%;
+    min-height: 48px;
+    place-items: center;
+    border: 3px solid var(--theme-pink);
+    color: var(--theme-pink-text);
+    background: var(--theme-white);
+    box-shadow: 5px 5px 0 var(--theme-gold);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  .room-page .stats-action:hover {
+    box-shadow: 3px 3px 0 var(--theme-gold);
+    transform: translate(2px, 2px);
+    background: var(--theme-pink);
+    color: var(--theme-on-pink);
+  }
+}
+.stats-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 16px 16px 48px;
+  border: 4px solid var(--theme-pink);
+  overflow: auto;
+  color: var(--theme-ink);
+  background: var(--theme-cream);
+}
+.stats-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+body:has(.stats-dialog[open]) {
+  overflow: hidden;
+}
+.stats-close {
+  align-self: flex-start;
+  min-width: 48px;
+  min-height: 44px;
+  border: 3px solid var(--theme-pink);
+  color: var(--theme-pink-text);
+  background: var(--theme-white);
+  box-shadow: 5px 5px 0 var(--theme-gold);
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}

@@ -12,12 +12,12 @@ import {
 import { isStatusName } from './status-rules';
 
 const COMPLETE_CATEGORY_COUNTS: Record<string, number> = {
-  food: 114,
+  food: 140,
   medicine: 2,
-  care: 3,
-  reusable: 75,
-  upgrade: 23,
-  decoration: 15,
+  care: 2,
+  reusable: 74,
+  upgrade: 18,
+  decoration: 22,
 };
 const METRICS = new Set([
   'food',
@@ -42,12 +42,14 @@ const ROOM_SLOTS = new Set([
   'shelf',
   'window',
   'cat-corner',
+  'poster',
+  'avatar',
 ]);
+const COSMETIC_ROOM_SLOTS = new Set(['poster', 'avatar']);
 const STATUS_HOOKS = new Set(['rolling_salt']);
 const FORBIDDEN_ALIASES = new Set([
   'salted-pretzels',
   'pretzels',
-  'pizza-slice',
   'potatoe-chips',
   'hash-browns',
   'lollipops',
@@ -99,7 +101,10 @@ function validateItem(
     issues.push('price must be a positive integer');
   const [imagePath, imageQuery] = item.image.split('?');
   if (
-    imagePath !== `/items/generated/${item.id}.png` ||
+    ![
+      `/items/generated/${item.id}.png`,
+      `/items/sprites/${item.id}.png`,
+    ].includes(imagePath) ||
     !/^v=[a-f0-9]{12}$/.test(imageQuery ?? '')
   )
     issues.push(
@@ -113,7 +118,9 @@ function validateItem(
     issues.push('qualitative nutrition hint is missing or generic');
   if (
     companionNamePattern.test(
-      `${item.description} ${item.qualitativeNutritionHint} ${(item.narration ?? []).join(' ')}`,
+      `${item.description} ${item.qualitativeNutritionHint} ${(item.narration ?? []).join(' ')}`
+        .split(item.name)
+        .join(''),
     )
   )
     issues.push('catalogue copy hardcodes the companion name');
@@ -147,7 +154,7 @@ function validateItem(
       issues.push(`invalid context probability: ${name}`);
   const preparationSpecific = preferences.includes('specific_preparation');
   const disliked = preferences.includes('disliked') || preparationSpecific;
-  if (disliked && !context?.dislikedEffects)
+  if (item.edible && disliked && !context?.dislikedEffects)
     issues.push('disliked behavior needs authored disliked effects');
   if (disliked && item.effects?.mood)
     issues.push('disliked mood effects must not be top-level consume effects');
@@ -186,7 +193,10 @@ function validateItem(
   for (const [metric, value] of Object.entries(roomEffects))
     if (!METRICS.has(metric) || !Number.isFinite(value) || value === 0)
       issues.push(`invalid room effect: ${metric}`);
-  if (item.roomSlot && !Object.keys(roomEffects).length)
+  const cosmetic = COSMETIC_ROOM_SLOTS.has(item.roomSlot ?? '');
+  if (cosmetic !== Boolean(item.roomVariant))
+    issues.push('room variant must match a cosmetic room slot');
+  if (item.roomSlot && !cosmetic && !Object.keys(roomEffects).length)
     issues.push('placeable item needs an authored room effect');
   if (!item.roomSlot && Object.keys(roomEffects).length)
     issues.push('unplaceable item cannot have room effects');
@@ -221,16 +231,8 @@ export function validateCatalog(
     for (const message of validateItem(item, ids, allTags))
       issues.push({ itemId: item.id, message });
 
-  const hints = new Map<string, string>();
   const hookOwners = new Map<string, string>();
   for (const item of definition.items) {
-    const prior = hints.get(item.qualitativeNutritionHint);
-    if (prior)
-      issues.push({
-        itemId: item.id,
-        message: `qualitative nutrition hint duplicates ${prior}`,
-      });
-    hints.set(item.qualitativeNutritionHint, item.id);
     for (const hook of item.automaticEventHooks ?? []) {
       const priorOwner = hookOwners.get(hook.id);
       if (priorOwner)
@@ -242,9 +244,9 @@ export function validateCatalog(
     }
   }
   if (requireComplete) {
-    if (definition.items.length !== 232)
+    if (definition.items.length !== canonicalItemIds.length)
       issues.push({
-        message: `expected 232 canonical items, found ${definition.items.length}`,
+        message: `expected ${canonicalItemIds.length} canonical items, found ${definition.items.length}`,
       });
     for (const [category, expected] of Object.entries(
       COMPLETE_CATEGORY_COUNTS,

@@ -122,7 +122,7 @@ test('shares the room artwork across the landing preview and game', async ({
       path: `/tmp/room-game-${width}.png`,
     });
     await page
-      .getByRole('button', { name: 'Choose an item for Desk', exact: true })
+      .getByRole('button', { name: 'Choose an item for Poster', exact: true })
       .click();
     const dialog = page.getByRole('dialog', { name: 'Room', exact: true });
     await expect(dialog).toBeVisible();

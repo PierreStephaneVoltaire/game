@@ -27,6 +27,7 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
   return {
     companion: { name: 'Nova Star', avatar: '/nova.png', appearances: [] },
     mode: 'streaming',
+    waitHours: [12, 6, 3, 1],
     modeLabel: 'Streaming mode',
     now: ending.at,
     runStartedAt: Date.UTC(2026, 7, 22, 12),

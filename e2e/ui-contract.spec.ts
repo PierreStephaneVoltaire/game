@@ -81,10 +81,10 @@ test('shows username feedback even when a sign-in password is short', async ({
   );
 });
 
-test('uses the exact three-column overview, uniform control rows, and item dialogs', async ({
+test('uses the three-column overview, full-width advance control, and item dialogs', async ({
   page,
 }) => {
-  await signInAndChooseMode(page, 'Realtime mode');
+  await signInAndChooseMode(page, 'Streaming mode');
 
   const firstRow = page.locator('[data-game-row="overview"]');
   const overviewColumn = firstRow.locator(':scope > .overview-column');
@@ -152,12 +152,26 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   const clock = await page.locator('.session-clock').boundingBox();
   expect(status!.y).toBeCloseTo(clock!.y, 0);
   expect(clock!.x).toBeGreaterThan(status!.x + status!.width);
-  await page.screenshot({
-    path: '/tmp/game-three-rows-desktop.png',
-    fullPage: true,
-  });
-
+  await expect(
+    page.locator('.status-time-card').getByRole('button', {
+      name: 'Advance time',
+    }),
+  ).toHaveCount(0);
+  const advanceTime = await page.locator('.advance-time-action').boundingBox();
+  expect(advanceTime!.x).toBeCloseTo(statusTime!.x, 0);
+  expect(advanceTime!.width).toBeCloseTo(statusTime!.width, 0);
+  expect(advanceTime!.y).toBeGreaterThan(statusTime!.y + statusTime!.height);
+  expect(
+    await page.locator('.metric-readout').evaluateAll((readouts) =>
+      readouts.every((readout) => {
+        const style = getComputedStyle(readout);
+        return style.flexDirection === 'column' && style.textAlign === 'center';
+      }),
+    ),
+  ).toBe(true);
   const careRow = page.locator('[data-game-row="care"]');
+  const careRowBox = await careRow.boundingBox();
+  expect(careRowBox!.y).toBeGreaterThan(advanceTime!.y + advanceTime!.height);
   await expect(careRow.getByRole('button')).toHaveCount(4);
   await expect(careRow.getByRole('button', { name: 'Feed' })).toBeVisible();
   await expect(careRow.getByRole('button', { name: 'Rest' })).toBeVisible();
@@ -216,7 +230,7 @@ test('uses the exact three-column overview, uniform control rows, and item dialo
   await expect(eventPanel.locator('li')).toHaveCount(1);
   const settings = page.locator('details.settings');
   await settings.locator('summary', { hasText: 'Settings' }).click();
-  await expect(settings).toContainText('Realtime mode');
+  await expect(settings).toContainText('Streaming mode');
   await expect(page.getByRole('dialog', { name: 'Settings' })).toHaveCount(0);
 
   await careRow.getByRole('button', { name: 'Feed' }).click();

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { createHash } from 'node:crypto';
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 
 const ROOT = new URL('../', import.meta.url);
 const SOURCE_FILES = [
@@ -39,9 +39,12 @@ function assertUniqueIds(records, label) {
 }
 
 function versionedItemImage(id) {
-  const bytes = readFileSync(new URL(`static/items/generated/${id}.png`, ROOT));
+  const folder = existsSync(new URL(`static/items/sprites/${id}.png`, ROOT))
+    ? 'sprites'
+    : 'generated';
+  const bytes = readFileSync(new URL(`static/items/${folder}/${id}.png`, ROOT));
   const version = createHash('sha256').update(bytes).digest('hex').slice(0, 12);
-  return `/items/generated/${id}.png?v=${version}`;
+  return `/items/${folder}/${id}.png?v=${version}`;
 }
 
 function notApplicableNutrition(item) {
@@ -76,10 +79,6 @@ if (baseItemSources.length !== canonicalIds.length)
   throw new Error(
     `Expected ${canonicalIds.length} catalogue source records, found ${baseItemSources.length}`,
   );
-if (nutritionSources.length !== 112)
-  throw new Error(
-    `Expected 112 nutrition source records, found ${nutritionSources.length}`,
-  );
 
 const nutritionById = new Map(
   nutritionSources.map((nutrition) => [nutrition.id, nutrition]),
@@ -98,7 +97,7 @@ if (missingIds.length || unexpectedIds.length)
   );
 const itemSources = canonicalIds.map((id) => sourceById.get(id));
 const items = itemSources.map((source) => {
-  const { cloneNutritionFrom, ...item } = source;
+  const { cloneNutritionFrom, nutrition: authoredNutrition, ...item } = source;
   if (cloneNutritionFrom && !sourceById.has(cloneNutritionFrom))
     throw new Error(
       `${source.id} clones nutrition from unknown item ${cloneNutritionFrom}`,
@@ -120,7 +119,7 @@ const items = itemSources.map((source) => {
       ? Object.fromEntries(
           Object.entries(nutrition).filter(([key]) => key !== 'id'),
         )
-      : notApplicableNutrition(source),
+      : (authoredNutrition ?? notApplicableNutrition(source)),
   };
 });
 if (nutritionById.size)
@@ -137,7 +136,7 @@ if (process.argv.includes('--check')) {
       'shop-items.json has drifted; run node scripts/generate-canonical-catalogue.mjs',
     );
   console.log(
-    `Catalogue compiler drift check passed (${items.length} items, 112 sourced nutrition records).`,
+    `Catalogue compiler drift check passed (${items.length} items, ${nutritionSources.length} sourced nutrition records).`,
   );
 } else {
   writeFileSync(outputUrl, output);

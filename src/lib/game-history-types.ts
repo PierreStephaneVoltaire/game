@@ -25,8 +25,11 @@ export type GameHistory = {
   repeatCount: number;
   sugarCrashDueAt: number | null;
   lastStatusReconcileAt: number;
-  decayRemainderHours: number;
-  healthRemainderHours: number;
+  decayRemainderMs?: number;
+  healthRemainderMs?: number;
+  /** Fractional-hour remainders from saves made before integer milliseconds. */
+  decayRemainderHours?: number;
+  healthRemainderHours?: number;
   pendingFoodDecayHit: boolean;
   eventCooldowns: Record<string, number>;
   oncePerLocalDate: Record<string, string>;

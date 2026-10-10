@@ -1,7 +1,7 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import type { GameIntent, GameViewModel } from '$lib/ui/game-view-model';
-  import StatusPanel from './StatusPanel.svelte';
+  import CompanionStats from './CompanionStats.svelte';
 
   export let model: GameViewModel;
   export let disabled = false;
@@ -9,113 +9,43 @@
   export let onIntent: (intent: GameIntent) => Promise<void> | void;
 
   let hospitalDialog: HTMLDialogElement;
+  let advanceTimeDialog: HTMLDialogElement;
+  let statsDialog: HTMLDialogElement;
+  let statsOpen = false;
   const numbers = new Intl.NumberFormat('en-US');
-  $: hospitalAvailable = model.statuses.some(
-    (status) => status.key === 'kidney_stone' || status.key === 'sick',
-  );
+  function openStats() {
+    statsOpen = true;
+    statsDialog.showModal();
+  }
 
-  function activityTime(value: number) {
-    return new Intl.DateTimeFormat('en-US', {
-      timeZone: model.timezone,
-      timeStyle: 'short',
-    }).format(value);
+  function openHospital() {
+    hospitalDialog.showModal();
   }
 
   async function confirmHospital() {
     hospitalDialog.close();
     await onIntent({ type: 'medical_care' });
   }
+
+  async function advanceTime(hours?: number) {
+    advanceTimeDialog.close();
+    await onIntent(
+      hours === undefined ? { type: 'wait' } : { type: 'wait', hours },
+    );
+  }
 </script>
 
 <aside class="overview-column">
-  <section class="metrics" aria-label="Current metrics">
-    <h1>{model.companion.name}</h1>
-    {#each model.metrics as metric (metric.key)}
-      <div class="metric">
-        <div>
-          <span>{metric.label}</span><strong
-            >{metric.value}/{metric.maximum}</strong
-          >
-        </div>
-        <meter
-          min="0"
-          max={metric.maximum}
-          value={metric.value}
-          aria-label={`${metric.label}: ${metric.value} out of ${metric.maximum}`}
-          >{metric.value}</meter
-        >
-      </div>
-    {/each}
-  </section>
-
-  <div class="status-time-card">
-    <StatusPanel statuses={model.statuses} />
-    {#if hospitalAvailable}
-      <button
-        class="secondary-action"
-        type="button"
-        on:click={() => hospitalDialog.showModal()}
-        {disabled}>Hospital</button
-      >
-    {/if}
-
-    <section class="time-balance" aria-label="Time and balance">
-      <div class="session-clock">
-        <h2>Time</h2>
-        <span>{model.formattedTime}</span>
-      </div>
-      <strong>Balance: ${numbers.format(model.balance)}</strong>
-      <span>Subscribers: {numbers.format(model.followers)}</span>
-      {#if model.madeItUnlocked && !model.ending}<strong
-          >Ending unlocked: Made It</strong
-        >{/if}
-      <span><strong>Career:</strong> {model.career.label}</span>
-      <span
-        ><strong>Streams:</strong>
-        {numbers.format(model.streamStats.completed)}</span
-      >
-      {#if model.career.nextMilestone}
-        <span
-          >Next milestone: {model.career.nextMilestone.label} · {numbers.format(
-            model.career.nextMilestone.remaining,
-          )} to go</span
-        >
-      {:else}
-        <span>All career milestones reached</span>
-      {/if}
-      {#each model.projects as project (project.id)}
-        <div class="project-progress">
-          <div>
-            <span>{project.label}</span><strong
-              >{project.progressPercentage}%</strong
-            >
-          </div>
-          <meter
-            min="0"
-            max="100"
-            value={project.progressPercentage}
-            aria-label={`${project.label}: ${project.progressPercentage}% complete`}
-            >{project.progressPercentage}%</meter
-          >
-          <small>Due {activityTime(project.endsAt)}</small>
-        </div>
-      {/each}
-      {#if model.activity}
-        <p class="activity" role="status">
-          {model.companion.name} is {model.activity.label} until
-          {activityTime(model.activity.endsAt)}.
-        </p>
-      {/if}
-      {#if model.mode === 'streaming' && !model.ending}
-        <button
-          class="secondary-action"
-          type="button"
-          on:click={() => onIntent({ type: 'wait' })}
-          {disabled}>Advance time</button
-        >
-      {/if}
-    </section>
-  </div>
+  <CompanionStats {model} {disabled} onHospital={openHospital} />
+  <button class="stats-action" type="button" on:click={openStats}>Stats</button>
+  {#if model.mode === 'streaming' && !model.ending}
+    <button
+      class="advance-time-action"
+      type="button"
+      on:click={() => advanceTimeDialog.showModal()}
+      disabled={model.commandsDisabled}>Advance time</button
+    >
+  {/if}
   {#if model.ending}
     <section class="ending-card" role="alert">
       <h2>{model.ending.title}</h2>
@@ -134,6 +64,49 @@
     <p class="command-error" role="alert">{errorMessage}</p>
   {/if}
 </aside>
+
+<dialog
+  class="stats-dialog"
+  bind:this={statsDialog}
+  aria-label="Stats"
+  on:close={() => (statsOpen = false)}
+>
+  <button
+    type="button"
+    class="stats-close"
+    aria-label="Close stats"
+    on:click={() => statsDialog.close()}>←</button
+  >
+  {#if statsOpen}
+    <CompanionStats {model} {disabled} onHospital={openHospital} />
+  {/if}
+</dialog>
+
+<dialog
+  class="advance-time-dialog"
+  bind:this={advanceTimeDialog}
+  aria-labelledby="advance-time-title"
+>
+  <h2 id="advance-time-title">Advance time</h2>
+  <div class="dialog-actions time-options">
+    <button
+      type="button"
+      disabled={model.commandsDisabled}
+      on:click={() => advanceTime()}>Random</button
+    >
+    {#each model.waitHours as hours (hours)}
+      <button
+        type="button"
+        disabled={model.commandsDisabled}
+        on:click={() => advanceTime(hours)}
+        >{hours} {hours === 1 ? 'hour' : 'hours'}</button
+      >
+    {/each}
+    <button type="button" on:click={() => advanceTimeDialog.close()}
+      >Cancel</button
+    >
+  </div>
+</dialog>
 
 <dialog
   class="hospital-dialog"
@@ -164,26 +137,12 @@
 </dialog>
 
 <style>
-  .session-clock {
-    display: flex;
+  .time-options {
     flex-direction: column;
-    gap: 7px;
   }
   @media (min-width: 781px) {
     .overview-column {
       display: contents;
-    }
-    .status-time-card {
-      grid-area: 2 / 1 / auto / -1;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      align-items: start;
-    }
-    .time-balance {
-      display: contents;
-    }
-    .secondary-action {
-      justify-self: start;
     }
     .ending-card,
     .command-error {

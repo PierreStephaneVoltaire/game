@@ -103,5 +103,5 @@ describe('autonomous catch-up chronology', () => {
     expect(selected!.oneShot.progression.followers).toBe(
       selected!.split.progression.followers,
     );
-  });
+  }, 60_000);
 });

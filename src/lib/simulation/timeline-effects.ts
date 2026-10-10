@@ -1,3 +1,4 @@
+import { resolvedState } from '../telemetry/collector';
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState } from '../game-types';
 import { actionRandom } from '../seeded-rng';
@@ -11,6 +12,7 @@ import { HOUR_MS } from '../game-constants';
 import { healthDamageSource } from './health-resolution';
 import { appendStatusTransitionEvents } from './engine-state';
 import { completeDueProjects } from '../project-rules';
+import { settleDueVentures } from '../commands/creator-services';
 import { resolveTimelineOpportunities } from './timeline-opportunities';
 import { appendTimelineStatusEvents } from './timeline-status-events';
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
@@ -54,14 +56,15 @@ export function resolveTimelineEffects({
   autonomousOpportunity = false,
   preventLethal = false,
 }: TimelineEffectsInput): TimelineEffectsResult {
-  let next = state;
+  let next = resolvedState(state);
   let deathAt = initialDeathAt;
   let lethalEventId: string | undefined;
   let reconciliationNow = initialReconciliationNow;
   let resolvedElapsedHours = (reconciliationNow - lastResolvedAt) / HOUR_MS;
   const eventIds: string[] = [];
   const beforeProjectEvents = next.events.length;
-  next = completeDueProjects(next, reconciliationNow);
+  next = resolvedState(completeDueProjects(next, reconciliationNow));
+  next = resolvedState(settleDueVentures(next, reconciliationNow));
   eventIds.push(
     ...next.events.slice(beforeProjectEvents).map((event) => event.id),
   );
@@ -95,21 +98,21 @@ export function resolveTimelineEffects({
       const beforeSnackEventCount = next.events.length;
       const beforeSnackStatuses = next.statuses;
       const snackCommandId = `${streamActivityId}:snack:${snackIndex}`;
-      next = resolveItemConsumption(
-        next,
-        {
-          type: 'use_item',
-          commandId: snackCommandId,
-          itemId: item.id,
-          now: reconciliationNow,
-        },
-        definition,
-        { automatic: true },
-      ).state;
-      next = appendStatusTransitionEvents(
-        next,
-        beforeSnackStatuses,
-        snackCommandId,
+      next = resolvedState(
+        resolveItemConsumption(
+          next,
+          {
+            type: 'use_item',
+            commandId: snackCommandId,
+            itemId: item.id,
+            now: reconciliationNow,
+          },
+          definition,
+          { automatic: true },
+        ).state,
+      );
+      next = resolvedState(
+        appendStatusTransitionEvents(next, beforeSnackStatuses, snackCommandId),
       );
       eventIds.push(
         ...next.events
@@ -118,7 +121,10 @@ export function resolveTimelineEffects({
       );
       if (next.metrics.health <= 0) {
         if (preventLethal) {
-          next = { ...next, metrics: { ...next.metrics, health: 1 } };
+          next = resolvedState({
+            ...next,
+            metrics: { ...next.metrics, health: 1 },
+          });
         } else {
           deathAt = reconciliationNow;
           break;
@@ -135,7 +141,7 @@ export function resolveTimelineEffects({
         undefined,
         definition,
       );
-      next = lifeEvents.state;
+      next = resolvedState(lifeEvents.state);
       eventIds.push(...lifeEvents.eventIds);
     }
   }
@@ -146,12 +152,12 @@ export function resolveTimelineEffects({
       at: reconciliationNow,
       autonomous: autonomousOpportunity,
     });
-    next = opportunities.state;
+    next = resolvedState(opportunities.state);
     eventIds.push(...opportunities.eventIds);
   }
   if (!deathAt && !next.ending) {
     const revenue = processSubscriberRevenue(next, reconciliationNow);
-    next = revenue.state;
+    next = resolvedState(revenue.state);
     eventIds.push(...revenue.eventIds);
   }
   if (!deathAt && !next.ending) {
@@ -159,12 +165,12 @@ export function resolveTimelineEffects({
       next,
       reconciliationNow,
     );
-    next = medicalPayments.state;
+    next = resolvedState(medicalPayments.state);
     eventIds.push(...medicalPayments.eventIds);
   }
   if (!deathAt && !next.ending) {
     const audience = resolveAudienceGrowth(next, reconciliationNow);
-    next = audience.state;
+    next = resolvedState(audience.state);
     eventIds.push(...audience.eventIds);
   }
   if (!deathAt && !next.ending) {
@@ -173,7 +179,7 @@ export function resolveTimelineEffects({
       reconciliation: statusReconciliation,
       at: reconciliationNow,
     });
-    next = statusEvents.state;
+    next = resolvedState(statusEvents.state);
     eventIds.push(...statusEvents.eventIds);
   }
 
@@ -196,7 +202,7 @@ export function resolveTimelineEffects({
         next.timedEffects.painReliefUntil !== null &&
         recurrenceAt < next.timedEffects.painReliefUntil
       ) {
-        next = {
+        next = resolvedState({
           ...next,
           statuses: {
             ...next.statuses,
@@ -205,7 +211,7 @@ export function resolveTimelineEffects({
               lastPenaltyAt: recurrenceAt,
             },
           },
-        };
+        });
         continue;
       }
       const recurrence = kidneyStoneRecurrenceMetricDeltas(next.metrics);
@@ -234,7 +240,7 @@ export function resolveTimelineEffects({
       };
       causalEventIds = [...causalEventIds, event.id];
       const beforeRecurrence = next;
-      next = {
+      next = resolvedState({
         ...next,
         metrics: {
           ...next.metrics,
@@ -250,11 +256,13 @@ export function resolveTimelineEffects({
           },
         },
         events: [...next.events, event],
-      };
-      next = reconcileMetricSource(
-        beforeRecurrence,
-        next,
-        `kidney-stone:${recurrenceAt}`,
+      });
+      next = resolvedState(
+        reconcileMetricSource(
+          beforeRecurrence,
+          next,
+          `kidney-stone:${recurrenceAt}`,
+        ),
       );
       eventIds.push(
         event.id,
@@ -265,11 +273,11 @@ export function resolveTimelineEffects({
       if (next.metrics.health <= 0) {
         deathAt = recurrenceAt;
         lethalEventId = event.id;
-        next = {
+        next = resolvedState({
           ...next,
           now: recurrenceAt,
           lastResolvedAt: recurrenceAt,
-        };
+        });
         reconciliationNow = recurrenceAt;
         resolvedElapsedHours = (reconciliationNow - lastResolvedAt) / HOUR_MS;
         break;

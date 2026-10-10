@@ -68,6 +68,7 @@ export function transitionSpeech(
   before: GameState,
   session: SpeechSession,
   intervalHours: number,
+  pools?: QuotePools,
 ): SpeechTrigger | null {
   const { state, definition, command, outcome } = session;
   if (
@@ -77,6 +78,8 @@ export function transitionSpeech(
   )
     return null;
   const events = state.events.slice(before.events.length);
+  const available = (trigger: SpeechTrigger) =>
+    !pools || trigger.pools.some((key) => pools[key]?.length);
   if (outcome?.accepted && command) {
     const consumed = events
       .filter(
@@ -89,30 +92,100 @@ export function transitionSpeech(
           ),
       )
       .at(-1);
-    if (consumed)
-      return {
+    if (consumed) {
+      const trigger = {
         id: command.commandId,
-        pools: [`feed:${consumed.itemId}`, 'feed'],
+        pools: [
+          `feed:${consumed.itemId}`,
+          `use_item:${consumed.itemId}`,
+          'feed',
+          'use_item',
+        ],
       };
-    if (command.type === 'perform_item_action')
-      return {
+      if (available(trigger)) return trigger;
+    }
+    if (command.type === 'use_item' && !consumed) {
+      const trigger = {
+        id: command.commandId,
+        pools: [`use_item:${command.itemId}`, 'use_item'],
+      };
+      if (available(trigger)) return trigger;
+    }
+    if (command.type === 'perform_item_action') {
+      const trigger = {
         id: command.commandId,
         pools: [
           `item_action:${command.itemId}:${command.action}`,
+          `use_item:${command.itemId}`,
           'item_action',
+          'use_item',
         ],
       };
+      if (available(trigger)) return trigger;
+    }
   }
   for (let index = events.length - 1; index >= 0; index--) {
     const trigger = activitySpeech(events[index]);
-    if (trigger) return trigger;
+    if (trigger && available(trigger)) return trigger;
+  }
+  if (pools) {
+    for (const event of [...events].reverse()) {
+      if (event.type === 'item_purchased' || event.type === 'cart_checked_out')
+        continue;
+      const keys = [`event:${event.type}`];
+      if (event.lifeEventId) {
+        keys.unshift(`life_event:${event.lifeEventId}`);
+        if (event.selectedOutcomeId)
+          keys.unshift(
+            `life_event:${event.lifeEventId}:${event.selectedOutcomeId}`,
+          );
+      }
+      if (
+        event.status &&
+        [
+          'status_added',
+          'status_cleared',
+          'debt_status_entered',
+          'debt_status_recovered',
+        ].includes(event.type)
+      ) {
+        const phase =
+          event.type === 'status_cleared' ||
+          event.type === 'debt_status_recovered'
+            ? 'cleared'
+            : 'added';
+        keys.unshift(`status:${event.status}:${phase}`);
+      }
+      const trigger = { id: event.id, pools: keys };
+      if (available(trigger)) return trigger;
+    }
   }
   const context = state.activity?.type ?? 'idle';
+  const idlePools = [
+    ...Object.keys(state.statuses).map((status) => `idle:${status}`),
+    'idle',
+  ];
+  const completed = events.findLast(
+    (event) =>
+      event.activityType &&
+      ['activity_completed', 'activity_interrupted'].includes(event.type),
+  );
+  const idleFrom = completed?.activityType ?? before.activity?.type;
+  if (idleFrom && context === 'idle') {
+    const trigger = {
+      id: `idle:${completed?.id ?? before.activity!.id}`,
+      pools: [`idle:from_${idleFrom}`, 'idle:start', ...idlePools],
+    };
+    if (available(trigger)) return trigger;
+  }
   if (
     speechHour(state, intervalHours) > speechHour(before, intervalHours) &&
     (context === 'idle' || context === 'stream')
   ) {
-    return { id: `hour:${speechHour(state, intervalHours)}`, pools: [context] };
+    return {
+      id: `hour:${speechHour(state, intervalHours)}`,
+      pools: context === 'idle' ? idlePools : [context],
+    };
   }
   return null;
 }

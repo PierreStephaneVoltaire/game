@@ -10,19 +10,16 @@ from sqlalchemy.orm import Session
 
 from backend.auth.models import AuthAttempt
 from backend.config import get_settings
-from backend.content.service import current_content
+from backend.content.models import ContentVersion
 from backend.errors import ApiError
 
-from .models import CommittedBatch, Game, GameEvent
+from .snapshot import game_snapshot
+from .models import CommittedBatch, Game, GameEvent, GameNickname
 from .schemas import CreateGame, DeathWrite, GameWrite
 from .validation import digest, validate_death_state, validate_write
 
 def _now() -> datetime:
     return datetime.now(UTC)
-
-
-def _utc_naive(value: datetime) -> datetime:
-    return value.astimezone(UTC).replace(tzinfo=None) if value.tzinfo else value
 
 
 def _rate_limit(session: Session, user_id: str, now: datetime) -> None:
@@ -40,20 +37,17 @@ def _rate_limit(session: Session, user_id: str, now: datetime) -> None:
     session.commit()
 
 
-def _require_current_content(session: Session, content_version: str) -> None:
-    current = current_content(session)
-    if current is None or current.version != content_version:
-        latest = current.version if current else None
-        raise ApiError(
-            409,
-            "CONTENT_VERSION_OUTDATED",
-            "Runtime content has changed.",
-            latestVersion=latest,
-        )
+def _require_known_content(session: Session, content_version: str) -> None:
+    if session.get(ContentVersion, content_version) is None:
+        raise ApiError(409, "CONTENT_VERSION_UNKNOWN", "The saved content version is unknown.")
 
 
-def _game_dict(game: Game) -> dict[str, Any]:
+def _game_dict(session: Session, game: Game) -> dict[str, Any]:
+    latest = session.scalar(select(CommittedBatch).where(CommittedBatch.game_hash == game.game_hash, CommittedBatch.resulting_state_version == game.state_version))
+    creation = session.scalar(select(CommittedBatch.batch_id).where(CommittedBatch.game_hash == game.game_hash, CommittedBatch.resulting_state_version == 0))
     return {
+        "creationBatchId": creation,
+        "latestCommittedBatchId": latest.batch_id if latest else None,
         "gameHash": game.game_hash,
         "lifeStatus": game.life_status,
         "stateVersion": game.state_version,
@@ -61,7 +55,7 @@ def _game_dict(game: Game) -> dict[str, Any]:
         "contentVersion": game.content_version,
         "lastEventSequence": game.last_event_sequence,
         "lastEventId": game.last_event_id,
-        "state": game.state_json,
+        "state": game_snapshot(session, game),
         "createdAt": game.created_at,
         "updatedAt": game.updated_at,
         "diedAt": game.died_at,
@@ -80,25 +74,43 @@ def _event_dict(event: GameEvent) -> dict[str, Any]:
 
 class GameService:
     def create(self, session: Session, user_id: str, content_version: str, data: CreateGame) -> dict[str, Any]:
+        try:
+            return self._create(session, user_id, content_version, data)
+        except IntegrityError:
+            session.rollback()
+            return self._create(session, user_id, content_version, data)
+
+    def _create(self, session: Session, user_id: str, content_version: str, data: CreateGame) -> dict[str, Any]:
         now = _now()
         with session.begin():
-            _require_current_content(session, content_version)
+            existing = session.scalar(select(Game).where(Game.game_hash == data.game_hash).with_for_update())
+            if existing:
+                if existing.owner_user_id == user_id:
+                    if data.creation_batch_id:
+                        previous = session.get(CommittedBatch, (data.game_hash, data.creation_batch_id))
+                        state_hash = digest(data.state)
+                        events_hash = digest([event.model_dump(mode="json", by_alias=True) for event in data.events])
+                        if previous and previous.resulting_state_version == 0 and previous.state_hash == state_hash and previous.events_hash == events_hash:
+                            return previous.acknowledgement_json
+                        raise ApiError(409, "GAME_HASH_CONFLICT", "The game code already has a different creation batch.")
+                    return _game_dict(session, existing)
+                raise ApiError(409, "GAME_HASH_CONFLICT", "That game hash belongs to another account.")
+            _require_known_content(session, content_version)
             count = session.scalar(select(func.count()).select_from(Game).where(Game.owner_user_id == user_id))
             if (count or 0) >= get_settings().max_games_per_user:
                 raise ApiError(409, "GAME_LIMIT_REACHED", "Each account can have at most 20 games.")
-            existing = session.get(Game, data.game_hash)
-            if existing:
-                if existing.owner_user_id == user_id:
-                    return _game_dict(existing)
-                raise ApiError(409, "GAME_HASH_CONFLICT", "That game hash belongs to another account.")
-            write = GameWrite(batchId="initial", previousEventId=None, targetState=data.state, events=data.events)
+            batch_id = data.creation_batch_id or "initial"
+            write = GameWrite(batchId=batch_id, previousEventId=None, targetState=data.state, events=data.events)
             validate_write(write, 0, None)
             if len(data.events) > get_settings().max_events_per_game:
                 raise ApiError(409, "EVENT_LIMIT_REACHED", "This game has too many events.")
+            if (data.state.get("ending") or {}).get("kind") == "death":
+                causes = data.state["ending"].get("eventIds", [])
+                validate_death_state(data.state, causes[-1] if causes else "", {event.event_id for event in data.events})
             game = Game(
                 game_hash=data.game_hash,
                 owner_user_id=user_id,
-                life_status="alive",
+                life_status="dead" if (data.state.get("ending") or {}).get("kind") == "death" else "alive",
                 state_version=0,
                 state_schema_version=data.state_schema_version,
                 content_version=content_version,
@@ -108,19 +120,38 @@ class GameService:
                 state_json=data.state,
                 created_at=now,
                 updated_at=now,
+                died_at=now if (data.state.get("ending") or {}).get("kind") == "death" else None,
             )
             session.add(game)
             for event in data.events:
                 session.add(GameEvent(
                     game_hash=game.game_hash, sequence=event.sequence, event_id=event.event_id,
-                    batch_id="initial", event_type=event.event_type, event_at=event.event_at,
+                    batch_id=batch_id, event_type=event.event_type, event_at=event.event_at,
                     payload_json=event.payload, created_at=now,
                 ))
-        return _game_dict(game)
+            if data.creation_batch_id:
+                session.flush()
+                acknowledgement = {
+                    "gameHash": game.game_hash, "stateVersion": 0,
+                    "committedThroughSequence": game.last_event_sequence,
+                    "committedThroughEventId": game.last_event_id,
+                    "latestCommittedBatchId": batch_id,
+                }
+                session.add(CommittedBatch(
+                    game_hash=game.game_hash, batch_id=batch_id,
+                    state_hash=digest(data.state),
+                    events_hash=digest([event.model_dump(mode="json", by_alias=True) for event in data.events]),
+                    resulting_state_version=0, committed_through_sequence=game.last_event_sequence,
+                    committed_through_event_id=game.last_event_id,
+                    acknowledgement_json=acknowledgement, committed_at=now,
+                ))
+            session.flush()
+            result = acknowledgement if data.creation_batch_id else _game_dict(session, game)
+        return result
 
     def get(self, session: Session, user_id: str, game_hash: str) -> dict[str, Any]:
         game = self._owned_game(session, user_id, game_hash)
-        return _game_dict(game)
+        return _game_dict(session, game)
 
     def write(self, session: Session, user_id: str, content_version: str, game_hash: str, if_match: int, data: GameWrite, *, death: bool = False, cause_event_id: str | None = None) -> dict[str, Any]:
         now = _now()
@@ -136,15 +167,12 @@ class GameService:
                     if previous.state_hash != state_hash or previous.events_hash != events_hash:
                         raise ApiError(409, "EVENT_CONFLICT", "A batch ID cannot be reused with different data.")
                     return previous.acknowledgement_json
-                _require_current_content(session, content_version)
+                _require_known_content(session, content_version)
                 if game.life_status == "dead":
                     raise ApiError(409, "EVENT_CONFLICT", "Dead games are read-only.")
                 if game.state_version != if_match:
                     raise ApiError(412, "STALE_STATE", "The game state is stale.")
                 validate_write(data, game.last_event_sequence, game.last_event_id)
-                if data.events and game.last_event_at:
-                    if _utc_naive(data.events[0].event_at) < _utc_naive(game.last_event_at):
-                        raise ApiError(409, "EVENT_CONFLICT", "Event timestamps must not decrease.")
                 total = game.last_event_sequence + len(data.events)
                 if total > get_settings().max_events_per_game:
                     raise ApiError(409, "EVENT_LIMIT_REACHED", "This game has too many events.")
@@ -185,6 +213,7 @@ class GameService:
                     "stateVersion": game.state_version,
                     "committedThroughSequence": game.last_event_sequence,
                     "committedThroughEventId": game.last_event_id,
+                    "latestCommittedBatchId": data.batch_id,
                     "etag": f'"{game.state_version}"',
                     "serverNow": now.isoformat(),
                 }
@@ -217,7 +246,32 @@ class GameService:
         ending = game.state_json.get("ending", {})
         event_ids = ending.get("eventIds", []) if isinstance(ending, dict) else []
         causes = list(session.scalars(select(GameEvent).where(GameEvent.game_hash == game_hash, GameEvent.event_id.in_(event_ids)).order_by(GameEvent.sequence))) if event_ids else []
-        return {"game": _game_dict(game), "ending": ending, "causalEvents": [_event_dict(event) for event in causes]}
+        return {"game": _game_dict(session, game), "ending": ending, "causalEvents": [_event_dict(event) for event in causes]}
+
+    def game_keys(self, session: Session, user_id: str) -> list[dict[str, Any]]:
+        rows = session.execute(
+            select(Game.game_hash, Game.life_status, Game.updated_at, GameNickname.nickname)
+            .outerjoin(GameNickname, GameNickname.game_hash == Game.game_hash)
+            .where(Game.owner_user_id == user_id)
+            .order_by(Game.updated_at.desc(), Game.game_hash.desc())
+        ).all()
+        return [
+            {"gameHash": game_hash, "lifeStatus": life_status, "updatedAt": updated_at, "nickname": nickname}
+            for game_hash, life_status, updated_at, nickname in rows
+        ]
+
+    def set_nickname(self, session: Session, user_id: str, game_hash: str, nickname: str) -> dict[str, Any]:
+        self._owned_game(session, user_id, game_hash)
+        existing = session.get(GameNickname, game_hash)
+        if not nickname:
+            if existing:
+                session.delete(existing)
+        elif existing:
+            existing.nickname, existing.updated_at = nickname, _now()
+        else:
+            session.add(GameNickname(game_hash=game_hash, nickname=nickname, updated_at=_now()))
+        session.commit()
+        return {"gameHash": game_hash, "nickname": nickname or None}
 
     @staticmethod
     def _owned_game(session: Session, user_id: str, game_hash: str) -> Game:

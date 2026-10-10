@@ -4,7 +4,6 @@
     companionSpeechSession,
     reconcileGameClock,
   } from '$lib/game-session';
-  import type { CompanionAppearance } from '$lib/ui/companion';
   import {
     clickSpeech,
     loadQuotes,
@@ -19,33 +18,19 @@
   import rules from '$lib/data/speech-rules.json';
 
   export let name: string;
-  export let appearance: CompanionAppearance;
 
   let session: SpeechSession | null = null;
   let pools: QuotePools = {};
   let text = '';
   let previousQuote = '';
   let clickSequence = 0;
-  let focused = false;
-  let hovered = false;
-  let remaining = 0;
-  let expiresAt = 0;
   let dismissal: ReturnType<typeof setTimeout> | undefined;
   let pending: ReturnType<typeof setTimeout> | undefined;
+  let deferred: SpeechTrigger | null = null;
+  let deferredDialog: HTMLDialogElement | null = null;
+  let avatar: HTMLButtonElement;
+  let bubble: HTMLDivElement;
   $: allowed = session !== null && speechAllowed(session.state);
-  $: pause(focused || hovered);
-
-  function pause(held: boolean) {
-    if (dismissal !== undefined) {
-      remaining = Math.max(0, expiresAt - performance.now());
-      clearTimeout(dismissal);
-      dismissal = undefined;
-    }
-    if (!held && text) {
-      expiresAt = performance.now() + remaining;
-      dismissal = setTimeout(clearSpeech, remaining);
-    }
-  }
 
   function clearSpeech() {
     clearTimeout(dismissal);
@@ -54,23 +39,37 @@
   }
 
   function speak(trigger: SpeechTrigger) {
-    if (
-      !session ||
-      document.visibilityState !== 'visible' ||
-      document.querySelector('dialog[open]')
-    )
+    if (!session || document.visibilityState !== 'visible') return;
+    const dialog = document.querySelector<HTMLDialogElement>('dialog[open]');
+    if (dialog) {
+      deferredDialog?.removeEventListener('close', dialogClosed);
+      deferredDialog = dialog;
+      dialog.addEventListener('close', dialogClosed, { once: true });
+      deferred = trigger;
       return;
+    }
+    deferred = null;
+    deferredDialog = null;
     const quote = selectQuote(pools, trigger, session.state, previousQuote);
     clearSpeech();
     if (!quote) return;
     previousQuote = text = quote;
-    remaining = rules.displaySeconds * 1000;
-    pause(focused || hovered);
+    dismissal = setTimeout(clearSpeech, rules.displaySeconds * 1000);
+  }
+
+  function dismissOnOutsideClick(event: MouseEvent) {
+    const target = event.target as Node;
+    if (text && !avatar.contains(target) && !bubble?.contains(target))
+      clearSpeech();
   }
 
   function clicked() {
     clearTimeout(pending);
     if (session) speak(clickSpeech(session.state, ++clickSequence));
+  }
+
+  function dialogClosed() {
+    if (deferred) speak(deferred);
   }
 
   onMount(() => {
@@ -110,9 +109,11 @@
       if (!next || !before || next.state.seed !== before.state.seed) {
         clearTimeout(pending);
         clearSpeech();
+        deferred = null;
         previousQuote = '';
         clickSequence = 0;
       } else if (!speechAllowed(next.state)) {
+        deferred = null;
         clearTimeout(pending);
         clearSpeech();
       } else if (document.visibilityState === 'visible') {
@@ -120,6 +121,7 @@
           before.state,
           next,
           rules.intervalHours,
+          pools,
         );
         if (trigger) {
           clearTimeout(pending);
@@ -129,6 +131,7 @@
       schedule();
     });
     const visibility = () => {
+      deferred = null;
       clearTimeout(pending);
       clearSpeech();
       schedule();
@@ -141,6 +144,7 @@
       stopped = true;
       unsubscribe();
       document.removeEventListener('visibilitychange', visibility);
+      deferredDialog?.removeEventListener('close', dialogClosed);
       clearTimeout(clock);
       clearTimeout(pending);
       clearSpeech();
@@ -148,25 +152,16 @@
   });
 </script>
 
+<svelte:window on:click={dismissOnOutsideClick} />
+
 <button
+  bind:this={avatar}
   type="button"
   class="companion-avatar"
   disabled={!allowed}
   aria-label={`Talk to ${name}`}
   on:click={clicked}
-  on:focus={() => (focused = true)}
-  on:blur={() => (focused = false)}
->
-  <img
-    class="companion"
-    src={appearance.assetPath}
-    alt={name}
-    data-appearance-id={appearance.id}
-    width="176"
-    height="176"
-    decoding="async"
-  />
-</button>
+></button>
 <div
   class="speech-position"
   role="status"
@@ -174,12 +169,7 @@
   aria-atomic="true"
 >
   {#if text}
-    <div
-      class="speech-bubble"
-      on:mouseenter={() => (hovered = true)}
-      on:mouseleave={() => (hovered = false)}
-      role="presentation"
-    >
+    <div bind:this={bubble} class="speech-bubble" role="presentation">
       {text}
     </div>
   {/if}
@@ -189,19 +179,19 @@
   .companion-avatar {
     position: absolute;
     z-index: 2;
-    bottom: -10px;
-    left: 57%;
-    width: min(274.56px, 42.12%);
+    top: 66%;
+    left: 45%;
+    width: 12.5%;
+    height: 33.5%;
     padding: 0;
     border: 0;
     background: transparent;
-    transform: translateX(-50%);
     cursor: pointer;
     pointer-events: none;
   }
   .companion-avatar::after {
     position: absolute;
-    inset: 0 25%;
+    inset: 0;
     pointer-events: auto;
     content: '';
   }
@@ -212,16 +202,10 @@
     opacity: 1;
     cursor: default;
   }
-  .companion-avatar img {
-    display: block;
-    width: 100%;
-    height: auto;
-    image-rendering: pixelated;
-  }
   .speech-position {
     position: absolute;
     z-index: 3;
-    bottom: min(264.56px, calc(42.12cqw - 10px));
+    bottom: calc(34% + 12px);
     left: 8%;
     width: 84%;
     pointer-events: none;
@@ -244,7 +228,7 @@
   .speech-position:has(.speech-bubble)::after {
     position: absolute;
     bottom: -9px;
-    left: 56%;
+    left: 50%;
     width: 14px;
     height: 14px;
     border-right: 3px solid var(--theme-ink);

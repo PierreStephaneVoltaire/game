@@ -6,11 +6,16 @@ import {
   createGameKey,
   ensureGameSession,
   gameViewModel,
+  companionSpeechSession,
+  reconcileGameClock,
   sendGameIntent,
   useGameDefinitionRepository,
 } from './game-session';
 import { HOUR_MS } from './game-constants';
-import { BundledGameDefinitionRepository } from './test-game-definition';
+import {
+  BUNDLED_GAME_DEFINITION,
+  BundledGameDefinitionRepository,
+} from './test-game-definition';
 
 describe('browser game session', () => {
   beforeEach(() =>
@@ -47,6 +52,54 @@ describe('browser game session', () => {
     expect(get(gameViewModel)?.now).toBe(startedAt + 2 * HOUR_MS);
   });
 
+  it.each(['realtime', 'streaming'] as const)(
+    'publishes only the completed %s action, including clock catch-up',
+    async (mode) => {
+      vi.useFakeTimers();
+      const startedAt = Date.UTC(2026, 7, 22, 14);
+      vi.setSystemTime(startedAt);
+      await beginGameSession(mode, '10000003');
+      const published = vi.fn();
+      const unsubscribe = companionSpeechSession.subscribe(published);
+      published.mockClear();
+      try {
+        vi.setSystemTime(startedAt + 2 * HOUR_MS);
+        await sendGameIntent({ type: 'play' });
+        expect(published).toHaveBeenCalledTimes(1);
+        expect(published.mock.calls[0][0].command.type).toBe('play');
+        expect(published.mock.calls[0][0].state.now).toBe(
+          get(gameViewModel)!.now,
+        );
+      } finally {
+        unsubscribe();
+      }
+    },
+  );
+
+  it('does not publish or resolve effects again for overlapping clock triggers at the same time', async () => {
+    useGameDefinitionRepository({
+      load: async () => structuredClone(BUNDLED_GAME_DEFINITION),
+    });
+    vi.useFakeTimers();
+    const startedAt = Date.UTC(2026, 7, 22, 14);
+    vi.setSystemTime(startedAt);
+    await beginGameSession('realtime', '10000004');
+    const published = vi.fn();
+    const unsubscribe = companionSpeechSession.subscribe(published);
+    published.mockClear();
+    try {
+      vi.setSystemTime(startedAt + 2 * HOUR_MS);
+      await Promise.all([
+        reconcileGameClock(),
+        reconcileGameClock(),
+        reconcileGameClock(),
+      ]);
+      expect(published).toHaveBeenCalledTimes(1);
+    } finally {
+      unsubscribe();
+    }
+  });
+
   it('uses the supplied session key as the run seed', async () => {
     await beginGameSession('streaming', '00421873');
 
@@ -65,6 +118,7 @@ describe('browser game session', () => {
         '**/*-test-fixtures.ts',
         '**/*-study.ts',
         '**/catalog-validation.ts',
+        '**/content/local-content.ts',
       ],
     });
     for (const file of files) {

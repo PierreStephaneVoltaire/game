@@ -1,3 +1,5 @@
+import { resolvedBoundary } from './resolution-boundary';
+import { resolvedState } from '../telemetry/collector';
 import type { GameState } from '../game-types';
 import type { GameDefinition } from '../game-definition';
 import { simulationRules as rules } from '../runtime-definition';
@@ -5,6 +7,9 @@ import { nextStatusBoundary } from '../status-rules';
 import { nextLocalMidnight } from '../shop-rules';
 import { HOUR_MS } from '../game-constants';
 import { nextEndingBoundary } from '../ending-rules';
+import { isHealthProtectedActivity } from './health-resolution';
+import { decayRemainderMs, healthRemainderMs } from './decay-remainders';
+import { nextVentureBoundaries } from '../commands/creator-services';
 import {
   nextLifeEventBoundary,
   processLifeEventBoundary,
@@ -21,14 +26,12 @@ export function nextReconciliationBoundaries(
   state: GameState,
   now: number,
 ): ReconciliationBoundarySet {
-  const intervalHours = rules.timeDecay.intervalHours;
+  const intervalMs = rules.timeDecay.intervalHours * HOUR_MS;
   const nextDecayAt =
-    state.lastResolvedAt +
-    (intervalHours - state.history.decayRemainderHours) * HOUR_MS;
-  const nextHealthAt = state.activity
+    state.lastResolvedAt + intervalMs - decayRemainderMs(state.history);
+  const nextHealthAt = isHealthProtectedActivity(state)
     ? undefined
-    : state.lastResolvedAt +
-      (intervalHours - state.history.healthRemainderHours) * HOUR_MS;
+    : state.lastResolvedAt + intervalMs - healthRemainderMs(state.history);
   const potentialRegularBoundaries = [
     state.activity?.endsAt,
     state.history.sugarCrashDueAt ?? undefined,
@@ -42,6 +45,7 @@ export function nextReconciliationBoundaries(
       : undefined,
     state.history.nextAutonomousAt,
     ...state.projects.map((project) => project.completesAt),
+    ...nextVentureBoundaries(state),
     nextDecayAt,
     nextHealthAt,
     nextStatusBoundary(state, state.lastResolvedAt),
@@ -85,7 +89,7 @@ export function catchUpLifeEvents(
   nextRegularBoundary: number,
   definition: GameDefinition,
 ): { state: GameState; eventIds: string[] } {
-  let lifeState = state;
+  let lifeState = resolvedState(state);
   const eventIds: string[] = [];
   while (!lifeState.ending) {
     const boundary = nextLifeEventBoundary(lifeState);
@@ -96,7 +100,7 @@ export function catchUpLifeEvents(
       undefined,
       definition,
     );
-    lifeState = lifeEvents.state;
+    lifeState = resolvedBoundary(resolvedState(lifeEvents.state));
     eventIds.push(...lifeEvents.eventIds);
   }
   return { state: lifeState, eventIds };

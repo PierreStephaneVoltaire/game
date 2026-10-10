@@ -1,15 +1,11 @@
-import { derived, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { GameController } from './game-controller';
 import type { GameDefinitionRepository } from './game-definition';
-import { InMemoryGameDefinitionRepository } from './game-definition';
 import { RuntimeContentCache } from './content/runtime-content';
 import type { GameCommand, GameState, Outcome } from './game-types';
-import {
-  createGameViewModel,
-  intentToCommand,
-  type GameIntent,
-  type GameViewModel,
-} from './ui/game-view-model';
+import { intentToCommand, type GameIntent } from './ui/game-view-model';
+import { batchSessionPublication, publishSession } from './ui/session-state';
+export { companionSpeechSession, gameViewModel } from './ui/session-state';
 import { UiCommandSequence } from './ui/command-sequence';
 import {
   loadGame,
@@ -18,22 +14,25 @@ import {
   saveTransition,
   setActiveGameHash,
 } from './persistence/games';
-import { nextOutbox, replacePending } from './persistence/outbox';
+import {
+  cacheRemoteGame,
+  downloadGame,
+  SavedGameUnavailableError,
+} from './persistence/remote';
+import { nextOutbox } from './persistence/outbox';
+import { withGameLock } from './persistence/locks';
+import { scheduleGameSync } from './persistence/scheduler';
 import { flushGame } from './persistence/sync';
-import type { EventRecord } from './persistence/types';
-import type { SpeechSession } from './ui/companion-speech';
+import { browserCapture } from './telemetry/browser';
+import { isLocalDevelopment } from './local-development';
+import { localContent } from './content/local-content';
 export const pendingGameKey = writable<string | null>(null);
 
-const runtimeContent = new RuntimeContentCache();
+const runtimeContent = isLocalDevelopment()
+  ? localContent
+  : new RuntimeContentCache();
 let activeController = new GameController(runtimeContent);
-const gameSession = writable<SpeechSession | null>(null);
-export const companionSpeechSession = { subscribe: gameSession.subscribe };
 const commandSequence = new UiCommandSequence();
-export const gameViewModel = derived<typeof gameSession, GameViewModel | null>(
-  gameSession,
-  ($session) =>
-    $session ? createGameViewModel($session.state, $session.definition) : null,
-);
 
 function publishGameState(
   state: GameState,
@@ -42,113 +41,97 @@ function publishGameState(
 ): void {
   const definition = activeController.currentDefinition;
   if (!definition) throw new Error('Game definition was not loaded.');
-  gameSession.set({ state, definition, command, outcome });
+  publishSession({ state, definition, command, outcome });
 }
 
-type RemoteGame = {
-  stateVersion: number;
-  lastEventSequence: number;
-  lastEventId: string | null;
-  state: GameState;
-};
-
-async function replayPending(gameHash: string): Promise<void> {
-  const pending = await nextOutbox(gameHash);
-  if (!pending) return;
-  const definition = await runtimeContent.load();
-  const controller = new GameController(
-    new InMemoryGameDefinitionRepository(definition),
-  );
-  const response = await fetch('/api/games/current', {
-    credentials: 'same-origin',
-    headers: {
-      'x-content-version': definition.version,
-      'x-game-key': gameHash,
+function syncHooks(gameHash: string) {
+  const capture =
+    activeController.current?.seed === gameHash
+      ? activeController.capture
+      : undefined;
+  return {
+    refreshContent: async () => {
+      if (runtimeContent instanceof RuntimeContentCache)
+        await runtimeContent.refreshBeforeWrite();
     },
-  });
-  let baseStateVersion: number;
-  let baseEventSequence: number;
-  let previousEventId: string | null;
-  let state: GameState;
-  let committedEventCount: number;
-  if (response.status === 404 && pending.baseStateVersion === 0) {
-    state = await controller.start({
-      mode: pending.targetState.mode,
-      now: pending.targetState.history.runStartedAt,
-      seed: gameHash,
-      timezone: pending.targetState.timezone,
-    });
-    baseStateVersion = 0;
-    baseEventSequence = 0;
-    previousEventId = null;
-    committedEventCount = 0;
-  } else {
-    if (!response.ok) throw new Error('Could not load the canonical game.');
-    const remote = (await response.json()) as RemoteGame;
-    state = await controller.load({
-      ...remote.state,
-      definitionVersion: definition.version,
-    });
-    baseStateVersion = remote.stateVersion;
-    baseEventSequence = remote.lastEventSequence;
-    previousEventId = remote.lastEventId;
-    committedEventCount = state.events.length;
-  }
-  for (const command of pending.commands) {
-    state = (
-      await controller.dispatch({
-        ...command,
-        expectedStateVersion: state.stateVersion,
-      })
-    ).state;
-  }
-  if (
-    state.mode === 'realtime' &&
-    pending.targetState.now > state.now &&
-    !state.ending
-  )
-    state = (await controller.reconcile(pending.targetState.now)).state;
-  const events: EventRecord[] = state.events
-    .slice(committedEventCount)
-    .map((event, index) => ({
-      ...event,
-      gameHash,
-      sequence: baseEventSequence + index + 1,
-    }));
-  if (
-    !(await replacePending(
-      pending,
-      state,
-      events,
-      baseStateVersion,
-      baseEventSequence,
-      previousEventId,
-      definition.version,
-    ))
-  )
-    return replayPending(gameHash);
-  if (activeController.current?.seed === gameHash) {
-    activeController = controller;
-    publishGameState(state);
-  }
+    adoptRemote: async (
+      remote: NonNullable<Awaited<ReturnType<typeof downloadGame>>>,
+    ) => {
+      await queued(async () => {
+        const discarded = await cacheRemoteGame(remote, true);
+        (capture ?? browserCapture())?.marker(
+          'stream_superseded',
+          {
+            supersededBatchIds: discarded.map((batch) => batch.batchId),
+            supersededPositions: discarded.flatMap((batch) =>
+              batch.capturePosition ? [batch.capturePosition] : [],
+            ),
+            latestCommittedBatchId: remote.latestCommittedBatchId ?? null,
+            stateVersion: remote.stateVersion,
+          },
+          activeController.current?.seed === gameHash
+            ? activeController.current
+            : remote.state,
+        );
+        if (activeController.current?.seed === gameHash) {
+          activeController.capture = browserCapture();
+          publishGameState(await activeController.load(remote.state));
+        }
+      }, gameHash);
+    },
+    confirmed: (
+      pending: import('./persistence/types').OutboxRecord,
+      acknowledgement: import('./persistence/types').SyncAcknowledgement,
+    ) => {
+      capture?.marker(
+        'save_confirmed',
+        {
+          saveBatchId: pending.batchId,
+          acknowledgement,
+          commandIds: pending.commands.map((command) => command.commandId),
+        },
+        pending.targetState,
+        pending.capturePosition,
+      );
+    },
+    rejected: (
+      pending: import('./persistence/types').OutboxRecord,
+      detail: Record<string, unknown>,
+    ) => {
+      capture?.marker(
+        'save_rejected',
+        detail,
+        pending.targetState,
+        pending.capturePosition,
+      );
+    },
+  };
 }
 
 function syncGame(gameHash: string): void {
-  void flushGame(gameHash, {
-    refreshContent: async () => {
-      await runtimeContent.refreshBeforeWrite();
-    },
-    replayConflict: replayPending,
-  });
+  if (!isLocalDevelopment()) scheduleGameSync(gameHash, syncHooks(gameHash));
 }
 
 const GAME_KEY_PATTERN = /^\d{8}$/;
+let gameQueue: Promise<unknown> = Promise.resolve();
+
+function queued<T>(task: () => Promise<T>, gameHash?: string): Promise<T> {
+  const locked = () =>
+    withGameLock(
+      gameHash ?? activeController.current?.seed ?? 'session',
+      'transition',
+      () => batchSessionPublication(task),
+    );
+  const run = gameQueue.then(locked, locked);
+  gameQueue = run.catch(() => undefined);
+  return run;
+}
 
 export function useGameDefinitionRepository(
   repository: GameDefinitionRepository,
 ): void {
   activeController = new GameController(repository);
-  gameSession.set(null);
+  publishSession(null);
 }
 
 export function gameKeyIsValid(gameKey: string): boolean {
@@ -164,40 +147,51 @@ export function createGameKey(): string {
 export async function openGameSession(gameKey: string): Promise<boolean> {
   const key = gameKey.trim();
   if (!gameKeyIsValid(key)) return false;
-  const persisted = await loadGame(key);
-  try {
-    const stored = persisted?.state ?? null;
-    if (!stored) return false;
-    const state = stored;
-    if (state.seed !== key) return false;
-    commandSequence.reset();
-    await activeController.load(state);
-    await setActiveGameHash(key);
-    publishGameState(state);
-    syncGame(key);
-    return true;
-  } catch {
-    return false;
-  }
+  if (!isLocalDevelopment()) await flushGame(key, syncHooks(key));
+  return queued(async () => {
+    try {
+      if (!isLocalDevelopment() && !(await nextOutbox(key))) {
+        try {
+          const remote = await downloadGame(key);
+          if (!remote) return false;
+          await cacheRemoteGame(remote);
+        } catch (error) {
+          if (!(error instanceof SavedGameUnavailableError)) throw error;
+        }
+      }
+      const persisted = await loadGame(key);
+      if (!persisted || persisted.state.seed !== key) return false;
+      activeController.capture = browserCapture();
+      const state = await activeController.load(persisted.state);
+      await setActiveGameHash(key);
+      publishGameState(state);
+      syncGame(key);
+      return true;
+    } catch {
+      return false;
+    }
+  }, key);
 }
 
-export async function beginGameSession(
+export function beginGameSession(
   mode: 'realtime' | 'streaming',
   gameKey: string,
 ): Promise<void> {
   const seed = gameKey.trim();
-  if (!gameKeyIsValid(seed))
-    throw new Error('An eight-digit game key is required.');
-  commandSequence.reset();
-  const state = await activeController.start({
-    mode,
-    now: Date.now(),
-    seed,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  });
-  await saveNewGame(state);
-  publishGameState(state);
-  syncGame(seed);
+  return queued(async () => {
+    if (!gameKeyIsValid(seed))
+      throw new Error('An eight-digit game key is required.');
+    activeController.capture = browserCapture();
+    const state = await activeController.start({
+      mode,
+      now: Date.now(),
+      seed,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    });
+    await saveNewGame(state, activeController.capture?.position(state));
+    publishGameState(state);
+    syncGame(seed);
+  }, seed);
 }
 
 export async function ensureGameSession(): Promise<boolean> {
@@ -213,7 +207,7 @@ async function sendGameCommand(command: GameCommand): Promise<Outcome> {
   const before = activeController.current;
   if (!before) throw new Error('Start a game session before sending actions.');
   const transition = await activeController.dispatch(command);
-  await saveTransition(before, transition.state, command);
+  await saveResolvedTransition(before, command);
   publishGameState(transition.state, command, transition.outcomes[0]);
   syncGame(transition.state.seed);
   return (
@@ -226,26 +220,59 @@ async function sendGameCommand(command: GameCommand): Promise<Outcome> {
   );
 }
 
-export async function sendGameIntent(intent: GameIntent): Promise<Outcome> {
-  let state = activeController.current;
-  if (!state) throw new Error('Start a game session before sending actions.');
-  if (state.mode === 'realtime') {
-    await reconcileGameClock();
-    state = activeController.current;
-    if (!state) throw new Error('The active game session was lost.');
-  }
-  return sendGameCommand(
-    intentToCommand(intent, state, commandSequence.next()),
-  );
+export function sendGameIntent(intent: GameIntent): Promise<Outcome> {
+  return queued(async () => {
+    await refreshLocalState();
+    let state = activeController.current;
+    if (!state) throw new Error('Start a game session before sending actions.');
+    if (state.mode === 'realtime') {
+      await catchUpGameClock();
+      state = activeController.current;
+      if (!state) throw new Error('The active game session was lost.');
+    }
+    return sendGameCommand(
+      intentToCommand(intent, state, commandSequence.next()),
+    );
+  });
 }
 
-export async function reconcileGameClock(): Promise<void> {
+export function reconcileGameClock(): Promise<void> {
+  return queued(async () => {
+    await refreshLocalState();
+    await catchUpGameClock();
+  });
+}
+
+async function catchUpGameClock(): Promise<void> {
   const current = activeController.current;
   if (!current || current.mode !== 'realtime') return;
   const transition = await activeController.reconcile(Date.now());
-  await saveTransition(current, transition.state);
+  await saveResolvedTransition(current);
   publishGameState(transition.state);
   syncGame(transition.state.seed);
+}
+
+async function refreshLocalState(): Promise<void> {
+  const current = activeController.current;
+  if (!current) return;
+  const stored = await loadGame(current.seed);
+  if (stored && JSON.stringify(stored.state) !== JSON.stringify(current))
+    publishGameState(await activeController.load(stored.state));
+}
+
+async function saveResolvedTransition(
+  before: GameState,
+  command?: GameCommand,
+): Promise<void> {
+  for (const state of activeController.savePoints) {
+    await saveTransition(
+      before,
+      state,
+      state === activeController.current ? command : undefined,
+      activeController.capture?.position(state),
+    );
+    before = state;
+  }
 }
 
 if (typeof window !== 'undefined')

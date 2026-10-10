@@ -26,6 +26,7 @@ class GameWrite(WireModel):
 
 
 class CreateGame(WireModel):
+    creation_batch_id: str | None = Field(alias="creationBatchId", default=None, min_length=1, max_length=128)
     game_hash: str = Field(alias="gameHash", pattern=r"^\d{8}$")
     state_schema_version: int = Field(alias="stateSchemaVersion", ge=1)
     state: dict[str, Any]
@@ -36,7 +37,18 @@ class DeathWrite(GameWrite):
     cause_event_id: str = Field(alias="causeEventId", min_length=1, max_length=128)
 
 
+class NicknameWrite(WireModel):
+    nickname: str = Field(max_length=40)
+
+    @field_validator("nickname")
+    @classmethod
+    def strip_nickname(cls, value: str) -> str:
+        return value.strip()
+
+
 class GameResponse(WireModel):
+    creation_batch_id: str | None = Field(alias="creationBatchId", default=None)
+    latest_committed_batch_id: str | None = Field(alias="latestCommittedBatchId", default=None)
     game_hash: str = Field(alias="gameHash")
     life_status: str = Field(alias="lifeStatus")
     state_version: int = Field(alias="stateVersion")

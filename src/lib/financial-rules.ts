@@ -1,9 +1,11 @@
+import { resolvedState } from './telemetry/collector';
 import { financialRules } from './runtime-definition';
 import type { DebtBreakdown, FinancialEffect } from './financial-types';
 import type { GameEvent, GameState } from './game-types';
 import { alignFinancialStatus } from './status-rules';
 import { financialRuinCause, runEndingMessage } from './ending-rules/messages';
 import { stateTextContext } from './seeded-text';
+import { trace } from './telemetry/collector';
 
 export function debtBreakdown(state: GameState): DebtBreakdown {
   const negativeCash = Math.max(0, -state.balance);
@@ -44,6 +46,7 @@ export function finalizeFinancialOperation(input: {
   kind: string;
   purchaseCategory?: string;
 }): GameState {
+  resolvedState(input.state);
   const beforeDebt = debtBreakdown(input.before);
   const afterDebt = debtBreakdown(input.state);
   const effect: FinancialEffect = {
@@ -53,7 +56,15 @@ export function finalizeFinancialOperation(input: {
     after: afterDebt,
     purchaseCategory: input.purchaseCategory,
   };
-  let next = patchTriggerEvent(input.state, input.triggerEventId, effect);
+  let next = resolvedState(
+    patchTriggerEvent(input.state, input.triggerEventId, effect),
+  );
+  trace('financial_settlement', input.kind, {
+    triggerEventId: input.triggerEventId,
+    cashBefore: input.before.balance,
+    cashAfter: input.state.balance,
+    ...effect,
+  });
   const aligned = alignFinancialStatus(next.statuses, next.balance, next.now);
   if (aligned.entered || aligned.cleared) {
     const event: GameEvent = {
@@ -70,13 +81,13 @@ export function finalizeFinancialOperation(input: {
       causedBy: [input.triggerEventId],
       financialEffect: effect,
     };
-    next = {
+    next = resolvedState({
       ...next,
       statuses: aligned.statuses,
       events: [...next.events, event],
       stateVersion: next.stateVersion + 1,
-    };
-  } else next = { ...next, statuses: aligned.statuses };
+    });
+  } else next = resolvedState({ ...next, statuses: aligned.statuses });
 
   if (
     next.ending ||

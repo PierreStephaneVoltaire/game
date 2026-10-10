@@ -8,7 +8,7 @@ import rules from './data/simulation-rules.json';
 import { createGameViewModel } from './ui/game-view-model';
 
 describe('GameController', () => {
-  test('loads definitions behind the controller seam', async () => {
+  test('loads definitions between transitions without replaying prior commands', async () => {
     let loads = 0;
     const controller = new GameController({
       async load() {
@@ -28,7 +28,7 @@ describe('GameController', () => {
         .outcomes[0].accepted,
     ).toBe(true);
     await controller.reconcile(controller.current!.now);
-    expect(loads).toBe(1);
+    expect(loads).toBe(3);
   });
 
   test('maps catalogue presentation from the repository-loaded definition', () => {

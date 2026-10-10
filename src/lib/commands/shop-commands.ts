@@ -14,6 +14,7 @@ import {
 import { reconcileMetricSource } from '../status-rules/metric-source-reconciliation';
 import { finalizeFinancialOperation } from '../financial-rules';
 import { handleCartCommand } from './shop-cart-commands';
+import { tracePurchases } from '../telemetry/financial';
 
 export type ShopCommandResult = {
   handled: boolean;
@@ -116,6 +117,7 @@ function buyItem(
     actionOrdinal: state.actionOrdinal + 1,
   };
   const reconciled = reconcileMetricSource(state, next, command.commandId);
+  tracePurchases(state, [{ item, quantity }], purchaseCost, command.commandId);
   return result(
     finalizeFinancialOperation({
       before: state,

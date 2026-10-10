@@ -10,21 +10,25 @@ permissions:
   id-token: write
 
 concurrency:
-  group: azure-static-web-app
+  group: azure-static-web-app-${{ github.ref == 'refs/heads/main' && 'prod' || 'stage' }}
   cancel-in-progress: false
 
 jobs:
   infrastructure:
     uses: ./.github/workflows/terraform-checks.yml
+    with:
+      environment: ${{ github.ref == 'refs/heads/main' && 'prod' || 'stage' }}
     secrets: inherit
 
   build_test_and_deploy:
     needs: infrastructure
     runs-on: ubuntu-latest
     env:
-      STATIC_WEB_APP_NAME: ${{ vars.AZURE_STATIC_WEB_APP_NAME }}
+      STATIC_WEB_APP_NAME: ${{ needs.infrastructure.outputs.static_web_app_name }}
+      APP_URL: ${{ needs.infrastructure.outputs.app_url }}
+      TELEMETRY_WORKER_NAME: ${{ needs.infrastructure.outputs.telemetry_worker_name }}
       RESOURCE_GROUP_NAME: ${{ vars.AZURE_RESOURCE_GROUP_NAME }}
-      API_ENVIRONMENT: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/static-web-hosting') && 'default' || 'staging' }}
+      PUBLIC_GAMEPLAY_LOGGING: ${{ vars.GAMEPLAY_LOGGING_ENABLED == 'true' && 'true' || 'false' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -51,7 +55,7 @@ jobs:
           cache-dependency-path: api/requirements-dev.txt
 
       - name: Install API dependencies
-        run: python -m pip install -r api/requirements-dev.txt
+        run: python -m pip install -r api/requirements-dev.txt -r telemetry-worker/requirements.txt
 
       - name: Generate SvelteKit files
         run: pnpm exec svelte-kit sync
@@ -99,19 +103,25 @@ jobs:
             test -n "${!key}" || { echo "::error::$key is missing."; exit 1; }
           done
 
+      - name: Package and deploy shared queue worker
+        if: github.ref == 'refs/heads/main'
+        run: |
+          python tools/package_telemetry_worker.py "$RUNNER_TEMP/telemetry-worker.zip"
+          az functionapp deployment source config-zip --name "$TELEMETRY_WORKER_NAME" --resource-group "$RESOURCE_GROUP_NAME" --src "$RUNNER_TEMP/telemetry-worker.zip" --build-remote false --only-show-errors --output none
+
       - name: Prepare API database
         env:
           PYTHONPATH: .:api
           AZURE_DATABASE_OBJECT_ID: ${{ secrets.AZURE_DATABASE_OBJECT_ID }}
         run: python -m tools.setup_api_database
 
-      - name: Ensure runtime content is published
+      - name: Publish runtime content to this environment
         env:
           PYTHONPATH: .:api
         run: |
           database_url="$(az staticwebapp appsettings list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.DATABASE_URL --output tsv)"
           test -n "$database_url"
-          DATABASE_URL="$database_url" python -m tools.global_content_publisher.cli --if-empty
+          DATABASE_URL="$database_url" python -m tools.global_content_publisher.cli
 
       - name: Import companion quotes
         env:
@@ -123,7 +133,7 @@ jobs:
           test -n "$database_url"
           DATABASE_URL="$database_url" python -m tools.global_content_publisher.quotes "$quote_file"
 
-      - name: Configure existing API environment before deployment
+      - name: Add API secrets to this environment
         env:
           DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
           SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
@@ -132,48 +142,40 @@ jobs:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: python -m tools.configure_api
 
+      - name: Fetch this environment's deployment token
+        id: token
+        run: |
+          token="$(az staticwebapp secrets list --name "$STATIC_WEB_APP_NAME" --resource-group "$RESOURCE_GROUP_NAME" --query properties.apiKey --output tsv)"
+          test -n "$token"
+          echo "::add-mask::$token"
+          printf 'value=%s\n' "$token" >> "$GITHUB_OUTPUT"
+
       - name: Deploy prebuilt frontend
-        id: deploy
         uses: Azure/static-web-apps-deploy@v1
         with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          azure_static_web_apps_api_token: ${{ steps.token.outputs.value }}
           action: upload
           app_location: build
           api_location: api
           output_location: ''
           skip_app_build: true
-          deployment_environment: ${{ env.API_ENVIRONMENT != 'default' && env.API_ENVIRONMENT || '' }}
 
-      - name: Verify deployment and report app URL
-        env:
-          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
+      - name: Report app URL
         run: |
-          if [ -z "$APP_URL" ]; then
-            echo "::error::Azure returned no deployment URL. Check that staging environments are enabled for PR previews."
-            exit 1
-          fi
-          printf 'App deployed: [%s](%s)\n' "$APP_URL" "$APP_URL" >> "$GITHUB_STEP_SUMMARY"
-
-      - name: Configure deployed API environment
-        env:
-          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
-          DISCORD_CLIENT_SECRET: ${{ secrets.DISCORD_CLIENT_SECRET }}
-          SIGNING_SECRET: ${{ secrets.SIGNING_SECRET }}
-          AZURE_DATABASE_CLIENT_ID: ${{ secrets.AZURE_DATABASE_CLIENT_ID }}
-          AZURE_DATABASE_CLIENT_SECRET: ${{ secrets.AZURE_DATABASE_CLIENT_SECRET }}
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        run: python -m tools.configure_api
+          printf '::notice title=Deployed game::%s\n' "$APP_URL"
+          printf '## Deployed game\n\n[Play the game](%s)\n' "$APP_URL" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Verify deployed authentication API
         timeout-minutes: 12
-        env:
-          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
         run: python -m tools.check_api
+
+      - name: Enable logging after worker and API deployment
+        if: vars.GAMEPLAY_LOGGING_ENABLED == 'true'
+        run: python -m tools.configure_telemetry
 
       - name: Verify account login and session persistence
         env:
           PYTHONPATH: .:api
-          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
           AUTH_TEST_USERNAME: admin
           AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
         run: python -m tools.check_login
@@ -183,7 +185,6 @@ jobs:
 
       - name: Verify Streaming game startup
         env:
-          APP_URL: ${{ steps.deploy.outputs.static_web_app_url }}
           AUTH_TEST_USERNAME: admin
           AUTH_TEST_PASSWORD: ${{ secrets.AUTH_TEST_PASSWORD }}
         run: node tools/check_game.mjs

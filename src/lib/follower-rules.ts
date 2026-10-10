@@ -6,17 +6,18 @@ import type { CareerTier, GameEvent, GameState } from './game-types';
 import { finalizeFinancialOperation } from './financial-rules';
 import { stateTextContext } from './seeded-text';
 
-const progressionRules = () => rules.progression as {
-  milestones: Array<{
-    id: CareerTier;
-    followers: number;
-    streamRate?: [number, number];
-    mood?: number;
-    unlockModelTier?: 1 | 2 | 3 | 4;
-    appearanceFee?: number;
-    subscriberRevenueMultiplier?: number;
-  }>;
-};
+const progressionRules = () =>
+  rules.progression as {
+    milestones: Array<{
+      id: CareerTier;
+      followers: number;
+      streamRate?: [number, number];
+      mood?: number;
+      unlockModelTier?: 1 | 2 | 3 | 4;
+      appearanceFee?: number;
+      subscriberRevenueMultiplier?: number;
+    }>;
+  };
 
 type FollowerChange = {
   amount: number;
@@ -32,8 +33,8 @@ export function subscriberRevenueMultiplier(state: GameState): number {
     state.progression.peakFollowers,
   );
   return (
-    progressionRules().milestones
-      .filter(
+    progressionRules()
+      .milestones.filter(
         (milestone) =>
           milestone.subscriberRevenueMultiplier &&
           progressionFollowers >= milestone.followers,
@@ -47,6 +48,7 @@ export function applyFollowerMilestones(
   sourceActionId: string,
   at: number,
   events: GameEvent[],
+  onResolved?: (state: GameState, events: GameEvent[]) => void,
 ): GameState {
   let progression = {
     ...state.progression,
@@ -56,6 +58,9 @@ export function applyFollowerMilestones(
     ),
   };
   let metrics = state.metrics;
+  const ledgerIds = new Set(state.events.map(({ id }) => id));
+  const nextEventId = () =>
+    `event-${state.events.length + events.filter(({ id }) => !ledgerIds.has(id)).length + 1}`;
   for (const milestone of progressionRules().milestones) {
     if (
       progression.peakFollowers < milestone.followers ||
@@ -99,7 +104,7 @@ export function applyFollowerMilestones(
         },
       ];
     events.push({
-      id: `event-${state.events.length + events.length + 1}`,
+      id: nextEventId(),
       type: 'career_milestone',
       at,
       message: `${milestone.id.replaceAll('_', ' ')} milestone reached.`,
@@ -108,6 +113,7 @@ export function applyFollowerMilestones(
       followerDelta: milestone.followers,
       revenueMultiplier: milestone.subscriberRevenueMultiplier,
     });
+    onResolved?.({ ...state, metrics, progression }, events);
   }
   const existingUnlock = state.endingUnlocks.made_it;
   if (
@@ -116,7 +122,7 @@ export function applyFollowerMilestones(
   ) {
     const triggerEventId = events[0]?.id ?? sourceActionId;
     const event: GameEvent = {
-      id: `event-${state.events.length + events.length + 1}`,
+      id: nextEventId(),
       type: 'ending_unlocked',
       at,
       message: madeItUnlockedMessage(
@@ -197,8 +203,8 @@ export function streamRateFor(state: GameState): [number, number] {
     state.progression.followers,
     state.progression.peakFollowers,
   );
-  const rate = progressionRules().milestones
-    .filter(
+  const rate = progressionRules()
+    .milestones.filter(
       (milestone) =>
         milestone.streamRate && progressionFollowers >= milestone.followers,
     )

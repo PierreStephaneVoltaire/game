@@ -25,6 +25,7 @@ import {
   selectPersonalPurchase,
 } from './life-event-random-resolution';
 import { stateTextContext } from './seeded-text';
+import { tracePurchases } from './telemetry/financial';
 
 export type { LifeEventDefinition, LifeEventEffects } from './life-event-types';
 
@@ -216,6 +217,13 @@ export function resolveLifeEvent(
     stateVersion: state.stateVersion + 1,
   };
   const events = [event];
+  if (purchasedItem)
+    tracePurchases(
+      state,
+      [{ item: purchasedItem, quantity: 1 }],
+      purchasedItem.price,
+      sourceActionId,
+    );
   next = applyFollowerMilestones(next, sourceActionId, at, events);
   next = { ...next, events: [...state.events, ...events] };
   next = reconcileMetricSource(state, next, sourceActionId);

@@ -7,7 +7,7 @@ from backend.database import get_session_factory
 from backend.http import endpoint, json_response
 
 from .service import content_manifest, immutable_bundle
-from .quotes import read_quotes
+from .quotes import read_quote_credits, read_quotes
 
 bp = func.Blueprint()
 
@@ -18,6 +18,13 @@ def get_quotes(request: func.HttpRequest) -> func.HttpResponse:
     with get_session_factory()() as session:
         require_user(request, session)
         return json_response(read_quotes(session))
+
+
+@bp.route(route="content/quote-credits", methods=["GET"])
+@endpoint
+def get_quote_credits(request: func.HttpRequest) -> func.HttpResponse:
+    with get_session_factory()() as session:
+        return json_response(read_quote_credits(session))
 
 
 @bp.route(route="content/manifest", methods=["GET"])

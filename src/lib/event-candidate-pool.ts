@@ -110,7 +110,6 @@ export function eventCandidates(
     {
       type: 'socks',
       weight:
-        Object.values(state.room).includes('cat-tree') &&
         (state.history.eventCooldowns.socks ?? 0) <= state.now
           ? rules.events.weights.socks + eventModifier('socks')
           : 0,

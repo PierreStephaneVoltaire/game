@@ -15,10 +15,17 @@ Runs do not inherit keepsakes, debt, Followers, or unlocks.
 
 ## Azure infrastructure
 
-The diagram shows the Azure infrastructure defined in this repository.
+The diagram shows the infrastructure defined in this repository, including the
+gameplay logging pipeline. It describes the configured architecture, not deployment
+status; browser capture and ingestion are enabled separately after worker deployment.
 
 ```mermaid
 flowchart TB
+  subgraph Browser
+    Game["Gameplay"]
+    Outbox["Independent IndexedDB logging outbox"]
+    Game -->|"Asynchronous capture"| Outbox
+  end
   subgraph Azure
     subgraph SWA["Azure Static Web Apps"]
       Frontend["Static SvelteKit frontend"]
@@ -26,15 +33,39 @@ flowchart TB
     end
     Entra["Microsoft Entra ID"]
     Database["Azure Database for PostgreSQL Flexible Server"]
+    Worker["Separate Python Function App<br/>Flex Consumption; zero always-ready instances"]
+    subgraph Storage["Existing Azure Storage account — private storage"]
+      Quotes["Blob: companion-content"]
+      Traces["Blob: gameplay-traces<br/>Immutable gzip JSON; indefinite retention"]
+      Queue["Queue: gameplay-traces<br/>Batch references"]
+      Poison["Queue: gameplay-traces-poison<br/>No automatic replay"]
+      Index["Table: GameplayRuns<br/>Run and operation index; indefinite retention"]
+      WorkerFiles["Blob: worker deployment packages<br/>and Functions host storage"]
+    end
     Insights["Application Insights"]
     Logs["Log Analytics workspace"]
+    Budget["Monthly infrastructure budget: C$50<br/>Actual alerts: C$40 / C$45; forecast: C$50<br/>No automatic shutdown"]
 
-    Frontend -->|"Browser requests: /api/*"| API
+    Frontend -->|"Serves game"| Game
+    Game -->|"Authenticated requests: /api/*"| API
+    Outbox -->|"Authenticated POST /api/telemetry/batches<br/>60 seconds / 256 KiB; flush on ending"| API
+    API -->|"1. Store validated batch"| Traces
+    API -->|"2. Enqueue blob reference"| Queue
+    API -->|"3. Acknowledge after queue acceptance"| Outbox
+    Queue -->|"Queue trigger"| Worker
+    Traces -->|"Read and validate full trace"| Worker
+    Worker -->|"Idempotent summaries and trace references"| Index
+    Worker -->|"After initial attempt + five retries"| Poison
+    WorkerFiles -->|"Code and host state"| Worker
     API -->|"Acquire database access token"| Entra
     API -->|"SQL over TLS with Entra authentication"| Database
-    API -->|"API telemetry"| Insights
-    Insights -->|"Telemetry storage"| Logs
+    API -->|"Operational diagnostics"| Insights
+    Worker -->|"Operational diagnostics only"| Insights
+    Insights -->|"Diagnostic storage"| Logs
   end
+  Deployment["GitHub Actions deployment"]
+  Deployment -->|"Read quotes for database import"| Quotes
+  Deployment -->|"Deploy worker before enabling logging"| WorkerFiles
 ```
 
 ## Requirements

@@ -62,3 +62,11 @@ class CommittedBatch(Base):
     committed_through_event_id: Mapped[str | None] = mapped_column(String(128))
     acknowledgement_json: Mapped[dict] = mapped_column(JSON, nullable=False)
     committed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+
+
+class GameNickname(Base):
+    __tablename__ = "game_nicknames"
+
+    game_hash: Mapped[str] = mapped_column(ForeignKey("games.game_hash", ondelete="CASCADE"), primary_key=True)
+    nickname: Mapped[str] = mapped_column(String(40), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)

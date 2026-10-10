@@ -96,6 +96,10 @@ test('renders the selected feed outcome and advances streaming time', async ({
 
   await signInAndChooseMode(page, 'Streaming mode');
   await page.getByRole('button', { name: 'Advance time' }).click();
+  await page
+    .getByRole('dialog', { name: 'Advance time', exact: true })
+    .getByRole('button', { name: 'Random', exact: true })
+    .click();
   await expect(page.locator('.event-panel li:last-child')).not.toContainText(
     /Time advanced|decay interval/,
   );
@@ -156,7 +160,15 @@ test('renders a refusal outcome and keeps status feedback visible', async ({
     if (await status.count()) break;
     const advanceTime = page.getByRole('button', { name: 'Advance time' });
     if (!(await advanceTime.isVisible())) break;
+    const previousTime = await page.locator('.session-clock span').innerText();
     await advanceTime.click();
+    await page
+      .getByRole('dialog', { name: 'Advance time', exact: true })
+      .getByRole('button', { name: 'Random', exact: true })
+      .click();
+    await expect(page.locator('.session-clock span')).not.toHaveText(
+      previousTime,
+    );
   }
   await expect(page.locator('.status-name').first()).toBeVisible();
 });
@@ -250,18 +262,18 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
     page.getByRole('region', { name: 'Time and balance' }),
   ).toContainText(`Balance: $${rules.startingCurrency}`);
   await page.getByRole('button', { name: 'Shop', exact: true }).click();
-  await page.getByRole('button', { name: 'reusable' }).click();
+  await page.getByRole('button', { name: 'decoration' }).click();
   await page
     .locator('.item-card')
-    .filter({ hasText: 'Socks Plushie' })
-    .getByRole('button', { name: 'Add one Socks Plushie', exact: true })
+    .filter({ hasText: 'Giant Plushie' })
+    .getByRole('button', { name: 'Add one Giant Plushie', exact: true })
     .click();
   await page.getByRole('tab', { name: /Cart/ }).click();
   await page.getByRole('button', { name: 'Checkout' }).click();
   await expect(page.getByText('Your cart is empty.')).toBeVisible();
   await page.getByRole('button', { name: 'Close Shop' }).click();
   await page.getByRole('button', { name: 'Inventory', exact: true }).click();
-  await page.getByRole('button', { name: /Socks Plushie/ }).click();
+  await page.getByRole('button', { name: /Giant Plushie/ }).click();
   await page.getByRole('button', { name: 'Offer a plushie apology' }).click();
   await expect(page.locator('.outcome')).toContainText(
     'Offer a plushie apology performed.',
@@ -272,14 +284,14 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
   await page.getByRole('button', { name: 'Unplace' }).click();
   await expect(page.locator('.outcome')).toContainText('Removed');
   await page.getByRole('button', { name: 'Close item details' }).click();
-  await page.getByRole('button', { name: /Socks Plushie/ }).click();
+  await page.getByRole('button', { name: /Giant Plushie/ }).click();
   await page.getByRole('button', { name: 'Place item' }).click();
   await page.getByRole('button', { name: 'Close item details' }).click();
   await page.getByRole('button', { name: /^Close (Shop|Inventory)$/ }).click();
   await expect(
-    page.getByRole('button', { name: 'Unplace Socks Plushie' }),
+    page.getByRole('button', { name: 'Unplace Giant Plushie' }),
   ).toBeVisible();
-  await page.getByRole('button', { name: 'Unplace Socks Plushie' }).click();
+  await page.getByRole('button', { name: 'Unplace Giant Plushie' }).click();
   await expect(page.locator('.event-panel li:last-child')).toContainText(
     /removed/i,
   );

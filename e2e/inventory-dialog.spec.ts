@@ -22,9 +22,9 @@ test('purchases into Inventory and preserves pagination, search, and placement',
               );
               record.state.balance = 5000;
               record.state.shop.itemIds = [
-                ...new Set([...record.state.shop.itemIds, 'socks-plushie']),
+                ...new Set([...record.state.shop.itemIds, 'giant-plushie']),
               ];
-              record.state.shop.stock['socks-plushie'] = 1;
+              record.state.shop.stock['giant-plushie'] = 1;
               store.put(record);
             }
           };
@@ -37,15 +37,15 @@ test('purchases into Inventory and preserves pagination, search, and placement',
       });
     },
     definition.items
-      .filter((item) => item.id !== 'socks-plushie')
+      .filter((item) => item.id !== 'giant-plushie')
       .slice(0, 30)
       .map((item) => item.id),
   );
   await page.reload();
   await page.getByRole('button', { name: 'Shop', exact: true }).click();
-  await page.getByRole('button', { name: 'reusable', exact: true }).click();
+  await page.getByRole('button', { name: 'decoration', exact: true }).click();
   await page
-    .getByRole('button', { name: 'Add one Socks Plushie', exact: true })
+    .getByRole('button', { name: 'Add one Giant Plushie', exact: true })
     .click();
   await page.getByRole('tab', { name: /Cart/ }).click();
   await page.getByRole('button', { name: 'Checkout' }).click();
@@ -66,10 +66,10 @@ test('purchases into Inventory and preserves pagination, search, and placement',
   await expect(secondPageItem).toBeFocused();
   await page
     .getByRole('searchbox', { name: 'Search inventory' })
-    .fill('Socks Plushie');
+    .fill('Giant Plushie');
   await expect(page.locator('.inventory-card')).toHaveCount(1);
   await page
-    .getByRole('button', { name: 'View Socks Plushie, 1 owned', exact: true })
+    .getByRole('button', { name: 'View Giant Plushie, 1 owned', exact: true })
     .click();
   await page.getByRole('button', { name: 'Place item', exact: true }).click();
   await expect(
@@ -79,9 +79,9 @@ test('purchases into Inventory and preserves pagination, search, and placement',
   await expect(page.locator('.outcome')).toContainText('Removed');
   await page.getByRole('button', { name: 'Place item', exact: true }).click();
   await page.getByRole('button', { name: 'Close item details' }).click();
-  await expect(page.getByRole('searchbox')).toHaveValue('Socks Plushie');
+  await expect(page.getByRole('searchbox')).toHaveValue('Giant Plushie');
   await page.getByRole('button', { name: 'Close Inventory' }).click();
   await expect(
-    page.getByRole('button', { name: 'Unplace Socks Plushie', exact: true }),
+    page.getByRole('button', { name: 'Unplace Giant Plushie', exact: true }),
   ).toBeVisible();
 });

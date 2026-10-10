@@ -1,3 +1,4 @@
+import { resolvedState } from './telemetry/collector';
 import type { GameDefinition } from './game-definition';
 import type { GameEvent, GameState } from './game-types';
 import { actionRandom } from './seeded-rng';
@@ -28,7 +29,9 @@ export function resolveAttemptEvent(
   state: GameState,
   commandId: string,
   definition: GameDefinition,
+  { scheduledOpportunity = false }: { scheduledOpportunity?: boolean } = {},
 ): GameState {
+  resolvedState(state);
   const rules = definition.simulationRules;
   const textContext = stateTextContext(state, commandId);
   const date = localDate(state.now, state.timezone);
@@ -36,6 +39,7 @@ export function resolveAttemptEvent(
     state,
     commandId,
     definition,
+    scheduledOpportunity,
   );
   if (selected === 'none')
     return {

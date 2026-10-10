@@ -19,6 +19,7 @@ export function completeStreamEconomy(
   completedAt: number,
   hourlyRate: number,
   donationMultiplier = 1,
+  onResolved?: (state: GameState, events: GameEvent[]) => void,
 ): StreamResult {
   const wholeHours = Math.max(0, Math.floor(elapsedHours));
   const startedAt = completedAt - elapsedHours * HOUR_MS;
@@ -68,6 +69,7 @@ export function completeStreamEconomy(
     },
   };
   const events: GameEvent[] = [];
+  onResolved?.(next, events);
   for (const { at, donation } of donations) {
     const event: GameEvent = {
       id: `event-${state.events.length + events.length + 1}`,
@@ -81,6 +83,7 @@ export function completeStreamEconomy(
     };
     next = creditIncome(next, donation.amount);
     events.push(event);
+    onResolved?.(next, events);
   }
   if (followers + donationFollowers > 0)
     events.push({
@@ -91,7 +94,14 @@ export function completeStreamEconomy(
       sourceActionId,
       followerDelta: followers + donationFollowers,
     });
-  next = applyFollowerMilestones(next, sourceActionId, completedAt, events);
+  next = applyFollowerMilestones(
+    next,
+    sourceActionId,
+    completedAt,
+    events,
+    onResolved,
+  );
+  onResolved?.(next, events);
   return { state: next, events };
 }
 

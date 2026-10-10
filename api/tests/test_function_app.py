@@ -23,8 +23,10 @@ def test_each_route_is_a_native_function() -> None:
         "get_game",
         "get_grave",
         "get_manifest",
+        "get_quote_credits",
         "get_quotes",
         "health",
+        "list_game_keys",
         "list_games",
         "list_graves",
         "login",
@@ -35,6 +37,8 @@ def test_each_route_is_a_native_function() -> None:
         "register",
         "reset",
         "write_game",
+        "write_nickname",
+        "telemetry_batch",
     }
 
 

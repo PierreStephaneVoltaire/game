@@ -1,3 +1,5 @@
+import { resolvedBoundary } from './resolution-boundary';
+import { resolvedState } from '../telemetry/collector';
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Transition } from '../game-types';
 import { completeActivity } from './activity-completion';
@@ -114,7 +116,7 @@ export function reconcileTime(
   });
   let deathAt = decay.deathAt;
   let reconciliationNow = decay.reconciliationNow;
-  let next: GameState = {
+  let next: GameState = resolvedState({
     ...state,
     now: reconciliationNow,
     lastResolvedAt: reconciliationNow,
@@ -123,20 +125,20 @@ export function reconcileTime(
     history: {
       ...state.history,
       lastStatusReconcileAt: reconciliationNow,
-      decayRemainderHours: decay.resolvedDecayRemainderHours,
-      healthRemainderHours: decay.resolvedHealthRemainderHours,
+      decayRemainderMs: decay.resolvedDecayRemainderMs,
+      healthRemainderMs: decay.resolvedHealthRemainderMs,
       pendingFoodDecayHit: decay.pendingFoodDecayHit,
       lastBondGainAt: decay.lastBondGainAt,
       sugarCrashDueAt: decay.statusReconciliation.sugarCrashDueAt,
     },
     timedEffects: decay.timedEffects,
-  };
+  });
   const resolvedAnything =
     decay.intervals > 0 || decay.healthIntervals > 0 || decay.bondIntervals > 0;
   const eventIds: string[] = [];
   if (resolvedAnything) {
     const event = timeEvent(next, reconciliationNow, decay);
-    next = { ...next, events: [...next.events, event] };
+    next = resolvedState({ ...next, events: [...next.events, event] });
     eventIds.push(event.id);
     if (!deathAt && decay.healthDamageSources.length > 0) {
       const rescues = resolvePostHealthRescues({
@@ -145,7 +147,7 @@ export function reconcileTime(
         damageSources: decay.healthDamageSources,
         damageEventId: event.id,
       });
-      next = rescues.state;
+      next = resolvedState(rescues.state);
       eventIds.push(...rescues.eventIds);
     }
   }
@@ -160,19 +162,20 @@ export function reconcileTime(
     autonomousOpportunity: state.history.nextAutonomousAt <= reconciliationNow,
     preventLethal: options.preventLethalDecay,
   });
-  next = timeline.state;
+  next = resolvedState(timeline.state);
   eventIds.push(...timeline.eventIds);
   deathAt = timeline.deathAt;
   reconciliationNow = timeline.reconciliationNow;
   const elapsedHours = timeline.resolvedElapsedHours;
-  if (resolvedAnything) next = { ...next, stateVersion: next.stateVersion + 1 };
+  if (resolvedAnything)
+    next = resolvedState({ ...next, stateVersion: next.stateVersion + 1 });
 
   if (next.ending) return result(next, eventIds, elapsedHours);
 
   if (deathAt) {
     if (!timeline.lethalEventId && !resolvedAnything) {
       const event = timeEvent(next, reconciliationNow, decay);
-      next = appendEvent(next, event);
+      next = resolvedState(appendEvent(next, event));
       eventIds.push(event.id);
     }
     return terminalResult(next, eventIds, elapsedHours);
@@ -192,7 +195,7 @@ export function reconcileTime(
       definition,
       interrupted: true,
     });
-    next = completion.state;
+    next = resolvedState(completion.state);
     eventIds.push(...completion.eventIds);
   } else if (next.activity && reconciliationNow >= next.activity.endsAt) {
     const completion = completeActivity({
@@ -201,16 +204,16 @@ export function reconcileTime(
       reconciliationNow,
       definition,
     });
-    next = completion.state;
+    next = resolvedState(completion.state);
     eventIds.push(...completion.eventIds);
   }
 
   if (!resolvedAnything && eventIds.length > 0) {
-    next = { ...next, stateVersion: next.stateVersion + 1 };
+    next = resolvedState({ ...next, stateVersion: next.stateVersion + 1 });
   }
 
   const beforeEnding = next.events.length;
-  next = reconcileRunEnding(next);
+  next = resolvedState(reconcileRunEnding(next));
   eventIds.push(...next.events.slice(beforeEnding).map((event) => event.id));
   if (!resolvedAnything && eventIds.length === 0)
     return { state: next, outcomes: [], elapsedHours, eventIds: [] };
@@ -277,7 +280,7 @@ function result(
   elapsedHours: number,
 ): ReconcileResult {
   return {
-    state,
+    state: resolvedBoundary(state),
     outcomes: eventIds.map((id) => ({
       accepted: true,
       kind: 'time_reconciled',

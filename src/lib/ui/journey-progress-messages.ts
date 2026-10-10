@@ -16,6 +16,12 @@ export const PROGRESSION_EVENT_TYPES = new Set([
   'tournament_stream',
   'model_debut_stream',
   'moms_care_package',
+  'merch_run_started',
+  'merch_run_flopped',
+  'merch_run_completed',
+  'convention_trip_started',
+  'convention_completed',
+  'convention_audience_growth',
 ]);
 
 export function progressionJourneyMessage(
@@ -47,6 +53,18 @@ export function progressionJourneyMessage(
       return `${petName} delivered the full-body commission and earned ${money(event.amount)}.`;
     return `${petName}'s new model is finished. Their fresh look is ready.`;
   }
+  if (event.type === 'merch_run_started')
+    return `${petName} launched a merch run. Sales will trickle in daily.`;
+  if (event.type === 'merch_run_flopped')
+    return `${petName} launched a merch run, but preorders came in weak.`;
+  if (event.type === 'merch_run_completed')
+    return `${petName}'s merch run wrapped up after earning ${money(event.amount)} in total.`;
+  if (event.type === 'convention_trip_started')
+    return `${petName} booked a convention appearance.`;
+  if (event.type === 'convention_completed')
+    return `${petName} is back from the convention, tired but happy.`;
+  if (event.type === 'convention_audience_growth')
+    return `The convention brought ${(event.followerDelta ?? 0).toLocaleString('en-US')} new subscribers to ${petName}'s channel.`;
   if (event.type === 'event_stream_queued')
     return event.message.toLowerCase().includes('tournament')
       ? `${petName}'s tournament appearance is lined up for the next clear afternoon slot.`

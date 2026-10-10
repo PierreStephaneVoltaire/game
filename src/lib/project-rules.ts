@@ -1,3 +1,4 @@
+import { resolvedState } from './telemetry/collector';
 import type { GameEvent, GameState, Project } from './game-types';
 import { simulationRules as rules } from './runtime-definition';
 import { queueEventStream } from './event-stream-rules';
@@ -51,11 +52,12 @@ export function completeDueProjects(
 ): GameState {
   const due = state.projects.filter((project) => project.completesAt <= now);
   if (!due.length) return state;
-  let next = {
+  let next = resolvedState({
     ...state,
     projects: state.projects.filter((project) => project.completesAt > now),
-  };
-  for (const project of due) next = completeProject(next, project, now);
+  });
+  for (const project of due)
+    next = resolvedState(completeProject(next, project, now));
   return next;
 }
 

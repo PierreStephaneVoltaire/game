@@ -1,3 +1,4 @@
+import { resolvedState } from '../telemetry/collector';
 import type { ItemDefinition } from '../game-definition';
 import type {
   GameCommand,
@@ -165,7 +166,7 @@ export function recordAttempt(
     );
   const interaction = attemptType === 'socialize' || attemptType === 'play';
   const genuineAttempt = outcome.accepted || countsAsRefusal;
-  let next: GameState = {
+  let next: GameState = resolvedState({
     ...state,
     metrics: becameAnnoyed
       ? {
@@ -201,7 +202,7 @@ export function recordAttempt(
         : 0,
     },
     stateVersion: state.stateVersion + 1,
-  };
+  });
   if (attemptStatus.warning) {
     const warning: GameEvent = {
       id: `event-${next.events.length + 1}`,
@@ -211,9 +212,11 @@ export function recordAttempt(
       sourceActionId,
       status: 'annoyed',
     };
-    next = { ...next, events: [...next.events, warning] };
+    next = resolvedState({ ...next, events: [...next.events, warning] });
   }
-  next = reconcileMetricSource(state, next, sourceActionId ?? 'attempt-status');
+  next = resolvedState(
+    reconcileMetricSource(state, next, sourceActionId ?? 'attempt-status'),
+  );
   return criticalPenalty
     ? applyCriticalHealthMoodPenalty(next, before, sourceActionId ?? 'attempt')
     : next;

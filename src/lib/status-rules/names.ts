@@ -15,6 +15,7 @@ export const STATUS_NAMES = [
   'low_energy',
   'sugar_crash',
   'dizzy_spell',
+  'lost_voice',
   'in_debt',
 ] as const satisfies readonly GameStatusName[];
 

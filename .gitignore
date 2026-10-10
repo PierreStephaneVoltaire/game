@@ -43,3 +43,6 @@ crash.*.log
 .terraform.tfstate.lock.info
 
 **/.terraform/
+
+# Terraform inputs are injected by CI from secrets; local copies stay untracked.
+infra/**/*.tfvars

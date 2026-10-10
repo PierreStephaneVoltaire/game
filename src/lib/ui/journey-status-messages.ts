@@ -40,6 +40,8 @@ export function statusJourneyMessage(input: {
     event.message.toLowerCase().includes('passed')
   )
     return `${petName}'s dizzy spell passed.`;
+  if (status === 'lost_voice' && event.message.includes('came back'))
+    return `${petName}'s voice came back with time.`;
   return clearedMessage(status, petName);
 }
 
@@ -92,6 +94,7 @@ function activeMessage(status: StatusName, name: string): string {
     low_energy: `${name} is running low on energy.`,
     sugar_crash: `${name} is having a sugar crash.`,
     dizzy_spell: `${name} is having a dizzy spell.`,
+    lost_voice: `${name}'s voice is gone.`,
     in_debt: `${name} is in debt.`,
   };
   return messages[status];
@@ -113,6 +116,7 @@ function clearedMessage(status: StatusName, name: string): string {
     low_energy: `${name}'s energy has recovered.`,
     sugar_crash: `${name} has recovered from the sugar crash.`,
     dizzy_spell: `${name}'s dizzy spell has cleared.`,
+    lost_voice: `${name}'s voice is back.`,
     in_debt: `${name} is no longer in debt.`,
   };
   return messages[status];

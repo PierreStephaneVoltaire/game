@@ -8,7 +8,7 @@ import {
 } from '../activity-rules';
 import { actionRandom } from '../seeded-rng';
 import { accepted, rejected } from '../simulation/engine-state';
-import { HOUR_MS } from '../game-constants';
+import { ADVANCE_TIME_HOURS, HOUR_MS } from '../game-constants';
 import {
   criticalMetrics,
   isCriticalState,
@@ -28,7 +28,7 @@ type ActivityFields = {
   expectedStateVersion?: number;
 };
 type ActivityCommand =
-  | (ActivityFields & { type: 'wait' })
+  | (ActivityFields & { type: 'wait'; hours?: number })
   | (ActivityFields & { type: 'medical_care' })
   | (ActivityFields & { type: 'rest' | 'socialize' | 'play' })
   | (ActivityFields & { type: 'commission_work' });
@@ -93,21 +93,32 @@ function wait(
         'Advance time is available in Streaming mode only.',
       ),
     );
+  if (
+    command.hours !== undefined &&
+    (!ADVANCE_TIME_HOURS.includes(command.hours) ||
+      command.hours < rules.wait.minHours ||
+      command.hours > rules.wait.maxHours)
+  )
+    return result(
+      state,
+      rejected('unavailable', 'Choose a supported duration.'),
+    );
   const critical = isCriticalState(state);
   const minimum = critical ? rules.wait.criticalMinHours : rules.wait.minHours;
   const maximum = critical ? rules.wait.criticalMaxHours : rules.wait.maxHours;
   const hours =
+    command.hours ??
     minimum +
-    Math.floor(
-      actionRandom(
-        state.seed,
-        state.stateVersion,
-        command.commandId,
-        'wait',
-        'hours',
-      ) *
-        (maximum - minimum + 1),
-    );
+      Math.floor(
+        actionRandom(
+          state.seed,
+          state.stateVersion,
+          command.commandId,
+          'wait',
+          'hours',
+        ) *
+          (maximum - minimum + 1),
+      );
   const waited = reconcile(state, state.now + hours * HOUR_MS, definition, {
     stopAtCritical: !critical,
     preventLethalDecay: !critical,

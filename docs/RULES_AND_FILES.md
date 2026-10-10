@@ -12,7 +12,7 @@ gameplay rules.
 - `src/lib/data/activity-rules.json` — activity durations, refusals,
   completion rewards, and strong-outcome chance. Player-facing activity copy
   belongs to `event-texts.json`.
-- `src/lib/data/shop-items.json` — the 232 compiled canonical item definitions:
+- `src/lib/data/shop-items.json` — the 258 compiled canonical item definitions:
   prices, qualitative hints, hidden effects/properties, nutrition provenance,
   status/event hooks, actions, room placement, and content-versioned generated
   PNG paths.
@@ -22,7 +22,7 @@ gameplay rules.
   copy/gameplay fields. Nutrition facts stay separate from gameplay values so
   the compiler only joins records; it never derives scores.
 - `src/lib/data/catalogue/canonical-item-ids.json` — explicit ordered
-  232-item allowlist. The compiler and validator reject missing, unexpected,
+  258-item allowlist. The compiler and validator reject missing, unexpected,
   duplicated, or reordered IDs.
 - `src/lib/data/pet-profile.json` — the configured companion identity and
   generic avatar path. Runtime code does not hardcode a companion name; the
@@ -70,12 +70,50 @@ gameplay rules.
 - `src/lib/content/runtime-content.ts` — IndexedDB-backed runtime bundle cache:
   it opens cached content without a network request, conditionally checks the
   manifest before writes, and atomically changes the bundle and active pointer.
-- `src/lib/game-constants.ts` — structural time units, stat bounds, and
+- `src/lib/game-constants.ts` — structural time units, Advance Time picker options, stat bounds, and
   simulation limits shared by runtime modules.
 - `src/lib/seeded-text.ts` — shared seeded selection and interpolation for
   JSON-authored event, Ending, History, and archive text pools.
 - `src/lib/game-engine.ts` — pure `startRun`, `dispatchCommand`, and
   `reconcileTime` public seam.
+- `src/lib/telemetry/collector.ts` — synchronous calculation collection scoped
+  outside simulation state; records the original random draws and results.
+- `tools/trace-instrumentation.ts` — instruments expressions in engine dependencies
+  without evaluating operands twice; assigns source-rule IDs and an engine build digest.
+- `src/lib/telemetry/capture.ts` and `state-changes.ts` — per-stream operation
+  identity, initialization checkpoints, ordered state changes, and reconstruction.
+- `src/lib/telemetry/console.ts` — browser console events and applied metric
+  changes with action, calculation, and simulation-time evidence, independent
+  of remote logging configuration.
+- `src/lib/ui/session-state.ts` — publishes one final UI state per serialized
+  session operation, combining local refresh, clock catch-up, and action effects.
+- `src/lib/telemetry/financial.ts` and `nutrition.ts` — separate purchase/payment
+  evidence and resolved feeding context, without changing financial or nutrition rules.
+- `src/lib/telemetry/browser.ts`, `outbox.ts`, `batches.ts`, and `delivery.ts` —
+  console capture with account-bound uploads, independent IndexedDB storage, lossless fragmentation,
+  acknowledged uploads, and retained retry/rejection data.
+- `src/lib/telemetry/reconstruction.ts` — ordered, read-only patch replay with
+  event steps, checkpoint recovery, missing-record detection, and superseded streams.
+- `src/lib/persistence/replay.ts` — verifies a committed save by batch identity
+  or matching legacy snapshot; it never executes simulation rules.
+- `src/lib/persistence/remote.ts` — complete saved-state/history downloads and
+  atomic local cache replacement after pending data is reconciled.
+- `src/lib/persistence/scheduler.ts`, `write-spacing.ts`, and `locks.ts` —
+  debounced delivery, cross-tab write spacing, and serialized local transitions.
+- `src/lib/persistence/save-points.ts` and
+  `src/lib/simulation/resolution-boundary.ts` — completed simulation boundaries
+  used to split large catch-ups within the existing save event limit.
+- `src/lib/ui/intent-command.ts` — unique action inputs built with the reconciled
+  state version and simulation timestamp.
+- `api/backend/games/snapshot.py` and `diagnostics.py` — complete history hydration
+  from the event ledger and save-rejection diagnostics without snapshot contents.
+- `api/backend/telemetry/` — authenticated, same-origin validation and immutable
+  compressed blob writes followed by queue acceptance.
+- `telemetry-worker/` — separate queue-triggered chronological Table index;
+  native poison handling preserves source blobs after six failed attempts.
+- `src/lib/telemetry/*.test.ts`, `api/tests/telemetry/test_pipeline.py`, and
+  `tools/check_telemetry.mjs` — reconstruction, determinism, conflict, storage,
+  retry, account-switch, and browser persistence checks.
 - `src/lib/ending-rules.ts` — pure terminal reconciliation for Death and the
   persistent Quit Streaming Mood-risk clock. Financial Ruin is finalized by
   the financial operation seam; Made It is finalized by audience progression,
@@ -84,7 +122,7 @@ gameplay rules.
   interpolation for Ending copy loaded from `ending-rules.json`; Ending prose
   is not authored in TypeScript.
 - `src/lib/commands/activity-commands.ts` — start, wait, and timed-activity
-  command resolution.
+  command resolution, including seeded or selected fixed wait durations.
 - `src/lib/commands/progression-actions.ts` — Commission Work and data-driven
   model/full-body service actions.
 - `src/lib/commands/item-action-commands.ts` and
@@ -94,6 +132,9 @@ gameplay rules.
   used by data-authored consuming actions.
 - `src/lib/commands/batch-feeding.ts` — deterministic multi-item Feed command
   adapter that delegates every selected unit to the ordinary consume pipeline.
+- `src/lib/commands/creator-services.ts` — merch-run and convention service
+  actions, their `ventures` state, seeded merch flop/multiplier rolls, daily
+  merch payouts, and convention completion boundaries.
 - `src/lib/commands/clipper-action.ts` — the catalogue-action adapter that
   consumes Clippers and delegates their career effect to audience growth.
 - `src/lib/commands/consumption-timed-effects.ts` and
@@ -119,6 +160,8 @@ gameplay rules.
   clocks, plus ordered
   project, autonomous-opportunity, Subscriber Revenue, status, and recurrence
   effects.
+- `src/lib/simulation/decay-remainders.ts` — integer-millisecond need and
+  Health interval remainders, reading legacy fractional-hour saves.
 - `src/lib/subscriber-revenue-rules.ts` — interval eligibility, payout, and
   atomic financial settlement for Subscriber Revenue.
 - `src/lib/simulation/timeline-opportunities.ts` and
@@ -137,8 +180,9 @@ gameplay rules.
   collection and causal event-chain construction for the Death Ending.
 - `src/lib/simulation/activity-completion.ts` — completion of Rest,
   Socialize, Play, Hospital, Commission Work, and stream activities.
-- `src/lib/simulation/stream-completion.ts` — stream settlement diagnostics and
-  qualifying ordinary-stream drought-reset decisions.
+- `src/lib/simulation/stream-completion.ts` — stream settlement diagnostics,
+  qualifying ordinary-stream drought-reset decisions, and the long-stream Lost
+  Voice onset roll.
 - `src/lib/simulation/activity-completion-message.ts` — seeded selection of
   JSON-authored completion text, including interrupted-activity wording.
 - `src/lib/simulation/activity-financial-settlement.ts` — Commission payout
@@ -167,8 +211,9 @@ gameplay rules.
   post-source status normalization and once-only onset effects.
 - `src/lib/status-rules/low-status-recurrences.ts` — chronological Lonely and
   Creative Block recurrence calculation behind the status-rules facade.
-- `src/lib/status-rules/natural-resolution.ts` — chronological Sick and Kidney
-  Stone natural passage, including same-boundary passage-before-recurrence.
+- `src/lib/status-rules/natural-resolution.ts` — chronological Sick, Kidney
+  Stone, and Lost Voice natural passage, including same-boundary
+  passage-before-recurrence.
 - `src/lib/status-rules/sugar-crash.ts` — atomic six-hour effective-sugar
   accumulation, scheduling, pending cancellation, and active clearance.
 - `src/lib/event-candidate-pool.ts`, `src/lib/event-selection.ts`,
@@ -281,6 +326,97 @@ gameplay rules.
 
 ## UI modules
 
+- `src/lib/ui/room-look.ts` — room art layer selection: the career-tier room
+  set, placed cosmetic items (Poster and Avatar anchors), and the wall/poster
+  picker. `room.svg` layers are tagged `data-slot` and `data-variant`; set
+  layers use the variant names `1`–`8`.
+
+## UI terminology
+
+Use the canonical names below in implementation and documentation. The
+nicknames are prompt aliases only; each alias identifies one element.
+
+### Game room
+
+- Canonical: Game Room
+  - Nicknames: Session Chamber, Companion Room, Main Care Room
+- Canonical: Recent Event Cards
+  - Nicknames: Event Feed Cards, Activity History Cards, Latest Event Stack
+- Canonical: Status Card
+  - Nicknames: Condition Panel, Active Status Strip, Status Summary
+- Canonical: Advance Time control
+  - Nicknames: Time Advance Button, Fast-Forward Control, Wait Duration Trigger
+- Canonical: Game Room action buttons
+  - Nicknames: Care Action Buttons, Room Command Buttons, Activity Controls
+- Canonical: Game destination buttons
+  - Nicknames: Room Shop Inventory History Buttons, Destination Tabs, Game Navigation Controls
+- Canonical: Game Room action modals
+  - Nicknames: Activity Choice Dialogs, Room Command Modals, Care Action Overlays
+- Canonical: Item selection modal
+  - Nicknames: Inventory Picker, Item Choice Dialog, Held Item Selector
+- Canonical: Game Room game screen
+  - Nicknames: Live Session Screen, Interactive Companion Screen, In-Game Display
+- Canonical: Companion avatar
+  - Nicknames: Room Character Portrait, Companion Sprite, Character Display
+
+### Shop and inventory
+
+- Canonical: Shop item tiles
+  - Nicknames: Catalogue Tiles, Offer Cards, Store Item Blocks
+- Canonical: Shop detail modal
+  - Nicknames: Offer Details Dialog, Catalogue Detail Overlay, Item Info Modal
+- Canonical: Inventory item tiles
+  - Nicknames: Owned Item Cards, Holdings Tiles, Inventory Entries
+- Canonical: Inventory detail modal
+  - Nicknames: Owned Item Details, Inventory Info Dialog, Item Use Overlay
+- Canonical: Shop cart
+  - Nicknames: Purchase Basket, Checkout Tray, Cart Panel
+
+### Landing page
+
+- Canonical: Landing page game screen
+  - Nicknames: Hero Device Preview, Home Companion Display, Marketing Game Mockup
+- Canonical: Landing page avatar
+  - Nicknames: Hero Companion Portrait, Preview Character, Landing Sprite
+- Canonical: About button
+  - Nicknames: About Link, Project Info Trigger, About Navigation Control
+- Canonical: Sign in button
+  - Nicknames: Login Link, Account Entry Button, Authentication Trigger
+- Canonical: SESSION badge
+  - Nicknames: Session Availability Badge, Live Status Badge, Session Indicator
+- Canonical: Pocket-size routine section
+  - Nicknames: Daily Routine Section, Tiny Routine Panel, Pocket Routine Block
+- Canonical: Keep your little gremlin alive section
+  - Nicknames: Companion Survival Section, Gremlin Care Block, Keep-Alive Feature Panel
+- Canonical: Landing page metric cards
+  - Nicknames: Hero Stat Tiles, Preview Care Cards, Landing Metrics Grid
+
+### Account and setup
+
+- Canonical: About page
+  - Nicknames: Project Information Page, Companion Overview Page, About Screen
+- Canonical: Login screen
+  - Nicknames: Sign-In Screen, Account Access Page, Authentication Screen
+- Canonical: Create account form
+  - Nicknames: Registration Form, New Account Panel, Account Creation Form
+- Canonical: Game key screen
+  - Nicknames: Session Key Screen, Game Access Page, Save Key Screen
+- Canonical: Game time screen
+  - Nicknames: Time Mode Screen, Session Pace Page, Clock Choice Screen
+- Canonical: Game time form
+  - Nicknames: Time Mode Form, Session Pace Selector, Clock Behavior Form
+
+### Game shell overlays
+
+- Canonical: Settings modal
+  - Nicknames: Session Settings Panel, Game Options Overlay, Configuration Popover
+- Canonical: Shop modal
+  - Nicknames: Store Dialog, Shopping Overlay, Catalogue Window
+- Canonical: Inventory modal
+  - Nicknames: Owned Items Dialog, Holdings Overlay, Backpack Window
+- Canonical: Item detail modal
+  - Nicknames: Item Information Dialog, Product Detail Overlay, Item Inspection Window
+
 - `src/lib/accounts/` — browser-only account API client and account menu. It
   restores the HttpOnly-cookie session without local storage and does not own
   or persist simulation state.
@@ -316,6 +452,11 @@ gameplay rules.
   anchor presentation.
 - `src/lib/components/CompanionOverview.svelte` — metrics, discovery-safe
   statuses, Time/Balance, Subscribers, career, appearance, and project progress.
+- `src/lib/ui/companion-speech.ts` and `CompanionAvatar.svelte` — seeded quote
+  selection for item use, taps, idle contexts, and event/activity/status
+  transitions; speech waits for open dialogs to close.
+- `api/backend/content/quotes.py` and root `companion-quotes.json` — validated
+  quote pools retaining verbatim text and source metadata, with optional in-game edits.
 - `src/lib/components/GameShop.svelte`, `ShoppingCart.svelte`,
   `ShopItemGrid.svelte`, `QuantityStepper.svelte`, `InventoryBrowser.svelte`,
   and `ItemDetail.svelte` — URL-addressable Shop, shared catalogue/LOC Cart,
@@ -341,13 +482,29 @@ gameplay rules.
   SQL runtime bundles, current-pointer reads, version enforcement, and the
   validated publisher.
 - `src/lib/persistence/` — IndexedDB games, events, outbox, and single-game
-  sync/replay.
-- `infra/modules/database`, `static-app`, `auth`, `game-data`, and
-  `global-data` — Entra-authenticated PostgreSQL; the root reads the existing
-  resource group and manages the Static Web App without reading its secret app
-  settings.
-- `.github/workflows/global-data-sync.yml` — main-branch workflow that
-  validates and publishes the current immutable SQL content bundle.
+  delivery. Attempted batches are frozen; later saves form a new batch using
+  the actual acknowledged server version and event cursor when first sent.
+  Creation and write retries retain their identities across content updates.
+  Snapshot uploads omit duplicated history, which is restored from the ordered
+  event ledger on reads; completed simulation boundaries keep event batches bounded.
+- `tools/check_gameplay.mjs` — real IndexedDB regressions for action identity,
+  overlapping saves, retries, competing devices, and fresh-browser restoration.
+- `infra/shared` — one long-lived state (`shared.tfstate`): the Entra-only
+  PostgreSQL server (tagged `stack = shared`), Log Analytics/App Insights, the
+  telemetry worker and its storage, the quote reader role, and the monthly
+  budget alert. It applies only from `main` or a manual `apply_shared` run.
+- `infra/env` — one state per environment (`env-prod.tfstate`,
+  `env-stage.tfstate`, selected by `TF_VAR_env`): that environment's Static
+  Web App, its own database on the shared server, DNS records, custom domain,
+  and non-secret app settings. It finds the DNS zone and server by Azure
+  lookups, so the domain is never a variable. Prod serves the zone apex; stage
+  serves `stage.<zone>`.
+- `infra/modules/static-app`, `auth`, `game-data`, and `global-data` — the
+  Static Web App resource and app-setting groups used by `infra/env`.
+- `.github/workflows/azure-static-web-app.yml` — `main` deploys to prod and
+  every other branch to stage; each deploy publishes the content bundle and
+  quotes to its own environment's database, and `tools/configure_api.py` adds
+  the CI-held secrets on top of the Terraform settings.
 
 Keep status behavior behind `status-rules.ts`, all configurable values in
 data, and all simulation uncertainty in `seeded-rng.ts`. Realtime has no

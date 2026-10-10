@@ -7,7 +7,7 @@ const item = (id: string) =>
   BUNDLED_GAME_DEFINITION.items.find((candidate) => candidate.id === id);
 
 describe('V2 catalogue definition seam', () => {
-  test('publishes exactly 232 canonical items in the locked category counts', () => {
+  test('publishes exactly 258 canonical items in the locked category counts', () => {
     const counts = Object.fromEntries(
       ['food', 'medicine', 'care', 'reusable', 'upgrade', 'decoration'].map(
         (category) => [
@@ -19,23 +19,23 @@ describe('V2 catalogue definition seam', () => {
       ),
     );
 
-    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(232);
+    expect(BUNDLED_GAME_DEFINITION.items).toHaveLength(258);
     expect(counts).toEqual({
-      food: 114,
+      food: 140,
       medicine: 2,
-      care: 3,
-      reusable: 75,
-      upgrade: 23,
-      decoration: 15,
+      care: 2,
+      reusable: 74,
+      upgrade: 18,
+      decoration: 22,
     });
   });
 
   test('uses the replacement identities and their authored preparation data', () => {
     expect(item('mini-tacos')).toMatchObject({ name: 'Mini Tacos', price: 6 });
     expect(item('cheeseless-toppingless-pizza')).toMatchObject({
-      name: 'Cheeseless Toppingless Pizza',
+      name: 'Bite-Sized Pizza Cubes',
       price: 9,
-      context: { preparationAcceptance: 0.85 },
+      context: { preparationAcceptance: 1 },
     });
     expect(item('the-concoction')).toMatchObject({
       name: 'The Concoction',
@@ -65,7 +65,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('insurance-card')).toMatchObject({
       category: 'care',
-      price: 250,
+      price: 740,
       supportsQuantity: false,
       maximumOwned: 1,
     });
@@ -84,8 +84,9 @@ describe('V2 catalogue definition seam', () => {
     expect(item('jar-of-pickle-juice')).toMatchObject({
       category: 'food',
       price: 3,
-      preferences: ['liked'],
-      effects: { food: { min: 1, max: 1 }, mood: { min: 1, max: 1 } },
+      preferences: ['disliked'],
+      effects: { food: { min: 1, max: 1 } },
+      context: { refusalProbability: 0.65 },
       nutritionScores: { salt: 3, water: 2 },
     });
     expect(item('sheet-of-cute-stickers')).toMatchObject({
@@ -123,7 +124,7 @@ describe('V2 catalogue definition seam', () => {
     });
     expect(item('new-model-commission')).toMatchObject({
       category: 'upgrade',
-      price: 1000,
+      price: 3500,
       consumable: true,
       supportsQuantity: true,
       progression: { requiredCareerTier: 'first_model' },
@@ -158,14 +159,6 @@ describe('V2 catalogue definition seam', () => {
         expect.objectContaining({
           progressionEffect: { type: 'activate_clippers' },
         }),
-      ],
-    });
-  });
-
-  test('authors the Cat Tree Socks modifier in catalogue data', () => {
-    expect(item('cat-tree')).toMatchObject({
-      eventPoolModifiers: [
-        { eventId: 'socks', weightDelta: 3, eligibility: 'placed' },
       ],
     });
   });

@@ -120,6 +120,29 @@ describe('periodic Health resolution', () => {
 });
 
 describe('protected activities and Streaming fairness', () => {
+  test('streams resolve Health at the ordinary two-hour boundary', () => {
+    const initial = run('stream-health-clock');
+    const result = reconcileTime(
+      {
+        ...initial,
+        metrics: metrics({ food: 10, health: 9, mood: 10, rest: 10 }),
+        activity: {
+          id: 'stream-health-clock',
+          type: 'stream',
+          startedAt: 0,
+          endsAt: 4 * HOUR,
+          sourceActionId: 'stream-health-clock',
+        },
+      },
+      2 * HOUR,
+      BUNDLED_GAME_DEFINITION,
+    ).state;
+
+    expect(result.metrics.health).toBe(11);
+    expect(result.history.healthRemainderMs).toBe(0);
+    expect(result.activity?.type).toBe('stream');
+  });
+
   test('pauses the Health clock during care without a catch-up burst', () => {
     const initial = run('protected-health', 'realtime');
     const state: GameState = {
@@ -127,7 +150,7 @@ describe('protected activities and Streaming fairness', () => {
       metrics: metrics({ food: 0, health: 4, rest: 10 }),
       history: {
         ...initial.history,
-        healthRemainderHours: 1,
+        healthRemainderMs: HOUR,
         pendingFoodDecayHit: true,
       },
       activity: {
@@ -146,7 +169,7 @@ describe('protected activities and Streaming fairness', () => {
     ).state;
 
     expect(during.metrics.health).toBe(4);
-    expect(during.history.healthRemainderHours).toBe(1);
+    expect(during.history.healthRemainderMs).toBe(HOUR);
     expect(during.history.pendingFoodDecayHit).toBe(true);
   });
 
@@ -174,13 +197,19 @@ describe('protected activities and Streaming fairness', () => {
 
   test('critical Advance Time uses only one or two hours', () => {
     const initial = run('critical-wait');
-    const critical = { ...initial, metrics: metrics({ food: 2 }) };
+    const critical = {
+      ...initial,
+      metrics: metrics({ food: 2 }),
+      history: {
+        ...initial.history,
+        autonomousRescue: { foodLocked: true, restLocked: true },
+      },
+    };
     const result = dispatchCommand(
       critical,
       { type: 'wait', commandId: 'critical-wait-1', now: 0 },
       BUNDLED_GAME_DEFINITION,
     );
-
     expect(result.state.now / HOUR).toBeGreaterThanOrEqual(1);
     expect(result.state.now / HOUR).toBeLessThanOrEqual(2);
   });

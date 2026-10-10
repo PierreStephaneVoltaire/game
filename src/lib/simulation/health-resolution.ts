@@ -37,7 +37,6 @@ export function isHealthProtectedActivity(state: GameState): boolean {
     state.activity?.type === 'rest' ||
     state.activity?.type === 'socialize' ||
     state.activity?.type === 'play' ||
-    state.activity?.type === 'stream' ||
     state.activity?.type === 'medical_care'
   );
 }

@@ -17,7 +17,7 @@ export function resolveNaturalStatusPassage(
   const nextStatuses = { ...state.statuses };
   let nextMetrics = metrics;
   const effects: StatusEffectEvent[] = [];
-  for (const status of ['kidney_stone', 'sick'] as const) {
+  for (const status of ['kidney_stone', 'sick', 'lost_voice'] as const) {
     const record = nextStatuses[status];
     if (!record?.naturalPassAt || record.naturalPassAt > now) continue;
     if (
@@ -45,7 +45,9 @@ export function resolveNaturalStatusPassage(
       message:
         status === 'kidney_stone'
           ? 'The kidney stone passed. Somehow, with dignity intact.'
-          : 'The companion recovered from sickness.',
+          : status === 'lost_voice'
+            ? "The companion's voice came back."
+            : 'The companion recovered from sickness.',
       at: record.naturalPassAt,
     });
     if (mood)

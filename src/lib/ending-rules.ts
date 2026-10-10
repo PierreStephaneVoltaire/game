@@ -1,3 +1,4 @@
+import { resolvedState } from './telemetry/collector';
 import type {
   EndingRiskClock,
   EndingRiskClocks,
@@ -46,9 +47,10 @@ export function nextEndingBoundary(state: GameState): number | undefined {
 }
 
 export function reconcileRunEnding(state: GameState): GameState {
+  resolvedState(state);
   if (state.ending) return state;
   if (state.metrics.health <= 0) return recordDeath(state);
-  const next = syncQuitStreamingRisk(state);
+  const next = resolvedState(syncQuitStreamingRisk(state));
   const clock = next.endingRisks.quit_streaming;
   if (
     clock.triggerStartedAt !== null &&
@@ -61,9 +63,9 @@ export function reconcileRunEnding(state: GameState): GameState {
 function syncQuitStreamingRisk(state: GameState): GameState {
   const active = state.metrics.mood === 0;
   const clock = state.endingRisks.quit_streaming;
-  let next = state;
+  let next = resolvedState(state);
   if (active && clock.triggerStartedAt === null)
-    next = {
+    next = resolvedState({
       ...state,
       endingRisks: {
         quit_streaming: {
@@ -72,7 +74,7 @@ function syncQuitStreamingRisk(state: GameState): GameState {
           warningEventIds: [],
         },
       },
-    };
+    });
   else if (!active && clock.triggerStartedAt !== null) {
     const event: GameEvent = {
       id: `event-${state.events.length + 1}`,
@@ -99,7 +101,7 @@ function syncQuitStreamingRisk(state: GameState): GameState {
       !next.endingRisks.quit_streaming.warningStages.includes(stage) &&
       next.now >= activeClock.triggerStartedAt + stage * HOUR_MS
     )
-      next = appendWarning(next, stage);
+      next = resolvedState(appendWarning(next, stage));
   return next;
 }
 

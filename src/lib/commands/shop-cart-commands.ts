@@ -6,6 +6,8 @@ import {
 } from '../billing-rules';
 import { finalizeFinancialOperation } from '../financial-rules';
 import { LINE_OF_CREDIT_OFFER_ID } from '../game-constants';
+import { tracePurchases } from '../telemetry/financial';
+import { trace } from '../telemetry/collector';
 import type { GameDefinition } from '../game-definition';
 import type { GameCommand, GameEvent, GameState, Outcome } from '../game-types';
 import {
@@ -208,6 +210,19 @@ function checkoutCart(
     stateVersion: state.stateVersion + 1,
     actionOrdinal: state.actionOrdinal + 1,
   };
+  tracePurchases(state, lines, itemTotal, command.commandId);
+  trace('financial_legs', 'financialRules.lineOfCredit', {
+    sourceActionId: command.commandId,
+    itemSpending: itemTotal,
+    applicationFee: opening ? terms.applicationPrice : 0,
+    cashAdvance: opening ? terms.cashAdvance : 0,
+    repaymentQuantity: repayment,
+    repaymentUnitPrice: terms.repaymentUnitPrice,
+    repaymentCost,
+    cashBefore: state.balance,
+    cashAfter: mutated.balance,
+    debtAfter: mutated.lineOfCredit,
+  });
   const next = finalizeFinancialOperation({
     before: state,
     state: mutated,
