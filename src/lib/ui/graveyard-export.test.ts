@@ -58,6 +58,8 @@ function record(): GameViewModel {
     statuses: [],
     endingRisks: [],
     activity: null,
+    socializeAvailableAt: null,
+    playAvailableAt: null,
     ending: {
       kind: 'death',
       at: Date.UTC(2026, 7, 23, 12),

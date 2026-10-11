@@ -74,11 +74,22 @@ export const test = base.extend<{ requestViolations: string[] }>({
           );
           return;
         }
-        if (path === '/api/auth/register' || path === '/api/auth/login') {
+        if (path === '/api/auth/discord') {
+          await route.fulfill({
+            status: 303,
+            headers: {
+              location: '/key',
+              'set-cookie':
+                'virtual_pet_session=test-session; Path=/; HttpOnly; SameSite=Lax',
+            },
+          });
+          return;
+        }
+        if (path === '/api/me/notifications') {
           await json(
-            { user, serverNow: '2026-08-30T20:00:00.000Z' },
-            path.endsWith('register') ? 201 : 200,
-            'virtual_pet_session=test-session; Path=/; HttpOnly; SameSite=Lax',
+            request.method() === 'PUT'
+              ? request.postDataJSON()
+              : { discordDm: false },
           );
           return;
         }
@@ -105,16 +116,22 @@ export const test = base.extend<{ requestViolations: string[] }>({
 
 export { expect };
 
+export async function signIn(page: Page): Promise<void> {
+  await page.context().clearCookies();
+  await page.goto('/login');
+  await page.evaluate(() =>
+    window.localStorage.removeItem('local-development-account'),
+  );
+  await page.goto('/login');
+  await page.getByRole('button', { name: 'Sign in with Discord' }).click();
+  await expect(page).toHaveURL(/\/key$/);
+}
+
 export async function signInAndChooseMode(
   page: Page,
   mode: 'Realtime mode' | 'Streaming mode',
 ): Promise<void> {
-  await page.context().clearCookies();
-  await page.goto('/login');
-  await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('correct horse battery staple');
-  await page.getByRole('button', { name: 'Create account' }).click();
-  await expect(page).toHaveURL(/\/key$/);
+  await signIn(page);
   await page.getByRole('button', { name: 'Generate new game' }).click();
   await expect(page.getByRole('textbox', { name: 'Game key' })).toHaveValue(
     /^\d{8}$/,

@@ -123,6 +123,8 @@ gameplay rules.
   is not authored in TypeScript.
 - `src/lib/commands/activity-commands.ts` — start, wait, and timed-activity
   command resolution, including seeded or selected fixed wait durations.
+- `src/lib/commands/interaction-commands.ts` — instant Socialize and Play
+  resolution and their separate per-action cooldown timestamps.
 - `src/lib/commands/progression-actions.ts` — Commission Work and data-driven
   model/full-body service actions.
 - `src/lib/commands/item-action-commands.ts` and
@@ -421,9 +423,9 @@ nicknames are prompt aliases only; each alias identifies one element.
   restores the HttpOnly-cookie session without local storage and does not own
   or persist simulation state.
 - `src/routes/login/+page.svelte` and
-  `src/lib/components/LoginWidget.svelte` — password-account registration and
-  sign-in only. Successful authentication continues to the separate game-key
-  page.
+  `src/lib/components/LoginWidget.svelte` — Discord-only sign-in and
+  first-time username onboarding. Successful authentication continues to the
+  separate game-key page.
 - `src/routes/key/+page.svelte`, `src/routes/mode/+page.svelte`,
   `src/lib/components/GameKeyWidget.svelte`, and
   `src/lib/components/TimeModeWidget.svelte` — eight-digit game-key entry and

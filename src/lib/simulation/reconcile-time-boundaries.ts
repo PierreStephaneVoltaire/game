@@ -34,6 +34,8 @@ export function nextReconciliationBoundaries(
     : state.lastResolvedAt + intervalMs - healthRemainderMs(state.history);
   const potentialRegularBoundaries = [
     state.activity?.endsAt,
+    state.history.interactionCooldowns?.socialize ?? undefined,
+    state.history.interactionCooldowns?.play ?? undefined,
     state.history.sugarCrashDueAt ?? undefined,
     state.timedEffects.deferredRestLossAt ?? undefined,
     state.timedEffects.hyperfocusUntil ?? undefined,

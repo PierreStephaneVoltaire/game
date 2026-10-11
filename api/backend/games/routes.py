@@ -15,6 +15,7 @@ from backend.content.service import CONTENT_VERSION_HEADER, require_current_cont
 from backend.database import get_session_factory
 from backend.errors import ApiError
 from backend.http import body, endpoint, json_response, limit, same_origin
+from backend.notifications.service import schedule_interaction_alerts
 from backend.pagination import decode_cursor, encode_cursor
 
 from .schemas import CreateGame, DeathWrite, GameWrite, NicknameWrite
@@ -89,14 +90,17 @@ def write_game(request: func.HttpRequest) -> dict[str, Any]:
     data = body(request, GameWrite)
     with save_diagnostics(request, data), get_session_factory()() as session:
         user = require_user(request, session)
-        return service.write(
+        game_hash = _game_key(request)
+        result = service.write(
             session,
             user.id,
             _content(request, session),
-            _game_key(request),
+            game_hash,
             _if_match(request.headers.get("if-match")),
             data,
         )
+        schedule_interaction_alerts(session, user.id, game_hash, data.target_state)
+        return result
 
 
 @bp.route(route="games/current/death", methods=["POST"])
@@ -106,16 +110,19 @@ def record_death(request: func.HttpRequest) -> dict[str, Any]:
     data = body(request, DeathWrite)
     with save_diagnostics(request, data), get_session_factory()() as session:
         user = require_user(request, session)
-        return service.write(
+        game_hash = _game_key(request)
+        result = service.write(
             session,
             user.id,
             _content(request, session),
-            _game_key(request),
+            game_hash,
             _if_match(request.headers.get("if-match")),
             data,
             death=True,
             cause_event_id=data.cause_event_id,
         )
+        schedule_interaction_alerts(session, user.id, game_hash, data.target_state)
+        return result
 
 
 @bp.route(route="games/current/events", methods=["GET"])

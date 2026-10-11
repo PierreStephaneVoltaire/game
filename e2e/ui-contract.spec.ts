@@ -8,18 +8,14 @@ test('moves from login through separate key and new-game mode screens', async ({
   await page.locator('a[href="/login"]').first().click();
   await expect(page).toHaveURL(/\/login$/);
 
-  await expect(page.getByLabel('Username')).toBeVisible();
-  await expect(page.getByLabel('Password')).toHaveValue('');
-  await expect(page.getByLabel(/Recovery contact/)).toHaveCount(0);
+  await expect(page.getByLabel('Username')).toHaveCount(0);
+  await expect(page.getByLabel('Password')).toHaveCount(0);
   await expect(
-    page.getByRole('button', { name: 'Sign in with Discord' }),
-  ).toBeVisible();
-  await expect(page.locator('body')).not.toContainText('Password must be');
+    page.getByRole('button', { name: 'Create account' }),
+  ).toHaveCount(0);
   await expect(page.locator('body')).not.toContainText('{pet}');
 
-  await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('abcdefgh');
-  await page.getByRole('button', { name: 'Create account' }).click();
+  await page.getByRole('button', { name: 'Sign in with Discord' }).click();
   await expect(page).toHaveURL(/\/key$/);
   await expect(page.getByRole('textbox', { name: 'Game key' })).toBeVisible();
   await expect(
@@ -52,33 +48,9 @@ test('moves from login through separate key and new-game mode screens', async ({
     .getByRole('button', { name: 'Sign out' })
     .click();
   await expect(page).toHaveURL(/\/login$/);
-  await expect(page.getByLabel('Username')).toBeVisible();
-});
-
-test('shows username feedback even when a sign-in password is short', async ({
-  page,
-}) => {
-  await page.context().clearCookies();
-  await page.route('**/api/auth/login', (route) =>
-    route.fulfill({
-      status: 401,
-      contentType: 'application/json',
-      body: JSON.stringify({
-        error: {
-          code: 'USERNAME_NOT_FOUND',
-          message:
-            'That username does not exist. Create an account to continue.',
-        },
-      }),
-    }),
-  );
-  await page.goto('/login');
-  await page.getByLabel('Username').fill('missing');
-  await page.getByLabel('Password').fill('short');
-  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
-  await expect(page.getByRole('alert')).toContainText(
-    'That username does not exist.',
-  );
+  await expect(
+    page.getByRole('button', { name: 'Sign in with Discord' }),
+  ).toBeVisible();
 });
 
 test('uses the three-column overview, full-width advance control, and item dialogs', async ({

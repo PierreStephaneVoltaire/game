@@ -23,7 +23,7 @@ from backend.http import (
 
 from .discord import begin, profile
 from .models import User
-from .schemas import DiscordCompleteRequest, LoginRequest, PasswordRequest, RegisterRequest, ResetRequest
+from .schemas import DiscordCompleteRequest, TestSessionRequest
 from .service import AuthProblem, AuthService
 from .sessions import current
 
@@ -64,39 +64,20 @@ def require_user(request: func.HttpRequest, session: Session) -> User:
     return user
 
 
-@bp.route(route="auth/register", methods=["POST"])
+@bp.route(route="auth/test-session", methods=["POST"])
 @endpoint
-def register(request: func.HttpRequest) -> func.HttpResponse:
+def test_session(request: func.HttpRequest) -> func.HttpResponse:
     settings = get_settings()
     same_origin(request, settings)
-    data = body(request, RegisterRequest)
+    data = body(request, TestSessionRequest)
+    if not settings.auth_test_password or data.username != settings.auth_test_username:
+        raise ApiError(401, "UNAUTHORIZED", "Sign in to continue.")
     with get_session_factory()() as session:
         try:
-            user, token = AuthService(session).register(
+            user, token = AuthService(session).test_session(
                 data.username,
-                data.password,
-                source(request),
-            )
-        except AuthProblem as problem:
-            _raise(problem)
-    return json_response(
-        {"user": user.model_dump(by_alias=True), "serverNow": _server_now()},
-        201,
-        {"Set-Cookie": _session_cookie(token)},
-    )
-
-
-@bp.route(route="auth/login", methods=["POST"])
-@endpoint
-def login(request: func.HttpRequest) -> func.HttpResponse:
-    settings = get_settings()
-    same_origin(request, settings)
-    data = body(request, LoginRequest)
-    with get_session_factory()() as session:
-        try:
-            user, token = AuthService(session).login(
-                data.username,
-                data.password,
+                data.secret,
+                settings.auth_test_password,
                 source(request),
             )
         except AuthProblem as problem:
@@ -138,37 +119,6 @@ def logout(request: func.HttpRequest) -> func.HttpResponse:
             )
         },
     )
-
-
-@bp.route(route="auth/password", methods=["PUT"])
-@endpoint
-def password(request: func.HttpRequest) -> dict[str, object]:
-    settings = get_settings()
-    same_origin(request, settings)
-    data = body(request, PasswordRequest)
-    with get_session_factory()() as session:
-        try:
-            AuthService(session).change_password(
-                require_user(request, session),
-                data.current_password,
-                data.new_password,
-            )
-        except AuthProblem as problem:
-            _raise(problem)
-    return {"serverNow": _server_now()}
-
-
-@bp.route(route="auth/password/reset", methods=["POST"])
-@endpoint
-def reset(request: func.HttpRequest) -> dict[str, object]:
-    same_origin(request, get_settings())
-    data = body(request, ResetRequest)
-    with get_session_factory()() as session:
-        try:
-            AuthService(session).consume_reset(data.token, data.new_password)
-        except AuthProblem as problem:
-            _raise(problem)
-    return {"serverNow": _server_now()}
 
 
 def _discord_start(request: func.HttpRequest, mode: str) -> func.HttpResponse:

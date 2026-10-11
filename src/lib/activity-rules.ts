@@ -8,10 +8,25 @@ import {
 } from './game-constants';
 import { STAT_MAX, STAT_MIN } from './game-constants';
 
+export function interactionWindowActive(
+  state: GameState,
+  types: string[] = ['socialize', 'play'],
+): boolean {
+  const cooldowns = state.history.interactionCooldowns;
+  return (['socialize', 'play'] as const).some((type) => {
+    const until = cooldowns?.[type] ?? null;
+    return (
+      types.includes(type) && until !== null && state.lastResolvedAt < until
+    );
+  });
+}
+
 export function activityPausesDecay(state: GameState): boolean {
+  const paused = rules.pausedDecayActivities ?? DEFAULT_PAUSED_DECAY_ACTIVITIES;
   return (
-    rules.pausedDecayActivities ?? DEFAULT_PAUSED_DECAY_ACTIVITIES
-  ).includes(state.activity?.type ?? '');
+    paused.includes(state.activity?.type ?? '') ||
+    interactionWindowActive(state, paused)
+  );
 }
 
 export function chooseDuration(

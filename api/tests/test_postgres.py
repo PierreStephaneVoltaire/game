@@ -8,7 +8,7 @@ import pytest
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
-from backend.auth.models import OAuthOnboarding, PasswordReset, Session as AuthSession
+from backend.auth.models import OAuthOnboarding, Session as AuthSession
 from backend.auth.service import AuthProblem, AuthService
 from backend.auth.sessions import current
 from backend.content.service import current_content
@@ -30,27 +30,15 @@ def test_postgres_auth_content_and_game_round_trip():
                 assert current_content(session).version == bundle.version
                 session.commit()
                 auth = AuthService(session)
-                user, cookie = auth.register("postgres_player", "correct horse battery staple", "test")
+                user, cookie = auth.test_session("postgres_player", "ci-secret", "ci-secret", "test")
                 session.expire_all()
                 assert current(session, cookie) is not None
-                reset = auth.issue_reset(user.username, "test")
-                session.expire_all()
-                auth.consume_reset(reset, "new correct horse battery staple")
-                assert current(session, cookie) is None
-                with pytest.raises(AuthProblem, match="invalid or expired"):
-                    auth.consume_reset(reset, "unused")
-                _, new_cookie = auth.login(user.username, "new correct horse battery staple", "test")
-                expired_session = session.scalar(select(AuthSession))
+                _, new_cookie = auth.test_session("postgres_player", "ci-secret", "ci-secret", "test")
+                expired_session = session.scalar(select(AuthSession).where(AuthSession.id == current(session, new_cookie).id))
                 expired_session.expires_at = datetime.now(UTC) - timedelta(seconds=1)
                 session.commit()
                 session.expire_all()
                 assert current(session, new_cookie) is None
-                reset = auth.issue_reset(user.username, "test")
-                session.scalar(select(PasswordReset).where(PasswordReset.used_at.is_(None))).expires_at = datetime.now(UTC) - timedelta(seconds=1)
-                session.commit()
-                session.expire_all()
-                with pytest.raises(AuthProblem, match="invalid or expired"):
-                    auth.consume_reset(reset, "unused")
                 onboarding = auth.create_onboarding("1234", {"username": "discord_player"})
                 session.expire_all()
                 auth.complete_onboarding(onboarding, "discord_player")

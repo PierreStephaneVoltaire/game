@@ -45,6 +45,7 @@ import {
   roomActionChoices,
   type InventoryActionChoice,
 } from './room-action-view-model';
+import { interactionAvailableAt } from '../commands/interaction-commands';
 import { metricPresentation, type MetricViewModel } from './metric-view-model';
 export type { ItemActionViewModel, ItemViewModel } from './item-view-model';
 export type { ShopOfferViewModel } from './shop-offer-view-model';
@@ -94,6 +95,8 @@ export type GameViewModel = {
   statuses: Array<{ key: StatusName; label: string }>;
   endingRisks: EndingRiskViewModel[];
   activity: ActivityViewModel | null;
+  socializeAvailableAt: number | null;
+  playAvailableAt: number | null;
   ending: EndingViewModel | null;
   commandsDisabled: boolean;
   events: EventViewModel[];
@@ -215,6 +218,8 @@ export function createGameViewModel(
           endsAt: state.activity.endsAt,
         }
       : null,
+    socializeAvailableAt: interactionAvailableAt(state, 'socialize'),
+    playAvailableAt: interactionAvailableAt(state, 'play'),
     ending: endingPresentation(state),
     commandsDisabled: state.ending !== null,
     events,

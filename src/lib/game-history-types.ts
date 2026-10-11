@@ -11,6 +11,11 @@ export type ConsumptionRecord = {
   nutritionProfileId?: string;
 };
 
+export type InteractionCooldowns = {
+  socialize: number | null;
+  play: number | null;
+};
+
 export type GameHistory = {
   consumptions: ConsumptionRecord[];
   /** Successful purchases retained after consumable inventory is used. */
@@ -49,6 +54,7 @@ export type GameHistory = {
   };
   lastCriticalHealthMoodPenaltyAt: number | null;
   lastMovementAt: number | null;
+  interactionCooldowns?: InteractionCooldowns;
   lifeEventScheduler: {
     boundariesProcessed: number;
     successfulRolls: Record<string, number>;

@@ -4,7 +4,7 @@ import hashlib
 import secrets
 from datetime import timedelta
 
-from sqlalchemy import delete, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from backend.config import get_settings
@@ -41,7 +41,3 @@ def current(db: Session, token: str | None) -> AuthSession | None:
         return None
     row.last_seen_at = now()
     return row
-
-
-def revoke_user_sessions(db: Session, user_id: str) -> None:
-    db.execute(delete(AuthSession).where(AuthSession.user_id == user_id))

@@ -21,16 +21,10 @@ def expect(response: httpx.Response, status: int) -> dict:
     return body
 
 
-def check(origin: str, username: str, password: str) -> None:
-    credentials = {"username": username, "password": password}
+def check(origin: str, username: str, secret: str) -> None:
+    credentials = {"username": username, "secret": secret}
     with httpx.Client(base_url=origin, headers={"Origin": origin}, timeout=30) as client:
-        response = client.post("/api/auth/login", json=credentials)
-        if response.status_code == 401 and response.json().get("error", {}).get("code") == "USERNAME_NOT_FOUND":
-            response = client.post("/api/auth/register", json=credentials)
-            expect(response, 201)
-            print(f"Created integration account {username}.")
-        else:
-            expect(response, 200)
+        expect(client.post("/api/auth/test-session", json=credentials), 200)
         if not client.cookies:
             raise RuntimeError("Authentication returned no session cookie; login cannot persist.")
         user = expect(client.get("/api/me"), 200)["user"]
@@ -45,9 +39,9 @@ def check(origin: str, username: str, password: str) -> None:
         expect(client.get("/api/me"), 401)
         client.cookies.clear()
 
-        expect(client.post("/api/auth/login", json=credentials), 200)
+        expect(client.post("/api/auth/test-session", json=credentials), 200)
         if expect(client.get("/api/me"), 200)["user"] != user:
-            raise RuntimeError("Fresh password login did not restore the same account.")
+            raise RuntimeError("Fresh test session did not restore the same account.")
         session_cookie = "; ".join(
             f"{cookie.name}={cookie.value}" for cookie in client.cookies.jar
         )

@@ -8,6 +8,7 @@ import { batchSessionPublication, publishSession } from './ui/session-state';
 export { companionSpeechSession, gameViewModel } from './ui/session-state';
 import { UiCommandSequence } from './ui/command-sequence';
 import {
+  clearActiveGameHash,
   loadGame,
   loadActiveGameHash,
   saveNewGame,
@@ -171,6 +172,17 @@ export async function openGameSession(gameKey: string): Promise<boolean> {
       return false;
     }
   }, key);
+}
+
+export async function closeGameSession(): Promise<void> {
+  const gameHash = activeController.current?.seed;
+  if (gameHash && !isLocalDevelopment())
+    await flushGame(gameHash, syncHooks(gameHash)).catch(() => undefined);
+  await queued(async () => {
+    activeController.close();
+    await clearActiveGameHash();
+    publishSession(null);
+  }, gameHash);
 }
 
 export function beginGameSession(

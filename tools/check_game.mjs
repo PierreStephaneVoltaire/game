@@ -22,12 +22,16 @@ try {
       keyLeaks.push('Game key appeared in a URL or Referer.');
   });
   page.on('pageerror', (error) => errors.push(error.message));
+  const session = await page.request.post(`${origin}/api/auth/test-session`, {
+    headers: { Origin: origin },
+    data: {
+      username: process.env.AUTH_TEST_USERNAME ?? 'admin',
+      secret: password,
+    },
+  });
+  if (!session.ok())
+    throw new Error(`Test session failed (HTTP ${session.status()}).`);
   await page.goto(`${origin}/login`);
-  await page
-    .getByLabel('Username')
-    .fill(process.env.AUTH_TEST_USERNAME ?? 'admin');
-  await page.getByLabel('Password', { exact: true }).fill(password);
-  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
   await expect(page).toHaveURL(`${origin}/key`, { timeout: 30_000 });
   // Override only the key-generation call in this diagnostic browser.
   const generate = page.getByRole('button', {

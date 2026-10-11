@@ -118,6 +118,12 @@ export class GameController {
     };
   }
 
+  close(): void {
+    this.state = null;
+    this.savePoints = [];
+    this.capture = undefined;
+  }
+
   get current(): GameState | null {
     return this.state;
   }

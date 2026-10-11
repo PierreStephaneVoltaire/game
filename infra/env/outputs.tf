@@ -13,3 +13,7 @@ output "static_web_app_hostname" {
 output "database_name" {
   value = azurerm_postgresql_flexible_server_database.env.name
 }
+
+output "notifier_name" {
+  value = azurerm_function_app_flex_consumption.notifier.name
+}

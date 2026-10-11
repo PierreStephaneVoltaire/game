@@ -49,6 +49,7 @@ def create_schema() -> None:
     from .auth import models as auth_models  # noqa: F401
     from .content import models as content_models  # noqa: F401
     from .games import models as game_models  # noqa: F401
+    from .notifications import models as notification_models  # noqa: F401
 
     Base.metadata.create_all(get_engine())
 

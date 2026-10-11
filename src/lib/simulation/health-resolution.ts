@@ -1,6 +1,7 @@
 import { simulationRules as rules } from '../runtime-definition';
 import { HEALTH_MAX, STAT_MIN } from '../game-constants';
 import type { GameState, HealthDamageSource, MetricName } from '../game-types';
+import { interactionWindowActive } from '../activity-rules';
 
 const CRITICAL_METRICS = ['food', 'rest', 'mood'] as const;
 
@@ -37,7 +38,8 @@ export function isHealthProtectedActivity(state: GameState): boolean {
     state.activity?.type === 'rest' ||
     state.activity?.type === 'socialize' ||
     state.activity?.type === 'play' ||
-    state.activity?.type === 'medical_care'
+    state.activity?.type === 'medical_care' ||
+    interactionWindowActive(state)
   );
 }
 

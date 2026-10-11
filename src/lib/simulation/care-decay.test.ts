@@ -116,7 +116,7 @@ describe('care activity decay pause', () => {
   );
 
   test.each(['socialize', 'play'] as const)(
-    '%s completion preserves needs and rewards in both modes',
+    '%s resolves instantly without advancing time in both modes',
     (type) => {
       for (const mode of ['streaming', 'realtime'] as const) {
         const initial = startRun(
@@ -130,15 +130,12 @@ describe('care activity decay pause', () => {
           quiet,
         );
         expect(transition.outcomes[0]?.accepted).toBe(true);
-        const completed =
-          mode === 'streaming'
-            ? transition.state
-            : reconcileTime(
-                transition.state,
-                transition.state.activity!.endsAt,
-                quiet,
-              ).state;
+        const completed = transition.state;
         expect(completed.activity).toBeNull();
+        expect(completed.now).toBe(initial.now);
+        expect(completed.history.decayRemainderMs).toBe(
+          initial.history.decayRemainderMs,
+        );
         expect(completed.metrics.food).toBe(initial.metrics.food);
         expect(completed.metrics.rest).toBe(initial.metrics.rest);
         expect(completed.metrics.bond).toBe(initial.metrics.bond + 1);
@@ -149,4 +146,65 @@ describe('care activity decay pause', () => {
       }
     },
   );
+
+  test.each(['socialize', 'play'] as const)(
+    '%s pauses decay and Health until its lock ends, then resumes',
+    (type) => {
+      const initial = startRun(
+        { mode: 'realtime', now: 0, seed: 'care-window', timezone: 'UTC' },
+        quiet,
+      );
+      initial.history.decayRemainderMs = 1.75 * HOUR_MS;
+      initial.history.healthRemainderMs = 1.75 * HOUR_MS;
+      initial.history.nextAutonomousAt = 100 * HOUR_MS;
+      const started = dispatchCommand(
+        initial,
+        { type, commandId: 'care-window', now: 0 },
+        quiet,
+      ).state;
+      const until = started.history.interactionCooldowns![type]!;
+      const atEnd = reconcileTime(started, until, quiet).state;
+      expect(atEnd.metrics.food).toBe(started.metrics.food);
+      expect(atEnd.metrics.rest).toBe(started.metrics.rest);
+      expect(atEnd.history.decayRemainderMs).toBe(1.75 * HOUR_MS);
+      expect(atEnd.history.healthRemainderMs).toBe(1.75 * HOUR_MS);
+      const after = reconcileTime(atEnd, until + 0.5 * HOUR_MS, quiet).state;
+      expect(after.metrics.food).toBe(started.metrics.food - 1);
+      expect(after.metrics.rest).toBe(started.metrics.rest - 1);
+    },
+  );
+
+  test('overlapping Socialize and Play locks pause decay only until the later lock ends', () => {
+    const initial = startRun(
+      { mode: 'realtime', now: 0, seed: 'care-overlap', timezone: 'UTC' },
+      quiet,
+    );
+    initial.history.decayRemainderMs = 1.75 * HOUR_MS;
+    initial.history.healthRemainderMs = 1.75 * HOUR_MS;
+    initial.history.nextAutonomousAt = 100 * HOUR_MS;
+    const played = dispatchCommand(
+      initial,
+      { type: 'play', commandId: 'overlap-play', now: 0 },
+      quiet,
+    ).state;
+    const both = dispatchCommand(
+      played,
+      { type: 'socialize', commandId: 'overlap-socialize', now: 0 },
+      quiet,
+    ).state;
+    const { socialize, play } = both.history.interactionCooldowns!;
+    const longest = Math.max(socialize!, play!);
+    const atLongest = reconcileTime(both, longest, quiet).state;
+    expect(atLongest.metrics.food).toBe(both.metrics.food);
+    expect(atLongest.metrics.rest).toBe(both.metrics.rest);
+    expect(atLongest.history.decayRemainderMs).toBe(1.75 * HOUR_MS);
+    expect(atLongest.history.healthRemainderMs).toBe(1.75 * HOUR_MS);
+    const after = reconcileTime(
+      atLongest,
+      longest + 0.5 * HOUR_MS,
+      quiet,
+    ).state;
+    expect(after.metrics.food).toBe(both.metrics.food - 1);
+    expect(after.metrics.rest).toBe(both.metrics.rest - 1);
+  });
 });

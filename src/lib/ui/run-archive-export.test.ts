@@ -72,6 +72,8 @@ function record(kind: NonNullable<GameViewModel['ending']>['kind']) {
     statuses: [],
     endingRisks: [],
     activity: null,
+    socializeAvailableAt: null,
+    playAvailableAt: null,
     ending,
     commandsDisabled: true,
     events: [

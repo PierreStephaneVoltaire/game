@@ -12,6 +12,8 @@ on:
         value: ${{ jobs.environment.outputs.static_web_app_name }}
       app_url:
         value: ${{ jobs.environment.outputs.app_url }}
+      notifier_name:
+        value: ${{ jobs.environment.outputs.notifier_name }}
       telemetry_worker_name:
         value: ${{ jobs.shared.outputs.telemetry_worker_name }}
   workflow_dispatch:
@@ -132,6 +134,7 @@ jobs:
     outputs:
       static_web_app_name: ${{ steps.outputs.outputs.static_web_app_name }}
       app_url: ${{ steps.outputs.outputs.app_url }}
+      notifier_name: ${{ steps.outputs.outputs.notifier_name }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v6
@@ -172,3 +175,4 @@ jobs:
         run: |
           printf 'static_web_app_name=%s\n' "$(terraform -chdir=infra/env output -raw static_web_app_name)" >> "$GITHUB_OUTPUT"
           printf 'app_url=%s\n' "$(terraform -chdir=infra/env output -raw app_url)" >> "$GITHUB_OUTPUT"
+          printf 'notifier_name=%s\n' "$(terraform -chdir=infra/env output -raw notifier_name)" >> "$GITHUB_OUTPUT"

@@ -39,6 +39,7 @@ def secret_settings(existing: dict[str, str]) -> dict[str, str]:
     return {
         **existing,
         "SIGNING_SECRET": os.environ["SIGNING_SECRET"],
+        "AUTH_TEST_PASSWORD": os.environ["AUTH_TEST_PASSWORD"],
         "DISCORD_CLIENT_SECRET": os.environ["DISCORD_CLIENT_SECRET"],
         "AZURE_CLIENT_ID": os.environ["AZURE_DATABASE_CLIENT_ID"],
         "AZURE_TENANT_ID": os.environ["AZURE_TENANT_ID"],
@@ -49,7 +50,7 @@ def secret_settings(existing: dict[str, str]) -> dict[str, str]:
 def main() -> None:
     existing = app_settings()
     settings = secret_settings(existing)
-    required = ["DATABASE_URL", "DATABASE_USERNAME", "APP_BASE_URL", "SIGNING_SECRET", "DISCORD_CLIENT_ID",
+    required = ["DATABASE_URL", "DATABASE_USERNAME", "APP_BASE_URL", "SIGNING_SECRET", "AUTH_TEST_PASSWORD", "DISCORD_CLIENT_ID",
                 "DISCORD_CLIENT_SECRET", "AZURE_CLIENT_ID", "AZURE_TENANT_ID", "AZURE_CLIENT_SECRET"]
     missing = [key for key in required if not settings.get(key)]
     if missing:

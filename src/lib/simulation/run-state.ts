@@ -55,6 +55,7 @@ export function createRunState(
     autonomousRescue: { foodLocked: false, restLocked: false },
     lastCriticalHealthMoodPenaltyAt: null,
     lastMovementAt: null,
+    interactionCooldowns: { socialize: null, play: null },
     lifeEventScheduler: {
       boundariesProcessed: 0,
       successfulRolls: {},

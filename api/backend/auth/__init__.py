@@ -1,1 +1,1 @@
-"""Password and Discord authentication."""
+"""Discord authentication."""

@@ -158,9 +158,11 @@ been approved.
   67.5% chance while Rest is active.
 - Rest loses 1 every two game-hours while awake, including streams, Hospital,
   and Commission Work. Socialize and Play pause passive Food, Rest, and Bond
-  decay. Partial decay clocks are preserved and resume afterward without
-  charging the activity duration. The paused activities are authored in
-  `activity-rules.json`.
+  decay until their lock ends. When both locks are active, the pause lasts
+  only until the later lock ends; the two windows overlap and never add
+  together. Partial decay clocks are preserved and resume afterward without
+  charging the lock duration. The paused activities are
+  authored in `activity-rules.json`.
 - Bond loses 1 after each 48 game-hours without a genuine Bond gain. A Bond
   gain resets the full clock.
 - Placing a room item that grants Bond may also reset that clock, but each
@@ -168,8 +170,10 @@ been approved.
 
 ### Periodic Health
 
-An unprotected Health check occurs every two game-hours. Rest, Socialize,
-Play, and Hospital preserve and pause the partially accumulated Health clock.
+An unprotected Health check occurs every two game-hours. Rest, Hospital, and
+Socialize or Play until its lock ends preserve and pause the partially
+accumulated Health clock. Overlapping Socialize and Play locks protect Health
+only until the later lock ends.
 Streams and Commission Work do not protect Health.
 
 Recovery uses Food, Rest, and Mood from before Food and Rest decay at the same
@@ -319,9 +323,9 @@ effects, not persistent statuses.
 ## Companion actions
 
 Feed, Rest, Socialize, Play, and item-detail interactions are companion
-attempts. Each owns one autonomous-event opportunity. Instant attempts roll
-after resolution; completed Rest, Socialize, Play, and Commission Work defer
-their opportunity until completion. An interrupted activity receives no
+attempts. Each owns one autonomous-event opportunity. Instant attempts,
+including Socialize and Play, roll after resolution; completed Rest and
+Commission Work defer their opportunity until completion. An interrupted activity receives no
 completion opportunity.
 
 Shop, room, Advance Time, and Hospital commands own no attempt opportunity.
@@ -346,9 +350,13 @@ Rest 0–2 also enables a weight-10, once-per-Rest snoring narration.
 
 ### Socialize and Play
 
-Socialize lasts 15, 30, 45, or 60 minutes with equal chances and gives Bond +1
-plus Creativity +1. Play lasts 1, 2, or 3 hours with equal chances and gives
-Bond +1 plus Mood +1. A seeded strong outcome, selected 25% of the time, raises
+Socialize and Play resolve instantly and do not advance time or make the
+companion busy. Socialize gives Bond +1 plus Creativity +1, then locks only
+Socialize for 15, 30, 45, or 60 minutes with equal chances. Play gives Bond +1
+plus Mood +1, then locks only Play for 1, 2, or 3 hours with equal chances. Each
+lock is a saved game-time timestamp, so it is checked against the caught-up
+clock when an older game is loaded. Other actions, including the other
+interaction, stay available during a lock. A seeded strong outcome, selected 25% of the time, raises
 the activity's primary reward from +1 to +2 while Bond remains +1. Completed
 activities select their player-facing narration from the authored arrays in
 `event-texts.json`; outcome strength does not replace that text.
@@ -367,9 +375,10 @@ Default card runs the ordinary Socialize or Play activity without an item.
 If no applicable item exists, the button runs that default activity immediately
 without opening a dialog.
 
-Rest, Socialize, Play, streams, and Commission Work end if a condition that was
-not critical at their start becomes critical. Interrupted Socialize, Play, and
-Commission Work grant no completion reward. Streams retain elapsed-hour income
+Rest, streams, Commission Work, and a Socialize or Play already in progress
+from an older save end if a condition that was not critical at their start
+becomes critical. Interrupted Socialize, Play, and Commission Work grant no
+completion reward. Streams retain elapsed-hour income
 and donation rolls but not base Subscribers or completion metrics. Hospital does
 not end early.
 

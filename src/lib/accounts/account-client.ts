@@ -5,7 +5,6 @@ export type Account = {
   userId: string;
   username: string;
   providers?: string[];
-  hasPassword?: boolean;
 };
 
 type AccountResponse = {
@@ -32,10 +31,7 @@ export class AccountRequestError extends Error {
 export const currentAccount = writable<Account | null>(null);
 
 const LOCAL_ACCOUNT_KEY = 'local-development-account';
-const LOCAL_CREDENTIALS = new Map([
-  ['admin', 'admin'],
-  ['local', 'local'],
-]);
+const LOCAL_USERNAME = 'local';
 
 function localAccount(): Account | null {
   if (!isLocalDevelopment()) return null;
@@ -59,24 +55,9 @@ function setLocalAccount(username: string | null): Account | null {
   } catch {
     return null;
   }
-  const account = username
-    ? { userId: 'local-development', username, hasPassword: true }
-    : null;
+  const account = username ? { userId: 'local-development', username } : null;
   currentAccount.set(account);
   return account;
-}
-
-const USERNAME_PATTERN = /^[a-z0-9_]{3,24}$/;
-
-export function credentialsAreValid(
-  username: string,
-  password: string,
-): boolean {
-  return (
-    USERNAME_PATTERN.test(username.trim().toLowerCase()) &&
-    password.length >= 1 &&
-    password.length <= 128
-  );
 }
 
 async function responseBody(response: Response): Promise<unknown> {
@@ -131,52 +112,11 @@ export async function restoreAccount(): Promise<Account | null> {
   }
 }
 
-async function authenticate(
-  action: 'login' | 'register',
-  username: string,
-  password: string,
-): Promise<Account> {
-  if (!credentialsAreValid(username, password))
-    throw new AccountRequestError(
-      'INVALID_REQUEST',
-      'Enter a valid username and password.',
-    );
-  if (action === 'register' && password.length < 8)
-    throw new AccountRequestError(
-      'INVALID_REQUEST',
-      'Use at least 8 characters for a new password.',
-    );
-  const normalizedUsername = username.trim().toLowerCase();
-  if (isLocalDevelopment()) {
-    if (
-      action !== 'login' ||
-      LOCAL_CREDENTIALS.get(normalizedUsername) !== password
-    )
-      throw new AccountRequestError(
-        'INVALID_CREDENTIALS',
-        'Use admin/admin or local/local locally.',
-      );
-    return setLocalAccount(normalizedUsername)!;
-  }
-  const result = await accountRequest(`/api/auth/${action}`, {
-    method: 'POST',
-    body: JSON.stringify({
-      username: username.trim().toLowerCase(),
-      password,
-    }),
-  });
-  currentAccount.set(result.user);
-  return result.user;
-}
-
-export function registerAccount(
-  username: string,
-  password: string,
-): Promise<Account> {
-  return authenticate('register', username, password);
-}
-
 export function beginDiscordLogin(): void {
+  if (isLocalDevelopment() && setLocalAccount(LOCAL_USERNAME)) {
+    window.location.assign('/key');
+    return;
+  }
   window.location.assign('/api/auth/discord');
 }
 
@@ -195,28 +135,6 @@ export async function completeDiscordOnboarding(
   });
   currentAccount.set(result.user);
   return result.user;
-}
-
-export async function resetPassword(
-  token: string,
-  newPassword: string,
-): Promise<void> {
-  if (newPassword.length < 8 || newPassword.length > 128)
-    throw new AccountRequestError(
-      'INVALID_REQUEST',
-      'Password must be 8–128 characters.',
-    );
-  await accountRequest('/api/auth/password/reset', {
-    method: 'POST',
-    body: JSON.stringify({ token, newPassword }),
-  });
-}
-
-export function loginAccount(
-  username: string,
-  password: string,
-): Promise<Account> {
-  return authenticate('login', username, password);
 }
 
 export async function logoutAccount(): Promise<void> {

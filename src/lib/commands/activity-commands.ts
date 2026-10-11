@@ -1,11 +1,7 @@
 import type { GameDefinition } from '../game-definition';
 import type { GameEvent, GameState, Outcome } from '../game-types';
 import { simulationRules as rules } from '../runtime-definition';
-import {
-  chooseActivityOutcome,
-  chooseDuration,
-  refusalProbability,
-} from '../activity-rules';
+import { chooseDuration } from '../activity-rules';
 import { actionRandom } from '../seeded-rng';
 import { accepted, rejected } from '../simulation/engine-state';
 import { ADVANCE_TIME_HOURS, HOUR_MS } from '../game-constants';
@@ -14,6 +10,7 @@ import {
   isCriticalState,
 } from '../simulation/health-resolution';
 import { hospitalCost, hospitalInsuranceItemId } from '../billing-rules';
+import { resolveInteraction } from './interaction-commands';
 
 export type ActivityCommandResult = {
   handled: boolean;
@@ -63,7 +60,7 @@ export function handleActivityCommand(
   if (command.type === 'medical_care')
     return medicalCare(state, command, definition);
   if (command.type === 'commission_work') return commissionWork(state, command);
-  return companionActivity(state, command);
+  return companionActivity(state, command, definition);
 }
 
 function commissionWork(
@@ -197,33 +194,28 @@ function medicalCare(
 function companionActivity(
   state: GameState,
   command: CompanionCommand,
+  definition: GameDefinition,
 ): ActivityCommandResult {
+  if (command.type === 'socialize' || command.type === 'play') {
+    const interaction = resolveInteraction(
+      state,
+      { type: command.type, commandId: command.commandId },
+      definition,
+    );
+    return {
+      handled: true,
+      state: interaction.state,
+      outcome: interaction.outcome,
+      completionOwnsAttemptOpportunity: interaction.outcome.accepted,
+    };
+  }
   let next = state;
   const duration = chooseDuration(command.type, next, command.commandId);
-  if (command.type === 'rest' && duration === 0)
+  if (duration === 0)
     return result(
       next,
       rejected('refused', 'Companion refuses to rest right now.'),
     );
-  if (
-    (command.type === 'socialize' || command.type === 'play') &&
-    actionRandom(
-      next.seed,
-      next.stateVersion,
-      command.commandId,
-      'refusal',
-      'attempt',
-    ) < refusalProbability(next)
-  )
-    return result(
-      next,
-      rejected('refused', 'Companion refused that interaction.'),
-    );
-
-  const activityOutcome =
-    command.type === 'socialize' || command.type === 'play'
-      ? chooseActivityOutcome(command.type, next, command.commandId)
-      : undefined;
   const event: GameEvent = {
     id: `event-${next.events.length + 1}`,
     type: 'activity_started',
@@ -241,7 +233,6 @@ function companionActivity(
       endsAt: next.now + duration,
       sourceActionId: command.commandId,
       payload: {
-        ...(activityOutcome ? { activityOutcome } : {}),
         startingRest: next.metrics.rest,
         startingMood: next.metrics.mood,
         startingCriticalMetrics: criticalMetrics(next.metrics).join(','),

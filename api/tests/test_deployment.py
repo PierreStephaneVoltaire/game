@@ -10,7 +10,7 @@ from tools import check_api, configure_api, setup_api_database
 
 
 def test_secrets_are_added_on_top_of_terraform_settings(monkeypatch):
-    for key, value in {"SIGNING_SECRET": "signing", "DISCORD_CLIENT_SECRET": "discord",
+    for key, value in {"SIGNING_SECRET": "signing", "AUTH_TEST_PASSWORD": "ci", "DISCORD_CLIENT_SECRET": "discord",
                        "AZURE_DATABASE_CLIENT_ID": "runtime", "AZURE_DATABASE_CLIENT_SECRET": "credential",
                        "AZURE_TENANT_ID": "tenant"}.items():
         monkeypatch.setenv(key, value)
@@ -19,10 +19,11 @@ def test_secrets_are_added_on_top_of_terraform_settings(monkeypatch):
     assert settings["APP_BASE_URL"] == "https://stage.example.test"
     assert settings["AZURE_CLIENT_ID"] == "runtime"
     assert settings["DISCORD_CLIENT_SECRET"] == "discord"
+    assert settings["AUTH_TEST_PASSWORD"] == "ci"
 
 
 def test_configured_secrets_do_not_trigger_another_restart(monkeypatch):
-    for key in ("SIGNING_SECRET", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
+    for key in ("SIGNING_SECRET", "AUTH_TEST_PASSWORD", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
                 "AZURE_DATABASE_CLIENT_SECRET", "AZURE_TENANT_ID"):
         monkeypatch.setenv(key, "configured")
     existing = secret_settings({"DATABASE_URL": "database", "DATABASE_USERNAME": "vpet_api",
@@ -35,7 +36,7 @@ def test_configured_secrets_do_not_trigger_another_restart(monkeypatch):
 
 
 def test_missing_terraform_settings_fail_before_writing(monkeypatch):
-    for key in ("SIGNING_SECRET", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
+    for key in ("SIGNING_SECRET", "AUTH_TEST_PASSWORD", "DISCORD_CLIENT_SECRET", "AZURE_DATABASE_CLIENT_ID",
                 "AZURE_DATABASE_CLIENT_SECRET", "AZURE_TENANT_ID"):
         monkeypatch.setenv(key, "configured")
     monkeypatch.setattr(configure_api, "app_settings", lambda: {"DATABASE_URL": "database"})

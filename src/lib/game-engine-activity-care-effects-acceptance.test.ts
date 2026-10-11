@@ -110,6 +110,7 @@ describe('Socialize and Play care effects', () => {
       { type: 'play', commandId: 'repeat-accepted-first', now: 0 },
       BUNDLED_GAME_DEFINITION,
     ).state;
+    const playReadyAt = first.history.interactionCooldowns!.play!;
     let refused: GameState | undefined;
     for (let index = 0; index < 200 && !refused; index += 1) {
       const attempted = dispatchCommand(
@@ -121,7 +122,7 @@ describe('Socialize and Play care effects', () => {
         {
           type: 'play',
           commandId: `repeat-refused-${index}`,
-          now: first.now,
+          now: playReadyAt,
         },
         BUNDLED_GAME_DEFINITION,
       );
@@ -146,24 +147,28 @@ describe('Socialize and Play care effects', () => {
     expect(completion?.metricDeltas).toEqual({ mood: 0, bond: 1 });
   });
 
-  test('an interrupted interaction grants no reward and keeps completion copy out of Journey', () => {
-    let started: GameState | undefined;
-    for (let index = 0; index < 200 && !started; index += 1) {
-      const result = dispatchCommand(
-        activityState(`interrupted-vignette-${index}`, 'realtime'),
-        {
-          type: 'play',
-          commandId: `interrupted-vignette-${index}`,
-          now: 0,
+  test('a Play in progress from an older save is interrupted without reward', () => {
+    const initial = activityState('interrupted-legacy-play', 'realtime');
+    const started: GameState = {
+      ...initial,
+      activity: {
+        id: 'activity-legacy',
+        type: 'play',
+        startedAt: 0,
+        endsAt: 3 * HOUR,
+        sourceActionId: 'interrupted-legacy-play',
+        payload: {
+          activityOutcome: 'normal',
+          startingRest: initial.metrics.rest,
+          startingMood: initial.metrics.mood,
+          startingCriticalMetrics: '',
         },
-        BUNDLED_GAME_DEFINITION,
-      ).state;
-      if ((result.activity?.endsAt ?? 0) > HOUR) started = result;
-    }
+      },
+    };
     const interrupted = reconcileTime(
       {
-        ...started!,
-        metrics: { ...started!.metrics, food: 1 },
+        ...started,
+        metrics: { ...started.metrics, food: 1 },
       },
       HOUR,
       BUNDLED_GAME_DEFINITION,
@@ -181,6 +186,43 @@ describe('Socialize and Play care effects', () => {
       ),
     ).toBe(false);
   });
+
+  test.each(['play', 'socialize'] as const)(
+    '%s resolves instantly and only locks itself until its cooldown passes',
+    (type) => {
+      const other = type === 'play' ? 'socialize' : 'play';
+      const first = dispatchCommand(
+        activityState(`cooldown-${type}`, 'realtime'),
+        { type, commandId: `cooldown-${type}-first`, now: 0 },
+        BUNDLED_GAME_DEFINITION,
+      );
+      const readyAt = first.state.history.interactionCooldowns![type]!;
+      const blocked = dispatchCommand(
+        first.state,
+        { type, commandId: `cooldown-${type}-blocked`, now: readyAt - 1 },
+        BUNDLED_GAME_DEFINITION,
+      );
+      const otherAction = dispatchCommand(
+        first.state,
+        { type: other, commandId: `cooldown-${type}-other`, now: 1 },
+        BUNDLED_GAME_DEFINITION,
+      );
+      const ready = dispatchCommand(
+        first.state,
+        { type, commandId: `cooldown-${type}-ready`, now: readyAt },
+        BUNDLED_GAME_DEFINITION,
+      );
+
+      expect(first.outcomes[0]?.accepted).toBe(true);
+      expect(first.state.activity).toBeNull();
+      expect(first.state.now).toBe(0);
+      expect(readyAt).toBeGreaterThan(0);
+      expect(blocked.outcomes[0]?.kind).toBe('cooldown');
+      expect(otherAction.outcomes[0]?.kind).not.toBe('cooldown');
+      expect(otherAction.outcomes[0]?.kind).not.toBe('activity_blocked');
+      expect(ready.outcomes[0]?.kind).not.toBe('cooldown');
+    },
+  );
 
   test('Hyperfocus still pins Creativity while Socialize awards Bond', () => {
     const initial = activityState('hyperfocus-socialize');

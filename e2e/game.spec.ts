@@ -1,4 +1,4 @@
-import { expect, signInAndChooseMode, test } from './fixtures';
+import { expect, signIn, signInAndChooseMode, test } from './fixtures';
 import rules from '../src/lib/data/simulation-rules.json' with { type: 'json' };
 test('signs in and reaches the companion room', async ({ page }) => {
   await signInAndChooseMode(page, 'Realtime mode');
@@ -22,20 +22,16 @@ test('signs in and reaches the companion room', async ({ page }) => {
 test('restores the account session and opens an existing key without mode selection', async ({
   page,
 }) => {
-  await page.context().clearCookies();
-  await page.goto('/login');
-  await page.waitForLoadState('networkidle');
-  await expect(page.getByLabel('Password')).toHaveValue('');
-  await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('correct horse battery staple');
-  await page.getByRole('button', { name: 'Create account' }).click();
+  await signIn(page);
   await page.getByRole('button', { name: 'Generate new game' }).click();
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Realtime mode' }).click();
   await expect(page).toHaveURL(/\/game$/);
   await page.reload();
   await expect(page).toHaveURL(/\/game$/);
-  await expect(page.getByLabel('Password')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Sign in with Discord' }),
+  ).toHaveCount(0);
   await expect(page.locator('[data-game-row="care"]')).toBeVisible();
   await expect(page.getByRole('button', { name: 'Realtime mode' })).toHaveCount(
     0,
@@ -249,11 +245,7 @@ test('uses autonomous stream income to purchase, place, and unplace a durable', 
       },
     });
   });
-  await page.context().clearCookies();
-  await page.goto('/login');
-  await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('correct horse battery staple');
-  await page.getByRole('button', { name: 'Create account' }).click();
+  await signIn(page);
   await page.getByRole('button', { name: 'Generate new game' }).click();
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Streaming mode' }).click();

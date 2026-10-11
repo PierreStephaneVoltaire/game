@@ -23,6 +23,9 @@ class Settings:
     discord_client_id: str
     discord_client_secret: str
     discord_callback_url: str
+    discord_bot_token: str
+    auth_test_username: str
+    auth_test_password: str
     max_games_per_user: int
     max_events_per_game: int
     max_events_per_batch: int
@@ -52,6 +55,9 @@ def get_settings() -> Settings:
         discord_callback_url=os.getenv(
             "DISCORD_CALLBACK_URL", f"{app_base_url}/api/auth/discord/callback"
         ),
+        discord_bot_token=os.getenv("DISCORD_BOT_TOKEN", ""),
+        auth_test_username=os.getenv("AUTH_TEST_USERNAME", "admin"),
+        auth_test_password=os.getenv("AUTH_TEST_PASSWORD", ""),
         max_games_per_user=_positive_int("MAX_GAMES_PER_USER", 20),
         max_events_per_game=_positive_int("MAX_EVENTS_PER_GAME", 50_000),
         max_events_per_batch=_positive_int("MAX_EVENTS_PER_BATCH", 500),

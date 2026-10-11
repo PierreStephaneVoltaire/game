@@ -19,38 +19,18 @@ def normalized_username(value: str) -> str:
     return value
 
 
-class RegisterRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True, alias_generator=camel, populate_by_name=True)
-    username: str = Field(max_length=24)
-    password: str = Field(min_length=8, max_length=128)
-
-    _username = field_validator("username")(normalized_username)
-
-
-class LoginRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
-    username: str = Field(max_length=24)
-    password: str = Field(min_length=1, max_length=128)
-
-    _username = field_validator("username")(normalized_username)
-
-
-class PasswordRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
-    current_password: str | None = Field(default=None, max_length=128)
-    new_password: str = Field(min_length=8, max_length=128)
-
-
-class ResetRequest(BaseModel):
-    model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
-    token: str = Field(min_length=20, max_length=200)
-    new_password: str = Field(min_length=8, max_length=128)
-
-
 class DiscordCompleteRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
     onboarding_token: str = Field(min_length=20, max_length=200)
     username: str = Field(max_length=24)
+
+    _username = field_validator("username")(normalized_username)
+
+
+class TestSessionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid", alias_generator=camel, populate_by_name=True)
+    username: str = Field(max_length=24)
+    secret: str = Field(min_length=1, max_length=256)
 
     _username = field_validator("username")(normalized_username)
 
@@ -60,4 +40,3 @@ class SafeUser(BaseModel):
     user_id: str
     username: str
     providers: list[str]
-    has_password: bool

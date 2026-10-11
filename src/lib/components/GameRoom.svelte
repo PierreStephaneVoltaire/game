@@ -3,6 +3,7 @@
   import { gameViewModel, sendGameIntent } from '$lib/game-session';
   import { daypartFor, type GameIntent } from '$lib/ui/game-view-model';
   import { OPEN_ROOM_INVENTORY_PICKER_EVENT } from '$lib/ui/room-picker-events';
+  import { interactionLocks } from '$lib/ui/interaction-cooldown';
   import CompanionOverview from './CompanionOverview.svelte';
   import CompanionAvatar from './CompanionAvatar.svelte';
   import InventorySelectionDialog from './InventorySelectionDialog.svelte';
@@ -30,6 +31,7 @@
     owned: item.owned,
   }));
   $: careBlocked = Boolean(model?.activity || model?.commandsDisabled);
+  $: interactionLocked = interactionLocks(careBlocked, model);
   $: recentEvents = model?.events.slice(-10) ?? [];
   $: activeCareKind =
     picker === 'socialize' || picker === 'play' ? picker : null;
@@ -233,12 +235,14 @@
       <button
         type="button"
         on:click={() => openCarePicker('socialize')}
-        disabled={careBlocked}>Socialize</button
+        disabled={interactionLocked.socialize.locked}
+        title={interactionLocked.socialize.title}>Socialize</button
       >
       <button
         type="button"
         on:click={() => openCarePicker('play')}
-        disabled={careBlocked}>Play</button
+        disabled={interactionLocked.play.locked}
+        title={interactionLocked.play.title}>Play</button
       >
     </section>
 
@@ -259,7 +263,7 @@
         confirmLabel="Use selected item"
         emptyMessage="There are no applicable items in the inventory."
         selectionLimit={1}
-        disabled={careBlocked}
+        disabled={interactionLocked[activeCareKind].locked}
         onConfirm={useSelected}
         onClose={closePicker}
       />

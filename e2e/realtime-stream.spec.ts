@@ -1,4 +1,4 @@
-import { expect, test } from './fixtures';
+import { expect, signIn, test } from './fixtures';
 
 test('observes a deterministic autonomous stream in Realtime mode', async ({
   page,
@@ -22,16 +22,13 @@ test('observes a deterministic autonomous stream in Realtime mode', async ({
     });
   }, startedAt);
 
-  await page.context().clearCookies();
-  await page.goto('/login');
-  await page.getByLabel('Username').fill('playtester');
-  await page.getByLabel('Password').fill('correct horse battery staple');
-  await page.getByRole('button', { name: 'Create account' }).click();
+  await signIn(page);
   await page.getByRole('button', { name: 'Generate new game' }).click();
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByRole('button', { name: 'Realtime mode' }).click();
   await page.getByRole('button', { name: 'Socialize' }).click();
-  await expect(page.getByText(/is socializing until/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Socialize' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Play' })).toBeEnabled();
 
   await page.evaluate(
     (nextNow) => {

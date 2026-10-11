@@ -71,7 +71,11 @@ function repeatedCompletions(type: 'socialize' | 'play', seed: string) {
   ).state;
   const second = dispatchCommand(
     first,
-    { type, commandId: `${seed}-second`, now: first.now },
+    {
+      type,
+      commandId: `${seed}-second`,
+      now: first.history.interactionCooldowns![type]!,
+    },
     BUNDLED_GAME_DEFINITION,
   ).state;
   return {
@@ -167,7 +171,7 @@ describe('Socialize and Play outcomes and authored completion text', () => {
       {
         type: 'play',
         commandId: 'switch-play-two',
-        now: socialize.now,
+        now: socialize.history.interactionCooldowns!.play!,
       },
       BUNDLED_GAME_DEFINITION,
     ).state;

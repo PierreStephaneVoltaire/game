@@ -20,7 +20,7 @@ def setup() -> tuple[Session, GameService, str]:
     engine = create_engine("sqlite+pysqlite:///:memory:")
     Base.metadata.create_all(engine)
     session = Session(engine, expire_on_commit=False)
-    user = User(username="player_1", password_hash="hash")
+    user = User(username="player_1")
     version = "a" * 64
     session.add_all([
         user,
@@ -113,7 +113,7 @@ def test_timestamp_cursor_and_death_cause_use_the_game_summary() -> None:
 
 def test_other_account_cannot_read_or_replay_committed_batch() -> None:
     session, games, owner = setup()
-    other = User(username="other_player", password_hash="hash")
+    other = User(username="other_player")
     session.add(other)
     session.commit()
     key, version = "00421873", "a" * 64
@@ -156,7 +156,7 @@ def test_blank_nickname_clears_and_other_accounts_cannot_rename() -> None:
     assert games.game_keys(session, user_id)[0]["nickname"] == "Second"
     games.set_nickname(session, user_id, "00421873", "")
     assert games.game_keys(session, user_id)[0]["nickname"] is None
-    other = User(username="player_2", password_hash="hash")
+    other = User(username="player_2")
     session.add(other)
     session.commit()
     with pytest.raises(ApiError) as error:

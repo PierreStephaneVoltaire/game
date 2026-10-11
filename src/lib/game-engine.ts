@@ -14,6 +14,7 @@ import { resolveAttemptEvent } from './event-rules';
 import { handleRoomCommand } from './commands/room-commands';
 import { handleShopCommand } from './commands/shop-commands';
 import { handleActivityCommand } from './commands/activity-commands';
+import { interactionAvailableAt } from './commands/interaction-commands';
 import { handleItemActionCommand } from './commands/item-action-commands';
 import { resolveItemConsumption } from './commands/item-consumption';
 import { reconcileTime as reconcileTimeInternal } from './simulation/reconcile-time';
@@ -162,6 +163,19 @@ export function dispatchCommand(
       resolveAttemptEvent(next, command.commandId, definition),
       command.commandId,
       rejected('activity_blocked', 'Companion is busy right now.'),
+      definition,
+    );
+  if (
+    (command.type === 'socialize' || command.type === 'play') &&
+    interactionAvailableAt(next, command.type) !== null
+  )
+    return rememberAndCompleteStreaming(
+      next,
+      command.commandId,
+      rejected(
+        'cooldown',
+        `${command.type === 'play' ? 'Play' : 'Socialize'} is not ready yet.`,
+      ),
       definition,
     );
   if (command.type === 'place_item' || command.type === 'unplace_item') {

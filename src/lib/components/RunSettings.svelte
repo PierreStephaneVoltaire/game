@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
   import { resolve } from '$app/paths';
   import { logoutAccount } from '$lib/accounts/account-client';
   import {
@@ -7,8 +8,10 @@
     NICKNAME_MAX_LENGTH,
     saveGameNickname,
   } from '$lib/accounts/game-keys';
+  import { closeGameSession } from '$lib/game-session';
   import type { GameMode } from '$lib/game-types';
   import RoomLookSettings from './RoomLookSettings.svelte';
+  import NotificationSettings from './NotificationSettings.svelte';
   export let mode: GameMode = 'realtime';
   export let seed = '';
   let busy = false;
@@ -47,6 +50,17 @@
   const modeLabel = (value: GameMode) =>
     value === 'streaming' ? 'Streaming mode' : 'Realtime mode';
 
+  async function switchGame(): Promise<void> {
+    if (busy) return;
+    busy = true;
+    try {
+      await closeGameSession();
+      await goto(resolve('/key'));
+    } finally {
+      busy = false;
+    }
+  }
+
   async function signOut(): Promise<void> {
     if (busy) return;
     busy = true;
@@ -77,6 +91,10 @@
       <button type="submit" disabled={nicknameBusy}>Save nickname</button>
       {#if nicknameMessage}<p role="status">{nicknameMessage}</p>{/if}
     </form>
+    <NotificationSettings />
+    <button type="button" disabled={busy} on:click={switchGame}
+      >Switch game</button
+    >
     <button type="button" disabled={busy} on:click={signOut}>Sign out</button>
   </div>
 </details>
@@ -155,6 +173,9 @@
     font-weight: 900;
   }
   summary:hover,
+  button + button {
+    margin-top: 12px;
+  }
   button:hover:not(:disabled) {
     box-shadow: 3px 3px 0 var(--theme-gold);
     transform: translate(2px, 2px);

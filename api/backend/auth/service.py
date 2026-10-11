@@ -9,11 +9,10 @@ from sqlalchemy import delete, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from .models import AuthAttempt, DiscordIdentity, OAuthOnboarding, PasswordReset, Session as AuthSession, User, is_expired, utcnow
-from .passwords import Passwords
+from .models import AuthAttempt, DiscordIdentity, OAuthOnboarding, Session as AuthSession, User, is_expired, utcnow
 from .schemas import SafeUser, normalized_username
 from .sessions import create as create_session
-from .sessions import digest, revoke_user_sessions
+from .sessions import digest
 
 
 class AuthProblem(Exception):
@@ -27,19 +26,17 @@ def subject(value: str) -> str:
 
 
 class AuthService:
-    def __init__(self, db: Session, passwords: Passwords | None = None) -> None:
+    def __init__(self, db: Session) -> None:
         self.db = db
-        self.passwords = passwords or Passwords()
 
     def safe_user(self, user: User) -> SafeUser:
         linked = self.db.scalar(select(DiscordIdentity.discord_user_id).where(DiscordIdentity.user_id == user.id))
-        return SafeUser(user_id=user.id, username=user.username, providers=["discord"] if linked else [], has_password=bool(user.password_hash))
+        return SafeUser(user_id=user.id, username=user.username, providers=["discord"] if linked else [])
 
     def cleanup_expired(self) -> None:
         now = utcnow()
         self.db.execute(delete(AuthSession).where(AuthSession.expires_at <= now))
         self.db.execute(delete(OAuthOnboarding).where(OAuthOnboarding.expires_at <= now))
-        self.db.execute(delete(PasswordReset).where(PasswordReset.expires_at <= now))
 
     def throttle(self, scope: str, value: str, limit: int, window: timedelta) -> None:
         self.cleanup_expired()
@@ -63,66 +60,19 @@ class AuthService:
         if row.attempt_count > limit:
             raise AuthProblem("RATE_LIMITED", 429, "Too many attempts. Try again later.")
 
-    def register(self, username: str, password: str, source: str) -> tuple[SafeUser, str]:
-        self.throttle("register-source", source, 5, timedelta(hours=1))
-        user = User(username=username, password_hash=self.passwords.hash(password))
-        self.db.add(user)
-        try:
-            self.db.flush()
-        except IntegrityError as error:
-            self.db.rollback()
-            raise AuthProblem("USERNAME_TAKEN", 409, "That username is already in use.") from error
-        _, token = create_session(self.db, user.id)
-        self.db.commit()
-        return self.safe_user(user), token
-
-    def login(self, username: str, password: str, source: str) -> tuple[SafeUser, str]:
-        self.throttle("login-source", source, 10, timedelta(minutes=15))
-        self.throttle("login-username", username, 10, timedelta(minutes=15))
-        user = self.db.scalar(select(User).where(User.username == username))
-        matches = self.passwords.verify(
-            password,
-            user.password_hash if user else None,
-        )
-        if user is None or not user.password_hash or not matches:
+    def test_session(self, username: str, secret: str, expected_secret: str, source: str) -> tuple[SafeUser, str]:
+        self.throttle("test-session-source", source, 10, timedelta(minutes=15))
+        if not expected_secret or not secrets.compare_digest(secret, expected_secret):
             self.db.commit()
-            if user is None:
-                raise AuthProblem("USERNAME_NOT_FOUND", 401, "That username does not exist. Create an account to continue.")
-            if not user.password_hash:
-                raise AuthProblem("PASSWORD_NOT_SET", 401, "That username uses Discord. Sign in with Discord.")
-            raise AuthProblem("INVALID_CREDENTIALS", 401, "Incorrect password for that username.")
+            raise AuthProblem("UNAUTHORIZED", 401, "Sign in to continue.")
+        user = self.db.scalar(select(User).where(User.username == username))
+        if user is None:
+            user = User(username=username)
+            self.db.add(user)
+            self.db.flush()
         _, token = create_session(self.db, user.id)
         self.db.commit()
         return self.safe_user(user), token
-
-    def change_password(self, user: User, current_password: str | None, new_password: str) -> None:
-        if user.password_hash and not self.passwords.verify(current_password or "", user.password_hash):
-            raise AuthProblem("INVALID_CREDENTIALS", 401, "Invalid username or password.")
-        user.password_hash = self.passwords.hash(new_password)
-        self.db.commit()
-
-    def issue_reset(self, username: str, issued_by: str) -> str:
-        user = self.db.scalar(select(User).where(User.username == username))
-        if user is None:
-            raise AuthProblem("INVALID_REQUEST", 400, "Unknown username.")
-        now = utcnow()
-        self.db.execute(delete(PasswordReset).where(PasswordReset.user_id == user.id, PasswordReset.used_at.is_(None)))
-        token = secrets.token_urlsafe(32)
-        self.db.add(PasswordReset(token_hash=digest(token), user_id=user.id, issued_by=issued_by, expires_at=now + timedelta(hours=1)))
-        self.db.commit()
-        return token
-
-    def consume_reset(self, token: str, new_password: str) -> None:
-        reset = self.db.get(PasswordReset, digest(token), with_for_update=True)
-        if reset is None or reset.used_at is not None or is_expired(reset.expires_at):
-            raise AuthProblem("RESET_TOKEN_INVALID", 400, "This reset link is invalid or expired.")
-        user = self.db.get(User, reset.user_id)
-        if user is None:
-            raise AuthProblem("RESET_TOKEN_INVALID", 400, "This reset link is invalid or expired.")
-        user.password_hash = self.passwords.hash(new_password)
-        reset.used_at = utcnow()
-        revoke_user_sessions(self.db, user.id)
-        self.db.commit()
 
     def create_onboarding(self, discord_user_id: str, profile: dict[str, object]) -> str:
         now = utcnow()

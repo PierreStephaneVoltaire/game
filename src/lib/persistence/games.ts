@@ -62,6 +62,15 @@ export async function setActiveGameHash(gameHash: string): Promise<void> {
   db.close();
 }
 
+export async function clearActiveGameHash(): Promise<void> {
+  const db = await database();
+  if (!db) return;
+  const transaction = db.transaction('metadata', 'readwrite');
+  transaction.objectStore('metadata').delete(ACTIVE_GAME_KEY);
+  await completed(transaction);
+  db.close();
+}
+
 export async function listLocalGames(): Promise<GameRecord[]> {
   const db = await database();
   if (!db) return [];

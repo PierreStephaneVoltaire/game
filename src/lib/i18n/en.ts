@@ -25,7 +25,7 @@ export const en = {
   cards: {
     food: {
       title: 'Food',
-      body: 'Keep her fed before she makes it everyone\'s problem',
+      body: "Keep her fed before she makes it everyone's problem",
     },
     rest: {
       title: 'Rest',
@@ -52,13 +52,8 @@ export const en = {
   login: {
     eyebrow: 'HI, CHAT',
     title: 'Meet your little gremlin.',
-    intro: 'Sign in or create an account with a username and password.',
-    usernameLabel: 'Username',
-    usernamePlaceholder: 'Your username',
-    passwordLabel: 'Password',
-    passwordPlaceholder: 'Enter your password',
+    intro: 'Sign in or create an account with Discord.',
     submit: 'Sign in',
-    createAccount: 'Create account',
     signOut: 'Sign out',
     serviceError: 'The account service could not complete the request.',
     modeTitle: 'Choose your time mode.',
