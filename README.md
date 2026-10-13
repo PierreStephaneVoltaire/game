@@ -26,29 +26,40 @@ flowchart TB
     Outbox["Independent IndexedDB logging outbox"]
     Game -->|"Asynchronous capture"| Outbox
   end
-  subgraph Azure
-    subgraph SWA["Azure Static Web Apps"]
-      Frontend["Static SvelteKit frontend"]
-      API["Managed Azure Functions API — Python"]
+  Discord["Discord<br/>OAuth sign-in and bot direct messages"]
+  subgraph Azure["Azure resource group"]
+    DNS["Existing Azure DNS zone<br/>prod: apex A record; stage: env CNAME"]
+    subgraph Env["Per-environment stack: prod and stage"]
+      subgraph SWA["Azure Static Web Apps — Free"]
+        Frontend["Static SvelteKit frontend"]
+        API["Managed Azure Functions API — Python"]
+      end
+      Notifier["Notifier Python Function App<br/>Flex Consumption; one-minute timer; max one instance"]
+      EnvDatabase[("Environment database<br/>on the shared server")]
+      NotifierFiles["Blob: notifier-env-deployments<br/>and Functions host storage"]
     end
-    Entra["Microsoft Entra ID"]
-    Database["Azure Database for PostgreSQL Flexible Server"]
-    Worker["Separate Python Function App<br/>Flex Consumption; zero always-ready instances"]
-    subgraph Storage["Existing Azure Storage account — private storage"]
-      Quotes["Blob: companion-content"]
-      Traces["Blob: gameplay-traces<br/>Immutable gzip JSON; indefinite retention"]
-      Queue["Queue: gameplay-traces<br/>Batch references"]
-      Poison["Queue: gameplay-traces-poison<br/>No automatic replay"]
-      Index["Table: GameplayRuns<br/>Run and operation index; indefinite retention"]
-      WorkerFiles["Blob: worker deployment packages<br/>and Functions host storage"]
+    subgraph Shared["Shared stack"]
+      Entra["Microsoft Entra ID"]
+      Server["Azure Database for PostgreSQL Flexible Server<br/>PostgreSQL 17; B1ms; Entra-only authentication"]
+      Worker["Trace worker Python Function App<br/>Flex Consumption; zero always-ready instances"]
+      subgraph Storage["Existing Azure Storage account — private storage"]
+        Quotes["Blob: companion-content"]
+        Traces["Blob: gameplay-traces<br/>Immutable gzip JSON; indefinite retention"]
+        Queue["Queue: gameplay-traces<br/>Batch references"]
+        Poison["Queue: gameplay-traces-poison<br/>No automatic replay"]
+        Index["Table: GameplayRuns<br/>Run and operation index; indefinite retention"]
+        WorkerFiles["Blob: gameplay-worker-deployments<br/>and Functions host storage"]
+      end
+      Insights["Application Insights"]
+      Logs["Log Analytics workspace<br/>30-day retention"]
+      Budget["Monthly subscription budget: C$80<br/>Actual alerts: 80% / 90%; forecast: 100%<br/>No automatic shutdown"]
     end
-    Insights["Application Insights"]
-    Logs["Log Analytics workspace"]
-    Budget["Monthly infrastructure budget: C$50<br/>Actual alerts: C$40 / C$45; forecast: C$50<br/>No automatic shutdown"]
 
+    DNS -->|"Custom domain"| Frontend
     Frontend -->|"Serves game"| Game
     Game -->|"Authenticated requests: /api/*"| API
     Outbox -->|"Authenticated POST /api/telemetry/batches<br/>60 seconds / 256 KiB; flush on ending"| API
+    API -->|"OAuth code exchange"| Discord
     API -->|"1. Store validated batch"| Traces
     API -->|"2. Enqueue blob reference"| Queue
     API -->|"3. Acknowledge after queue acceptance"| Outbox
@@ -57,15 +68,23 @@ flowchart TB
     Worker -->|"Idempotent summaries and trace references"| Index
     Worker -->|"After initial attempt + five retries"| Poison
     WorkerFiles -->|"Code and host state"| Worker
+    NotifierFiles -->|"Code and host state"| Notifier
     API -->|"Acquire database access token"| Entra
-    API -->|"SQL over TLS with Entra authentication"| Database
+    Notifier -->|"Acquire database access token"| Entra
+    API -->|"SQL over TLS with Entra authentication"| EnvDatabase
+    Notifier -->|"Read due notifications over TLS"| EnvDatabase
+    Notifier -->|"Bot direct messages"| Discord
+    EnvDatabase -->|"Hosted on"| Server
     API -->|"Operational diagnostics"| Insights
+    Notifier -->|"Operational diagnostics"| Insights
     Worker -->|"Operational diagnostics only"| Insights
     Insights -->|"Diagnostic storage"| Logs
   end
-  Deployment["GitHub Actions deployment"]
+  Deployment["GitHub Actions deployment<br/>main: prod; other branches: stage"]
+  Deployment -->|"Terraform: shared stack, then environment stack"| Azure
   Deployment -->|"Read quotes for database import"| Quotes
   Deployment -->|"Deploy worker before enabling logging"| WorkerFiles
+  Deployment -->|"Deploy notifier and set its secrets"| NotifierFiles
 ```
 
 ## Requirements
